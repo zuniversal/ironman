@@ -1,0 +1,120 @@
+import React, {
+  Component,
+  PureComponent,
+  lazy,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import './style.less';
+
+import { Form, Input, Button, Checkbox } from 'antd';
+import SmartTable from '@/common/SmartTable'; //
+import ClientForm from '@/components/Form/ClientForm'; //
+import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
+import ClientTable from '@/components/Table/ClientTable'; //
+import SmartModal from '@/common/SmartModal'; //
+
+class Client extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+  }
+
+  renderFormBtn = (
+    <>
+      {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
+      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
+        同步OA
+      </Button>
+      <Button type="primary">新建客户</Button>
+      <Button type="primary">导出客户数据</Button>
+      <Button type="primary">删除</Button>
+    </>
+  );
+
+  onSubmit = (e, rest) => {
+    console.log('    onSubmit ： ', e, rest);
+  };
+  onFail = (e, rest) => {
+    console.log('    onFail ： ', e, rest);
+  };
+
+  showModal = params => {
+    console.log(' showModal,  , ： ', params);
+  };
+
+  renderClientTable(params) {
+    console.log(' renderClientTable ： ', params);
+  }
+
+  showModal = e => {
+    console.log('    showModal ： ', e);
+    this.setState({
+      show: true,
+    });
+  };
+  handleOk = e => {
+    console.log(' handleOk ： ', e, this.state, this.props); //
+    this.setState({
+      show: false,
+    });
+  };
+  onClose = e => {
+    console.log(' onClose ： ', e, this.state, this.props); //
+    this.setState({
+      show: false,
+    });
+  };
+
+  componentDidMount() {
+    console.log(
+      ' Client 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
+    this.showModal();
+  }
+
+  render() {
+    console.log(
+      ' %c Client 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    );
+    const { show } = this.state; //
+
+    return (
+      <div className="Client">
+        {/* Client */}
+
+        <Button type="primary" onClick={this.showModal}>
+          show
+        </Button>
+
+        <SmartModal show={show} handleOk={this.handleOk} onClose={this.onClose}>
+          <ClientForm
+            onSubmit={this.onSubmit}
+            onFail={this.onFail}
+          ></ClientForm>
+        </SmartModal>
+
+        <ClientSearchForm
+          formBtn={this.renderFormBtn}
+          onSubmit={this.onSubmit}
+          onFail={this.onFail}
+        ></ClientSearchForm>
+
+        {/* {this.renderClientTable()} */}
+
+        <ClientTable showModal={this.showModal}></ClientTable>
+      </div>
+    );
+  }
+}
+
+export default Client;
