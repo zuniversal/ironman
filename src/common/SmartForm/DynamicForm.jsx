@@ -234,7 +234,7 @@ const DynamicForm = props => {
                   // {...formItemProps}
 
                   {...formItemLayout}
-                  className={'formItems'}
+                  className={'formItems dynamicFormWrapper'}
                   {...formItemProps}
                   {...field}
                   name={[field.name, fieldKey]}

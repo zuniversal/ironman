@@ -104,7 +104,7 @@ const ContractSearchForm = props => {
   return (
     <div className={''}>
       <SearchForm
-        flexRow={4}
+        // flexRow={4}
         config={config}
         formProps={formProps}
         // init={init}

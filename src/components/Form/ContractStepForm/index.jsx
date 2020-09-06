@@ -62,10 +62,11 @@ const ContractStepForm = props => {
         current={current}
         onChange={onChange}
         // type="navigation"
+        className={`stepWrapper`} 
       >
         {contractStepConfig.map((v, i) => (
           <Step
-            icon={null}
+            // icon={null}
             // status="finish"
             title={v.title}
             key={v.key}
@@ -73,7 +74,10 @@ const ContractStepForm = props => {
         ))}
       </Steps>
 
-      <ContractRelativeForm></ContractRelativeForm>
+      <ContractRelativeForm
+        index={current}
+        
+      ></ContractRelativeForm>
 
       <Button type="primary" onClick={prev}>
         上一步
