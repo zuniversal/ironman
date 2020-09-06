@@ -26,43 +26,39 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const ClientTable = props => {
-  console.log(' ClientTable ： ', props); //
+const ContractTable = props => {
+  console.log(' ContractTable  ： ', props); //
   const { showModal, edit, remove } = props; //
 
   const columns = [
     {
-      title: '客户编号',
+      title: '所属客户',
       dataIndex: 'key',
-      // link: true,
       render: (text, record, index) => <a onClick={showModal}>{text}</a>,
     },
     {
-      noFilter: true,
-      title: '客户名称',
+      title: '合同编号',
       dataIndex: 'field2',
+      render: (text, record, index) => <a onClick={showModal}>{text}</a>,
     },
     {
-      // noFilter: true,
-      title: '客户类型',
+      title: '业务主体',
       dataIndex: 'field3',
     },
     {
-      // noFilter: true,
-      title: '所属行业',
+      title: '业务员',
       dataIndex: 'field4',
     },
     {
-      // noFilter: true,
-      title: '企业规模',
+      title: '合同类型',
       dataIndex: 'field5',
     },
     {
-      title: '资产规模',
+      title: '失效日期',
       dataIndex: 'field6',
     },
     {
-      title: '管理员',
+      title: '户号',
       dataIndex: 'field7',
     },
     {
@@ -70,11 +66,10 @@ const ClientTable = props => {
       dataIndex: 'field8',
     },
     {
-      title: '客户地址',
+      title: '电站数量',
       dataIndex: 'field9',
     },
     {
-      noFilter: true,
       title: '操作',
       className: 'actionCol',
       render: (text, record, index) => {
@@ -99,10 +94,10 @@ const ClientTable = props => {
   );
 };
 
-ClientTable.defaultProps = {
+ContractTable.defaultProps = {
   showModal: () => {},
   edit: () => {},
   remove: () => {},
 };
 
-export default ClientTable;
+export default ContractTable;

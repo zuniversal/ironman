@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SearchForm from '@/common/SearchForm'; //
 import { regoins } from '@/configs'; //
 
 export const config = [
@@ -93,8 +93,8 @@ const init = {
   // select
 };
 
-const ClientSearchForm = props => {
-  console.log(' ClientSearchForm ： ', props); //
+const ContractSearchForm = props => {
+  console.log(' ContractSearchForm ： ', props); //
 
   const formProps = {
     // layout: 'vertical',
@@ -103,7 +103,7 @@ const ClientSearchForm = props => {
 
   return (
     <div className={''}>
-      <SmartForm
+      <SearchForm
         flexRow={4}
         config={config}
         formProps={formProps}
@@ -111,11 +111,11 @@ const ClientSearchForm = props => {
         // init={{}}
 
         {...props}
-      ></SmartForm>
+      ></SearchForm>
     </div>
   );
 };
 
-ClientSearchForm.defaultProps = {};
+ContractSearchForm.defaultProps = {};
 
-export default ClientSearchForm;
+export default ContractSearchForm;

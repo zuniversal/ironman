@@ -31,10 +31,62 @@ import SearchForm from './SearchForm'; //
 import ModalForm from './ModalForm'; //
 import DateForn from './DateForn'; //
 
-import { INPUT_TXT, SELECT_TXT } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
+
+const layoutObj = {
+  // labelCol: { span: 8 },
+  // wrapperCol: { span: 14 },
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 18 },
+    // sm: { span: 12 },
+  },
+};
+const noLabelLayout = {
+  // labelCol: { span: 8 },
+  // wrapperCol: { span: 14 },
+  labelCol: {
+    // xs: { span: 24 },
+    sm: { span: 0 },
+  },
+  wrapperCol: {
+    // xs: { span: 24 },
+    sm: { span: 24 },
+  },
+};
+const rowLayout = {
+  // labelCol: { span: 8 },
+  // wrapperCol: { span: 14 },
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 20 },
+  },
+};
+
+export const getLabel = (label, key) => {
+  const labelMap = {
+    rowText: '',
+    Input: INPUT_TXT + label,
+    Select: SELECT_TXT + label,
+    Password: INPUT_TXT + label,
+    Cascader: INPUT_TXT + label,
+    AutoComplete: INPUT_TXT + label,
+    Checkbox: INPUT_TXT + label,
+  };
+
+  return labelMap[key];
+};
 
 const residences = [
   {
@@ -113,8 +165,12 @@ const SmartForm = (props, state) => {
     className,
     onSubmit,
     onFail,
+    propsForm,
   } = props; //
+
   const [form] = Form.useForm();
+  const formControl = propsForm ? propsForm : form; //
+
   console.log(
     ' %c SmartForm 组件 state, props ： ',
     `color: #333; font-weight: bold`,
@@ -173,7 +229,10 @@ const SmartForm = (props, state) => {
   }));
 
   const rules = (params, extra) => {
-    console.log(' rules   params, extra,  ,   ： ', params, extra);
+    const { items, label, formType } = params;
+    const message = getLabel(label, formType);
+    // console.log(' rules   params, extra,  ,   ： ', params, extra, message, label, formType,  );
+
     return [
       // {
       //   type: 'pwd',
@@ -181,7 +240,7 @@ const SmartForm = (props, state) => {
       // },
       {
         required: true,
-        message: 'Please input your E-mail!',
+        message: label + REQUIRE,
       },
     ];
   };
@@ -191,31 +250,6 @@ const SmartForm = (props, state) => {
   //   setFormLayout(layout);
   // };
 
-  const layoutObj = {
-    // labelCol: { span: 8 },
-    // wrapperCol: { span: 14 },
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 18 },
-    },
-  };
-  const rowLayout = {
-    // labelCol: { span: 8 },
-    // wrapperCol: { span: 14 },
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 20 },
-    },
-  };
-
   const formItemLayout = formLayout === 'horizontal' ? layoutObj : null;
 
   const [componentSize, setComponentSize] = useState('default');
@@ -224,8 +258,8 @@ const SmartForm = (props, state) => {
     console.log(' onFormLayoutChange value, rest ： ', value, rest); //
     const { layout, size } = value;
 
-    setFormLayout(layout);
-    setComponentSize(size);
+    // setFormLayout(layout);
+    // setComponentSize(size);
   };
 
   const onGenderChange = (value, rest) => {
@@ -264,134 +298,6 @@ const SmartForm = (props, state) => {
     </>
   );
 
-  // const config = [
-  //   {
-  //     formType: 'Input',
-  //     itemProps: {
-  //       label: "Test", name: 'test', key: "test", rules: [
-  //         {
-  //           required: true,
-  //           message: 'Please input your E-mail!',
-  //         },
-  //       ],
-  //       // noStyle: true,
-  //     },
-  //     comProps: {
-  //       allowClear: true,
-
-  //     },
-  //   },
-  //   {
-  //     formType: 'Select',
-  //     itemProps: {
-  //       label: "Select", name: 'select', key: "select", rules: rules(),
-  //     },
-  //     comProps: {
-  //       allowClear: true,
-  //       onChange: onGenderChange,
-  //       placeholder: "Select a option and change input text above",
-  //     },
-  //     selectOptions: selectOptions,
-
-  //   },
-
-  //   {
-  //     formType: 'Input',
-  //     itemProps: {
-  //       label: "Email1", name: 'email', key: "email", rules: [
-  //         {
-  //           type: 'email',
-  //           message: 'The input is not valid E-mail!',
-  //         },
-  //         {
-  //           required: true,
-  //           message: 'Please input your E-mail!',
-  //         },
-  //       ],
-
-  //     },
-  //     comProps: {
-
-  //     },
-  //   },
-  //   {
-  //     formType: 'Password',
-  //     itemProps: {
-  //       // label: "pwd",
-  //       label: labelCom,
-  //       name: 'pwd', key: "pwd", rules: [
-  //         // {
-  //         //   type: 'password',
-  //         //   message: 'The input is not valid E-mail!',
-  //         // },
-  //         {
-  //           required: true,
-  //           message: 'Please input your E-mail!',
-  //         },
-  //       ],
-
-  //     },
-  //     comProps: {
-
-  //     },
-  //     addonBefore: prefixSelector,
-  //   },
-  //   {
-  //     formType: 'Password',
-  //     itemProps: {
-  //       label: "Password", name: 'password', key: "password", rules: rules(),
-
-  //     },
-  //     comProps: {
-
-  //     },
-
-  //   },
-  //   {
-  //     formType: 'Cascader',
-  //     itemProps: {
-  //       label: "Cascader", name: 'cascader', key: "cascader", rules: rules(),
-  //       placeholder: "website",
-
-  //     },
-  //     comProps: {
-  //       options: residences,
-
-  //     },
-
-  //   },
-  //   {
-  //     formType: 'AutoComplete',
-  //     itemProps: {
-  //       label: "AutoComplete", name: 'autocomplete', key: "autocomplete", rules: rules(),
-
-  //     },
-  //     comProps: {
-  //       options: websiteOptions,
-  //       onChange: onWebsiteChange,
-  //       placeholder: "website",
-
-  //     },
-
-  //   },
-
-  //   {
-  //     formType: 'Checkbox',
-  //     itemProps: {
-  //       label: "Checkbox", name: 'checkbox', key: "checkbox", rules: rules(),
-  //       // Warning: [antd: Checkbox] `value` is not a valid prop, do you mean `checked`?
-  //       valuePropName: "checked",
-
-  //     },
-  //     comProps: {
-  //     },
-  //     checkboxContent: <div className=''>
-  //       I have read the <a href="">agreement</a>
-  //     </div>
-  //     ,
-  //   },
-  // ]
-
   const onReset = () => {
     form.resetFields();
   };
@@ -405,7 +311,8 @@ const SmartForm = (props, state) => {
 
   // return <Row gutter={24}>{colForm}</Row>
 
-  const formItems = config.map((items, i) => {
+  const formItems = config.map((item, i) => {
+    const items = { formType: 'Input', ...item };
     const {
       formType = 'Input',
       checkboxContent,
@@ -427,21 +334,11 @@ const SmartForm = (props, state) => {
 
     const formItemProps = {
       ...itemProps,
-      className: 'formItems',
-      rules: noRule ? [] : rules(),
+      className: `formItems ${itemProps.className}  `,
+      rules: noRule ? [] : rules({ items, label }),
     };
 
-    const labelMap = {
-      rowText: '',
-      Input: INPUT_TXT + label,
-      Select: SELECT_TXT + label,
-      Password: INPUT_TXT + label,
-      Cascader: INPUT_TXT + label,
-      AutoComplete: INPUT_TXT + label,
-      Checkbox: INPUT_TXT + label,
-    };
-
-    const formLabel = customLabel ? customLabel : labelMap[formType]; //
+    const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
 
     const realComProps = {
@@ -465,6 +362,8 @@ const SmartForm = (props, state) => {
         </AutoComplete>
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
+
+      Dynamic: <DynamicForm {...realComProps}></DynamicForm>,
     };
 
     const formItemCom = formItemMap[formType];
@@ -475,7 +374,15 @@ const SmartForm = (props, state) => {
     }
 
     if (rowText) {
-      // console.log(' formItemProps ： ', formItemProps, formItemCom, formItemMap, formType, rowText,     )//
+      console.log(
+        ' rowText formItemProps ： ',
+        formItemProps,
+        formItemCom,
+        formItemMap,
+        formType,
+        rowText,
+        rowLayout,
+      ); //
       return (
         <Form.Item
           // name={key}
@@ -493,7 +400,7 @@ const SmartForm = (props, state) => {
     }
 
     if (flexRow) {
-      console.log(' flexRowflexRow ： ', flexRow); //
+      // console.log(' flexRowflexRow ： ', flexRow); //
       const colForm = (
         <Col span={flexRow} key={itemProps.key}>
           <Form.Item
@@ -528,8 +435,10 @@ const SmartForm = (props, state) => {
         // rules={rules}
         // valuePropName="checked"
         // {...formItemProps}
-        className={'formItems'}
+        // className={`formItems ${className}  `}
+
         {...formItemProps}
+        {...(formType === 'Dynamic' ? noLabelLayout : {})}
       >
         {formItemCom}
       </Form.Item>
@@ -541,8 +450,8 @@ const SmartForm = (props, state) => {
     <Form
       {...formItemLayout}
       layout={formLayout}
-      form={form}
-      name="register"
+      form={formControl}
+      name="smartForm"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       initialValues={{}}

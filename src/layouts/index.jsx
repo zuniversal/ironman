@@ -12,6 +12,7 @@ import ProLayout, {
   ProSettings,
 } from '@ant-design/pro-layout';
 import defaultProps from './defaultProps';
+import { history } from 'umi';
 import './style.less';
 // import UserCenterForm from '../../components/FormCom/index'//
 
@@ -36,10 +37,12 @@ const content = (
 
 export default props => {
   const [settings, setSetting] = useState(undefined);
-  const [pathname, setPathname] = useState('/welcome');
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
-  const { children } = props; //
+  const { children, location } = props; //
+  const path = location.pathname;
+  // const [pathname, setPathname] = useState('/welcome');
+  const [pathname, setPathname] = useState(path);
   console.log(' settings, pathname ： ', settings, pathname, props); //
 
   // return <div >{ props.children }</div>
@@ -81,6 +84,7 @@ export default props => {
                 // console.log(' com ： ', com, comRef.current, )//
                 // comRef.current = com//
                 setPathname(item.path || '/welcome');
+                history.push(item.path);
               }}
             >
               {dom}

@@ -14,7 +14,9 @@ import SmartTable from '@/common/SmartTable'; //
 import ClientForm from '@/components/Form/ClientForm'; //
 import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
 import ClientTable from '@/components/Table/ClientTable'; //
+import ClientFormModal from '@/components/Modal/ClientFormModal'; //
 import SmartModal from '@/common/SmartModal'; //
+import SmartFormModal from '@/common/SmartFormModal'; //
 
 class Client extends PureComponent {
   constructor(props) {
@@ -27,6 +29,7 @@ class Client extends PureComponent {
   renderFormBtn = (
     <>
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
+      {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
       <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
         同步OA
       </Button>
@@ -43,10 +46,6 @@ class Client extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-  showModal = params => {
-    console.log(' showModal,  , ： ', params);
-  };
-
   renderClientTable(params) {
     console.log(' renderClientTable ： ', params);
   }
@@ -57,10 +56,30 @@ class Client extends PureComponent {
       show: true,
     });
   };
-  handleOk = e => {
-    console.log(' handleOk ： ', e, this.state, this.props); //
+  handleOk = async props => {
+    console.log(' handleOkhandleOk ： ', props, this.state, this.props); //
+    const { form } = props; //
+
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
+    // });
+
     this.setState({
-      show: false,
+      // show: false,
     });
   };
   onClose = e => {
@@ -92,16 +111,36 @@ class Client extends PureComponent {
       <div className="Client">
         {/* Client */}
 
-        <Button type="primary" onClick={this.showModal}>
-          show
-        </Button>
+        <ClientFormModal
+          // modalProps={
+          //   {
+          //     show: show,
+          //     handleOk: this.handleOk,
+          //     onClose: this.onClose,
 
-        <SmartModal show={show} handleOk={this.handleOk} onClose={this.onClose}>
+          //   }
+
+          // }
+          // formsProps={
+          //   {
+          //     onSubmit: this.onSubmit,
+          //     onFail: this.onFail,
+
+          //   }
+          // }
+          show={show}
+          handleOk={this.handleOk}
+          onClose={this.onClose}
+          onSubmit={this.onSubmit}
+          onFail={this.onFail}
+        ></ClientFormModal>
+
+        {/* <SmartModal show={show} handleOk={this.handleOk} onClose={this.onClose}>
           <ClientForm
             onSubmit={this.onSubmit}
             onFail={this.onFail}
           ></ClientForm>
-        </SmartModal>
+        </SmartModal> */}
 
         <ClientSearchForm
           formBtn={this.renderFormBtn}

@@ -1,22 +1,29 @@
-import React from 'react';
+import React, {
+  Component,
+  PureComponent,
+  lazy,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import './style.less';
 import {
+  Table,
+  Icon,
+  notification,
+  Modal,
+  Button,
+  Tag,
   Form,
   Input,
-  Tooltip,
-  Cascader,
-  Select,
   Row,
   Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
 } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
+import SmartFormModal from '@/common/SmartFormModal'; //
 import { regoins } from '@/configs'; //
 
 export const config = [
@@ -138,9 +145,18 @@ export const config = [
   {
     formType: 'Dynamic',
     itemProps: {
-      label: '用户名',
+      // label: '用户名',
+      // label: ' ',
+      className: 'noMBottom',
     },
-    comProps: {},
+    comProps: {
+      // key: 'userName',
+      // formType: 'Select',
+      itemProps: {
+        label: '用户名',
+      },
+      comProps: {},
+    },
   },
   {
     // formType: 'Select',
@@ -166,6 +182,39 @@ export const config = [
       key: 'rowText',
     },
   },
+
+  // {
+  //   // formType: 'Select',
+  //   itemProps: {
+  //     label: '下属户号',
+  //   },
+  //   comProps: {},
+  // },
+
+  <Form.Item label="下属户号" key={'captcha'} className={'noMBottom'}>
+    <Row gutter={8}>
+      <Col span={12}>
+        <Form.Item
+          name="houseNo"
+          // label="下属户号"
+          key={'houseNo'}
+          rules={[
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Col>
+
+      <Col span={12}>
+        <Button>生成客户画像</Button>
+      </Col>
+    </Row>
+  </Form.Item>,
+
   {
     formType: 'Select',
     itemProps: {
@@ -174,14 +223,6 @@ export const config = [
     comProps: {},
   },
 ];
-
-// const formConfig = config.map((v, i) => ({ ...v, itemProps:  v.formType === 'rowText' ? {...v.itemProps} : {...v.itemProps, key: `key{i}`, name: `name${i}`, },    }))
-// const formConfig = config.map((v, i) => ({ ...v, itemProps:  {...v.itemProps, key: `key{i}`, name: `name${i}`, noRule: v.formType === 'rowText',   },   }))
-const formConfig = config.map((v, i) => ({
-  ...v,
-  itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-}));
-// console.log(' formConfig  config.map v ： ', formConfig,   )
 
 const init = {
   name: 'zyb',
@@ -194,31 +235,21 @@ const init = {
   // select
 };
 
-const ClientForm = props => {
-  console.log(' ClientForm ： ', props); //
+const ClientFormModal = props => {
+  const [form] = Form.useForm();
+  console.log(' ClientFormModal ： ', props, form); //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
+  const { show, handleOk, onClose, onSubmit, onFail } = props; //
+
+  const onOk = e => {
+    console.log(' onOk   e, ,   ： ', e);
+
+    handleOk && handleOk({ e, form });
   };
 
-  return (
-    <div className={''}>
-      <SmartForm
-        // flexRow={4}
-        config={formConfig}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        init={{
-          key9: regoins,
-        }}
-        {...props}
-      ></SmartForm>
-    </div>
-  );
+  return <SmartFormModal config={config} {...props}></SmartFormModal>;
 };
 
-ClientForm.defaultProps = {};
+ClientFormModal.defaultProps = {};
 
-export default ClientForm;
+export default ClientFormModal;

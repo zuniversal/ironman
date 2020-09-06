@@ -499,3 +499,14 @@ export const customFilter = (t, k) => {
     },
   };
 };
+
+export const formatConfig = config =>
+  config.map((v, i) => ({
+    ...v,
+    // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+    // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+    itemProps:
+      v.rowText || v.formType === 'Dynamic'
+        ? { ...v.itemProps, key: `key${i}` }
+        : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+  }));

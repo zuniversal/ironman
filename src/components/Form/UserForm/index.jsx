@@ -17,8 +17,9 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
 
-const config = [
+export const config = [
   {
     formType: 'Input',
     itemProps: {

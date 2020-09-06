@@ -1,14 +1,14 @@
 const datas = [];
 const obj = {};
 new Array(20).fill(0).forEach((v, i) => {
-  obj[`field${i}`] = `field${i}`;
+  obj[`field${i}`] = `Field${i}`;
 });
 
 for (let i = 1; i <= 20; i++) {
   datas.push({
     ...obj,
     key: i,
-    [`field${i}`]: `field${i}`,
+    [`field${i}`]: `Field${i}`,
     name: 'John Brown',
     age: `${i}2`,
     address: `New York No. ${i} Lake Park`,
