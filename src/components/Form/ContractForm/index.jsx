@@ -1,5 +1,5 @@
-import React from 'react';
-import './style.less';
+import React from 'react'
+import './style.less'
 import {
   Form,
   Input,
@@ -14,73 +14,159 @@ import {
   Radio,
   Space,
   InputNumber,
-} from 'antd';
+  Upload,
+  Result,
 
-import SearchForm from '@/common/SearchForm'; //
-import { regoins } from '@/configs'; //
+} from 'antd'
+import {
+  UploadOutlined,
+  PlusOutlined,
+  
+} from '@ant-design/icons'
+
+import SmartForm from '@/common/SmartForm' //
+import { regoins } from '@/configs'//
+import { formatConfig } from '@/utils'//
+
+const normFile = e => {
+  console.log('Upload event:', e);
+
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  return e && e.fileList;
+};
+
+
+const reportConfig = [
+  { value: '是', key: 'key1',  },
+  { value: '否', key: 'key2',  },
+]
+
+const reportOption = reportConfig.map((v) => <Radio value={v.key} key={v.key} >{v.value}</Radio>)
+console.log(' reportOption  reportConfig.map v ： ', reportOption,   )
+
+
 
 export const config = [
   {
-    formType: 'Select',
+    formType: 'rowText',
+    // rowText: '基本信息:',
+    // noRule: true,
     itemProps: {
-      label: '省',
-      name: 'province',
-      key: 'province',
+      label: '基本信息:',
     },
-    comProps: {},
-    // customLabel: '自定义customLabel',
   },
   {
-    formType: 'Select',
     itemProps: {
-      label: '市',
-      name: 'city',
-      key: 'city',
+      label: '所属客户',
     },
-    comProps: {},
   },
   {
-    formType: 'Select',
     itemProps: {
-      label: '县',
-      name: 'site',
-      key: 'site',
+      label: '户号',
     },
-    comProps: {},
   },
-
-  // <Form.Item
-  //   name="email"
-  //   label="E-mail"
-  //   key={'email'}
-  //   rules={[
-  //     {
-  //       type: 'email',
-  //       message: 'The input is not valid E-mail!',
-  //     },
-  //     {
-  //       required: true,
-  //       message: 'Please input your E-mail!',
-  //     },
-  //   ]}
-  // >
-  //   <Input />
-  // </Form.Item>,
-
+  {
+    itemProps: {
+      label: '电站数量',
+    },
+  },
+  {
+    itemProps: {
+      label: '合同编号',
+    },
+  },
+  {
+    itemProps: {
+      label: '业务主体',
+    },
+  },
+  {
+    itemProps: {
+      label: '业务员',
+    },
+  },
+  {
+    itemProps: {
+      label: '合同类型',
+    },
+  },
+  {
+    formType: 'DatePicker',
+    noRule: true,
+    itemProps: {
+      label: '录入日期',
+    },
+  },
+  {
+    formType: 'DatePicker',
+    noRule: true,
+    itemProps: {
+      label: '生效日期',
+    },
+  },
+  {
+    formType: 'DatePicker',
+    noRule: true,
+    itemProps: {
+      label: '结束日期',
+    },
+  },
+  {
+    formType: 'rowText',
+    // rowText: '附件:',
+    // noRule: true,
+    itemProps: {
+      label: '附件:',
+    },
+  },
   // {
-  //   formType: 'Select',
+  //   noRule: true,
   //   itemProps: {
-  //     label: "Select", name: 'select', key: "select", rules: rules(),
+  //     label: '合同附件',
   //   },
-  //   comProps: {
-  //     allowClear: true,
-  //     onChange: onGenderChange,
-  //     placeholder: "Select a option and change input text above",
-  //   },
-  //   selectOptions: selectOptions,
-
   // },
+
+  // // 如果没有给 Form.Item 组件指定 key  会导致报错
+  // // Warning: Each child in a list should have a unique "key" prop.
+  <Form.Item
+    key={'attach'} 
+    name="upload"
+    label="合同附件"
+    valuePropName="fileList"
+    getValueFromEvent={normFile}
+    extra="支持扩展名：.pdf"
+  >
+    <Upload name="logo" action="/upload.do" listType="picture">
+      <Button icon={<UploadOutlined />}>上传文件</Button>
+    </Upload>
+  </Form.Item>,
+
+  {
+    formType: 'rowText',
+    // rowText: '其他信息:',
+    // noRule: true,
+    itemProps: {
+      label: '其他信息:',
+    },
+  },
+  {
+    formType: 'Radio',
+    noRule: true,
+    itemProps: {
+      label: '是否生成客户报告',
+    },
+    radioOptions: reportOption, 
+  },
+  
+  
+  
+  
 ];
+
+
 
 const init = {
   name: 'zyb',
@@ -93,29 +179,38 @@ const init = {
   // select
 };
 
-const ContractSearchForm = props => {
-  console.log(' ContractSearchForm ： ', props); //
+const ContractForm = props => {
+  console.log(' ContractForm ： ', props,  )//
+
+  const {index,  } = props// 
 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
+  // const formConfig = formatConfig(config);
+  
+
   return (
     <div className={''}>
-      <SearchForm
-        // flexRow={4}
-        config={config}
+      <SmartForm
+        // config={config}
+        config={formatConfig(config)}
+        // config={configs}
         formProps={formProps}
         // init={init}
         // init={{}}
 
         {...props}
-      ></SearchForm>
+      ></SmartForm>
+
+
+
     </div>
-  );
-};
+  )
+}
 
-ContractSearchForm.defaultProps = {};
+ContractForm.defaultProps = {}
 
-export default ContractSearchForm;
+export default ContractForm

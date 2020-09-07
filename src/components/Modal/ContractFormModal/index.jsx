@@ -250,10 +250,13 @@ class ContractFormModal extends Component {
       this.props,
     );
 
-    const { show, handleOk, onClose } = this.props; //
+    const { show, onOk, onCancel } = this.props; //
 
     return (
-      <SmartModal show={show} handleOk={handleOk} onClose={onClose}>
+      <SmartModal 
+        show={show} onOk={onOk} onCancel={onCancel}
+        {...this.props} 
+      >
         <ContractStepForm></ContractStepForm>
       </SmartModal>
     );

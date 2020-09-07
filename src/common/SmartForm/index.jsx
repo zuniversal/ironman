@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, isValidElement,  } from 'react';
 import './style.less';
 import {
   Form,
@@ -330,17 +330,22 @@ const SmartForm = (props, state) => {
       type,
       noRule,
     } = items;
-
-    if (typeof type === 'function') {
+    
+    // if (typeof type === 'function') {
+    if (isValidElement(items)) {
       return items;
     }
 
     const { label } = itemProps;
 
+    const formItemNoRuleProps = {
+      ...itemProps,
+      className: `formItems ${itemProps.className}  `,
+    };
     const formItemProps = {
       ...itemProps,
       className: `formItems ${itemProps.className}  `,
-      rules: noRule ? [] : rules({ items, label }),
+      rules: noRule ? undefined : rules({ items, label }),
     };
 
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
@@ -352,7 +357,7 @@ const SmartForm = (props, state) => {
     };
 
     const formItemMap = {
-      rowText: rowText,
+      rowText: label,
       Input: <Input allowClear {...realComProps} />,
       Select: (
         <Select allowClear {...realComProps}>
@@ -377,22 +382,22 @@ const SmartForm = (props, state) => {
     };
 
     const formItemCom = formItemMap[formType];
-    // console.log(' formItemCom ： ', formItemCom, formItemMap, formType,  )//
+    // console.log(' formItemCom ： ', formItemCom, formItemMap, formType, items, formLabel,  )//
 
     if (!formItemCom) {
       return <div key={Math.random()}>没有匹配</div>;
     }
 
-    if (rowText) {
-      console.log(
-        ' rowText formItemProps ： ',
-        formItemProps,
-        formItemCom,
-        formItemMap,
-        formType,
-        rowText,
-        rowLayout,
-      ); //
+    if (formType === 'rowText') {
+      // console.log(
+      //   ' rowText formItemProps ： ',
+      //   formItemProps,
+      //   formItemCom,
+      //   formItemMap,
+      //   formType,
+      //   rowLayout,
+      //   formItemNoRuleProps,
+      // ); //
       return (
         <Form.Item
           // name={key}
@@ -402,7 +407,7 @@ const SmartForm = (props, state) => {
           // {...formItemProps}
           // noStyle
           {...rowLayout}
-          {...formItemProps}
+          {...formItemNoRuleProps}
         >
           {/* {formItemCom} */}
         </Form.Item>
@@ -438,6 +443,8 @@ const SmartForm = (props, state) => {
     //   valuePropName: "checked"
     // }
 
+
+    console.log(' formItemProps ： ', formItemProps,  )// 
     return (
       <Form.Item
         // name={key}

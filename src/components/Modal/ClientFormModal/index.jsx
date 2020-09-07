@@ -239,13 +239,13 @@ const ClientFormModal = props => {
   const [form] = Form.useForm();
   console.log(' ClientFormModal ： ', props, form); //
 
-  const { show, handleOk, onClose, onSubmit, onFail } = props; //
+  const { show, onOk, onCancel, onSubmit, onFail } = props; //
 
-  const onOk = e => {
-    console.log(' onOk   e, ,   ： ', e);
+  // const onOk = e => {
+  //   console.log(' onOk   e, ,   ： ', e);
 
-    handleOk && handleOk({ e, form });
-  };
+  //   onOk && onOk({ e, form });
+  // };
 
   return <SmartFormModal config={config} {...props}></SmartFormModal>;
 };

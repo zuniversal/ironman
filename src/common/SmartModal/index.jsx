@@ -24,10 +24,10 @@ class SmartModal extends PureComponent {
       show: true,
     });
   };
-  handleOk = e => {
-    const { customShow, handleOk } = this.props; //
-    console.log('  handleOk  customShow ', customShow, this.state, this.props);
-    handleOk && handleOk();
+  onOk = e => {
+    const { customShow, onOk } = this.props; //
+    console.log('  onOk  customShow ', customShow, this.state, this.props);
+    onOk && onOk();
 
     // if (customShow) {
     //   console.log(' 自定义 ： ',    )//
@@ -39,15 +39,15 @@ class SmartModal extends PureComponent {
     //   show: false,
     // })
   };
-  handleClose = e => {
-    const { customShow, onClose } = this.props; //
+  onCancel = e => {
+    const { customShow, onCancel } = this.props; //
     console.log(
-      '  handleClose  customShow ',
+      '  onCancel  customShow ',
       customShow,
       this.state,
       this.props,
     );
-    onClose && onClose();
+    onCancel && onCancel();
 
     // if (customShow) {
     //   console.log(' 自定义 ： ',    )//
@@ -88,21 +88,22 @@ class SmartModal extends PureComponent {
       <Modal
         className={`${className} ${noJustify ? '' : 'textJustify'}`}
         title={title}
-        width={width != undefined ? width : '60%'}
+        // width={width != undefined ? width : '60%'}
+        width={width != undefined ? width : '800px'}
         visible={show}
         // onShow={this.onShow}
-        onOk={this.handleOk}
-        onCancel={this.handleClose}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
         maskClosable={maskClosable}
         footer={[
-          <Button key="cancel" onClick={this.handleClose}>
+          <Button key="cancel" onClick={this.onCancel}>
             {cancelTxt != undefined ? cancelTxt : '取消'}
           </Button>,
           extra != undefined ? extra : null,
           !isHideOk ? (
             <Button
               key="sure"
-              onClick={this.handleOk}
+              onClick={this.onOk}
               type="primary"
               icon={<SmileOutlined />}
             >

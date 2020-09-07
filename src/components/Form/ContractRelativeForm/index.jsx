@@ -15,11 +15,13 @@ import {
   Space,
   InputNumber,
   Upload,
-  
+  Result,
+
 } from 'antd';
 import {
   UploadOutlined,
-
+  PlusOutlined,
+  
 } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
@@ -42,7 +44,7 @@ const reportConfig = [
   { value: '否', key: 'key2',  },
 ]
 
-const reportOption = reportConfig.map((v) => <Radio value={v.key} >{v.value}</Radio>)
+const reportOption = reportConfig.map((v) => <Radio value={v.key} key={v.key} >{v.value}</Radio>)
 console.log(' reportOption  reportConfig.map v ： ', reportOption,   )
 
 
@@ -57,7 +59,7 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    rowText: '基本信息:',
+    // rowText: '基本信息:',
     // noRule: true,
     itemProps: {
       label: '基本信息:',
@@ -117,7 +119,7 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    rowText: '位置信息:',
+    // rowText: '位置信息:',
     // noRule: true,
     itemProps: {
       label: '位置信息:',
@@ -150,7 +152,7 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    rowText: '管理员信息:',
+    // rowText: '管理员信息:',
     // noRule: true,
     itemProps: {
       label: '管理员信息:',
@@ -184,7 +186,7 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    rowText: '其他信息:',
+    // rowText: '其他信息:',
     // noRule: true,
     itemProps: {
       label: '其他信息:',
@@ -200,7 +202,7 @@ export const clientConfig = [
 export const contractConfig = [
   {
     formType: 'rowText',
-    rowText: '基本信息:',
+    // rowText: '基本信息:',
     // noRule: true,
     itemProps: {
       label: '基本信息:',
@@ -264,10 +266,10 @@ export const contractConfig = [
   },
   {
     formType: 'rowText',
-    rowText: '附近:',
+    // rowText: '附件:',
     // noRule: true,
     itemProps: {
-      label: '附近:',
+      label: '附件:',
     },
   },
   // {
@@ -279,22 +281,22 @@ export const contractConfig = [
 
   // // 如果没有给 Form.Item 组件指定 key  会导致报错
   // // Warning: Each child in a list should have a unique "key" prop.
-  // <Form.Item
-  //   key={'attach'} 
-  //   name="upload"
-  //   label="合同附件"
-  //   valuePropName="fileList"
-  //   getValueFromEvent={normFile}
-  //   extra="支持扩展名：.pdf"
-  // >
-  //   <Upload name="logo" action="/upload.do" listType="picture">
-  //     <Button icon={<UploadOutlined />}>上传文件</Button>
-  //   </Upload>
-  // </Form.Item>,
+  <Form.Item
+    key={'attach'} 
+    name="upload"
+    label="合同附件"
+    valuePropName="fileList"
+    getValueFromEvent={normFile}
+    extra="支持扩展名：.pdf"
+  >
+    <Upload name="logo" action="/upload.do" listType="picture">
+      <Button icon={<UploadOutlined />}>上传文件</Button>
+    </Upload>
+  </Form.Item>,
 
   {
     formType: 'rowText',
-    rowText: '其他信息:',
+    // rowText: '其他信息:',
     // noRule: true,
     itemProps: {
       label: '其他信息:',
@@ -318,7 +320,7 @@ export const contractConfig = [
 export const houseNoConfig = [
   {
     formType: 'rowText',
-    rowText: '基本信息:',
+    // rowText: '基本信息:',
     // noRule: true,
     itemProps: {
       label: '基本信息:',
@@ -347,7 +349,7 @@ export const houseNoConfig = [
 
   {
     formType: 'rowText',
-    rowText: '地址信息:',
+    // rowText: '地址信息:',
     // noRule: true,
     itemProps: {
       label: '地址信息:',
@@ -371,7 +373,7 @@ export const houseNoConfig = [
 
   {
     formType: 'rowText',
-    rowText: '电气信息:',
+    // rowText: '电气信息:',
     // noRule: true,
     itemProps: {
       label: '电气信息:',
@@ -405,6 +407,178 @@ export const houseNoConfig = [
 
 
 
+
+export const stationConfig = [
+  {
+    formType: 'rowText',
+    // rowText: '基本信息:',
+    // noRule: true,
+    itemProps: {
+      label: '基本信息:',
+    },
+  },
+  {
+    itemProps: {
+      label: '所属客户',
+    },
+  },
+  {
+    itemProps: {
+      label: '户号',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '电站名称',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '托管电站数',
+    },
+  },
+
+
+  {
+    formType: 'rowText',
+    // rowText: '电气信息:',
+    // noRule: true,
+    itemProps: {
+      label: '电气信息:',
+    },
+  },
+  {
+    itemProps: {
+      label: '电源编号',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '进线名称',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '电压等级',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '倍率',
+    },
+  },
+
+
+  {
+    itemProps: {
+      label: '电表号',
+    },
+  },
+  {
+    itemProps: {
+      label: '电价类型',
+    },
+  },
+  {
+    itemProps: {
+      label: '电功率考核因数',
+    },
+  },
+  {
+    itemProps: {
+      label: '计费方式',
+    },
+  },
+  
+  
+  {
+    itemProps: {
+      label: '变压器容童',
+    },
+  },
+  
+
+  {
+    formType: 'rowText',
+    // rowText: '设备信息:',
+    // noRule: true,
+    itemProps: {
+      label: '设备信息:',
+    },
+  },
+  {
+    itemProps: {
+      label: '请筛选设备',
+    },
+  },
+
+  {
+    formType: 'rowText',
+    // rowText: '监控信息:',
+    // noRule: true,
+    itemProps: {
+      label: '监控信息:',
+    },
+  },
+  
+  {
+    itemProps: {
+      label: '请筛选监控点',
+    },
+  },
+
+  // {
+  //   formType: 'rowText',
+  //   // rowText: '一次电气图:',
+  //   // noRule: true,
+  //   itemProps: {
+  //     label: '一次电气图:',
+  //   },
+  // },
+  <Form.Item
+    key={'attach'} 
+    name="upload"
+    label="一次电气图"
+    valuePropName="fileList"
+    getValueFromEvent={normFile}
+    extra="支持扩展名：.pdf"
+  >
+    <Upload name="logo" action="/upload.do" 
+      listType="picture-card"
+      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    >
+      {/* <Button icon={<UploadOutlined />}>上传</Button> */}
+      <div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    </Upload>
+  </Form.Item>,
+]
+
+
+
+export const SuccResult = props => {
+
+  return <Result
+    status="success"
+    title="关联新增成功"
+    // subTitle="subTitle"
+    extra={[
+      <Button type="primary" key="console">
+        返回合同列表
+      </Button>,
+    ]}
+  
+  /> 
+}
+
+
 const init = {
   name: 'zyb',
   role: '巡检人员',
@@ -431,28 +605,34 @@ const ContractRelativeForm = props => {
   const config1 = formatConfig(clientConfig)
   const config2 = formatConfig(contractConfig)
   const config3 = formatConfig(houseNoConfig)
+  const config4 = formatConfig(stationConfig)
   // 
   const configs = [
     config1,
     config2,
     config3,
-    config1,
-    config2,
+    config4,
   ][index]
   
 
   return (
     <div className={''}>
-      <SmartForm
-        // config={config}
-        // config={formatConfig(config)}
-        config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
+      {index < 4 && 
+        <SmartForm
+          // config={config}
+          // config={formatConfig(config)}
+          config={configs}
+          formProps={formProps}
+          // init={init}
+          // init={{}}
 
-        {...props}
-      ></SmartForm>
+          {...props}
+        ></SmartForm>
+      }
+
+      {index === 4 && <SuccResult></SuccResult>}
+
+
     </div>
   );
 };

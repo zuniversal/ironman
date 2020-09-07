@@ -56,8 +56,8 @@ class Client extends PureComponent {
       show: true,
     });
   };
-  handleOk = async props => {
-    console.log(' handleOkhandleOk ： ', props, this.state, this.props); //
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
     try {
@@ -82,8 +82,8 @@ class Client extends PureComponent {
       // show: false,
     });
   };
-  onClose = e => {
-    console.log(' onClose ： ', e, this.state, this.props); //
+  onCancel = e => {
+    console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       show: false,
     });
@@ -115,8 +115,8 @@ class Client extends PureComponent {
           // modalProps={
           //   {
           //     show: show,
-          //     handleOk: this.handleOk,
-          //     onClose: this.onClose,
+          //     onOk: this.onOk,
+          //     onCancel: this.onCancel,
 
           //   }
 
@@ -129,13 +129,13 @@ class Client extends PureComponent {
           //   }
           // }
           show={show}
-          handleOk={this.handleOk}
-          onClose={this.onClose}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
           onSubmit={this.onSubmit}
           onFail={this.onFail}
         ></ClientFormModal>
 
-        {/* <SmartModal show={show} handleOk={this.handleOk} onClose={this.onClose}>
+        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}>
           <ClientForm
             onSubmit={this.onSubmit}
             onFail={this.onFail}

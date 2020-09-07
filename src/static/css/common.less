@@ -1,0 +1,400 @@
+@import './variable.less';
+
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+#root,
+.root,
+.ant-layout {
+    width: 100%;
+    height: 100%;
+}
+
+// ::-webkit-scrollbar {
+//     width: 8px;
+//     height: 8px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//     background: #8492A6;
+//     border-radius: 10px;
+// }
+
+// ::-webkit-scrollbar-track {
+//     background: #e2e2e2;
+// }
+
+.fje{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+.fsb{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+
+.contentWrapper{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// .f-r {
+//     float: right;
+// }
+
+// .t-r {
+//     text-align: right;
+// }
+
+// .t-c {
+//     text-align: center;
+// }
+
+// .d-ib {
+//     display: inline-block;
+// }
+// .wb50 {
+//     width: 50%; 
+// }
+
+
+
+
+// .transition {
+//     transition: all .3s linear;
+// }
+
+// .btnWrapper {
+//     clear: both;
+//     overflow: hidden;
+//     margin-bottom: 10px;
+//     display: inline;
+// }
+
+
+// .ant-btn{
+//     margin-right: 5px;
+
+//     padding: 0 6px!important;
+//     height: 25px!important;
+//     font-size: 12px!important;
+    
+// }
+// .ant-btn-primary {
+//     background-color: @primary!important;
+//     border-color: @primary!important;
+// }
+
+// .acc{    
+//     color: #f7f7f7!important;
+//     border-color: #108ee9!important;
+//     background-color: #108ee9!important;    
+// }
+// .succ{    
+//     color: #f7f7f7!important;
+//     border-color: #13CE66!important;
+//     background-color: #13CE66!important;    
+// }
+// .sub{    
+//     color: #f7f7f7!important;
+//     border-color: @sub!important;
+//     background-color: @sub!important; 
+//     // border-color: #108ee9!important;
+//     // background-color: #108ee9!important;      
+// }
+// .salmon{    
+//     color: #f7f7f7!important;
+//     border-color: orange!important;
+//     background-color: orange!important;    
+// }
+// .warn{    
+//     color: #f7f7f7!important;
+//     border-color: red!important;
+//     background-color: #f04134!important;    
+// }
+// .warm{    
+//     color: #f7f7f7!important;
+//     border-color: @warm!important;
+//     background-color: @warm!important;    
+// }
+
+
+
+// // .warning{    
+// //     background-color: #ff661f!important;    
+// // }
+
+
+// // .ant-btn-primary.disabled{
+// //     background-color: #f7f7f7!important;   
+// //     color: rgba(0,0,0,.25)!important;   
+// // }
+
+
+
+// .hide {
+//     transition: all 2s linear!important;   
+//     display: none!important;
+// }
+
+// .white {
+//     color: white;
+// }
+
+// .center {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%)
+// }
+
+// .border {
+//     border: 1px solid #49a9ee;
+//     border-radius: 4px;
+//     transition: all .3s linear;
+// }
+
+// // .iconfont {
+// //     font-size: 36px!important; 
+// // }
+
+
+// // 清除浮动
+// .clearFix::after {
+//     content: '';
+//     display: block;
+//     clear: both;
+// }
+
+// .flex {
+//     flex: 1;
+// }
+
+// .flex2 {
+//     flex: 2;
+// }
+
+// .flexCenter {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+// .f_c {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+// .f_b {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+// }
+
+
+// .custom-filter-dropdown {
+//     padding: 8px;
+//     border-radius: 6px;
+//     background: #fff;
+//     box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+// }
+
+
+// 过滤框
+.custom-filter-dropdown {
+    padding: 8px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+}
+
+.custom-filter-dropdown input {
+    width: 130px;
+    margin-right: 8px;
+}
+
+
+.ellipsis {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
+// .tooltip {
+//     position: relative;
+//     // display: inline-block;
+//     // border-bottom: 1px dotted black; /* 悬停元素上显示点线 */
+// }
+
+
+// /* Tooltip 文本 */
+// .tooltip .tooltiptext {
+//     visibility: hidden;
+//     // width: 120px;
+//     width: initial;
+//     background-color: black;
+//     color: #fff;
+//     text-align: center;
+//     padding: 5px 10px;
+//     border-radius: 6px;
+
+//     /* 定位 */
+//     position: absolute;
+//     z-index: 1;
+//     // bottom: 100%;
+//     left: 25%;
+//     // margin-left: -60px;
+
+//     /* 淡入 - 1秒内从 0% 到 100% 显示: */
+//     opacity: 0;
+//     transition: opacity 1s;
+// }
+
+
+// /* 鼠标移动上去后显示提示框 */
+// .tooltip:hover .tooltiptext {
+//     visibility: visible;
+//     opacity: 1;
+//     z-index: 1000;
+// }
+
+// .formBtnWrapper{
+//     height: 40px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+
+
+
+
+// .m-r10{
+//     margin-right: 10px;
+// }
+// .m-r5{
+//     margin-right: 5px;
+// }
+
+
+// .m-l10{
+//     margin-left: 10px;
+// }
+// .m-20{
+//     margin: 20px;
+// }
+
+
+// .max_300{
+//     max-width: 300px;
+// }
+
+// .df{
+//   display: flex;  
+// }
+
+// .f1{
+//     flex: 1; 
+// }
+
+// .m_w_300{
+//     max-width: 300px; 
+// }
+// .m_w_150{
+//     max-width: 150px; 
+//     min-width: 150px; 
+// }
+// .m_w_100{
+//     max-width: 100px; 
+//     min-width: 100px; 
+// }
+// .m_w_200{
+//     max-width: 200px; 
+//     min-width: 200px; 
+// }
+
+
+
+// .antDateInput{
+//     position: relative;
+//     display: inline-block;
+//     padding: 4px 7px;
+//     width: 100%;
+//     height: 32px;
+//     font-size: 12px;
+//     line-height: 1.5;
+//     color: rgba(0, 0, 0, 0.65);
+//     background-color: #fff;
+//     background-image: none;
+//     border: 1px solid #d9d9d9;
+//     border-radius: 4px;
+//     transition: all .3s;
+// }
+
+// .dateFormWrapper{
+//     flex: 1;
+//     display: flex;
+//     display: inline-block;
+//     // .ant-row{
+//     //     width: 25%;
+//     // }
+//     .form{
+//         display: inline-block;
+//     }
+    
+//     .ant-input-number-handler-wrap{
+//         display: none;
+//     }
+//     .filterWrapper{
+//         width: 10%;
+//         display: inline-block;
+//         text-align: center;
+//     }
+//     .filterBtn{
+//         // flex: 1;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         // width: 10%;
+//         // display: inline-block;
+//         // line-height: 64px;
+//         // float: right;
+//         // margin-top: 13px;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+

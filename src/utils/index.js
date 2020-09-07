@@ -405,7 +405,7 @@ export const customRequestFilter = (t, k, config = {}) => {
 // redux
 
 const extension = window.devToolsExtension;
-console.log(' extension ： ', extension, extension ? '111' : 222); //
+// console.log(' extension ： ', extension, extension ? '111' : 222); //
 export const tools = extension ? extension() : undefined;
 
 export const showTotal = total => `總共 ${total} 條`;
@@ -506,7 +506,7 @@ export const formatConfig = config =>
     // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
     // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
     itemProps:
-      v.rowText || v.formType === 'Dynamic'
+      v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText'
         ? { ...v.itemProps, key: `key${i}` }
         : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
   }));

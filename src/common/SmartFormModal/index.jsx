@@ -245,8 +245,8 @@ const ClientFormModal = props => {
     // formsProps,
 
     show,
-    handleOk,
-    onClose,
+    onOk,
+    onCancel,
     onSubmit,
     onFail,
 
@@ -266,8 +266,8 @@ const ClientFormModal = props => {
   }));
   // console.log(' formConfig  config.map v ： ', formConfig,   )
 
-  const onOk = e => {
-    console.log(' onOk   e, ,   ： ', e);
+  const handleOk = e => {
+    console.log(' handleOk   e, ,   ： ', e);
 
     // form
     // .validateFields()
@@ -280,7 +280,7 @@ const ClientFormModal = props => {
     //   console.log('Validate Failed:', info);
     // });
 
-    handleOk && handleOk({ e, form });
+    onOk && onOk({ e, form });
   };
 
   return (
@@ -289,8 +289,8 @@ const ClientFormModal = props => {
         // {...modalProps}
 
         show={show}
-        handleOk={onOk}
-        onClose={onClose}
+        onOk={handleOk}
+        onCancel={onCancel}
       >
         <SmartForm
           // flexRow={4}

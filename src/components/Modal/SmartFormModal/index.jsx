@@ -244,8 +244,8 @@ const SmartFormModal = props => {
     // formsProps,
 
     show,
-    handleOk,
-    onClose,
+    onOk,
+    onCancel,
     onSubmit,
     onFail,
   } = props; //
@@ -272,7 +272,7 @@ const SmartFormModal = props => {
     //   console.log('Validate Failed:', info);
     // });
 
-    handleOk && handleOk({ e, form });
+    onOk && onOk({ e, form });
   };
 
   return (
@@ -281,8 +281,8 @@ const SmartFormModal = props => {
         // {...modalProps}
 
         show={show}
-        handleOk={onOk}
-        onClose={onClose}
+        onOk={onOk}
+        onCancel={onCancel}
       >
         <SmartForm
           // flexRow={4}

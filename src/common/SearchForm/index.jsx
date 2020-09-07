@@ -26,6 +26,8 @@ import {
 } from 'antd';
 // import debounce from 'lodash/debounce'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
+import { INPUT_TXT,    } from '@/constants'; //
+
 
 const { Option } = Select;
 
@@ -38,36 +40,65 @@ class SearchForm extends PureComponent {
 
   state = {
     data: [],
+    // value: '',
     value: [],
     fetching: false,
   };
 
-  request = e => {
-    console.log(' request   e, ,   ： ', e);
+  request = value => {
+    console.log(' request   value, ,   ： ', value);
+    const obj = {};
+    const data = new Array(20).fill(0).map((v, i) => {
+      // obj[`value`] = `value${i}`
+      const obj = {};
+      obj[`value`] = `value-${i}`
+      obj[`text`] = `text-${i}`
+      return obj 
+    });
+
+    // const data = new Array(20).fill((e, ) => {
+    //   console.log(' objobjobjobj ： ', e,    )// 
+    //   return 111 
+    // })
+    // const data = new Array(20).fill(obj)
+    console.log(' data ： ', data,  )// 
+
+    this.setState({
+      // value,
+      data: data,
+      fetching: false,
+    });
   };
 
   handleChange = value => {
+    console.log(' handleChange ： ', value,    )// 
+
+
     this.setState({
       value,
-      data: [],
+      // data: data,
       fetching: false,
     });
   };
 
   render() {
     const { fetching, data, value } = this.state;
-    const { className } = this.props;
+    const { className, menuConfig, ...rest } = this.props;
+
 
     return (
       <Select
-        labelInValue
-        value={value}
+        // mode="multiple"
+        // labelInValue
         placeholder="Select users"
-        notFoundContent={fetching ? <Spin size="small" /> : null}
-        filterOption={false}
+        value={value}
+        showSearch
+        // notFoundContent={fetching ? <Spin size="small" /> : null}
+        // filterOption={false}
         onSearch={this.request}
         onChange={this.handleChange}
         suffixIcon={<SearchOutlined className="searchIcon" />}
+        // {...rest} 
         className={`${className} searchForm `}
         // style={{ width: '100%' }}
       >
@@ -82,6 +113,8 @@ class SearchForm extends PureComponent {
 SearchForm.defaultProps = {
   menuConfig: [],
   className: '',
+  placeholder: INPUT_TXT,
+
 };
 
 export default SearchForm;

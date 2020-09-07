@@ -56,6 +56,21 @@ const ContractStepForm = props => {
     setCurrent(current - 1);
   };
 
+
+  const stepAction = <div className='fje'  >
+    <div className=' '  >
+      <Button className={'actionBtn m-r-10 '}  type="primary" onClick={prev}>
+        上一步
+      </Button>
+      <Button className={'actionBtn m-r-10 '}  type="primary" onClick={next}>
+        下一步
+      </Button>
+    </div>
+  </div>
+
+
+
+
   return (
     <div className="contractStepForm  ">
       <Steps
@@ -79,12 +94,8 @@ const ContractStepForm = props => {
         
       ></ContractRelativeForm>
 
-      <Button type="primary" onClick={prev}>
-        上一步
-      </Button>
-      <Button type="primary" onClick={next}>
-        下一步
-      </Button>
+      {current < 4 && stepAction}
+
     </div>
   );
 };

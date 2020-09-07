@@ -25,13 +25,14 @@ import {
 import { DownOutlined } from '@ant-design/icons';
 
 const DropDownBtn = props => {
-  const [form] = Form.useForm();
-  console.log(' DropDownBtn ： ', props, form); //
+  console.log(' DropDownBtn ： ', props, ); //
 
-  const { handleClick, btnProps, children = '按钮', menu, menuConfig } = props; //
+  const { handleClick, btnProps, children = '按钮', menu, menuConfig, menuClick,    } = props; //
 
-  const handleMenuClick = e => {
-    console.log(' handleMenuClick   e, ,   ： ', e);
+  const handleMenuClick = (item, ) => {
+    console.log(' handleMenuClick   item, ,   ： ', item, props,   );
+    
+    menuClick && menuClick({ ...item,  });
   };
 
   const menuCom = menu ? (
