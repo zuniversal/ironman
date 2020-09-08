@@ -28,14 +28,14 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ClientTable = props => {
   console.log(' ClientTable ： ', props); //
-  const { showModal, edit, remove } = props; //
+  const { tdClick,  } = props; //
 
   const columns = [
     {
       title: '客户编号',
       dataIndex: 'key',
       // link: true,
-      render: (text, record, index) => <a onClick={showModal}>{text}</a>,
+      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       noFilter: true,
@@ -73,36 +73,20 @@ const ClientTable = props => {
       title: '客户地址',
       dataIndex: 'field9',
     },
-    {
-      noFilter: true,
-      title: '操作',
-      className: 'actionCol',
-      render: (text, record, index) => {
-        // console.log(' text, record, index ： ', text, record, index,  )//
-        return (
-          <span>
-            <a onClick={() => showModal('edit', record)}>编辑</a>
-            <a onClick={() => showModal('remove', record)}>删除</a>
-          </span>
-        );
-      },
-    },
   ];
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
-      dataSource={[]}
       // rowKey={'source_no'}
+      {...props}
     ></SmartTable>
   );
 };
 
 ClientTable.defaultProps = {
   showModal: () => {},
-  edit: () => {},
-  remove: () => {},
 };
 
 export default ClientTable;

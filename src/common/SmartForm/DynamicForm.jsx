@@ -13,6 +13,9 @@ import {
   AutoComplete,
   Radio,
   Space,
+  InputNumber,
+  DatePicker,
+
 } from 'antd';
 
 import {
@@ -56,6 +59,8 @@ export const getLabel = (label, key) => {
     Cascader: INPUT_TXT + label,
     AutoComplete: INPUT_TXT + label,
     Checkbox: INPUT_TXT + label,
+    Radio: SELECT_TXT + label,
+    DatePicker: SELECT_TXT + label,
   };
 
   return labelMap[key];
@@ -115,6 +120,8 @@ const DynamicForm = props => {
     key,
     itemProps,
     comProps,
+    radioOptions,
+    selectOptions,
     customLabel,
     formType = 'Input',
     checkboxContent,
@@ -164,6 +171,11 @@ const DynamicForm = props => {
             </AutoComplete>
           ),
           Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
+          Radio:  <Radio.Group>
+            {/* <Radio value="item">item</Radio> */}
+            {radioOptions}
+          </Radio.Group>,
+          DatePicker: <DatePicker {...realComProps} />,
         };
 
         const formItemCom = formItemMap[formType];

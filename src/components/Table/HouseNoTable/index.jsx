@@ -26,64 +26,41 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const ContractTable = props => {
-  console.log(' ContractTable  ： ', props); //
+const HouseNoTable = props => {
+  console.log(' HouseNoTable  ： ', props); //
   const { showModal, edit, remove, tdClick,    } = props; //
 
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'key',
+      dataIndex: 'field1',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '合同编号',
+      title: '户号',
       dataIndex: 'field2',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '业务主体',
+      title: '签约公司',
       dataIndex: 'field3',
-      link: true,  
+      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '业务员',
+      title: '客户代表',
       dataIndex: 'field4',
+      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '合同类型',
+      title: '电站数',
       dataIndex: 'field5',
+      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '失效日期',
+      title: '录入日期',
       dataIndex: 'field6',
+      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
-    {
-      title: '户号',
-      dataIndex: 'field7',
-    },
-    {
-      title: '户号',
-      dataIndex: 'field8',
-    },
-    {
-      title: '电站数量',
-      dataIndex: 'field9',
-    },
-    // {
-    //   noFilter: true,
-    //   title: '操作',
-    //   className: 'actionCol',
-    //   render: (text, record, index) => {
-    //     // console.log(' text, record, index ： ', text, record, index,  )//
-    //     return (
-    //       <span>
-    //         <a onClick={() => showModal('edit', record)}>编辑</a>
-    //         <a onClick={() => showModal('remove', record)}>删除</a>
-    //       </span>
-    //     );
-    //   },
-    // },
   ];
 
   return (
@@ -96,10 +73,10 @@ const ContractTable = props => {
   );
 };
 
-ContractTable.defaultProps = {
+HouseNoTable.defaultProps = {
   // showModal: () => {},
   tdClick: () => {},
   // remove: () => {},
 };
 
-export default ContractTable;
+export default HouseNoTable;

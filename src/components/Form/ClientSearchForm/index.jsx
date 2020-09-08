@@ -95,23 +95,26 @@ const init = {
 
 const ClientSearchForm = props => {
   console.log(' ClientSearchForm ： ', props); //
-
+  const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
   return (
-    <div className={''}>
+    <div className={'fsb'}>
       <SmartForm
-        flexRow={4}
+        // flexRow={4}
+        flexRow={8}
         config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
 
-        {...props}
+        {...rest}
       ></SmartForm>
+
+      {formBtn}
     </div>
   );
 };

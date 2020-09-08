@@ -23,6 +23,7 @@ import ContractTable from '@/components/Table/ContractTable'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
+import ContractStepForm from '@/components/Form/ContractStepForm'; //
 
 const menuConfig = [
   { key: 'upload', text: '上传文件' },
@@ -46,8 +47,29 @@ export const SuccResult = props => {
   /> 
 }
 
+export const UploadCom = props => <div className="contentWrapper">
+    <Upload
+      listType="picture"
+      onChange={props.onChange}
+    >
+      合同列表<Button icon={<UploadOutlined />}>上传文件</Button>
+      <div className="extra">
+        支持扩展名：xls, xlsx, csv,...
+      </div>
+    </Upload>
+  </div>// 
+
+export const ContractFormCom = props => {
+  console.log(' ContractFormCom ： ', props,    )// 
+  return <div className={''}  >
+    <div className={'fje'}  >
+      <Button type="primary " onClick={() => props.showRelativeForm('newRelated')}  >关联新增</Button>
+    </div>
+    <ContractForm></ContractForm>
+  </div>
 
 
+}
 
 
 class Contract extends PureComponent {
@@ -59,7 +81,7 @@ class Contract extends PureComponent {
 
       showModalCom: null,  
 
-
+      action: '',  
       title: '',  
       contractTitle: '',  
 
@@ -78,13 +100,11 @@ class Contract extends PureComponent {
   menuClick = (params,  ) => {
     console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
   //   const {item,  } = this.props// 
-
     this.setState({
       show: true,
       title: this.state.titleMap[params.key],  
-
+      showModalCom: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
     })
-    
   }
 
   renderFormBtn = (
@@ -92,11 +112,9 @@ class Contract extends PureComponent {
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
       {/* 注意 如果静态属性返回jsx 组件等内容 传递的方法必须放到属性之前 否则子组件得到的方法是 undefined */}
-      <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >新增合同</DropDownBtn>
-      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
-        同步OA
-      </Button>
-      <Button type="primary "onClick={() => this.showContractForm('add')}  >新增合同</Button>
+      <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
+      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
+      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增合同</Button>
       <Button type="primary">导出合同数据</Button>
       <Button type="primary">删除</Button>
     </div>
@@ -111,17 +129,7 @@ class Contract extends PureComponent {
     
 
     
-    return <div className="contentWrapper">
-      <Upload
-        listType="picture"
-        onChange={this.onUploadChange}
-      >
-        合同列表<Button icon={<UploadOutlined />}>上传文件</Button>
-        <div className="extra">
-          支持扩展名：xls, xlsx, csv,...
-        </div>
-      </Upload>
-    </div>
+    return 
   }
   onUploadChange = (params,  ) => {
     console.log(' onUploadChange,  , ： ', params,    )
@@ -143,26 +151,44 @@ class Contract extends PureComponent {
     console.log(' renderContractTable ： ', params);
   }
 
-  showContractForm = (key, ) => {
-    console.log('    showContractForm ： ', key, this.state, this.props,  );
+  showContractModal = (params, ) => {
+    const {action,  } = params
+    console.log('    showContractModal ： ', action, params, this.state, this.props,  );
     this.setState({
+      action,
       show: true,
-      title: this.state.titleMap[key],  
-      showModalCom: <div className={''}  >
-        <div className={'fje'}  >
-          <Button type="primary "onClick={() => this.showRelativeForm('newRelated')}  >关联新增</Button>
-        </div>
-        <ContractForm></ContractForm>
-      </div>,
+      title: this.state.titleMap[action],  
+      showModalCom: <ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>,
     });
   };
-  showRelativeForm = (key, ) => {
-    console.log('    showRelativeForm ： ', key, this.state, this.props,  );
+  showRelativeForm = (action, ) => {
+    console.log('    showRelativeForm ： ', action, this.state, this.props,  );
     this.setState({
+      action,
       showContractForm: true,
-      contractTitle: this.state.titleMap[key],  
+      contractTitle: this.state.titleMap[action],  
     });
   };
+
+  onContractFormOk = async props => {
+    console.log(' onOk ： ', props, this.state, this.props); //
+    const { form } = props; //
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
+    // });
+
+    this.setState({
+      showContractForm: false,
+    });
+  };
+
   closeContractForm = e => {
     console.log('    closeContractForm ： ', e);
     this.setState({
@@ -177,7 +203,7 @@ class Contract extends PureComponent {
   };
   onOk = async props => {
     console.log(' onOk ： ', props, this.state, this.props); //
-    // const { form } = props; //
+    const { form } = props; //
 
     // try {
     //   const res = await form.validateFields();
@@ -186,20 +212,20 @@ class Contract extends PureComponent {
     //   console.log(' error ： ', error); //
     // }
 
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-
-    this.setState({
-      // show: false,
+    form
+    .validateFields()
+    .then(values => {
+      console.log('  values await 结果  ：', values,  )//
+      form.resetFields();
+      // onCreate(values);
+    })
+    .catch(info => {
+      console.log('Validate Failed:', info);
     });
+
+    // this.setState({
+    //   show: false,
+    // });
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -215,7 +241,7 @@ class Contract extends PureComponent {
       this.props,
     ); //
 
-    // this.showContractForm();
+    // this.showContractModal();
     // this.showModal();
 
   }
@@ -229,6 +255,12 @@ class Contract extends PureComponent {
     );
     const { show, showContractForm, title, contractTitle,   } = this.state; //
 
+    const tableProps = {
+      edit: this.showContractModal,
+      remove: this.showContractModal,
+      tdClick: this.showContractModal,
+    }
+
     return (
       <div className="contract">
         {/* Contract */}
@@ -241,13 +273,30 @@ class Contract extends PureComponent {
 
         {/* {this.renderContractTable()} */}
 
-        <ContractTable showModal={this.showContractForm}></ContractTable>
+        <ContractTable {...tableProps}  ></ContractTable>
 
-        <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
+        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
           title={title}
         >
           {this.renderModalContent()}
-        </SmartModal>
+        </SmartModal> */}
+
+        <SmartFormModal
+          // width={'900px'}
+          title={title}
+          show={show}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
+          top={
+            <div className={'fje'}  >
+              <Button type="primary " onClick={() => this.showRelativeForm('newRelated')}  >关联新增</Button>
+            </div>
+          }
+          // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
+          FormCom={ContractForm}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        ></SmartFormModal>
 
         {/* <SmartFormModal
           show={show} onOk={this.onOk} onCancel={this.onCancel}
@@ -256,14 +305,26 @@ class Contract extends PureComponent {
         >
         </SmartFormModal> */}
 
-        <ContractFormModal
+        {/* <ContractFormModal
+          width={'700px'}
           title={contractTitle}
           show={showContractForm}
           onOk={this.onOk}
           onCancel={this.closeContractForm}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        ></ContractFormModal>
+        ></ContractFormModal> */}
+
+        <SmartFormModal
+          width={'900px'}
+          title={contractTitle}
+          show={showContractForm}
+          onOk={this.onContractFormOk}
+          onCancel={this.closeContractForm}
+          FormCom={ContractStepForm}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        ></SmartFormModal>
       </div>
     );
   }

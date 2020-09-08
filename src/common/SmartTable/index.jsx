@@ -13,9 +13,25 @@ import datas from '@/pages/data'; //
 
 // }
 
-function filters(params) {
-  console.log(' filters ： ', params, this);
-}
+// function filters(params) {
+//   console.log(' filters ： ', params, this);
+// }
+
+export const ActionCom = (props,  ) => {
+  const {edit, remove, extra, record  } = props
+  // console.log(' ActionCom props ： ', props,  )//
+  return (
+    <span>
+      <a onClick={() => edit({action: 'edit', record})}>编辑</a>
+      <a onClick={() => remove({action: 'remove', record})}>删除</a>
+      {extra}
+    </span>
+  );
+}  //
+
+
+
+
 
 class SmartTable extends PureComponent {
   constructor(props) {
@@ -67,11 +83,11 @@ class SmartTable extends PureComponent {
           <Button
             type="primary"
             onClick={() => this.blur(key)}
-            className="m-r10"
+            className="m-r-10"
           >
             关闭
           </Button>
-          <Button type="primary" onClick={() => this.reset(key)}>
+          <Button onClick={() => this.reset(key)}>
             重置
           </Button>
         </div>
@@ -154,30 +170,59 @@ class SmartTable extends PureComponent {
     // if (config.render) {
     //   return config.render
     // }
-    if (record) {
-      return <span>{text}</span>;
-    }
 
     if (config.link) {
       return <a>{text}</a>;
     }
+
+    return <span>{text}</span>;
+
   };
 
   render() {
     const { pagination, searchText, searchKey } = this.state;
-    const { dataSource, columns, loading, rowKey, className } = this.props;
+    const { dataSource, columns, loading, rowKey, className, edit, remove, actionConfig,   } = this.props;
 
     const col = columns.map(v => ({
-      render: v.render ? v.render : this.renderCol,
+      // render: v.render ? v.render : this.renderCol,
+      render: (...rest) => this.renderCol(...rest, v),
       ...v,
       ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
+
+    const actionCol = {
+      title: '操作',
+      className: 'actionCol',
+      render: (text, record, index) => {
+        // console.log(' text, record, index ： ', text, record, index,  )//
+      // render: (...rest) => {
+      //   console.log(' rest ： ', rest,  )// 
+        const props = {
+          // ...rest,
+          text, record, index, 
+          edit, 
+          remove,
+          ...actionConfig, 
+        }
+        
+        return <ActionCom {...props}   ></ActionCom>
+        // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
+      },
+    }  // 
+
+
+    const cols = [
+      ...col,
+      actionCol,
+    ]
+
     console.log(
       ' %c SmartTable 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
     ); //
+
 
     return (
       <div className="smartTable">
@@ -186,11 +231,12 @@ class SmartTable extends PureComponent {
           showQuickJumper
           showSizeChanger
           // size={'small'}
-          pagination={pagination}
           // loading={loading}
-          rowClassName={(record, i) => ANIMATE.bounceIn}
           // scroll={{ x: 800,  }}
-          rowKey={rowKey}
+          // rowKey={rowKey}
+          pagination={pagination}
+          rowClassName={(record, i) => ANIMATE.bounceIn}
+
           {...this.props}
           // dataSource={dataSource}
           dataSource={this.dataFilter()}
@@ -199,8 +245,8 @@ class SmartTable extends PureComponent {
           // dataSource={filters(dataSource, searchText, searchKey, )}
           // dataSource={() => filters(dataSource, searchText, searchKey, )()}
           // dataSource={this.filters(dataSource, searchText, searchKey, )}
-          columns={col}
-          className={`tables ${className} `}
+          columns={cols}
+          className={`smartTable ${className} `}
         />
       </div>
     );
@@ -213,6 +259,11 @@ SmartTable.defaultProps = {
   dataSource: datas,
   className: '',
   rowKey: 'key',
+  edit: () => {}, 
+  remove: () => {}, 
+  actionConfig: {},  
+
+
 };
 
 export default SmartTable; //

@@ -138,9 +138,14 @@ export const config = [
   {
     formType: 'Dynamic',
     itemProps: {
-      label: '用户名',
+      // label: '用户名',
     },
-    comProps: {},
+    comProps: {
+      itemProps: {
+        label: '用户名',
+      },
+      comProps: {},
+    },
   },
   {
     // formType: 'Select',

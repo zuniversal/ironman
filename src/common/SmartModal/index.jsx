@@ -89,7 +89,7 @@ class SmartModal extends PureComponent {
         className={`${className} ${noJustify ? '' : 'textJustify'}`}
         title={title}
         // width={width != undefined ? width : '60%'}
-        width={width != undefined ? width : '800px'}
+        width={width != undefined ? width : '1100px'}
         visible={show}
         // onShow={this.onShow}
         onOk={this.onOk}
@@ -99,7 +99,6 @@ class SmartModal extends PureComponent {
           <Button key="cancel" onClick={this.onCancel}>
             {cancelTxt != undefined ? cancelTxt : '取消'}
           </Button>,
-          extra != undefined ? extra : null,
           !isHideOk ? (
             <Button
               key="sure"
@@ -111,6 +110,9 @@ class SmartModal extends PureComponent {
             </Button>
           ) : null,
         ]}
+
+        {...this.props} 
+
       >
         {show ? children : null}
       </Modal>

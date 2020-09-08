@@ -90,7 +90,6 @@ class SearchForm extends PureComponent {
       <Select
         // mode="multiple"
         // labelInValue
-        placeholder="Select users"
         value={value}
         showSearch
         // notFoundContent={fetching ? <Spin size="small" /> : null}
@@ -98,13 +97,12 @@ class SearchForm extends PureComponent {
         onSearch={this.request}
         onChange={this.handleChange}
         suffixIcon={<SearchOutlined className="searchIcon" />}
-        // {...rest} 
+        {...rest} 
         className={`${className} searchForm `}
         // style={{ width: '100%' }}
       >
-        {data.map(d => (
-          <Option key={d.value}>{d.text}</Option>
-        ))}
+        {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+        
       </Select>
     );
   }

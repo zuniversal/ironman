@@ -24,6 +24,7 @@ import { SmileOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import SmartModal from '@/common/SmartModal'; //
+import usePowerStationForm from '@/components/Form/PowerStationForm/usePowerStationForm'; //
 import { regoins } from '@/configs'; //
 
 export const config = [
@@ -236,9 +237,8 @@ const init = {
   // select
 };
 
-const ClientFormModal = props => {
+const SmartFormModal = props => {
   const [form] = Form.useForm();
-  console.log(' ClientFormModal ： ', props, form); //
 
   const {
     // modalProps,
@@ -249,9 +249,18 @@ const ClientFormModal = props => {
     onCancel,
     onSubmit,
     onFail,
+    FormCom,
+    top,
+    ...rest
 
-    config,
+    // config,
   } = props; //
+
+  const configs = usePowerStationForm()
+
+  console.log(' SmartFormModal ： ', props, form, rest, configs,  ); //
+
+  
 
   // const formConfig = config.map((v, i) => ({ ...v, itemProps:  v.formType === 'rowText' ? {...v.itemProps} : {...v.itemProps, key: `key{i}`, name: `name${i}`, },    }))
   // const formConfig = config.map((v, i) => ({ ...v, itemProps:  {...v.itemProps, key: `key{i}`, name: `name${i}`, noRule: v.formType === 'rowText',   },   }))
@@ -282,6 +291,12 @@ const ClientFormModal = props => {
 
     onOk && onOk({ e, form });
   };
+  const close = e => {
+    console.log(' close   e, ,   ： ', e);
+
+    onCancel && onCancel({ e, form });
+  };
+
 
   return (
     <div className={''}>
@@ -289,10 +304,14 @@ const ClientFormModal = props => {
         // {...modalProps}
 
         show={show}
-        onOk={handleOk}
         onCancel={onCancel}
+
+        {...rest}
+        onOk={handleOk}
+        onCancel={close}
+        
       >
-        <SmartForm
+        {/* <SmartForm
           // flexRow={4}
           config={formConfig}
           // formProps={formProps}
@@ -305,14 +324,35 @@ const ClientFormModal = props => {
           propsForm={form}
           onSubmit={onSubmit}
           onFail={onFail}
-        ></SmartForm>
+        ></SmartForm> */}
+        
+        <div>
+          {top}
+
+          <FormCom
+            // flexRow={4}
+            // config={formConfig}
+            // formProps={formProps}
+            // init={init}
+            // init={{}}
+            init={{
+              key9: regoins,
+            }}
+            // {...formsProps}
+            propsForm={form}
+            onSubmit={onSubmit}
+            onFail={onFail}
+          ></FormCom>
+
+        </div>
+
       </SmartModal>
     </div>
   );
 };
 
-ClientFormModal.defaultProps = {
+SmartFormModal.defaultProps = {
   config: [],
 };
 
-export default ClientFormModal;
+export default SmartFormModal;

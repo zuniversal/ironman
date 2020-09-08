@@ -23,20 +23,28 @@ class Client extends PureComponent {
     super(props);
     this.state = {
       show: false,
+
+      action: '',  
+      title: '',  
+      contractTitle: '',  
+      titleMap: {
+        add: '新增客户',
+        edit: '编辑客户',
+        detail: '客户详情',
+      },
+
     };
   }
 
   renderFormBtn = (
-    <>
+    <div className={'btnWrapper'}>
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
-        同步OA
-      </Button>
-      <Button type="primary">新建客户</Button>
+      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
+      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增合同</Button>
       <Button type="primary">导出客户数据</Button>
       <Button type="primary">删除</Button>
-    </>
+    </div>
   );
 
   onSubmit = (e, rest) => {
@@ -50,6 +58,15 @@ class Client extends PureComponent {
     console.log(' renderClientTable ： ', params);
   }
 
+  showContractModal = (params, ) => {
+    const {action,  } = params
+    console.log('    showContractModal ： ', action, params, this.state, this.props,  );
+    this.setState({
+      action,
+      show: true,
+      title: this.state.titleMap[action],  
+    });
+  };
   showModal = e => {
     console.log('    showModal ： ', e);
     this.setState({
@@ -95,7 +112,7 @@ class Client extends PureComponent {
       this.state,
       this.props,
     ); //
-    this.showModal();
+    // this.showModal();
   }
 
   render() {
@@ -105,13 +122,21 @@ class Client extends PureComponent {
       this.state,
       this.props,
     );
-    const { show } = this.state; //
+    const { show, showContractForm, title,   } = this.state; //
+
+    const tableProps = {
+      edit: this.showContractModal,
+      remove: this.showContractModal,
+      tdClick: this.showContractModal,
+    }
+
+
 
     return (
       <div className="Client">
         {/* Client */}
 
-        <ClientFormModal
+        {/* <ClientFormModal
           // modalProps={
           //   {
           //     show: show,
@@ -133,7 +158,23 @@ class Client extends PureComponent {
           onCancel={this.onCancel}
           onSubmit={this.onSubmit}
           onFail={this.onFail}
-        ></ClientFormModal>
+        ></ClientFormModal> */}
+
+
+        <SmartFormModal
+          // width={'900px'}
+          title={title}
+          show={show}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
+          // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
+          FormCom={ClientForm}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        ></SmartFormModal>
+
+
+
 
         {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}>
           <ClientForm
@@ -150,7 +191,7 @@ class Client extends PureComponent {
 
         {/* {this.renderClientTable()} */}
 
-        <ClientTable showModal={this.showModal}></ClientTable>
+        <ClientTable {...tableProps}  showModal={this.showModal} ></ClientTable>
       </div>
     );
   }
