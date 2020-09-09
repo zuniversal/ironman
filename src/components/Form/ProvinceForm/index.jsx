@@ -17,8 +17,6 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import SearchForm from '@/common/SearchForm'; //
-import ProvinceForm from '@/components/Form/ProvinceForm'; //
 import { regoins } from '@/configs'; //
 
 export const config = [
@@ -95,41 +93,32 @@ const init = {
   // select
 };
 
-const ContractSearchForm = props => {
-  console.log(' ContractSearchForm ： ', props); //
-
-  const { formBtn } = props; //
-
+const ProvinceForm = props => {
+  console.log(' ProvinceForm ： ', props); //
+  const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
   return (
-    <div className=''>
-      <ProvinceForm></ProvinceForm>
+    <div className={'fsb provinceForm '}>
+      <SmartForm
+        // flexRow={4}
+        flexRow={8}
+        config={config}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
 
-      <hr className='hrs'  />
+        {...rest}
+      ></SmartForm>
 
-      <div className={'flex-bw'}>
-        {/* <SmartForm
-          flexRow={4}
-          config={config}
-          formProps={formProps}
-          // init={init}
-          // init={{}}
-
-          {...props}
-        ></SmartForm> */}
-
-        <SearchForm></SearchForm>
-
-        {formBtn}
-      </div>
+      {formBtn}
     </div>
   );
 };
 
-ContractSearchForm.defaultProps = {};
+ProvinceForm.defaultProps = {};
 
-export default ContractSearchForm;
+export default ProvinceForm;

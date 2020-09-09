@@ -26,7 +26,7 @@ import {
 } from 'antd';
 // import debounce from 'lodash/debounce'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
-import { INPUT_TXT,    } from '@/constants'; //
+import { INPUT_TXT, WORD,    } from '@/constants'; //
 
 
 const { Option } = Select;
@@ -83,8 +83,11 @@ class SearchForm extends PureComponent {
 
   render() {
     const { fetching, data, value } = this.state;
-    const { className, menuConfig, ...rest } = this.props;
+    const { className, menuConfig, placeholder, word, defPh, ...rest } = this.props;
 
+    const prop = {
+      placeholder: defPh ? placeholder + word : placeholder
+    }
 
     return (
       <Select
@@ -97,12 +100,13 @@ class SearchForm extends PureComponent {
         onSearch={this.request}
         onChange={this.handleChange}
         suffixIcon={<SearchOutlined className="searchIcon" />}
+        {...prop} 
         {...rest} 
         className={`${className} searchForm `}
         // style={{ width: '100%' }}
       >
         {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-        
+
       </Select>
     );
   }
@@ -112,6 +116,8 @@ SearchForm.defaultProps = {
   menuConfig: [],
   className: '',
   placeholder: INPUT_TXT,
+  word: WORD, 
+  defPh: true,  
 
 };
 

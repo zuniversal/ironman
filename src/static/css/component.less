@@ -1,0 +1,34 @@
+@import './variable.less';
+
+
+
+.smartTable {
+  
+    .actionCol a {
+      // &:nth-child(even){
+      //   padding-right: 15px;
+
+      // }
+      &:not(:last-child):after {
+        content:'|';
+        padding: 10px;
+        color: @primary;
+        width: 2px;
+      }
+      // margin-right: 10px;
+      // border-right: 2px solid @primary;
+      display: inline-block;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+

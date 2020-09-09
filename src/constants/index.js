@@ -35,6 +35,7 @@ export const PAGEATH = 'page/';
 // export const department = userInfo.department
 export const SELECT_TXT = '请选择';
 export const INPUT_TXT = '请输入';
+export const WORD = '关键字';
 export const REQUIRE = '字段必填！';
 
 export const SIZE = 10;

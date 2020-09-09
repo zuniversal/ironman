@@ -172,7 +172,6 @@ export const config = [
     },
   },
   {
-    formType: 'Select',
     itemProps: {
       label: '附件',
     },

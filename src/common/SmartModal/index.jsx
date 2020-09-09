@@ -86,7 +86,7 @@ class SmartModal extends PureComponent {
 
     return (
       <Modal
-        className={`${className} ${noJustify ? '' : 'textJustify'}`}
+        wrapClassName={`${className} ${noJustify ? '' : 'textJustify'} smartModal `}
         title={title}
         // width={width != undefined ? width : '60%'}
         width={width != undefined ? width : '1100px'}
@@ -104,9 +104,9 @@ class SmartModal extends PureComponent {
               key="sure"
               onClick={this.onOk}
               type="primary"
-              icon={<SmileOutlined />}
+              // icon={<SmileOutlined />}
             >
-              {okTxt != undefined ? okTxt : '確認'}
+              {okTxt != undefined ? okTxt : '确定'}
             </Button>
           ) : null,
         ]}

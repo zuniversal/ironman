@@ -14,6 +14,7 @@ import ProLayout, {
 import defaultProps from './defaultProps';
 import { history } from 'umi';
 import './style.less';
+import { ANIMATE,  } from '@/constants'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
 const { Header, Sider, Content } = Layout;
@@ -46,6 +47,11 @@ export default props => {
   console.log(' settings, pathname ： ', settings, pathname, props); //
 
   // return <div >{ props.children }</div>
+
+  const goPage = (path) => {
+    console.log(' goPage   path,   ： ', path  )
+    history.push(path)
+  }
 
   return (
     <div
@@ -138,13 +144,15 @@ export default props => {
             <Avatar shape="square" size="small" icon={<UserOutlined />} /> */}
             <SearchOutlined className={'m-r-10'} />
             <BellOutlined className={'m-r-10'} />
-            <Avatar shape="square" size="small" icon={<UserOutlined />} />
+            <Avatar shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
           </div>
         )}
         {...settings}
       >
         <Content
-          className="container "
+          key={pathname} 
+          // className={`${ANIMATE.flash} container `}
+          className={` container `}
           style={
             {
               // margin: '20px',

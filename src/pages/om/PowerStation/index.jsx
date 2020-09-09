@@ -17,19 +17,9 @@ import {
 } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import PowerStationForm from '@/components/Form/PowerStationForm'; //
-import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
-import ContractFormModal from '@/components/Modal/ContractFormModal'; //
 import PowerStationTable from '@/components/Table/PowerStationTable'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import ContractStepForm from '@/components/Form/ContractStepForm'; //
-import usePowerStationForm from '@/components/Form/PowerStationForm/usePowerStationForm'; //
-
-const menuConfig = [
-  { key: 'upload', text: '上传文件' },
-  { key: 'down', text: '下载数据模板' },
-];
 
 
 
@@ -60,17 +50,7 @@ export const UploadCom = props => <div className="contentWrapper">
     </Upload>
   </div>// 
 
-export const ContractFormCom = props => {
-  console.log(' ContractFormCom ： ', props,    )// 
-  return <div className={''}  >
-    <div className={'fje'}  >
-      <Button type="primary " onClick={() => props.showRelativeForm('newRelated')}  >关联新增</Button>
-    </div>
-    <ContractForm></ContractForm>
-  </div>
 
-
-}
 
 
 class Contract extends PureComponent {
@@ -78,7 +58,7 @@ class Contract extends PureComponent {
     super(props);
     this.state = {
       show: false,
-      showContractForm: false,  
+      showPowerStationForm: false,  
 
       showModalCom: null,  
 
@@ -98,15 +78,6 @@ class Contract extends PureComponent {
     };
   }
 
-  menuClick = (params,  ) => {
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
-  //   const {item,  } = this.props// 
-    this.setState({
-      show: true,
-      title: this.state.titleMap[params.key],  
-      showModalCom: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
-    })
-  }
 
   renderForm = (
     <div className={'fsb '}  >
@@ -120,17 +91,17 @@ class Contract extends PureComponent {
     </div>
   );
 
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e,   )
-    const {showModalCom,  } = this.state// 
-    if (showModalCom) {
-      return showModalCom
+  renderModalForm = (e,  ) => {
+    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    const {modalForm,  } = this.state// 
+    if (modalForm) {
+      return modalForm
     }
     
-
-    
-    return 
+    // return null
   }
+  
+  
   onUploadChange = (params,  ) => {
     console.log(' onUploadChange,  , ： ', params,    )
     if (params.file.status === 'done') {
@@ -155,18 +126,11 @@ class Contract extends PureComponent {
       action,
       show: true,
       title: this.state.titleMap[action],  
-    });
-  };
-  showRelativeForm = (action, ) => {
-    console.log('    showRelativeForm ： ', action, this.state, this.props,  );
-    this.setState({
-      action,
-      showContractForm: true,
-      contractTitle: this.state.titleMap[action],  
+      modalForm: PowerStationForm,
     });
   };
 
-  onContractFormOk = async props => {
+  onPowerStationFormOk = async props => {
     console.log(' onOk ： ', props, this.state, this.props); //
     const { form } = props; //
     // form
@@ -181,14 +145,14 @@ class Contract extends PureComponent {
     // });
 
     this.setState({
-      showContractForm: false,
+      showPowerStationForm: false,
     });
   };
 
-  closeContractForm = e => {
-    console.log('    closeContractForm ： ', e);
+  closePowerStationForm = e => {
+    console.log('    closePowerStationForm ： ', e);
     this.setState({
-      showContractForm: false,
+      showPowerStationForm: false,
     });
   };
   showModal = e => {
@@ -249,7 +213,7 @@ class Contract extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showContractForm, title, contractTitle,   } = this.state; //
+    const { show, showPowerStationForm, title, contractTitle, action,  } = this.state; //
 
     const tableProps = {
       edit: this.showContractModal,
@@ -257,19 +221,10 @@ class Contract extends PureComponent {
       tdClick: this.showContractModal,
     }
 
-    // const configs = usePowerStationForm()
-    // console.log(' configs ： ', configs,  )// 
 
 
     return (
       <div className="contract">
-        {/* Contract */}
-
-        {/* <ClientSearchForm
-          formBtn={this.renderFormBtn}
-          onSubmit={this.onSubmit}
-          onFail={this.onFail}
-        ></ClientSearchForm> */}
 
         {this.renderForm}
 
@@ -284,43 +239,19 @@ class Contract extends PureComponent {
 
         <SmartFormModal
           // width={'900px'}
+          formComProps={{...tableProps, action, }} 
+
           title={title}
           show={show}
           onOk={this.onOk}
           onCancel={this.onCancel}
           show={show}
-          FormCom={PowerStationForm}
+          FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
         ></SmartFormModal>
 
-        {/* <SmartFormModal
-          show={show} onOk={this.onOk} onCancel={this.onCancel}
-          onSubmit={this.onSubmit}
-          onFail={this.onFail}
-        >
-        </SmartFormModal> */}
 
-        {/* <ContractFormModal
-          width={'700px'}
-          title={contractTitle}
-          show={showContractForm}
-          onOk={this.onOk}
-          onCancel={this.closeContractForm}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></ContractFormModal> */}
-
-        {/* <SmartFormModal
-          width={'900px'}
-          title={contractTitle}
-          show={showContractForm}
-          onOk={this.onContractFormOk}
-          onCancel={this.closeContractForm}
-          FormCom={ContractStepForm}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal> */}
       </div>
     );
   }

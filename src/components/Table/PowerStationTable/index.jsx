@@ -68,6 +68,9 @@ const PowerStationTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
+      extra={
+        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+      }
       {...props}
     ></SmartTable>
   );

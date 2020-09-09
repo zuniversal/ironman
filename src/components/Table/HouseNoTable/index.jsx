@@ -44,12 +44,10 @@ const HouseNoTable = props => {
     {
       title: '签约公司',
       dataIndex: 'field3',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       title: '客户代表',
       dataIndex: 'field4',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       title: '电站数',
@@ -59,7 +57,6 @@ const HouseNoTable = props => {
     {
       title: '录入日期',
       dataIndex: 'field6',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
   ];
 
@@ -68,6 +65,9 @@ const HouseNoTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
+      extra={
+        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+      }
       {...props}
     ></SmartTable>
   );

@@ -68,11 +68,13 @@ const rowLayout = {
   // wrapperCol: { span: 14 },
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 4 },
+    // sm: { span: 4 },
+    sm: { span: 0 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 20 },
+    // sm: { span: 20 },
+    sm: { span: 24 },
   },
 };
 
@@ -340,7 +342,7 @@ const SmartForm = (props, state) => {
 
     const formItemNoRuleProps = {
       ...itemProps,
-      className: `formItems ${itemProps.className}  `,
+      className: `formItems rowText ${itemProps.className}  `,
     };
     const formItemProps = {
       ...itemProps,
@@ -406,6 +408,7 @@ const SmartForm = (props, state) => {
           // valuePropName="checked"
           // {...formItemProps}
           // noStyle
+          labelAlign={'left'}
           {...rowLayout}
           {...formItemNoRuleProps}
         >

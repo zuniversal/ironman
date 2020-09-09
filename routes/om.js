@@ -19,4 +19,10 @@ export default [
     component: '@/pages/om/PowerStation',
     title: '电站管理',
   },
+  {
+    path: '/userCenter',
+    component: '@/pages/UserCenter',
+    title: '个人中心',
+  },
 ];
+

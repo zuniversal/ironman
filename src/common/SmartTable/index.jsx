@@ -44,6 +44,7 @@ class SmartTable extends PureComponent {
       total,
       showSizeChanger: true,
       showTotal: showTotal,
+      position: ['bottomCenter'],  
     };
     this.state = {
       pagination,
@@ -124,7 +125,12 @@ class SmartTable extends PureComponent {
 
   dataFilter = () => {
     const { searchKey, searchText } = this.state; //
-    const { dataSource } = this.props; //
+    const { dataSource, noMock, rowLength,   } = this.props; //
+
+    if (noMock) {
+      return []
+    }
+    
     // const data = dataSource
     const data = this.state.datas;
 
@@ -161,6 +167,13 @@ class SmartTable extends PureComponent {
         })
         .filter(record => !!record);
     } else {
+      if (rowLength) {
+        const sliceData = data.slice(0, rowLength);
+        console.log('  sliceData ：', sliceData,  )// 
+         
+        return sliceData
+      }
+      
       return data;
     }
   };
@@ -181,13 +194,14 @@ class SmartTable extends PureComponent {
 
   render() {
     const { pagination, searchText, searchKey } = this.state;
-    const { dataSource, columns, loading, rowKey, className, edit, remove, actionConfig,   } = this.props;
+    const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
 
-    const col = columns.map(v => ({
+    const col = columns.map((v, i) => ({
       // render: v.render ? v.render : this.renderCol,
       render: (...rest) => this.renderCol(...rest, v),
+      dataIndex: `field${i}`,
       ...v,
-      ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
+      // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
 
     const actionCol = {
@@ -202,6 +216,7 @@ class SmartTable extends PureComponent {
           text, record, index, 
           edit, 
           remove,
+          extra,
           ...actionConfig, 
         }
         
@@ -213,8 +228,12 @@ class SmartTable extends PureComponent {
 
     const cols = [
       ...col,
-      actionCol,
     ]
+    console.log('  对吗  !noActionCol ', !noActionCol,    )
+    if (!noActionCol) {
+      cols.push(actionCol)
+    }
+    
 
     console.log(
       ' %c SmartTable 组件 this.state, this.props ： ',
@@ -227,7 +246,7 @@ class SmartTable extends PureComponent {
     return (
       <div className="smartTable">
         <Table
-          bordered
+          // bordered
           showQuickJumper
           showSizeChanger
           // size={'small'}

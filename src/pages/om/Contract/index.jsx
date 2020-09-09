@@ -79,7 +79,9 @@ class Contract extends PureComponent {
       show: false,
       showContractForm: false,  
 
-      showModalCom: null,  
+      topCom: null,  
+      modalForm: null,  
+      modalContent: null,  
 
       action: '',  
       title: '',  
@@ -103,7 +105,8 @@ class Contract extends PureComponent {
     this.setState({
       show: true,
       title: this.state.titleMap[params.key],  
-      showModalCom: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
+      modalContent: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
+      // modalForm: UploadCom,
     })
   }
 
@@ -119,24 +122,39 @@ class Contract extends PureComponent {
       <Button type="primary">删除</Button>
     </div>
   );
-
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e,   )
-    const {showModalCom,  } = this.state// 
-    if (showModalCom) {
-      return showModalCom
+  renderModalTop = (e,  ) => {
+    console.log('    renderModalTop ： ', e, this.state, this.props,   )
+    return this.state.topCom 
+  }
+  renderModalForm = (e,  ) => {
+    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    const {modalForm,  } = this.state// 
+    if (modalForm) {
+      return modalForm
     }
     
-
+    // return null
+  }
+  renderModalContent = (e,  ) => {
+    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    const {modalContent,  } = this.state// 
+    if (modalContent) {
+      return modalContent
+    }
     
-    return 
+    // return null
   }
   onUploadChange = (params,  ) => {
     console.log(' onUploadChange,  , ： ', params,    )
     if (params.file.status === 'done') {
-      this.setState({
-        showModalCom: <SuccResult></SuccResult>,
-      })
+      setTimeout(() => {
+        console.log('  延时器 ： ',  )
+        this.setState({
+          modalContent: <SuccResult></SuccResult>,
+        })
+        
+      }, 2000)
+      
     }
     
   }
@@ -158,7 +176,15 @@ class Contract extends PureComponent {
       action,
       show: true,
       title: this.state.titleMap[action],  
-      showModalCom: <ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>,
+      // 如果 {xxx} 渲染的是一个组件 不是一个组件实例 会报错 
+      // Warning: React.createElement: type is invalid -- expected a string (for built-in components) or 
+      // a class/function (for composite components) but got: undefined. You likely forgot to export your component 
+      // from the file it's defined in, or you might have mixed up default and named imports.
+      // modalForm: <ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>,
+      modalForm: ContractForm,
+      topCom: <div className={'fje'}  >
+        <Button type="primary " onClick={() => this.showRelativeForm('newRelated')}  >关联新增</Button>
+      </div>,
     });
   };
   showRelativeForm = (action, ) => {
@@ -231,6 +257,9 @@ class Contract extends PureComponent {
     console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       show: false,
+      topCom: null,  
+      modalForm: null,  
+      modalContent: null,  
     });
   };
 
@@ -287,16 +316,15 @@ class Contract extends PureComponent {
           show={show}
           onOk={this.onOk}
           onCancel={this.onCancel}
-          top={
-            <div className={'fje'}  >
-              <Button type="primary " onClick={() => this.showRelativeForm('newRelated')}  >关联新增</Button>
-            </div>
-          }
+          top={this.renderModalTop()}
           // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
-          FormCom={ContractForm}
+          // FormCom={ContractForm}
+          FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        ></SmartFormModal>
+        >
+          {this.renderModalContent()}
+        </SmartFormModal>
 
         {/* <SmartFormModal
           show={show} onOk={this.onOk} onCancel={this.onCancel}

@@ -250,7 +250,10 @@ const SmartFormModal = props => {
     onSubmit,
     onFail,
     FormCom,
+    formComProps,
+    children,
     top,
+    bottom,
     ...rest
 
     // config,
@@ -258,7 +261,7 @@ const SmartFormModal = props => {
 
   const configs = usePowerStationForm()
 
-  console.log(' SmartFormModal ： ', props, form, rest, configs,  ); //
+  console.log(' SmartFormModal ： ', props, form, rest, configs, React.isValidElement(null), React.isValidElement(FormCom), ); //
 
   
 
@@ -297,6 +300,8 @@ const SmartFormModal = props => {
     onCancel && onCancel({ e, form });
   };
 
+  
+
 
   return (
     <div className={''}>
@@ -329,7 +334,9 @@ const SmartFormModal = props => {
         <div>
           {top}
 
-          <FormCom
+          {children}
+
+          {FormCom && <FormCom
             // flexRow={4}
             // config={formConfig}
             // formProps={formProps}
@@ -338,11 +345,13 @@ const SmartFormModal = props => {
             init={{
               key9: regoins,
             }}
-            // {...formsProps}
+            {...formComProps}
             propsForm={form}
             onSubmit={onSubmit}
             onFail={onFail}
-          ></FormCom>
+          ></FormCom>}
+
+          {bottom}
 
         </div>
 

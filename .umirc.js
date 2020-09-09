@@ -12,6 +12,7 @@ export default defineConfig({
   },
   routes: [
     // { path: '/login', component: 'login' },
+    // { path: '/userCenter', component: '@/pages/UserCenter' },
 
     {
       path: '/',
@@ -23,4 +24,7 @@ export default defineConfig({
     ...om,
     ...sm,
   ],
+  theme: {
+    '@primary-color': '#00B460',
+  },
 });
