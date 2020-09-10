@@ -81,9 +81,14 @@ export default props => {
         }}
         menuItemRender={(item, dom) => {
           // console.log(' menuItemRender ： ', item, dom, pathname,   )//
+
+          // 调用 报错 
+          // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different 
+          // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
           if (item.path === pathname) {
             setTitle(item.name)
           }
+
           
           return (
             <a

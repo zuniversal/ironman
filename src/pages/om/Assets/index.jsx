@@ -59,12 +59,12 @@ const menuConfig = [
 ];
 
 
-const TITLE = '户号'
+const TITLE = '资产'
 
 
 
 
-class HouseNo extends PureComponent {
+class Assets extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -196,7 +196,7 @@ class HouseNo extends PureComponent {
 
   componentDidMount() {
     console.log(
-      ' HouseNo 组件componentDidMount挂载 ： ',
+      ' Assets 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
     ); //
@@ -208,7 +208,7 @@ class HouseNo extends PureComponent {
 
   render() {
     console.log(
-      ' %c HouseNo 组件 this.state, this.props ： ',
+      ' %c Assets 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
@@ -224,7 +224,7 @@ class HouseNo extends PureComponent {
 
 
     return (
-      <div className="HouseNo">
+      <div className="Assets">
 
         {this.renderForm}
 
@@ -257,4 +257,4 @@ class HouseNo extends PureComponent {
   }
 }
 
-export default HouseNo;
+export default Assets;

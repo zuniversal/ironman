@@ -26,37 +26,29 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const HouseNoTable = props => {
-  console.log(' HouseNoTable  ： ', props); //
+const HouseNoFormTable = props => {
+  console.log(' HouseNoFormTable  ： ', props); //
   const { tdClick,    } = props; //
 
   const columns = [
     {
-      title: '所属客户',
-      dataIndex: 'field1',
+      title: '电站名称',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
-      title: '户号',
-      dataIndex: 'field2',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      title: '电源编号',
     },
     {
-      title: '签约公司',
-      dataIndex: 'field3',
+      title: '托管电站数',
     },
     {
-      title: '客户代表',
-      dataIndex: 'field4',
+      title: '变压器容量',
     },
     {
-      title: '电站数',
-      dataIndex: 'field5',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      title: '设备数量',
     },
     {
-      title: '录入日期',
-      dataIndex: 'field6',
+      title: '备注',
     },
   ];
 
@@ -68,15 +60,16 @@ const HouseNoTable = props => {
       extra={
         <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
       }
+      rowLength={2}
       {...props}
     ></SmartTable>
   );
 };
 
-HouseNoTable.defaultProps = {
+HouseNoFormTable.defaultProps = {
   // showModal: () => {},
   tdClick: () => {},
   // remove: () => {},
 };
 
-export default HouseNoTable;
+export default HouseNoFormTable;

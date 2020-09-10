@@ -57,3 +57,13 @@
 
 
 
+.autoWidth(@counter) when (@counter > 0) {
+  .w-@{counter} {
+    width: (1px * @counter);
+  }
+
+
+}
+
+.autoWidth(300);
+

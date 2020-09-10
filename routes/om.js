@@ -15,6 +15,11 @@ export default [
     title: '户号管理',
   },
   {
+    path: '/assets',
+    component: '@/pages/om/Assets',
+    title: '户号管理',
+  },
+  {
     path: '/powerstation',
     component: '@/pages/om/PowerStation',
     title: '电站管理',

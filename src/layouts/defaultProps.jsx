@@ -23,6 +23,12 @@ export default {
         component: '../Welcome',
       },
       {
+        path: '/userCenter',
+        name: '用户中心',
+        icon: <ScheduleFilled />,
+        component: '../pages/UserCenter',
+      },
+      {
         path: '/班组管理',
         name: '班组管理',
         icon: <ScheduleFilled />,
@@ -67,7 +73,7 @@ export default {
         component: '../pages/om/HouseNo',
       },
       {
-        path: '/资产管理',
+        path: '/assets',
         name: '资产管理',
         icon: <ScheduleFilled />,
         component: '../Welcome',

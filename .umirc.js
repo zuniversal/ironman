@@ -11,6 +11,11 @@ export default defineConfig({
     type: 'hash',
   },
   publicPath: './',
+  alias: {
+    'smartTb': './components/Table',
+    'smartForm': './components/Form',
+    
+  },
   routes: [
     // { path: '/login', component: 'login' },
     // { path: '/userCenter', component: '@/pages/UserCenter' },
@@ -27,5 +32,7 @@ export default defineConfig({
   ],
   theme: {
     '@primary-color': '#00B460',
+
   },
+  
 });

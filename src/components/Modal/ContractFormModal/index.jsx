@@ -254,7 +254,7 @@ class ContractFormModal extends Component {
 
     return (
       <SmartModal 
-        show={show} onOk={onOk} onCancel={onCancel}
+        // show={show} onOk={onOk} onCancel={onCancel}
         {...this.props} 
       >
         <ContractStepForm></ContractStepForm>

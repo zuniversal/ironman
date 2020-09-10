@@ -192,6 +192,13 @@ class SmartTable extends PureComponent {
 
   };
 
+
+  onRemove = (e,  ) => {
+    console.log('    onRemove ： ', e, this.state, this.props,   )
+    const {remove,  } = this.props// 
+
+  }
+
   render() {
     const { pagination, searchText, searchKey } = this.state;
     const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
@@ -203,6 +210,7 @@ class SmartTable extends PureComponent {
       ...v,
       // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
+    
 
     const actionCol = {
       title: '操作',
@@ -215,7 +223,7 @@ class SmartTable extends PureComponent {
           // ...rest,
           text, record, index, 
           edit, 
-          remove,
+          remove: this.onRemove,
           extra,
           ...actionConfig, 
         }
@@ -254,7 +262,8 @@ class SmartTable extends PureComponent {
           // scroll={{ x: 800,  }}
           // rowKey={rowKey}
           pagination={pagination}
-          rowClassName={(record, i) => ANIMATE.bounceIn}
+          // rowClassName={(record, i) => ANIMATE.bounceIn}
+          rowClassName={(record, i) => ANIMATE.slideInRight}
 
           {...this.props}
           // dataSource={dataSource}

@@ -22,12 +22,12 @@ import {
   Menu,
   Dropdown,
 } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, EllipsisOutlined,    } from '@ant-design/icons';
 
 const DropDownBtn = props => {
   console.log(' DropDownBtn ： ', props, ); //
 
-  const { handleClick, btnProps, children = '按钮', menu, menuConfig, menuClick,    } = props; //
+  const { handleClick, btnProps, children = '按钮', menu, menuConfig, menuClick, noEllipsis,    } = props; //
 
   const handleMenuClick = (item, ) => {
     console.log(' handleMenuClick   item, ,   ： ', item, props,   );
@@ -47,8 +47,8 @@ const DropDownBtn = props => {
 
   return (
     <Dropdown overlay={menuCom}>
-      <Button type="primary" {...btnProps}>
-        {children}
+      <Button type="primary" {...btnProps} className='dropBtn'  >
+        {children}{!noEllipsis ? <><span className="yAxis">|</span><EllipsisOutlined /></> : null}
       </Button>
     </Dropdown>
   );
