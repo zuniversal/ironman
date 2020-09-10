@@ -39,12 +39,12 @@ class SmartTable extends PureComponent {
     const { total, size = SIZE } = this.props;
     const pagination = {
       // current: 10,
-      pageSize: Number(size),
       // pageSize: 6,
-      total,
-      showSizeChanger: true,
-      showTotal: showTotal,
+      // showSizeChanger: true,
+      // showTotal: showTotal,
       position: ['bottomCenter'],  
+      pageSize: Number(size),
+      total,
     };
     this.state = {
       pagination,
@@ -247,8 +247,8 @@ class SmartTable extends PureComponent {
       <div className="smartTable">
         <Table
           // bordered
-          showQuickJumper
-          showSizeChanger
+          // showQuickJumper
+          // showSizeChanger
           // size={'small'}
           // loading={loading}
           // scroll={{ x: 800,  }}

@@ -128,11 +128,13 @@ export default props => {
         //   </div>
         // )}
 
-        headerContentRender={() => (
-          <div>
-            <MenuFoldOutlined />
-          </div>
-        )}
+        // 导航栏 左渲染 
+        // headerContentRender={() => (
+        //   <div>
+        //     <MenuFoldOutlined />
+        //   </div>
+        // )}
+
         // pageTitleRender={() => (
         //   <div>
         //     pageTitleRender
@@ -147,6 +149,9 @@ export default props => {
             <Avatar shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
           </div>
         )}
+        title={'POWERKEEPER'}
+        siderWidth={200}
+
         {...settings}
       >
         <Content
