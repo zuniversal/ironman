@@ -10,6 +10,7 @@ export default defineConfig({
   history: {
     type: 'hash',
   },
+  publicPath: './',
   routes: [
     // { path: '/login', component: 'login' },
     // { path: '/userCenter', component: '@/pages/UserCenter' },

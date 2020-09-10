@@ -239,6 +239,7 @@ const PowerStationForm = props => {
       key={'attach'} 
       name="upload"
       label="上传电气图"
+      colon={false}
       // extra="支持扩展名：.pdf"
     >
       <Upload name="logo" action="/upload.do"  listType="picture-card" >

@@ -38,6 +38,7 @@ const content = (
 
 export default props => {
   const [settings, setSetting] = useState(undefined);
+  const [title, setTitle] = useState('');
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
   const { children, location } = props; //
@@ -45,7 +46,6 @@ export default props => {
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
   console.log(' settings, pathname ： ', settings, pathname, props); //
-
   // return <div >{ props.children }</div>
 
   const goPage = (path) => {
@@ -80,7 +80,11 @@ export default props => {
           // return
         }}
         menuItemRender={(item, dom) => {
-          // console.log(' menuItemRender ： ', item, dom,    )//
+          // console.log(' menuItemRender ： ', item, dom, pathname,   )//
+          if (item.path === pathname) {
+            setTitle(item.name)
+          }
+          
           return (
             <a
               onClick={() => {
@@ -144,12 +148,14 @@ export default props => {
           <div>
             {/* <Avatar shape="square" size="small" icon={<SearchOutlined />} />
             <Avatar shape="square" size="small" icon={<UserOutlined />} /> */}
-            <SearchOutlined className={'m-r-10'} />
-            <BellOutlined className={'m-r-10'} />
-            <Avatar shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
+            <SearchOutlined className={'actionItem '} />
+            <BellOutlined className={'actionItem '} />
+            <Avatar className={'actionItem'}  shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
+            <span className={'actionItem userName '}  >用户名</span>
           </div>
         )}
         title={'POWERKEEPER'}
+        logo={null}
         siderWidth={200}
 
         {...settings}
@@ -166,10 +172,19 @@ export default props => {
             }
           }
         >
+          <div className="titleWrapper">
+            <div className="pageTitle">
+              {title}
+            </div>
+          </div>
           {/* <Com></Com> */}
           {/* <UserCenterForm></UserCenterForm> */}
 
-          {children}
+          <div className="content">
+            {children}
+            
+          </div>
+          
         </Content>
 
         {/* <PageContainer

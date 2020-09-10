@@ -2,7 +2,7 @@
 
 
 @import '../static/css/index.less';
-
+@import '../static/css/variable.less';
 
 
 .ant-pro-basicLayout-content {
@@ -12,17 +12,51 @@
 .layoutContainer {
   width: 100%;
   height: 100%;
+  .actionItem{
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  .userName{
+    font-size: 14px;
+  }
+  
+  .ant-pro-sider-menu-logo{
+    h1 {
+      margin-left: 0;
+    }
+  }
+  
 }
 
 .container {
+  margin: 15px;
   background: #fff;
   // text-align: center;
-  margin: 15px;
-  padding: 20px;
   // minHeight: 100px;
 
   // width: 100%;
   height: 100%;
+  .titleWrapper{
+    padding: 20px 0;
+    padding-bottom: 0;
+    .pageTitle{
+      font-size: 16px;
+      padding-left: 14px;
+      border-left: 4px solid @primary;
+    }
+    
+  }
+  
+  .content{
+    padding: 20px;
+    
+  }
+  .actionItem{
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  
 }
 
 .flex-bw {

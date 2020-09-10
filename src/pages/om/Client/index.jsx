@@ -41,7 +41,7 @@ class Client extends PureComponent {
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
       <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增合同</Button>
+      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增客户</Button>
       <Button type="primary">导出客户数据</Button>
       <Button type="primary">删除</Button>
     </div>
@@ -185,8 +185,8 @@ class Client extends PureComponent {
 
         <ClientSearchForm
           formBtn={this.renderFormBtn}
-          onSubmit={this.onSubmit}
-          onFail={this.onFail}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
         ></ClientSearchForm>
 
         {/* {this.renderClientTable()} */}

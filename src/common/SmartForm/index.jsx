@@ -341,6 +341,7 @@ const SmartForm = (props, state) => {
     const { label } = itemProps;
 
     const formItemNoRuleProps = {
+      colon: false,  
       ...itemProps,
       className: `formItems rowText ${itemProps.className}  `,
     };
@@ -468,6 +469,7 @@ const SmartForm = (props, state) => {
   console.log(' formProps ： ', formProps, formItemLayout, formLayout); //
   return (
     <Form
+      preserve={false}
       {...formItemLayout}
       layout={formLayout}
       form={formControl}

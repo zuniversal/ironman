@@ -14,6 +14,7 @@ import {
   Radio,
   Space,
   InputNumber,
+  Divider,
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
@@ -106,10 +107,12 @@ const ContractSearchForm = props => {
   };
 
   return (
-    <div className=''>
+    <div className='contractSearchForm'>
       <ProvinceForm></ProvinceForm>
 
-      <hr className='hrs'  />
+      {/* <hr className='hrs'  /> */}
+      
+      <Divider />
 
       <div className={'flex-bw'}>
         {/* <SmartForm
