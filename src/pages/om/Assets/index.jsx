@@ -9,19 +9,24 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result,   } from 'antd';
+import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography,  } from 'antd';
 import {
   UploadOutlined,
   PlusOutlined,
-  
+  CloseCircleOutlined,
+
 } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
-import HouseNoTable from '@/components/Table/HouseNoTable'; //
-import HouseNoForm from '@/components/Form/HouseNoForm'; //
-import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
+import AssetsTable from '@/components/Table/AssetsTable'; //
+import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
+import AssetsForm from '@/components/Form/AssetsForm'; //
+import AssetsSearchForm from '@/components/Form/AssetsSearchForm'; //
+import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
+
+
 
 
 
@@ -59,7 +64,8 @@ const menuConfig = [
 ];
 
 
-const TITLE = '资产'
+export const TITLE = '资产'
+export const DEVICE = '设备'
 
 
 
@@ -69,17 +75,19 @@ class Assets extends PureComponent {
     super(props);
     this.state = {
       show: false,
-
+      showResultModal: false,  
+      
       showModalCom: null,  
+      modalContent: null,  
 
       action: '',  
       title: '',  
-      houseNoTitle: '',  
+      assetsTitle: '',  
 
       titleMap: {
-        add: `新增${TITLE}`,
-        edit: `编辑${TITLE}`,
-        detail: `${TITLE}详情`,
+        add: `新增${DEVICE}`,
+        edit: `编辑${DEVICE}`,
+        detail: `${DEVICE}详情`,
         newRelated: `关联新增`,
         upload: `文件上传`,
         down: `文件下载`,
@@ -91,43 +99,53 @@ class Assets extends PureComponent {
 
 
   menuClick = (params,  ) => {
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+    console.log(' menuClick,  , ： ', params, this.state.titleMap,    )
   //   const {item,  } = this.props// 
     this.setState({
-      show: true,
-      title: this.state.titleMap[params.key],  
-      modalContent: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
+      showResultModal: true,
+      // title: this.state.titleMap[params.key],  
+      // modalContent: <ResultModal  ></ResultModal>,
+      // modalContent: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
       // modalForm: UploadCom,
     })
   }
-  
-  showModalContent = (params, ) => {
+  onResultModalCancel = (e,  ) => {
+    console.log('    onResultModalCancel ： ', e,   )
+    this.setState({
+      showResultModal: false,
+    })
+    
+  }
+  showFormModal = (params, ) => {
     const {action,  } = params
-    console.log('    showModalContent ： ', action, params, this.state, this.props,  );
+    console.log('    showFormModal ： ', action, params, this.state, this.props,  );
     this.setState({
       action,
       show: true,
       title: this.state.titleMap[action],  
-      modalForm: HouseNoForm,
+      modalForm: AssetsForm,
     });
   };
 
 
   renderForm = (
-    <div className={'fsb '}  >
-      <HouseNoSearchForm></HouseNoSearchForm>
-      <div className={'btnWrapper'}>
-        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
-        <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-        <Button type="primary "onClick={() => this.showModalContent({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary">导出{TITLE}数据</Button>
-        <Button type="primary">删除</Button>
+    <div>
+      <AssetsSearchForm></AssetsSearchForm>
+      <div className={'fsb '}  >
+        <SearchForm></SearchForm>
+        <div className={'btnWrapper'}>
+          <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
+          <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
+          <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+          <Button type="primary">导出{TITLE}数据</Button>
+          <Button type="primary">删除</Button>
+        </div>
       </div>
     </div>
   );
 
   renderModalForm = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    console.log('    renderModalForm ： ', e, this.state, this.props,   )
     const {modalForm,  } = this.state// 
     if (modalForm) {
       return modalForm
@@ -135,17 +153,32 @@ class Assets extends PureComponent {
     
     // return null
   }
-  
-  
-  onUploadChange = (params,  ) => {
-    console.log(' onUploadChange,  , ： ', params,    )
-    if (params.file.status === 'done') {
-      this.setState({
-        showModalCom: <SuccResult></SuccResult>,
-      })
-    }
+  renderModalContent = (e,  ) => {
+    console.log('    renderModalContent ： ', e,   )
+    const {modalContent,  } = this.state// 
     
+    return modalContent
   }
+  showModalContent = (params, ) => {
+    const {action,  } = params
+    console.log('    showModalContent ： ', action, params, this.state, this.props,  );
+    this.setState({
+      action,
+      show: true,
+      title: this.state.titleMap[action],  
+      modalContent: <AssetsDetailTable></AssetsDetailTable>,
+    });
+  };
+  
+  // onUploadChange = (params,  ) => {
+  //   console.log(' onUploadChange,  , ： ', params,    )
+  //   if (params.file.status === 'done') {
+  //     this.setState({
+  //       showModalCom: <ResultModal></ResultModal>,
+  //     })
+  //   }
+    
+  // }
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -201,8 +234,8 @@ class Assets extends PureComponent {
       this.props,
     ); //
 
-    // this.showModalContent();
-    // this.showModal();
+    // this.showFormModal();
+    // this.menuClick();
 
   }
 
@@ -213,23 +246,37 @@ class Assets extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, houseNoTitle, action,  } = this.state; //
+    const { show, title, assetsTitle, action, showResultModal,  } = this.state; //
 
     const tableProps = {
-      edit: this.showModalContent,
-      remove: this.showModalContent,
+      edit: this.showFormModal,
+      remove: this.showFormModal,
       tdClick: this.showModalContent,
     }
 
-
-
+    const modalProps = {
+      title: title,
+      show: showResultModal,
+      onOk: this.onResultModalOk,
+      onCancel: this.onResultModalCancel,
+    }
+    const resProps = {
+      status: 'error',  
+      title: '导入成功',  
+      subTitle: '请核对并修改以下信息后，再重新提交。',  
+      // extra: [
+      //   <Button  key="console" >返回列表</Button>,
+      // ],
+      children: <ErrorInfo></ErrorInfo>,
+    }
+    
     return (
       <div className="Assets">
 
         {this.renderForm}
 
 
-        <HouseNoTable {...tableProps}  ></HouseNoTable>
+        <AssetsTable {...tableProps}  ></AssetsTable>
 
         {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
           title={title}
@@ -242,14 +289,25 @@ class Assets extends PureComponent {
           formComProps={{...tableProps, action, }} 
 
           title={title}
-          show={show}
           onOk={this.onOk}
           onCancel={this.onCancel}
           show={show}
           FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        ></SmartFormModal>
+        >
+          {this.renderModalContent()}
+        </SmartFormModal>
+
+
+        <ResultModal
+          modalProps={modalProps} 
+          resProps={resProps} 
+          
+        >
+          {this.renderModalContent()}
+        </ResultModal>
+        
 
 
       </div>

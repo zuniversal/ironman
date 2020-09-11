@@ -11,9 +11,9 @@
     "strict": true,
     "paths": {
       "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"],
-      "smartTb": ["src/components/Table"],
-      "smartForm": ["src/components/Form"]
+      "@@/*": ["src/.umi/*"]
+      ,"smartTb": ["src/components/Table/*"],
+      "smartForm": ["src/components/Form/*"]
     },
     "allowSyntheticDefaultImports": true
   },

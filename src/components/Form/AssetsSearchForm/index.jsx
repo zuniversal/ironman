@@ -18,46 +18,25 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
+import { formatConfig } from '@/utils'//
 
 export const config = [
   {
     formType: 'Select',
-    noRule: true,  
     itemProps: {
       label: '客户',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-240',  
     },  
   },
   {
     formType: 'Select',
-    noRule: true,  
     itemProps: {
-      label: '户号',
+      label: '电站',
     },
     comProps: {
-      className: 'w-200',  
-    },  
-  },
-  {
-    formType: 'Cascader',
-    noRule: true,  
-    itemProps: {
-      label: '区域',
-    },
-    comProps: {
-      className: 'w-200',  
-    },  
-  },
-  {
-    formType: 'Input',
-    noRule: true,  
-    itemProps: {
-      label: '邮编',
-    },
-    comProps: {
-      className: 'w-200',  
+      className: 'w-240',  
     },  
   },
 
@@ -66,8 +45,8 @@ export const config = [
 
 
 
-const HouseNoSearchForm = props => {
-  console.log(' HouseNoSearchForm ： ', props); //
+const AssetsSearchForm = props => {
+  console.log(' AssetsSearchForm ： ', props); //
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
@@ -75,11 +54,13 @@ const HouseNoSearchForm = props => {
   };
 
   return (
-    <div className={'fsb HouseNoSearchForm '}>
+    <div className={'fsb assetsSearchForm '}>
       <SmartForm
         // flexRow={4}
         // flexRow={6}
-        config={config}
+        // config={config}
+        layout="inline"
+        config={formatConfig(config)}
         formProps={formProps}
         // init={init}
         // init={{}}
@@ -92,6 +73,6 @@ const HouseNoSearchForm = props => {
   );
 };
 
-HouseNoSearchForm.defaultProps = {};
+AssetsSearchForm.defaultProps = {};
 
-export default HouseNoSearchForm;
+export default AssetsSearchForm;

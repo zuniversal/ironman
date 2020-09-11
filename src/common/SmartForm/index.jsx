@@ -466,12 +466,13 @@ const SmartForm = (props, state) => {
     );
   });
 
+
   console.log(' formProps ： ', formProps, formItemLayout, formLayout); //
   return (
     <Form
       preserve={false}
       {...formItemLayout}
-      layout={formLayout}
+      // layout={formLayout}
       form={formControl}
       name="smartForm"
       onFinish={onFinish}
@@ -482,6 +483,7 @@ const SmartForm = (props, state) => {
       scrollToFirstError
       {...formProps}
       className={`smartForm ${className}`}
+      // layout="inline"
     >
       {flexRow ? (
         <Row gutter={24}>
@@ -557,7 +559,7 @@ const SmartForm = (props, state) => {
 SmartForm.defaultProps = {
   config: [],
   init: {},
-  formProps: {},
+  // formProps: {},
   formBtn: null,
   isRowBtn: false,
   className: '',

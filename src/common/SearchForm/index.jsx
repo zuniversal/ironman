@@ -102,7 +102,7 @@ class SearchForm extends PureComponent {
         suffixIcon={<SearchOutlined className="searchIcon" />}
         {...prop} 
         {...rest} 
-        className={`${className} searchForm `}
+        className={`${className} searchForm w-224 `}
         // style={{ width: '100%' }}
       >
         {data.map(d => <Option key={d.value}>{d.text}</Option>)}

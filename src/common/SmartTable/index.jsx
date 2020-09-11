@@ -55,6 +55,8 @@ class SmartTable extends PureComponent {
       filterDropdownVisible: false,
 
       datas,
+
+      selectionType: 'checkbox',  
     };
   }
 
@@ -199,8 +201,19 @@ class SmartTable extends PureComponent {
 
   }
 
+
+  onChange = (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  }
+
+  getCheckboxProps = record => ({
+    disabled: record.name === 'Disabled User', // Column configuration not to be checked
+    name: record.name,
+  })
+
+
   render() {
-    const { pagination, searchText, searchKey } = this.state;
+    const { pagination, searchText, searchKey, selectionType,   } = this.state;
     const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -242,6 +255,11 @@ class SmartTable extends PureComponent {
       cols.push(actionCol)
     }
     
+    const rowSelection = {
+      onChange: this.onChange,
+      getCheckboxProps: this.getCheckboxProps,
+    };
+
 
     console.log(
       ' %c SmartTable 组件 this.state, this.props ： ',
@@ -252,7 +270,7 @@ class SmartTable extends PureComponent {
 
 
     return (
-      <div className="smartTable">
+      <div className="">
         <Table
           // bordered
           // showQuickJumper
@@ -261,6 +279,12 @@ class SmartTable extends PureComponent {
           // loading={loading}
           // scroll={{ x: 800,  }}
           // rowKey={rowKey}
+
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+
           pagination={pagination}
           // rowClassName={(record, i) => ANIMATE.bounceIn}
           rowClassName={(record, i) => ANIMATE.slideInRight}

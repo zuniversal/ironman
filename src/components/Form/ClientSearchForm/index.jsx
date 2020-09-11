@@ -96,8 +96,8 @@ const init = {
   // select
 };
 
-const ContractSearchForm = props => {
-  console.log(' ContractSearchForm ： ', props); //
+const ClientSearchForm = props => {
+  console.log(' ClientSearchForm ： ', props); //
 
   const { formBtn } = props; //
 
@@ -107,7 +107,7 @@ const ContractSearchForm = props => {
   };
 
   return (
-    <div className='contractSearchForm'>
+    <div className='clientSearchForm'>
       <ProvinceForm></ProvinceForm>
 
       {/* <hr className='hrs'  /> */}
@@ -133,6 +133,6 @@ const ContractSearchForm = props => {
   );
 };
 
-ContractSearchForm.defaultProps = {};
+ClientSearchForm.defaultProps = {};
 
-export default ContractSearchForm;
+export default ClientSearchForm;
