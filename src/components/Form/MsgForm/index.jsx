@@ -69,8 +69,8 @@ const treeData = [
   
 // }
 
-const RoleTab = (props,  ) => {
-  console.log(' RoleTab   props,  ,   ： ', props,    )
+const MsgForm = (props,  ) => {
+  console.log(' MsgForm   props,  ,   ： ', props,    )
   const [expandedKeys, setExpandedKeys] = useState(['sys', 'om']);
   const [checkedKeys, setCheckedKeys] = useState(['sys']);
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -149,11 +149,11 @@ const RoleForm = props => {
         {...rest}
       ></SmartForm>
 
-      <RoleTab
+      <MsgForm
 
       >
 
-      </RoleTab>
+      </MsgForm>
 
     </div>
   );

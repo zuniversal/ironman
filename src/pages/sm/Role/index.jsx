@@ -70,7 +70,7 @@ class Role extends PureComponent {
     
   }
   showFormModal = (params, ) => {
-    const {action,  } = params
+    const {action ,  } = params
     console.log('    showFormModal ： ', action, params, this.state, this.props,  );
     this.setState({
       action,
@@ -183,7 +183,7 @@ class Role extends PureComponent {
       this.props,
     ); //
 
-    // this.showFormModal();
+    this.showFormModal({action: 'add',  });
 
   }
 

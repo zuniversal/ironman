@@ -16,61 +16,25 @@ import {
   CloseCircleOutlined,
 
 } from '@ant-design/icons';
-import SearchForm from '@/common/SearchForm'; //
-import AssetsTable from '@/components/Table/AssetsTable'; //
-import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
-import AssetsForm from '@/components/Form/AssetsForm'; //
-import AssetsSearchForm from '@/components/Form/AssetsSearchForm'; //
-import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
+
 import SmartModal from '@/common/SmartModal'; //
+import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
+import MsgForm from '@/components/Form/MsgForm'; //
+import MsgTable from '@/components/Table/MsgTable'; //
+import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
 
 
 
 
-export const SuccResult = props => {
 
-  return <Result
-    status="success"
-    title="关联新增成功"
-    // subTitle="subTitle"
-    extra={[
-      <Button type="primary" key="console">
-        返回{TITLE}列表
-      </Button>,
-    ]}
-  
-  /> 
-}
-
-export const UploadCom = props => <div className="contentWrapper">
-    <Upload
-      listType="picture"
-      onChange={props.onChange}
-    >
-      {TITLE}列表<Button icon={<UploadOutlined />}>上传文件</Button>
-      <div className="extra">
-        支持扩展名：xls, xlsx, csv,...
-      </div>
-    </Upload>
-  </div>// 
-
-
-const menuConfig = [
-  { key: 'upload', text: '上传文件' },
-  { key: 'down', text: '下载数据模板' },
-];
-
-
-export const TITLE = '资产'
-export const DEVICE = '设备'
+export const TITLE = '消息'
 
 
 
 
-class Assets extends PureComponent {
+class Msg extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,12 +46,12 @@ class Assets extends PureComponent {
 
       action: '',  
       title: '',  
-      assetsTitle: '',  
+      msgTitle: '',  
 
       titleMap: {
-        add: `新增${DEVICE}`,
-        edit: `编辑${DEVICE}`,
-        detail: `${DEVICE}详情`,
+        add: `新增${TITLE}`,
+        edit: `编辑${TITLE}`,
+        detail: `${TITLE}详情`,
         newRelated: `关联新增`,
         upload: `文件上传`,
         down: `文件下载`,
@@ -98,17 +62,6 @@ class Assets extends PureComponent {
 
 
 
-  menuClick = (params,  ) => {
-    console.log(' menuClick,  , ： ', params, this.state.titleMap,    )
-  //   const {item,  } = this.props// 
-    this.setState({
-      showResultModal: true,
-      // title: this.state.titleMap[params.key],  
-      // modalContent: <ResultModal  ></ResultModal>,
-      // modalContent: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
-      // modalForm: UploadCom,
-    })
-  }
   onResultModalCancel = (e,  ) => {
     console.log('    onResultModalCancel ： ', e,   )
     this.setState({
@@ -117,30 +70,22 @@ class Assets extends PureComponent {
     
   }
   showFormModal = (params, ) => {
-    const {action,  } = params
+    const {action ,  } = params
     console.log('    showFormModal ： ', action, params, this.state, this.props,  );
     this.setState({
       action,
       show: true,
       title: this.state.titleMap[action],  
-      modalForm: AssetsForm,
+      modalForm: MsgForm,
     });
   };
 
 
   renderForm = (
-    <div>
-      <AssetsSearchForm></AssetsSearchForm>
-      <Divider />
-      <div className={'fsb '}  >
-        <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
-          <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
-          <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-          <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-          <Button type="primary">导出{TITLE}数据</Button>
-          <Button type="primary">删除</Button>
-        </div>
+    <div className={'fsb '}  >
+      <SearchForm></SearchForm>
+      <div className={'btnWrapper'}>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
       </div>
     </div>
   );
@@ -167,19 +112,9 @@ class Assets extends PureComponent {
       action,
       show: true,
       title: this.state.titleMap[action],  
-      modalContent: <AssetsDetailTable></AssetsDetailTable>,
     });
   };
   
-  // onUploadChange = (params,  ) => {
-  //   console.log(' onUploadChange,  , ： ', params,    )
-  //   if (params.file.status === 'done') {
-  //     this.setState({
-  //       showModalCom: <ResultModal></ResultModal>,
-  //     })
-  //   }
-    
-  // }
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -230,32 +165,37 @@ class Assets extends PureComponent {
     });
   };
 
-  componentDidMount() {
-    console.log(
-      ' Assets 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
-
-    // this.showFormModal();
-    // this.menuClick();
-
-  }
-
-  render() {
-    console.log(
-      ' %c Assets 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-    const { show, title, assetsTitle, action, showResultModal,  } = this.state; //
-
+  renderTable = (e,  ) => {
+    console.log('    renderTable ： ', e,   )
     const tableProps = {
       edit: this.showFormModal,
       remove: this.showFormModal,
       tdClick: this.showModalContent,
     }
+
+    return <MsgTable {...tableProps}  ></MsgTable>
+  }
+
+  componentDidMount() {
+    console.log(
+      ' Msg 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
+
+    this.showFormModal({action: 'add',  });
+
+  }
+
+  render() {
+    console.log(
+      ' %c Msg 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    );
+    const { show, title, msgTitle, action, showResultModal,  } = this.state; //
+
 
     const modalProps = {
       title: title,
@@ -274,22 +214,18 @@ class Assets extends PureComponent {
     }
     
     return (
-      <div className="Assets">
-
+      <div className="Msg">
+        
         {this.renderForm}
 
 
-        <AssetsTable {...tableProps}  ></AssetsTable>
+        {this.renderTable()}
 
-        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
-          title={title}
-        >
-          {this.renderModalContent()}
-        </SmartModal> */}
+ 
 
         <SmartFormModal
           // width={'900px'}
-          formComProps={{...tableProps, action, }} 
+          formComProps={{action, }} 
 
           title={title}
           onOk={this.onOk}
@@ -308,7 +244,6 @@ class Assets extends PureComponent {
           resProps={resProps} 
           
         >
-          {/* {this.renderModalContent()} */}
           <ErrorInfo></ErrorInfo>
         </ResultModal>
         
@@ -319,4 +254,4 @@ class Assets extends PureComponent {
   }
 }
 
-export default Assets;
+export default Msg;
