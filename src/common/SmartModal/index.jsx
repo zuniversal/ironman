@@ -89,7 +89,7 @@ class SmartModal extends PureComponent {
         wrapClassName={`${className} ${noJustify ? '' : 'textJustify'} smartModal `}
         title={title}
         // width={width != undefined ? width : '60%'}
-        width={width != undefined ? width : '1100px'}
+        width={width != undefined ? width : '800px'}
         visible={show}
         // onShow={this.onShow}
         onOk={this.onOk}

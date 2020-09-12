@@ -13,7 +13,9 @@
       "@/*": ["src/*"],
       "@@/*": ["src/.umi/*"]
       ,"smartTb": ["src/components/Table/*"],
-      "smartForm": ["src/components/Form/*"]
+      "smartForm": ["src/components/Form/*"],
+      "Widgets": ["src/components/Widgets/*"],
+      "Widgets": ["src/components/Widgets/*"]
     },
     "allowSyntheticDefaultImports": true
   },

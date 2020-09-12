@@ -14,6 +14,7 @@ export default defineConfig({
   alias: {
     'smartTb': './components/Table',
     'smartForm': './components/Form',
+    'Widgets': './components/Widgets',
 
   },
   routes: [
@@ -32,7 +33,8 @@ export default defineConfig({
   ],
   theme: {
     '@primary-color': '#00B460',
-    '@menu-bg': '#00B460'
+    '@menu-dark-bg': '#2C2C2C',
+    
 
   },
   

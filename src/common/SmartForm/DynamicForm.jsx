@@ -35,10 +35,12 @@ const layoutObj = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 6 },
+    sm: { span: 0 },
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 18 },
+    sm: { span: 24 },
   },
 };
 
@@ -128,6 +130,9 @@ const DynamicForm = props => {
     noRule,
     addText,
     subText,
+
+    noLabel,
+
   } = props; //
 
   return (
@@ -136,27 +141,34 @@ const DynamicForm = props => {
         const { add, remove } = params;
         console.log(' params ： ', fields, params, itemProps); //
 
-        const { label } = itemProps;
+        const { label, className,   } = itemProps;
 
         const formItemProps = {
           ...itemProps,
-          className: 'dynamicFormItem',
+          className: `dynamicFormItem  `,
           rules: noRule ? [] : rules({ items: props, label }),
         };
 
-        const formLabel = customLabel ? customLabel : getLabel(label, formType);
+        if (noLabel) {
+          formItemProps.label = ''
+        }
+        
+
+        const formLabel = (customLabel ? customLabel : getLabel(label, formType));
         // console.log('  formLabel ：', formLabel,  )//
 
         const realComProps = {
           ...comProps,
+          className: ` ${comProps.className} `,
           placeholder: formLabel,
         };
-        console.log(' realComProps ： ', realComProps); //
+        console.log(' realComProps ： ', realComProps, formItemProps,    ); //
 
         const formItemMap = {
           rowText: '',
           Input: (
-            <Input allowClear {...realComProps} className={'inlineInput '} />
+            // <Input allowClear {...realComProps} className={'inlineInput '} />
+            <Input allowClear {...realComProps}  />
           ),
           Select: (
             <Select allowClear {...realComProps}>
@@ -243,7 +255,6 @@ const DynamicForm = props => {
                   // label={label}
                   // rules={rules}
                   // valuePropName="checked"
-                  // {...formItemProps}
 
                   {...formItemLayout}
                   className={'formItems dynamicFormWrapper'}
@@ -278,6 +289,7 @@ const DynamicForm = props => {
 DynamicForm.defaultProps = {
   addText: '添加',
   subText: '刪除',
+  noLabel: true,  
 };
 
 export default DynamicForm; //

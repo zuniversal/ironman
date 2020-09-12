@@ -27,6 +27,7 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '省',
+      className: 'w-200',  
       name: 'province',
       key: 'province',
     },
@@ -37,6 +38,7 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '市',
+      className: 'w-200',  
       name: 'city',
       key: 'city',
     },
@@ -46,6 +48,7 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '县',
+      className: 'w-200',  
       name: 'site',
       key: 'site',
     },

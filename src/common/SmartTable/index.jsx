@@ -1,9 +1,11 @@
 import React, { Component, PureComponent } from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import { Table, Icon, Switch, Radio, Form, Divider, Button, Input } from 'antd';
-import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
-import { showTotal, dataFilter, customFilter } from '@/utils'; //
-
+import { RemoveModal } from '@/components/Modal/ResultModal';
+import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //onRemove
+// import { showTotal, dataFilter, customFilter } from '@/utils'; //
+import { tips,  } from '@/utils'; //
 import datas from '@/pages/data'; //
 
 // export const showTotal = (total) => `總共 ${total} 條`
@@ -18,7 +20,7 @@ import datas from '@/pages/data'; //
 // }
 
 export const ActionCom = (props,  ) => {
-  const {edit, remove, extra, record  } = props
+  const {edit, remove, extra, record, onRemove,    } = props
   // console.log(' ActionCom props ： ', props,  )//
   return (
     <span>
@@ -53,6 +55,8 @@ class SmartTable extends PureComponent {
       searchKey: '',
       filtered: false,
       filterDropdownVisible: false,
+
+      showResultModal: false,  
 
       datas,
 
@@ -198,7 +202,9 @@ class SmartTable extends PureComponent {
   onRemove = (e,  ) => {
     console.log('    onRemove ： ', e, this.state, this.props,   )
     const {remove,  } = this.props// 
-
+    this.setState({
+      showResultModal: true,
+    })
   }
 
 
@@ -211,9 +217,25 @@ class SmartTable extends PureComponent {
     name: record.name,
   })
 
+  
+  onResultModalOk = (e,  ) => {
+    console.log(' onResultModalOk   e,  ,   ： ', e,    )
+    tips('删除成功！')
+    this.setState({
+      showResultModal: false,
+    })
+  }
+
+  onResultModalCancel = (e, ) => {
+    console.log(' onResultModalCancel   e, ,   ： ', e,   )
+    this.setState({
+      showResultModal: false,
+    })
+  }
+
 
   render() {
-    const { pagination, searchText, searchKey, selectionType,   } = this.state;
+    const { pagination, searchText, searchKey, selectionType, showResultModal,   } = this.state;
     const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -250,7 +272,7 @@ class SmartTable extends PureComponent {
     const cols = [
       ...col,
     ]
-    console.log('  对吗  !noActionCol ', !noActionCol,    )
+    // console.log('  对吗  !noActionCol ', !noActionCol, actionCol,    )
     if (!noActionCol) {
       cols.push(actionCol)
     }
@@ -267,6 +289,23 @@ class SmartTable extends PureComponent {
       this.state,
       this.props,
     ); //
+
+
+    const title = '删除电站'
+
+    const modalProps = {
+      title: title,
+      show: showResultModal,
+      onOk: this.onResultModalOk,
+      onCancel: this.onResultModalCancel,
+    }
+    const resProps = {
+      // okFn: this.handleOk, 
+      // offFn: this.handleOff, 
+      okFn: this.onResultModalOk, 
+      offFn: this.onResultModalCancel, 
+    }
+    
 
 
     return (
@@ -286,8 +325,8 @@ class SmartTable extends PureComponent {
           }}
 
           pagination={pagination}
-          // rowClassName={(record, i) => ANIMATE.bounceIn}
-          rowClassName={(record, i) => ANIMATE.slideInRight}
+          rowClassName={(record, i) => ANIMATE.bounceIn}
+          // rowClassName={(record, i) => ANIMATE.slideInRight}
 
           {...this.props}
           // dataSource={dataSource}
@@ -300,22 +339,53 @@ class SmartTable extends PureComponent {
           columns={cols}
           className={`smartTable ${className} `}
         />
+
+        <RemoveModal 
+          modalProps={modalProps} 
+          resProps={resProps}
+          
+        >
+          {/* <div className="dfc">
+            {okText && <Button key="buy">{okText}</Button>}
+            {okText && <Button type="primary" >{okText}</Button>}
+          </div> */}
+        </RemoveModal>
+
       </div>
     );
   }
 }
 
+
 SmartTable.defaultProps = {
+  className: '',
   columns: [],
   // dataSource: [],
   dataSource: datas,
-  className: '',
   rowKey: 'key',
+
   edit: () => {}, 
   remove: () => {}, 
-  actionConfig: {},  
+  actionConfig: {},
+  extra: null, 
+  noActionCol: false,
 
 
 };
+
+SmartTable.propTypes = {
+  className: PropTypes.string,
+  columns: PropTypes.array,
+  dataSource: PropTypes.array,
+  rowKey: PropTypes.string,
+  edit: PropTypes.func,
+  remove: PropTypes.func,
+  actionConfig: PropTypes.object,
+  noActionCol: PropTypes.bool,
+
+}
+
+
+
 
 export default SmartTable; //

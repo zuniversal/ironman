@@ -59,7 +59,6 @@ const AssetsSearchForm = props => {
         // flexRow={4}
         // flexRow={6}
         // config={config}
-        layout="inline"
         config={formatConfig(config)}
         formProps={formProps}
         // init={init}

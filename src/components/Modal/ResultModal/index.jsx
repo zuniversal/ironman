@@ -24,7 +24,7 @@ import {
   Divider,
   
 } from 'antd';
-import { SmileOutlined, CloseCircleOutlined,  } from '@ant-design/icons';
+import { SmileOutlined, CloseCircleOutlined, ExclamationOutlined,  } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import SmartModal from '@/common/SmartModal'; //
@@ -32,203 +32,6 @@ import { regoins } from '@/configs'; //
 
 const { Paragraph, Text } = Typography;
 
-export const config = [
-  {
-    formType: 'rowText',
-    rowText: '基本信息:',
-    noRule: true,
-    itemProps: {
-      label: '基本信息:',
-      key: 'rowText',
-    },
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '客户名称',
-    },
-    comProps: {},
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '客户类型',
-    },
-    comProps: {},
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '所属行业',
-    },
-    comProps: {},
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '企业规模',
-    },
-    comProps: {},
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '资产规模',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '总面积',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '占地面积',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '企业LOGO',
-    },
-    comProps: {},
-  },
-
-  {
-    formType: 'rowText',
-    rowText: '位置信息',
-    noRule: true,
-    itemProps: {
-      label: '位置信息',
-      key: 'rowText',
-    },
-  },
-  {
-    formType: 'Cascader',
-    itemProps: {
-      label: '区域',
-    },
-    comProps: {
-      options: regoins,
-    },
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '详细地址',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '经度',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '纬度',
-    },
-    comProps: {},
-  },
-
-  {
-    formType: 'rowText',
-    rowText: '管理员信息',
-    noRule: true,
-    itemProps: {
-      label: '管理员信息',
-      key: 'rowText',
-    },
-  },
-  {
-    formType: 'Dynamic',
-    itemProps: {
-      // label: '用户名',
-      // label: ' ',
-      className: 'noMBottom',
-    },
-    comProps: {
-      // key: 'userName',
-      // formType: 'Select',
-      itemProps: {
-        label: '用户名',
-      },
-      comProps: {},
-    },
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '密码',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '手机号',
-    },
-    comProps: {},
-  },
-
-  {
-    formType: 'rowText',
-    rowText: '其他信息',
-    noRule: true,
-    itemProps: {
-      label: '其他信息',
-      key: 'rowText',
-    },
-  },
-
-  // {
-  //   // formType: 'Select',
-  //   itemProps: {
-  //     label: '下属户号',
-  //   },
-  //   comProps: {},
-  // },
-
-  <Form.Item label="下属户号" key={'captcha'} className={'noMBottom'}>
-    <Row gutter={8}>
-      <Col span={12}>
-        <Form.Item
-          name="houseNo"
-          // label="下属户号"
-          key={'houseNo'}
-          rules={[
-            {
-              required: true,
-              message: 'Please input your E-mail!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-      </Col>
-
-      <Col span={12}>
-        <Button>生成客户画像</Button>
-      </Col>
-    </Row>
-  </Form.Item>,
-
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '附件',
-    },
-    comProps: {},
-  },
-];
 
 
 export const ErrorInfo = (props) => {
@@ -251,14 +54,85 @@ export const ErrorInfo = (props) => {
 }
 
 
+export const RemoveModal = (props, ) => {
+  console.log(' %c RemoveModal 组件 props ： ', `color: #333; font-weight: bold`, props,      )
+  const onResultModalOk = (e,  ) => {
+    console.log(' onResultModalOk   e,  ,   ： ', e,    )
+    
+  }
+
+  const onResultModalCancel = (e, ) => {
+    console.log(' onResultModalCancel   e, ,   ： ', e,   )
+    
+  }
+
+  const title = '删除电站'
+  const showResultModal = false
+
+  const {modalProps, resProps, children,     } = props// 
+
+  
+  // const resProps = {
+  //   status: 'error',  
+  //   title: '导入成功',  
+  //   subTitle: '请核对并修改以下信息后，再重新提交。',  
+  //   // extra: [
+  //   //   <Button  key="console" >返回列表</Button>,
+  //   // ],
+  //   children: <ErrorInfo></ErrorInfo>,
+  // }
+  console.log(' resProps ： ', resProps,  )// 
+  return (<ResultModal className={'RemoveModal'} 
+    // title={'您是否确认删除？'}
+    // subTitle={'删除电站会删除电站下所有资产。监测点，请慎重!'}
+    // okText={'确认'}
+    // cancelText={'取消'}:
+
+    modalProps={modalProps} 
+    resProps={{
+      icon: <ExclamationOutlined className={'warnings '}  />, 
+      status: 'warning',  
+      title: '您是否确认删除？111',  
+      subTitle: '删除电站会删除电站下所有资产。监测点，请慎重!',  
+      okText: '确认',  
+      cancelText: '取消',  
+      ...resProps,
+    }} 
+
+  >
+    {children}
+  </ResultModal>)
+  
+}
+
+RemoveModal.defaultProps = {
+  // title: '您是否确认删除？',  
+  // subTitle: '删除电站会删除电站下所有资产。监测点，请慎重!',  
+  // okText: '确认',  
+  // cancelText: '取消',  
+  
+};
+
 
 
 
 const ResultModal = props => {
   const [form] = Form.useForm();
   console.log(' ResultModal ： ', props, form); //
+  const { show, onOk, onCancel, onSubmit, onFail, modalProps, resProps, 
+    children,
+  } = props; //
 
-  const { show, onOk, onCancel, onSubmit, onFail, modalProps, resProps,  } = props; //
+  const {status = 'succ', okText, cancelText, okFn, offFn,   } = resProps
+  
+  const btnCom = <div className="dfc">
+    {cancelText && <Button onClick={offFn} >{cancelText}</Button>}
+    {okText && <Button type="primary" onClick={okFn} >{okText}</Button>}
+  </div>
+
+  // const { 
+  //   children = btnCom,   
+  // } = props; //
 
   // const onOk = e => {
   //   console.log(' onOk   e, ,   ： ', e);
@@ -266,12 +140,12 @@ const ResultModal = props => {
   //   onOk && onOk({ e, form });
   // };
 
-  const {status = 'succ', children,  } = resProps
 
   const statusMap = {
     succ: 'success',
     success: 'success',
     error: 'error',
+    warning: 'warning',
   }[status]
 
   console.log(' statusMap ： ', statusMap, status,  )// 
@@ -291,6 +165,8 @@ const ResultModal = props => {
       
     > 
       {children}
+
+      {(okText || cancelText) && btnCom}
     </Result>
   </SmartModal>;
 };

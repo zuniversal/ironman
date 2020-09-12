@@ -22,10 +22,10 @@ import { regoins } from '@/configs'; //
 export const config = [
   {
     formType: 'rowText',
-    rowText: '基本信息:',
-    noRule: true,
+    // rowText: '基本信息',
+    // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
       key: 'rowText',
     },
   },
@@ -88,8 +88,8 @@ export const config = [
 
   {
     formType: 'rowText',
-    rowText: '位置信息',
-    noRule: true,
+    // rowText: '位置信息',
+    // noRule: true,
     itemProps: {
       label: '位置信息',
       key: 'rowText',
@@ -138,13 +138,16 @@ export const config = [
   {
     formType: 'Dynamic',
     itemProps: {
-      // label: '用户名',
+      // label: '',
+      label: '用户名',
     },
     comProps: {
       itemProps: {
         label: '用户名',
       },
-      comProps: {},
+      comProps: {
+        className: 'w-320',  
+      },
     },
   },
   {
@@ -164,7 +167,7 @@ export const config = [
 
   {
     formType: 'rowText',
-    rowText: '其他信息',
+    // rowText: '其他信息',
     noRule: true,
     itemProps: {
       label: '其他信息',

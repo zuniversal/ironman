@@ -52,10 +52,10 @@ console.log(' reportOption  reportConfig.map v ： ', reportOption,   )
 export const config = [
   {
     formType: 'rowText',
-    // rowText: '基本信息:',
+    // rowText: '基本信息',
     // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
     },
   },
   {
@@ -116,10 +116,10 @@ export const config = [
   },
   {
     formType: 'rowText',
-    // rowText: '附件:',
+    // rowText: '附件',
     // noRule: true,
     itemProps: {
-      label: '附件:',
+      label: '附件',
     },
   },
   // {

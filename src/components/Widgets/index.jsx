@@ -42,10 +42,10 @@ export const UploadCom = (props, ) => {
     colon={false}
     // extra="支持扩展名：.pdf"
   >
-    <Upload name="logo" action="/upload.do"  listType="picture-card" className={'uploadCom'}  >
+    <Upload name="logo" action="/upload.do"  listType="picture-card" >
       <div>
-        <PlusOutlined className={'icon'}  />
-        <div className={'text'}  >上传照片</div>
+        <PlusOutlined />
+        <div style={{ marginTop: 8 }}>上传照片</div>
       </div>
     </Upload>
   </Form.Item> 
@@ -55,7 +55,7 @@ export const UploadCom = (props, ) => {
 
 
 
-class Temp extends React.Component {
+class Widgets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -70,4 +70,4 @@ class Temp extends React.Component {
   }
 }
 
-export default Temp;
+export default Widgets;

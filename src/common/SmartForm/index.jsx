@@ -94,40 +94,6 @@ export const getLabel = (label, key) => {
   return labelMap[key];
 };
 
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const formItemLayout = {
   // labelCol: {
@@ -346,6 +312,7 @@ const SmartForm = (props, state) => {
       className: `formItems rowText ${itemProps.className}  `,
     };
     const formItemProps = {
+      colon: false,  
       ...itemProps,
       className: `formItems ${itemProps.className}  `,
       rules: noRule ? undefined : rules({ items, label }),
@@ -355,6 +322,7 @@ const SmartForm = (props, state) => {
     // console.log('  formLabel ：', formLabel,  )//
 
     const realComProps = {
+      className: 'w-320',
       ...comProps,
       placeholder: formLabel,
     };
@@ -459,7 +427,8 @@ const SmartForm = (props, state) => {
         // className={`formItems ${className}  `}
 
         {...formItemProps}
-        {...(formType === 'Dynamic' ? noLabelLayout : {})}
+        // {...(formType === 'Dynamic' ? formItemNoRuleProps : formItemProps)}
+        // {...(formType === 'Dynamic' ? rowLayout : {})}
       >
         {formItemCom}
       </Form.Item>

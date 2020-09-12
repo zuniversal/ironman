@@ -162,13 +162,16 @@ export const clientConfig = [
   {
     formType: 'Dynamic',
     itemProps: {
-      // label: '用户名',
+      // label: '',
+      label: '用户名',
     },
     comProps: {
       itemProps: {
         label: '用户名',
       },
-      comProps: {},
+      comProps: {
+        className: 'w-320',  
+      },
     },
   },
 
@@ -186,10 +189,10 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '其他信息:',
+    // rowText: '其他信息',
     // noRule: true,
     itemProps: {
-      label: '其他信息:',
+      label: '其他信息',
     },
   },
   {
@@ -202,10 +205,10 @@ export const clientConfig = [
 export const contractConfig = [
   {
     formType: 'rowText',
-    // rowText: '基本信息:',
+    // rowText: '基本信息',
     // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
     },
   },
   {

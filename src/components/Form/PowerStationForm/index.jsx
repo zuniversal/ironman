@@ -134,10 +134,10 @@ const PowerStationForm = props => {
   const config = [
     {
       formType: 'rowText',
-      // rowText: '基本信息:',
+      // rowText: '基本信息',
       // noRule: true,
       itemProps: {
-        label: '基本信息:',
+        label: '基本信息',
       },
     },
     {

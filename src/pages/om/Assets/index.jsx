@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography,  } from 'antd';
+import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography, Divider,  } from 'antd';
 import {
   UploadOutlined,
   PlusOutlined,
@@ -131,6 +131,7 @@ class Assets extends PureComponent {
   renderForm = (
     <div>
       <AssetsSearchForm></AssetsSearchForm>
+      <Divider />
       <div className={'fsb '}  >
         <SearchForm></SearchForm>
         <div className={'btnWrapper'}>
@@ -224,6 +225,8 @@ class Assets extends PureComponent {
     console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       show: false,
+      modalForm: null,  
+      modalContent: null,  
     });
   };
 
@@ -267,7 +270,7 @@ class Assets extends PureComponent {
       // extra: [
       //   <Button  key="console" >返回列表</Button>,
       // ],
-      children: <ErrorInfo></ErrorInfo>,
+      // children: <ErrorInfo></ErrorInfo>,
     }
     
     return (
@@ -305,7 +308,8 @@ class Assets extends PureComponent {
           resProps={resProps} 
           
         >
-          {this.renderModalContent()}
+          {/* {this.renderModalContent()} */}
+          <ErrorInfo></ErrorInfo>
         </ResultModal>
         
 

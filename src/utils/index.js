@@ -32,18 +32,28 @@ export const succModal = (content = '', title = SUCC_TXT) =>
 //     });
 // };
 
-export const confirms = (c = 1, m, t = 3, cb) => {
-  // console.log('confirms ：', c, t, cb, )
-  let type = 'success';
-  if (c === 0) {
-    type = 'error';
-  } else if (c === 2) {
-    type = 'warn';
-  }
+export const confirms = (type = 1, msg, time = 3, cb) => {
+  // console.log('confirms ：', type, time, cb, )
+  const msgMap = {
+    0: 'error',
+    1: 'success',
+    2: 'warn',
+  }[type]
+  
   message.config({
-    duration: 6,
+    duration: 3,
   });
-  message[type](m, t, cb);
+  message[msgMap](msg, time, cb);
+};
+
+export const tips = (msg, type = 1, time = 3, cb) => {
+  // console.log('confirms ：', type, time, cb, )
+  const msgMap = {
+    0: 'error',
+    1: 'success',
+    2: 'warn',
+  }[type]
+  message[msgMap](msg, time, cb);
 };
 
 // export const isNoTips = res => JSON.parse(res.config.data).noTips
@@ -417,88 +427,6 @@ export const pagination = total => ({
   showTotal,
 });
 
-export const dataFilter = (t, data = [], searchText, k) => {
-  // console.log(' dataFilter ：', t, t.state, data, 'k ：', k, 'searchText ：', searchText, );
-  if (data.length && k != '') {
-    const reg = new RegExp(searchText, 'gi');
-    return data
-      .map(record => {
-        // console.log('record ：', record);
-        if (record[k] != undefined) {
-          const match = `${record[k]}`.match(reg);
-          if (!match) {
-            return null;
-          }
-          return {
-            ...record,
-            [k]: record[k],
-          };
-        } else {
-          return {
-            ...record,
-          };
-        }
-      })
-      .filter(record => !!record);
-  } else {
-    return data;
-  }
-};
-
-export const customFilter = (t, k) => {
-  //   console.log(' customFilter ：', t, t.onInputChange);
-  return {
-    filterDropdown: (
-      <div className="custom-filter-dropdown">
-        <Input
-          ref={ele => (t.searchInput = ele)}
-          placeholder={`${INPUT_TXT}The Search Text`}
-          value={t.state.searchText}
-          onChange={t.onInputChange.bind(t, k)}
-        />
-        <Button type="primary" onClick={t.blur.bind(this, k)} className="m-r10">
-          關閉
-        </Button>
-        <Button type="primary" onClick={t.reset.bind(this, k)}>
-          重置
-        </Button>
-      </div>
-    ),
-    filterIcon: (
-      <Icon
-        type="filter"
-        style={{ color: t.state.filtered ? '#fff' : '#fff' }}
-      />
-    ),
-    filterDropdownVisible: t.state[`${k}Visible`],
-    onFilterDropdownVisibleChange: visible => {
-      console.log(
-        ' onFilterDropdownVisibleChange  ：',
-        visible,
-        t,
-        t.state,
-        `${k}Visible`,
-        k,
-      );
-      // if (!t.state.isHandleTableChange) {
-      t.setState(
-        {
-          [`${k}Visible`]: visible,
-          // searchText: '', searchKey: '',
-        },
-        () => {
-          console.log(' focusfocus ： '); //
-          t.searchInput.focus();
-          // t.setState({
-          //     searchText: '',
-          // })
-          t.reset();
-        },
-      );
-      // }
-    },
-  };
-};
 
 export const formatConfig = config =>
   config.map((v, i) => ({
@@ -510,3 +438,11 @@ export const formatConfig = config =>
         ? { ...v.itemProps, key: `key${i}` }
         : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
   }));
+
+
+  
+
+
+
+
+

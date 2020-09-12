@@ -27,7 +27,9 @@ export const config = [
       name: 'province',
       key: 'province',
     },
-    comProps: {},
+    comProps: {
+      className: 'w-200',  
+    },
     // customLabel: '自定义customLabel',
   },
   {
@@ -37,7 +39,9 @@ export const config = [
       name: 'city',
       key: 'city',
     },
-    comProps: {},
+    comProps: {
+      className: 'w-200',  
+    },
   },
   {
     formType: 'Select',
@@ -46,7 +50,9 @@ export const config = [
       name: 'site',
       key: 'site',
     },
-    comProps: {},
+    comProps: {
+      className: 'w-200',  
+    },
   },
 
   // <Form.Item
@@ -98,14 +104,14 @@ const ProvinceForm = props => {
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
-    // layout: 'inline',
+    layout: 'inline',
   };
 
   return (
     <div className={'fsb provinceForm '}>
       <SmartForm
         // flexRow={4}
-        flexRow={8}
+        // flexRow={8}
         config={config}
         formProps={formProps}
         // init={init}

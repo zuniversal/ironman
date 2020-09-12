@@ -129,7 +129,7 @@ class UserCenter extends PureComponent {
 
 
     return (
-      <div className="UserCenter">
+      <div className="userCenter dfc  ">
         <UserCenterForm></UserCenterForm>
 
 

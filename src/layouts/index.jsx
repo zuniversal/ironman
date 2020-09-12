@@ -15,6 +15,8 @@ import defaultProps from './defaultProps';
 import { history } from 'umi';
 import './style.less';
 import { ANIMATE,  } from '@/constants'//
+import Icon from '@/components/Widgets/Icons'//
+// import Icon from 'Widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
 const { Header, Sider, Content } = Layout;
@@ -153,8 +155,10 @@ export default props => {
           <div>
             {/* <Avatar shape="square" size="small" icon={<SearchOutlined />} />
             <Avatar shape="square" size="small" icon={<UserOutlined />} /> */}
-            <SearchOutlined className={'actionItem '} />
-            <BellOutlined className={'actionItem '} />
+            {/* <SearchOutlined className={'actionItem '} /> */}
+            {/* <BellOutlined className={'actionItem '} /> */}
+            <Icon icon={'search'} className={'actionItem '}  />
+            <Icon icon={'bell'} className={'actionItem '}  />
             <Avatar className={'actionItem'}  shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
             <span className={'actionItem userName '}  >用户名</span>
           </div>
@@ -208,8 +212,6 @@ export default props => {
               content
             </div>
           )}
-
-
           // content={content}
           // tabList={[
           //   {
@@ -236,9 +238,7 @@ export default props => {
           //     提交
           //   </Button>,
           // ]}
-
         >
-
           
            需要抱过个容器 否则会报错 TypeError: react_redux_lib_default(...) is not a function 
           <div
@@ -256,14 +256,7 @@ export default props => {
               subTitle="Sorry, you are not authorized to access this page."
               extra={<Button type="primary">Back Home</Button>}
             />
-
-
-
           </div>
-
-
-
-
         </PageContainer> */}
       </ProLayout>
 
