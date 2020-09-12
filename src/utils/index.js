@@ -18,6 +18,26 @@ const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
 
+
+
+
+export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.key} key={v.key} >{v.value}</Radio>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const INPUT_TXT = 'Please Input ';
 export const SUCC_TXT = 'Action Successful o(*￣︶￣*)o ！';
 

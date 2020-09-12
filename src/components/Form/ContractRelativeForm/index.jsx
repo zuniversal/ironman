@@ -26,7 +26,7 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 const normFile = e => {
   console.log('Upload event:', e);
@@ -40,12 +40,11 @@ const normFile = e => {
 
 
 const reportConfig = [
-  { value: '是', key: 'key1',  },
-  { value: '否', key: 'key2',  },
+  { value: '是', key: 'yes',  },
+  { value: '否', key: 'no',  },
 ]
 
-const reportOption = reportConfig.map((v) => <Radio value={v.key} key={v.key} >{v.value}</Radio>)
-console.log(' reportOption  reportConfig.map v ： ', reportOption,   )
+const reportOption = reportRadioOp(reportConfig,  )
 
 
 

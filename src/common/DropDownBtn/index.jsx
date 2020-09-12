@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Table,
@@ -55,7 +56,18 @@ const DropDownBtn = props => {
 };
 
 DropDownBtn.defaultProps = {
+  placeholder: '按钮',
+  noEllipsis: false,
   menuConfig: [],
+  menuClick: () => {},  
 };
+
+DropDownBtn.propTypes = {
+  noEllipsis: PropTypes.bool,
+  noEllipsis: PropTypes.bool,
+  menuConfig: PropTypes.array,
+  menuClick: PropTypes.func,
+
+}
 
 export default DropDownBtn;

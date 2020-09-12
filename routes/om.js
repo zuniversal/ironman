@@ -1,31 +1,31 @@
 export default [
   {
-    path: '/client',
+    path: '/om/client',
     component: '@/pages/om/Client',
     title: '客户管理',
   },
   {
-    path: '/contract',
+    path: '/om/contract',
     component: '@/pages/om/Contract',
     title: '合同管理',
   },
   {
-    path: '/houseno',
+    path: '/om/houseno',
     component: '@/pages/om/HouseNo',
     title: '户号管理',
   },
   {
-    path: '/assets',
+    path: '/om/assets',
     component: '@/pages/om/Assets',
     title: '户号管理',
   },
   {
-    path: '/powerstation',
+    path: '/om/powerstation',
     component: '@/pages/om/PowerStation',
     title: '电站管理',
   },
   {
-    path: '/userCenter',
+    path: '/om/userCenter',
     component: '@/pages/UserCenter',
     title: '个人中心',
   },

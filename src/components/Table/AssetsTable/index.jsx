@@ -61,13 +61,20 @@ const AssetsTable = props => {
     },
   ];
 
+  
+  const showQRCode = (e, ) => {
+    console.log(' showQRCode   e, ,   ： ', e,   )
+    
+  }
+
+
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
       extra={
-        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+        <a onClick={showQRCode}>生成二维码1</a>
       }
       {...props}
     ></SmartTable>

@@ -15,7 +15,7 @@
       ,"smartTb": ["src/components/Table/*"],
       "smartForm": ["src/components/Form/*"],
       "Widgets": ["src/components/Widgets/*"],
-      "Widgets": ["src/components/Widgets/*"]
+      "_Widgets": ["src/components/Widgets/*"]
     },
     "allowSyntheticDefaultImports": true
   },

@@ -108,7 +108,7 @@ const ProvinceForm = props => {
   };
 
   return (
-    <div className={'fsb provinceForm '}>
+    <div className={' provinceForm '}>
       <SmartForm
         // flexRow={4}
         // flexRow={8}

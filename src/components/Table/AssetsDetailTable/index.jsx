@@ -164,6 +164,12 @@ const AssetsDetailTable = props => {
     deviceCol3,
   ]
 
+
+  const showQRCode = (e, ) => {
+    console.log(' showQRCode   e, ,   ： ', e,   )
+    
+  }
+
   return (
     <div className={'assetsDetailTable'} >
       {infoCols.map((v, i) => <SmartTable
@@ -173,7 +179,7 @@ const AssetsDetailTable = props => {
         // dataSource={noCalculateList}
         // rowKey={'source_no'}
         extra={
-          <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+          <a onClick={showQRCode}>生成二维码1</a>
         }
         rowLength={1}
         noActionCol
@@ -200,7 +206,7 @@ const AssetsDetailTable = props => {
           // dataSource={noCalculateList}
           // rowKey={'source_no'}
           extra={
-            <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+            <a onClick={showQRCode}>生成二维码1</a>
           }
           rowLength={1}
           noActionCol

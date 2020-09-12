@@ -17,7 +17,8 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
+import { regoins } from '@/configs'//
+import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 export const config = [
   {
@@ -182,13 +183,7 @@ export const config = [
   },
 ];
 
-// const formConfig = config.map((v, i) => ({ ...v, itemProps:  v.formType === 'rowText' ? {...v.itemProps} : {...v.itemProps, key: `key{i}`, name: `name${i}`, },    }))
-// const formConfig = config.map((v, i) => ({ ...v, itemProps:  {...v.itemProps, key: `key{i}`, name: `name${i}`, noRule: v.formType === 'rowText',   },   }))
-const formConfig = config.map((v, i) => ({
-  ...v,
-  itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-}));
-// console.log(' formConfig  config.map v ： ', formConfig,   )
+
 
 const init = {
   name: 'zyb',
@@ -213,7 +208,7 @@ const ClientForm = props => {
     <div className={''}>
       <SmartForm
         // flexRow={4}
-        config={formConfig}
+        config={formatConfig(config)}
         formProps={formProps}
         // init={init}
         // init={{}}

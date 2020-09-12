@@ -1,4 +1,5 @@
 import React, { useState, isValidElement,  } from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -525,13 +526,26 @@ const SmartForm = (props, state) => {
   );
 };
 
+
 SmartForm.defaultProps = {
-  config: [],
-  init: {},
-  // formProps: {},
   formBtn: null,
-  isRowBtn: false,
   className: '',
+  config: [],
+  flexRow: 0,
+  isRowBtn: false,
+  init: {},
+  // formProps: {},  
+
 };
+
+SmartForm.propTypes = {
+  className: PropTypes.string,
+  config: PropTypes.array,
+  flexRow: PropTypes.number,
+  isRowBtn: PropTypes.bool,
+  init: PropTypes.object,
+  // formProps: PropTypes.object,
+
+}
 
 export default SmartForm;

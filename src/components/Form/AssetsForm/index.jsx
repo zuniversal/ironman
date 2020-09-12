@@ -124,7 +124,7 @@ const AssetsForm = props => {
       },
     },
 
-    <UploadCom label={'上传铭牌'}    ></UploadCom>,
+    <UploadCom label={'上传铭牌'} key={'uploadCom'}    ></UploadCom>,
     
   ];
 

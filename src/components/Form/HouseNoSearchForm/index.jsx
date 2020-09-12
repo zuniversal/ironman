@@ -17,7 +17,8 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
+import { regoins } from '@/configs'//
+import { formatConfig, reportRadioOp,  } from '@/utils'//  
 
 export const config = [
   {
@@ -79,7 +80,7 @@ const HouseNoSearchForm = props => {
       <SmartForm
         // flexRow={4}
         // flexRow={6}
-        config={config}
+        config={formatConfig(config)}
         formProps={formProps}
         // init={init}
         // init={{}}

@@ -14,7 +14,7 @@ export default defineConfig({
   alias: {
     'smartTb': './components/Table',
     'smartForm': './components/Form',
-    'Widgets': './components/Widgets',
+    '_Widgets': './components/Widgets',
 
   },
   routes: [
@@ -24,7 +24,11 @@ export default defineConfig({
     {
       path: '/',
       component: '@/layouts/index',
-      routes: [...om],
+      routes: [
+        ...cs,
+        ...om,
+        ...sm,
+      ],
     },
 
     ...cs,

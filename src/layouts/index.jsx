@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense,   } from 'react';
 import { Button, Descriptions, Result, Avatar, Layout } from 'antd';
 import {
   UserOutlined,
@@ -16,7 +16,7 @@ import { history } from 'umi';
 import './style.less';
 import { ANIMATE,  } from '@/constants'//
 import Icon from '@/components/Widgets/Icons'//
-// import Icon from 'Widgets/Icons'//
+// import Icon from '_Widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
 const { Header, Sider, Content } = Layout;
@@ -88,7 +88,8 @@ export default props => {
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different 
           // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
           if (item.path === pathname) {
-            setTitle(item.name)
+            // setTitle(item.name)
+            setTimeout(() => setTitle(item.name), 0)
           }
 
           
@@ -169,32 +170,39 @@ export default props => {
 
         {...settings}
       >
-        <Content
-          key={pathname} 
-          // className={`${ANIMATE.flash} container `}
-          className={` container `}
-          style={
-            {
-              // margin: '20px',
-              // padding: '100px',
-              // minHeight: '100px',
-            }
-          }
+        <Suspense
+          fallback={null}
         >
-          <div className="titleWrapper">
-            <div className="pageTitle">
-              {title}
-            </div>
-          </div>
-          {/* <Com></Com> */}
-          {/* <UserCenterForm></UserCenterForm> */}
 
-          <div className="content">
-            {children}
             
-          </div>
-          
-        </Content>
+          <Content
+            key={pathname} 
+            // className={`${ANIMATE.flash} container `}
+            className={` container `}
+            style={
+              {
+                // margin: '20px',
+                // padding: '100px',
+                // minHeight: '100px',
+              }
+            }
+          >
+            <div className="titleWrapper">
+              <div className="pageTitle">
+                {title}
+              </div>
+            </div>
+            {/* <Com></Com> */}
+            {/* <UserCenterForm></UserCenterForm> */}
+
+            <div className="content">
+              {children}
+              
+            </div>
+            
+          </Content>
+
+        </Suspense>
 
         {/* <PageContainer
           tabBarExtraContent={() => (

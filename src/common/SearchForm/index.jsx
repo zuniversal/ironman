@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Table,
@@ -113,12 +114,21 @@ class SearchForm extends PureComponent {
 }
 
 SearchForm.defaultProps = {
-  menuConfig: [],
-  className: '',
-  placeholder: INPUT_TXT,
-  word: WORD, 
-  defPh: true,  
+    className: '',
+    menuConfig: [],
+    placeholder: INPUT_TXT,
+    word: WORD, 
+    defPh: true,  
+
 
 };
+
+SearchForm.propTypes = {
+    menuConfig: PropTypes.array,
+    placeholder: PropTypes.string,
+    word: PropTypes.string,
+    defPh: PropTypes.bool,
+
+}
 
 export default SearchForm;
