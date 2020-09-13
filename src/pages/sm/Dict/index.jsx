@@ -183,7 +183,7 @@ class Dict extends PureComponent {
       this.props,
     ); //
 
-    this.showFormModal({action: 'add',  });
+    // this.showFormModal({action: 'add',  });
 
   }
 

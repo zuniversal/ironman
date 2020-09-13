@@ -1,7 +1,9 @@
 
 
+import {toolbox, } from '../common'
 
-import intl from 'react-intl-universal'
+
+
 
 const option = (data) => {
     return {
@@ -15,14 +17,7 @@ const option = (data) => {
                 }
             }
         },
-        toolbox: {
-            feature: {
-                dataView: { show: true, title: intl.get('DATA_VIEW'), readOnly: false, lang: [intl.get('DATA_VIEW'), intl.get('CLOSE'), intl.get('REFRESH'),  ]},
-                magicType: { show: true, title: intl.get('SAVE_AS_IMG'), type: ['line', 'bar'], },
-                restore: { show: true, title: intl.get('RESTORE'), },
-                saveAsImage: { show: true, title: intl.get('SAVE_AS_IMG'),   }
-            }
-        },
+        toolbox,
         legend: {
             data: ['Year Expense', 'Expense Trend', '平均温度']
         },

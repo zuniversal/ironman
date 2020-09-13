@@ -59,7 +59,9 @@ const SmartFormModal = props => {
   const handleOk = e => {
     console.log(' handleOk   e, ,   ： ', e);
 
-    // form
+    const formValues = form.getFieldsValue()
+    console.log('  formValues ：', formValues,  )//  
+
     // .validateFields()
     // .then(values => {
     //   console.log('  values await 结果  ：', values,  )//
@@ -119,16 +121,15 @@ const SmartFormModal = props => {
             // formProps={formProps}
             // init={init}
             // init={{}}
-            init={{
-              key9: regoins,
-            }}
             {...formComProps}
             propsForm={form}
+            key={props.action} 
             // onSubmit={onSubmit}
             // onFail={onFail}
           ></FormCom>}
 
           {bottom}
+          
 
         </div>
 
@@ -140,7 +141,7 @@ const SmartFormModal = props => {
 
 SmartFormModal.defaultProps = {
     show: false, 
-    formComProps: {}, 
+    // formComProps: {}, 
 
 
 
@@ -148,7 +149,7 @@ SmartFormModal.defaultProps = {
 
 SmartFormModal.propTypes = {
     show: PropTypes.bool,
-    formComProps: PropTypes.object,
+    // formComProps: PropTypes.object,
 
 }
 

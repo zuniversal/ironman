@@ -58,6 +58,8 @@ class UserManage extends PureComponent {
         down: `文件下载`,
       },
 
+      newTbData: [],
+
     };
   }
 
@@ -136,30 +138,32 @@ class UserManage extends PureComponent {
     });
   };
   onOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
-    // try {
-    //   const res = await form.validateFields();
-    //   console.log('  res await 结果  ：', res); //
-    // } catch (error) {
-    //   console.log(' error ： ', error); //
-    // }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+      const {newTbData,  } = this.state// 
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData,  ],
+      })
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
 
-    form
-    .validateFields()
-    .then(values => {
-      console.log('  values await 结果  ：', values,  )//
-      form.resetFields();
-      // onCreate(values);
-    })
-    .catch(info => {
-      console.log('Validate Failed:', info);
-    });
-
-    // this.setState({
-    //   show: false,
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
     // });
+
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -176,6 +180,7 @@ class UserManage extends PureComponent {
       edit: this.showFormModal,
       remove: this.showFormModal,
       tdClick: this.showModalContent,
+      newTbData: this.state.newTbData,
     }
 
     return <UserManageTable {...tableProps}  ></UserManageTable>
@@ -208,6 +213,12 @@ class UserManage extends PureComponent {
       onOk: this.onResultModalOk,
       onCancel: this.onResultModalCancel,
     }
+    
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
+    }
+
     const resProps = {
       status: 'error',  
       title: '导入成功',  
@@ -230,7 +241,7 @@ class UserManage extends PureComponent {
 
         <SmartFormModal
           // width={'900px'}
-          formComProps={{action, }} 
+          formComProps={{...formComProps, action, }} 
 
           title={title}
           onOk={this.onOk}

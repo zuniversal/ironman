@@ -26,7 +26,7 @@ import {
 
 import SmartForm from '@/common/SmartForm' //
 import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp, mockFormData,    } from '@/utils'//
+import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 const normFile = e => {
   console.log('Upload event:', e);
@@ -93,21 +93,21 @@ export const config = [
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '录入日期',
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '生效日期',
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '结束日期',
@@ -152,7 +152,7 @@ export const config = [
     },
   },
   {
-    formType: 'Radio',
+    // formType: 'Radio',
     noRule: true,
     itemProps: {
       label: '是否生成客户报告',
@@ -191,6 +191,23 @@ const ContractForm = props => {
   // const formConfig = formatConfig(config);
   
 
+  const initialValues = {
+    projects: [1, 2],
+    input: 'zyb',  
+  };
+  const newInit = [
+    {
+      name: "项目一",
+      id: 1
+    },
+    { name: "项目二", id: 2 }
+  ];
+
+  const [form] = Form.useForm();
+  // const [form] = Form.useForm(initialValues);
+  const formControl = form; //
+  
+
   return (
     <div className={''}>
       <SmartForm
@@ -198,12 +215,39 @@ const ContractForm = props => {
         config={formatConfig(config)}
         // config={configs}
         formProps={formProps}
-        init={mockFormData(formatConfig(config), )}
+        // init={init}
         // init={{}}
-      
+
         {...props}
       ></SmartForm>
 
+    <Form 
+    initialValues={initialValues}
+      form={formControl}
+      
+      
+      
+      >
+      <Form.Item name="projects" label="所属项目">
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Please select"
+        >
+          {newInit.map(item => (
+            <Select.Option key={item.id} value={item.id}>
+              {item.name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item name="input" label="所属项目">
+        <Input
+          placeholder="Please select"
+        >
+        </Input>
+      </Form.Item>
+    </Form>
 
 
     </div>

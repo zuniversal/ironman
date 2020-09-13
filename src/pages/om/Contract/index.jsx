@@ -97,6 +97,8 @@ class Contract extends PureComponent {
         down: '文件下载',
       },
 
+      newTbData: [],  
+
     };
   }
 
@@ -229,9 +231,20 @@ class Contract extends PureComponent {
     });
   };
   onOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+      const {newTbData,  } = this.state// 
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData,  ],
+      })
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
     // try {
     //   const res = await form.validateFields();
     //   console.log('  res await 结果  ：', res); //
@@ -239,20 +252,17 @@ class Contract extends PureComponent {
     //   console.log(' error ： ', error); //
     // }
 
-    form
-    .validateFields()
-    .then(values => {
-      console.log('  values await 结果  ：', values,  )//
-      form.resetFields();
-      // onCreate(values);
-    })
-    .catch(info => {
-      console.log('Validate Failed:', info);
-    });
-
-    // this.setState({
-    //   show: false,
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   // form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
     // });
+
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -272,7 +282,7 @@ class Contract extends PureComponent {
     ); //
 
     // this.showContractModal();
-    // this.showModal();
+    // this.showContractModal({action: 'edit',  });
 
   }
 
@@ -289,7 +299,15 @@ class Contract extends PureComponent {
       edit: this.showContractModal,
       remove: this.showContractModal,
       tdClick: this.showContractModal,
+      newTbData: this.state.newTbData,
     }
+
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
+    }
+    
+    console.log(' formComProps ： ', formComProps,  )// 
 
     return (
       <div className="contract">
@@ -319,7 +337,7 @@ class Contract extends PureComponent {
           onCancel={this.onCancel}
           top={this.renderModalTop()}
           // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
-          // FormCom={ContractForm}
+          formComProps={formComProps}
           FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}

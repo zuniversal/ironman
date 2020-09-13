@@ -130,24 +130,39 @@ const DynamicForm = props => {
     noRule,
     addText,
     subText,
-
+    name,
     noLabel,
+    init,
+    extra,
 
   } = props; //
 
   return (
-    <Form.List name="dynamicForm" className={'dynamicForm '}>
+    <Form.List 
+      // name="dynamicForm" 
+      name={name}
+      className={'dynamicForm '}
+      
+    >
       {(fields, params) => {
         const { add, remove } = params;
         console.log(' params ： ', fields, params, itemProps); //
 
         const { label, className,   } = itemProps;
 
+        // const formItemProps = {
+        //   ...itemProps,
+        //   className: `dynamicFormItem  `,
+        //   rules: noRule ? [] : rules({ items: props, label }),
+        // };
         const formItemProps = {
+          colon: false,  
           ...itemProps,
-          className: `dynamicFormItem  `,
-          rules: noRule ? [] : rules({ items: props, label }),
+          className: `dynamicFormItem ${itemProps.className}  `,
+          rules: noRule ? undefined : rules({ props, label }),
         };
+
+
 
         if (noLabel) {
           formItemProps.label = ''
@@ -197,15 +212,31 @@ const DynamicForm = props => {
 
         return (
           <div>
-            {[
-              {
-                // name: 'dfiled',
-                key: 'dfiled',
-              },
+            {
+            [
+              // {
+              //   name: 'dfiled',
+              //   key: 'dynamicField',
+              // },
+              
+              // ...init ? init : [],
               ...fields,
-            ].map((field, index) => {
-              const fieldKey = key ? key : field.key; //
-              console.log('  fieldKey ：', field, key, fieldKey); //
+            ]
+              .map((field, index) => {
+              const fieldKey = name ? name : field.name; //
+              console.log(' 动态表单 fieldKey ：', fields, field, name, fieldKey); //
+
+              // if (init) {
+              //   init.forEach((v, i) => {
+              //     // console.log(' data v ： ', v, i,  )
+              //     add(v, 0)
+              //   })
+              //   // add('手动增加的', 0)
+              // } else {
+              //   add()
+              // } 
+              
+              // add()
 
               const subBtn = (
                 <MinusCircleOutlined
@@ -249,34 +280,61 @@ const DynamicForm = props => {
                 </Form.Item>
               );
 
+              const normalItem = <Form.Item
+                // name={key}
+                // label={label}
+                // rules={rules}
+                // valuePropName="checked"
+
+                {...formItemLayout}
+                className={'formItems dynamicFormWrapper'}
+                {...formItemProps}
+                {...field}
+                // name={[field.name, fieldKey]}
+                // key={fieldKey}
+                // name={[name, fieldKey]}
+                // name={name}
+                // name={[field.fieldKey, 'itemKey']}
+                // fieldKey={[field.fieldKey, 'itemFieldKey']}
+
+                // name={[field.fieldKey, 'itemKey']}// 每个项 对象的 key 
+                // fieldKey={[field.fieldKey, 'itemFieldKey']}
+                // name={'itemKey'}// 
+                // fieldKey={'itemFieldKey'}
+
+                // key={field.name}
+                // key={field.key}
+                validateTrigger={['onChange', 'onBlur']}
+              >
+                {formItemCom}
+              </Form.Item>
+
               return (
-                <Form.Item
-                  // name={key}
-                  // label={label}
-                  // rules={rules}
-                  // valuePropName="checked"
+                extra ? <Form.Item
+                  // <Form.Item
+                  // key= "field19"
+                  // label= "field19"
+          
+                  key={field.key}
+                  //  label={formLabel}
+                  className={'extraRow'} 
 
-                  {...formItemLayout}
-                  className={'formItems dynamicFormWrapper'}
-                  {...formItemProps}
-                  {...field}
-                  name={[field.name, fieldKey]}
-                  key={fieldKey}
-                  validateTrigger={['onChange', 'onBlur']}
                 >
-                  {/* 
-                      注意 如果Form.Item 内部渲染的是多个节点必须使用一个标签包裹 否则报错
-                      devScripts.js:5836 Warning: [antd: Form.Item] `children` is array of render props cannot have `name`. 
+                  <Form.Item
+                      // name= "field19"
+                      //  {...rest}
+                    name={field.name}
+                    {...formItemProps}
+                    //  rules={rules}
                     
-                    */}
-                  <>
-                    {formItemCom}
-
-                    {/* {subBtn} */}
-                    {actionBtn}
-                    {/* {fields.length > 1 ? actionBtn : null} */}
-                  </>
-                </Form.Item>
+                    >
+                    {formItemCom} 
+                    {/* {extra} */}
+                  </Form.Item>
+                  <Form.Item>
+                    {actionBtn} 
+                  </Form.Item>
+                </Form.Item> : normalItem
               );
             })}
           </div>

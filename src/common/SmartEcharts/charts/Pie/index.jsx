@@ -1,5 +1,5 @@
-// import {color} from 'util'
-import intl from 'react-intl-universal'
+
+import {toolbox, } from '../common'
 
 
 
@@ -17,14 +17,7 @@ const option = (data, legend) => {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        toolbox: {
-            feature: {
-                dataView: { show: true, title: intl.get('DATA_VIEW'), readOnly: false, lang: [intl.get('DATA_VIEW'), intl.get('CLOSE'), intl.get('REFRESH'),  ]},
-                magicType: { show: true, title: intl.get('SAVE_AS_IMG'), type: ['line', 'bar'], },
-                restore: { show: true, title: intl.get('RESTORE'), },
-                saveAsImage: { show: true, title: intl.get('SAVE_AS_IMG'),   }
-            }
-        },
+        toolbox,
         legend: {
             orient: 'vertical',
             left: 'left',
@@ -32,8 +25,7 @@ const option = (data, legend) => {
         },
         series: [
             {
-                // name: 'Country Visit',
-                name: intl.get('EXPENSE_COST'),
+                name: 'Country Visit',
                 type: 'pie',
                 radius: '55%',
                 center: ['55%', '60%'],

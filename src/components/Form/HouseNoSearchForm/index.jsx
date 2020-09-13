@@ -28,7 +28,7 @@ export const config = [
       label: '客户',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-160',  
     },  
   },
   {
@@ -38,7 +38,7 @@ export const config = [
       label: '户号',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-160',  
     },  
   },
   {
@@ -48,7 +48,7 @@ export const config = [
       label: '区域',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-160',  
     },  
   },
   {
@@ -58,7 +58,7 @@ export const config = [
       label: '邮编',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-160',  
     },  
   },
 

@@ -17,15 +17,17 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
+import { regoins } from '@/configs'//
+import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 export const config = [
   {
     formType: 'Select',
+    noRule: true,  
     itemProps: {
       label: '省',
-      name: 'province',
-      key: 'province',
+      // name: 'province',
+      // key: 'province',
     },
     comProps: {
       className: 'w-200',  
@@ -34,10 +36,11 @@ export const config = [
   },
   {
     formType: 'Select',
+    noRule: true,  
     itemProps: {
       label: '市',
-      name: 'city',
-      key: 'city',
+      // name: 'city',
+      // key: 'city',
     },
     comProps: {
       className: 'w-200',  
@@ -45,10 +48,11 @@ export const config = [
   },
   {
     formType: 'Select',
+    noRule: true,  
     itemProps: {
       label: '县',
-      name: 'site',
-      key: 'site',
+      // name: 'site',
+      // key: 'site',
     },
     comProps: {
       className: 'w-200',  
@@ -110,9 +114,9 @@ const ProvinceForm = props => {
   return (
     <div className={' provinceForm '}>
       <SmartForm
-        // flexRow={4}
         // flexRow={8}
-        config={config}
+        // config={config}
+        config={formatConfig(config)}
         formProps={formProps}
         // init={init}
         // init={{}}

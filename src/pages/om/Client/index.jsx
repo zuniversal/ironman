@@ -15,8 +15,14 @@ import ClientForm from '@/components/Form/ClientForm'; //
 import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
 import ClientTable from '@/components/Table/ClientTable'; //
 import ClientFormModal from '@/components/Modal/ClientFormModal'; //
+import ClientRadar from '@/components/Echarts/ClientRadar'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+
+
+
+export const TITLE = '客户'
+
 
 class Client extends PureComponent {
   constructor(props) {
@@ -26,12 +32,19 @@ class Client extends PureComponent {
 
       action: '',  
       title: '',  
-      contractTitle: '',  
+      Title: '',  
       titleMap: {
-        add: '新增客户',
-        edit: '编辑客户',
-        detail: '客户详情',
+        add: `新增${TITLE}`,
+        edit: `编辑${TITLE}`,
+        detail: `${TITLE}详情`,
+        userCapture: `${TITLE}画像`,
       },
+
+      commonContent: null,  
+      commonTitle: '',  
+      isShowModal: false,  
+
+      newTbData: [],  
 
     };
   }
@@ -41,7 +54,7 @@ class Client extends PureComponent {
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
       <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增客户</Button>
+      <Button type="primary "onClick={() => this.showModal({action: 'add',  })}  >新增客户</Button>
       <Button type="primary">导出客户数据</Button>
       <Button type="primary">删除</Button>
     </div>
@@ -58,21 +71,16 @@ class Client extends PureComponent {
     console.log(' renderClientTable ： ', params);
   }
 
-  showContractModal = (params, ) => {
+  showModal = (params, ) => {
     const {action,  } = params
-    console.log('    showContractModal ： ', action, params, this.state, this.props,  );
+    console.log('    showModal ： ', action, params, this.state, this.props,  );
     this.setState({
       action,
       show: true,
       title: this.state.titleMap[action],  
     });
   };
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
+  
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
@@ -80,6 +88,11 @@ class Client extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res); //
+      const {newTbData,  } = this.state// 
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData,  ],
+      })
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -95,9 +108,6 @@ class Client extends PureComponent {
     //   console.log('Validate Failed:', info);
     // });
 
-    this.setState({
-      // show: false,
-    });
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -106,6 +116,44 @@ class Client extends PureComponent {
     });
   };
 
+
+  showCapture = (params, ) => {
+    const {action,  } = params
+    console.log(' showCapture,  , ： ', action,    )
+    this.setState({
+      isShowModal: true,
+      action,
+      commonTitle: this.state.titleMap[action],  
+      commonContent: <ClientRadar   ></ClientRadar>, 
+    })
+  }
+  showCommonModal = (params,  ) => {
+    console.log(' showCommonModal,  , ： ', params,    )
+    this.setState({
+      isShowModal: true,
+      // commonContent: , 
+    })
+  }
+  onModalOk = (params,  ) => {
+    console.log(' onModalOk,  , ： ', params,    )
+    this.setState({
+      isShowModal: false,
+    })
+  }
+  onModalCancel = (params,  ) => {
+    console.log(' onModalCancel,  , ： ', params,    )
+    this.setState({
+      isShowModal: false,
+    })
+  }
+  renderContent = (e,  ) => {
+    console.log('    renderContent ： ', e,   )
+    const {commonContent,  } = this.state// 
+    return commonContent
+  }
+
+
+
   componentDidMount() {
     console.log(
       ' Client 组件componentDidMount挂载 ： ',
@@ -113,6 +161,8 @@ class Client extends PureComponent {
       this.props,
     ); //
     // this.showModal();
+    // this.showModal({action: 'edit',  });
+    // this.showCapture({action: 'userCapture',  });
   }
 
   render() {
@@ -122,13 +172,21 @@ class Client extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showContractForm, title,   } = this.state; //
+    const { show, showForm, title, isShowModal, commonTitle,   } = this.state; //
 
     const tableProps = {
-      edit: this.showContractModal,
-      remove: this.showContractModal,
-      tdClick: this.showContractModal,
+      edit: this.showModal,
+      remove: this.showModal,
+      tdClick: this.showModal,
+      newTbData: this.state.newTbData,
     }
+
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
+    }
+
+    
 
 
 
@@ -161,28 +219,6 @@ class Client extends PureComponent {
         ></ClientFormModal> */}
 
 
-        <SmartFormModal
-          // width={'900px'}
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
-          FormCom={ClientForm}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal>
-
-
-
-
-        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}>
-          <ClientForm
-            onSubmit={this.onSubmit}
-            onFail={this.onFail}
-          ></ClientForm>
-        </SmartModal> */}
-
         <ClientSearchForm
           formBtn={this.renderFormBtn}
           // onSubmit={this.onSubmit}
@@ -192,6 +228,46 @@ class Client extends PureComponent {
         {/* {this.renderClientTable()} */}
 
         <ClientTable {...tableProps}  showModal={this.showModal} ></ClientTable>
+
+
+
+        <SmartFormModal
+          // width={'900px'}
+          title={title}
+          show={show}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
+          // FormCom={<FormCom showRelativeForm={this.showRelativeForm}  ></FormCom>}
+
+          formComProps={formComProps} 
+          FormCom={ClientForm}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        ></SmartFormModal>
+
+
+        <SmartModal 
+          title={commonTitle} 
+          show={isShowModal} 
+          onOk={this.onModalOk} 
+          onCancel={this.onModalCancel}
+          
+        >
+          {this.renderContent()}
+        </SmartModal>
+
+
+        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}>
+          <ClientForm
+            onSubmit={this.onSubmit}
+            onFail={this.onFail}
+          ></ClientForm>
+        </SmartModal> */}
+
+
+
+
+
       </div>
     );
   }

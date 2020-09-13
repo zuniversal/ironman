@@ -1,4 +1,4 @@
-import React, {useState, } from 'react';
+import React from 'react';
 import './style.less';
 import {
   Form,
@@ -14,9 +14,6 @@ import {
   Radio,
   Space,
   InputNumber,
-  Tabs,
-  Tree,
-
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
@@ -24,103 +21,47 @@ import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'//
 
 
-const { TabPane } = Tabs;
 
-const tabConfig = [
-  {tab: '菜单权限',   },
-  {tab: '操作权限',   },
-  {tab: '字典权限',   },
-  
+
+const checkboxGroupOptions = [
+  { label: '应用内通知', value: 'app' },
+  { label: '短信', value: 'msg' },
+  { label: '邮件', value: 'email' },
+
 ]
 
+const selectData = [
+  { label: '应用内通知', value: 'app' },
+  { label: '短信', value: 'msg' },
+  { label: '邮件', value: 'email' },
 
-const treeData = [
-  {
-    title: '系统管理',
-    key: 'sys',  
-    children: [
-      {
-        title: '用户管理',
-        key: 'user',  
-      },
-      {
-        title: '角色管理',
-        key: 'role',  
-      },
-    ],
-  },
-
-  {
-    title: '运维管理',
-    key: 'om',  
-    children: [
-      {
-        title: '巡检运维',
-        key: 'check',  
-      },
-    ],
-  },
 ]
-
-
-
-// const callback = (key,  ) => {
-//   // console.log(' callback   key,  ,   ： ', key,    )
-  
-// }
-
-const MsgForm = (props,  ) => {
-  console.log(' MsgForm   props,  ,   ： ', props,    )
-  const [expandedKeys, setExpandedKeys] = useState(['sys', 'om']);
-  const [checkedKeys, setCheckedKeys] = useState(['sys']);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
-
-  const onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys); 
-
-    setExpandedKeys(expandedKeys);
-    setAutoExpandParent(false);
-  };
-
-  const onCheck = (checkedKeys) => {
-    console.log('onCheck', checkedKeys);
-    setCheckedKeys(checkedKeys);
-  };
-
-  const onSelect = (selectedKeys, info) => {
-    console.log('onSelect', info);
-    setSelectedKeys(selectedKeys);
-  };
-
-
-  return <Tabs defaultActiveKey="1"  >
-    {tabConfig.map((v, i) => <TabPane tab={v.tab} key={v.tab} >
-
-      <Tree
-        checkable
-        onExpand={onExpand}
-        expandedKeys={expandedKeys}
-        autoExpandParent={autoExpandParent}
-        onCheck={onCheck}
-        checkedKeys={checkedKeys}
-        onSelect={onSelect}
-        selectedKeys={selectedKeys}
-        treeData={treeData}
-      />
-    </TabPane>)}
-  </Tabs>
-}
-
-
 
 
 
 export const config = [
   {
+    formType: 'TextArea',  
     itemProps: {
-      label: '角色名',
+      label: '消息内容',
     },
+  },
+  {
+    formType: 'CheckboxGroup',  
+    itemProps: {
+      label: '通知方法',
+    },
+    comProps: {
+      options: checkboxGroupOptions,
+    },
+    // checkboxContent: 
+  },
+  {
+    formType: 'Select',  
+    itemProps: {
+      label: '通知人员',
+    },
+    selectData: selectData,
   },
 
   
@@ -128,8 +69,8 @@ export const config = [
 
 
 
-const RoleForm = props => {
-  console.log(' RoleForm ： ', props); //
+const MsgForm = props => {
+  console.log(' MsgForm ： ', props); //
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
@@ -137,7 +78,7 @@ const RoleForm = props => {
   };
 
   return (
-    <div className={' RoleForm '}>
+    <div className={' MsgForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -149,16 +90,11 @@ const RoleForm = props => {
         {...rest}
       ></SmartForm>
 
-      <MsgForm
-
-      >
-
-      </MsgForm>
-
+      {formBtn}
     </div>
   );
 };
 
-RoleForm.defaultProps = {};
+MsgForm.defaultProps = {};
 
-export default RoleForm;
+export default MsgForm;

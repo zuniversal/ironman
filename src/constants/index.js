@@ -1,5 +1,22 @@
 import { animate, createProperty } from '@/utils';
 
+
+
+
+
+export const PRIMARY = '#00B460'
+
+
+
+
+
+
+
+
+
+
+
+
 export const isTest = process.env.NODE_ENV === 'development';
 
 export const TIMEOUT_TXT =

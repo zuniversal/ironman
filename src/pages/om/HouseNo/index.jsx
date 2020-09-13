@@ -84,6 +84,8 @@ class HouseNo extends PureComponent {
         upload: `文件上传`,
         down: `文件下载`,
       },
+      
+      newTbData: [],  
 
     };
   }
@@ -162,30 +164,32 @@ class HouseNo extends PureComponent {
     });
   };
   onOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
-    // try {
-    //   const res = await form.validateFields();
-    //   console.log('  res await 结果  ：', res); //
-    // } catch (error) {
-    //   console.log(' error ： ', error); //
-    // }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+      const {newTbData,  } = this.state// 
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData,  ],
+      })
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
 
-    form
-    .validateFields()
-    .then(values => {
-      console.log('  values await 结果  ：', values,  )//
-      form.resetFields();
-      // onCreate(values);
-    })
-    .catch(info => {
-      console.log('Validate Failed:', info);
-    });
-
-    // this.setState({
-    //   show: false,
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
     // });
+
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -219,6 +223,12 @@ class HouseNo extends PureComponent {
       edit: this.showModalContent,
       remove: this.showModalContent,
       tdClick: this.showModalContent,
+      newTbData: this.state.newTbData,
+    }
+
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
     }
 
 
@@ -239,7 +249,7 @@ class HouseNo extends PureComponent {
 
         <SmartFormModal
           // width={'900px'}
-          formComProps={{...tableProps, action, }} 
+          formComProps={{...tableProps, ...formComProps, action, }} 
 
           title={title}
           show={show}

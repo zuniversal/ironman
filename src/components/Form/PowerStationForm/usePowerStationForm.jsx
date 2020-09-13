@@ -171,7 +171,7 @@ export const config = [
 
 
 const PowerStationForm = props => {
-  console.log(' PowerStationForm ： ', props, config,   )//
+  // console.log(' PowerStationForm ： ', props, config,   )//
 
 
   const formProps = {

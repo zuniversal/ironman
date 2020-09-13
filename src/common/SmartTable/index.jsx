@@ -2,11 +2,12 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import './style.less';
 import { Table, Icon, Switch, Radio, Form, Divider, Button, Input } from 'antd';
+import SmartModal from '@/common/SmartModal'; //
+import QRCodeCom from '@/common/QRCodeCom'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //onRemove
+import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
 // import { showTotal, dataFilter, customFilter } from '@/utils'; //
-import { tips,  } from '@/utils'; //
-import datas from '@/pages/data'; //
+import { tips, mockTbData,  } from '@/utils'; //
 
 // export const showTotal = (total) => `總共 ${total} 條`
 
@@ -20,13 +21,14 @@ import datas from '@/pages/data'; //
 // }
 
 export const ActionCom = (props,  ) => {
-  const {edit, remove, extra, record, onRemove,    } = props
+  const {edit, remove, extra, record, onRemove, showQRCode,    } = props
   // console.log(' ActionCom props ： ', props,  )//
   return (
     <span>
       <a onClick={() => edit({action: 'edit', record})}>编辑</a>
       <a onClick={() => remove({action: 'remove', record})}>删除</a>
-      {extra}
+      <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>
+      {/* {extra} */}
     </span>
   );
 }  //
@@ -58,9 +60,15 @@ class SmartTable extends PureComponent {
 
       showResultModal: false,  
 
-      datas,
+      mockTbData: mockTbData(),
 
       selectionType: 'checkbox',  
+
+      title: '',  
+      show: false,  
+      modalContent: null,  
+
+
     };
   }
 
@@ -131,14 +139,26 @@ class SmartTable extends PureComponent {
 
   dataFilter = () => {
     const { searchKey, searchText } = this.state; //
-    const { dataSource, noMock, rowLength,   } = this.props; //
+    const { dataSource, noMock, rowLength, newTbData,  } = this.props; //
+
+    // const addData = newTbData.filter((v) => typeof v !== 'object')
+    const addData = {}
+    if (newTbData[0]) {
+      Object.keys(newTbData[0]).forEach((v, i) => {
+        addData[v] = typeof newTbData[0][v] !== 'object' ? '' : v
+        
+      })
+      
+    }
+    
+    
 
     if (noMock) {
       return []
     }
     
     // const data = dataSource
-    const data = this.state.datas;
+    const data = this.state.mockTbData;
 
     console.log(
       ' dataFilter ：',
@@ -179,8 +199,12 @@ class SmartTable extends PureComponent {
          
         return sliceData
       }
-      
-      return data;
+      console.log(' 1111111111 ： ', addData, newTbData,   )// 
+      if (Object.keys(addData).length) {
+        return [addData, ...data,  ];
+      } else {
+        return data
+      }
     }
   };
 
@@ -234,8 +258,36 @@ class SmartTable extends PureComponent {
   }
 
 
+  showQRCode = (params,  ) => {
+    console.log('    showQRCode ： ', params,   )
+    this.setState({
+      show: true,
+      modalContent: <QRCodeCom value={params.record} ></QRCodeCom>, 
+    })
+  }
+  onOk = (e,  ) => {
+    console.log('    onOk ： ', e,   )
+    this.setState({
+      show: false,
+      modalContent: null,  
+    })
+  }
+  onCancel = (e,  ) => {
+    console.log('    onCancel ： ', e,   )
+    this.setState({
+      show: false,
+      modalContent: null,  
+    })
+  }
+  renderModalContent = (e,  ) => {
+    console.log('    renderModalContent ： ', e,   )
+    const { modalContent,  } = this.state;
+    return modalContent
+  }
+
+
   render() {
-    const { pagination, searchText, searchKey, selectionType, showResultModal,   } = this.state;
+    const { pagination, searchText, searchKey, selectionType, showResultModal, title, show,  } = this.state;
     const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -259,6 +311,7 @@ class SmartTable extends PureComponent {
           text, record, index, 
           edit, 
           remove: this.onRemove,
+          showQRCode: this.showQRCode,
           extra,
           ...actionConfig, 
         }
@@ -291,10 +344,9 @@ class SmartTable extends PureComponent {
     ); //
 
 
-    const title = '删除电站'
 
     const modalProps = {
-      title: title,
+      title: '删除电站',
       show: showResultModal,
       onOk: this.onResultModalOk,
       onCancel: this.onResultModalCancel,
@@ -351,6 +403,19 @@ class SmartTable extends PureComponent {
           </div> */}
         </RemoveModal>
 
+
+        <SmartModal 
+          show={show} onOk={this.onOk} onCancel={this.onCancel}
+          title={title}
+          footer={null}
+          className={`qrCodeModal `}
+        >
+          {this.renderModalContent()}
+        </SmartModal> 
+
+
+        
+
       </div>
     );
   }
@@ -360,8 +425,9 @@ class SmartTable extends PureComponent {
 SmartTable.defaultProps = {
   className: '',
   columns: [],
+  newTbData: [],  
   // dataSource: [],
-  dataSource: datas,
+  dataSource: mockTbData(),
   rowKey: 'key',
 
   edit: () => {}, 
@@ -376,6 +442,7 @@ SmartTable.defaultProps = {
 SmartTable.propTypes = {
   className: PropTypes.string,
   columns: PropTypes.array,
+  newTbData: PropTypes.array,
   dataSource: PropTypes.array,
   rowKey: PropTypes.string,
   edit: PropTypes.func,

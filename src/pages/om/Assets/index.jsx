@@ -93,6 +93,8 @@ class Assets extends PureComponent {
         down: `文件下载`,
       },
 
+      newTbData: [],  
+
     };
   }
 
@@ -196,30 +198,32 @@ class Assets extends PureComponent {
     });
   };
   onOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
-    // try {
-    //   const res = await form.validateFields();
-    //   console.log('  res await 结果  ：', res); //
-    // } catch (error) {
-    //   console.log(' error ： ', error); //
-    // }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+      const {newTbData,  } = this.state// 
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData,  ],
+      })
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
 
-    form
-    .validateFields()
-    .then(values => {
-      console.log('  values await 结果  ：', values,  )//
-      form.resetFields();
-      // onCreate(values);
-    })
-    .catch(info => {
-      console.log('Validate Failed:', info);
-    });
-
-    // this.setState({
-    //   show: false,
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
     // });
+
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -255,6 +259,12 @@ class Assets extends PureComponent {
       edit: this.showFormModal,
       remove: this.showFormModal,
       tdClick: this.showModalContent,
+      newTbData: this.state.newTbData,
+    }
+
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
     }
 
     const modalProps = {
@@ -265,7 +275,7 @@ class Assets extends PureComponent {
     }
     const resProps = {
       status: 'error',  
-      title: '导入成功',  
+      title: '导入失败',  
       subTitle: '请核对并修改以下信息后，再重新提交。',  
       // extra: [
       //   <Button  key="console" >返回列表</Button>,
@@ -289,7 +299,7 @@ class Assets extends PureComponent {
 
         <SmartFormModal
           // width={'900px'}
-          formComProps={{...tableProps, action, }} 
+          formComProps={{...tableProps, ...formComProps, action, }} 
 
           title={title}
           onOk={this.onOk}

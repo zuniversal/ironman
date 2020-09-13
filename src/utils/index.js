@@ -7,26 +7,81 @@ import {
   Input,
   message,
   Modal,
+  Select,
   Radio,
   Checkbox,
   DatePicker,
 } from 'antd';
 import axios from 'axios';
+import moment from 'moment'
 // import { INPUT_TXT,  } from 'constants'
 // import {SUCC_TXT, } from 'constants'
 const RadioGroup = Radio.Group;
+const { Option, OptGroup } = Select
 const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
 
 
 
 
-export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.key} key={v.key} >{v.value}</Radio>)
+export const reportSelectOp = (configs, opType = 'Option') => {
+  const OptionMap = {
+    Option,
+    OptGroup,
+  }[opType]
+  const options = configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
+  const groupOptions = configs.map((v) => <OptGroup label={v.label} key={v.key} >
+    {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
+  </OptGroup>) 
+  return opType === 'Option' ? options : groupOptions
+}
+
+export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
 
 
 
+export const dateFormat = 'YYYY/MM/DD';
+export const monthFormat = 'YYYY/MM';
+
+export const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+
+export const mockDate = moment('2020/02/02', dateFormat)
+export const mockMonth = moment('2020/02/02', monthFormat)
 
 
+export const mockFormData = (config, ) => {
+  // console.log(' mockFormData   formType, ,   ： ', config,   )
+  const mockData = {}
+  config.forEach((item, i) => {
+    const {formType, itemProps,   } = item
+    const {label, key,   } = itemProps
+    if (formType !== 'rowText' && !React.isValidElement(item)) {
+      const mockDataMap = {
+        Input: label,
+        Select: [label,  ],
+        Password: label,
+        Cascader: [label,  ],
+        AutoComplete: label,
+        Checkbox: label,
+        Radio: label,
+        DatePicker: mockDate,
+    
+        Dynamic: ['值1',   ],
+        // Dynamic: [{name: '值1', key: '值1', fieldKey: '值1', },   ],
+        // Dynamic: ['值1', '值2',  ],
+        // Dynamic: 'Dynamic初始值', 
+        
+      }[formType]
+  
+      // console.log(' mockDataMap ： ', formType, item, mockDataMap, mockData,  )// 
+      
+      mockData[key] = mockDataMap
+    }
+    
+  })
+
+  return mockData 
+}
 
 
 
@@ -449,19 +504,48 @@ export const pagination = total => ({
 
 
 export const formatConfig = config =>
-  config.map((v, i) => ({
-    ...v,
-    // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-    // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-    itemProps:
-      v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText'
-        ? { ...v.itemProps, key: `key${i}` }
-        : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-  }));
+  config.map((v, i) => {
+    // console.log(' formatConfig ： ', v, i, v.formType   )// 
+    const items = {
+      ...v,
+      // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+      // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+      itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
+          ? { ...v.itemProps, key: `field${i}`,  }
+          : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
+          // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
+          // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
+    } 
+    if (!React.isValidElement(v)) {
+      items.formType = v.formType || 'Input'
+    }
+    return items
+  });
 
 
   
 
+
+export const mockTbData = () => {
+
+  return new Array(20).fill(0).map((v, i) => {
+    const obj = {};
+    new Array(20).fill(0).forEach((v, index) => {
+      // console.log(' vsssss ： ', v, i, index, )// 
+      obj[`field${index}`] = `Field${i}`;
+    });
+    return {
+      ...obj,
+      key: i,
+      // [`field${i}`]: `Field${i}`,
+      // name: 'John Brown',
+      // age: `${i}2`,
+      // address: `New York No. ${i} Lake Park`,
+      // description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
+    }
+  })
+}
+  
 
 
 

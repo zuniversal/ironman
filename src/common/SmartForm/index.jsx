@@ -18,6 +18,7 @@ import {
   DatePicker,
 
 } from 'antd';
+import moment from 'moment'
 
 import {
   QuestionCircleOutlined,
@@ -35,7 +36,9 @@ import ModalForm from './ModalForm'; //
 import DateForn from './DateForn'; //
 
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
+import { mockFormData, reportSelectOp, reportRadioOp,   } from '@/utils'; //
 
+const { TextArea } = Input
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -83,6 +86,7 @@ export const getLabel = (label, key) => {
   const labelMap = {
     rowText: '',
     Input: INPUT_TXT + label,
+    TextArea: INPUT_TXT + label,
     Select: SELECT_TXT + label,
     Password: INPUT_TXT + label,
     Cascader: INPUT_TXT + label,
@@ -126,6 +130,8 @@ const formItemLayoutWithOutLabel = {
   // },
 };
 
+
+
 const SmartForm = (props, state) => {
   const {
     config,
@@ -139,17 +145,43 @@ const SmartForm = (props, state) => {
     onSubmit,
     onFail,
     propsForm,
+    isMockData,
+    action,
+
   } = props; //
 
+  const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
+  console.log(' initialValues ： ', initialValues, action, action === 'edit',  )// 
+  // const initialValues = init ? init : {}
+  // const initialValues = { field2: 'zyb',    }
+
+  // const [form] = Form.useForm(initialValues, );// 不行 
   const [form] = Form.useForm();
   const formControl = propsForm ? propsForm : form; //
+  // const formControl = form; //
+
+  
+  // setTimeout(() => {
+  //   console.log('  延时器 ： ',  )
+  //   form
+  //   .validateFields()
+  //   .then(values => {
+  //     console.log('  values await 结果  ：', values,  )//
+  //     form.resetFields();
+  //     // onCreate(values);
+  //   })
+  //   .catch(info => {
+  //     console.log('Validate Failed:', info);
+  //   });
+  // }, 2000)
+  
+
 
   console.log(
     ' %c SmartForm 组件 state, props ： ',
     `color: #333; font-weight: bold`,
     state,
     props,
-    form,
     config,
     config[config.length - 1],
   ); //
@@ -163,7 +195,8 @@ const SmartForm = (props, state) => {
       props,
       onSubmit,
     );
-    onSubmit && onSubmit({ values, form });
+    
+    // onSubmit && onSubmit({ values, form });
   };
 
   // errorFields: Array(5) errors: ["Please input your E-mail!"]
@@ -295,7 +328,7 @@ const SmartForm = (props, state) => {
       selectOptions,
       customLabel,
       rowText,
-
+      extra,
       type,
       noRule,
     } = items;
@@ -305,19 +338,30 @@ const SmartForm = (props, state) => {
       return items;
     }
 
-    const { label } = itemProps;
+    const { label,  } = itemProps;
+    const itemPropsCls = itemProps.className
+
+
+    const formItemCommonProps = {
+      colon: false,  
+      ...itemProps,
+      
+    }
+    // if (formType === 'Dynamic') {
+    //   console.log(' formTypeformType ： ', formItemCommonProps, formType, formType === 'Dynamic'    )// 
+    //   formItemCommonProps.className = `dynamicRow ${formItemCommonProps.className}  `
+    // }
 
     const formItemNoRuleProps = {
-      colon: false,  
-      ...itemProps,
-      className: `formItems rowText ${itemProps.className}  `,
+      ...formItemCommonProps,
+      className: `formItems rowText ${itemPropsCls}  `,
     };
     const formItemProps = {
-      colon: false,  
-      ...itemProps,
-      className: `formItems ${itemProps.className}  `,
+      ...formItemCommonProps,
+      className: `formItems ${itemPropsCls}  `,
       rules: noRule ? undefined : rules({ items, label }),
     };
+
 
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
@@ -327,15 +371,40 @@ const SmartForm = (props, state) => {
       ...comProps,
       placeholder: formLabel,
     };
+    const dynamicComProps = {
+      className: 'w-320',
+      ...comProps,
+      // comProps: {...comProps, className: `${comProps.className} dynamiRow` },
+      placeholder: formLabel,
+      name: formItemProps.key,
+      init: initialValues[comProps?.key],
+      
+    };
+    // console.log(' realComProps11 ： ', realComProps, itemProps, formItemProps, comProps,    )// 
+
+
+
+    const {radioData = [], selectData = [],  } = realComProps
+    
+    const renderRadioOptions = reportRadioOp(radioData)
+    const renderSelectOptions = reportSelectOp(selectData)
+
 
     const formItemMap = {
       rowText: label,
       Input: <Input allowClear {...realComProps} />,
-      Select: (
-        <Select allowClear {...realComProps}>
-          {selectOptions}
-        </Select>
-      ),
+      TextArea: <TextArea
+        autoSize={{ minRows: 3, maxRows: 5 }}
+        allowClear {...realComProps}
+      />,
+      Select: <Select allowClear {...realComProps}
+        filterOption
+        showSearch
+      >
+      <Option value="male">male</Option>
+      <Option value="female">female</Option>
+      <Option value="other">other</Option>
+        </Select>,
       Password: <Input.Password {...realComProps} />,
       Cascader: <Cascader {...realComProps} />,
       AutoComplete: (
@@ -344,13 +413,14 @@ const SmartForm = (props, state) => {
         </AutoComplete>
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
+      CheckboxGroup: <Checkbox.Group {...realComProps}  />,
       Radio:  <Radio.Group>
         {/* <Radio value="item">item</Radio> */}
         {radioOptions}
       </Radio.Group>,
       DatePicker: <DatePicker {...realComProps} />,
 
-      Dynamic: <DynamicForm {...realComProps}></DynamicForm>,
+      Dynamic: <DynamicForm {...dynamicComProps}   ></DynamicForm>,
     };
 
     const formItemCom = formItemMap[formType];
@@ -407,6 +477,55 @@ const SmartForm = (props, state) => {
       return colForm;
     }
 
+    const normalItem = <Form.Item
+      // name={key}
+      // label={label}
+      // rules={rules}
+      // valuePropName="checked"
+      // {...formItemProps}
+      // className={`formItems ${className}  `}
+
+      {...formItemProps}
+      // {...(formType === 'Dynamic' ? formItemNoRuleProps : formItemProps)}
+      // {...(formType === 'Dynamic' ? rowLayout : {})}
+    >
+      {formItemCom} 
+      {/* 注意 不能有别的内容 否则初始值设置无效  */}
+      {/* {extra} */}
+    </Form.Item>
+
+      
+    if (extra) {
+      // console.log(' extra ： ', extra, formItemProps,  )// 
+      const {label, key, rules, ...rest } = formItemProps
+      
+      return <Form.Item
+        // key= "field19"
+        // label= "field19"
+
+        key={key}
+        label={label}
+        // rules={rules}
+        className={'extraRow'} 
+      >
+        <Form.Item
+            // name= "field19"
+            {...rest}
+            rules={rules}
+          
+          >
+          {formItemCom} 
+          {/* {extra} */}
+        </Form.Item>
+        <Form.Item>
+          {extra} 
+        </Form.Item>
+      </Form.Item>
+
+    }
+
+    
+
     // console.log(' itemProps ： ', formItemCom, formType, items, itemProps, comProps,   )//
 
     // const formItemProps = {
@@ -419,25 +538,12 @@ const SmartForm = (props, state) => {
 
     // console.log(' formItemProps ： ', formItemProps,  )// 
     return (
-      <Form.Item
-        // name={key}
-        // label={label}
-        // rules={rules}
-        // valuePropName="checked"
-        // {...formItemProps}
-        // className={`formItems ${className}  `}
-
-        {...formItemProps}
-        // {...(formType === 'Dynamic' ? formItemNoRuleProps : formItemProps)}
-        // {...(formType === 'Dynamic' ? rowLayout : {})}
-      >
-        {formItemCom}
-      </Form.Item>
+      normalItem
     );
   });
 
 
-  console.log(' formProps ： ', formProps, formItemLayout, formLayout); //
+  // console.log(' formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
   return (
     <Form
       preserve={false}
@@ -447,7 +553,8 @@ const SmartForm = (props, state) => {
       name="smartForm"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      initialValues={{}}
+      // initialValues={{}}
+      initialValues={initialValues}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
       scrollToFirstError
@@ -535,6 +642,9 @@ SmartForm.defaultProps = {
   isRowBtn: false,
   init: {},
   // formProps: {},  
+  isMockData: false,  
+  isMockData: true,  
+  action: '',  
 
 };
 
@@ -545,6 +655,8 @@ SmartForm.propTypes = {
   isRowBtn: PropTypes.bool,
   init: PropTypes.object,
   // formProps: PropTypes.object,
+  isMockData: PropTypes.bool,
+  action: PropTypes.string,
 
 }
 
