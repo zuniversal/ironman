@@ -11,6 +11,13 @@ export default defineConfig({
     type: 'hash',
   },
   publicPath: './',
+  locale: {
+    default: 'zh-CN',
+    antd: true,  
+    title: false,
+    baseNavigator: true,
+    baseSeparator: '-',
+  },
   alias: {
     'smartTb': './components/Table',
     'smartForm': './components/Form',

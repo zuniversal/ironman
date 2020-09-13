@@ -14,6 +14,10 @@ import {
 } from 'antd';
 import axios from 'axios';
 import moment from 'moment'
+
+export {request, } from './request'
+
+
 // import { INPUT_TXT,  } from 'constants'
 // import {SUCC_TXT, } from 'constants'
 const RadioGroup = Radio.Group;
@@ -24,7 +28,7 @@ const { RangePicker } = DatePicker;
 
 
 
-export const reportSelectOp = (configs, opType = 'Option') => {
+export const reportSelectOp = (configs, opType = 'option') => {
   const OptionMap = {
     Option,
     OptGroup,
@@ -33,7 +37,8 @@ export const reportSelectOp = (configs, opType = 'Option') => {
   const groupOptions = configs.map((v) => <OptGroup label={v.label} key={v.key} >
     {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
   </OptGroup>) 
-  return opType === 'Option' ? options : groupOptions
+  console.log(' opType ： ', opType, groupOptions, options, configs,    )// 
+  return opType === 'group' ? groupOptions : options
 }
 
 export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
@@ -58,11 +63,14 @@ export const mockFormData = (config, ) => {
     if (formType !== 'rowText' && !React.isValidElement(item)) {
       const mockDataMap = {
         Input: label,
+        TextArea: label,
         Select: [label,  ],
         Password: label,
         Cascader: [label,  ],
         AutoComplete: label,
         Checkbox: label,
+        CheckboxGroup: label,
+        
         Radio: label,
         DatePicker: mockDate,
     

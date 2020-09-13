@@ -331,6 +331,10 @@ const SmartForm = (props, state) => {
       extra,
       type,
       noRule,
+      radioData = [], 
+      selectData = [], 
+      opType, 
+       
     } = items;
     
     // if (typeof type === 'function') {
@@ -384,10 +388,10 @@ const SmartForm = (props, state) => {
 
 
 
-    const {radioData = [], selectData = [],  } = realComProps
+    // const {} = realComProps
     
     const renderRadioOptions = reportRadioOp(radioData)
-    const renderSelectOptions = reportSelectOp(selectData)
+    const renderSelectOptions = reportSelectOp(selectData, opType, )
 
 
     const formItemMap = {
@@ -401,10 +405,11 @@ const SmartForm = (props, state) => {
         filterOption
         showSearch
       >
-      <Option value="male">male</Option>
-      <Option value="female">female</Option>
-      <Option value="other">other</Option>
-        </Select>,
+        {renderSelectOptions}
+        {/* <Option value="male">male</Option>
+        <Option value="female">female</Option>
+        <Option value="other">other</Option> */}
+      </Select>,
       Password: <Input.Password {...realComProps} />,
       Cascader: <Cascader {...realComProps} />,
       AutoComplete: (

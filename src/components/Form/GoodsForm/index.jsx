@@ -22,35 +22,18 @@ import { formatConfig } from '@/utils'//
 
 export const config = [
   {
-    formType: 'Select',  
-    noRule: true,
     itemProps: {
-      label: '模块',
+      label: '物料编号'
     },
   },
   {
     itemProps: {
-      label: '名称',
+      label: '物料名称'
     },
   },
   {
-    formType: 'TextArea',  
-    noRule: true,
     itemProps: {
-      label: '枚举值',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '关联设备',
-    },
-  },
-  {
-    formType: 'TextArea',  
-    noRule: true,
-    itemProps: {
-      label: '备注',
+      label: '单价(元)'
     },
   },
 
@@ -59,8 +42,8 @@ export const config = [
 
 
 
-const DictForm = props => {
-  console.log(' DictForm ： ', props); //
+const GoodsForm = props => {
+  console.log(' GoodsForm ： ', props); //
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
@@ -68,7 +51,7 @@ const DictForm = props => {
   };
 
   return (
-    <div className={' DictForm '}>
+    <div className={' GoodsForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -85,6 +68,6 @@ const DictForm = props => {
   );
 };
 
-DictForm.defaultProps = {};
+GoodsForm.defaultProps = {};
 
-export default DictForm;
+export default GoodsForm;
