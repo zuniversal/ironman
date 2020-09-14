@@ -7,7 +7,7 @@ import axios from 'axios'
 // axios.defaults.timeout = 30000
 // axios.defaults.headers.common['Authorization'] = getItems('token')
 
-const http = axios.create({
+const instance = axios.create({
     baseURL: URL,
     timeout: 5000,
     timeout: 2000,
@@ -17,14 +17,14 @@ export class Request {
     http = null
 
     constructor() {
-        this.http = http// 
+        this.http = instance// 
         console.log(' super ： ',  )
-        http.interceptors.request.use((config) => {
+        this.http.interceptors.request.use((config) => {
             // console.log('getToken() token ：', config, getToken(), getItems('token'),  )
             // config.headers.Authorization = getToken()
             // console.log('langlanglang LanguageLanguage：', getLang(),  )
             config.headers.Authorization = getItems('token')
-            // http.store.dispatch({type: LOAD, data: true})
+            // this.http.store.dispatch({type: LOAD, data: true})
             //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
             config.data = wrapParams(config.data) 
             config.datas = wrapParams(config.method === 'get' ? config.params : config.data)
@@ -32,8 +32,8 @@ export class Request {
             return config
         }, (err) => Promise.reject(err))
 
-        http.interceptors.response.use((res) => {
-            // http.store.dispatch({type: LOAD, data: false})
+        this.http.interceptors.response.use((res) => {
+            // this.http.store.dispatch({type: LOAD, data: false})
             console.log(' 返回请求 ： ', res.data,   )// 
             tipsConfirm(res,  )
 
@@ -65,7 +65,8 @@ export class Request {
 
 
 export const request = new Request()// 
-console.log(' request ： ', request,  )// 
+const {http,  } = request
+console.log(' request ： ', request, http,  )// 
 
 
 

@@ -7,6 +7,8 @@ import { animate, createProperty } from '@/utils';
 export const PRIMARY = '#00B460'
 
 
+export const BASE_URL = ``
+export const URL = `${BASE_URL}api/UserConfig/data/`
 
 
 
@@ -29,7 +31,7 @@ export const TIMEOUT_TXT =
 // export const URL_PREFIX = "http://192.168.108.167:8080/"
 export const URL_PREFIX = 'https://app.pvumgroup.com/';
 // export const URL_PREFIX = "http://192.168.108.85:8000/"
-export const URL = `${URL_PREFIX}api/UserConfig/data/`;
+// export const URL = `${URL_PREFIX}api/UserConfig/data/`;
 export const forgetPwdURL = `${URL_PREFIX}empinfo/#/forgetPwd?system=empinfo`;
 // export const forgetPwdURL = "http://localhost:8080/#/forgetPwd"
 // export const forgetPwdURL = "http://192.168.108.167:8080/#/forgetPwd"
