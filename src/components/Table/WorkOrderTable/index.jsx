@@ -26,14 +26,30 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const OrganizeTable = props => {
-  console.log(' OrganizeTable  ： ', props); //
+const WorkOrderTable = props => {
+  console.log(' WorkOrderTable  ： ', props); //
   const { showModal, edit, remove, tdClick,    } = props; //
 
   const columns = [
     {
-      title: '部门',
+      title: 'id',
     },
+    {
+      title: '模块',
+    },
+    {
+      title: '名称',
+    },
+    {
+      title: '枚举值',
+    },
+    {
+      title: '关联设备',
+    },
+    {
+      title: '备注',
+    },
+    
   ];
 
   return (
@@ -47,9 +63,9 @@ const OrganizeTable = props => {
   );
 };
 
-OrganizeTable.defaultProps = {
+WorkOrderTable.defaultProps = {
   tdClick: () => {},
   
 };
 
-export default OrganizeTable;
+export default WorkOrderTable;

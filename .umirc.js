@@ -12,11 +12,11 @@ export default defineConfig({
   },
   publicPath: './',
   locale: {
-    default: 'zh-CN',
     antd: true,  
-    title: false,
-    baseNavigator: true,
-    baseSeparator: '-',
+    // default: 'zh-CN',
+    // title: false,
+    // baseNavigator: true,
+    // baseSeparator: '-',
   },
   alias: {
     'smartTb': './components/Table',

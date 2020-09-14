@@ -33,11 +33,11 @@ export const reportSelectOp = (configs, opType = 'option') => {
     Option,
     OptGroup,
   }[opType]
+  console.log(' opType ： ', opType, groupOptions, options, configs,    )//
   const options = configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
-  const groupOptions = configs.map((v) => <OptGroup label={v.label} key={v.key} >
+  const groupOptions = configs.map((v) => <OptGroup label={v.label} key={v.value} >
     {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
-  </OptGroup>) 
-  console.log(' opType ： ', opType, groupOptions, options, configs,    )// 
+  </OptGroup>)  
   return opType === 'group' ? groupOptions : options
 }
 
