@@ -21,16 +21,6 @@ import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 
-const init = {
-  name: 'zyb',
-  role: '巡检人员',
-  tel: 'zyb',
-  email: 'zyb',
-  dep: '巡检运维',
-  // password
-  // password2
-  // select
-};
 
 const ClientForm = props => {
   console.log(' ClientForm ： ', props); //
@@ -50,6 +40,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '客户名称',
+        // name: '',  
       },
       comProps: {},
     },
@@ -57,6 +48,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '客户类型',
+        name: 'type',  
       },
       comProps: {},
     },
@@ -64,6 +56,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '所属行业',
+        name: 'industry',  
       },
       comProps: {},
     },
@@ -71,6 +64,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '企业规模',
+        name: 'scale',  
       },
       comProps: {},
     },
@@ -78,6 +72,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '资产规模',
+        name: 'asset',  
       },
       comProps: {},
     },
@@ -85,6 +80,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '总面积',
+        name: 'total_area',  
       },
       comProps: {},
     },
@@ -92,6 +88,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '占地面积',
+        name: 'covered_area',  
       },
       comProps: {},
     },
@@ -99,6 +96,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '企业LOGO',
+        name: 'region',  
       },
       comProps: {},
     },
@@ -115,6 +113,7 @@ const ClientForm = props => {
       formType: 'Cascader',
       itemProps: {
         label: '区域',
+        name: 'region',  
       },
       comProps: {
         options: regoins,
@@ -124,6 +123,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '详细地址',
+        // name: '', 
       },
       comProps: {},
     },
@@ -131,6 +131,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '经度',
+        name: 'longitude', 
       },
       comProps: {},
     },
@@ -138,6 +139,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '纬度',
+        name: 'latitude', 
       },
       comProps: {},
     },
@@ -171,6 +173,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '密码',
+        // name: 'pwd', 
       },
       comProps: {},
     },
@@ -178,6 +181,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '手机号',
+        // name: 'phone', 
       },
       comProps: {},
     },

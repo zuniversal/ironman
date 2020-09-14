@@ -15,7 +15,7 @@ import {
 import axios from 'axios';
 import moment from 'moment'
 
-export {request, } from './request'
+// export {request, } from './request'
 
 
 // import { INPUT_TXT,  } from 'constants'
@@ -33,12 +33,15 @@ export const reportSelectOp = (configs, opType = 'option') => {
     Option,
     OptGroup,
   }[opType]
-  console.log(' opType ： ', opType, groupOptions, options, configs,    )//
-  const options = configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
-  const groupOptions = configs.map((v) => <OptGroup label={v.label} key={v.value} >
-    {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
-  </OptGroup>)  
-  return opType === 'group' ? groupOptions : options
+  // console.log(' opType ： ', opType, configs,    )//
+  // const options = 
+  // const groupOptions = 
+  return opType === 'group' ? configs.map((v) => {
+      // console.log(' groupOptions v ： ', v,  )// 
+      return <OptGroup label={v.label} key={v.value} >
+      {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
+    </OptGroup> 
+  }) : configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
 }
 
 export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
@@ -156,7 +159,7 @@ export const tipsConfirm = res => {
   const { code, message } = res.data;
   const codeExist = code !== 1 && code != undefined;
   console.log(
-    ' %c codeExist 组件 this.statethis.propss ： ',
+    ' %c tipsConfirm 返回提示 ： ',
     `color: #333; font-weight: bold`,
     code === 1,
     !!isNoTips(res),
@@ -513,17 +516,19 @@ export const pagination = total => ({
 
 export const formatConfig = config =>
   config.map((v, i) => {
-    // console.log(' formatConfig ： ', v, i, v.formType   )// 
+    console.log(' formatConfig ： ', v, i, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
     const items = {
       ...v,
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
       // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
       itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
           ? { ...v.itemProps, key: `field${i}`,  }
-          : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
+          // : { ...v.itemProps, key: `field${i}`,  },
+          : { ...v.itemProps, key: `field${i}`, name: v.itemProp?.name ? v.itemProp.name : `field${i}` },
           // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
           // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
     } 
+    // console.log(' items ： ', items,  )// 
     if (!React.isValidElement(v)) {
       items.formType = v.formType || 'Input'
     }

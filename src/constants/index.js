@@ -7,8 +7,11 @@ import { animate, createProperty } from '@/utils';
 export const PRIMARY = '#00B460'
 
 
-export const BASE_URL = ``
-export const URL = `${BASE_URL}api/UserConfig/data/`
+
+
+export const BASE_URL = `http://yapi.afafa.com.cn/mock/19/api/v1/console/`
+
+export const URL = `${BASE_URL}`
 
 
 

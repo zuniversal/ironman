@@ -36,6 +36,12 @@ export const ActionCom = (props,  ) => {
 
 
 
+// const isMockData = true
+const isMockData = false
+
+
+
+
 
 class SmartTable extends PureComponent {
   constructor(props) {
@@ -141,11 +147,13 @@ class SmartTable extends PureComponent {
     const { searchKey, searchText } = this.state; //
     const { dataSource, noMock, rowLength, newTbData,  } = this.props; //
 
-    // const addData = newTbData.filter((v) => typeof v !== 'object')
-    const addData = {}
+    // const mpckAddData = newTbData.filter((v) => typeof v !== 'object')
+    const mpckAddData = {
+    }
     if (newTbData[0]) {
+      mpckAddData.key = Math.random()
       Object.keys(newTbData[0]).forEach((v, i) => {
-        addData[v] = typeof newTbData[0][v] !== 'object' ? '' : v
+        mpckAddData[v] = typeof newTbData[0][v] !== 'object' ? '' : v
         
       })
       
@@ -158,7 +166,8 @@ class SmartTable extends PureComponent {
     }
     
     // const data = dataSource
-    const data = this.state.mockTbData;
+    // const data = this.state.mockTbData;
+    const data = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
 
     console.log(
       ' dataFilter ：',
@@ -199,9 +208,9 @@ class SmartTable extends PureComponent {
          
         return sliceData
       }
-      console.log(' 1111111111 ： ', addData, newTbData,   )// 
-      if (Object.keys(addData).length) {
-        return [addData, ...data,  ];
+      console.log(' isMockData ： ', mpckAddData, newTbData, isMockData  )// 
+      if (Object.keys(mpckAddData).length && isMockData) {
+        return [mpckAddData, ...data,  ];
       } else {
         return data
       }
@@ -293,7 +302,7 @@ class SmartTable extends PureComponent {
     const col = columns.map((v, i) => ({
       // render: v.render ? v.render : this.renderCol,
       render: (...rest) => this.renderCol(...rest, v),
-      dataIndex: `field${i}`,
+      dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
       ...v,
       // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
@@ -426,8 +435,8 @@ SmartTable.defaultProps = {
   className: '',
   columns: [],
   newTbData: [],  
-  // dataSource: [],
-  dataSource: mockTbData(),
+  dataSource: [],
+  // dataSource: mockTbData(),
   rowKey: 'key',
 
   edit: () => {}, 

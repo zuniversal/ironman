@@ -1,8 +1,6 @@
 import {get, post, noTipsGet, noTipsPost,  } from "@/utils/request"
 
 
-// const SUB = ''
-// export const middle = p => noTipsPost(SUB + 'login', p)
 
 
 export const login = p => noTipsPost('login', p)

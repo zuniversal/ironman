@@ -19,7 +19,7 @@ import Icon from '@/components/Widgets/Icons'//
 // import Icon from '_Widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
-import { test,  } from '@/services/login'//
+import { test,  } from '@/services/test'//
 const res = test().then(res => {
   console.log('  resresres2  ： ', res,  )
   

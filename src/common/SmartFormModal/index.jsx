@@ -30,7 +30,6 @@ import { regoins } from '@/configs'; //
 
 
 const SmartFormModal = props => {
-  const [form] = Form.useForm();
 
   const {
     // modalProps,
@@ -51,9 +50,14 @@ const SmartFormModal = props => {
     // config,
   } = props; //
 
-  const configs = usePowerStationForm()
+  // const configs = usePowerStationForm()
+  // console.log(' configs ： ', configs,  )// 
 
-  console.log(' SmartFormModal ： ', props, form, modalProps, configs, React.isValidElement(null), React.isValidElement(FormCom), ); //
+  const [form] = show ? Form.useForm() : []
+
+
+
+  console.log(' SmartFormModal ： ', props, form, modalProps, React.isValidElement(null), React.isValidElement(FormCom), ); //
 
   
   const handleOk = e => {
@@ -84,8 +88,7 @@ const SmartFormModal = props => {
 
 
   return (
-    <div className={''}>
-      <SmartModal
+    show && <SmartModal
         // {...modalProps}
 
         show={show}
@@ -134,7 +137,6 @@ const SmartFormModal = props => {
         </div>
 
       </SmartModal>
-    </div>
   );
 };
 

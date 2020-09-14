@@ -21,10 +21,11 @@ import AssetsTable from '@/components/Table/AssetsTable'; //
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
 import AssetsForm from '@/components/Form/AssetsForm'; //
 import AssetsSearchForm from '@/components/Form/AssetsSearchForm'; //
-import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
+import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
+import ErrorInfo from '@/components/Widgets/ErrorInfo';
 
 
 

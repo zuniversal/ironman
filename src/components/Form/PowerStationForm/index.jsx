@@ -26,6 +26,7 @@ import {
 
 import SmartForm from '@/common/SmartForm' //
 import {DeviceInfoTable, WatchInfoTable, } from '@/components/Table/PowerStationInfoTable'; //
+import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp,  } from '@/utils'//  
 
@@ -233,21 +234,24 @@ const PowerStationForm = props => {
         label: '一次电气图',
       },
     },
+
+    <UploadCom label={'上传铭牌'} key={'uploadCom'}    ></UploadCom>,
     
-    <Form.Item
-      key={'attach'} 
-      name="upload"
-      label="上传电气图"
-      colon={false}
-      // extra="支持扩展名：.pdf"
-    >
-      <Upload name="logo" action="/upload.do"  listType="picture-card" >
-        <div>
-          <PlusOutlined />
-          <div style={{ marginTop: 8 }}>上传照片</div>
-        </div>
-      </Upload>
-    </Form.Item>,
+    
+    // <Form.Item
+    //   key={'attach'} 
+    //   name="upload"
+    //   label="上传电气图"
+    //   colon={false}
+    //   // extra="支持扩展名：.pdf"
+    // >
+    //   <Upload name="logo" action="/upload.do"  listType="picture-card" >
+    //     <div>
+    //       <PlusOutlined />
+    //       <div style={{ marginTop: 8 }}>上传照片</div>
+    //     </div>
+    //   </Upload>
+    // </Form.Item>,
 
     
     

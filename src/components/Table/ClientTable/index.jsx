@@ -33,45 +33,40 @@ const ClientTable = props => {
   const columns = [
     {
       title: '客户编号',
-      dataIndex: 'key',
+      dataIndex: 'id',
       // link: true,
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       noFilter: true,
       title: '客户名称',
-      dataIndex: 'field2',
+      dataIndex: 'name',
     },
     {
       // noFilter: true,
       title: '客户类型',
-      dataIndex: 'field3',
+      dataIndex: 'type',
     },
     {
       // noFilter: true,
       title: '所属行业',
-      dataIndex: 'field4',
     },
     {
       // noFilter: true,
       title: '企业规模',
-      dataIndex: 'field5',
     },
     {
       title: '资产规模',
-      dataIndex: 'field6',
+      dataIndex: 'asset',
     },
     {
       title: '管理员',
-      dataIndex: 'field7',
     },
     {
       title: '户号',
-      dataIndex: 'field8',
     },
     {
       title: '客户地址',
-      dataIndex: 'field9',
     },
   ];
 

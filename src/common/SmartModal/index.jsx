@@ -114,8 +114,8 @@ class SmartModal extends PureComponent {
         {...this.props} 
 
       >
-        {show ? children : null}
-        {/* {children} */}
+        {/* {show ? children : null} */}
+        {children}
       </Modal>
     );
   }
