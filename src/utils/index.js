@@ -84,7 +84,7 @@ export const mockFormData = (config, ) => {
         
       }[formType]
   // 
-      console.log(' mockDataMap ： ', formType, item, mockDataMap, mockData,  )// 
+      console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )// 
       
       mockData[key] = mockDataMap
     }
@@ -94,6 +94,51 @@ export const mockFormData = (config, ) => {
   return mockData 
 }
 
+
+export const formatConfig = config => config.map((v, i) => {
+  console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
+  const items = {
+    ...v,
+    // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+    // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+    itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
+        ? { ...v.itemProps, key: `field${i}`,  }
+        // : { ...v.itemProps, key: `field${i}`,  },
+        : { ...v.itemProps, key: v.itemProps?.name ? v.itemProps.name : `field${i}`, name: v.itemProps?.name ? v.itemProps.name : `field${i}` },
+        // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
+        // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
+  } 
+  // console.log(' items ： ', items,  )// 
+  if (!React.isValidElement(v)) {
+    items.formType = v.formType || 'Input'
+  }
+  return items
+});
+
+
+  
+
+
+export const mockTbData = () => {
+
+  return new Array(20).fill(0).map((v, i) => {
+    const obj = {};
+    new Array(20).fill(0).forEach((v, index) => {
+      // console.log(' vsssss ： ', v, i, index, )// 
+      obj[`field${index}`] = `Field${i}`;
+    });
+    return {
+      ...obj,
+      key: i,
+      // [`field${i}`]: `Field${i}`,
+      // name: 'John Brown',
+      // age: `${i}2`,
+      // address: `New York No. ${i} Lake Park`,
+      // description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
+    }
+  })
+}
+  
 
 
 
@@ -513,52 +558,6 @@ export const pagination = total => ({
   showTotal,
 });
 
-
-export const formatConfig = config =>
-  config.map((v, i) => {
-    console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
-    const items = {
-      ...v,
-      // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-      // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-      itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
-          ? { ...v.itemProps, key: `field${i}`,  }
-          // : { ...v.itemProps, key: `field${i}`,  },
-          : { ...v.itemProps, key: `field${i}`, name: v.itemProps?.name ? v.itemProps.name : `field${i}` },
-          // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
-          // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
-    } 
-    // console.log(' items ： ', items,  )// 
-    if (!React.isValidElement(v)) {
-      items.formType = v.formType || 'Input'
-    }
-    return items
-  });
-
-
-  
-
-
-export const mockTbData = () => {
-
-  return new Array(20).fill(0).map((v, i) => {
-    const obj = {};
-    new Array(20).fill(0).forEach((v, index) => {
-      // console.log(' vsssss ： ', v, i, index, )// 
-      obj[`field${index}`] = `Field${i}`;
-    });
-    return {
-      ...obj,
-      key: i,
-      // [`field${i}`]: `Field${i}`,
-      // name: 'John Brown',
-      // age: `${i}2`,
-      // address: `New York No. ${i} Lake Park`,
-      // description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-    }
-  })
-}
-  
 
 
 

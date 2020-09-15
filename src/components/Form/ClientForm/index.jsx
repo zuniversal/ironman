@@ -96,7 +96,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '企业LOGO',
-        name: 'region',  
+        name: 'logo',  
       },
       comProps: {},
     },
