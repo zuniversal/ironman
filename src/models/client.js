@@ -1,10 +1,10 @@
 // import {
   
-//   getCustomer,
-//   getCustomerDetail,
-//   addCustomer,
-//   editCustomer,
-//   removeCustomer,
+//   getList,
+//   getListDetail,
+//   addItem,
+//   editItem,
+//   removeItem,
 
 // } from "@/services/client"
 
@@ -19,13 +19,15 @@ import * as client from "@/services/client"
 const namespace = 'client'
 const createAction = action(namespace)
 
-export const getCustomerAsync = createAction('getCustomerAsync')
-export const getCustomer = createAction('getCustomer')
-export const addCustomer = createAction('addCustomer')
-export const addCustomerAsync = createAction('addCustomerAsync')
+export const getListAsync = createAction('getListAsync')
+export const getItemAsync = createAction('getItemAsync')
+export const getItem = createAction('getItem')
+export const getList = createAction('getList')
+export const addItem = createAction('addItem')
+export const addItemAsync = createAction('addItemAsync')
 
 // createAction('client/add')()
-// export const counterAdd = createAction('client/getCustomer')
+// export const counterAdd = createAction('client/getList')
 
 
 
@@ -38,20 +40,29 @@ export default {
   },
 
   reducers: {
-    getCustomer(state, {payload, type}) {
-      console.log(' getCustomer 修改  ： ', state, payload, type,     )// 
+    getList(state, {payload, type}) {
+      console.log(' getList 修改  ： ', state, payload, type,     )// 
       return { 
         ...state, 
         count: state.count + 1,
         // ...payload,
-        clientData: [payload.bean, ],
+        clientList: [payload.bean, ],
       }
     },
-    addCustomer(state, {payload, type}) {
-      console.log(' addCustomer 修改  ： ', state, payload, type,     )// 
+    getItem(state, {payload, type}) {
+      console.log(' getItem 修改  ： ', state, payload, type,     )// 
       return { 
         ...state, 
-        // clientData: [payload.bean, ],
+        count: state.count + 1,
+        // ...payload,
+        // clientList: [payload.bean, ],
+      }
+    },
+    addItem(state, {payload, type}) {
+      console.log(' addItem 修改  ： ', state, payload, type,     )// 
+      return { 
+        ...state, 
+        // clientList: [payload.bean, ],
       }
     },
 
@@ -59,22 +70,29 @@ export default {
   },
 
   effects: {
-    // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getCustomerAsync(params, action) {
-    *getCustomerAsync({payload, type}, {call, put,   }) {
-      console.log(' getCustomerAsync ： ', payload, type,     )// 
+    // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getListAsync(params, action) {
+    *getListAsync({payload, type}, {call, put,   }) {
+      console.log(' getListAsync ： ', payload, type,     )// 
       const params = { name: 'zyb',  }
-      const res = yield call(client.getCustomer, params)
-      // console.log('  getCustomerAsync res ：', res,  )//  
+      // const res = yield call(client.getList, params)
+      const res = yield call(client.getList, payload)
+      // console.log('  getListAsync res ：', res,  )//  
       // 副作用里派发的 type 不应该携带前缀 
-      // Warning: [sagaEffects.put] client/getCustomer should not be prefixed with namespace client
-      yield put(getCustomer(res))
+      // Warning: [sagaEffects.put] client/getList should not be prefixed with namespace client
+      yield put(getList(res))
+
+    },    
+    *getItemAsync({payload, type}, {call, put,   }) {
+      console.log(' getItemAsync ： ', payload, type,     )// 
+      const res = yield call(client.getItem, payload)
+      yield put(getItem(res))
 
     },
-    *addCustomerAsync({payload, type}, {call, put,   }) {
-      console.log(' addCustomerAsync ： ', payload, type,     )// 
-      const res = yield call(client.addCustomer, payload)
-      // console.log('  addCustomer res ：', res,  )//  
-      yield put(addCustomer(res))
+    *addItemAsync({payload, type}, {call, put,   }) {
+      console.log(' addItemAsync ： ', payload, type,     )// 
+      const res = yield call(client.addItem, payload)
+      // console.log('  addItem res ：', res,  )//  
+      yield put(addItem(res))
       
     },
 

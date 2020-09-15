@@ -79,6 +79,8 @@ export const remove = (url, params, o) => http.delete(url, params, o)
 
 export const noTipsGet = (url, params) => http.get(url, {params: {...params, noTips: true}})
 export const noTipsPost = (url, params) => http.post(url, {...params, noTips: true})
+export const noTipsPut = (url, params) => http.put(url, {...params, noTips: true})
+export const noTipsRemove = (url, params) => http.delete(url, {...params, noTips: true})
 
 // export const blobPost = (url, params, o) => http.post(url, {...params, noTips: true}, o) 
 export const blobPost = (url, params, o) => http({method: 'post', url, data: {...params, noTips: true, }, responseType: 'blob', })

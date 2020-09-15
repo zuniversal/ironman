@@ -20,7 +20,7 @@ export default [
     title: '资产管理',
   },
   {
-    path: '/om/powerstation',
+    path: '/om/powerStation',
     component: '@/pages/om/PowerStation',
     title: '电站管理',
   },
@@ -73,17 +73,17 @@ export default [
 
 
   {
-    path: '/om/inspectplan',
+    path: '/om/inspectPlan',
     component: '@/pages/om/InspectPlan',
     title: '巡检计划',
   },
   {
-    path: '/om/inspectmission',
+    path: '/om/inspectMission',
     component: '@/pages/om/InspectMission',
     title: '巡检任务',
   },
   {
-    path: '/om/inspectrecord',
+    path: '/om/inspectRecord',
     component: '@/pages/om/InspectRecord',
     title: '巡检记录',
   },
@@ -101,7 +101,7 @@ export default [
     title: '告警模板',
   },
   {
-    path: '/om/alarmrecord',
+    path: '/om/alarmRecord',
     component: '@/pages/om/AlarmRecord',
     title: '告警记录',
   },

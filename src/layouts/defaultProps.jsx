@@ -186,25 +186,25 @@ export default {
         component: '../pages/om/Operation',
         routes: [
           {
-            path: '/admin/inspectplan',
+            path: '/om/inspectplan',
             name: '巡检计划',
             // icon: <ScheduleFilled />,
             component: '../pages/om/InspectPlan',
           },
           {
-            path: '/admin/inspectMission',
+            path: '/om/inspectMission',
             name: '巡检任务',
             // icon: <ScheduleFilled />,
             component: '../pages/om/InspectMission',
           },
           {
-            path: '/admin/inspectrecord',
+            path: '/om/inspectrecord',
             name: '巡检记录',
             // icon: <ScheduleFilled />,
             component: '../pages/om/InspectRecord',
           },
           {
-            path: '/admin/weak',
+            path: '/om/weak',
             name: '缺陷管理',
             // icon: <ScheduleFilled />,
             component: '../pages/om/Weak',
@@ -218,13 +218,13 @@ export default {
         component: '../Alarm',
         routes: [
           {
-            path: '/admin/template',
+            path: '/om/template',
             name: '告警模板',
             // icon: <ScheduleFilled />,
             component: '../pages/om/Template',
           },
           {
-            path: '/admin/alarmrecord',
+            path: '/om/alarmrecord',
             name: '告警记录',
             // icon: <ScheduleFilled />,
             component: '../pages/om/AlarmRecord',
@@ -263,13 +263,13 @@ export default {
       //   component: '../Waiter',
       //   routes: [
       //     {
-      //       path: '/admin/online',
+      //       path: '/cs/online',
       //       name: '在线客服',
       //       // icon: <ScheduleFilled />,
       //       component: '../Online',
       //     },
       //     {
-      //       path: '/admin/feedback',
+      //       path: '/cs/feedback',
       //       name: '回访管理',
       //       // icon: <ScheduleFilled />,
       //       component: '../Feedback',

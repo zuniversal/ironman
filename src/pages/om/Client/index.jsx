@@ -21,17 +21,17 @@ import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
 
-import { getCustomer, getCustomerAsync, addCustomerAsync,   } from '@/models/client'//
+import { getList, getItem, getListAsync, getItemAsync, addItemAsync,    } from '@/models/client'//
 import { connect } from 'umi';
 
-
-// import { getCustomer,  } from '@/services/client'//
-// const res = getCustomer().then(res => {
-//   console.log('  getCustomer  ： ', res, getCustomer, getCustomerAsync,   )
-//   getCustomer({
+console.log(' getListAsync ： ', getListAsync,  )// 
+// import { getItem,  } from '@/services/client'//
+// const res = getItem().then(res => {
+//   console.log('  getItem  ： ', res, getItem, getListAsync,   )
+//   getItem({
 //     name: 'zyb',  
 //   })
-//   getCustomerAsync()
+//   getListAsync()
 // })
 
 
@@ -44,14 +44,27 @@ export const TITLE = '客户'
 // const mapStateToProps = ({ client, }) => ({...client});
 const mapStateToProps = ({ client, }) => client;
 const mapActions = {
-  getCustomer,
-  addCustomerAsync,
-  getCustomerAsync,
+  getListAsync,
+  getItemAsync,
+  getList,
+  getItem,
 
 }
 
-@connect(mapStateToProps, mapActions)
-// @connect(mapStateToProps, )
+// const mapActions = (...rest) => {
+//   console.log(' mapActions ： ', rest,  )// 
+//   return {
+//     addItemAsync,
+//     getListAsync,
+//     getList,
+//     getItem,
+  
+//   } 
+// }
+
+
+// @connect(mapStateToProps, mapActions)
+@connect(mapStateToProps, )
 // @connect((state) => {
 //   console.log(' statestate ： ', state,  )// 
 //   return state.client
@@ -116,12 +129,12 @@ class Client extends PureComponent {
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
-    const {addCustomerAsync,  } = this.props// 
+    const {addItemAsync,  } = this.props// 
 
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res); //
-      addCustomerAsync(res)
+      addItemAsync(res)
       
       const {newTbData,  } = this.state// 
       this.setState({
@@ -187,19 +200,32 @@ class Client extends PureComponent {
     return commonContent
   }
 
-  getCustomer = (e,  ) => {
-    console.log('    getCustomer ： ', e,   )
+  getList = (e,  ) => {
+    console.log('    getList ： ', e, this.state, this.props,   )
     
-    const {dispatch, getCustomer, getCustomerAsync,    } = this.props// 
-    // dispatch({ type: 'client/getCustomer' })
-    // getCustomer({
+    const {dispatch,    } = this.props// 
+    dispatch(getListAsync({
+      name: 'getListAsync参数',  
+    }))
+
+    dispatch(getItemAsync({
+      name: 'getItemAsync参数',  
+      d_id: 100, 
+    }))
+
+    // const {dispatch, getItem, getListAsync, getItemAsync,   } = this.props// 
+    // dispatch({ type: 'client/getItem' })
+    // getItem({
     //   name: 'zybss1',  
     // })
 
-    getCustomerAsync({
-      name: '参数',  
-    })
-    // getCustomerAsync()
+    // getListAsync({
+    //   name: 'getListAsync参数',  
+    // })
+    // getItemAsync({
+    //   name: 'getItemAsync参数',  
+    //   d_id: 100, 
+    // })
 
 
 
@@ -215,7 +241,7 @@ class Client extends PureComponent {
     // this.showModal({action: 'edit',  });
     // this.showCapture({action: 'userCapture',  });
 
-    this.getCustomer()
+    this.getList()
     
   }
 
@@ -228,14 +254,14 @@ class Client extends PureComponent {
     );
     const { show, showForm, title, isShowModal, commonTitle,   } = this.state; //
 
-    const {clientData,  } = this.props// 
+    const {clientList,  } = this.props// 
 
     const tableProps = {
       edit: this.showModal,
       remove: this.showModal,
       tdClick: this.showModal,
       newTbData: this.state.newTbData,
-      dataSource: clientData,
+      dataSource: clientList,
     }
 
     const formComProps = {

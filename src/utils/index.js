@@ -83,8 +83,8 @@ export const mockFormData = (config, ) => {
         // Dynamic: 'Dynamic初始值', 
         
       }[formType]
-  
-      // console.log(' mockDataMap ： ', formType, item, mockDataMap, mockData,  )// 
+  // 
+      console.log(' mockDataMap ： ', formType, item, mockDataMap, mockData,  )// 
       
       mockData[key] = mockDataMap
     }
@@ -516,7 +516,7 @@ export const pagination = total => ({
 
 export const formatConfig = config =>
   config.map((v, i) => {
-    console.log(' formatConfig ： ', v, i, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
+    console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
     const items = {
       ...v,
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
@@ -524,7 +524,7 @@ export const formatConfig = config =>
       itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
           ? { ...v.itemProps, key: `field${i}`,  }
           // : { ...v.itemProps, key: `field${i}`,  },
-          : { ...v.itemProps, key: `field${i}`, name: v.itemProp?.name ? v.itemProp.name : `field${i}` },
+          : { ...v.itemProps, key: `field${i}`, name: v.itemProps?.name ? v.itemProps.name : `field${i}` },
           // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
           // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
     } 
