@@ -22,9 +22,10 @@ export default defineConfig({
     // baseSeparator: '-',
   },
   alias: {
-    'smartTb': './components/Table',
-    'smartForm': './components/Form',
-    '_Widgets': './components/Widgets',
+    'smartTb': './src/components/Table',
+    'smartForm': './src/components/Form',
+    'widgets': './src/components/Widgets',
+    '_Widgets': './src/components/Widgets',
 
   },
   routes: [

@@ -19,12 +19,18 @@ import * as client from "@/services/client"
 const namespace = 'client'
 const createAction = action(namespace)
 
-export const getListAsync = createAction('getListAsync')
-export const getItemAsync = createAction('getItemAsync')
 export const getItem = createAction('getItem')
 export const getList = createAction('getList')
 export const addItem = createAction('addItem')
+export const editItem = createAction('editItem')
+export const removeItem = createAction('removeItem')
+
+export const getListAsync = createAction('getListAsync')
+export const getItemAsync = createAction('getItemAsync')
 export const addItemAsync = createAction('addItemAsync')
+export const editItemAsync = createAction('editItemAsync')
+export const removeItemAsync = createAction('removeItemAsync')
+
 
 // createAction('client/add')()
 // export const counterAdd = createAction('client/getList')
@@ -62,7 +68,21 @@ export default {
       console.log(' addItem 修改  ： ', state, payload, type,     )// 
       return { 
         ...state, 
-        // clientList: [payload.bean, ],
+        clientList: [payload.bean, ...state.clientList,  ],
+      }
+    },
+    editItem(state, {payload, type}) {
+      console.log(' editItem 修改  ： ', state, payload, type,     )// 
+      return { 
+        ...state, 
+        clientList: state.clientList.map((v) => ({...v.id !== payload.payload.d_id ? payload : v,   })),
+      }
+    },
+    removeItem(state, {payload, type}) {
+      console.log(' removeItem 修改  ： ', state, payload, type,     )// 
+      return { 
+        ...state, 
+        clientList: state.clientList.filter((v) => v.id !== payload.payload.d_id)
       }
     },
 
@@ -93,6 +113,20 @@ export default {
       const res = yield call(client.addItem, payload)
       // console.log('  addItem res ：', res,  )//  
       yield put(addItem(res))
+      
+    },
+    *editItemAsync({payload, type}, {call, put,   }) {
+      console.log(' editItemAsync ： ', payload, type,     )// 
+      const res = yield call(client.editItem, payload)
+      // console.log('  editItem res ：', res,  )//  
+      yield put(editItem({...res, payload,  }))
+      
+    },
+    *removeItemAsync({payload, type}, {call, put,   }) {
+      console.log(' removeItemAsync ： ', payload, type,     )// 
+      const res = yield call(client.removeItem, payload)
+      // console.log('  removeItem res ：', res,  )//  
+      yield put(removeItem({...res, payload,  }))
       
     },
 

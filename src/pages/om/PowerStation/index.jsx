@@ -64,7 +64,6 @@ class Contract extends PureComponent {
 
       action: '',  
       title: '',  
-      contractTitle: '',  
 
       titleMap: {
         add: '新增电站',
@@ -217,7 +216,7 @@ class Contract extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showPowerStationForm, title, contractTitle, action,  } = this.state; //
+    const { show, showPowerStationForm, title, action,  } = this.state; //
 
     const tableProps = {
       edit: this.showContractModal,

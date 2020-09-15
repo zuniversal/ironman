@@ -26,10 +26,25 @@
 // })
 
 
+
+
 export const action = (prefix, ) => (types) => (payload) => ({
   type: prefix + '/' + types,
   payload,
 })
+
+
+// export const action = (type) => (payload) => ({
+//   type,
+//   payload,
+// })
+
+
+// export const prefixAction = (prefix, ) => (types) => (payload) => ({
+//   type: prefix + '/' + types,
+//   payload,
+// })
+
 
 
 

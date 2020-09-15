@@ -201,7 +201,7 @@ export const isNoTips = res => {
   return res.config.datas.noTips;
 };
 export const tipsConfirm = res => {
-  const { code, message } = res.data;
+  const { code, msg } = res.data;
   const codeExist = code !== 1 && code != undefined;
   console.log(
     ' %c tipsConfirm 返回提示 ： ',
@@ -214,11 +214,11 @@ export const tipsConfirm = res => {
     res,
     res.config.url,
   );
-  if (!(!code !== 1 && !!isNoTips(res))) {
-    //
-    // console.log(' codeExist confirmsconfirmsconfirms ：', res.datas, code !== 1, code != undefined, !isNoTips(res), (code !== 1 && code != undefined), (code !== 1 && isNoTips(res)) )
-    confirms(code, message);
-  }
+  // if (!(!code !== 1 && !!isNoTips(res))) {
+  //   //
+  //   // console.log(' codeExist confirmsconfirmsconfirms ：', res.datas, code !== 1, code != undefined, !isNoTips(res), (code !== 1 && code != undefined), (code !== 1 && isNoTips(res)) )
+  //   confirms(code, msg);
+  // }
 };
 export const wrapParams = p => ({ ...p });
 

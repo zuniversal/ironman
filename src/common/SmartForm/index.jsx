@@ -151,7 +151,8 @@ const SmartForm = (props, state) => {
   } = props; //
 
   const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
-  console.log(' initialValues ： ', initialValues, action, action === 'edit',  )// 
+  // const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, ) : {}
+  console.log(' SmartForm initialValues ： ', props, initialValues, action, action === 'edit',  )// 
   // const initialValues = init ? init : {}
   // const initialValues = { field2: 'zyb',    }
 

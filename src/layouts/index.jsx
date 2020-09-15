@@ -16,7 +16,7 @@ import { history } from 'umi';
 import './style.less';
 import { ANIMATE,  } from '@/constants'//
 import Icon from '@/components/Widgets/Icons'//
-// import Icon from '_Widgets/Icons'//
+// import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
 import { test,  } from '@/services/test'//

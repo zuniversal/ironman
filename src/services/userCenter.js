@@ -3,11 +3,8 @@ import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove, 
 
 
 
-export const getCustomer = p => noTipsGet('customer', p)
-export const getCustomerDetail = p => noTipsGet('customer/', p)
-export const addCustomer = p => noTipsPost('customer', p)
-export const editCustomer = p => put('customer', p)
-export const removeCustomer = p => remove('customer', p)
+export const getItem = p => noTipsGet('custom_info', p)
+export const editItem = p => put('custom_info', p)
 
 
 
