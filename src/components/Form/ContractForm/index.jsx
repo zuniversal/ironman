@@ -39,12 +39,10 @@ const normFile = e => {
 };
 
 
-const reportConfig = [
+const choiceRadios = [
   { value: '是', key: 'yes',  },
   { value: '否', key: 'no',  },
 ]
-
-const reportOption = reportRadioOp(reportConfig,  )
 
 
 
@@ -157,7 +155,8 @@ export const config = [
     itemProps: {
       label: '是否生成客户报告',
     },
-    radioOptions: reportOption, 
+    radioOptions: choiceRadios,
+    opType: 'group',
   },
   
   

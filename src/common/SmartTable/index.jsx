@@ -20,15 +20,17 @@ import { tips, mockTbData,  } from '@/utils'; //
 //   console.log(' filters ： ', params, this);
 // }
 
-export const ActionCom = (props,  ) => {
-  const {edit, remove, extra, record, onRemove, showQRCode,    } = props
+export const ActionCom = (params,  ) => {
+  const {edit, remove, extra, record, onRemove, showQRCode, noDefault, props,  } = params
   // console.log(' ActionCom props ： ', props,  )//
   return (
     <span>
-      <a onClick={() => edit({action: 'edit', record})}>编辑</a>
-      <a onClick={() => remove({action: 'remove', record})}>删除</a>
+      {props.noDefault && <>
+        <a onClick={() => edit({action: 'edit', record})}>编辑</a>
+        <a onClick={() => remove({action: 'remove', record})}>删除</a>
+      </>}
       <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>
-      {/* {extra} */}
+      {extra}
     </span>
   );
 }  //
@@ -38,6 +40,7 @@ export const ActionCom = (props,  ) => {
 
 // const isMockData = true
 const isMockData = false
+const mixinData = true
 
 
 
@@ -167,7 +170,11 @@ class SmartTable extends PureComponent {
     
     // const data = dataSource
     // const data = this.state.mockTbData;
-    const data = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
+
+    // const data = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
+    const realData = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
+    const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
+
 
     console.log(
       ' dataFilter ：',
@@ -319,10 +326,11 @@ class SmartTable extends PureComponent {
           // ...rest,
           text, record, index, 
           edit, 
-          // remove: this.onRemove,
-          remove,
+          remove: this.onRemove,
+          // remove,
           showQRCode: this.showQRCode,
           extra,
+          props: this.props,
           ...actionConfig, 
         }
         
@@ -438,7 +446,8 @@ SmartTable.defaultProps = {
   newTbData: [],  
   // dataSource: [],
   dataSource: mockTbData(),
-  rowKey: 'key',
+  // rowKey: 'key',
+  rowKey: 'u_id',
 
   edit: () => {}, 
   remove: () => {}, 

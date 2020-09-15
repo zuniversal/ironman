@@ -36,7 +36,7 @@ import ModalForm from './ModalForm'; //
 import DateForn from './DateForn'; //
 
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
-import { mockFormData, reportSelectOp, reportRadioOp,   } from '@/utils'; //
+import { mockFormData, renderSelectOp, renderRadioOp,   } from '@/utils'; //
 
 const { TextArea } = Input
 const { Option } = Select;
@@ -47,12 +47,13 @@ const layoutObj = {
   // wrapperCol: { span: 14 },
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },
+    sm: { span: 6 },// 
+    sm: { span: 8 },// 
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 18 },
-    // sm: { span: 12 },
+    sm: { span: 18 },// 
+    sm: { span: 16 },// 
   },
 };
 const noLabelLayout = {
@@ -147,11 +148,23 @@ const SmartForm = (props, state) => {
     propsForm,
     isMockData,
     action,
+    noPh,
 
   } = props; //
 
-  const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
-  // const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, ) : {}
+  console.log(
+    ' %c SmartForm 组件 state, props ： ',
+    `color: #333; font-weight: bold`,
+    state,
+    props,
+    config,
+    config[config.length - 1],
+  ); //
+
+
+  // const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
+  const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, init, ) : {}
+  // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(config, init, ) : {}
   console.log(' SmartForm initialValues ： ', props, initialValues, action, action === 'edit',  )// 
   // const initialValues = init ? init : {}
   // const initialValues = { field2: 'zyb',    }
@@ -178,14 +191,6 @@ const SmartForm = (props, state) => {
   
 
 
-  console.log(
-    ' %c SmartForm 组件 state, props ： ',
-    `color: #333; font-weight: bold`,
-    state,
-    props,
-    config,
-    config[config.length - 1],
-  ); //
 
   const onFinish = (values, rest) => {
     console.log(
@@ -371,16 +376,19 @@ const SmartForm = (props, state) => {
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
 
+    const placeholder = noPh ? '' : formLabel//  
+    console.log('  placeholder ：', placeholder,  )// 
+
     const realComProps = {
       className: 'w-320',
       ...comProps,
-      placeholder: formLabel,
+      placeholder: placeholder,
     };
     const dynamicComProps = {
       className: 'w-320',
       ...comProps,
       // comProps: {...comProps, className: `${comProps.className} dynamiRow` },
-      placeholder: formLabel,
+      placeholder: placeholder,
       name: formItemProps.key,
       init: initialValues[comProps?.key],
       
@@ -391,8 +399,8 @@ const SmartForm = (props, state) => {
 
     // const {} = realComProps
     
-    const renderRadioOptions = reportRadioOp(radioData)
-    const renderSelectOptions = reportSelectOp(selectData, opType, )
+    const renderRadioOptions = renderRadioOp(radioData, opType, )
+    const renderSelectOptions = renderSelectOp(selectData, opType, )
 
 
     const formItemMap = {
@@ -422,7 +430,7 @@ const SmartForm = (props, state) => {
       CheckboxGroup: <Checkbox.Group {...realComProps}  />,
       Radio:  <Radio.Group>
         {/* <Radio value="item">item</Radio> */}
-        {radioOptions}
+        {renderSelectOptions}
       </Radio.Group>,
       DatePicker: <DatePicker {...realComProps} />,
 

@@ -82,11 +82,11 @@ class Role extends PureComponent {
 
 
   renderForm = (
-    <div className={'fsb '}  >
+    <div className={'fje '}  >
       <SearchForm></SearchForm>
-      <div className={'btnWrapper'}>
+      {/* <div className={'btnWrapper'}> */}
         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-      </div>
+      {/* </div> */}
     </div>
   );
 

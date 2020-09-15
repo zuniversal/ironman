@@ -24,7 +24,7 @@ export default {
       },
       {
         path: '/om/userCenter',
-        name: '用户中心',
+        name: '个人中心',
         icon: <ScheduleFilled />,
         component: '../pages/UserCenter',
       },
@@ -35,22 +35,22 @@ export default {
         component: '../Shifts',
         routes: [
           {
-            path: '/om/shifts',
+            path: '/om/shiftsManage',
             name: '班组管理',
             // icon: <ScheduleFilled />,
-            component: '../pages/om/Shifts',
+            component: '../pages/om/ShiftsManage',
           },
           {
-            path: '/om/shifts/arrange',
+            path: '/om/shiftsArrange',
             name: '排班',
             // icon: <ScheduleFilled />,
-            component: '../pages/om/Arrange',
+            component: '../pages/om/ShiftsArrange',
           },
           {
-            path: '/om/shifts/transfer',
+            path: '/om/shiftsTransfer',
             name: '交接班',
             // icon: <ScheduleFilled />,
-            component: '../pages/om/Transfer',
+            component: '../pages/om/ShiftsTransfer',
           },
         ],
       },

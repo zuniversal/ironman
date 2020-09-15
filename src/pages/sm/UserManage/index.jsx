@@ -84,10 +84,21 @@ class UserManage extends PureComponent {
   };
 
 
+  // renderForm = (
+  //   <div>
+  //     <UserManageSearchForm></UserManageSearchForm>
+  //     <Divider />
+  //     <div className={'fsb '}  >
+  //       <SearchForm></SearchForm>
+  //       <div className={'btnWrapper'}>
+  //         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   renderForm = (
-    <div>
+    <div className={'fsb '}  >
       <UserManageSearchForm></UserManageSearchForm>
-      <Divider />
       <div className={'fsb '}  >
         <SearchForm></SearchForm>
         <div className={'btnWrapper'}>

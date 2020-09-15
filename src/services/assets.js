@@ -3,16 +3,15 @@ import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove, 
 
 
 
-export const getList = p => noTipsGet('electricityuser', p)
-export const getItem = p => noTipsGet(`electricityuser/${p.d_id}`, p)
-export const addItem = p => post('electricityuser', p)
-export const editItem = p => put('electricityuser', p)
-export const removeItem = p => remove('electricityuser', p)
+export const getList = p => noTipsGet('OMS/equipment', p)
+export const getItem = p => noTipsGet(`OMS/equipment/${p.d_id}`, p)
+export const addItem = p => post('OMS/equipment', p)
+export const editItem = p => put('OMS/equipment', p)
+export const removeItem = p => remove('OMS/equipment', p)
 
 
-export const syncOA = p => noTipsGet('electricityuser/OA', p)
+export const syncOA = p => noTipsGet('OMS/equipment/OA', p)
 
-export const QRCode = p => noTipsGet('OMS/equipment/QRcode', p)
 
 
 

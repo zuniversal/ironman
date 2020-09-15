@@ -115,7 +115,7 @@ class Client extends PureComponent {
       title: this.state.titleMap[action],  
       modalForm: ClientForm,
 
-      editData: action === 'edit' ? params.record : null, 
+      editData: action === 'edit' ? params.record : {}, 
     });
   };
 
@@ -181,7 +181,8 @@ class Client extends PureComponent {
     const {dispatch,    } = this.props// 
     dispatch(removeItemAsync({
       name: 'removeItemAsync参数', 
-      d_id: props.record.id 
+      d_id: props.record.id,
+      ...props.record,
     }))
 
   };
@@ -201,6 +202,7 @@ class Client extends PureComponent {
       const {dispatch,    } = this.props// 
       dispatch(actionFn({
         name: 'actionFn参数',  
+        data: res,
       }))
       // const {addItemAsync,  } = this.props// 
       //addItemAsync(res)
@@ -340,7 +342,7 @@ class Client extends PureComponent {
     const formComProps = {
       getCapture: this.showCapture,
       action: this.state.action,
-      init: this.state.editData, 
+      // init: this.state.editData, 
     }
 
     

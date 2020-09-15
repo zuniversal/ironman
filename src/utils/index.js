@@ -28,7 +28,7 @@ const { RangePicker } = DatePicker;
 
 
 
-export const reportSelectOp = (configs, opType = 'option') => {
+export const renderSelectOp = (configs, opType = 'option') => {
   const OptionMap = {
     Option,
     OptGroup,
@@ -44,7 +44,11 @@ export const reportSelectOp = (configs, opType = 'option') => {
   }) : configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
 }
 
-export const reportRadioOp = (configs,  ) => configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
+export const renderRadioOp = (configs, opType = 'option') => {
+  return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>) 
+}
+
+
 
 
 
@@ -57,9 +61,12 @@ export const mockDate = moment('2020/02/02', dateFormat)
 export const mockMonth = moment('2020/02/02', monthFormat)
 
 
-export const mockFormData = (config, ) => {
+export const mockFormData = (config, init, ) => {
   // console.log(' mockFormData   formType, ,   ： ', config,   )
-  const mockData = {}
+  const mockData = {
+    d_id: Math.random(),
+    ...init,
+  }
   config.forEach((item, i) => {
     const {formType, itemProps,   } = item
     const {label, key,   } = itemProps
@@ -119,23 +126,37 @@ export const formatConfig = config => config.map((v, i) => {
   
 
 
-export const mockTbData = () => {
+export const mockTbData = (children, ) => {
 
   return new Array(20).fill(0).map((v, i) => {
+    const start = 10
+    const childrenObj = {};
     const obj = {};
     new Array(20).fill(0).forEach((v, index) => {
       // console.log(' vsssss ： ', v, i, index, )// 
       obj[`field${index}`] = `Field${i}`;
+      childrenObj[`field${start * index}`] = `Field_${i}`;
     });
-    return {
+    console.log(' objobj ： ', obj,  )// 
+    const item = {
+      d_id: i,
       ...obj,
       key: i,
       // [`field${i}`]: `Field${i}`,
-      // name: 'John Brown',
-      // age: `${i}2`,
-      // address: `New York No. ${i} Lake Park`,
-      // description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
     }
+    const childrenItem = {
+      d_id: start * (i + 1),
+      ...childrenObj,
+      key: i,
+      // [`field${i}`]: `Field${i}`,
+    }
+    if (children) {
+      item.children = [
+        childrenItem,
+      ]
+    }
+    
+    return item
   })
 }
   

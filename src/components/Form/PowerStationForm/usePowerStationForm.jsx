@@ -44,7 +44,7 @@ const reportConfig = [
   { value: '否', key: 'no',  },
 ]
 
-const reportOption = reportRadioOp(reportConfig,  )
+// const reportOption = reportRadioOp(reportConfig,  )
 
 
 

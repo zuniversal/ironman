@@ -37,13 +37,18 @@ export default [
     title: '班组管理',
   },
   {
-    path: '/om/arrange',
-    component: '@/pages/om/Arrange',
+    path: '/om/shiftsManage',
+    component: '@/pages/om/ShiftsManage',
+    title: '班组管理',
+  },
+  {
+    path: '/om/shiftsArrange',
+    component: '@/pages/om/ShiftsArrange',
     title: '排班',
   },
   {
-    path: '/om/transfer',
-    component: '@/pages/om/Transfer',
+    path: '/om/shiftsTransfer',
+    component: '@/pages/om/ShiftsTransfer',
     title: '交接班',
   },
 

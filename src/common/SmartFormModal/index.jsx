@@ -61,7 +61,7 @@ const SmartFormModal = props => {
 
   
   const handleOk = e => {
-    console.log(' handleOk   e, ,   ： ', e);
+    console.log(' handleOk   e, ,   ： ', e, props,     );
 
     const formValues = form.getFieldsValue()
     console.log('  formValues ：', formValues,  )//  
@@ -76,7 +76,7 @@ const SmartFormModal = props => {
     //   console.log('Validate Failed:', info);
     // });
 
-    onOk && onOk({ e, form });
+    onOk && onOk({ e, form, init: formComProps.init, });
   };
   const close = e => {
     console.log(' close   e, ,   ： ', e);
@@ -88,7 +88,7 @@ const SmartFormModal = props => {
 
 
   return (
-    show && <SmartModal
+    <SmartModal
         // {...modalProps}
 
         show={show}

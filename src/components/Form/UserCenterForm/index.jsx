@@ -124,7 +124,7 @@ const UserCenterForm = props => {
         {...props}
       ></SmartForm>
 
-      <div className="fje">
+      <div className="dfc actionBtn ">
         <Button type="primary" onClick={handleOk}>确认修改</Button>
       </div>
       

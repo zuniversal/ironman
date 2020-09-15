@@ -31,14 +31,6 @@ import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 
 
-const reportConfig = [
-  { value: '是', key: 'yes',  },
-  { value: '否', key: 'no',  },
-]
-
-const reportOption = reportRadioOp(reportConfig,  )
-
-
 
 
 const HouseNoForm = props => {
