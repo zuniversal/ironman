@@ -129,7 +129,7 @@ class Client extends PureComponent {
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
-    const {addItemAsync,  } = this.props// 
+    // const {addItemAsync,  } = this.props// 
 
     try {
       const res = await form.validateFields();
