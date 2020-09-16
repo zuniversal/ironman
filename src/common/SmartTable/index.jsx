@@ -29,7 +29,7 @@ export const ActionCom = (params,  ) => {
         <a onClick={() => edit({action: 'edit', record})}>编辑</a>
         <a onClick={() => remove({action: 'remove', record})}>删除</a>
       </>}
-      <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>
+      props.noDefault && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
       {extra}
     </span>
   );

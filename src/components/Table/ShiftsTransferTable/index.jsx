@@ -55,6 +55,9 @@ const ShiftsTransferTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
       
+      extra={
+        <a onClick={() => tdClick({action: 'showList'})}>查看</a>
+      }
       {...props}
     ></SmartTable>
   );

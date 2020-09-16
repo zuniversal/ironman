@@ -21,6 +21,7 @@ import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import ShiftsArrangeForm from '@/components/Form/ShiftsArrangeForm'; //
+import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm'; //
 import ShiftsArrangeTable from '@/components/Table/ShiftsArrangeTable'; //
 import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
@@ -82,7 +83,7 @@ class ShiftsArrange extends PureComponent {
 
   renderForm = (
     <div className={'fsb '}  >
-      <SearchForm></SearchForm>
+      <ShiftsArrangeSearchForm></ShiftsArrangeSearchForm>
       <div className={'btnWrapper'}>
         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出{TITLE}数据</Button>
