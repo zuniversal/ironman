@@ -16,35 +16,21 @@ import { history, connect,    } from 'umi';
 import './style.less';
 import { ANIMATE,  } from '@/constants'//
 import Icon from '@/components/Widgets/Icons'//
+// import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
-import { test,  } from '@/services/test'//
-const res = test().then(res => {
-  console.log('  resresres2  ： ', res,  )
+// import { test,  } from '@/services/test'//
+// const res = test().then(res => {
+//   console.log('  resresres2  ： ', res,  )
   
-})
+// })
 
 
 
 const { Header, Sider, Content } = Layout;
 
-const content = (
-  <Descriptions size="small" column={2}>
-    <Descriptions.Item label="创建人">张三</Descriptions.Item>
-    <Descriptions.Item label="创建人">张三</Descriptions.Item>
-    <Descriptions.Item label="创建人">张三</Descriptions.Item>
-    <Descriptions.Item label="创建人">张三</Descriptions.Item>
-    <Descriptions.Item label="联系方式">
-      <a>421421</a>
-    </Descriptions.Item>
-    <Descriptions.Item label="创建时间">2017-01-10</Descriptions.Item>
-    <Descriptions.Item label="更新时间">2017-10-10</Descriptions.Item>
-    <Descriptions.Item label="备注">
-      中国浙江省杭州市西湖区古翠路
-    </Descriptions.Item>
-  </Descriptions>
-);
+
 
 const Layouts = props => {
   const [settings, setSetting] = useState(undefined);
@@ -66,21 +52,10 @@ const Layouts = props => {
   return (
       <div
         id="test-pro-layout"
-        style={
-          {
-            // transform: 'rotate(0)',
-            // overflowX: 'hidden',
-          }
-        }
         className={'layoutContainer'}
       >
         <ProLayout
           {...defaultProps}
-          style={
-            {
-              // maxHeight: '100vh',
-            }
-          }
           location={{
             pathname,
           }}
@@ -183,7 +158,11 @@ const Layouts = props => {
           >
 
                     
-            {/* <Spin spinning={loading} className={'spinWrapper'}  > */}
+            <Spin 
+              // spinning={loading} 
+              spinning={false} 
+              className={'spinWrapper'}  
+            >
               <Content
                 key={pathname} 
                 // className={`${ANIMATE.flash} container `}
@@ -211,71 +190,10 @@ const Layouts = props => {
                 
               </Content>
 
-            {/* </Spin> */}
+            </Spin>
           </Suspense>
 
-          {/* <PageContainer
-            tabBarExtraContent={() => (
-              <div>
-                tabBarExtraContent
-              </div>
-            )}
-            extraContent={() => (
-              <div>
-                extraContent
-              </div>
-            )}
-            content={() => (
-              <div>
-                content
-              </div>
-            )}
-            // content={content}
-            // tabList={[
-            //   {
-            //     tab: '基本信息',
-            //     key: 'base',
-            //   },
-            //   {
-            //     tab: '详细信息',
-            //     key: 'info',
-            //   },
-            // ]}
-            // extra={[
-            //   <Button key="4">操作4</Button>,
-            //   <Button key="3">操作</Button>,
-            //   <Button key="2">操作</Button>,
-            //   <Button key="1" type="primary">
-            //     主操作
-            //   </Button>,
-            // ]}
-            // footer={[
-            //   <Button key="4">重置4</Button>,
-            //   <Button key="3">重置</Button>,
-            //   <Button key="2" type="primary">
-            //     提交
-            //   </Button>,
-            // ]}
-          >
-            
-            需要抱过个容器 否则会报错 TypeError: react_redux_lib_default(...) is not a function 
-            <div
-              style={{
-                // height: '120vh',
-              }}
-            >
-              <Result
-                status="404"
-                style={{
-                  height: '100%',
-                  background: '#fff',
-                }}
-                title="Hello World"
-                subTitle="Sorry, you are not authorized to access this page."
-                extra={<Button type="primary">Back Home</Button>}
-              />
-            </div>
-          </PageContainer> */}
+
         </ProLayout>
 
         <SettingDrawer

@@ -36,12 +36,14 @@ export const config = [
     noRule: true,  
     itemProps: {
       label: '姓名',
+      name: 'name', 
     },
   },
   {
     noRule: true,  
     itemProps: {
       label: '角色',
+      name: '', 
     },
     comProps: {
       disabled: true,  
@@ -51,18 +53,21 @@ export const config = [
     noRule: true,  
     itemProps: {
       label: '手机',
+      name: 'phone', 
     },
   },
   {
     noRule: true,  
     itemProps: {
       label: '邮箱',
+      name: '', 
     },
   },
   {
     noRule: true,  
     itemProps: {
       label: '业务部门',
+      name: '', 
     },
     comProps: {
       disabled: true,  
@@ -74,6 +79,7 @@ export const config = [
     noRule: true,  noRule: true,
     itemProps: {
       label: '密码重置',
+      name: '', 
     },
   },
   {
@@ -82,6 +88,7 @@ export const config = [
     noRule: true,  noRule: true,
     itemProps: {
       label: '再次输入密码',
+      name: '', 
     },
   },
   

@@ -23,6 +23,12 @@ export default {
         component: '../Home',
       },
       {
+        path: '/om/test',
+        name: '测试',
+        icon: <ScheduleFilled />,
+      },
+
+      {
         path: '/om/userCenter',
         name: '个人中心',
         icon: <ScheduleFilled />,

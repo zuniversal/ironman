@@ -28,7 +28,11 @@ import {
   getItemAsync,
   addItemAsync,
   editItemAsync,
-  removeItemAsync,    
+  removeItemAsync,  
+  
+  syncOAAsync,
+  getPortraitAsync,
+
 } from '@/models/client'//
 import { connect } from 'umi';
 
@@ -37,7 +41,6 @@ console.log(' getListAsync ： ', getListAsync,  )//
 // const res = getItem().then(res => {
 //   console.log('  getItem  ： ', res, getItem, getListAsync,   )
 //   getItem({
-//     name: 'zyb',  
 //   })
 //   getListAsync()
 // })
@@ -103,8 +106,41 @@ class Client extends PureComponent {
       newTbData: [], 
       editData: {},  
 
+
+      selectedRowKeys: [],
+      selectedRows: [],
+      
+
     };
   }
+  
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    console.log(' onSelectChange ： ', selectedRowKeys, selectedRows, this.state, this.props,    )// 
+
+    this.setState({ 
+      selectedRowKeys, 
+      selectedRows,
+    });
+  }
+  syncOAAsync = (params,  ) => {
+    console.log(' syncOAAsync,  , ： ', params,    )
+    const {dispatch,    } = this.props// 
+
+    dispatch(syncOAAsync({
+    }))
+    
+  }
+  getPortraitAsync = (params,  ) => {
+    console.log(' getPortraitAsync,  , ： ', params,    )
+    const {dispatch,    } = this.props// 
+    
+    dispatch(
+      getPortraitAsync({
+      })
+    )
+    
+  }
+
 
   showFormModal = (params, ) => {
     const {action,  } = params
@@ -119,14 +155,14 @@ class Client extends PureComponent {
     });
   };
 
-  renderFormBtn = (
+  renderFormBtn = (params, ) => (
     <div className={'btnWrapper'}>
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-      <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button>
-      <Button type="primary">导出客户数据</Button>
-      <Button type="primary">删除</Button>
+      <Button type="primary" onClick={this.syncOAAsync}>同步OA</Button>
+      <Button type="primary " onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button>
+      <Button type="primary" onClick={() => this.syncOAAsync({action: 'add',  })} >导出客户数据</Button>
+      <Button type="primary" onClick={() => this.onBatchRemove()} >删除</Button>
     </div>
   );
   renderModalForm = (e,  ) => {
@@ -179,11 +215,20 @@ class Client extends PureComponent {
   onRemove = (props, ) => {
     console.log(' onRemove ： ', props, this.state, this.props); 
     const {dispatch,    } = this.props// 
-    dispatch(removeItemAsync({
-      name: 'removeItemAsync参数', 
-      d_id: props.record.id,
-      ...props.record,
-    }))
+
+    dispatch(removeItemAsync([
+      // d_id: props.record.id,
+      // ...props.record,
+      props.record,
+    ]))
+
+  };
+  onBatchRemove = (props, ) => {
+    console.log(' onBatchRemove ： ', props, this.state, this.props); 
+    const {dispatch,    } = this.props// 
+    const {selectedRows,  } = this.state// 
+
+    dispatch(removeItemAsync(selectedRows))
 
   };
   onOk = async (props, ) => {
@@ -201,7 +246,6 @@ class Client extends PureComponent {
       console.log('  res await 结果  ：', res, action, actionFn,    ); //
       const {dispatch,    } = this.props// 
       dispatch(actionFn({
-        name: 'actionFn参数',  
         data: res,
       }))
       // const {addItemAsync,  } = this.props// 
@@ -276,31 +320,29 @@ class Client extends PureComponent {
     
     const {dispatch,    } = this.props// 
     dispatch(getListAsync({
-      name: 'getListAsync参数',  
     }))
 
     dispatch(getItemAsync({
-      name: 'getItemAsync参数',  
       d_id: 100, 
     }))
 
     // const {dispatch, getItem, getListAsync, getItemAsync,   } = this.props// 
     // dispatch({ type: 'client/getItem' })
     // getItem({
-    //   name: 'zybss1',  
     // })
 
     // getListAsync({
-    //   name: 'getListAsync参数',  
     // })
     // getItemAsync({
-    //   name: 'getItemAsync参数',  
     //   d_id: 100, 
     // })
 
 
 
   }
+
+
+
 
   componentDidMount() {
     console.log(
@@ -337,6 +379,7 @@ class Client extends PureComponent {
       tdClick: this.showModalContent,
       newTbData: this.state.newTbData,
       dataSource: this.props.clientList,
+      onSelectChange: this.onSelectChange,
     }
 
     const formComProps = {
@@ -379,7 +422,7 @@ class Client extends PureComponent {
 
 
         <ClientSearchForm
-          formBtn={this.renderFormBtn}
+          formBtn={this.renderFormBtn()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
         ></ClientSearchForm>

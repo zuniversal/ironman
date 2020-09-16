@@ -41,7 +41,14 @@ const OrganizeTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
+
+      haveChildren
       
+      // expandable={{
+      //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.field0}</p>,
+      //   rowExpandable: record => record.name !== 'Not Expandable',
+      // }}
+
       {...props}
     ></SmartTable>
   );

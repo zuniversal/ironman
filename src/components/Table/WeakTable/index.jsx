@@ -33,34 +33,42 @@ const WeakTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     
     {
       title: '名称',
+      dataIndex: 'name',
     },
     
     {
       title: '电站',
+      dataIndex: 'station.name',
     },
     
     {
       title: '客户名称',
+      dataIndex: '',
     },
     
     {
       title: '反馈人',
+      dataIndex: '',
     },
     
     {
       title: '反馈时间',
+      dataIndex: '',
     },
     
     {
       title: '处理状态',
+      dataIndex: 'status',
     },
     
     {
       title: '备注',
+      dataIndex: 'remark',
     },
     
   ];

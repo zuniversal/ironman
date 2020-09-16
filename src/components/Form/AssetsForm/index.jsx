@@ -55,12 +55,14 @@ const AssetsForm = props => {
       formType: 'Select',
       itemProps: {
         label: '户号',
+        name: '',  
       },
     },
     {
       formType: 'Select',
       itemProps: {
         label: '电站',
+        name: 'station',  
       },
     },
     {
@@ -68,6 +70,7 @@ const AssetsForm = props => {
       noRule: true,  
       itemProps: {
         label: '上级设备',
+        name: 'parent_id',  
       },
     },
     {
@@ -75,38 +78,45 @@ const AssetsForm = props => {
       noRule: true,  
       itemProps: {
         label: '设备名称',
+        name: 'name',  
       },
     },
     {
       noRule: true,  
       itemProps: {
         label: '设备编号',
+        name: 'code',  
       },
     },
     {
       noRule: true,  
       itemProps: {
         label: '出厂号',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '设备型号',
+        name: 'type',  
       },
     },
     {
       itemProps: {
         label: '额定电压',
+        name: 'voltage',  
       },
     },
     {
       itemProps: {
         label: '额定电流',
+        name: 'electricity',  
       },
     },
     {
       itemProps: {
         label: '变压容量',
+        name: 'transformer_capacity',  
       },
     },
     {
@@ -114,6 +124,7 @@ const AssetsForm = props => {
       noRule: true,  
       itemProps: {
         label: '出厂日期',
+        name: 'production_date',  
       },
     },
     {
@@ -121,6 +132,7 @@ const AssetsForm = props => {
       noRule: true,  
       itemProps: {
         label: '投运日期',
+        name: 'operation_date',  
       },
     },
 

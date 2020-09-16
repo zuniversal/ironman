@@ -50,7 +50,7 @@ const InspectRecordTable = props => {
       title: '领取人',
     },
     {
-      title: '执行时间',
+      title: '领取时间',
     },
     {
       title: '完成时间',

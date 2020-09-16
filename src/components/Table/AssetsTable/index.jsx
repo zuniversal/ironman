@@ -33,17 +33,17 @@ const AssetsTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'client',
+      dataIndex: 'customer_name',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       title: '户号',
-      dataIndex: 'signing_company',
+      dataIndex: 'code',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
       title: '电站',
-      dataIndex: 'customer_representative',
+      dataIndex: 'station_name',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {

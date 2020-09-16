@@ -32,36 +32,41 @@ const InspectMissionTable = props => {
 
   const columns = [
     {
-      title: 'id',
+      d: 'id',
+      dataIndex: 'id',
+    },
+    {
+      d: '名称',
+      dataIndex: 'name',
+    },
+    {
+      d: '电站',
+      dataIndex: '',
     },
     
     {
-      title: '名称',
+      d: '客户名称',
+      dataIndex: '',
+    },
+    {
+      d: '当前状态',
+      dataIndex: 'status',
     },
     
     {
-      title: '电站',
+      d: '领取人',
+      dataIndex: '',
     },
     
     {
-      title: '客户名称',
+      d: '执行时间',
+      dataIndex: 'work_date',
+    },
+    {
+      d: '领取时间',
+      dataIndex: 'assign_date',
     },
     
-    {
-      title: '反馈人',
-    },
-    
-    {
-      title: '反馈时间',
-    },
-    
-    {
-      title: '处理状态',
-    },
-    
-    {
-      title: '备注',
-    },
     
   ];
 

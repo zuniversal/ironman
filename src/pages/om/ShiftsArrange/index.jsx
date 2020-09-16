@@ -85,7 +85,7 @@ class ShiftsArrange extends PureComponent {
     <div className={'fsb '}  >
       <ShiftsArrangeSearchForm></ShiftsArrangeSearchForm>
       <div className={'btnWrapper'}>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >{TITLE}</Button>
         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出{TITLE}数据</Button>
       </div>
     </div>

@@ -25,11 +25,11 @@ export const ActionCom = (params,  ) => {
   // console.log(' ActionCom props ： ', props,  )//
   return (
     <span>
-      {props.noDefault && <>
+      {!props.noDefault && <>
         <a onClick={() => edit({action: 'edit', record})}>编辑</a>
         <a onClick={() => remove({action: 'remove', record})}>删除</a>
       </>}
-      {props.noDefault && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
+      {!props.noDefault && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
       {extra}
     </span>
   );
@@ -69,7 +69,7 @@ class SmartTable extends PureComponent {
 
       showResultModal: false,  
 
-      mockTbData: mockTbData(),
+      mockTbData: mockTbData(props.haveChildren, ),
 
       selectionType: 'checkbox',  
 
@@ -172,8 +172,10 @@ class SmartTable extends PureComponent {
     // const data = this.state.mockTbData;
 
     // const data = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
-    const realData = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
-    const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
+    // const realData = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
+    // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
+
+    const data = (dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
 
 
     console.log(
@@ -215,7 +217,7 @@ class SmartTable extends PureComponent {
          
         return sliceData
       }
-      console.log(' isMockData ： ', mpckAddData, newTbData, isMockData  )// 
+      console.log(' isMockData ： ', mpckAddData, newTbData, data, isMockData, dataSource, this.state.mockTbData,  )// 
       if (Object.keys(mpckAddData).length && isMockData) {
         return [mpckAddData, ...data,  ];
       } else {
@@ -249,7 +251,15 @@ class SmartTable extends PureComponent {
 
 
   onChange = (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    console.log(' onChange ： ', selectedRowKeys, selectedRows, this.state, this.props,    )// 
+    const {onSelectChange,  } = this.props// 
+    if (onSelectChange) {
+      onSelectChange(selectedRowKeys, selectedRows)
+    }
+    
+    this.setState({ 
+      selectedRowKeys,
+    });
   }
 
   getCheckboxProps = record => ({
@@ -303,7 +313,7 @@ class SmartTable extends PureComponent {
 
 
   render() {
-    const { pagination, searchText, searchKey, selectionType, showResultModal, title, show,  } = this.state;
+    const { pagination, searchText, searchKey, selectionType, showResultModal, title, show, selectedRowKeys,  } = this.state;
     const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -326,8 +336,8 @@ class SmartTable extends PureComponent {
           // ...rest,
           text, record, index, 
           edit, 
-          remove: this.onRemove,
-          // remove,
+          // remove: this.onRemove,
+          remove,
           showQRCode: this.showQRCode,
           extra,
           props: this.props,
@@ -376,7 +386,8 @@ class SmartTable extends PureComponent {
       offFn: this.onResultModalCancel, 
     }
     
-
+    const realData = this.dataFilter()
+    console.log('  realData ：', realData,  )// 
 
     return (
       <div className="">
@@ -400,7 +411,7 @@ class SmartTable extends PureComponent {
 
           {...this.props}
           // dataSource={dataSource}
-          dataSource={this.dataFilter()}
+          dataSource={realData}
           // dataSource={dataFilter(this, dataSource, searchText, searchKey, )}
           // dataSource={filters(dataSource, searchText, searchKey, ).bind(this)}
           // dataSource={filters(dataSource, searchText, searchKey, )}
@@ -444,10 +455,10 @@ SmartTable.defaultProps = {
   className: '',
   columns: [],
   newTbData: [],  
-  // dataSource: [],
-  dataSource: mockTbData(),
+  dataSource: [],
+  // dataSource: mockTbData(),
   // rowKey: 'key',
-  rowKey: 'u_id',
+  rowKey: 'd_id',
 
   edit: () => {}, 
   remove: () => {}, 

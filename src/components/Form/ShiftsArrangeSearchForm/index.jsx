@@ -34,12 +34,18 @@ const ShiftsArrangeSearchForm = props => {
       itemProps: {
         label: '班组',
       },
+      comProps: {
+        className: 'w-240',  
+      },  
     },
     {
       formType: 'DatePicker', 
       itemProps: {
         label: '月份',
       },
+      comProps: {
+        className: 'w-240',  
+      },  
     },
     
   ];
@@ -50,15 +56,14 @@ const ShiftsArrangeSearchForm = props => {
 
   const formProps = {
     // layout: 'vertical',
-    // layout: 'inline',
+    layout: 'inline',
   };
 
   return (
     <div className={'ShiftsArrangeSearchForm'}>
-      <div className="fje btnWrapper ">
-        {/* <Button type="primary "onClick={() => showFormModal({action: 'export',  })}  >导出数据</Button> */}
+      {/* <div className="fje btnWrapper ">
         <Button type="primary "onClick={() => {}}  >导出数据</Button>
-      </div>
+      </div> */}
 
       <SmartForm
         // flexRow={4}

@@ -33,21 +33,27 @@ const UserManageTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'user_id',
     },
     {
       title: '姓名',
+      dataIndex: 'name',
     },
     {
       title: '手机',
+      dataIndex: 'phone',
     },
     {
       title: '邮箱',
+      dataIndex: 'email',
     },
     {
       title: '业务部门',
+      // dataIndex: '',
     },
     {
       title: '角色',
+      // dataIndex: '',
     },
   ];
 

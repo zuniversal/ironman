@@ -36,7 +36,7 @@ export class Request {
             // this.http.store.dispatch({type: LOAD, data: false})
             console.log(' 返回请求 ： ', res.data,   )// 
             tipsConfirm(res,  )
-
+            // console.log(' 返回请求22s ： ', res.data,   )// 
             // return res.data
             return res.data.data
         }, (err) => {

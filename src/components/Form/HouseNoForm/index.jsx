@@ -57,13 +57,13 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '客户',
-        name: '',  
+        name: 'customer',  
       },
     },
     {
       itemProps: {
         label: '户号',
-        name: '',  
+        name: 'code',  
       },
     },
     {

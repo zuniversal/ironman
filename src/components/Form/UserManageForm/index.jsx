@@ -24,38 +24,39 @@ export const config = [
   {
     itemProps: {
       label: '姓名',
+      name: 'name',
     },
   },
   {
     itemProps: {
       label: '手机',
+      name: 'name',
     },
   },
   {
     itemProps: {
       label: '邮箱',
+      name: 'email',
     },
   },
   {
     itemProps: {
       label: '密码',
-    },
-  },
-  {
-    itemProps: {
-      label: '角色',
+      name: 'password',
     },
   },
   {
     formType: 'Select',
     itemProps: {
       label: '角色',
+      name: '',
     },
   },
   {
     formType: 'Select',
     itemProps: {
       label: '所属业务部门',
+      name: '',
     },
   },
 
