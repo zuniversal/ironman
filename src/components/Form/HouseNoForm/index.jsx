@@ -57,21 +57,25 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '客户',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '户号',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '签约公司',
+        name: 'signing_company',  
       },
     },
     {
       itemProps: {
         label: '客户代表',
+        name: 'customer_representative',  
       },
     },
     {
@@ -84,26 +88,31 @@ const HouseNoForm = props => {
       formType: 'Cascader',
       itemProps: {
         label: '区域',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '详细用电地址',
+        name: 'addr',  
       },
     },
     {
       itemProps: {
         label: '邮编',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '经度',
+        name: 'longitude',  
       },
     },
     {
       itemProps: {
         label: '纬度',
+        name: 'latitude',  
       },
     },
     {
@@ -116,6 +125,7 @@ const HouseNoForm = props => {
       formType: 'Select',
       itemProps: {
         label: '变压器容量',
+        name: 'transformer_capacity',  
       },
     },
     
@@ -123,6 +133,7 @@ const HouseNoForm = props => {
       formType: 'Select',
       itemProps: {
         label: '电压等级',
+        name: 'voltage_level',  
       },
     },
     
@@ -130,12 +141,14 @@ const HouseNoForm = props => {
       formType: 'Select',
       itemProps: {
         label: '电价类型',
+        name: '',  
       },
     },
     
     {
       itemProps: {
         label: '电站数',
+        name: 'station_num',  
       },
     },
     

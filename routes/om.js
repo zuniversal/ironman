@@ -25,6 +25,11 @@ export default [
     title: '电站管理',
   },
   {
+    path: '/om/clientReport',
+    component: '@/pages/om//ClientReport',
+    title: '客户报告',
+  },
+  {
     path: '/om/userCenter',
     component: '@/pages/UserCenter',
     title: '个人中心',
@@ -54,8 +59,8 @@ export default [
 
 
   {
-    path: '/om/monitor',
-    component: '@/pages/om/Monitor',
+    path: '/om/monitorManage',
+    component: '@/pages/om/MonitorManage',
     title: '监测管理',
   },
   {
@@ -101,8 +106,8 @@ export default [
 
 
   {
-    path: '/om/template',
-    component: '@/pages/om/Template',
+    path: '/om/alarmTemplate',
+    component: '@/pages/om/AlarmTemplate',
     title: '告警模板',
   },
   {

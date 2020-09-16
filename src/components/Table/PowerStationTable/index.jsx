@@ -33,7 +33,7 @@ const PowerStationTable = props => {
   const columns = [
     {
       title: '户号',
-      dataIndex: 'field1',
+      dataIndex: 'customer',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {
@@ -43,7 +43,7 @@ const PowerStationTable = props => {
     },
     {
       title: '业务主体',
-      dataIndex: 'field3',
+      dataIndex: 'signing_company',
       render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
     },
     {

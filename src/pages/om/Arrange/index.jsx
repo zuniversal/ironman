@@ -85,7 +85,7 @@ class Goods extends PureComponent {
       <SearchForm></SearchForm>
       <div className={'btnWrapper'}>
         <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出资产数据</Button>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出{TITLE}数据</Button>
       </div>
     </div>
   );

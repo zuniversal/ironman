@@ -91,10 +91,10 @@ export default {
         component: '../pages/om/PowerStation',
       },
       {
-        path: '/om/clentReport',
+        path: '/om/clientReport',
         name: '客户报告',
         icon: <ScheduleFilled />,
-        component: '../pages/om/ClentReport',
+        component: '../pages/om/ClientReport',
       },
 
 
@@ -156,10 +156,10 @@ export default {
 
       
       {
-        path: '/om/monitor',
+        path: '/om/monitorManage',
         name: '监测管理',
         icon: <ScheduleFilled />,
-        component: '../pages/om/Monitor',
+        component: '../pages/om/MonitorManage',
       },
       {
         path: '/om/goods',
@@ -186,7 +186,7 @@ export default {
         component: '../pages/om/Operation',
         routes: [
           {
-            path: '/om/inspectplan',
+            path: '/om/inspectPlan',
             name: '巡检计划',
             // icon: <ScheduleFilled />,
             component: '../pages/om/InspectPlan',
@@ -198,7 +198,7 @@ export default {
             component: '../pages/om/InspectMission',
           },
           {
-            path: '/om/inspectrecord',
+            path: '/om/inspectRecord',
             name: '巡检记录',
             // icon: <ScheduleFilled />,
             component: '../pages/om/InspectRecord',
@@ -218,13 +218,13 @@ export default {
         component: '../Alarm',
         routes: [
           {
-            path: '/om/template',
+            path: '/om/alarmTemplate',
             name: '告警模板',
             // icon: <ScheduleFilled />,
-            component: '../pages/om/Template',
+            component: '../pages/om/AlarmTemplate',
           },
           {
-            path: '/om/alarmrecord',
+            path: '/om/alarmRecord',
             name: '告警记录',
             // icon: <ScheduleFilled />,
             component: '../pages/om/AlarmRecord',
