@@ -25,15 +25,15 @@ import { formatConfig } from '@/utils'//
 
 
 
-const DictForm = props => {
-  console.log(' DictForm ： ', props); //
+const MissionsForm = props => {
+  console.log(' MissionsForm ： ', props); //
   const {formBtn, ...rest } = props// 
 
     
   const config = [
     {
       itemProps: {
-        label: '模块',
+        label: '客户',
       },
     },
     {
@@ -43,20 +43,27 @@ const DictForm = props => {
     },
     {
       itemProps: {
-        label: '枚举值',
+        label: '任务描述',
       },
     },
     {
       itemProps: {
-        label: '关联设备',
+        label: '联系人',
       },
     },
     {
       itemProps: {
-        label: '备注',
+        label: '电话',
       },
     },
-
+    {
+      itemProps: {
+        label: '地址',
+      },
+    },
+    
+    
+    
     
   ];
 
@@ -68,7 +75,7 @@ const DictForm = props => {
   };
 
   return (
-    <div className={' DictForm '}>
+    <div className={' MissionsForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -85,6 +92,6 @@ const DictForm = props => {
   );
 };
 
-DictForm.defaultProps = {};
+MissionsForm.defaultProps = {};
 
-export default DictForm;
+export default MissionsForm;

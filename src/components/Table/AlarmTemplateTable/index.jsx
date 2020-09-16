@@ -26,8 +26,8 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const InspectMissionTable = props => {
-  console.log(' InspectMissionTable  ： ', props); //
+const AlarmTemplateTable = props => {
+  console.log(' AlarmTemplateTable  ： ', props); //
   const { showModal, edit, remove, tdClick,    } = props; //
 
   const columns = [
@@ -40,27 +40,7 @@ const InspectMissionTable = props => {
     },
     
     {
-      title: '电站',
-    },
-    
-    {
-      title: '客户名称',
-    },
-    
-    {
-      title: '反馈人',
-    },
-    
-    {
-      title: '反馈时间',
-    },
-    
-    {
-      title: '处理状态',
-    },
-    
-    {
-      title: '备注',
+      title: '通知方法',
     },
     
   ];
@@ -76,9 +56,9 @@ const InspectMissionTable = props => {
   );
 };
 
-InspectMissionTable.defaultProps = {
+AlarmTemplateTable.defaultProps = {
   tdClick: () => {},
   
 };
 
-export default InspectMissionTable;
+export default AlarmTemplateTable;

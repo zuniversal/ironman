@@ -26,30 +26,38 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const OperateTable = props => {
-  console.log(' OperateTable  ： ', props); //
+const MonitorManageTable = props => {
+  console.log(' MonitorManageTable  ： ', props); //
   const { showModal, edit, remove, tdClick,    } = props; //
 
   const columns = [
     {
-      title: 'id',
+      title: '所属客户',
     },
     {
-      title: '模块',
+      title: '户号',
     },
     {
-      title: '名称',
+      title: '电站',
     },
     {
-      title: '枚举值',
+      title: '设备名称',
     },
     {
       title: '关联设备',
     },
     {
-      title: '备注',
+      title: '监测点',
     },
-    
+    {
+      title: '设备类型',
+    },
+    {
+      title: 'IEMI号',
+    },
+    {
+      title: '状态',
+    },
   ];
 
   return (
@@ -58,14 +66,22 @@ const OperateTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
       
+      extra={
+        <>
+          <a onClick={() => tdClick({action: 'showList'})}>发起工单</a>
+          <a onClick={() => tdClick({action: 'showList'})}>完成任务</a>
+          <a onClick={() => tdClick({action: 'showList'})}>关联合同</a>
+        </>
+      }
+      
       {...props}
     ></SmartTable>
   );
 };
 
-OperateTable.defaultProps = {
+MonitorManageTable.defaultProps = {
   tdClick: () => {},
   
 };
 
-export default OperateTable;
+export default MonitorManageTable;

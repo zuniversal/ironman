@@ -20,8 +20,8 @@ import {
 import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import GoodsForm from '@/components/Form/GoodsForm'; //
-import GoodsTable from '@/components/Table/GoodsTable'; //
+import MonitorManageForm from '@/components/Form/MonitorManageForm'; //
+import MonitorManageTable from '@/components/Table/MonitorManageTable'; //
 import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
 
@@ -29,12 +29,13 @@ import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
 
 
-export const TITLE = '物料'
+export const TITLE = '监测'
+export const DEVICE = '设备'
 
 
 
 
-class Goods extends PureComponent {
+class MonitorManage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,8 +49,10 @@ class Goods extends PureComponent {
       title: '',  
 
       titleMap: {
-        add: `新增${TITLE}`,
-        edit: `编辑${TITLE}`,
+        add: `新增${TITLE}${DEVICE}`,
+        edit: `编辑${TITLE}${DEVICE}`,
+        import: `Excel导入${DEVICE}`,
+        export: `导出${TITLE}${DEVICE}`,
         detail: `${TITLE}详情`,
         newRelated: `关联新增`,
         upload: `文件上传`,
@@ -75,7 +78,7 @@ class Goods extends PureComponent {
       action,
       show: true,
       title: this.state.titleMap[action],  
-      modalForm: GoodsForm,
+      modalForm: MonitorManageForm,
     });
   };
 
@@ -84,8 +87,9 @@ class Goods extends PureComponent {
     <div className={'fsb '}  >
       <SearchForm></SearchForm>
       <div className={'btnWrapper'}>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出资产数据</Button>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}{DEVICE}</Button>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >Excel导入{DEVICE}</Button>
+        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出{TITLE}{DEVICE}</Button>
       </div>
     </div>
   );
@@ -173,12 +177,12 @@ class Goods extends PureComponent {
       tdClick: this.showModalContent,
     }
 
-    return <GoodsTable {...tableProps}  ></GoodsTable>
+    return <MonitorManageTable {...tableProps}  ></MonitorManageTable>
   }
 
   componentDidMount() {
     console.log(
-      ' Goods 组件componentDidMount挂载 ： ',
+      ' MonitorManage 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
     ); //
@@ -189,7 +193,7 @@ class Goods extends PureComponent {
 
   render() {
     console.log(
-      ' %c Goods 组件 this.state, this.props ： ',
+      ' %c MonitorManage 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
@@ -214,7 +218,7 @@ class Goods extends PureComponent {
     }
     
     return (
-      <div className="Goods">
+      <div className="MonitorManage">
         
         {this.renderForm}
 
@@ -254,4 +258,4 @@ class Goods extends PureComponent {
   }
 }
 
-export default Goods;
+export default MonitorManage;

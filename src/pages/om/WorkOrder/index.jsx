@@ -20,8 +20,8 @@ import {
 import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import GoodsForm from '@/components/Form/GoodsForm'; //
-import GoodsTable from '@/components/Table/GoodsTable'; //
+import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
+import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
 import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
 
@@ -34,7 +34,7 @@ export const TITLE = '物料'
 
 
 
-class Goods extends PureComponent {
+class WorkOrder extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,7 +75,7 @@ class Goods extends PureComponent {
       action,
       show: true,
       title: this.state.titleMap[action],  
-      modalForm: GoodsForm,
+      modalForm: WorkOrderForm,
     });
   };
 
@@ -173,12 +173,12 @@ class Goods extends PureComponent {
       tdClick: this.showModalContent,
     }
 
-    return <GoodsTable {...tableProps}  ></GoodsTable>
+    return <WorkOrderTable {...tableProps}  ></WorkOrderTable>
   }
 
   componentDidMount() {
     console.log(
-      ' Goods 组件componentDidMount挂载 ： ',
+      ' WorkOrder 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
     ); //
@@ -189,7 +189,7 @@ class Goods extends PureComponent {
 
   render() {
     console.log(
-      ' %c Goods 组件 this.state, this.props ： ',
+      ' %c WorkOrder 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
@@ -214,7 +214,7 @@ class Goods extends PureComponent {
     }
     
     return (
-      <div className="Goods">
+      <div className="WorkOrder">
         
         {this.renderForm}
 
@@ -254,4 +254,4 @@ class Goods extends PureComponent {
   }
 }
 
-export default Goods;
+export default WorkOrder;

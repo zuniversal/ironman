@@ -140,10 +140,10 @@ export default {
         component: '../pages/sm/CsMonitor',
       },
       {
-        path: '/sm/operate',
+        path: '/sm/operateRecord',
         name: '操作记录',
         icon: <ScheduleFilled />,
-        component: '../pages/sm/Operate',
+        component: '../pages/sm/OperateRecord',
       },
 
 

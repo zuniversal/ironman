@@ -35,20 +35,27 @@ const InspectPlanTable = props => {
       title: 'id',
     },
     {
-      title: '模块',
-    },
-    {
       title: '名称',
     },
     {
-      title: '枚举值',
+      title: '电站',
     },
     {
-      title: '关联设备',
+      title: '客户名称',
     },
     {
-      title: '备注',
+      title: '当前状态',
     },
+    {
+      title: '领取人',
+    },
+    {
+      title: '执行时间',
+    },
+    {
+      title: '领取时间',
+    },
+    
     
   ];
 

@@ -30,8 +30,8 @@ export default [
     title: '系统监控',
   },
   {
-    path: '/sm/operate',
-    component: '@/pages/sm/Operate',
+    path: '/sm/operateRecord',
+    component: '@/pages/sm/OperateRecord',
     title: '操作记录',
   },
   

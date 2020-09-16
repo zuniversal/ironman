@@ -1,7 +1,7 @@
 // import {
   
-//   getCustomer,
-//   getCustomerDetail,
+//   getItem,
+//   getItemDetail,
 //   addCustomer,
 //   editCustomer,
 //   removeCustomer,
@@ -19,11 +19,11 @@ import * as client from "@/services/client"
 const namespace = 'client'
 const createAction = action(namespace)
 
-export const getCustomer = createAction('getCustomer')
-export const getCustomerAsync = createAction('getCustomerAsync')
+export const getItem = createAction('getItem')
+export const getItemAsync = createAction('getItemAsync')
 
 // createAction('client/add')()
-// export const counterAdd = createAction('client/getCustomer')
+// export const counterAdd = createAction('client/getItem')
 
 
 
@@ -36,8 +36,8 @@ export default {
   },
 
   reducers: {
-    getCustomer(state, {payload, type}) {
-      console.log(' getCustomer 修改  ： ', state, payload, type,     )// 
+    getItem(state, {payload, type}) {
+      console.log(' getItem 修改  ： ', state, payload, type,     )// 
       return { 
         ...state, 
         count: state.count + 1,
@@ -49,14 +49,14 @@ export default {
   },
 
   effects: {
-    // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getCustomerAsync(params, action) {
-    *getCustomerAsync({payload, type}, {call, put,   }) {
-      console.log(' getCustomerAsync ： ', payload, type,     )// 
+    // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getItemAsync(params, action) {
+    *getItemAsync({payload, type}, {call, put,   }) {
+      console.log(' getItemAsync ： ', payload, type,     )// 
 
       const params = { name: 'zyb',  }
-      const res = yield call(client.getCustomer, params)
-      console.log('  getCustomerAsync res ：', res,  )//  
-      yield put(getCustomer(res))
+      const res = yield call(client.getItem, params)
+      console.log('  getItemAsync res ：', res,  )//  
+      yield put(getItem(res))
 
 
 

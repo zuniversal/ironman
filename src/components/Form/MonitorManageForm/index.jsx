@@ -41,27 +41,68 @@ const selectData = [
 
 export const config = [
   {
-    formType: 'TextArea',  
+    formType: 'Select', 
     itemProps: {
-      label: '消息内容',
+      label: '户号',
     },
   },
   {
-    formType: 'CheckboxGroup',  
+    formType: 'Select', 
     itemProps: {
-      label: '通知方法',
+      label: '电站',
     },
-    comProps: {
-      options: checkboxGroupOptions,
-    },
-    // checkboxContent: 
   },
   {
-    formType: 'Select',  
+    formType: 'Select', 
     itemProps: {
-      label: '通知人员',
+      label: '关联客户设备',
     },
-    selectData: selectData,
+  },
+  {
+    itemProps: {
+      label: '监控点名称',
+    },
+  },
+  {
+    itemProps: {
+      label: '设备编码',
+    },
+  },
+  {
+    itemProps: {
+      label: '设备名称',
+    },
+  },
+  {
+    itemProps: {
+      label: 'IMEI号',
+    },
+  },
+  {
+    formType: 'Select', 
+    itemProps: {
+      label: '设备类型',
+    },
+  },
+  {
+    itemProps: {
+      label: '品牌',
+    },
+  },
+  {
+    itemProps: {
+      label: '告警策略',
+    },
+  },
+  {
+    itemProps: {
+      label: '状态',
+    },
+  },
+  {
+    itemProps: {
+      label: '说明',
+    },
   },
 
   
@@ -69,8 +110,8 @@ export const config = [
 
 
 
-const MsgForm = props => {
-  console.log(' MsgForm ： ', props); //
+const MonitorManageForm = props => {
+  console.log(' MonitorManageForm ： ', props); //
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
@@ -78,7 +119,7 @@ const MsgForm = props => {
   };
 
   return (
-    <div className={' MsgForm '}>
+    <div className={' MonitorManageForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -95,6 +136,6 @@ const MsgForm = props => {
   );
 };
 
-MsgForm.defaultProps = {};
+MonitorManageForm.defaultProps = {};
 
-export default MsgForm;
+export default MonitorManageForm;

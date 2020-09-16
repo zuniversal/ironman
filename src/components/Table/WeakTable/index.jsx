@@ -34,18 +34,31 @@ const WeakTable = props => {
     {
       title: 'id',
     },
-    {
-      title: '模块',
-    },
+    
     {
       title: '名称',
     },
+    
     {
-      title: '枚举值',
+      title: '电站',
     },
+    
     {
-      title: '关联设备',
+      title: '客户名称',
     },
+    
+    {
+      title: '反馈人',
+    },
+    
+    {
+      title: '反馈时间',
+    },
+    
+    {
+      title: '处理状态',
+    },
+    
     {
       title: '备注',
     },

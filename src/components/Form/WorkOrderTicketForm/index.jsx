@@ -25,38 +25,63 @@ import { formatConfig } from '@/utils'//
 
 
 
-const DictForm = props => {
-  console.log(' DictForm ： ', props); //
+const WorkOrderTicketForm = props => {
+  console.log(' WorkOrderTicketForm ： ', props); //
   const {formBtn, ...rest } = props// 
 
     
   const config = [
     {
       itemProps: {
-        label: '模块',
+        label: '添加工作票',
       },
     },
     {
       itemProps: {
-        label: '名称',
+        label: '单号',
       },
     },
     {
       itemProps: {
-        label: '枚举值',
+        label: '工单类型',
       },
     },
     {
       itemProps: {
-        label: '关联设备',
+        label: '客户',
       },
     },
     {
       itemProps: {
-        label: '备注',
+        label: '类型',
       },
     },
-
+    {
+      itemProps: {
+        label: '工作内容',
+      },
+    },
+    {
+      itemProps: {
+        label: '安全措施',
+      },
+    },
+    {
+      itemProps: {
+        label: '施工日期',
+      },
+    },
+    {
+      itemProps: {
+        label: '施工人员',
+      },
+    },
+    {
+      itemProps: {
+        label: '施工负责人',
+      },
+    },
+    
     
   ];
 
@@ -68,7 +93,7 @@ const DictForm = props => {
   };
 
   return (
-    <div className={' DictForm '}>
+    <div className={' WorkOrderTicketForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -85,6 +110,6 @@ const DictForm = props => {
   );
 };
 
-DictForm.defaultProps = {};
+WorkOrderTicketForm.defaultProps = {};
 
-export default DictForm;
+export default WorkOrderTicketForm;

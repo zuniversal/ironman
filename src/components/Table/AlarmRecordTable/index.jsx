@@ -35,20 +35,30 @@ const AlarmRecordTable = props => {
       title: 'id',
     },
     {
-      title: '模块',
+      title: '客户',
     },
     {
-      title: '名称',
+      title: '监测点',
     },
     {
-      title: '枚举值',
+      title: '告警详情',
     },
     {
-      title: '关联设备',
+      title: '告警模板',
     },
     {
-      title: '备注',
+      title: '告警状态',
     },
+    {
+      title: '开始时间',
+    },
+    {
+      title: '持续时长',
+    },
+    {
+      title: '当前状态',
+    },
+    
     
   ];
 

@@ -35,20 +35,36 @@ const WorkOrderTable = props => {
       title: 'id',
     },
     {
-      title: '模块',
-    },
-    {
       title: '名称',
     },
     {
-      title: '枚举值',
+      title: '工单编号',
     },
     {
-      title: '关联设备',
+      title: '客户名称',
     },
     {
-      title: '备注',
+      title: '工单类型',
     },
+    {
+      title: '当前状态',
+    },
+    {
+      title: '处理人务',
+    },
+    {
+      title: '关联任',
+    },
+    {
+      title: '任务状态',
+    },
+    {
+      title: '客户确认',
+    },
+    {
+      title: '创建时间',
+    },
+    
     
   ];
 
@@ -58,6 +74,13 @@ const WorkOrderTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
       
+      extra={
+        <>
+          <a onClick={() => tdClick({action: 'showList'})}>派单</a>
+          <a onClick={() => tdClick({action: 'showList'})}>导出</a>
+          <a onClick={() => tdClick({action: 'showList'})}>添加工作票</a>
+        </>
+      }
       {...props}
     ></SmartTable>
   );

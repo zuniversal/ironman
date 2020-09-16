@@ -35,19 +35,10 @@ const CsMonitorTable = props => {
       title: 'id',
     },
     {
-      title: '模块',
+      title: '服务',
     },
     {
-      title: '名称',
-    },
-    {
-      title: '枚举值',
-    },
-    {
-      title: '关联设备',
-    },
-    {
-      title: '备注',
+      title: '状态',
     },
     
   ];
