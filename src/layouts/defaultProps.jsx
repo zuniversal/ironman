@@ -79,7 +79,7 @@ export default {
         component: '../pages/om/Client',
       },
       {
-        path: '/om/houseno',
+        path: '/om/houseNo',
         name: '户号管理',
         icon: <ScheduleFilled />,
         component: '../pages/om/HouseNo',
@@ -91,7 +91,7 @@ export default {
         component: '../pages/om/Assets',
       },
       {
-        path: '/om/powerstation',
+        path: '/om/powerStation',
         name: '电站管理',
         icon: <ScheduleFilled />,
         component: '../pages/om/PowerStation',

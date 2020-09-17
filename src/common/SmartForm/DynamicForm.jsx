@@ -146,7 +146,13 @@ const DynamicForm = props => {
     >
       {(fields, params) => {
         const { add, remove } = params;
-        console.log(' params ： ', fields, params, itemProps); //
+        console.log(' params ： ', fields.length, fields.length === 0, fields, params, itemProps); //
+
+        if (fields.length === 0) {
+          console.log(' add ： ',    )// 
+          add()
+          add('add', 0)
+        }
 
         const { label, className,   } = itemProps;
 
@@ -236,7 +242,6 @@ const DynamicForm = props => {
               //   add()
               // } 
               
-              // add()
 
               const subBtn = (
                 <MinusCircleOutlined

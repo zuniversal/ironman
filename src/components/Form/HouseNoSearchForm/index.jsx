@@ -85,6 +85,7 @@ const HouseNoSearchForm = props => {
         // init={init}
         // init={{}}
 
+        noRuleAll
         {...rest}
       ></SmartForm>
 

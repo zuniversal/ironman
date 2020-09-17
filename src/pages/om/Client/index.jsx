@@ -145,6 +145,15 @@ class Client extends PureComponent {
   showFormModal = (params, ) => {
     const {action,  } = params
     console.log('    showFormModal ： ', action, params, this.state, this.props,  );
+    const isEdit = action === 'edit'
+    if (isEdit) {
+      const {dispatch,  } = this.props// 
+      dispatch(getItemAsync({
+        d_id: 100, 
+      }))
+      
+    }
+    
     this.setState({
       action,
       show: true,
@@ -283,11 +292,16 @@ class Client extends PureComponent {
   showCapture = (params, ) => {
     const {action,  } = params
     console.log(' showCapture,  , ： ', action,    )
+    const {dispatch, portraitData,    } = this.props// 
+    dispatch(getPortraitAsync({
+      d_id: 999, 
+    }))
+
     this.setState({
       isShowModal: true,
       action,
       commonTitle: this.state.titleMap[action],  
-      commonContent: <ClientRadar   ></ClientRadar>, 
+      commonContent: <ClientRadar data={portraitData}  ></ClientRadar>, 
     })
   }
   showCommonModal = (params,  ) => {
@@ -322,9 +336,6 @@ class Client extends PureComponent {
     dispatch(getListAsync({
     }))
 
-    dispatch(getItemAsync({
-      d_id: 100, 
-    }))
 
     // const {dispatch, getItem, getListAsync, getItemAsync,   } = this.props// 
     // dispatch({ type: 'client/getItem' })

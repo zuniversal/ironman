@@ -63,6 +63,7 @@ const UserManageSearchForm = props => {
         // init={init}
         // init={{}}
 
+        noRuleAll
         {...rest}
       ></SmartForm>
 

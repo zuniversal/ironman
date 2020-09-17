@@ -64,6 +64,7 @@ const WorkOrderSearchForm = props => {
         // init={init}
         // init={{}}
 
+        noRuleAll
         {...rest}
       ></SmartForm>
 

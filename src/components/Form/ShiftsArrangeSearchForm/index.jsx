@@ -74,6 +74,8 @@ const ShiftsArrangeSearchForm = props => {
         // init={{
         //   key9: regoins,
         // }}
+        
+        noRuleAll
         {...props}
       ></SmartForm>
     </div>

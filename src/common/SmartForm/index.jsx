@@ -377,7 +377,7 @@ const SmartForm = (props, state) => {
     // console.log('  formLabel ：', formLabel,  )//
 
     const placeholder = noPh ? '' : formLabel//  
-    console.log('  placeholder ：', placeholder,  )// 
+    // console.log('  placeholder ：', placeholder,  )
 
     const realComProps = {
       className: 'w-320',

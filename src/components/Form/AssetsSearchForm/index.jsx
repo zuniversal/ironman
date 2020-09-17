@@ -63,6 +63,7 @@ const AssetsSearchForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
+        noRuleAll
 
         {...rest}
       ></SmartForm>

@@ -8,7 +8,7 @@
 
 // } from "@/services/client"
 
-import { init, action,  } from '@/utils/createAction'// 
+import { action,  } from '@/utils/createAction'// 
 import * as client from "@/services/client"
 
 
@@ -17,24 +17,19 @@ import * as client from "@/services/client"
 
 
 const namespace = 'client'
-const createAction = init(namespace)
+const createAction = action(namespace)
 
 export const getItem = createAction('getItem')
 export const getList = createAction('getList')
 export const addItem = createAction('addItem')
 export const editItem = createAction('editItem')
 export const removeItem = createAction('removeItem')
-export const syncOA = createAction('syncOA')
-export const getPortrait = createAction('getPortrait')
 
 export const getListAsync = createAction('getListAsync')
 export const getItemAsync = createAction('getItemAsync')
 export const addItemAsync = createAction('addItemAsync')
 export const editItemAsync = createAction('editItemAsync')
 export const removeItemAsync = createAction('removeItemAsync')
-export const syncOAAsync = createAction('syncOAAsync')
-export const getPortraitAsync = createAction('getPortraitAsync')
-
 
 
 // createAction('client/add')()
@@ -47,8 +42,6 @@ export default {
 
   state: {
     count: 1, 
-    oaData: {},  
-    portraitData: {},  
 
   },
 
@@ -83,33 +76,13 @@ export default {
       return { 
         ...state, 
         clientList: state.clientList.map((v) => ({...v.id !== payload.payload.d_id ? payload : v,   })),
-        // clientList: state.clientList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
       }
     },
     removeItem(state, {payload, type}) {
       console.log(' removeItem 修改  ： ', state, payload, type,     )// 
-      const removeList = payload.payload.filter((v) => v.id)
-      console.log(' removeList  payload.payload.filter v ： ', removeList,   )
       return { 
         ...state, 
-        // clientList: state.clientList.filter((v) => v.id !== payload.payload.d_id)
-        clientList: state.clientList.filter((v) => removeList.some(item => v.id === item))
-      }
-    },
-
-
-    syncOA(state, {payload, type}) {
-      console.log(' syncOA 修改  ： ', state, payload, type,     )// 
-      return { 
-        ...state,
-        // portraitData: payload., 
-      }
-    },
-    getPortrait(state, {payload, type}) {
-      console.log(' getPortrait 修改  ： ', state, payload, type,     )// 
-      return { 
-        ...state, 
-        // portraitData: payload., 
+        clientList: state.clientList.filter((v) => v.id !== payload.payload.d_id)
       }
     },
 
@@ -118,10 +91,9 @@ export default {
 
   effects: {
     // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getListAsync(params, action) {
-    *getListAsync(params, {call, put,   }) {
-      const {payload, type} = params
-      console.log(' getListAsync ： ', payload, type, params,    )// 
-      // const params = { name: 'zyb',  }
+    *getListAsync({payload, type}, {call, put,   }) {
+      console.log(' getListAsync ： ', payload, type,     )// 
+      const params = { name: 'zyb',  }
       // const res = yield call(client.getList, params)
       const res = yield call(client.getList, payload)
       // console.log('  getListAsync res ：', res,  )//  
@@ -153,28 +125,10 @@ export default {
     *removeItemAsync({payload, type}, {call, put,   }) {
       console.log(' removeItemAsync ： ', payload, type,     )// 
       const res = yield call(client.removeItem, payload)
-      console.log('  removeItem res ：', res, {...res, payload,} )//  
+      // console.log('  removeItem res ：', res,  )//  
       yield put(removeItem({...res, payload,  }))
       
     },
-
-
-    *syncOAAsync({payload, type}, {call, put,   }) {
-      console.log(' syncOAAsync ： ', payload, type,     )// 
-      const res = yield call(client.syncOA, payload)
-      // console.log('  syncOA res ：', res,  )//  
-      yield put(syncOA({...res, payload,  }))
-      
-    },
-    *getPortraitAsync({payload, type}, {call, put,   }) {
-      console.log(' getPortraitAsync ： ', payload, type,     )// 
-      const res = yield call(client.getPortrait, payload)
-      // console.log('  getPortrait res ：', res,  )//  
-      yield put(getPortrait({...res, payload,  }))
-      
-    },
-
-
 
 
   },

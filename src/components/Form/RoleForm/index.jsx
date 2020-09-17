@@ -26,12 +26,6 @@ import { formatConfig } from '@/utils'//
 
 const { TabPane } = Tabs;
 
-const tabConfig = [
-  {tab: '菜单权限',   },
-  {tab: '操作权限',   },
-  {tab: '字典权限',   },
-  
-]
 
 
 const treeData = [
@@ -94,8 +88,16 @@ const RoleTab = (props,  ) => {
   };
 
 
+  const tabConfig = [
+    {tab: '菜单权限',   },
+    {tab: '操作权限', disabled: true,    },
+    {tab: '字典权限', disabled: true,    },
+    
+  ]
+
+
   return <Tabs defaultActiveKey="1"  >
-    {tabConfig.map((v, i) => <TabPane tab={v.tab} key={v.tab} >
+    {tabConfig.map((v, i) => <TabPane tab={v.tab} key={v.tab} disabled={v.disabled} >
 
       <Tree
         checkable
