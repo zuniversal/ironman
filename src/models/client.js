@@ -47,7 +47,8 @@ export default {
 
   state: {
     count: 1, 
-    oaData: {},  
+    clientDetail: {},  
+    syncOAData: {},  
     portraitData: {},  
 
   },
@@ -118,59 +119,59 @@ export default {
 
   effects: {
     // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getListAsync(params, action) {
-    *getListAsync(params, {call, put,   }) {
-      const {payload, type} = params
-      console.log(' getListAsync ： ', payload, type, params,    )// 
+    *getListAsync({payload, action, type}, {call, put,   }) {
+      // const {payload, action, type} = params
+      console.log(' getListAsync ： ', payload, action, type,     )// 
       // const params = { name: 'zyb',  }
       // const res = yield call(client.getList, params)
       const res = yield call(client.getList, payload)
       // console.log('  getListAsync res ：', res,  )//  
       // 副作用里派发的 type 不应该携带前缀 
       // Warning: [sagaEffects.put] client/getList should not be prefixed with namespace client
-      yield put(getList(res))
+      yield put(action(res))
 
     },    
-    *getItemAsync({payload, type}, {call, put,   }) {
+    *getItemAsync({payload, action, type}, {call, put,   }) {
       console.log(' getItemAsync ： ', payload, type,     )// 
       const res = yield call(client.getItem, payload)
-      yield put(getItem(res))
+      yield put(action(res))
 
     },
-    *addItemAsync({payload, type}, {call, put,   }) {
+    *addItemAsync({payload, action, type}, {call, put,   }) {
       console.log(' addItemAsync ： ', payload, type,     )// 
       const res = yield call(client.addItem, payload)
       // console.log('  addItem res ：', res,  )//  
-      yield put(addItem(res))
+      yield put(action(res))
       
     },
-    *editItemAsync({payload, type}, {call, put,   }) {
+    *editItemAsync({payload, action, type}, {call, put,   }) {
       console.log(' editItemAsync ： ', payload, type,     )// 
       const res = yield call(client.editItem, payload)
       // console.log('  editItem res ：', res,  )//  
-      yield put(editItem({...res, payload,  }))
+      yield put(action({...res, payload,  }))
       
     },
-    *removeItemAsync({payload, type}, {call, put,   }) {
+    *removeItemAsync({payload, action, type}, {call, put,   }) {
       console.log(' removeItemAsync ： ', payload, type,     )// 
       const res = yield call(client.removeItem, payload)
       console.log('  removeItem res ：', res, {...res, payload,} )//  
-      yield put(removeItem({...res, payload,  }))
+      yield put(action({...res, payload,  }))
       
     },
 
 
-    *syncOAAsync({payload, type}, {call, put,   }) {
+    *syncOAAsync({payload, action, type}, {call, put,   }) {
       console.log(' syncOAAsync ： ', payload, type,     )// 
       const res = yield call(client.syncOA, payload)
       // console.log('  syncOA res ：', res,  )//  
-      yield put(syncOA({...res, payload,  }))
+      yield put(action({...res, payload,  }))
       
     },
-    *getPortraitAsync({payload, type}, {call, put,   }) {
+    *getPortraitAsync({payload, action, type}, {call, put,   }) {
       console.log(' getPortraitAsync ： ', payload, type,     )// 
       const res = yield call(client.getPortrait, payload)
       // console.log('  getPortrait res ：', res,  )//  
-      yield put(getPortrait({...res, payload,  }))
+      yield put(action({...res, payload,  }))
       
     },
 

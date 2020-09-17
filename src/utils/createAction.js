@@ -26,16 +26,26 @@
 // })
 
 
-export const action = (type) => (payload) => ({
+// export const action = (type) => (payload) => ({
+//   type,
+//   payload,
+// })
+
+export const action = (payload) => ({
   type,
   payload,
 })
 
-
 export const init = (prefix, ) => (types) => (payload) => ({
   type: prefix + '/' + types,
   payload,
-  action: action(types, ),
+  action: (res) => {
+    console.log(' res ： ', res,  )// 
+    return (payload) => ({
+      type: types,
+      payload,
+    }) 
+  },
 })
 
 

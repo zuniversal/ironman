@@ -91,7 +91,7 @@ export const mockFormData = (config, init, ) => {
         
       }[formType]
   // 
-      console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )// 
+      // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )// 
       
       mockData[key] = mockDataMap
     }
