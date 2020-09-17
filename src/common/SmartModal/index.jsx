@@ -79,7 +79,7 @@ class SmartModal extends PureComponent {
         maskClosable={maskClosable}
         footer={[
           <Button key="cancel" onClick={this.onCancel}>
-            {cancelTxt != undefined ? cancelTxt : '取消'}
+            {cancelTxt}
           </Button>,
           !isHideOk ? (
             <Button
@@ -88,7 +88,7 @@ class SmartModal extends PureComponent {
               type="primary"
               // icon={<SmileOutlined />}
             >
-              {okTxt != undefined ? okTxt : '确定'}
+              {okTxt}
             </Button>
           ) : null,
         ]}
@@ -106,8 +106,8 @@ class SmartModal extends PureComponent {
 
 SmartModal.defaultProps = {
   title: '默认标题',
-  okTxt: '',
-  cancelTxt: '',
+  okTxt: '确定',
+  cancelTxt: '取消',
   className: '',
   width: '800px',
   customShow: false,

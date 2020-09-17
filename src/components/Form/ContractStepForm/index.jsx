@@ -29,19 +29,21 @@ import ContractRelativeForm from '@/components/Form/ContractRelativeForm'; //
 
 const { Step } = Steps;
 
-const contractStepConfig = [
-  { key: 'client', title: '客户信息', description: '' },
-  { key: 'contract', title: '合同信息', description: '' },
-  { key: 'houseNo', title: '户号信息', description: '' },
-  { key: 'station', title: '电站信息', description: '' },
-  { key: 'complete', title: '完成', description: '' },
-];
 
 const ContractStepForm = props => {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
 
   console.log(' ContractStepForm ： ', props, form); //
+
+  const contractStepConfig = [
+    { key: 'client', title: '客户信息', form: Form.useForm(),   },
+    { key: 'contract', title: '合同信息', form: Form.useForm(),   },
+    { key: 'houseNo', title: '户号信息', form: Form.useForm(),   },
+    { key: 'station', title: '电站信息', form: Form.useForm(),   },
+    { key: 'complete', title: '完成', form: Form.useForm(),   },
+  ];
+
 
   const onChange = current => {
     console.log('onChange:', current);

@@ -148,11 +148,11 @@ const DynamicForm = props => {
         const { add, remove } = params;
         console.log(' params ： ', fields.length, fields.length === 0, fields, params, itemProps); //
 
-        if (fields.length === 0) {
-          console.log(' add ： ',    )// 
-          add()
-          add('add', 0)
-        }
+        // if (fields.length === 0) {
+        //   console.log(' add ： ',    )// 
+        //   add()
+        //   add('add', 0)
+        // }
 
         const { label, className,   } = itemProps;
 
@@ -164,7 +164,7 @@ const DynamicForm = props => {
         const formItemProps = {
           colon: false,  
           ...itemProps,
-          className: `dynamicFormItem ${itemProps.className}  `,
+          className: `dynamicFormItem formItems ${itemProps.className}  `,
           rules: noRule ? undefined : rules({ props, label }),
         };
 
@@ -217,13 +217,13 @@ const DynamicForm = props => {
         const formItemLayout = layoutObj;
         const fieldsData = fields
         
-        if (fields.length === 0) {
-          console.log(' fieldsDatafieldsData ： ',    )// 
-          fieldsData.push({
-            name: 'dfiled',
-            key: 'dynamicField',
-          })
-        }
+        // if (fields.length === 0) {
+        //   console.log(' fieldsDatafieldsData ： ', fieldsData,   )// 
+        //   fieldsData.push({
+        //     name: 'dfiled',
+        //     key: 'dynamicField',
+        //   })
+        // }
 
         return (
           <div>
@@ -345,7 +345,9 @@ const DynamicForm = props => {
                     {formItemCom} 
                     {/* {extra} */}
                   </Form.Item>
-                  <Form.Item>
+                  <Form.Item
+                    className={'formItems '}
+                  >
                     {actionBtn} 
                   </Form.Item>
                 </Form.Item> : normalItem

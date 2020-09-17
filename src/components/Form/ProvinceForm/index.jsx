@@ -17,7 +17,13 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
+import { regoins,
+  province,
+  site,
+  city,
+
+ } from '@/configs'//
+// import regoins from '@/configs/regions.js'; //
 import { formatConfig, reportRadioOp,  } from '@/utils'//
 
 export const config = [
@@ -32,6 +38,7 @@ export const config = [
     comProps: {
       className: 'w-200',  
     },
+    selectData: province,
     // customLabel: '自定义customLabel',
   },
   {
@@ -45,6 +52,7 @@ export const config = [
     comProps: {
       className: 'w-200',  
     },
+    selectData: city,
   },
   {
     formType: 'Select',
@@ -57,6 +65,7 @@ export const config = [
     comProps: {
       className: 'w-200',  
     },
+    selectData: site,
   },
 
   // <Form.Item

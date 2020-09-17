@@ -17,6 +17,7 @@ import Dnd from './Dnd'//
 import CalendarCom from './CalendarCom'// 
 import CRUDHoc from '@/common/CRUDHoc';
 import DashMap from '@/components/Echarts/DashMap';
+import ProvinceForm from '@/components/Form/ProvinceForm'; //
 import { connect } from 'umi';
 
 
@@ -143,6 +144,7 @@ class Test extends PureComponent {
       <div className="Test   ">
 
 
+        <ProvinceForm></ProvinceForm>
         {/* <Dnd></Dnd> */}
         {/* <CalendarCom></CalendarCom> */}
         <DashMap></DashMap>

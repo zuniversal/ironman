@@ -39,6 +39,7 @@ const ClientTable = props => {
     },
     {
       noFilter: true,
+      detail: true,  
       title: '客户名称',
       dataIndex: 'name',
     },
@@ -60,10 +61,12 @@ const ClientTable = props => {
       dataIndex: 'asset',
     },
     {
+      detail: true,  
       title: '管理员',
     },
     {
       title: '户号',
+      linkUrl: '/om/houseNo',  
     },
     {
       title: '客户地址',

@@ -1,13 +1,14 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types'
 import './style.less';
-import { Table, Icon, Switch, Radio, Form, Divider, Button, Input } from 'antd';
+import { Table, Icon, Switch, Radio, Form, Divider, Button, Input, Tooltip,    } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
 import QRCodeCom from '@/common/QRCodeCom'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
 // import { showTotal, dataFilter, customFilter } from '@/utils'; //
 import { tips, mockTbData,  } from '@/utils'; //
+import { Link,  } from 'umi'; //
 
 // export const showTotal = (total) => `總共 ${total} 條`
 
@@ -35,9 +36,10 @@ export const ActionCom = (params,  ) => {
     <span>
       {!props.noDefault && <>
         <a onClick={() => edit({action: 'edit', record})}>编辑</a>
-        <a onClick={() => remove({action: 'remove', record})}>删除</a>
+        {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
+        <a onClick={() => remove(record)}>删除</a>
       </>}
-      {!props.noDefault && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
+      {(!props.noDefault || !props.noQRCode) && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
       {extra}
     </span>
   );
@@ -184,7 +186,7 @@ class SmartTable extends PureComponent {
     // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
 
     const data = ((dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i})))
-    .map((v, i) => ({...v, d_id: v.d_id ? v.d_id : Math.random()}))
+    .map((v, i) => ({...v, d_id: v.d_id && v.d_id !== 0 ? v.d_id : Math.random()}))
 
 
     console.log(
@@ -241,12 +243,26 @@ class SmartTable extends PureComponent {
     //   return config.render
     // }
 
-    if (config.link) {
-      `${text}`.length
-      return <span className={`${ ? 'ellipsis' : ''}`}  >{text}</span>;
+    const {tdClick,  } = this.props// 
+
+    const textLength = `${text}`.length
+    // console.log('  textLength ：', textLength,  )//  
+    const txt = textLength > WORD_LEN ? `${text}`.slice(0, 10) + '...' : text
+    
+    let content = ''
+    if (config.linkUrl) {
+      content = <Link to={config.linkUrl} className={`${textLength > WORD_LEN ? 'ellipsis' : ''}`}  >{txt}</Link>;
+    } else if (config.link) {
+      content = <a className={`${textLength > WORD_LEN ? 'ellipsis' : ''}`}  >{txt}</a>;
+    } else if (config.detail) {
+      content = <a onClick={() => tdClick({action: 'detail', record,  })}  >{txt}</a>;
+    } else {
+      content = <span className={``}  >{txt}</span>;
     }
 
-    return <span>{text}</span>;
+    return <Tooltip title={text} >
+      {content}
+    </Tooltip>
 
   };
 
@@ -472,9 +488,12 @@ SmartTable.defaultProps = {
 
   edit: () => {}, 
   remove: () => {}, 
+  tdClick: () => {}, 
   actionConfig: {},
   extra: null, 
   noActionCol: false,
+  noDefault: false,
+  noQRCode: false,
 
 
 };
@@ -487,8 +506,11 @@ SmartTable.propTypes = {
   rowKey: PropTypes.string,
   edit: PropTypes.func,
   remove: PropTypes.func,
+  tdClick: PropTypes.func,
   actionConfig: PropTypes.object,
   noActionCol: PropTypes.bool,
+  noDefault: PropTypes.bool,
+  noQRCode: PropTypes.bool,
 
 }
 

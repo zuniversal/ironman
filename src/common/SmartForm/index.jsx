@@ -161,9 +161,17 @@ const SmartForm = (props, state) => {
     config[config.length - 1],
   ); //
 
+  const [ initData, setInitData ] = useState(() => {
+    const dynamicFields = config.filter((v) => v.formType === 'Dynamic').map((v) => v.itemProps.key)
+    const obj = {}
+    dynamicFields.forEach((v) => obj[v] = ['',  ])
+    console.log(' 惰性初始state   ： ', obj, dynamicFields,  )
+    return obj
+  })
+    
 
   // const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
-  const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, init, ) : {}
+  const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, init, ) : initData
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(config, init, ) : {}
   console.log(' SmartForm initialValues ： ', props, initialValues, action, action === 'edit',  )// 
   // const initialValues = init ? init : {}
@@ -430,7 +438,7 @@ const SmartForm = (props, state) => {
       CheckboxGroup: <Checkbox.Group {...realComProps}  />,
       Radio:  <Radio.Group>
         {/* <Radio value="item">item</Radio> */}
-        {renderSelectOptions}
+        {renderRadioOptions}
       </Radio.Group>,
       DatePicker: <DatePicker {...realComProps} />,
 

@@ -228,7 +228,8 @@ class Client extends PureComponent {
     dispatch(removeItemAsync([
       // d_id: props.record.id,
       // ...props.record,
-      props.record,
+      // props.record,
+      record,
     ]))
 
   };

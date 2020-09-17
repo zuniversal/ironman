@@ -26,6 +26,24 @@ export const regoins = [
 ];
 
 
+export const province = [
+  {
+    value: '福建',
+    label: '福建',
+  },
+  {
+    value: '泉州',
+    label: '泉州',
+  },
+  {
+    value: '泉港',
+    label: '泉港',
+  },
+];
+
+export const site = province
+export const city = province
+
 
 export const httpTipsMap = { 
   slow: '阿哦，加载中，请稍后', 

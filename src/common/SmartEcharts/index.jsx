@@ -21,15 +21,19 @@ import Pie from '@/common/SmartEcharts/charts/Pie'
 import Bar from '@/common/SmartEcharts/charts/Bar'
 import TabBar from '@/common/SmartEcharts/charts/TabBar'
 import Radar from '@/common/SmartEcharts/charts/Radar'
-import Map from '@/common/SmartEcharts/charts/Map'
+import Maps from '@/common/SmartEcharts/charts/Map'
 
+
+
+
+// https://github.com/hustcc/echarts-for-react/blob/master/demo/src/charts/Map.jsx
 
 const optionMap = {
     bar: Bar,
     tabBar: TabBar,
     pie: Pie,
     radar: Radar,
-    map: Map,
+    map: Maps,
 }
 
 

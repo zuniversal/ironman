@@ -308,7 +308,7 @@ export const contractConfig = [
     itemProps: {
       label: '是否生成客户报告',
     },
-    radioOptions: choiceRadios,
+    radioData: choiceRadios,
     opType: 'group',
   },
   
@@ -626,6 +626,7 @@ const ContractRelativeForm = props => {
           // init={init}
           // init={{}}
 
+          propsForm={configs[index].form}
           {...props}
         ></SmartForm>
       }
