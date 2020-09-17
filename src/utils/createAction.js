@@ -26,26 +26,26 @@
 // })
 
 
-// export const action = (type) => (payload) => ({
-//   type,
-//   payload,
-// })
-
-export const action = (payload) => ({
+export const action = type => payload => ({
   type,
   payload,
 })
 
-export const init = (prefix, ) => (types) => (payload) => ({
+// export const action = (payload) => ({
+//   type,
+//   payload,
+// })
+
+// export const action = (types) => (payload) => ({
+//   type: types.split('Async')[0],
+//   payload,
+// })
+
+
+export const init = prefix => types => payload => ({
   type: prefix + '/' + types,
   payload,
-  action: (payload) => {
-    console.log(' payload ： ', payload, types,  )// 
-    return {
-      type: types.split('Async')[0],
-      payload,
-    } 
-  }
+  action: action(types.split('Async')[0])
 })
 
 

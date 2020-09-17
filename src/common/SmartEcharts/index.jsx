@@ -9,6 +9,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
+import 'echarts/lib/chart/map';
 
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
@@ -20,6 +21,7 @@ import Pie from '@/common/SmartEcharts/charts/Pie'
 import Bar from '@/common/SmartEcharts/charts/Bar'
 import TabBar from '@/common/SmartEcharts/charts/TabBar'
 import Radar from '@/common/SmartEcharts/charts/Radar'
+import Map from '@/common/SmartEcharts/charts/Map'
 
 
 const optionMap = {
@@ -27,6 +29,7 @@ const optionMap = {
     tabBar: TabBar,
     pie: Pie,
     radar: Radar,
+    map: Map,
 }
 
 

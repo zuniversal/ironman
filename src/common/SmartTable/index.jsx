@@ -242,7 +242,8 @@ class SmartTable extends PureComponent {
     // }
 
     if (config.link) {
-      return <a>{text}</a>;
+      `${text}`.length
+      return <span className={`${ ? 'ellipsis' : ''}`}  >{text}</span>;
     }
 
     return <span>{text}</span>;
