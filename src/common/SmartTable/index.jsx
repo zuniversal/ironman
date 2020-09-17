@@ -20,6 +20,14 @@ import { tips, mockTbData,  } from '@/utils'; //
 //   console.log(' filters ： ', params, this);
 // }
 
+
+
+const NUM_LEN = 9
+const WORD_LEN = 10
+const LETTER_LEN = 20
+
+
+
 export const ActionCom = (params,  ) => {
   const {edit, remove, extra, record, onRemove, showQRCode, noDefault, props,  } = params
   // console.log(' ActionCom props ： ', props,  )//
@@ -175,7 +183,8 @@ class SmartTable extends PureComponent {
     // const realData = (dataSource ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
     // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
 
-    const data = (dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i}))
+    const data = ((dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i})))
+    .map((v, i) => ({...v, d_id: v.d_id ? v.d_id : Math.random()}))
 
 
     console.log(

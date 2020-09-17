@@ -119,9 +119,11 @@ export default {
 
   effects: {
     // actionChannel  all  apply  call  cancel  cancelled  cps  flush  fork  getContext  join  put  race  select  setContext  spawn  take  takeEvery  takeLatest  takem  throttle      *getListAsync(params, action) {
-    *getListAsync({payload, action, type}, {call, put,   }) {
-      // const {payload, action, type} = params
-      console.log(' getListAsync ： ', payload, action, type,     )// 
+    // *getListAsync({payload, action, type}, {call, put,   }) {
+      // console.log(' getListAsync ： ', payload, action, type,     )// 
+    *getListAsync(params, {call, put,   }) {
+      const {payload, action, type} = params
+      console.log(' getListAsync ： ', payload, action, type, params,    )// 
       // const params = { name: 'zyb',  }
       // const res = yield call(client.getList, params)
       const res = yield call(client.getList, payload)

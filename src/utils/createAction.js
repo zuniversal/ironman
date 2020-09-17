@@ -39,13 +39,13 @@ export const action = (payload) => ({
 export const init = (prefix, ) => (types) => (payload) => ({
   type: prefix + '/' + types,
   payload,
-  action: (res) => {
-    console.log(' res ： ', res,  )// 
-    return (payload) => ({
-      type: types,
+  action: (payload) => {
+    console.log(' payload ： ', payload, types,  )// 
+    return {
+      type: types.split('Async')[0],
       payload,
-    }) 
-  },
+    } 
+  }
 })
 
 

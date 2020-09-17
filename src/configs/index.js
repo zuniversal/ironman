@@ -27,3 +27,15 @@ export const regoins = [
 
 
 
+export const httpTipsMap = { 
+  slow: '阿哦，加载中，请稍后', 
+  notNetWork: '阿哦，没有网络，请您检查网络设置',    
+  loadError: '阿哦，加载失败了，点击刷新试试（提供刷新按钮）',    
+}
+
+
+
+
+
+
+

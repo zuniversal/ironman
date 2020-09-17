@@ -215,20 +215,29 @@ const DynamicForm = props => {
         // console.log(' formItemCom ： ', formItemCom, formItemMap, formType,  )//
 
         const formItemLayout = layoutObj;
+        const fieldsData = fields
+        
+        if (fields.length === 0) {
+          console.log(' fieldsDatafieldsData ： ',    )// 
+          fieldsData.push({
+            name: 'dfiled',
+            key: 'dynamicField',
+          })
+        }
 
         return (
           <div>
             {
-            [
-              // {
-              //   name: 'dfiled',
-              //   key: 'dynamicField',
-              // },
+            // [
+            //   // {
+            //   //   name: 'dfiled',
+            //   //   key: 'dynamicField',
+            //   // },
               
-              // ...init ? init : [],
-              ...fields,
-            ]
-              .map((field, index) => {
+            //   // ...(fields.length === 0 ? init : []),
+            //   ...fields,
+            // ]
+              fieldsData.map((field, index) => {
               const fieldKey = name ? name : field.name; //
               console.log(' 动态表单 fieldKey ：', fields, field, name, fieldKey); //
 

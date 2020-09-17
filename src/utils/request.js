@@ -1,5 +1,6 @@
 
 
+import {httpTipsMap,    } from '@/configs'
 import {URL, LOAD, LOUOUT} from '@/constants'
 import {getToken, getItems, wrapParams, tipsConfirm, isUd, tips, getLang, removeItems,  } from '@/utils'
 import axios from 'axios'

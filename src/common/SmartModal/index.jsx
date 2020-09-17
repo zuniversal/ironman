@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import { Table, Icon, notification, Modal, Button, Tag } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
@@ -29,15 +30,6 @@ class SmartModal extends PureComponent {
     console.log('  onOk  customShow ', customShow, this.state, this.props);
     onOk && onOk();
 
-    // if (customShow) {
-    //   console.log(' 自定义 ： ',    )//
-    //   return
-    // }
-    // console.log(' 自定义2 ： ',    )//
-
-    // this.setState({
-    //   show: false,
-    // })
   };
   onCancel = e => {
     const { customShow, onCancel } = this.props; //
@@ -49,15 +41,6 @@ class SmartModal extends PureComponent {
     );
     onCancel && onCancel();
 
-    // if (customShow) {
-    //   console.log(' 自定义 ： ',    )//
-    //   return
-    // }
-    // console.log(' 自定义2 ： ',    )//
-
-    // this.setState({
-    //   show: false,
-    // })
   };
 
   render() {
@@ -66,7 +49,6 @@ class SmartModal extends PureComponent {
       title,
       width,
       className,
-      noJustify,
       isHideOk,
       okTxt,
       extra,
@@ -86,10 +68,10 @@ class SmartModal extends PureComponent {
 
     return (
       <Modal
-        wrapClassName={`${className} ${noJustify ? '' : 'textJustify'} smartModal `}
+        wrapClassName={`${className} smartModal  `}
         title={title}
         // width={width != undefined ? width : '60%'}
-        width={width != undefined ? width : '800px'}
+        width={width}
         visible={show}
         // onShow={this.onShow}
         onOk={this.onOk}
@@ -116,6 +98,7 @@ class SmartModal extends PureComponent {
       >
         {show ? children : null}
         {/* {children} */}
+
       </Modal>
     );
   }
@@ -123,8 +106,27 @@ class SmartModal extends PureComponent {
 
 SmartModal.defaultProps = {
   title: '默认标题',
+  okTxt: '',
+  cancelTxt: '',
   className: '',
+  width: '800px',
   customShow: false,
+  show: false,
+  isHideOk: false,
+
 };
+
+SmartModal.propTypes = {
+  title: PropTypes.string,
+  okTxt: PropTypes.string,
+  cancelTxt: PropTypes.string,
+  className: PropTypes.string,
+  width: PropTypes.string,
+  customShow: PropTypes.bool,
+  show: PropTypes.bool,
+  isHideOk: PropTypes.bool,
+
+}
+
 
 export default SmartModal;

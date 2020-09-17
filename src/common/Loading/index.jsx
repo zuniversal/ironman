@@ -9,12 +9,12 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Spin,  } from 'antd';
 
 
 
 const Loading = () => {
-  return <div className={'Loading'}>Loading加载中</div>;
+  return <Spin className={'loadingWrapper'}></Spin>;
 };
 
 export default Loading;

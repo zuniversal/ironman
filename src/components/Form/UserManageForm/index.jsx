@@ -30,7 +30,7 @@ export const config = [
   {
     itemProps: {
       label: '手机',
-      name: 'name',
+      name: '',
     },
   },
   {
