@@ -45,6 +45,7 @@ export const renderSelectOp = (configs, opType = 'option') => {
 }
 
 export const renderRadioOp = (configs, opType = 'option') => {
+  console.log(' configs, opType ： ', configs, opType,  )// 
   return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>) 
 }
 

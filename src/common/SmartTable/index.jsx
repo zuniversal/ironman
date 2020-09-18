@@ -253,7 +253,7 @@ class SmartTable extends PureComponent {
     if (config.linkUrl) {
       content = <Link to={config.linkUrl} className={`${textLength > WORD_LEN ? 'ellipsis' : ''}`}  >{txt}</Link>;
     } else if (config.link) {
-      content = <a className={`${textLength > WORD_LEN ? 'ellipsis' : ''}`}  >{txt}</a>;
+      content = <a className={``}  >{txt}</a>;
     } else if (config.detail) {
       content = <a onClick={() => tdClick({action: 'detail', record,  })}  >{txt}</a>;
     } else {
