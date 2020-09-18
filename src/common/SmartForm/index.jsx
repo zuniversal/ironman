@@ -48,12 +48,12 @@ const layoutObj = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 6 },// 
-    sm: { span: 8 },// 
+    sm: { span: 7 },// 
   },
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 18 },// 
-    sm: { span: 16 },// 
+    sm: { span: 17 },// 
   },
 };
 const noLabelLayout = {
@@ -474,7 +474,7 @@ const SmartForm = (props, state) => {
           {...rowLayout}
           {...formItemNoRuleProps}
         >
-          {/* {formItemCom} */}
+          {formItemCom}
         </Form.Item>
       );
     }

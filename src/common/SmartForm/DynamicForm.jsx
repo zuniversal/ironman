@@ -279,7 +279,7 @@ const DynamicForm = props => {
                     <PlusOutlined /> {addText}
                   </Button>
 
-                  {fields.length > 0 ? (
+                  {fields.length > 1 ? (
                     <Button
                       type="dashed"
                       className={'actionBtn subBtn'}

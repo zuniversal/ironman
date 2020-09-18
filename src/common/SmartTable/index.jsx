@@ -27,6 +27,26 @@ const NUM_LEN = 9
 const WORD_LEN = 10
 const LETTER_LEN = 20
 
+const lengthMap = {
+  num: NUM_LEN,
+  word: WORD_LEN,
+  letter: LETTER_LEN,
+}
+
+const textType = (text,  ) => {
+  let textLength = `${text}`.length
+  if (isNaN(text)) {
+    textLength = lengthMap.num
+  } else if (/^[a-zA-Z]+$/.test(text)) {
+    textLength = lengthMap.letter
+  } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
+    textLength = lengthMap.word
+  }
+  console.log(' textLength ： ', text, textLength,  )// 
+  return textLength 
+}
+
+
 
 
 export const ActionCom = (params,  ) => {
@@ -237,6 +257,7 @@ class SmartTable extends PureComponent {
     }
   };
 
+
   renderCol = (text, record, index, config) => {
     // console.log('    renderCol ： ', text, record, index, config,  )
     // if (config.render) {
@@ -248,10 +269,12 @@ class SmartTable extends PureComponent {
     const textLength = `${text}`.length
     // console.log('  textLength ：', textLength,  )//  
     const txt = textLength > WORD_LEN ? `${text}`.slice(0, 10) + '...' : text
+
+    const txts = this.textType(`${text}`)
     
     let content = ''
     if (config.linkUrl) {
-      content = <Link to={config.linkUrl} className={`${textLength > WORD_LEN ? 'ellipsis' : ''}`}  >{txt}</Link>;
+      content = <Link to={config.linkUrl} className={``}  >{txt}</Link>;
     } else if (config.link) {
       content = <a className={``}  >{txt}</a>;
     } else if (config.detail) {
