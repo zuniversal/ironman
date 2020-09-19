@@ -65,7 +65,7 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
   };
 
   renderModalForm = (e,  ) => {
-    console.log('    renderModalForm ： ', e, this.state, this.props,   )
+    // console.log('    renderModalForm ： ', e, this.state, this.props,   )
     // const {modalForm,  } = this.state// 
     if (modalForm) {
       return modalForm
@@ -74,7 +74,7 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
     // return null
   }
   renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e,   )
+    // console.log('    renderModalContent ： ', e,   )
     const {modalContent,  } = this.state// 
     if (modalContent) {
       return modalContent

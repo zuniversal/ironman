@@ -19,19 +19,27 @@ $ npm start
 ## 目录说明
 
 ```
-  common - 通用型组件
-  components - 基础组件
-  configs - 公共配置
-  constants - 通用常量
-  layouts - 布局入口组件
-  locales - 国际化
-  models - 状态管理
-  pages - 页面容器
-  services - 请求服务
-  static - 静态资源
-  tamp - 临时存放 后续加入的文件目录 
-  utils - 工具方法
-  
+
+  ├─common - 通用型组件 （需要根据项目进一步编写完善）
+    ├─SearchForm 
+    ├─SmartEcharts 
+    ├─SmartForm 
+    ├─SmartFormModal 
+    ├─SmartHOC 
+    ├─SmartModal 
+    └─SmartTable 
+  ├─components - 基础组件
+  ├─configs - 公共配置
+  ├─constants - 通用常量
+  ├─layouts - 布局入口组件
+  ├─locales - 国际化
+  ├─models - 状态管理
+  ├─pages - 页面容器
+  ├─services - 请求服务
+  ├─static - 静态资源
+  ├─tamp - 临时存放 后续加入的文件目录 
+  └─utils - 工具方法
+
 ```
 
 

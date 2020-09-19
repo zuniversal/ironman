@@ -14,7 +14,7 @@ import { Form, Input, Button, Spin,  } from 'antd';
 
 
 const Loading = () => {
-  return <Spin className={'loadingWrapper'}></Spin>;
+  return <Spin className={'loadingWrapper'} size="large" ></Spin>;
 };
 
 export default Loading;

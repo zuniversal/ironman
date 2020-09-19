@@ -49,7 +49,9 @@ class SearchForm extends PureComponent {
   request = value => {
     console.log(' request   value, ,   ： ', value);
     const obj = {};
+    // https://segmentfault.com/a/1190000020221170
     const data = new Array(20).fill(0).map((v, i) => {
+    // const data = Array.from({ length: 20, }, () => ({})).map((v, i) => {
       // obj[`value`] = `value${i}`
       const obj = {};
       obj[`value`] = `value-${i}`
