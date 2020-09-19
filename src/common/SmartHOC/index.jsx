@@ -15,7 +15,7 @@ import { Form, Input, Button, Spin,  } from 'antd';
 
 
 /* 
-  封装的 通用 业务高阶组件 可选择性使用封装的方法  自动处理相关操作 
+  封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
   支持 注入 actions, modalForm, titleMap, noDidMount  等配置参数 
   actions：注入的 models 里封装的相应操作页面的 action 
   modalForm：页面的操作表单 

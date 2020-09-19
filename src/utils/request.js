@@ -8,6 +8,10 @@ import axios from 'axios'
 // axios.defaults.timeout = 30000
 // axios.defaults.headers.common['Authorization'] = getItems('token')
 
+
+// 封装的项目通用的 请求方法 操作    
+// 支持 根据请求方式 自动判别是否显示操作 tips 
+
 const instance = axios.create({
     baseURL: URL,
     // timeout: 5000,
@@ -19,7 +23,7 @@ export class Request {
 
     constructor() {
         this.http = instance// 
-        console.log(' super ： ',  )
+        // console.log(' super ： ',  )
         this.http.interceptors.request.use((config) => {
             // console.log('getToken() token ：', config, getToken(), getItems('token'),  )
             // config.headers.Authorization = getToken()
@@ -68,7 +72,7 @@ export class Request {
 
 export const request = new Request()// 
 const {http,  } = request
-console.log(' request ： ', request, URL, {...http},  )// 
+// console.log(' request ： ', request, URL, {...http},  )// 
 
 
 
@@ -78,10 +82,13 @@ export const post = (url, params, o) => http.post(url, params, o)
 export const put = (url, params, o) => http.put(url, params, o)
 export const remove = (url, params, o) => http.delete(url, params, o)
 
+// 不显示 tips 的方法 
 export const noTipsGet = (url, params) => http.get(url, {params: {...params, noTips: true}})
 export const noTipsPost = (url, params) => http.post(url, {...params, noTips: true})
 export const noTipsPut = (url, params) => http.put(url, {...params, noTips: true})
 export const noTipsRemove = (url, params) => http.delete(url, {...params, noTips: true})
+
+
 
 // export const blobPost = (url, params, o) => http.post(url, {...params, noTips: true}, o) 
 export const blobPost = (url, params, o) => http({method: 'post', url, data: {...params, noTips: true, }, responseType: 'blob', })

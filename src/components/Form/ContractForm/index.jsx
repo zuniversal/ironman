@@ -40,8 +40,8 @@ const normFile = e => {
 
 
 const choiceRadios = [
-  { value: '是', key: 'yes',  },
-  { value: '否', key: 'no',  },
+  { label: '是', value: 'yes', key: 'yes',  },
+  { label: '否', value: 'no', key: 'no',  },
 ]
 
 
@@ -155,7 +155,7 @@ export const config = [
     itemProps: {
       label: '是否生成客户报告',
     },
-    radioOptions: choiceRadios,
+    radioData: choiceRadios,
     opType: 'group',
   },
   

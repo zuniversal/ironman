@@ -6,21 +6,14 @@ import SmartModal from '@/common/SmartModal'; //
 import QRCodeCom from '@/common/QRCodeCom'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
-// import { showTotal, dataFilter, customFilter } from '@/utils'; //
 import { tips, mockTbData,  } from '@/utils'; //
 import { Link,  } from 'umi'; //
 
-// export const showTotal = (total) => `總共 ${total} 條`
 
-// const filters = (params, ) => {
-//   console.log(' filters   params, ,   ： ', params, this,  )
+/* 
+  封装的通用 表格组件 封装带有相关通用操作 
 
-// }
-
-// function filters(params) {
-//   console.log(' filters ： ', params, this);
-// }
-
+*/
 
 
 const NUM_LEN = 9
@@ -33,16 +26,23 @@ const lengthMap = {
   letter: LETTER_LEN,
 }
 
-const textType = (text,  ) => {
-  let textLength = `${text}`.length
-  if (isNaN(text)) {
+const getTextLength = (text,  ) => {
+  let textLength = text.length
+  if (!isNaN(text)) {
     textLength = lengthMap.num
   } else if (/^[a-zA-Z]+$/.test(text)) {
     textLength = lengthMap.letter
   } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
     textLength = lengthMap.word
   }
-  console.log(' textLength ： ', text, textLength,  )// 
+  // console.log(' textLength ：`${}` ', text, textLength,  )// 
+  return textLength 
+}
+
+
+const foramtText = (text,  ) => {
+  let textLength = getTextLength(text,  )
+  const txt = textLength === text.length ? text : `${text}`.slice(0, textLength) + '...'
   return textLength 
 }
 
@@ -57,7 +57,7 @@ export const ActionCom = (params,  ) => {
       {!props.noDefault && <>
         <a onClick={() => edit({action: 'edit', record})}>编辑</a>
         {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-        <a onClick={() => remove(record)}>删除</a>
+        <a onClick={() => remove({record, })}>删除</a>
       </>}
       {(!props.noDefault || !props.noQRCode) && <a onClick={() => showQRCode({action: 'QRCode', record})}>生成二维码</a>}
       {extra}
@@ -97,7 +97,7 @@ class SmartTable extends PureComponent {
       filtered: false,
       filterDropdownVisible: false,
 
-      showResultModal: false,  
+      isShowResultModal: false,  
 
       mockTbData: mockTbData(props.haveChildren, ),
 
@@ -111,13 +111,14 @@ class SmartTable extends PureComponent {
     };
   }
 
-  onInputChange = (k, e) => {
-    console.log(' k, e ： ', k, e); //
-    this.setState({ searchText: e.target.value, searchKey: k });
+
+  // 自动过滤相关方法 
+  onInputChange = (searchKey, e) => {
+    console.log(' searchKey, e ： ', searchKey, e,   ); //
+    this.setState({ searchText: e.target.value, searchKey: searchKey, });
   };
   blur = k => this.setState({ [`${k}Visible`]: false });
-  reset = k =>
-    this.setState({ [`${k}Visible`]: false, searchText: '', searchKey: '' });
+  reset = k => this.setState({ [`${k}Visible`]: false, searchText: '', searchKey: '' });
 
   autoFilter = key => {
     // console.log(' autoFilter   key, ,   ： ', key, this,  )
@@ -176,6 +177,13 @@ class SmartTable extends PureComponent {
     };
   };
 
+
+
+
+
+
+  // 得到表格的真实数据源 支持单元格相关字段的自动过滤 
+  // 可关闭相关 mock 模拟数据 
   dataFilter = () => {
     const { searchKey, searchText } = this.state; //
     const { dataSource, noMock, rowLength, newTbData,  } = this.props; //
@@ -206,7 +214,9 @@ class SmartTable extends PureComponent {
     // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
 
     const data = ((dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i})))
-    .map((v, i) => ({...v, d_id: v.d_id && v.d_id !== 0 ? v.d_id : Math.random()}))
+    // .map((v, i) => ({...v, d_id: v.d_id 
+    //   // && v.d_id !== 0 
+    //   ? v.d_id : Math.random()}))
 
 
     console.log(
@@ -248,7 +258,7 @@ class SmartTable extends PureComponent {
          
         return sliceData
       }
-      console.log(' isMockData ： ', mpckAddData, newTbData, data, isMockData, dataSource, this.state.mockTbData,  )// 
+      console.log(' isMockData ： ', mpckAddData, newTbData, data, isMockData, dataSource, this.state.mockTbData, this.state, this.props,  )// 
       if (Object.keys(mpckAddData).length && isMockData) {
         return [mpckAddData, ...data,  ];
       } else {
@@ -258,6 +268,7 @@ class SmartTable extends PureComponent {
   };
 
 
+  // 根据参数 计算 处理 得出单元格显示的内容  
   renderCol = (text, record, index, config) => {
     // console.log('    renderCol ： ', text, record, index, config,  )
     // if (config.render) {
@@ -270,7 +281,7 @@ class SmartTable extends PureComponent {
     // console.log('  textLength ：', textLength,  )//  
     const txt = textLength > WORD_LEN ? `${text}`.slice(0, 10) + '...' : text
 
-    const txts = this.textType(`${text}`)
+    const txts = foramtText(`${text}`)
     
     let content = ''
     if (config.linkUrl) {
@@ -294,7 +305,7 @@ class SmartTable extends PureComponent {
     console.log('    onRemove ： ', e, this.state, this.props,   )
     const {remove,  } = this.props// 
     this.setState({
-      showResultModal: true,
+      isShowResultModal: true,
     })
   }
 
@@ -321,14 +332,14 @@ class SmartTable extends PureComponent {
     console.log(' onResultModalOk   e,  ,   ： ', e,    )
     tips('删除成功！')
     this.setState({
-      showResultModal: false,
+      isShowResultModal: false,
     })
   }
 
   onResultModalCancel = (e, ) => {
     console.log(' onResultModalCancel   e, ,   ： ', e,   )
     this.setState({
-      showResultModal: false,
+      isShowResultModal: false,
     })
   }
 
@@ -360,20 +371,11 @@ class SmartTable extends PureComponent {
     return modalContent
   }
 
-
-  render() {
-    const { pagination, searchText, searchKey, selectionType, showResultModal, title, show, selectedRowKeys,  } = this.state;
-    const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
-
-    const col = columns.map((v, i) => ({
-      // render: v.render ? v.render : this.renderCol,
-      render: (...rest) => this.renderCol(...rest, v),
-      dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
-      ...v,
-      // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
-    }));
+  actionCol = (e,  ) => {
+    console.log('    actionCol ： ', e,   )
+    const { edit, remove, extra, actionConfig,  } = this.props;
     
-
+    // 通用操作列 
     const actionCol = {
       title: '操作',
       className: 'actionCol',
@@ -398,13 +400,62 @@ class SmartTable extends PureComponent {
       },
     }  // 
 
+    return actionCol 
+  }
+
+
+  renderRemoveModal(params,  ) {
+    console.log(' renderRemoveModal ： ', params,  )
+    const {isShowResultModal,  } = this.state// 
+
+    const modalProps = {
+      title: '删除电站',
+      show: isShowResultModal,
+      onOk: this.onResultModalOk,
+      onCancel: this.onResultModalCancel,
+    }
+    const resProps = {
+      // okFn: this.handleOk, 
+      // offFn: this.handleOff, 
+      okFn: this.onResultModalOk, 
+      offFn: this.onResultModalCancel, 
+    }
+
+    return <RemoveModal 
+      modalProps={modalProps} 
+      resProps={resProps}
+      
+    >
+      {/* <div className="dfc">
+        {okText && <Button key="buy">{okText}</Button>}
+        {okText && <Button type="primary" >{okText}</Button>}
+      </div> */}
+    </RemoveModal>
+  }
+  
+
+
+  render() {
+    const { pagination, searchText, searchKey, selectionType, isShowResultModal, title, show, selectedRowKeys,  } = this.state;
+    const { dataSource, columns, loading, rowKey, className, edit, remove, extra, actionConfig, noActionCol,  } = this.props;
+
+    const col = columns.map((v, i) => ({
+      // render: v.render ? v.render : this.renderCol,
+      render: (...rest) => this.renderCol(...rest, v),
+      dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
+      ...v,
+      // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
+    }));
+    
+
+
 
     const cols = [
       ...col,
     ]
     // console.log('  对吗  !noActionCol ', !noActionCol, actionCol,    )
     if (!noActionCol) {
-      cols.push(actionCol)
+      cols.push(this.actionCol())
     }
     
     const rowSelection = {
@@ -422,21 +473,9 @@ class SmartTable extends PureComponent {
 
 
 
-    const modalProps = {
-      title: '删除电站',
-      show: showResultModal,
-      onOk: this.onResultModalOk,
-      onCancel: this.onResultModalCancel,
-    }
-    const resProps = {
-      // okFn: this.handleOk, 
-      // offFn: this.handleOff, 
-      okFn: this.onResultModalOk, 
-      offFn: this.onResultModalCancel, 
-    }
     
     const realData = this.dataFilter()
-    console.log('  realData ：', realData,  )// 
+    // console.log('  realData ：', realData,  )// 
 
     return (
       <div className="">
@@ -470,16 +509,8 @@ class SmartTable extends PureComponent {
           className={`smartTable ${className} `}
         />
 
-        <RemoveModal 
-          modalProps={modalProps} 
-          resProps={resProps}
-          
-        >
-          {/* <div className="dfc">
-            {okText && <Button key="buy">{okText}</Button>}
-            {okText && <Button type="primary" >{okText}</Button>}
-          </div> */}
-        </RemoveModal>
+        
+        {this.renderRemoveModal()}
 
 
         <SmartModal 
@@ -507,7 +538,8 @@ SmartTable.defaultProps = {
   dataSource: [],
   // dataSource: mockTbData(),
   // rowKey: 'key',
-  rowKey: 'd_id',
+  // rowKey: 'd_id',
+  rowKey: 'id',
 
   edit: () => {}, 
   remove: () => {}, 

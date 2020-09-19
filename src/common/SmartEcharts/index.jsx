@@ -23,7 +23,10 @@ import TabBar from '@/common/SmartEcharts/charts/TabBar'
 import Radar from '@/common/SmartEcharts/charts/Radar'
 import Maps from '@/common/SmartEcharts/charts/Map'
 
-
+/* 
+    通用 Echarts 组件 
+    
+*/
 
 
 // https://github.com/hustcc/echarts-for-react/blob/master/demo/src/charts/Map.jsx

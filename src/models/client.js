@@ -17,7 +17,7 @@ import * as client from "@/services/client"
 
 
 const namespace = 'client'
-const createAction = init(namespace)
+const {createAction, createCRUD, } = init(namespace)
 
 export const getItem = createAction('getItem')
 export const getList = createAction('getList')

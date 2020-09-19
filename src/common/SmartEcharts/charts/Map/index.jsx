@@ -46,6 +46,23 @@ const option = (radar = [], data = [],   ) => {
                 saveAsImage : {show: true}
             }
         },
+            geo: {//配置地图参数
+              map: "china",
+              label: {
+                emphasis: {
+                  show: false
+                }
+              },
+              itemStyle: {
+                normal: {
+                  areaColor: "#058bd2",
+                  borderColor: "#111"
+                },
+                emphasis: {
+                  areaColor: "#1e67b2"
+                }
+              }
+            },
         series : [
             {
                 name: 'iphone3',

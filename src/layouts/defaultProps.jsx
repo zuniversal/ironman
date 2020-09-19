@@ -24,7 +24,7 @@ export default {
       },
       {
         path: '/om/test',
-        name: '测试',
+        name: '开发测试',
         icon: <ScheduleFilled />,
       },
 

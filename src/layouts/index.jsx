@@ -143,7 +143,7 @@ const Layouts = props => {
               {/* <BellOutlined className={'actionItem '} /> */}
               <Icon icon={'search'} className={'actionItem '}  />
               <Icon icon={'bell'} className={'actionItem '}  />
-              <Avatar className={'actionItem'}  shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/userCenter')} />
+              <Avatar className={'actionItem'}  shape="square" size="small" icon={<UserOutlined />} onClick={() => goPage('/om/userCenter')} />
               <span className={'actionItem userName '}  >用户名</span>
             </div>
           )}

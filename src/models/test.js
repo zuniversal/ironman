@@ -1,5 +1,10 @@
+/* 
+  在原操作方法基础上  可选择性使用 创建相关 actions方法 简化方法的调用  
 
-import { init, action,  } from '@/utils/createAction'// 
+*/
+
+
+import { init, action,   } from '@/utils/createAction'// 
 import * as services from "@/services/client"
 
 
@@ -8,29 +13,38 @@ import * as services from "@/services/client"
 
 
 const namespace = 'test'
-const createAction = init(namespace)
+const {createAction, createCRUD, } = init(namespace)
 
 
-export const getListAsync = createAction('getListAsync')
-export const getItemAsync = createAction('getItemAsync')
-export const addItemAsync = createAction('addItemAsync')
-export const editItemAsync = createAction('editItemAsync')
-export const removeItemAsync = createAction('removeItemAsync')
-export const syncOAAsync = createAction('syncOAAsync')
-export const getPortraitAsync = createAction('getPortraitAsync')
+// export const getListAsync = createAction('getListAsync')
+// export const getItemAsync = createAction('getItemAsync')
+// export const addItemAsync = createAction('addItemAsync')
+// export const editItemAsync = createAction('editItemAsync')
+// export const removeItemAsync = createAction('removeItemAsync')
+// export const syncOAAsync = createAction('syncOAAsync')
+// export const getPortraitAsync = createAction('getPortraitAsync')
+
+const otherActions = [
+  'syncOAAsync',
+  'getPortraitAsync',
+]
 
 
 export const actions = {
-  getListAsync: createAction('getListAsync'),
-  getItemAsync: createAction('getItemAsync'),
-  addItemAsync: createAction('addItemAsync'),
-  editItemAsync: createAction('editItemAsync'),
-  removeItemAsync: createAction('removeItemAsync'),
-  syncOAAsync: createAction('syncOAAsync'),
-  getPortraitAsync: createAction('getPortraitAsync'),
+  // getListAsync: createAction('getListAsync'),
+  // getItemAsync: createAction('getItemAsync'),
+  // addItemAsync: createAction('addItemAsync'),
+  // editItemAsync: createAction('editItemAsync'),
+  // removeItemAsync: createAction('removeItemAsync'),
+
+  // syncOAAsync: createAction('syncOAAsync'),
+  // getPortraitAsync: createAction('getPortraitAsync'),
+
+  ...createCRUD(otherActions),
 
 }
 
+console.log(' actions ： ', actions,  )// 
 
 // createAction('client/add')()
 // export const counterAdd = createAction('client/getList')

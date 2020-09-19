@@ -8,16 +8,16 @@
 
 export const regoins = [
   {
-    value: '福建',
-    label: '福建',
+    value: '广东省',
+    label: '广东省',
     children: [
       {
-        value: '泉州',
-        label: '泉州',
+        value: '深圳市',
+        label: '深圳市',
         children: [
           {
-            value: '泉港',
-            label: '泉港',
+            value: '南山区',
+            label: '南山区',
           },
         ],
       },
@@ -28,16 +28,16 @@ export const regoins = [
 
 export const province = [
   {
-    value: '福建',
-    label: '福建',
+    value: '广东省',
+    label: '广东省',
   },
   {
-    value: '泉州',
-    label: '泉州',
+    value: '深圳市',
+    label: '深圳市',
   },
   {
-    value: '泉港',
-    label: '泉港',
+    value: '南山区',
+    label: '南山区',
   },
 ];
 

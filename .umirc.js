@@ -17,10 +17,7 @@ export default defineConfig({
   // Warning: The current popular language does not exist, please check the locales folder!
   locale: {
     antd: true,  
-    // default: 'zh-CN',
-    // title: false,
-    // baseNavigator: true,
-    // baseSeparator: '-',
+    default: 'zh-CN',// 
   },
   
   dynamicImport: {

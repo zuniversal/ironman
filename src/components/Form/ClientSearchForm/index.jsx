@@ -27,6 +27,8 @@ import { regoins } from '@/configs'; //
 const ClientSearchForm = props => {
   console.log(' ClientSearchForm ： ', props); //
 
+  const [form] = Form.useForm();
+
   const { formBtn } = props; //
 
   const formProps = {
@@ -36,7 +38,9 @@ const ClientSearchForm = props => {
 
   return (
     <div className='clientSearchForm'>
-      <ProvinceForm></ProvinceForm>
+      <ProvinceForm
+        propsForm={form}
+      ></ProvinceForm>
 
       {/* <hr className='hrs'  /> */}
       
@@ -55,7 +59,9 @@ const ClientSearchForm = props => {
 
         <SearchForm></SearchForm>
 
-        {formBtn}
+        {formBtn && formBtn(
+          {form,  }
+        )}
       </div>
     </div>
   );

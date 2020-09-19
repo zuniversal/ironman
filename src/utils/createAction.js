@@ -25,12 +25,6 @@
 //   },
 // })
 
-
-export const action = type => payload => ({
-  type,
-  payload,
-})
-
 // export const action = (payload) => ({
 //   type,
 //   payload,
@@ -42,19 +36,81 @@ export const action = type => payload => ({
 // })
 
 
-export const init = prefix => types => payload => ({
-  type: prefix + '/' + types,
+
+
+// export const init = prefix => ({
+//   createCRUD,
+//   createAction: types => payload => ({
+//     type: prefix + '/' + types,
+//     payload,
+//     action: action(types.split(suffix)[0]),
+//   })
+// })
+
+
+
+
+
+const suffix = 'Async'
+
+
+export const action = type => payload => ({
+  type,
   payload,
-  action: action(types.split('Async')[0])
 })
 
 
+const crudConfigs = [
+  'getListAsync',
+  'getItemAsync',
+  'addItemAsync',
+  'editItemAsync',
+  'removeItemAsync',
+]
 
 
-// export const prefixAction = (prefix, ) => (types) => (payload) => ({
-//   type: prefix + '/' + types,
-//   payload,
-// })
+// export const createCRUD = (config = []) => {
+//   const actions = {}
+//   return [...crudConfigs, ...config, ]
+//   .forEach((type) => {
+//     actions.[type] = payload => ({
+//       type: prefix + '/' + types,
+//       payload,
+//       action: action(types.split(suffix)[0]),
+//     })
+//   })
+// }
+
+
+
+
+// 根据相应 models 命名 初始化 相应的带该model前缀的 action 方法 
+// 1. 函数显示调用 简化 action 调用方法的编写   副作用的  effects 里 可直接调用传入的 修改相应的同名 reducer 的方法 
+// 2. 可选择性使用 自动创建项目通用的 增删改查 相关 aciton
+
+export const init = prefix => {
+  return {
+    createAction: types => payload => ({
+      type: prefix + '/' + types,
+      payload,
+      action: action(types.split(suffix)[0]),
+    }),
+    createCRUD: (config = []) => {
+      const actions = {}
+      const typeArr = [...crudConfigs, ...config, ]
+      typeArr.forEach(types => {
+          actions[types] = payload => ({
+            type: prefix + '/' + types,
+            payload,
+            action: action(types.split(suffix)[0]),
+          })
+        });
+      return actions
+    },
+  }
+}
+
+
 
 
 

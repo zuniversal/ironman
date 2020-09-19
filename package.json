@@ -35,6 +35,7 @@
     "react-dom": "^16.12.0",
     "react-draggable-tags": "^1.0.2",
     "redux-actions": "^2.6.5",
+    "redux-logger": "^3.0.6",
     "umi": "^3.2.19",
     "yorkie": "^2.0.0"
   },

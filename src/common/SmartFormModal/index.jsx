@@ -25,8 +25,14 @@ import { SmileOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import SmartModal from '@/common/SmartModal'; //
-import usePowerStationForm from '@/components/Form/PowerStationForm/usePowerStationForm'; //
 import { regoins } from '@/configs'; //
+
+
+
+// 通用表单模态框组件 转发父组件传入的 表单属性给相应的表单 
+// 统一自动创建 form 管理 转发 form 组件的状态供父组件使用 
+
+// 主要作用是转发创建的表单
 
 
 const SmartFormModal = props => {
@@ -40,18 +46,16 @@ const SmartFormModal = props => {
     onCancel,
     onSubmit,
     onFail,
-    FormCom,
-    formComProps,
+    FormCom,// 调用传入的form组件 
+    formComProps,// 传递给表单的属性 
     children,
     top,
     bottom,
-    ...modalProps
+    ...modalProps// 其余传给表单的属性
 
     // config,
   } = props; //
 
-  // const configs = usePowerStationForm()
-  // console.log(' configs ： ', configs,  )// 
 
   const [form] = show ? Form.useForm() : []
 
@@ -66,15 +70,6 @@ const SmartFormModal = props => {
     const formValues = form.getFieldsValue()
     console.log('  formValues ：', formValues,  )//  
 
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
 
     onOk && onOk({ e, form, init: formComProps.init, });
   };
@@ -89,69 +84,67 @@ const SmartFormModal = props => {
 
   return (
     <SmartModal
-        // {...modalProps}
+      show={show}
+      onOk={handleOk}
+      onCancel={close}
+      
 
-        show={show}
+      {...modalProps}
+    >
+      {/* <SmartForm
+        // flexRow={4}
+        config={formConfig}
+        // formProps={formProps}
+        // init={init}
+        // init={{}}
+        init={{
+          key9: regoins,
+        }}
+        // {...formsProps}
+        propsForm={form}
+        onSubmit={onSubmit}
+        onFail={onFail}
+      ></SmartForm> */}
+      
+      <div>
+        {top}
 
-        {...modalProps}
-        onOk={handleOk}
-        onCancel={close}
-        
-      >
-        {/* <SmartForm
+        {children}
+
+        {FormCom && <FormCom
           // flexRow={4}
-          config={formConfig}
+          // config={formConfig}
           // formProps={formProps}
           // init={init}
           // init={{}}
-          init={{
-            key9: regoins,
-          }}
-          // {...formsProps}
+          {...formComProps}
           propsForm={form}
-          onSubmit={onSubmit}
-          onFail={onFail}
-        ></SmartForm> */}
+          key={props.action} 
+          // onSubmit={onSubmit}
+          // onFail={onFail}
+        ></FormCom>}
+
+        {bottom}
         
-        <div>
-          {top}
 
-          {children}
+      </div>
 
-          {FormCom && <FormCom
-            // flexRow={4}
-            // config={formConfig}
-            // formProps={formProps}
-            // init={init}
-            // init={{}}
-            {...formComProps}
-            propsForm={form}
-            key={props.action} 
-            // onSubmit={onSubmit}
-            // onFail={onFail}
-          ></FormCom>}
-
-          {bottom}
-          
-
-        </div>
-
-      </SmartModal>
+    </SmartModal>
   );
 };
 
 
+
+
 SmartFormModal.defaultProps = {
     show: false, 
-    // formComProps: {}, 
-
-
+    formComProps: {}, 
 
 };
 
 SmartFormModal.propTypes = {
     show: PropTypes.bool,
-    // formComProps: PropTypes.object,
+    formComProps: PropTypes.object,
 
 }
 

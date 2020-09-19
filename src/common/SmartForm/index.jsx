@@ -133,6 +133,18 @@ const formItemLayoutWithOutLabel = {
 
 
 
+
+
+
+/* 
+  抽象表单组件为通用型表单 封装带有相关默认通用操作 
+  支持表单配置形式传入 与 原来的直接传入表单组件形式
+  
+  尚未开发完 根据项目持续完善 
+
+*/
+
+
 const SmartForm = (props, state) => {
   const {
     config,
@@ -405,7 +417,6 @@ const SmartForm = (props, state) => {
 
 
 
-    // const {} = realComProps
     
     const renderRadioOptions = renderRadioOp(radioData, opType, )
     const renderSelectOptions = renderSelectOp(selectData, opType, )
@@ -657,17 +668,18 @@ const SmartForm = (props, state) => {
 
 
 SmartForm.defaultProps = {
-  formBtn: null,
   className: '',
-  config: [],
-  flexRow: 0,
-  isRowBtn: false,
-  init: {},
+  config: [],// 表单配置项
+  flexRow: 0,// 弹性布局值
+  isRowBtn: false,// 是否显示横向表单按钮
+  init: {},// 表单初始值
   // formProps: {},  
   isMockData: false,  
-  isMockData: true,  
-  action: '',  
+  isMockData: true,  // 是否使用 mock 数据
+  action: '',  // 表单的操作行为
+  noPh: false, // 是否显示表单项的 placeholder 文本 
 
+  
 };
 
 SmartForm.propTypes = {
@@ -678,6 +690,7 @@ SmartForm.propTypes = {
   init: PropTypes.object,
   // formProps: PropTypes.object,
   isMockData: PropTypes.bool,
+  noPh: PropTypes.bool,
   action: PropTypes.string,
 
 }

@@ -15,7 +15,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { DragDropContext, Droppable, Draggable,   } from 'react-beautiful-dnd';
 import Dnd from './Dnd'// 
 import CalendarCom from './CalendarCom'// 
-// import CommonHOC from '@/common/CommonHOC';
+// import SmartHOC from '@/common/SmartHOC';
 import DashMap from '@/components/Echarts/DashMap';
 import CURD from './CURD'// 
 import ProvinceForm from '@/components/Form/ProvinceForm'; //
@@ -26,7 +26,7 @@ const mapStateToProps = ({ client, }) => client;
 
 
 @connect(mapStateToProps, )
-// @CommonHOC()
+// @SmartHOC()
 class Test extends PureComponent {
   constructor(props) {
     super(props);

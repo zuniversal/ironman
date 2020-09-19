@@ -7,23 +7,12 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import PropTypes from 'prop-types'
 import './style.less'
-import {
-  Table,
-  Icon,
-  notification,
-  Modal,
-  Button,
-  Tag,
-  Form,
-  Input,
-  Row,
-  Col,
-  Menu,
-  Dropdown,
-} from 'antd'
+
+import PropTypes from 'prop-types'
 import QRCode from 'qrcode.react'
+
+
 
 const QRCodeCom = (props,  ) => {
   console.log(' QRCodeCom ： ', props, ) //
@@ -39,19 +28,15 @@ const QRCodeCom = (props,  ) => {
   )
 }
 
-// QRCodeCom.defaultProps = {
-//   placeholder: '按钮',
-//   noEllipsis: false,
-//   menuConfig: [],
-//   menuClick: () => {},  
-// }
 
-// QRCodeCom.propTypes = {
-//   noEllipsis: PropTypes.bool,
-//   noEllipsis: PropTypes.bool,
-//   menuConfig: PropTypes.array,
-//   menuClick: PropTypes.func,
+QRCodeCom.defaultProps = {
+  value: '按钮',
 
-// }
+}
+
+QRCodeCom.propTypes = {
+  value: PropTypes.string,
+  
+}
 
 export default QRCodeCom

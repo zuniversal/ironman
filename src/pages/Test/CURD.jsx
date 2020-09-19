@@ -35,7 +35,7 @@ import {
 
 } from '@/models/client'//
 import { actions,  } from '@/models/test'//
-import CommonHOC from '@/common/CommonHOC';
+import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
 console.log(' getListAsync ： ', getListAsync,  )// 
@@ -49,8 +49,6 @@ console.log(' getListAsync ： ', getListAsync,  )//
 
 
 
-
-export const TITLE = '客户'
 
 
 // const mapStateToProps = ({ client, }) => ({client});
@@ -75,6 +73,19 @@ const mapActions = {
 //   } 
 // }
 
+ 
+
+export const TITLE = '客户'
+
+const titleMap = {
+  add: `新增${TITLE}`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
+  userCapture: `${TITLE}画像`,
+}
+
+
+
 
 // @connect(mapStateToProps, mapActions)
 @connect(mapStateToProps, )
@@ -82,11 +93,14 @@ const mapActions = {
 //   console.log(' statestate ： ', state,  )// 
 //   return state.client
 // }, )
-// @CommonHOC
-@CommonHOC({
+// @SmartHOC
+@SmartHOC({
   actions,
+  titleMap,
+  modalForm: ClientForm,
+
 })
-class Client extends PureComponent {
+class CRUD extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,12 +109,7 @@ class Client extends PureComponent {
       action: '',  
       title: '',  
       Title: '',  
-      titleMap: {
-        add: `新增${TITLE}`,
-        edit: `编辑${TITLE}`,
-        detail: `${TITLE}详情`,
-        userCapture: `${TITLE}画像`,
-      },
+      titleMap,
 
       commonContent: null,  
       commonTitle: '',  
@@ -120,6 +129,21 @@ class Client extends PureComponent {
     };
   }
   
+  renderFormBtn = (params, ) => {
+    console.log(' renderFormBtn ： ', params,    )// 
+    return <div className={'btnWrapper'}> 
+      {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
+      {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
+      {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
+      <Button type="primary" onClick={() => this.props.search(params)}>搜索</Button>
+      <Button type="primary" onClick={this.syncOAAsync}>同步OA</Button>
+      {/* <Button type="primary" onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button> */}
+      <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增客户</Button>
+      <Button type="primary" onClick={() => this.syncOAAsync({action: 'add',  })} >导出客户数据</Button>
+      <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
+    </div> 
+  }
+
   onSelectChange = (selectedRowKeys, selectedRows) => {
     console.log(' onSelectChange ： ', selectedRowKeys, selectedRows, this.state, this.props,    )// 
 
@@ -163,7 +187,7 @@ class Client extends PureComponent {
     this.setState({
       action,
       show: true,
-      title: this.state.titleMap[action],  
+      // title: this.state.titleMap[action],  
       modalForm: ClientForm,
 
       editData: action === 'edit' ? params.record : {}, 
@@ -176,7 +200,7 @@ class Client extends PureComponent {
     this.setState({
       action,
       show: true,
-      title: this.state.titleMap[action],  
+      // title: this.state.titleMap[action],  
       modalForm: ClientForm,
     });
   };
@@ -198,7 +222,6 @@ class Client extends PureComponent {
   //   this.setState({
   //     action,
   //     show: true,
-  //     title: this.state.titleMap[action],  
   //   });
   // };
 
@@ -282,7 +305,7 @@ class Client extends PureComponent {
     this.setState({
       isShowModal: true,
       action,
-      commonTitle: this.state.titleMap[action],  
+      // commonTitle: this.state.titleMap[action],  
       commonContent: <ClientRadar data={portraitData}  ></ClientRadar>, 
     })
   }
@@ -337,22 +360,19 @@ class Client extends PureComponent {
 
   // }
 
+  search = async (params, ) => {
+    console.log('    search ： ', params,  )
+    const {form,  } = params
+    
+    const res = await form.validateFields();
+    console.log('  res await 结果  ：', res, form,    ); //
+  }
 
-  renderFormBtn = (params, ) => (
-    <div className={'btnWrapper'}>
-      {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
-      {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      <Button type="primary" onClick={this.syncOAAsync}>同步OA</Button>
-      <Button type="primary " onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button>
-      <Button type="primary" onClick={() => this.syncOAAsync({action: 'add',  })} >导出客户数据</Button>
-      <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
-    </div>
-  );
 
   renderSearchForm(params,  ) {
     // console.log(' renderSearchForm ： ', params,  )
     return <ClientSearchForm
-      formBtn={this.renderFormBtn()}
+      formBtn={this.renderFormBtn}
       // onSubmit={this.onSubmit}
       // onFail={this.onFail}
     ></ClientSearchForm>
@@ -368,14 +388,17 @@ class Client extends PureComponent {
       // remove: this.showModal,
       // tdClick: this.showModal,
       
-      edit: this.showFormModal,
+      // edit: this.showFormModal,
       // remove: this.showFormModal,
-      tdClick: this.showModalContent,
+      // tdClick: this.showModalContent,
       newTbData: this.state.newTbData,
 
 
-      remove: this.props.onRemove,
       onSelectChange: this.props.onSelectChange,
+      tdClick: this.props.showFormModal,
+      dataSource: this.props.dataList,
+      edit: this.props.showFormModal,
+      remove: this.props.onRemove,
     }
 
     return <ClientTable {...tableProps}   ></ClientTable>
@@ -397,7 +420,7 @@ class Client extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showForm, title, isShowModal, commonTitle,   } = this.state; //
+    const { show, showForm, title, isShowModal, commonTitle, action, titleMap,    } = this.state; //
 
     
 
@@ -412,8 +435,8 @@ class Client extends PureComponent {
 
 
     return (
-      <div className="Client">
-        {/* Client */}
+      <div className="CRUD">
+        {/* CRUD */}
 
 
 
@@ -430,6 +453,8 @@ class Client extends PureComponent {
           show={show}
           onOk={this.onOk}
           onCancel={this.onCancel}
+          action={action}
+          titleMap={titleMap}
           // FormCom={<FormCom showRelativeForm={this.showRelativeForm}  ></FormCom>}
 
           formComProps={formComProps}
@@ -468,4 +493,4 @@ class Client extends PureComponent {
   }
 }
 
-export default Client;
+export default CRUD;
