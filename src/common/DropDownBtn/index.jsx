@@ -32,8 +32,9 @@ const DropDownBtn = props => {
 
   const handleMenuClick = (item, ) => {
     console.log(' handleMenuClick   item, ,   ： ', item, props,   );
-    
-    menuClick && menuClick({ ...item,  });
+    const clickItem = menuConfig.find((v) => v.key === item.key)
+    console.log(' clickItem  menuConfig.find v ： ', clickItem,   )
+    menuClick && menuClick({ ...clickItem, ...item,  });
   };
 
   const menuCom = menu ? (
@@ -41,7 +42,7 @@ const DropDownBtn = props => {
   ) : (
     <Menu onClick={handleMenuClick}>
       {menuConfig.map((v, i) => (
-        <Menu.Item key={v.key}>{v.text}</Menu.Item>
+        <Menu.Item key={v.key} action={v.action}>{v.text}</Menu.Item>
       ))}
     </Menu>
   );

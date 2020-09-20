@@ -63,12 +63,8 @@ const ContractTable = props => {
       dataIndex: 'field7',
     },
     {
-      title: '户号',
-      dataIndex: 'field8',
-    },
-    {
       title: '电站数量',
-      dataIndex: 'field9',
+      dataIndex: 'field8',
     },
     // {
     //   noFilter: true,

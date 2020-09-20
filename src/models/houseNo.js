@@ -1,6 +1,6 @@
 
 import { init, action,   } from '@/utils/createAction'// 
-import * as services from "@/services/client"
+import * as services from "@/services/houseNo"
 
 
 const namespace = 'houseNo'
@@ -19,6 +19,7 @@ export const actions = {
 
 // console.log(' actions ： ', actions,  )// 
 
+export const mapStateToProps = state => state[namespace]
 
 
 
@@ -71,6 +72,13 @@ export default {
       }
     },
 
+    syncOA(state, {payload, type}) {
+      // console.log(' syncOA 修改  ： ', state, payload, type,     )// 
+      return { 
+        ...state,
+        // portraitData: payload., 
+      }
+    },
 
 
 
@@ -103,6 +111,13 @@ export default {
       
     },
 
+    *syncOAAsync({payload, action, type}, {call, put,   }) {
+      // console.log(' syncOAAsync ： ', payload, type,     )// 
+      const res = yield call(services.syncOA, payload)
+      console.log('  syncOA res ：', res,  )//  
+      yield put(action({...res, payload,  }))
+      
+    },
 
 
 

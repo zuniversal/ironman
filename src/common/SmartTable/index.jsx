@@ -17,8 +17,10 @@ import { Link,  } from 'umi'; //
 
 
 const NUM_LEN = 9
+// const NUM_LEN = 5
 const WORD_LEN = 10
 const LETTER_LEN = 20
+// const LETTER_LEN = 8
 
 const lengthMap = {
   num: NUM_LEN,
@@ -26,24 +28,35 @@ const lengthMap = {
   letter: LETTER_LEN,
 }
 
-const getTextLength = (text,  ) => {
+const getLengthLimit = (text,  ) => {
   let textLength = text.length
   if (!isNaN(text)) {
-    textLength = lengthMap.num
-  } else if (/^[a-zA-Z]+$/.test(text)) {
-    textLength = lengthMap.letter
+    console.log(' 数字 ： ',    )// 
+    // textLength = lengthMap.num
+    return lengthMap.num
+  } else if (/^[a-zA-Z\s]+$/.test(text)) {
+    console.log(' 字母 ： ',    )// 
+    // textLength = lengthMap.letter
+    return lengthMap.letter
   } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
-    textLength = lengthMap.word
+    console.log(' 文字 ： ',    )// 
+    // textLength = lengthMap.word
+    return lengthMap.word
   }
-  // console.log(' textLength ：`${}` ', text, textLength,  )// 
+  console.log(' 默认长度 ： ', isNaN(text), text, textLength,  )// 
   return textLength 
 }
 
 
 const foramtText = (text,  ) => {
-  let textLength = getTextLength(text,  )
-  const txt = textLength === text.length ? text : `${text}`.slice(0, textLength) + '...'
-  return textLength 
+  if (!text) {
+    return text 
+  }
+  const textStr = `${text}`
+  let lengthLimit = getLengthLimit(textStr,  ) 
+  const txt = textStr.length > lengthLimit ? `${textStr}`.slice(0, lengthLimit) + '...' : textStr
+  console.log(' lengthLimit, textStr, textStr.length ： ', txt, lengthLimit, textStr.length, textStr,   )//
+  return txt 
 }
 
 
@@ -99,7 +112,8 @@ class SmartTable extends PureComponent {
 
       isShowResultModal: false,  
 
-      mockTbData: mockTbData(props.haveChildren, ),
+      // mockTbData: mockTbData(props.haveChildren, ),
+      mockTbData: [],
 
       selectionType: 'checkbox',  
 
@@ -214,9 +228,9 @@ class SmartTable extends PureComponent {
     // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData 
 
     const data = ((dataSource.length > 0 ? dataSource : this.state.mockTbData).map((v, i) => ({...v, key: i})))
-    // .map((v, i) => ({...v, d_id: v.d_id 
-    //   // && v.d_id !== 0 
-    //   ? v.d_id : Math.random()}))
+    .map((v, i) => ({...v, d_id: v.d_id 
+      // && v.d_id !== 0 
+      ? v.d_id : Math.random()}))
 
 
     console.log(
@@ -275,21 +289,28 @@ class SmartTable extends PureComponent {
     //   return config.render
     // }
 
-    const {tdClick,  } = this.props// 
+    const {showDetail,  } = this.props// 
 
     const textLength = `${text}`.length
-    // console.log('  textLength ：', textLength,  )//  
-    const txt = textLength > WORD_LEN ? `${text}`.slice(0, 10) + '...' : text
+    // const txt = foramtText(`${text}`)
+    const txt = foramtText(text)
+    // const txt = textLength > lengthLimit ? `${text}`.slice(0, lengthLimit) + '...' : text
 
-    const txts = foramtText(`${text}`)
+    // console.log('  渲染=== ：', text, txt, )//  
+
+
     
     let content = ''
     if (config.linkUrl) {
       content = <Link to={config.linkUrl} className={``}  >{txt}</Link>;
+    } else if (config.linkUrlFn) {
+      const path = config.linkUrlFn(text, record, index, )
+      // console.log('  path ：', path,  )// 
+      content = <Link to={path} className={``}  >{txt}</Link>;
     } else if (config.link) {
       content = <a className={``}  >{txt}</a>;
     } else if (config.detail) {
-      content = <a onClick={() => tdClick({action: 'detail', record,  })}  >{txt}</a>;
+      content = <a onClick={() => showDetail({action: 'detail', record,  })}  >{txt}</a>;
     } else {
       content = <span className={``}  >{txt}</span>;
     }
@@ -441,9 +462,9 @@ class SmartTable extends PureComponent {
 
     const col = columns.map((v, i) => ({
       // render: v.render ? v.render : this.renderCol,
-      render: (...rest) => this.renderCol(...rest, v),
       dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
       ...v,
+      render: (...rest) => this.renderCol(...rest, v),
       // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
     
@@ -475,7 +496,7 @@ class SmartTable extends PureComponent {
 
     
     const realData = this.dataFilter()
-    // console.log('  realData ：', realData,  )// 
+    console.log('  realData ：', realData,  )// 
 
     return (
       <div className="">
@@ -538,12 +559,12 @@ SmartTable.defaultProps = {
   dataSource: [],
   // dataSource: mockTbData(),
   // rowKey: 'key',
-  // rowKey: 'd_id',
-  rowKey: 'id',
+  rowKey: 'd_id',
+  // rowKey: 'id',
 
   edit: () => {}, 
   remove: () => {}, 
-  tdClick: () => {}, 
+  showDetail: () => {}, 
   actionConfig: {},
   extra: null, 
   noActionCol: false,
@@ -561,7 +582,7 @@ SmartTable.propTypes = {
   rowKey: PropTypes.string,
   edit: PropTypes.func,
   remove: PropTypes.func,
-  tdClick: PropTypes.func,
+  showDetail: PropTypes.func,
   actionConfig: PropTypes.object,
   noActionCol: PropTypes.bool,
   noDefault: PropTypes.bool,

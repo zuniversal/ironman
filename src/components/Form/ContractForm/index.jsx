@@ -27,6 +27,7 @@ import {
 import SmartForm from '@/common/SmartForm' //
 import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp, mockFormData,    } from '@/utils'//
+import { UploadCom } from '@/components/Widgets'
 
 const normFile = e => {
   console.log('Upload event:', e);
@@ -140,6 +141,7 @@ export const config = [
       <Button icon={<UploadOutlined />}>上传文件</Button>
     </Upload>
   </Form.Item>,
+  // UploadCom,
 
   {
     formType: 'rowText',
@@ -197,7 +199,7 @@ const ContractForm = props => {
         config={formatConfig(config)}
         // config={configs}
         formProps={formProps}
-        init={mockFormData(formatConfig(config), )}
+        // init={mockFormData(formatConfig(config), )}
         // init={{}}
       
         {...props}

@@ -10,7 +10,7 @@ export const editItem = p => put(`customer/${p.d_id}`, p)
 export const removeItem = p => remove(`customer/${p.d_id}`, p)
 
 
-export const syncOA = p => noTipsGet(`customer/oa`, p)
+export const syncOA = p => get(`customer/OA`, p)
 export const getPortrait = p => noTipsGet(`customer/portrait/${p.d_id}`, p)
 
 

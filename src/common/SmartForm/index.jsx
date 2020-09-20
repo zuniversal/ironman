@@ -16,6 +16,8 @@ import {
   Space,
   InputNumber,
   DatePicker,
+  Divider,
+
 
 } from 'antd';
 import moment from 'moment'
@@ -157,6 +159,7 @@ const SmartForm = (props, state) => {
     className,
     onSubmit,
     onFail,
+    onFieldChange,
     propsForm,
     isMockData,
     action,
@@ -290,6 +293,8 @@ const SmartForm = (props, state) => {
     console.log(' onFormLayoutChange value, rest ： ', value, rest); //
     const { layout, size } = value;
 
+    onFieldChange && onFieldChange({ value,  });
+
     // setFormLayout(layout);
     // setComponentSize(size);
   };
@@ -360,6 +365,7 @@ const SmartForm = (props, state) => {
       radioData = [], 
       selectData = [], 
       opType, 
+      haveDivider,
        
     } = items;
     
@@ -424,6 +430,7 @@ const SmartForm = (props, state) => {
 
     const formItemMap = {
       rowText: label,
+      Divider: <Divider  />,
       Input: <Input allowClear {...realComProps} />,
       TextArea: <TextArea
         autoSize={{ minRows: 3, maxRows: 5 }}
@@ -461,6 +468,18 @@ const SmartForm = (props, state) => {
 
     if (!formItemCom) {
       return <div key={Math.random()}>没有匹配</div>;
+    }
+
+    if (formType === 'Divider') {
+      return (
+        <Form.Item
+          labelAlign={'left'}
+          {...rowLayout}
+          {...formItemNoRuleProps}
+        >
+          <Divider />
+        </Form.Item>
+      );
     }
 
     if (formType === 'rowText') {

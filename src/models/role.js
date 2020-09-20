@@ -1,6 +1,6 @@
 
 import { init, action,   } from '@/utils/createAction'// 
-import * as services from "@/services/client"
+import * as services from "@/services/role"
 
 
 const namespace = 'role'
@@ -18,6 +18,8 @@ export const actions = {
 }
 
 // console.log(' actions ： ', actions,  )// 
+
+export const mapStateToProps = state => state[namespace]
 
 
 

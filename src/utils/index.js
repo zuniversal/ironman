@@ -81,7 +81,7 @@ export const mockFormData = (config, init, ) => {
         Checkbox: label,
         CheckboxGroup: label,
         
-        Radio: label,
+        Radio: 'yes',
         DatePicker: mockDate,
     
         Dynamic: ['值1',   ],
@@ -103,7 +103,7 @@ export const mockFormData = (config, init, ) => {
 
 
 export const formatConfig = config => config.map((v, i) => {
-  console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
+  // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
   const items = {
     ...v,
     // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
@@ -112,6 +112,8 @@ export const formatConfig = config => config.map((v, i) => {
         ? { ...v.itemProps, key: `field${i}`,  }
         // : { ...v.itemProps, key: `field${i}`,  },
         : { ...v.itemProps, key: v.itemProps?.name ? v.itemProps.name : `field${i}`, name: v.itemProps?.name ? v.itemProps.name : `field${i}` },
+        // 直接生成 name 
+        // : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
         // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
         // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
   } 

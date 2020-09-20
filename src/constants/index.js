@@ -28,6 +28,7 @@ export const UN_CHECK_TXT = 'OFF';
 export const TIME_ZERO = ' 00:00:00';
 
 
+export const HOUSENO = '/om/houseNo?'
 
 
 

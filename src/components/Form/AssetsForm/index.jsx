@@ -65,6 +65,13 @@ const AssetsForm = props => {
         name: 'station',  
       },
     },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //     name: '',  
+    //   },
+    // },
     {
       formType: 'Select',
       noRule: true,  

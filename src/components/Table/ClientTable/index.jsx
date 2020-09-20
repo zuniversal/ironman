@@ -25,6 +25,17 @@ import {
 } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
+import { HOUSENO,  } from '@/constants'// 
+
+
+const linkUrlFn = (params = ['code', 'id', ], path = '',  ) => (text, record, index) => {
+  let linkUrl = path
+  let res = params.forEach((key) => linkUrl += `${key}=${record[key] != undefined ? record[key] : ''}&`)
+  // console.log(' linkUrl ： ', linkUrl,  )// 
+  return linkUrl 
+}
+
+
 
 const ClientTable = props => {
   console.log(' ClientTable ： ', props); //
@@ -35,7 +46,8 @@ const ClientTable = props => {
       title: '客户编号',
       dataIndex: 'id',
       // link: true,
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      // render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      linkUrlFn: linkUrlFn(['code', 'id', ], HOUSENO,  ),
     },
     {
       noFilter: true,
@@ -66,7 +78,15 @@ const ClientTable = props => {
     },
     {
       title: '户号',
-      linkUrl: '/om/houseNo',  
+      dataIndex: 'code',
+      // linkUrl: '/om/houseNo',  
+      // linkUrlFn: (text, record, index) => {
+      //   let linkUrl = HOUSENO
+      //   let res = ['code', 'id', ].forEach((key) => linkUrl += `${key}=${record[key]}`)
+      //   console.log(' linkUrl ： ', linkUrl,  )// 
+      //   return linkUrl 
+      // },
+      linkUrlFn: linkUrlFn(['code', 'id', ], HOUSENO,  ),
     },
     {
       title: '客户地址',

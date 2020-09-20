@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -16,8 +17,10 @@ import {
   InputNumber,
   Upload,
   Result,
+  Tabs 
 
 } from 'antd';
+
 import {
   UploadOutlined,
   PlusOutlined,
@@ -28,8 +31,11 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp,  } from '@/utils'//
 
+
+const { TabPane } = Tabs;
+
 const normFile = e => {
-  console.log('Upload event:', e);
+  console.log('Upload event', e);
 
   if (Array.isArray(e)) {
     return e;
@@ -41,8 +47,8 @@ const normFile = e => {
 
 
 const choiceRadios = [
-  { value: '是', key: 'yes',  },
-  { value: '否', key: 'no',  },
+  { label: '是', value: 'yes', key: 'yes',  },
+  { label: '否', value: 'no', key: 'no',  },
 ]
 
 
@@ -56,10 +62,10 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '基本信息:',
+    // rowText: '基本信息',
     // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
     },
   },
 
@@ -116,10 +122,10 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '位置信息:',
+    // rowText: '位置信息',
     // noRule: true,
     itemProps: {
-      label: '位置信息:',
+      label: '位置信息',
     },
   },
   {
@@ -149,10 +155,10 @@ export const clientConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '管理员信息:',
+    // rowText: '管理员信息',
     // noRule: true,
     itemProps: {
-      label: '管理员信息:',
+      label: '管理员信息',
     },
   },
 
@@ -266,10 +272,10 @@ export const contractConfig = [
   },
   {
     formType: 'rowText',
-    // rowText: '附件:',
+    // rowText: '附件',
     // noRule: true,
     itemProps: {
-      label: '附件:',
+      label: '附件',
     },
   },
   // {
@@ -296,10 +302,10 @@ export const contractConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '其他信息:',
+    // rowText: '其他信息',
     // noRule: true,
     itemProps: {
-      label: '其他信息:',
+      label: '其他信息',
     },
   },
   {
@@ -320,10 +326,10 @@ export const contractConfig = [
 export const houseNoConfig = [
   {
     formType: 'rowText',
-    // rowText: '基本信息:',
+    // rowText: '基本信息',
     // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
     },
   },
   {
@@ -349,10 +355,10 @@ export const houseNoConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '地址信息:',
+    // rowText: '地址信息',
     // noRule: true,
     itemProps: {
-      label: '地址信息:',
+      label: '地址信息',
     },
   },
   {
@@ -373,10 +379,10 @@ export const houseNoConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '电气信息:',
+    // rowText: '电气信息',
     // noRule: true,
     itemProps: {
-      label: '电气信息:',
+      label: '电气信息',
     },
   },
   {
@@ -411,10 +417,10 @@ export const houseNoConfig = [
 export const stationConfig = [
   {
     formType: 'rowText',
-    // rowText: '基本信息:',
+    // rowText: '基本信息',
     // noRule: true,
     itemProps: {
-      label: '基本信息:',
+      label: '基本信息',
     },
   },
   {
@@ -443,10 +449,10 @@ export const stationConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '电气信息:',
+    // rowText: '电气信息',
     // noRule: true,
     itemProps: {
-      label: '电气信息:',
+      label: '电气信息',
     },
   },
   {
@@ -505,10 +511,10 @@ export const stationConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '设备信息:',
+    // rowText: '设备信息',
     // noRule: true,
     itemProps: {
-      label: '设备信息:',
+      label: '设备信息',
     },
   },
   {
@@ -519,10 +525,10 @@ export const stationConfig = [
 
   {
     formType: 'rowText',
-    // rowText: '监控信息:',
+    // rowText: '监控信息',
     // noRule: true,
     itemProps: {
-      label: '监控信息:',
+      label: '监控信息',
     },
   },
   
@@ -534,10 +540,10 @@ export const stationConfig = [
 
   // {
   //   formType: 'rowText',
-  //   // rowText: '一次电气图:',
+  //   // rowText: '一次电气图',
   //   // noRule: true,
   //   itemProps: {
-  //     label: '一次电气图:',
+  //     label: '一次电气图',
   //   },
   // },
   <Form.Item
@@ -593,51 +599,68 @@ const init = {
 const ContractRelativeForm = props => {
   console.log(' ContractRelativeForm ： ', props); //
 
-  const {index,  } = props// 
+  const {index, propsForm, formConfigs, } = props// 
 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
-  // const formConfig = formatConfig(config);
-  // console.log(' formConfig ： ', formConfig); //
+  // const formConfigs = formatConfig(config);
+  // console.log(' formConfigs ： ', formConfigs); //
   const config1 = formatConfig(clientConfig)
   const config2 = formatConfig(contractConfig)
   const config3 = formatConfig(houseNoConfig)
   const config4 = formatConfig(stationConfig)
   // 
-  const configs = [
+  const configArr = [
     config1,
     config2,
     config3,
     config4,
-  ][index]
+  ]
+  
+  const configs = configArr[index]
   
 
   return (
     <div className={''}>
-      {index < 4 && 
+      {formConfigs.map((v, i) => <div key={i} className={i === index ? `${i}` : `${i} hide `}   >
         <SmartForm
           // config={config}
           // config={formatConfig(config)}
-          config={configs}
+          // config={v}
+          // config={v.config}
+          config={configArr[i]}
           formProps={formProps}
           // init={init}
           // init={{}}
 
-          propsForm={configs[index].form}
+          // propsForm={propsForm}
+          // propsForm={formConfigs[index].form}
+          propsForm={v.form}
+          // propsForm={Form.useForm()[0]}
           {...props}
         ></SmartForm>
-      }
+      </div>)}
 
-      {index === 4 && <SuccResult></SuccResult>}
 
 
     </div>
   );
 };
 
-ContractRelativeForm.defaultProps = {};
+
+ContractRelativeForm.defaultProps = {
+  formConfigs: [],
+
+
+};
+
+ContractRelativeForm.propTypes = {
+  formConfigs: PropTypes.array,
+  
+
+}
 
 export default ContractRelativeForm;

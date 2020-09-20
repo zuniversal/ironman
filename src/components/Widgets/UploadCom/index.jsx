@@ -35,7 +35,10 @@ const UploadCom = (props, ) => {
     colon={false}
     // extra="支持扩展名：.pdf"
   >
-    <Upload name="logo" action="/upload.do"  listType="picture-card" className={'uploadCom'}  >
+    <Upload name="logo" action="/upload.do" 
+      // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`? 
+      fileList={[]}
+      listType="picture-card" className={'uploadCom'}  >
       <div>
         <PlusOutlined className={'icon'}  />
         <div className={'text'}  >上传照片</div>

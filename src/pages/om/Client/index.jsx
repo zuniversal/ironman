@@ -30,7 +30,7 @@ export const TITLE = '客户'
 
 
 const titleMap = {
-  add: `新增${TITLE}`,
+  add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   userCapture: `${TITLE}画像`,
@@ -84,10 +84,10 @@ class CRUD extends PureComponent {
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
       {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
       <Button type="primary" onClick={() => this.props.search(params)}>搜索</Button>
-      <Button type="primary" onClick={this.syncOAAsync}>同步OA</Button>
+      <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
       {/* <Button type="primary" onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button> */}
       <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增客户</Button>
-      <Button type="primary" onClick={() => this.syncOAAsync({action: 'add',  })} >导出客户数据</Button>
+      <Button type="primary" onClick={() => this.props.exportData()} >导出{TITLE}数据</Button>
       <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
     </div> 
   }
@@ -329,7 +329,7 @@ class CRUD extends PureComponent {
 
 
   renderTable(params,  ) {
-    // console.log(' renderTable ： ', params,  )
+    console.log(' renderTable ： ', params, this.state, this.props,  )
 
     const tableProps = {
       // edit: this.showModal,
@@ -344,6 +344,7 @@ class CRUD extends PureComponent {
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
+      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,

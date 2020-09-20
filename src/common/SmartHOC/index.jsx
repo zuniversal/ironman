@@ -10,13 +10,14 @@ import React, {
 import './style.less';
 
 import SmartFormModal from '@/common/SmartFormModal'; //
+import { tips,   } from '@/utils';
 
 import { Form, Input, Button, Spin,  } from 'antd';
 
 
 /* 
   封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
-  支持 注入 actions, modalForm, titleMap, noDidMount  等配置参数 
+  支持 注入 actions, modalForm, titleMap, isMountFetch, isCheckQuery,  等配置参数 
   actions：注入的 models 里封装的相应操作页面的 action 
   modalForm：页面的操作表单 
   titleMap：模态框的标题映射
@@ -25,7 +26,7 @@ import { Form, Input, Button, Spin,  } from 'antd';
 */
 
 
-export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class extends React.Component {
+export default ({actions, modalForm, titleMap, isMountFetch, isCheckQuery,  }) => Com => class extends React.Component {
 
   constructor(props) {
     super(props);
@@ -39,11 +40,25 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
       selectedRowKeys: [],
       selectedRows: [],
       
+      newTbData: [], 
       editData: {}, 
+
+      topCom: null,
+
 
     };
   }
   
+  setTopCom = (topCom,  ) => {
+    console.log('    setTopCom ： ', topCom,   )
+    this.setState(topCom)
+  }
+  renderModalTop = (e,  ) => {
+    console.log('    renderModalTop ： ', e, this.state, this.props,   )
+    return this.state.topCom 
+  }
+
+
 
   showFormModal = (params, ) => {
     const {action,  } = params
@@ -130,6 +145,7 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
     console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       isShow: false,
+      // topCom: null,
     });
   };
 
@@ -143,6 +159,29 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
       selectedRowKeys, 
       selectedRows,
     });
+  }
+  
+  downloadFile = (params,  ) => {
+    console.log(' downloadFile,  , ： ', params,    )
+    const {dispatch,    } = this.props// 
+    tips('模拟文件下载成功！')
+    
+  }
+  exportData = (params,  ) => {
+    console.log(' exportData,  , ： ', params,    )
+    const {dispatch,    } = this.props// 
+    tips('模拟导出成功！')
+    
+  }
+  syncOAAsync = (params,  ) => {
+    console.log(' syncOAAsync,  , ： ', params,    )
+    const {dispatch,    } = this.props// 
+    tips('正在同步OA！')
+    dispatch(
+      actions.syncOAAsync({
+      })
+    )
+    
   }
   onRemove = (props, ) => {
     console.log(' onRemove ： ', props, this.state, this.props); 
@@ -186,6 +225,11 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
     )
 
   }
+  isCheckQuery = (e,  ) => {
+    const {query,  } = this.props.location// 
+    console.log('    isCheckQuery ： ', e, this.state, this.props, query,   )
+  }
+  
   componentDidMount() {
     console.log(
       ' SmartHoc 组件componentDidMount挂载 ： ',
@@ -193,9 +237,11 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
       this.props,
     ); //
 
-    if (!noDidMount) {
+    if (!isMountFetch) {
       this.getList()
-      
+    }
+    if (!isCheckQuery) {
+      this.isCheckQuery()
     }
   }
 
@@ -226,8 +272,13 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
 
 
         showFormModal={this.showFormModal}
-        showFormModal={this.showFormModal}
+        syncOAAsync={this.syncOAAsync}
+        downloadFile={this.downloadFile}
+        exportData={this.exportData}
         search={this.search}
+        
+        setTopCom={this.setTopCom}
+        
       />
 
 
@@ -245,6 +296,8 @@ export default ({actions, modalForm, titleMap, noDidMount,  }) => Com => class e
         // FormCom={this.renderModalForm()}
         FormCom={modalForm}
 
+        top={this.renderModalTop()}
+        
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
 

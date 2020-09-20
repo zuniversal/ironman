@@ -1,9 +1,9 @@
 
 import { init, action,   } from '@/utils/createAction'// 
-import * as services from "@/services/contract"
+import * as services from "@/services/dict"
 
 
-const namespace = 'contract'
+const namespace = 'dict'
 const {createAction, createCRUD, } = init(namespace)
 
 const otherActions = [

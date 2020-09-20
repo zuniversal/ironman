@@ -22,48 +22,46 @@ import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import SuccResult from '@/components/Widgets/SuccResult'; //
+
+import { actions, mapStateToProps,  } from '@/models/houseNo'//
+import SmartHOC from '@/common/SmartHOC';
+import { connect } from 'umi';
 
 
 
-export const SuccResult = props => {
 
-  return <Result
-    status="success"
-    title="关联新增成功"
-    // subTitle="subTitle"
-    extra={[
-      <Button type="primary" key="console">
-        返回{TITLE}列表
-      </Button>,
-    ]}
-  
-  /> 
-}
-
-export const UploadCom = props => <div className="contentWrapper">
-    <Upload
-      listType="picture"
-      onChange={props.onChange}
-    >
-      {TITLE}列表<Button icon={<UploadOutlined />}>上传文件</Button>
-      <div className="extra">
-        支持扩展名：xls, xlsx, csv,...
-      </div>
-    </Upload>
-  </div>// 
 
 
 const menuConfig = [
-  { key: 'upload', text: '上传文件' },
-  { key: 'down', text: '下载数据模板' },
+  { key: 'upload', clickFn: 'showUploadModal', action: 'upload', text: '上传文件' },
+  { key: 'down', clickFn: 'downloadFile', action: 'down', text: '下载数据模板' },
 ];
 
 
 const TITLE = '户号'
 
 
+const titleMap =  {
+  add: `新建${TITLE}`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
+  newRelated: `关联新增`,
+  upload: `文件上传`,
+  down: `文件下载`,
+}
+
+// const mapStateToProps = ({ houseNo, }) => houseNo;
 
 
+@connect(mapStateToProps, )
+@SmartHOC({
+  actions,
+  titleMap,
+  modalForm: HouseNoForm,
+
+})
 class HouseNo extends PureComponent {
   constructor(props) {
     super(props);
@@ -74,16 +72,8 @@ class HouseNo extends PureComponent {
 
       action: '',  
       title: '',  
-      houseNoTitle: '',  
 
-      titleMap: {
-        add: `新增${TITLE}`,
-        edit: `编辑${TITLE}`,
-        detail: `${TITLE}详情`,
-        newRelated: `关联新增`,
-        upload: `文件上传`,
-        down: `文件下载`,
-      },
+      titleMap,
       
       newTbData: [],  
 
@@ -91,63 +81,47 @@ class HouseNo extends PureComponent {
   }
 
 
-
-  menuClick = (params,  ) => {
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
-  //   const {item,  } = this.props// 
-    this.setState({
-      show: true,
-      title: this.state.titleMap[params.key],  
-      modalContent: <UploadCom onChange={this.onUploadChange}   ></UploadCom>,
-      // modalForm: UploadCom,
-    })
-  }
-  
-  showModalContent = (params, ) => {
-    const {action,  } = params
-    console.log('    showModalContent ： ', action, params, this.state, this.props,  );
-    this.setState({
-      action,
-      show: true,
-      title: this.state.titleMap[action],  
-      modalForm: HouseNoForm,
-    });
-  };
-
-
-  renderForm = (
-    <div className={'fsb '}  >
-      <HouseNoSearchForm></HouseNoSearchForm>
-      <div className={'btnWrapper'}>
-        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
-        <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-        <Button type="primary "onClick={() => this.showModalContent({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary">导出{TITLE}数据</Button>
-        <Button type="primary">删除</Button>
-      </div>
-    </div>
-  );
-
-  renderModalForm = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
-    const {modalForm,  } = this.state// 
-    if (modalForm) {
-      return modalForm
-    }
-    
-    // return null
-  }
-  
-  
   onUploadChange = (params,  ) => {
     console.log(' onUploadChange,  , ： ', params,    )
     if (params.file.status === 'done') {
-      this.setState({
-        showModalCom: <SuccResult></SuccResult>,
-      })
+      setTimeout(() => {
+        console.log('  延时器 ： ',  )
+        this.setState({
+          modalContent: <SuccResult></SuccResult>,
+        })
+        
+      }, 2000)
+      
+    }
+  }
+  showUploadModal = (params, ) => {
+    console.log('    showUploadModal ： ', params,  )
+    //   const {item,  } = this.props// 
+    const {action,  } = params
+    
+    this.setState({
+      show: true,
+      action,
+      modalContent: <UploadFileCom onChange={this.onUploadChange} label={titleMap[action]}  ></UploadFileCom>,
+    })
+  }
+  downloadFile = (params, ) => {
+    console.log('    downloadFile ： ', params,  )
+    this.props.downloadFile()
+  }
+
+  menuClick = (params,  ) => {
+    const {key, clickFn, } = params
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+    if (clickFn) {
+      this[clickFn](params)
+      return  
     }
     
   }
+
+  
+  
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -198,17 +172,82 @@ class HouseNo extends PureComponent {
     });
   };
 
-  componentDidMount() {
-    console.log(
-      ' HouseNo 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
 
-    // this.showModalContent();
-    // this.showModal();
+  
+  // renderFormBtn = (params, ) => {
+  //   console.log(' renderFormBtn ： ', params,    )// 
+  //   return <div className={'fsb '}  >
+  //     <HouseNoSearchForm></HouseNoSearchForm>
+  //     <div className={'btnWrapper'}>
+  //       <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
+  //       <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
+  //       <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+  //       <Button type="primary">导出{TITLE}数据</Button>
+  //       <Button type="primary">删除</Button>
+  //     </div>
+  //   </div>
+  // }
 
+  renderModalContent = (e,  ) => {
+    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    const {modalContent,  } = this.state// 
+    if (modalContent) {
+      return modalContent
+    }
+    
+    // return null
   }
+
+  renderSearchForm(params,  ) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return <div className={'fsb '}  >
+      <HouseNoSearchForm></HouseNoSearchForm>
+      <div className={'btnWrapper'}>
+        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
+        <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
+        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+        <Button type="primary" onClick={() => this.props.exportData()} >导出{TITLE}数据</Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
+      </div>
+    </div>
+    return <HouseNoSearchForm
+      formBtn={this.renderFormBtn}
+      // onSubmit={this.onSubmit}
+      // onFail={this.onFail}
+    ></HouseNoSearchForm>
+  }
+  
+  renderTable(params,  ) {
+    console.log(' renderTable ： ', params, this.state, this.props,  )
+
+    const tableProps = {
+      newTbData: this.state.newTbData,
+
+
+      onSelectChange: this.props.onSelectChange,
+      tdClick: this.props.showFormModal,
+      showDetail: this.props.showFormModal,
+      dataSource: this.props.dataList,
+      edit: this.props.showFormModal,
+      remove: this.props.onRemove,
+    }
+
+    return <HouseNoTable {...tableProps}   ></HouseNoTable>
+  }
+  
+  renderSmartModal(params,  ) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props,  )
+    const { show, title, action, titleMap,   } = this.state; //
+
+    return <SmartModal 
+      show={show} onOk={this.onOk} onCancel={this.onCancel}
+      action={action}
+      titleMap={titleMap}
+    >
+      {this.renderModalContent()}
+    </SmartModal>
+  }
+  
 
   render() {
     console.log(
@@ -217,14 +256,7 @@ class HouseNo extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, houseNoTitle, action,  } = this.state; //
-
-    const tableProps = {
-      edit: this.showModalContent,
-      remove: this.showModalContent,
-      tdClick: this.showModalContent,
-      newTbData: this.state.newTbData,
-    }
+    const { show, title, action, titleMap,   } = this.state; //
 
     const formComProps = {
       getCapture: this.showCapture,
@@ -236,18 +268,17 @@ class HouseNo extends PureComponent {
     return (
       <div className="HouseNo">
 
-        {this.renderForm}
+        {this.renderSearchForm()}
+
+        {this.renderTable()}
+        
+        {this.renderSmartModal()}
 
 
-        <HouseNoTable {...tableProps}  ></HouseNoTable>
 
-        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
-          title={title}
-        >
-          {this.renderModalContent()}
-        </SmartModal> */}
+        
 
-        <SmartFormModal
+        {/* <SmartFormModal
           // width={'900px'}
           formComProps={{...tableProps, ...formComProps, action, }} 
 
@@ -259,7 +290,7 @@ class HouseNo extends PureComponent {
           FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        ></SmartFormModal>
+        ></SmartFormModal> */}
 
 
       </div>

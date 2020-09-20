@@ -59,7 +59,8 @@ const SmartFormModal = props => {
 
   const [form] = show ? Form.useForm() : []
 
-
+  const {init = {},  } = formComProps
+  
 
   console.log(' SmartFormModal ： ', props, form, modalProps, React.isValidElement(null), React.isValidElement(FormCom), ); //
 
@@ -71,7 +72,7 @@ const SmartFormModal = props => {
     console.log('  formValues ：', formValues,  )//  
 
 
-    onOk && onOk({ e, form, init: formComProps.init, });
+    onOk && onOk({ e, form, init: init, });
   };
   const close = e => {
     console.log(' close   e, ,   ： ', e);

@@ -16,102 +16,106 @@ import {
   
 } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
-import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import PowerStationTable from '@/components/Table/PowerStationTable'; //
+import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import DropDownBtn from '@/common/DropDownBtn'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import SuccResult from '@/components/Widgets/SuccResult'; //
+
+import { actions, mapStateToProps,  } from '@/models/powerStation'//
+import SmartHOC from '@/common/SmartHOC';
+import { connect } from 'umi';
 
 
 
-export const SuccResult = props => {
 
-  return <Result
-    status="success"
-    title="关联新增成功"
-    // subTitle="subTitle"
-    extra={[
-      <Button type="primary" key="console">
-        返回电站列表
-      </Button>,
-    ]}
-  
-  /> 
+
+
+
+const TITLE = '电站'
+
+
+const titleMap =  {
+  add: `新建${TITLE}`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
+  newRelated: `关联新增`,
+  upload: `文件上传`,
+  down: `文件下载`,
 }
 
-export const UploadCom = props => <div className="contentWrapper">
-    <Upload
-      listType="picture"
-      onChange={props.onChange}
-    >
-      电站列表<Button icon={<UploadOutlined />}>上传文件</Button>
-      <div className="extra">
-        支持扩展名：xls, xlsx, csv,...
-      </div>
-    </Upload>
-  </div>// 
+// const mapStateToProps = ({ houseNo, }) => houseNo;
 
 
+@connect(mapStateToProps, )
+@SmartHOC({
+  actions,
+  titleMap,
+  modalForm: PowerStationForm,
 
-
-class Contract extends PureComponent {
+})
+class PowerStation extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      showPowerStationForm: false,  
 
       showModalCom: null,  
 
       action: '',  
       title: '',  
 
-      titleMap: {
-        add: '新增电站',
-        edit: '编辑电站',
-        detail: '电站详情',
-        newRelated: '关联新增',
-        upload: '文件上传',
-        down: '文件下载',
-      },
-
+      titleMap,
+      
       newTbData: [],  
 
     };
   }
 
 
-  renderForm = (
-    <div className={'fsb '}  >
-      <SearchForm></SearchForm>
-      <div className={'btnWrapper '}  >
-        <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新建电站</Button>
-        <Button type="primary">同步OA数据</Button>
-        <Button type="primary">导出电站数据</Button>
-        <Button type="primary">删除</Button>
-      </div>
-    </div>
-  );
-
-  renderModalForm = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
-    const {modalForm,  } = this.state// 
-    if (modalForm) {
-      return modalForm
-    }
-    
-    // return null
-  }
-  
-  
   onUploadChange = (params,  ) => {
     console.log(' onUploadChange,  , ： ', params,    )
     if (params.file.status === 'done') {
-      this.setState({
-        showModalCom: <SuccResult></SuccResult>,
-      })
+      setTimeout(() => {
+        console.log('  延时器 ： ',  )
+        this.setState({
+          modalContent: <SuccResult></SuccResult>,
+        })
+        
+      }, 2000)
+      
+    }
+  }
+  showUploadModal = (params, ) => {
+    console.log('    showUploadModal ： ', params,  )
+    //   const {item,  } = this.props// 
+    const {action,  } = params
+    
+    this.setState({
+      show: true,
+      action,
+      modalContent: <UploadFileCom onChange={this.onUploadChange} label={titleMap[action]}  ></UploadFileCom>,
+    })
+  }
+  downloadFile = (params, ) => {
+    console.log('    downloadFile ： ', params,  )
+    this.props.downloadFile()
+  }
+
+  menuClick = (params,  ) => {
+    const {key, clickFn, } = params
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+    if (clickFn) {
+      this[clickFn](params)
+      return  
     }
     
   }
+
+  
+  
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -120,42 +124,7 @@ class Contract extends PureComponent {
   };
 
 
-  showContractModal = (params, ) => {
-    const {action,  } = params
-    console.log('    showContractModal ： ', action, params, this.state, this.props,  );
-    this.setState({
-      action,
-      show: true,
-      title: this.state.titleMap[action],  
-      modalForm: PowerStationForm,
-    });
-  };
-
-  onPowerStationFormOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-
-    this.setState({
-      showPowerStationForm: false,
-    });
-  };
-
-  closePowerStationForm = e => {
-    console.log('    closePowerStationForm ： ', e);
-    this.setState({
-      showPowerStationForm: false,
-    });
-  };
+  
   showModal = e => {
     console.log('    showModal ： ', e);
     this.setState({
@@ -197,33 +166,69 @@ class Contract extends PureComponent {
     });
   };
 
-  componentDidMount() {
-    console.log(
-      ' Contract 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
-
-    // this.showContractModal();
-    // this.showModal();
-
+  renderModalContent = (e,  ) => {
+    console.log('    renderModalContent ： ', e, this.state, this.props,   )
+    const {modalContent,  } = this.state// 
+    if (modalContent) {
+      return modalContent
+    }
+    
+    // return null
   }
+
+  renderSearchForm(params,  ) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return <div className={'fsb '}  >
+      <SearchForm></SearchForm>
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
+        <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
+        <Button type="primary" onClick={() => this.props.exportData()} >导出{TITLE}数据</Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
+      </div>
+    </div>
+  }
+  
+  renderTable(params,  ) {
+    console.log(' renderTable ： ', params, this.state, this.props,  )
+
+    const tableProps = {
+      newTbData: this.state.newTbData,
+
+
+      onSelectChange: this.props.onSelectChange,
+      tdClick: this.props.showFormModal,
+      showDetail: this.props.showFormModal,
+      dataSource: this.props.dataList,
+      edit: this.props.showFormModal,
+      remove: this.props.onRemove,
+    }
+
+    return <PowerStationTable {...tableProps}   ></PowerStationTable>
+  }
+  
+  renderSmartModal(params,  ) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props,  )
+    const { show, title, action, titleMap,   } = this.state; //
+
+    return <SmartModal 
+      show={show} onOk={this.onOk} onCancel={this.onCancel}
+      action={action}
+      titleMap={titleMap}
+    >
+      {this.renderModalContent()}
+    </SmartModal>
+  }
+  
 
   render() {
     console.log(
-      ' %c Contract 组件 this.state, this.props ： ',
+      ' %c PowerStation 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
     );
-    const { show, showPowerStationForm, title, action,  } = this.state; //
-
-    const tableProps = {
-      edit: this.showContractModal,
-      remove: this.showContractModal,
-      tdClick: this.showContractModal,
-      newTbData: this.state.newTbData,
-    }
+    const { show, title, action, titleMap,   } = this.state; //
 
     const formComProps = {
       getCapture: this.showCapture,
@@ -231,21 +236,21 @@ class Contract extends PureComponent {
     }
 
 
+
     return (
-      <div className="contract">
+      <div className="PowerStation">
 
-        {this.renderForm}
+        {this.renderSearchForm()}
+
+        {this.renderTable()}
+        
+        {this.renderSmartModal()}
 
 
-        <PowerStationTable {...tableProps}  ></PowerStationTable>
 
-        {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}
-          title={title}
-        >
-          {this.renderModalContent()}
-        </SmartModal> */}
+        
 
-        <SmartFormModal
+        {/* <SmartFormModal
           // width={'900px'}
           formComProps={{...tableProps, ...formComProps, action, }} 
 
@@ -257,7 +262,7 @@ class Contract extends PureComponent {
           FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        ></SmartFormModal>
+        ></SmartFormModal> */}
 
 
       </div>
@@ -265,4 +270,4 @@ class Contract extends PureComponent {
   }
 }
 
-export default Contract;
+export default PowerStation;

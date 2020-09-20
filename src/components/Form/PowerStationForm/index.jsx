@@ -84,9 +84,9 @@ const PowerStationForm = props => {
 
   const editCol = [
     deciveRow,
-    <DeviceInfoTable key={'DeviceInfoTable'}  pagination={false} ></DeviceInfoTable>,
+    // <DeviceInfoTable key={'DeviceInfoTable'}  pagination={false} ></DeviceInfoTable>,
     watchRow,
-    <WatchInfoTable key={'WatchInfoTable'}  pagination={false} ></WatchInfoTable>,
+    // <WatchInfoTable key={'WatchInfoTable'}  pagination={false} ></WatchInfoTable>,
     {
       formType: 'rowText',
       itemProps: {

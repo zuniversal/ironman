@@ -3,15 +3,16 @@ import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove, 
 
 
 
-export const getList = p => noTipsGet('customer', p)
-export const getItem = p => noTipsGet(`customer/${p.d_id}`, p)
-export const addItem = p => post('customer', p)
-export const editItem = p => put(`customer/${p.d_id}`, p)
-export const removeItem = p => remove(`customer/${p.d_id}`, p)
+export const getList = p => noTipsGet('OMS/equipment/list', p)
+export const getItem = p => noTipsGet(`OMS/equipment/get`, p)
+export const addItem = p => post('OMS/equipment/create', p)
+export const editItem = p => put(`OMS/equipment/modify`, p)
+export const removeItem = p => remove(`OMS/equipment/delete`, p)
 
 
-export const syncOA = p => noTipsGet(`customer/oa`, p)
-export const getPortrait = p => noTipsGet(`customer/portrait/${p.d_id}`, p)
+export const syncOA = p => noTipsGet(`OMS/equipment/OA`, p)
+export const exportData = p => noTipsGet(`OMS/equipment/export`, p)
+export const uploadFile = p => noTipsGet(`OMS/equipment/upload`, p)
 
 
 

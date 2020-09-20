@@ -3,15 +3,15 @@ import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove, 
 
 
 
-export const getList = p => noTipsGet('customer', p)
-export const getItem = p => noTipsGet(`customer/${p.d_id}`, p)
-export const addItem = p => post('customer', p)
-export const editItem = p => put(`customer/${p.d_id}`, p)
-export const removeItem = p => remove(`customer/${p.d_id}`, p)
+export const getList = p => noTipsGet('powerstation', p)
+export const getItem = p => noTipsGet(`powerstation/${p.d_id}`, p)
+export const addItem = p => post('powerstation', p)
+export const editItem = p => put(`powerstation/${p.d_id}`, p)
+export const removeItem = p => remove(`powerstation/${p.d_id}`, p)
 
 
-export const syncOA = p => noTipsGet(`customer/oa`, p)
-export const getPortrait = p => noTipsGet(`customer/portrait/${p.d_id}`, p)
+export const syncOA = p => noTipsGet(`powerstation/oa`, p)
+export const createQRCode = p => noTipsGet(`powerstation/qrcode/${p.d_id}`, p)
 
 
 
