@@ -225,9 +225,13 @@ export default ({actions, modalForm, titleMap, isMountFetch, isCheckQuery,  }) =
     )
 
   }
-  isCheckQuery = (e,  ) => {
-    const {query,  } = this.props.location// 
-    console.log('    isCheckQuery ： ', e, this.state, this.props, query,   )
+  checkQuery = (e,  ) => {
+    const {location,  } = this.props// 
+    if (location) {
+      const {query,  } = location// 
+      console.log('    checkQuery ： ', e, this.state, this.props, query,   )
+
+    }
   }
   
   componentDidMount() {
@@ -241,7 +245,7 @@ export default ({actions, modalForm, titleMap, isMountFetch, isCheckQuery,  }) =
       this.getList()
     }
     if (!isCheckQuery) {
-      this.isCheckQuery()
+      this.checkQuery()
     }
   }
 
