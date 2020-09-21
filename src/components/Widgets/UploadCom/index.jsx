@@ -37,7 +37,7 @@ const UploadCom = (props, ) => {
   >
     <Upload name="logo" action="/upload.do" 
       // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`? 
-      fileList={[]}
+      // fileList={[]}
       listType="picture-card" className={'uploadCom'}  >
       <div>
         <PlusOutlined className={'icon'}  />

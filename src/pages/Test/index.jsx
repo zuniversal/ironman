@@ -146,7 +146,7 @@ class Test extends PureComponent {
 
 
         {/* <ProvinceForm></ProvinceForm> */}
-        {/* <Dnd></Dnd> */}
+        <Dnd></Dnd>
         {/* <CalendarCom></CalendarCom> */}
         {/* <DashMap></DashMap> */}
         

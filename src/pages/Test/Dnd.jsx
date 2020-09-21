@@ -13,7 +13,7 @@ const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
+  console.log(' result ： ', result,    )// 
   return result;
 };
 
@@ -30,6 +30,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
+
+  console.log(' source, destination, droppableSource, droppableDestination ： ', result, source, destination, droppableSource, droppableDestination,    )// 
 
   return result;
 };
@@ -55,9 +57,10 @@ const getListStyle = isDraggingOver => ({
 
 function QuoteApp() {
   const [state, setState] = useState([getItems(10), getItems(5, 10)]);
-
+  console.log(' QuoteApp ： ', state,    )// 
   function onDragEnd(result) {
     const { source, destination } = result;
+    console.log(' result ： ', result,    )// 
 
     // dropped outside the list
     if (!destination) {
@@ -65,6 +68,7 @@ function QuoteApp() {
     }
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
+    console.log(' dInd, sInd,   ： ', dInd, sInd,     )// 
 
     if (sInd === dInd) {
       const items = reorder(state[sInd], source.index, destination.index);
@@ -94,6 +98,7 @@ function QuoteApp() {
       <button
         type="button"
         onClick={() => {
+          console.log(' getItems(1) ： ', getItems(1),  )// 
           setState([...state, getItems(1)]);
         }}
       >
@@ -103,8 +108,9 @@ function QuoteApp() {
         <DragDropContext onDragEnd={onDragEnd}>
           {state.map((el, ind) => (
             <Droppable key={ind} droppableId={`${ind}`}>
-              {(provided, snapshot) => (
-                <div
+              {(provided, snapshot) => {
+                console.log(' provided, snapshot ： ', state, provided, snapshot,  )// 
+                return <div
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                   {...provided.droppableProps}
@@ -137,6 +143,7 @@ function QuoteApp() {
                               onClick={() => {
                                 const newState = [...state];
                                 newState[ind].splice(index, 1);
+                                console.log(' newState ： ', newState,    )// 
                                 setState(
                                   newState.filter(group => group.length)
                                 );
@@ -150,8 +157,8 @@ function QuoteApp() {
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </div>
-              )}
+                </div> 
+              }}
             </Droppable>
           ))}
         </DragDropContext>
@@ -159,7 +166,6 @@ function QuoteApp() {
     </div>
   );
 }
-
 
 export default QuoteApp;
 

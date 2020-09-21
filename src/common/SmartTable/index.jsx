@@ -31,15 +31,15 @@ const lengthMap = {
 const getLengthLimit = (text,  ) => {
   let textLength = text.length
   if (!isNaN(text)) {
-    console.log(' 数字 ： ',    )// 
+    // console.log(' 数字 ： ',    )
     // textLength = lengthMap.num
     return lengthMap.num
   } else if (/^[a-zA-Z\s]+$/.test(text)) {
-    console.log(' 字母 ： ',    )// 
+    // console.log(' 字母 ： ',    )
     // textLength = lengthMap.letter
     return lengthMap.letter
   } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
-    console.log(' 文字 ： ',    )// 
+    // console.log(' 文字 ： ',    )
     // textLength = lengthMap.word
     return lengthMap.word
   }
