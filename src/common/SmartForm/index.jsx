@@ -1,5 +1,5 @@
-import React, { useState, isValidElement,  } from 'react';
-import PropTypes from 'prop-types'
+import React, { useState, isValidElement } from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -17,10 +17,8 @@ import {
   InputNumber,
   DatePicker,
   Divider,
-
-
 } from 'antd';
-import moment from 'moment'
+import moment from 'moment';
 
 import {
   QuestionCircleOutlined,
@@ -38,9 +36,9 @@ import ModalForm from './ModalForm'; //
 import DateForn from './DateForn'; //
 
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
-import { mockFormData, renderSelectOp, renderRadioOp,   } from '@/utils'; //
+import { mockFormData, renderSelectOp, renderRadioOp } from '@/utils'; //
 
-const { TextArea } = Input
+const { TextArea } = Input;
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -49,13 +47,13 @@ const layoutObj = {
   // wrapperCol: { span: 14 },
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },// 
-    sm: { span: 7 },// 
+    sm: { span: 6 }, //
+    sm: { span: 7 }, //
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 18 },// 
-    sm: { span: 17 },// 
+    sm: { span: 18 }, //
+    sm: { span: 17 }, //
   },
 };
 const noLabelLayout = {
@@ -102,7 +100,6 @@ export const getLabel = (label, key) => {
   return labelMap[key];
 };
 
-
 const formItemLayout = {
   // labelCol: {
   //   xs: { span: 24 },
@@ -133,11 +130,6 @@ const formItemLayoutWithOutLabel = {
   // },
 };
 
-
-
-
-
-
 /* 
   抽象表单组件为通用型表单 封装带有相关默认通用操作 
   支持表单配置形式传入 与 原来的直接传入表单组件形式
@@ -145,7 +137,6 @@ const formItemLayoutWithOutLabel = {
   尚未开发完 根据项目持续完善 
 
 */
-
 
 const SmartForm = (props, state) => {
   const {
@@ -164,7 +155,6 @@ const SmartForm = (props, state) => {
     isMockData,
     action,
     noPh,
-
   } = props; //
 
   console.log(
@@ -176,28 +166,38 @@ const SmartForm = (props, state) => {
     config[config.length - 1],
   ); //
 
-  const [ initData, setInitData ] = useState(() => {
-    const dynamicFields = config.filter((v) => v.formType === 'Dynamic').map((v) => v.itemProps.key)
-    const obj = {}
-    dynamicFields.forEach((v) => obj[v] = ['',  ])
-    console.log(' 惰性初始state   ： ', obj, dynamicFields,  )
-    return obj
-  })
-    
+  const [initData, setInitData] = useState(() => {
+    const dynamicFields = config
+      .filter(v => v.formType === 'Dynamic')
+      .map(v => v.itemProps.key);
+    const obj = {};
+    dynamicFields.forEach(v => (obj[v] = ['']));
+    console.log(' 惰性初始state   ： ', obj, dynamicFields);
+    return obj;
+  });
 
   // const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
-  const initialValues = Object.keys(init).length ? init : (isMockData && action === 'edit') ? mockFormData(config, init, ) : initData
+  const initialValues = Object.keys(init).length
+    ? init
+    : isMockData && action === 'edit'
+    ? mockFormData(config, init)
+    : initData;
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(config, init, ) : {}
-  console.log(' SmartForm initialValues ： ', props, initialValues, action, action === 'edit',  )// 
+  console.log(
+    ' SmartForm initialValues ： ',
+    props,
+    initialValues,
+    action,
+    action === 'edit',
+  ); //
   // const initialValues = init ? init : {}
   // const initialValues = { field2: 'zyb',    }
 
-  // const [form] = Form.useForm(initialValues, );// 不行 
+  // const [form] = Form.useForm(initialValues, );// 不行
   const [form] = Form.useForm();
   const formControl = propsForm ? propsForm : form; //
   // const formControl = form; //
 
-  
   // setTimeout(() => {
   //   console.log('  延时器 ： ',  )
   //   form
@@ -211,9 +211,6 @@ const SmartForm = (props, state) => {
   //     console.log('Validate Failed:', info);
   //   });
   // }, 2000)
-  
-
-
 
   const onFinish = (values, rest) => {
     console.log(
@@ -224,7 +221,7 @@ const SmartForm = (props, state) => {
       props,
       onSubmit,
     );
-    
+
     // onSubmit && onSubmit({ values, form });
   };
 
@@ -293,7 +290,7 @@ const SmartForm = (props, state) => {
     console.log(' onFormLayoutChange value, rest ： ', value, rest); //
     const { layout, size } = value;
 
-    onFieldChange && onFieldChange({ value,  });
+    onFieldChange && onFieldChange({ value });
 
     // setFormLayout(layout);
     // setComponentSize(size);
@@ -362,29 +359,38 @@ const SmartForm = (props, state) => {
       extra,
       type,
       noRule,
-      radioData = [], 
-      selectData = [], 
-      opType, 
+      radioData = [],
+      selectData = [],
+      opType,
       haveDivider,
-       
     } = items;
-    
+
     // if (typeof type === 'function') {
     if (isValidElement(items)) {
       return items;
     }
 
-    const { label,  } = itemProps;
-    const itemPropsCls = itemProps.className
-
+    const { label } = itemProps;
+    const itemPropsCls = itemProps.className;
 
     const formItemCommonProps = {
-      colon: false,  
+      colon: false,
       ...itemProps,
-      
+    };
+    if (
+      formType === 'Radio' ||
+      formType === 'Switch' ||
+      formType === 'Checkbox'
+    ) {
+      console.log(
+        ' formItemCommonPropsformItemCommonPropsformItemCommonProps ： ',
+        formType,
+      ); //
+      formItemCommonProps.valuePropName = `checked`;
     }
+
     // if (formType === 'Dynamic') {
-    //   console.log(' formTypeformType ： ', formItemCommonProps, formType, formType === 'Dynamic'    )// 
+    //   console.log(' formTypeformType ： ', formItemCommonProps, formType, formType === 'Dynamic'    )//
     //   formItemCommonProps.className = `dynamicRow ${formItemCommonProps.className}  `
     // }
 
@@ -398,11 +404,10 @@ const SmartForm = (props, state) => {
       rules: noRule ? undefined : rules({ items, label }),
     };
 
-
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
 
-    const placeholder = noPh ? '' : formLabel//  
+    const placeholder = noPh ? '' : formLabel; //
     // console.log('  placeholder ：', placeholder,  )
 
     const realComProps = {
@@ -417,34 +422,38 @@ const SmartForm = (props, state) => {
       placeholder: placeholder,
       name: formItemProps.key,
       init: initialValues[comProps?.key],
-      
     };
-    // console.log(' realComProps11 ： ', realComProps, itemProps, formItemProps, comProps,    )// 
+    console.log(
+      ' realComProps11 ： ',
+      realComProps,
+      itemProps,
+      formItemProps,
+      comProps,
+      initialValues,
+    ); //
 
-
-
-    
-    const renderRadioOptions = renderRadioOp(radioData, opType, )
-    const renderSelectOptions = renderSelectOp(selectData, opType, )
-
+    // const renderRadioOptions = renderRadioOp(radioData, opType, )
+    // const renderSelectOptions = renderSelectOp(selectData, opType, )
 
     const formItemMap = {
       rowText: label,
-      Divider: <Divider  />,
+      Divider: <Divider />,
       Input: <Input allowClear {...realComProps} />,
-      TextArea: <TextArea
-        autoSize={{ minRows: 3, maxRows: 5 }}
-        allowClear {...realComProps}
-      />,
-      Select: <Select allowClear {...realComProps}
-        filterOption
-        showSearch
-      >
-        {renderSelectOptions}
-        {/* <Option value="male">male</Option>
+      TextArea: (
+        <TextArea
+          autoSize={{ minRows: 3, maxRows: 5 }}
+          allowClear
+          {...realComProps}
+        />
+      ),
+      Select: (
+        <Select allowClear {...realComProps} filterOption showSearch>
+          {renderSelectOp(selectData, opType)}
+          {/* <Option value="male">male</Option>
         <Option value="female">female</Option>
         <Option value="other">other</Option> */}
-      </Select>,
+        </Select>
+      ),
       Password: <Input.Password {...realComProps} />,
       Cascader: <Cascader {...realComProps} />,
       AutoComplete: (
@@ -453,14 +462,16 @@ const SmartForm = (props, state) => {
         </AutoComplete>
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
-      CheckboxGroup: <Checkbox.Group {...realComProps}  />,
-      Radio:  <Radio.Group>
-        {/* <Radio value="item">item</Radio> */}
-        {renderRadioOptions}
-      </Radio.Group>,
+      CheckboxGroup: <Checkbox.Group {...realComProps} />,
+      Radio: (
+        <Radio.Group>
+          {/* <Radio value="item">item</Radio> */}
+          {renderRadioOp(radioData, opType)}
+        </Radio.Group>
+      ),
       DatePicker: <DatePicker {...realComProps} />,
 
-      Dynamic: <DynamicForm {...dynamicComProps}   ></DynamicForm>,
+      Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
     };
 
     const formItemCom = formItemMap[formType];
@@ -472,11 +483,7 @@ const SmartForm = (props, state) => {
 
     if (formType === 'Divider') {
       return (
-        <Form.Item
-          labelAlign={'left'}
-          {...rowLayout}
-          {...formItemNoRuleProps}
-        >
+        <Form.Item labelAlign={'left'} {...rowLayout} {...formItemNoRuleProps}>
           <Divider />
         </Form.Item>
       );
@@ -529,54 +536,51 @@ const SmartForm = (props, state) => {
       return colForm;
     }
 
-    const normalItem = <Form.Item
-      // name={key}
-      // label={label}
-      // rules={rules}
-      // valuePropName="checked"
-      // {...formItemProps}
-      // className={`formItems ${className}  `}
-
-      {...formItemProps}
-      // {...(formType === 'Dynamic' ? formItemNoRuleProps : formItemProps)}
-      // {...(formType === 'Dynamic' ? rowLayout : {})}
-    >
-      {formItemCom} 
-      {/* 注意 不能有别的内容 否则初始值设置无效  */}
-      {/* {extra} */}
-    </Form.Item>
-
-      
-    if (extra) {
-      // console.log(' extra ： ', extra, formItemProps,  )// 
-      const {label, key, rules, ...rest } = formItemProps
-      
-      return <Form.Item
-        // key= "field19"
-        // label= "field19"
-
-        key={key}
-        label={label}
+    const normalItem = (
+      <Form.Item
+        // name={key}
+        // label={label}
         // rules={rules}
-        className={'extraRow'} 
+        // valuePropName="checked"
+        // {...formItemProps}
+        // className={`formItems ${className}  `}
+
+        {...formItemProps}
+        // {...(formType === 'Dynamic' ? formItemNoRuleProps : formItemProps)}
+        // {...(formType === 'Dynamic' ? rowLayout : {})}
       >
+        {formItemCom}
+        {/* 注意 不能有别的内容 否则初始值设置无效  */}
+        {/* {extra} */}
+      </Form.Item>
+    );
+
+    if (extra) {
+      // console.log(' extra ： ', extra, formItemProps,  )//
+      const { label, key, rules, ...rest } = formItemProps;
+
+      return (
         <Form.Item
+          // key= "field19"
+          // label= "field19"
+
+          key={key}
+          label={label}
+          // rules={rules}
+          className={'extraRow'}
+        >
+          <Form.Item
             // name= "field19"
             {...rest}
             rules={rules}
-          
           >
-          {formItemCom} 
-          {/* {extra} */}
+            {formItemCom}
+            {/* {extra} */}
+          </Form.Item>
+          <Form.Item>{extra}</Form.Item>
         </Form.Item>
-        <Form.Item>
-          {extra} 
-        </Form.Item>
-      </Form.Item>
-
+      );
     }
-
-    
 
     // console.log(' itemProps ： ', formItemCom, formType, items, itemProps, comProps,   )//
 
@@ -587,13 +591,9 @@ const SmartForm = (props, state) => {
     //   valuePropName: "checked"
     // }
 
-
-    // console.log(' formItemProps ： ', formItemProps,  )// 
-    return (
-      normalItem
-    );
+    // console.log(' formItemProps ： ', formItemProps,  )//
+    return normalItem;
   });
-
 
   // console.log(' formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
   return (
@@ -685,20 +685,17 @@ const SmartForm = (props, state) => {
   );
 };
 
-
 SmartForm.defaultProps = {
   className: '',
-  config: [],// 表单配置项
-  flexRow: 0,// 弹性布局值
-  isRowBtn: false,// 是否显示横向表单按钮
-  init: {},// 表单初始值
-  // formProps: {},  
-  isMockData: false,  
-  isMockData: true,  // 是否使用 mock 数据
-  action: '',  // 表单的操作行为
-  noPh: false, // 是否显示表单项的 placeholder 文本 
-
-  
+  config: [], // 表单配置项
+  flexRow: 0, // 弹性布局值
+  isRowBtn: false, // 是否显示横向表单按钮
+  init: {}, // 表单初始值
+  // formProps: {},
+  isMockData: false,
+  isMockData: true, // 是否使用 mock 数据
+  action: '', // 表单的操作行为
+  noPh: false, // 是否显示表单项的 placeholder 文本
 };
 
 SmartForm.propTypes = {
@@ -711,7 +708,6 @@ SmartForm.propTypes = {
   isMockData: PropTypes.bool,
   noPh: PropTypes.bool,
   action: PropTypes.string,
-
-}
+};
 
 export default SmartForm;

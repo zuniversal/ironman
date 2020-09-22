@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  TabletOutlined,
-  ScheduleFilled,
-
-
-} from '@ant-design/icons';
+import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
 
 export default {
   route: {
@@ -29,7 +24,7 @@ export default {
       },
 
       {
-        path: '/om/userCenter',
+        path: '/cs/userCenter',
         name: '个人中心',
         icon: <ScheduleFilled />,
         component: '../pages/UserCenter',
@@ -60,11 +55,6 @@ export default {
           },
         ],
       },
-
-      
-
-
-
 
       {
         path: '/om/contract',
@@ -103,13 +93,7 @@ export default {
         component: '../pages/om/ClientReport',
       },
 
-
-
-      
-
-
-
-      { 
+      {
         path: '/sm/userManage',
         name: '用户管理',
         icon: <ScheduleFilled />,
@@ -152,15 +136,6 @@ export default {
         component: '../pages/sm/OperateRecord',
       },
 
-
-
-
-      
-
-
-
-
-      
       {
         path: '/om/monitorManage',
         name: '监测管理',
@@ -238,7 +213,6 @@ export default {
         ],
       },
 
-
       {
         path: '/kpi',
         name: '绩效管理',
@@ -260,8 +234,6 @@ export default {
         ],
       },
 
-
-
       // {
       //   path: '/waiter',
       //   name: '客服管理',
@@ -282,7 +254,6 @@ export default {
       //     },
       //   ],
       // },
-
     ],
   },
   location: {

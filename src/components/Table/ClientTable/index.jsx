@@ -25,21 +25,22 @@ import {
 } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
-import { HOUSENO,  } from '@/constants'// 
+import { HOUSENO } from '@/constants'; //
 
-
-const linkUrlFn = (params = ['code', 'id', ], path = '',  ) => (text, record, index) => {
-  let linkUrl = path
-  let res = params.forEach((key) => linkUrl += `${key}=${record[key] != undefined ? record[key] : ''}&`)
-  // console.log(' linkUrl ： ', linkUrl,  )// 
-  return linkUrl 
-}
-
-
+const linkUrlFn = (params = [], path = '') => (text, record, index) => {
+  let linkUrl = path;
+  // let res = params.forEach((key) => linkUrl += `${key}=${record[key] != undefined ? record[key] : ''}&`)
+  let paramsStr = params
+    .map(key => `${key}=${record[key] != undefined ? record[key] : ''}`)
+    .join('&');
+  linkUrl += paramsStr;
+  console.log(' linkUrl ： ', linkUrl, paramsStr); //
+  return linkUrl;
+};
 
 const ClientTable = props => {
   console.log(' ClientTable ： ', props); //
-  const { tdClick,  } = props; //
+  const { tdClick } = props; //
 
   const columns = [
     {
@@ -47,11 +48,11 @@ const ClientTable = props => {
       dataIndex: 'id',
       // link: true,
       // render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
-      linkUrlFn: linkUrlFn(['code', 'id', ], HOUSENO,  ),
+      linkUrlFn: linkUrlFn(['code', 'id', 'ids'], HOUSENO),
     },
     {
       noFilter: true,
-      detail: true,  
+      detail: true,
       title: '客户名称',
       dataIndex: 'name',
     },
@@ -73,20 +74,20 @@ const ClientTable = props => {
       dataIndex: 'asset',
     },
     {
-      detail: true,  
+      detail: true,
       title: '管理员',
     },
     {
       title: '户号',
       dataIndex: 'code',
-      // linkUrl: '/om/houseNo',  
+      // linkUrl: '/om/houseNo',
       // linkUrlFn: (text, record, index) => {
       //   let linkUrl = HOUSENO
       //   let res = ['code', 'id', ].forEach((key) => linkUrl += `${key}=${record[key]}`)
-      //   console.log(' linkUrl ： ', linkUrl,  )// 
-      //   return linkUrl 
+      //   console.log(' linkUrl ： ', linkUrl,  )//
+      //   return linkUrl
       // },
-      linkUrlFn: linkUrlFn(['code', 'id', ], HOUSENO,  ),
+      linkUrlFn: linkUrlFn(['code', 'id'], HOUSENO),
     },
     {
       title: '客户地址',

@@ -26,15 +26,9 @@ export default [
   },
   {
     path: '/om/clientReport',
-    component: '@/pages/om//ClientReport',
+    component: '@/pages/om/ClientReport',
     title: '客户报告',
   },
-  {
-    path: '/om/userCenter',
-    component: '@/pages/UserCenter',
-    title: '个人中心',
-  },
-
 
   {
     path: '/om/shifts',
@@ -57,7 +51,6 @@ export default [
     title: '交接班',
   },
 
-
   {
     path: '/om/monitorManage',
     component: '@/pages/om/MonitorManage',
@@ -69,7 +62,6 @@ export default [
     title: '物料管理',
   },
 
-
   {
     path: '/om/missions',
     component: '@/pages/om/Missions',
@@ -80,7 +72,6 @@ export default [
     component: '@/pages/om/WorkOrder',
     title: '工单管理',
   },
-
 
   {
     path: '/om/inspectPlan',
@@ -103,8 +94,6 @@ export default [
     title: '缺陷管理',
   },
 
-
-
   {
     path: '/om/alarmTemplate',
     component: '@/pages/om/AlarmTemplate',
@@ -115,12 +104,4 @@ export default [
     component: '@/pages/om/AlarmRecord',
     title: '告警记录',
   },
-
-
-
-
-
-
-
 ];
-

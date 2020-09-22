@@ -1,19 +1,26 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // fake data generator
 const getItems = (count, offset = 0) =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
     id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`
+    content: `item ${k + offset}`,
   }));
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-  console.log(' result ： ', result,    )// 
+  console.log(
+    ' list, startIndex, endIndex ： ',
+    list,
+    startIndex,
+    endIndex,
+    removed,
+    result,
+  ); //
   return result;
 };
 
@@ -30,37 +37,42 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
-
-  console.log(' source, destination, droppableSource, droppableDestination ： ', result, source, destination, droppableSource, droppableDestination,    )// 
-
+  console.log(
+    ' source, destination, droppableSource, droppableDestination ： ',
+    source,
+    destination,
+    droppableSource,
+    droppableDestination,
+    removed,
+    result,
+  ); //
   return result;
 };
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: "none",
+  userSelect: 'none',
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? 'lightgreen' : 'grey',
 
   // styles we need to apply on draggables
-  ...draggableStyle
+  ...draggableStyle,
 });
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250
+  width: 250,
 });
 
 function QuoteApp() {
   const [state, setState] = useState([getItems(10), getItems(5, 10)]);
-  console.log(' QuoteApp ： ', state,    )// 
+  console.log(' QuoteApp state ： ', state); //
   function onDragEnd(result) {
     const { source, destination } = result;
-    console.log(' result ： ', result,    )// 
 
     // dropped outside the list
     if (!destination) {
@@ -68,19 +80,18 @@ function QuoteApp() {
     }
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
-    console.log(' dInd, sInd,   ： ', dInd, sInd,     )// 
-
     if (sInd === dInd) {
       const items = reorder(state[sInd], source.index, destination.index);
       const newState = [...state];
       newState[sInd] = items;
+      console.log(' result 111 ： ', result, sInd, dInd, newState); //
       setState(newState);
     } else {
       const result = move(state[sInd], state[dInd], source, destination);
       const newState = [...state];
       newState[sInd] = result[sInd];
       newState[dInd] = result[dInd];
-
+      console.log(' result 22 ： ', result, sInd, dInd, newState); //
       setState(newState.filter(group => group.length));
     }
   }
@@ -98,19 +109,17 @@ function QuoteApp() {
       <button
         type="button"
         onClick={() => {
-          console.log(' getItems(1) ： ', getItems(1),  )// 
           setState([...state, getItems(1)]);
         }}
       >
         Add new item
       </button>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: 'flex' }}>
         <DragDropContext onDragEnd={onDragEnd}>
           {state.map((el, ind) => (
             <Droppable key={ind} droppableId={`${ind}`}>
-              {(provided, snapshot) => {
-                console.log(' provided, snapshot ： ', state, provided, snapshot,  )// 
-                return <div
+              {(provided, snapshot) => (
+                <div
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                   {...provided.droppableProps}
@@ -128,13 +137,13 @@ function QuoteApp() {
                           {...provided.dragHandleProps}
                           style={getItemStyle(
                             snapshot.isDragging,
-                            provided.draggableProps.style
+                            provided.draggableProps.style,
                           )}
                         >
                           <div
                             style={{
-                              display: "flex",
-                              justifyContent: "space-around"
+                              display: 'flex',
+                              justifyContent: 'space-around',
                             }}
                           >
                             {item.content}
@@ -143,9 +152,8 @@ function QuoteApp() {
                               onClick={() => {
                                 const newState = [...state];
                                 newState[ind].splice(index, 1);
-                                console.log(' newState ： ', newState,    )// 
                                 setState(
-                                  newState.filter(group => group.length)
+                                  newState.filter(group => group.length),
                                 );
                               }}
                             >
@@ -157,8 +165,8 @@ function QuoteApp() {
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                </div> 
-              }}
+                </div>
+              )}
             </Droppable>
           ))}
         </DragDropContext>
@@ -168,5 +176,3 @@ function QuoteApp() {
 }
 
 export default QuoteApp;
-
-

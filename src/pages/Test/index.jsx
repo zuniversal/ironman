@@ -11,21 +11,18 @@ import './style.less';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
-
-import { DragDropContext, Droppable, Draggable,   } from 'react-beautiful-dnd';
-import Dnd from './Dnd'// 
-import CalendarCom from './CalendarCom'// 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Dnd from './Dnd'; //
+import CalendarCom from './CalendarCom'; //
 // import SmartHOC from '@/common/SmartHOC';
 import DashMap from '@/components/Echarts/DashMap';
-import CURD from './CURD'// 
+// import CURD from './CURD'//
 import ProvinceForm from '@/components/Form/ProvinceForm'; //
 import { connect } from 'umi';
 
+const mapStateToProps = ({ client }) => client;
 
-const mapStateToProps = ({ client, }) => client;
-
-
-@connect(mapStateToProps, )
+@connect(mapStateToProps)
 // @SmartHOC()
 class Test extends PureComponent {
   constructor(props) {
@@ -33,15 +30,14 @@ class Test extends PureComponent {
     this.state = {
       show: false,
 
-      action: '',  
-      title: '',  
-      contractTitle: '',  
+      action: '',
+      title: '',
+      contractTitle: '',
       titleMap: {
         add: '新增客户',
         edit: '编辑客户',
         detail: '客户详情',
       },
-
     };
   }
 
@@ -49,8 +45,15 @@ class Test extends PureComponent {
     <div className={'btnWrapper'}>
       {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
       {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>同步OA</Button>
-      <Button type="primary "onClick={() => this.showContractModal({action: 'add',  })}  >新增合同</Button>
+      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
+        同步OA
+      </Button>
+      <Button
+        type="primary "
+        onClick={() => this.showContractModal({ action: 'add' })}
+      >
+        新增合同
+      </Button>
       <Button type="primary">导出客户数据</Button>
       <Button type="primary">删除</Button>
     </div>
@@ -67,13 +70,19 @@ class Test extends PureComponent {
     console.log(' renderTestTable ： ', params);
   }
 
-  showContractModal = (params, ) => {
-    const {action,  } = params
-    console.log('    showContractModal ： ', action, params, this.state, this.props,  );
+  showContractModal = params => {
+    const { action } = params;
+    console.log(
+      '    showContractModal ： ',
+      action,
+      params,
+      this.state,
+      this.props,
+    );
     this.setState({
       action,
       show: true,
-      title: this.state.titleMap[action],  
+      title: this.state.titleMap[action],
     });
   };
   showModal = e => {
@@ -116,11 +125,7 @@ class Test extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' Test 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
+    console.log(' Test 组件componentDidMount挂载 ： ', this.state, this.props); //
     // this.showModal();
   }
 
@@ -131,31 +136,22 @@ class Test extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showContractForm, title,   } = this.state; //
+    const { show, showContractForm, title } = this.state; //
 
     const tableProps = {
       edit: this.showContractModal,
       remove: this.showContractModal,
       tdClick: this.showContractModal,
-    }
-
-
+    };
 
     return (
       <div className="Test   ">
-
-
         {/* <ProvinceForm></ProvinceForm> */}
-        <Dnd></Dnd>
+        {/* <Dnd></Dnd> */}
         {/* <CalendarCom></CalendarCom> */}
         {/* <DashMap></DashMap> */}
-        
 
-        <CURD></CURD>
-
-
-
-
+        {/* <CURD></CURD> */}
       </div>
     );
   }

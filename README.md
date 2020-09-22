@@ -20,7 +20,7 @@ $ npm start
 
 ```
 
-  ├─common - 通用型组件 （需要根据项目进一步编写完善）
+  ├─common - 通用型组件 （需要根据项目进一步编写完善 尚未完结 ）
     ├─SearchForm 
     ├─SmartEcharts 
     ├─SmartForm 
@@ -34,10 +34,10 @@ $ npm start
   ├─layouts - 布局入口组件
   ├─locales - 国际化
   ├─models - 状态管理
-  ├─pages - 页面容器
+  ├─pages - 页面容器 - 处理管控逻辑 组装组件
   ├─services - 请求服务
   ├─static - 静态资源
-  ├─tamp - 临时存放 后续加入的文件目录 
+  ├─tamp - 不需要查看的目录 临时存放 (后续加入的文件目录) 
   └─utils - 工具方法
 
 ```
