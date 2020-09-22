@@ -58,11 +58,11 @@ const option = (radar = [], data = []) => {
       },
       itemStyle: {
         normal: {
-          areaColor: '#058bd2',
+          areaColor: '#108ee9',
           borderColor: '#111',
         },
         emphasis: {
-          areaColor: '#1e67b2',
+          areaColor: '#f50',
         },
       },
     },

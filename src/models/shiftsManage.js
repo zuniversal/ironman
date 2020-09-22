@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
-import * as services from '@/services/client';
+import * as services from '@/services/shiftsManage';
 
-const namespace = 'userCenter';
+const namespace = 'shiftsManage';
 const { createAction, createCRUD } = init(namespace);
 
 const otherActions = ['syncOAAsync', 'getPortraitAsync'];

@@ -155,6 +155,7 @@ const SmartForm = (props, state) => {
     isMockData,
     action,
     noPh,
+    formLayouts,
   } = props; //
 
   console.log(
@@ -282,7 +283,7 @@ const SmartForm = (props, state) => {
   //   setFormLayout(layout);
   // };
 
-  const formItemLayout = formLayout === 'horizontal' ? layoutObj : null;
+  const formItemLayout = formLayout === 'horizontal' ? formLayouts : null;
 
   const [componentSize, setComponentSize] = useState('default');
 
@@ -386,7 +387,7 @@ const SmartForm = (props, state) => {
         ' formItemCommonPropsformItemCommonPropsformItemCommonProps ： ',
         formType,
       ); //
-      formItemCommonProps.valuePropName = `checked`;
+      // formItemCommonProps.valuePropName = `checked`;
     }
 
     // if (formType === 'Dynamic') {
@@ -463,12 +464,17 @@ const SmartForm = (props, state) => {
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
       CheckboxGroup: <Checkbox.Group {...realComProps} />,
-      Radio: (
-        <Radio.Group>
-          {/* <Radio value="item">item</Radio> */}
-          {renderRadioOp(radioData, opType)}
-        </Radio.Group>
-      ),
+      Radio:
+        // <Radio.Group>
+        //   {/* <Radio value="item">item</Radio> */}
+        //   {renderRadioOp(radioData, opType)}
+        // </Radio.Group>
+        renderRadioOp(radioData, opType),
+        // <Radio.Group>
+        //   <Radio value="small">Small</Radio>
+        //   <Radio value="yes">yes</Radio>
+        //   <Radio value="large">Large</Radio>
+        // </Radio.Group>
       DatePicker: <DatePicker {...realComProps} />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
@@ -591,7 +597,7 @@ const SmartForm = (props, state) => {
     //   valuePropName: "checked"
     // }
 
-    // console.log(' formItemProps ： ', formItemProps,  )//
+    console.log(' formItemProps ： ', formItemProps, normalItem); //
     return normalItem;
   });
 
@@ -606,7 +612,10 @@ const SmartForm = (props, state) => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       // initialValues={{}}
-      initialValues={initialValues}
+      // initialValues={initialValues}
+      initialValues={{
+        ...initialValues,
+      }}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
       scrollToFirstError
@@ -696,6 +705,7 @@ SmartForm.defaultProps = {
   isMockData: true, // 是否使用 mock 数据
   action: '', // 表单的操作行为
   noPh: false, // 是否显示表单项的 placeholder 文本
+  formLayouts: layoutObj,
 };
 
 SmartForm.propTypes = {
@@ -708,6 +718,7 @@ SmartForm.propTypes = {
   isMockData: PropTypes.bool,
   noPh: PropTypes.bool,
   action: PropTypes.string,
+  formLayouts: PropTypes.object,
 };
 
 export default SmartForm;

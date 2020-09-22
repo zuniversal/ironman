@@ -26,17 +26,7 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //
-
-const linkUrlFn = (params = [], path = '') => (text, record, index) => {
-  let linkUrl = path;
-  // let res = params.forEach((key) => linkUrl += `${key}=${record[key] != undefined ? record[key] : ''}&`)
-  let paramsStr = params
-    .map(key => `${key}=${record[key] != undefined ? record[key] : ''}`)
-    .join('&');
-  linkUrl += paramsStr;
-  console.log(' linkUrl ： ', linkUrl, paramsStr); //
-  return linkUrl;
-};
+import { linkUrlFn } from '@/utils'; //
 
 const ClientTable = props => {
   console.log(' ClientTable ： ', props); //

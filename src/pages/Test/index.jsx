@@ -146,11 +146,11 @@ class Test extends PureComponent {
 
     return (
       <div className="Test   ">
+        test
         {/* <ProvinceForm></ProvinceForm> */}
         {/* <Dnd></Dnd> */}
         {/* <CalendarCom></CalendarCom> */}
-        {/* <DashMap></DashMap> */}
-
+        <DashMap></DashMap>
         {/* <CURD></CURD> */}
       </div>
     );

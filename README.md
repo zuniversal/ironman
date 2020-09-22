@@ -20,21 +20,25 @@ $ npm start
 
 ```
 
-  ├─common - 通用型组件 （需要根据项目进一步编写完善 尚未完结 ）
-    ├─SearchForm 
-    ├─SmartEcharts 
-    ├─SmartForm 
+  ├─common - 通用型公共组件 （需要根据项目进一步编写完善 尚未完结 ）
+    ├─SearchForm 搜索组件
+    ├─SmartEcharts echarts图标
+    ├─SmartForm 抽象表单
     ├─SmartFormModal 
-    ├─SmartHOC 
-    ├─SmartModal 
-    └─SmartTable 
+    ├─SmartHOC 可选择性高阶组件
+    ├─SmartModal 模态框
+    └─SmartTable 表格组件
+
   ├─components - 基础组件
-  ├─configs - 公共配置
-  ├─constants - 通用常量
-  ├─layouts - 布局入口组件
+    - 主要包括各页面的基本 表格 表单 等组件 及 其它的Widgets小部件 目录 
+      命名方式： 页面 + 功能（如 搜索型 Search ）+ Form/Table 等
+
+  ├─configs - 项目公共配置
+  ├─constants - 项目通用常量
+  ├─layouts - 布局入口容器组件 
   ├─locales - 国际化
   ├─models - 状态管理
-  ├─pages - 页面容器 - 处理管控逻辑 组装组件
+  ├─pages - 页面容器 - 处理管控页面逻辑 数据 组装组件
   ├─services - 请求服务
   ├─static - 静态资源
   ├─tamp - 不需要查看的目录 临时存放 (后续加入的文件目录) 

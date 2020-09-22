@@ -80,7 +80,7 @@ export const ActionCom = params => {
     noDefault,
     props,
   } = params;
-  // console.log(' ActionCom props ： ', props,  )//
+  console.log(' ActionCom props ： ', props); //
   return (
     <span>
       {!props.noDefault && (
@@ -90,7 +90,7 @@ export const ActionCom = params => {
           <a onClick={() => remove({ record })}>删除</a>
         </>
       )}
-      {(!props.noDefault || !props.noQRCode) && (
+      {!props.noDefault && props.isQRCode && (
         <a onClick={() => showQRCode({ action: 'QRCode', record })}>
           生成二维码
         </a>
@@ -386,35 +386,8 @@ class SmartTable extends PureComponent {
     });
   };
 
-  showQRCode = params => {
-    console.log('    showQRCode ： ', params);
-    this.setState({
-      show: true,
-      modalContent: <QRCodeCom value={params.record}></QRCodeCom>,
-    });
-  };
-  onOk = e => {
-    console.log('    onOk ： ', e);
-    this.setState({
-      show: false,
-      modalContent: null,
-    });
-  };
-  onCancel = e => {
-    console.log('    onCancel ： ', e);
-    this.setState({
-      show: false,
-      modalContent: null,
-    });
-  };
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e);
-    const { modalContent } = this.state;
-    return modalContent;
-  };
-
   actionCol = e => {
-    console.log('    actionCol ： ', e);
+    console.log('    actionCol ： ', e, this.state, this.props);
     const { edit, remove, extra, actionConfig } = this.props;
 
     // 通用操作列
@@ -474,6 +447,49 @@ class SmartTable extends PureComponent {
     );
   }
 
+  showQRCode = params => {
+    console.log('    showQRCode ： ', params);
+    this.setState({
+      show: true,
+      modalContent: <QRCodeCom value={params.record}></QRCodeCom>,
+    });
+  };
+  onOk = e => {
+    console.log('    onOk ： ', e);
+    this.setState({
+      show: false,
+      modalContent: null,
+    });
+  };
+  onCancel = e => {
+    console.log('    onCancel ： ', e);
+    this.setState({
+      show: false,
+      modalContent: null,
+    });
+  };
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e);
+    const { modalContent } = this.state;
+    return modalContent;
+  };
+  renderQRCodeModal(params) {
+    console.log(' renderQRCodeModal ： ', params);
+    const { title, show } = this.state; //
+    return (
+      <SmartModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        title={title}
+        footer={null}
+        className={`qrCodeModal `}
+      >
+        {this.renderModalContent()}
+      </SmartModal>
+    );
+  }
+
   render() {
     const {
       pagination,
@@ -481,8 +497,6 @@ class SmartTable extends PureComponent {
       searchKey,
       selectionType,
       isShowResultModal,
-      title,
-      show,
       selectedRowKeys,
     } = this.state;
     const {
@@ -560,16 +574,7 @@ class SmartTable extends PureComponent {
 
         {this.renderRemoveModal()}
 
-        <SmartModal
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          title={title}
-          footer={null}
-          className={`qrCodeModal `}
-        >
-          {this.renderModalContent()}
-        </SmartModal>
+        {this.renderQRCodeModal()}
       </div>
     );
   }
@@ -592,7 +597,7 @@ SmartTable.defaultProps = {
   extra: null,
   noActionCol: false,
   noDefault: false,
-  noQRCode: false,
+  isQRCode: false,
 };
 
 SmartTable.propTypes = {
@@ -607,7 +612,7 @@ SmartTable.propTypes = {
   actionConfig: PropTypes.object,
   noActionCol: PropTypes.bool,
   noDefault: PropTypes.bool,
-  noQRCode: PropTypes.bool,
+  isQRCode: PropTypes.bool,
 };
 
 export default SmartTable; //

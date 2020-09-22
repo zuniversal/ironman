@@ -219,10 +219,46 @@ export default ({
 
       dispatch(actions.getListAsync({}));
     };
-    isCheckQuery = e => {
-      const { query } = this.props.location; //
-      console.log('    isCheckQuery ： ', e, this.state, this.props, query);
+    checkQuery = e => {
+      const { location } = this.props; //
+      if (location) {
+        const { query } = location;
+        console.log('    checkQuery ： ', e, this.state, this.props, query);
+      }
     };
+
+    renderSmartFormModal(params) {
+      console.log(' renderSmartFormModal ： ', params);
+      const { action, isShow } = this.state; //
+
+      const formComProps = {
+        action,
+        // init: this.state.editData,
+      };
+
+      return (
+        <SmartFormModal
+          // width={'900px'}
+
+          show={isShow}
+          onOk={this.onOk}
+          onCancel={this.onCancel}
+          action={action}
+          titleMap={titleMap}
+          // FormCom={<FormCom showRelativeForm={this.showRelativeForm}  ></FormCom>}
+
+          formComProps={formComProps}
+          // FormCom={this.renderModalForm()}
+          FormCom={modalForm}
+          top={this.renderModalTop()}
+
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        >
+          {this.renderModalContent()}
+        </SmartFormModal>
+      );
+    }
 
     componentDidMount() {
       console.log(
@@ -235,26 +271,18 @@ export default ({
         this.getList();
       }
       if (!isCheckQuery) {
-        this.isCheckQuery();
+        this.checkQuery();
       }
     }
 
     render() {
       // console.log(' SmartHoc 组件 this.state, this.props ：', config, this.state, this.props, )
       console.log(
-        'SmartHoc 组件 this.state, this.props ：',
+        'SmartHoc 组件 this.state, this.props111 ：',
         this.state,
         this.props,
       );
 
-      const { action } = this.state; //
-
-      const formComProps = {
-        action,
-        // init: this.state.editData,
-      };
-
-      const { isShow } = this.state;
       return (
         <div className="smartHocWrapper">
           <Com
@@ -271,26 +299,7 @@ export default ({
             setTopCom={this.setTopCom}
           />
 
-          <SmartFormModal
-            // width={'900px'}
-
-            show={isShow}
-            onOk={this.onOk}
-            onCancel={this.onCancel}
-            action={action}
-            titleMap={titleMap}
-            // FormCom={<FormCom showRelativeForm={this.showRelativeForm}  ></FormCom>}
-
-            formComProps={formComProps}
-            // FormCom={this.renderModalForm()}
-            FormCom={modalForm}
-            top={this.renderModalTop()}
-
-            // onSubmit={this.onSubmit}
-            // onFail={this.onFail}
-          >
-            {this.renderModalContent()}
-          </SmartFormModal>
+          {this.renderSmartFormModal()}
         </div>
       );
     }

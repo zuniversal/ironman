@@ -12,170 +12,178 @@ import {
   Checkbox,
   DatePicker,
 } from 'antd';
-import moment from 'moment'
+import moment from 'moment';
 
 // export {request, } from './request'
-
 
 // import { INPUT_TXT,  } from 'constants'
 // import {SUCC_TXT, } from 'constants'
 const RadioGroup = Radio.Group;
-const { Option, OptGroup } = Select
+const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
-
-
-
 
 export const renderSelectOp = (configs, opType = 'option') => {
   const OptionMap = {
     Option,
     OptGroup,
-  }[opType]
+  }[opType];
   // console.log(' opType ： ', opType, configs,    )//
-  // const options = 
-  // const groupOptions = 
-  return opType === 'group' ? configs.map((v) => {
-      // console.log(' groupOptions v ： ', v,  )// 
-      return <OptGroup label={v.label} key={v.value} >
-      {v.children.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>)}
-    </OptGroup> 
-  }) : configs.map((v) => <Option value={v.value} key={v.value} >{v.label}</Option>) 
-}
+  // const options =
+  // const groupOptions =
+  return opType === 'group'
+    ? configs.map(v => {
+        // console.log(' groupOptions v ： ', v,  )//
+        return (
+          <OptGroup label={v.label} key={v.value}>
+            {v.children.map(v => (
+              <Option value={v.value} key={v.value}>
+                {v.label}
+              </Option>
+            ))}
+          </OptGroup>
+        );
+      })
+    : configs.map(v => (
+        <Option value={v.value} key={v.value}>
+          {v.label}
+        </Option>
+      ));
+};
 
 export const renderRadioOp = (configs, opType = 'option') => {
-  // console.log(' configs, opType ： ', configs, opType,  )// 
-  return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>) 
-}
-
-
-
-
+  // console.log(' configs, opType ： ', configs, opType,  )//
+  // return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
+  const radioItems = configs.map(v => (
+    <Radio value={v.value} key={v.value}>
+      {v.label}
+    </Radio>
+  ));
+  return opType === 'group' ? (
+    <RadioGroup>{radioItems}</RadioGroup>
+  ) : (
+    radioItems
+  );
+};
 
 export const dateFormat = 'YYYY/MM/DD';
 export const monthFormat = 'YYYY/MM';
 
 export const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
-export const mockDate = moment('2020/02/02', dateFormat)
-export const mockMonth = moment('2020/02/02', monthFormat)
+export const mockDate = moment('2020/02/02', dateFormat);
+export const mockMonth = moment('2020/02/02', monthFormat);
 
-
-export const mockFormData = (config, init, ) => {
+export const mockFormData = (config, init) => {
   // console.log(' mockFormData   formType, ,   ： ', config,   )
   const mockData = {
     d_id: Math.random(),
     ...init,
-  }
+  };
   config.forEach((item, i) => {
-    const {formType, itemProps,   } = item
-    const {label, key,   } = itemProps
+    const { formType, itemProps } = item;
+    const { label, key } = itemProps;
     if (formType !== 'rowText' && !React.isValidElement(item)) {
       const mockDataMap = {
         Input: label,
         TextArea: label,
-        Select: [label,  ],
+        Select: [label],
         Password: label,
-        Cascader: [label,  ],
+        Cascader: [label],
         AutoComplete: label,
         Checkbox: label,
         CheckboxGroup: label,
-        
-        Radio: 'yes',
+
+        Radio: 'no',
         DatePicker: mockDate,
-    
-        Dynamic: ['值1',   ],
+
+        Dynamic: ['值1'],
         // Dynamic: [{name: '值1', key: '值1', fieldKey: '值1', },   ],
         // Dynamic: ['值1', '值2',  ],
-        // Dynamic: 'Dynamic初始值', 
-        
-      }[formType]
-  // 
-      // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )// 
-      
-      mockData[key] = mockDataMap
+        // Dynamic: 'Dynamic初始值',
+      }[formType];
+      //
+      // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//
+
+      mockData[key] = mockDataMap;
     }
-    
-  })
+  });
 
-  return mockData 
-}
+  return mockData;
+};
 
+export const formatConfig = config =>
+  config.map((v, i) => {
+    // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
+    const items = {
+      ...v,
+      // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+      // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
+      itemProps:
+        v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText'
+          ? { ...v.itemProps, key: `field${i}` }
+          : // : { ...v.itemProps, key: `field${i}`,  },
+            {
+              ...v.itemProps,
+              key: v.itemProps?.name ? v.itemProps.name : `field${i}`,
+              name: v.itemProps?.name ? v.itemProps.name : `field${i}`,
+            },
+      // 直接生成 name
+      // : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
+      // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
+      // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
+    };
+    // console.log(' items ： ', items,  )//
+    if (!React.isValidElement(v)) {
+      items.formType = v.formType || 'Input';
+    }
+    return items;
+  });
 
-export const formatConfig = config => config.map((v, i) => {
-  // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )// 
-  const items = {
-    ...v,
-    // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-    // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
-    itemProps: (v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText' ) 
-        ? { ...v.itemProps, key: `field${i}`,  }
-        // : { ...v.itemProps, key: `field${i}`,  },
-        : { ...v.itemProps, key: v.itemProps?.name ? v.itemProps.name : `field${i}`, name: v.itemProps?.name ? v.itemProps.name : `field${i}` },
-        // 直接生成 name 
-        // : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
-        // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
-        // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
-  } 
-  // console.log(' items ： ', items,  )// 
-  if (!React.isValidElement(v)) {
-    items.formType = v.formType || 'Input'
-  }
-  return items
-});
-
-
-  
-
-
-export const mockTbData = (children, ) => {
-
+export const mockTbData = children => {
   return new Array(20).fill(0).map((v, i) => {
-    const start = 10
+    const start = 10;
     const childrenObj = {};
     const obj = {};
     new Array(20).fill(0).forEach((v, index) => {
-      // console.log(' vsssss ： ', v, i, index, )// 
+      // console.log(' vsssss ： ', v, i, index, )//
       // obj[`field${index}`] = `FieldFieldFieldFieldFieldField`;
       obj[`field${index}`] = `Field${i}`;
       childrenObj[`field${start * index}`] = `Field_${i}`;
     });
-    // console.log(' objobj ： ', obj,  )// 
+    // console.log(' objobj ： ', obj,  )//
     const item = {
       id: i,
       d_id: i,
       ...obj,
       key: i,
       // [`field${i}`]: `Field${i}`,
-    }
+    };
     const childrenItem = {
       id: start * (i + 1),
       d_id: start * (i + 1),
       ...childrenObj,
       key: i,
       // [`field${i}`]: `Field${i}`,
-    }
+    };
     if (children) {
-      item.children = [
-        childrenItem,
-      ]
+      item.children = [childrenItem];
     }
-    
-    return item
-  })
-}
 
+    return item;
+  });
+};
 
-  
-
-
-
-
-
-
-
-
-
+export const linkUrlFn = (params = [], path = '') => (text, record, index) => {
+  let linkUrl = path;
+  // let res = params.forEach((key) => linkUrl += `${key}=${record[key] != undefined ? record[key] : ''}&`)
+  let paramsStr = params
+    .map(key => `${key}=${record[key] != undefined ? record[key] : ''}`)
+    .join('&');
+  linkUrl += paramsStr;
+  console.log(' linkUrl ： ', linkUrl, paramsStr); //
+  return linkUrl;
+};
 
 export const INPUT_TXT = 'Please Input ';
 export const SUCC_TXT = 'Action Successful o(*￣︶￣*)o ！';
@@ -183,15 +191,14 @@ export const SUCC_TXT = 'Action Successful o(*￣︶￣*)o ！';
 export const succModal = (content = '', title = SUCC_TXT) =>
   Modal.success({ title, content, maskClosable: true, width: '40%' });
 
-
 export const confirms = (type = 1, msg, time = 3, cb) => {
   // console.log('confirms ：', type, time, cb, )
   const msgMap = {
     0: 'error',
     1: 'success',
     2: 'warn',
-  }[type]
-  
+  }[type];
+
   message.config({
     duration: 3,
   });
@@ -204,7 +211,7 @@ export const tips = (msg, type = 1, time = 3, cb) => {
     0: 'error',
     1: 'success',
     2: 'warn',
-  }[type]
+  }[type];
   message[msgMap](msg, time, cb);
 };
 
@@ -252,7 +259,6 @@ export const removeItem = k => localStorage.removeItem(k);
 export const setItems = (k, v) => sessionStorage.setItem(k, JSON.stringify(v));
 export const getItems = k => JSON.parse(sessionStorage.getItem(k));
 export const removeItems = k => sessionStorage.removeItem(k);
-
 
 export const debounce = (cb, v) => {
   if (t) clearTimeout(t);
@@ -320,12 +326,10 @@ export const createRow = l => {
 export const filterArr = keys =>
   keys.filter((v, i, arr) => arr.indexOf(v) === i);
 
-
 export const filterArrOForm = (arr, k, e = 'data') =>
   arr
     .filter((v, i, arr) => arr.indexOf(v) === i)
     .map(v => (v = { [k]: v, [e]: [] }));
-
 
 export const mergeArr = (o, a, k, e = 'data') => {
   // console.log('a, k ：', o, a, k, e);
@@ -342,13 +346,10 @@ export const mergeArr = (o, a, k, e = 'data') => {
   return a;
 };
 
-
 export const addProp = (arr, con, k, p) =>
   arr.map(v => ({ ...v, [p]: con.filter(item => item[k] === v[k])[0][p] }));
 
 export const findDOMNode = (d, c) => d.findDOMNode(c);
-
-
 
 // redux
 
@@ -364,8 +365,3 @@ export const pagination = total => ({
   showSizeChanger: true,
   showTotal,
 });
-
-
-
-
-

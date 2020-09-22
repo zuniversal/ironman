@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,94 +16,86 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
-import { regoins } from '@/configs'//
-import { formatConfig } from '@/utils'//
-
-
-
+import SmartForm from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '姓名',
-      name: 'name', 
+      name: 'name',
     },
   },
   {
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '角色',
-      name: '', 
+      name: '',
     },
     comProps: {
-      disabled: true,  
-    }
+      disabled: true,
+    },
   },
   {
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '手机',
-      name: 'phone', 
+      name: 'phone',
     },
   },
   {
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '邮箱',
-      name: '', 
+      name: '',
     },
   },
   {
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '业务部门',
-      name: '', 
+      name: '',
     },
     comProps: {
-      disabled: true,  
-    }
+      disabled: true,
+    },
   },
   {
     formType: 'Password',
-    
-    noRule: true,  noRule: true,
+    noRule: true,
     itemProps: {
       label: '密码重置',
-      name: '', 
+      name: '',
     },
   },
   {
     formType: 'Password',
-    
-    noRule: true,  noRule: true,
+    noRule: true,
     itemProps: {
       label: '再次输入密码',
-      name: '', 
+      name: '',
     },
   },
-  
-  
-  
-  
 ];
 
-
-
+const formLayouts = {
+  labelCol: {
+    sm: { span: 9 }, //
+  },
+  wrapperCol: {
+    sm: { span: 15 }, //
+  },
+};
 
 const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props,  )//
+  console.log(' UserCenterForm ： ', props); //
 
-  const {index,  } = props// 
+  const { index } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -112,11 +104,9 @@ const UserCenterForm = props => {
 
   // const formConfig = formatConfig(config);
 
-  const handleOk = (e, ) => {
-    console.log(' handleOk   e, ,   ： ', e,   )
-    
-  }
-  
+  const handleOk = e => {
+    console.log(' handleOk   e, ,   ： ', e);
+  };
 
   return (
     <div className={'userCenterForm'}>
@@ -128,18 +118,20 @@ const UserCenterForm = props => {
         // init={init}
         // init={{}}
 
+        action={'edit'}
+        formLayouts={formLayouts}
         {...props}
       ></SmartForm>
 
       <div className="dfc actionBtn ">
-        <Button type="primary" onClick={handleOk}>确认修改</Button>
+        <Button type="primary" onClick={handleOk}>
+          确认修改
+        </Button>
       </div>
-      
-
     </div>
-  )
-}
+  );
+};
 
-UserCenterForm.defaultProps = {}
+UserCenterForm.defaultProps = {};
 
-export default UserCenterForm
+export default UserCenterForm;

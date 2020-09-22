@@ -28,18 +28,22 @@ import SmartTable from '@/common/SmartTable'; //
 
 const HouseNoTable = props => {
   console.log(' HouseNoTable  ： ', props); //
-  const { tdClick,    } = props; //
+  const { tdClick } = props; //
 
   const columns = [
     {
       title: '所属客户',
       dataIndex: 'customer',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '户号',
       dataIndex: 'code',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '签约公司',
@@ -52,7 +56,9 @@ const HouseNoTable = props => {
     {
       title: '电站数',
       dataIndex: 'electricityuser',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '录入日期',
@@ -65,9 +71,14 @@ const HouseNoTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      extra={
-        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
-      }
+
+      // extra={
+      //   <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
+      // }
+
+      actionConfig={{
+        isQRCode: true,
+      }}
       {...props}
     ></SmartTable>
   );
