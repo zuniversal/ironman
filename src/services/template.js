@@ -3,20 +3,15 @@ import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove, 
 
 
 
-export const getCustomer = p => noTipsGet('customer', p)
-export const getCustomerDetail = p => noTipsGet('customer/', p)
-export const addCustomer = p => noTipsPost('customer', p)
-export const editCustomer = p => put('customer', p)
-export const removeCustomer = p => remove('customer', p)
+export const getList = p => noTipsGet('customer', p)
+export const getItem = p => noTipsGet(`customer/${p.d_id}`, p)
+export const addItem = p => post('customer', p)
+export const editItem = p => put(`customer/${p.d_id}`, p)
+export const removeItem = p => remove(`customer/${p.d_id}`, p)
 
 
-
-
-
-
-
-
-
+export const syncOA = p => noTipsGet(`customer/oa`, p)
+export const getPortrait = p => noTipsGet(`customer/portrait/${p.d_id}`, p)
 
 
 

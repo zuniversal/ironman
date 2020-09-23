@@ -99,7 +99,7 @@ export const remove = (url, params) => http.delete(url, params);
 
 // 不显示 tips 的方法
 export const noTipsGet = (url, params) =>
-  get(url, { params: { ...params, noTips: true } });
+  get(url, { ...params, noTips: true } );
 export const noTipsPost = (url, params) =>
   post(url, { ...params, noTips: true });
 export const noTipsPut = (url, params) => put(url, { ...params, noTips: true });

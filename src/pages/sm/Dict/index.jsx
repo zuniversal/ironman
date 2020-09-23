@@ -39,7 +39,7 @@ const TITLE = '字典'
 
 
 const titleMap =  {
-  add: `新建$${TITLE}`,
+  add: `TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,

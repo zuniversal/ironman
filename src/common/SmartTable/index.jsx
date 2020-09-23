@@ -79,8 +79,8 @@ export const ActionCom = params => {
     showQRCode,
     noDefault,
     props,
-  } = params;
-  console.log(' ActionCom props ： ', props); //
+  } = params;//
+  console.log(' ActionCom props ： ', params); 
   return (
     <span>
       {!props.noDefault && (
@@ -127,8 +127,8 @@ class SmartTable extends PureComponent {
 
       isShowResultModal: false,
 
-      // mockTbData: mockTbData(props.haveChildren, ),
-      mockTbData: [],
+      mockTbData: mockTbData(props.haveChildren, ),
+      // mockTbData: [],
 
       selectionType: 'checkbox',
 
@@ -397,7 +397,6 @@ class SmartTable extends PureComponent {
       render: (text, record, index) => {
         // console.log(' text, record, index ： ', text, record, index,  )//
         // render: (...rest) => {
-        //   console.log(' rest ： ', rest,  )//
         const props = {
           // ...rest,
           text,
@@ -411,7 +410,8 @@ class SmartTable extends PureComponent {
           props: this.props,
           ...actionConfig,
         };
-
+  
+        console.log(' restrest,  ： ', props )//
         return <ActionCom {...props}></ActionCom>;
         // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
       },
@@ -584,8 +584,8 @@ SmartTable.defaultProps = {
   className: '',
   columns: [],
   newTbData: [],
-  dataSource: [],
-  // dataSource: mockTbData(),
+  // dataSource: [],
+  dataSource: mockTbData(),
   // rowKey: 'key',
   rowKey: 'd_id',
   // rowKey: 'id',
