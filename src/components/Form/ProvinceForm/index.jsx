@@ -16,54 +16,49 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins,
-  province,
-  site,
-  city,
-
- } from '@/configs'//
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { regoins, province, site, city } from '@/configs'; //
 // import regoins from '@/configs/regions.js'; //
-import { formatConfig, reportRadioOp,  } from '@/utils'//
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 export const config = [
   {
     formType: 'Select',
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '省',
       // name: 'province',
       // key: 'province',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-200',
     },
     selectData: province,
     // customLabel: '自定义customLabel',
   },
   {
     formType: 'Select',
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '市',
       // name: 'city',
       // key: 'city',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-200',
     },
     selectData: city,
   },
   {
     formType: 'Select',
-    noRule: true,  
+    noRule: true,
     itemProps: {
       label: '县',
       // name: 'site',
       // key: 'site',
     },
     comProps: {
-      className: 'w-200',  
+      className: 'w-200',
     },
     selectData: site,
   },
@@ -114,7 +109,7 @@ const init = {
 
 const ProvinceForm = props => {
   console.log(' ProvinceForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     layout: 'inline',
@@ -122,7 +117,7 @@ const ProvinceForm = props => {
 
   return (
     <div className={' provinceForm '}>
-      <SmartForm
+      <SearchForm
         // flexRow={8}
         // config={config}
         config={formatConfig(config)}
@@ -131,7 +126,7 @@ const ProvinceForm = props => {
         // init={{}}
 
         {...rest}
-      ></SmartForm>
+      ></SearchForm>
 
       {formBtn}
     </div>

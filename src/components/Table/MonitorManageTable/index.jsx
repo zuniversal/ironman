@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const MonitorManageTable = props => {
   console.log(' MonitorManageTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -60,20 +60,21 @@ const MonitorManageTable = props => {
     },
   ];
 
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>发起工单</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>完成任务</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>关联合同</a>
+    </>
+  );
+
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
-      extra={
-        <>
-          <a onClick={() => tdClick({action: 'showList'})}>发起工单</a>
-          <a onClick={() => tdClick({action: 'showList'})}>完成任务</a>
-          <a onClick={() => tdClick({action: 'showList'})}>关联合同</a>
-        </>
-      }
-      
+      extra={extra}
+      isQRCode
       {...props}
     ></SmartTable>
   );
@@ -81,7 +82,6 @@ const MonitorManageTable = props => {
 
 MonitorManageTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default MonitorManageTable;

@@ -79,8 +79,8 @@ export const ActionCom = props => {
     showQRCode,
     noDefault,
     tableProps,
-  } = props; 
-  //console.log(' ActionCom props ： ', props);
+  } = props;
+  // console.log(' ActionCom props ： ', props);
   return (
     <span>
       {!props.noDefault && (
@@ -95,7 +95,8 @@ export const ActionCom = props => {
           生成二维码
         </a>
       )}
-      {extra}
+      {/* {extra} */}
+      {extra(props)}
     </span>
   );
 }; //
@@ -399,6 +400,8 @@ class SmartTable extends PureComponent {
         // render: (...rest) => {
         const props = {
           // ...rest,
+          // tableProps: this.props,
+          ...this.props,
           text,
           record,
           index,
@@ -407,11 +410,10 @@ class SmartTable extends PureComponent {
           remove,
           showQRCode: this.showQRCode,
           extra,
-          tableProps: this.props,
           ...actionConfig,
         };
 
-        //console.log(' restrest,  ： ', props); 
+        //console.log(' restrest,  ： ', props);
         return <ActionCom {...props}></ActionCom>;
         // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
       },
@@ -594,7 +596,8 @@ SmartTable.defaultProps = {
   remove: () => {},
   showDetail: () => {},
   actionConfig: {},
-  extra: null,
+  // extra: null,
+  extra: () => {},
   noActionCol: false,
   noDefault: false,
   isQRCode: false,

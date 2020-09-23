@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsTransferTable = props => {
   console.log(' ShiftsTransferTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -46,18 +46,22 @@ const ShiftsTransferTable = props => {
     {
       title: '创建时间',
     },
-    
   ];
+
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>查看</a>
+    </>
+  );
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
-      extra={
-        <a onClick={() => tdClick({action: 'showList'})}>查看</a>
-      }
+
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -65,7 +69,6 @@ const ShiftsTransferTable = props => {
 
 ShiftsTransferTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default ShiftsTransferTable;

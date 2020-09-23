@@ -30,7 +30,7 @@ import { linkUrlFn } from '@/utils'; //
 
 const ClientReportTable = props => {
   console.log(' ClientReportTable ： ', props); //
-  const { tdClick } = props; //
+  const { tdClick, showModal } = props; //
 
   const columns = [
     {
@@ -77,11 +77,22 @@ const ClientReportTable = props => {
     },
   ];
 
+  const extra = props => (
+    <>
+      <a onClick={() => showModal({ action: 'edit' })}>录入</a>
+      <a onClick={() => showModal({ action: 'edit' })}>修改</a>
+      <a onClick={() => showModal({ action: 'edit' })}>打印</a>
+    </>
+  );
+
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
+
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );

@@ -28,28 +28,36 @@ import SmartTable from '@/common/SmartTable'; //
 
 const MonitorTable = props => {
   console.log(' MonitorTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      title: 'id',
+      title: '所属客户',
     },
     {
-      title: '模块',
+      title: '户号',
     },
     {
-      title: '名称',
+      title: '电站',
     },
     {
-      title: '枚举值',
+      title: '设备名称',
     },
     {
       title: '关联设备',
     },
     {
-      title: '备注',
+      title: '监测点',
     },
-    
+    {
+      title: '设备类型',
+    },
+    {
+      title: 'IEMI号',
+    },
+    {
+      title: '状态',
+    },
   ];
 
   return (
@@ -57,7 +65,7 @@ const MonitorTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -65,7 +73,6 @@ const MonitorTable = props => {
 
 MonitorTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default MonitorTable;

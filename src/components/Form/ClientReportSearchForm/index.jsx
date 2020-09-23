@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
@@ -31,25 +31,25 @@ const ClientReportSearchForm = props => {
       itemProps: {
         label: '选择月份',
       },
-      comProps: {},
+      // comProps: {},
     },
     {
       formType: 'Select',
       itemProps: {
         label: '巡检组长',
       },
-      comProps: {},
+      // comProps: {},
     },
   ];
 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
     <div className={''}>
-      <SmartForm
+      {/* <SmartForm
         // flexRow={4}
         config={formatConfig(config)}
         formProps={formProps}
@@ -58,8 +58,15 @@ const ClientReportSearchForm = props => {
         // init={{
         //   key9: regoins,
         // }}
+
+        isSearchForm
         {...props}
-      ></SmartForm>
+      ></SmartForm> */}
+
+      <SearchForm
+        config={formatConfig(config)}
+        formProps={formProps}
+      ></SearchForm>
     </div>
   );
 };

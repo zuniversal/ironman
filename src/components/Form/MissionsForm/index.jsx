@@ -18,18 +18,12 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
+const MissionsManageForm = props => {
+  console.log(' MissionsManageForm ： ', props); //
+  const { formBtn, ...rest } = props; //
 
-
-
-
-
-const MissionsForm = props => {
-  console.log(' MissionsForm ： ', props); //
-  const {formBtn, ...rest } = props// 
-
-    
   const config = [
     {
       itemProps: {
@@ -61,13 +55,7 @@ const MissionsForm = props => {
         label: '地址',
       },
     },
-    
-    
-    
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',
@@ -75,7 +63,7 @@ const MissionsForm = props => {
   };
 
   return (
-    <div className={' MissionsForm '}>
+    <div className={' MissionsManageForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -92,6 +80,6 @@ const MissionsForm = props => {
   );
 };
 
-MissionsForm.defaultProps = {};
+MissionsManageForm.defaultProps = {};
 
-export default MissionsForm;
+export default MissionsManageForm;

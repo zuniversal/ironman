@@ -28,35 +28,15 @@ import SmartTable from '@/common/SmartTable'; //
 
 const InspectPlanTable = props => {
   console.log(' InspectPlanTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
-    {
-      title: 'id',
-    },
-    {
-      title: '名称',
-    },
     {
       title: '电站',
     },
     {
-      title: '客户名称',
+      title: '剩余/总巡检数量',
     },
-    {
-      title: '当前状态',
-    },
-    {
-      title: '领取人',
-    },
-    {
-      title: '执行时间',
-    },
-    {
-      title: '领取时间',
-    },
-    
-    
   ];
 
   return (
@@ -64,7 +44,7 @@ const InspectPlanTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -72,7 +52,6 @@ const InspectPlanTable = props => {
 
 InspectPlanTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default InspectPlanTable;

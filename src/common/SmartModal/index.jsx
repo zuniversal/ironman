@@ -7,14 +7,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import { Table, Icon, notification, Modal, Button, Tag } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
-
 // 封装带默认属性的 模态框
-
 
 class SmartModal extends PureComponent {
   constructor(props) {
@@ -33,31 +31,23 @@ class SmartModal extends PureComponent {
     const { customShow, onOk } = this.props; //
     console.log('  onOk  customShow ', customShow, this.state, this.props);
     onOk && onOk();
-
   };
   onCancel = e => {
     const { customShow, onCancel } = this.props; //
-    console.log(
-      '  onCancel  customShow ',
-      customShow,
-      this.state,
-      this.props,
-    );
+    console.log('  onCancel  customShow ', customShow, this.state, this.props);
     onCancel && onCancel();
-
   };
 
-  // 根据属性得出 title 
-  getTitle = (e,  ) => {
-    const {title,  } = this.state// 
-    const {titleMap, action,  } = this.props// 
-    const actionTitle = titleMap[action]
-    console.log('    getTitle ： ', e, this.state, this.props, actionTitle,   )
+  // 根据属性得出 title
+  getTitle = e => {
+    const { titleMap, action, title } = this.props; //
+    const actionTitle = titleMap[action];
+    console.log('    getTitle ： ', e, this.state, this.props, actionTitle);
     if (actionTitle) {
-      return actionTitle
+      return actionTitle;
     }
-    return title 
-  }
+    return title;
+  };
 
   render() {
     const {
@@ -107,21 +97,17 @@ class SmartModal extends PureComponent {
             </Button>
           ) : null,
         ]}
-
-        {...this.props} 
+        {...this.props}
         title={this.getTitle()}
-
       >
         {show ? children : null}
         {/* {children} */}
-
       </Modal>
     );
   }
 }
 
-
-// 默认属性 
+// 默认属性
 SmartModal.defaultProps = {
   title: '默认标题',
   okTxt: '确定',
@@ -131,8 +117,7 @@ SmartModal.defaultProps = {
   customShow: false,
   show: false,
   isHideOk: false,
-  titleMap: {},  // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
-
+  titleMap: {}, // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
 };
 
 SmartModal.propTypes = {
@@ -145,9 +130,6 @@ SmartModal.propTypes = {
   show: PropTypes.bool,
   isHideOk: PropTypes.bool,
   titleMap: PropTypes.object,
-  
-
-}
-
+};
 
 export default SmartModal;

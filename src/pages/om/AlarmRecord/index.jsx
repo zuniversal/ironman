@@ -164,12 +164,6 @@ class AlarmRecord extends PureComponent {
       <div className={'fsb '}>
         <SearchForm></SearchForm>
         <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
           <Button type="primary" onClick={() => this.props.exportData()}>
             导出{TITLE}数据
           </Button>

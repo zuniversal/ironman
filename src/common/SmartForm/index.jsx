@@ -31,12 +31,17 @@ import FormList from './FormList'; //
 import NestForm from './NestForm'; //
 import ComplexForm from './ComplexForm'; //
 import DepForm from './DepForm'; //
-import SearchForm from './SearchForm'; //
+// import SearchForm from './SearchForm'; //
 import ModalForm from './ModalForm'; //
 import DateForn from './DateForn'; //
 
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
-import { mockFormData, renderSelectOp, renderRadioOp } from '@/utils'; //
+import {
+  mockFormData,
+  renderSelectOp,
+  renderRadioOp,
+  formatConfig,
+} from '@/utils'; //
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -156,19 +161,24 @@ const SmartForm = (props, state) => {
     action,
     noPh,
     formLayouts,
+    isSearchForm,
+    isFormat,
   } = props; //
+
+  const configs = isFormat ? formatConfig(config, { isSearchForm }) : config; //
+  console.log('  configs ：', configs); //
 
   console.log(
     ' %c SmartForm 组件 state, props ： ',
     `color: #333; font-weight: bold`,
     state,
     props,
-    config,
-    config[config.length - 1],
+    configs,
+    configs[configs.length - 1],
   ); //
 
   const [initData, setInitData] = useState(() => {
-    const dynamicFields = config
+    const dynamicFields = configs
       .filter(v => v.formType === 'Dynamic')
       .map(v => v.itemProps.key);
     const obj = {};
@@ -177,13 +187,13 @@ const SmartForm = (props, state) => {
     return obj;
   });
 
-  // const initialValues = (isMockData && action === 'edit') ? mockFormData(config, ) : {}
+  // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
   const initialValues = Object.keys(init).length
     ? init
     : isMockData && action === 'edit'
-    ? mockFormData(config, init)
+    ? mockFormData(configs, init)
     : initData;
-  // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(config, init, ) : {}
+  // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
   console.log(
     ' SmartForm initialValues ： ',
     props,
@@ -235,32 +245,6 @@ const SmartForm = (props, state) => {
     onFail && onFail({ err: errorInfo, form });
   };
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = value => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        ['.comProps', '.org', '.net'].map(domain => `${value}${domain}`),
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website,
-  }));
-
   const rules = (params, extra) => {
     const { items, label, formType } = params;
     const message = getLabel(label, formType);
@@ -278,12 +262,19 @@ const SmartForm = (props, state) => {
     ];
   };
 
-  const [formLayout, setFormLayout] = useState('horizontal');
+  // const [formLayout, setFormLayout] = useState('horizontal');
+  const formLayoutType = isSearchForm ? 'inline' : 'horizontal';
+  const [formLayout, setFormLayout] = useState(
+    isSearchForm ? 'inline' : 'horizontal',
+  );
   // const onFormLayoutChange = ({ layout }) => {
   //   setFormLayout(layout);
   // };
 
   const formItemLayout = formLayout === 'horizontal' ? formLayouts : null;
+  const isInline = {
+    layout: isSearchForm ? 'inline' : 'horizontal',
+  };
 
   const [componentSize, setComponentSize] = useState('default');
 
@@ -295,21 +286,6 @@ const SmartForm = (props, state) => {
 
     // setFormLayout(layout);
     // setComponentSize(size);
-  };
-
-  const onGenderChange = (value, rest) => {
-    console.log(' onGenderChange value, rest ： ', value, rest); //
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({ test: 'Hi, man!' });
-        return;
-      case 'female':
-        form.setFieldsValue({ test: 'Hi, lady!' });
-        return;
-      case 'other':
-        form.setFieldsValue({ test: 'Hi there!' });
-        return;
-    }
   };
 
   // const labelCom = <span>
@@ -346,7 +322,7 @@ const SmartForm = (props, state) => {
 
   // return <Row gutter={24}>{colForm}</Row>
 
-  const formItems = config.map((item, i) => {
+  const formItems = configs.map((item, i) => {
     const items = { formType: 'Input', ...item };
     const {
       formType = 'Input',
@@ -364,6 +340,7 @@ const SmartForm = (props, state) => {
       selectData = [],
       opType,
       haveDivider,
+      isSearchForm,
     } = items;
 
     // if (typeof type === 'function') {
@@ -412,12 +389,12 @@ const SmartForm = (props, state) => {
     // console.log('  placeholder ：', placeholder,  )
 
     const realComProps = {
-      className: 'w-320',
+      // className: 'w-320',
       ...comProps,
       placeholder: placeholder,
     };
     const dynamicComProps = {
-      className: 'w-320',
+      // className: 'w-320',
       ...comProps,
       // comProps: {...comProps, className: `${comProps.className} dynamiRow` },
       placeholder: placeholder,
@@ -431,6 +408,7 @@ const SmartForm = (props, state) => {
       formItemProps,
       comProps,
       initialValues,
+      formItemLayout,
     ); //
 
     // const renderRadioOptions = renderRadioOp(radioData, opType, )
@@ -470,11 +448,11 @@ const SmartForm = (props, state) => {
         //   {renderRadioOp(radioData, opType)}
         // </Radio.Group>
         renderRadioOp(radioData, opType),
-        // <Radio.Group>
-        //   <Radio value="small">Small</Radio>
-        //   <Radio value="yes">yes</Radio>
-        //   <Radio value="large">Large</Radio>
-        // </Radio.Group>
+      // <Radio.Group>
+      //   <Radio value="small">Small</Radio>
+      //   <Radio value="yes">yes</Radio>
+      //   <Radio value="large">Large</Radio>
+      // </Radio.Group>
       DatePicker: <DatePicker {...realComProps} />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
@@ -607,6 +585,7 @@ const SmartForm = (props, state) => {
       preserve={false}
       {...formItemLayout}
       // layout={formLayout}
+      {...isInline}
       form={formControl}
       name="smartForm"
       onFinish={onFinish}
@@ -706,6 +685,8 @@ SmartForm.defaultProps = {
   action: '', // 表单的操作行为
   noPh: false, // 是否显示表单项的 placeholder 文本
   formLayouts: layoutObj,
+  isSearchForm: false,
+  isFormat: true,
 };
 
 SmartForm.propTypes = {
@@ -719,6 +700,17 @@ SmartForm.propTypes = {
   noPh: PropTypes.bool,
   action: PropTypes.string,
   formLayouts: PropTypes.object,
+  isSearchForm: PropTypes.bool,
+  isFormat: PropTypes.bool,
 };
 
 export default SmartForm;
+
+// export const SearchForm = props => React.cloneElement(SmartForm, {
+//   isSearchForm: true,
+//   ...props,
+// })
+export const SearchForm = props => {
+  console.log(' SearchFormSearchForm ： ', props); //
+  return <SmartForm {...props} isSearchForm></SmartForm>;
+};

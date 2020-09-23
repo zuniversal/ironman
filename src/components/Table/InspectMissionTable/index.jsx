@@ -28,54 +28,63 @@ import SmartTable from '@/common/SmartTable'; //
 
 const InspectMissionTable = props => {
   console.log(' InspectMissionTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      d: 'id',
+      title: 'id',
       dataIndex: 'id',
     },
     {
-      d: '名称',
+      title: '名称',
       dataIndex: 'name',
     },
     {
-      d: '电站',
+      title: '电站',
       dataIndex: '',
     },
-    
+
     {
-      d: '客户名称',
+      title: '客户名称',
       dataIndex: '',
     },
     {
-      d: '当前状态',
+      title: '当前状态',
       dataIndex: 'status',
     },
-    
+
     {
-      d: '领取人',
+      title: '领取人',
       dataIndex: '',
     },
-    
+
     {
-      d: '执行时间',
+      title: '执行时间',
       dataIndex: 'work_date',
     },
     {
-      d: '领取时间',
+      title: '领取时间',
       dataIndex: 'assign_date',
     },
-    
-    
   ];
+
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>派发</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>已领取</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>已开始</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>已完成</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>修改日期</a>
+    </>
+  );
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -83,7 +92,6 @@ const InspectMissionTable = props => {
 
 InspectMissionTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default InspectMissionTable;

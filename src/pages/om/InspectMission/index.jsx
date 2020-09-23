@@ -9,91 +9,96 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography, Divider,  } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Menu,
+  Upload,
+  Result,
+  Typography,
+  Divider,
+} from 'antd';
 
 import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectMissionForm from '@/components/Form/InspectMissionForm'; //
+import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm'; //
 import InspectMissionTable from '@/components/Table/InspectMissionTable'; //
-import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
+import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
-import { actions, mapStateToProps,  } from '@/models/inspectMission'//
+import { actions, mapStateToProps } from '@/models/inspectMission'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
+const TITLE = '操作';
 
-
-const TITLE = '操作'
-
-
-const titleMap =  {
+const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
-}
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
-
-@connect(mapStateToProps, )
+@connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
   modalForm: InspectMissionForm,
-
 })
 class InspectMission extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      action: '',  
-      title: '',  
+      action: '',
+      title: '',
       titleMap,
-      newTbData: [],  
-
+      newTbData: [],
     };
   }
 
-
-  onUploadChange = (params,  ) => {
-    console.log(' onUploadChange,  , ： ', params,    )
+  onUploadChange = params => {
+    console.log(' onUploadChange,  , ： ', params);
     if (params.file.status === 'done') {
       setTimeout(() => {
-        console.log('  延时器 ： ',  )
+        console.log('  延时器 ： ');
         this.setState({
           modalContent: <SuccResult></SuccResult>,
-        })
-        
-      }, 2000)
-      
+        });
+      }, 2000);
     }
-  }
-  showUploadModal = (params, ) => {
-    console.log('    showUploadModal ： ', params,  )
-    //   const {item,  } = this.props// 
-    const {action,  } = params
-    
+  };
+  showUploadModal = params => {
+    console.log('    showUploadModal ： ', params);
+    //   const {item,  } = this.props//
+    const { action } = params;
+
     this.setState({
       show: true,
       action,
-      modalContent: <UploadFileCom onChange={this.onUploadChange} label={titleMap[action]}  ></UploadFileCom>,
-    })
-  }
-  menuClick = (params,  ) => {
-    const {key, clickFn, } = params
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+      modalContent: (
+        <UploadFileCom
+          onChange={this.onUploadChange}
+          label={titleMap[action]}
+        ></UploadFileCom>
+      ),
+    });
+  };
+  menuClick = params => {
+    const { key, clickFn } = params;
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
     if (clickFn) {
-      this[clickFn](params)
-      return  
+      this[clickFn](params);
+      return;
     }
-    
-  }
-  
-  
+  };
+
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -114,11 +119,11 @@ class InspectMission extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res); //
-      const {newTbData,  } = this.state// 
+      const { newTbData } = this.state; //
       this.setState({
         show: false,
-        newTbData: [res, ...newTbData,  ],
-      })
+        newTbData: [res, ...newTbData],
+      });
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -133,7 +138,6 @@ class InspectMission extends PureComponent {
     // .catch(info => {
     //   console.log('Validate Failed:', info);
     // });
-
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -142,28 +146,33 @@ class InspectMission extends PureComponent {
     });
   };
 
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
-    const {modalContent,  } = this.state// 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { modalContent } = this.state; //
     if (modalContent) {
-      return modalContent
+      return modalContent;
     }
-    
+
     // return null
+  };
+
+  renderSearchForm(params) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return (
+      <div className={'fsb '}>
+        <InspectMissionSearchForm></InspectMissionSearchForm>
+        <div className={'btnWrapper'}>
+          <SearchForm></SearchForm>
+          <Button type="primary" onClick={() => this.props.exportData()}>
+            导出
+          </Button>
+        </div>
+      </div>
+    );
   }
 
-  renderSearchForm(params,  ) {
-    // console.log(' renderSearchForm ： ', params,  )
-    return <div className={'fje '}  >
-      <div className={'btnWrapper'}>
-        <SearchForm></SearchForm>
-        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-      </div>
-    </div>
-  }
-  
-  renderTable(params,  ) {
-    console.log(' renderTable ： ', params, this.state, this.props,  )
+  renderTable(params) {
+    console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
       newTbData: this.state.newTbData,
@@ -174,40 +183,43 @@ class InspectMission extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
+    };
 
-    }
-
-    return <InspectMissionTable {...tableProps}   ></InspectMissionTable>
+    return <InspectMissionTable {...tableProps}></InspectMissionTable>;
   }
-  
-  renderSmartModal(params,  ) {
-    console.log(' renderSmartModal ： ', params, this.state, this.props,  )
-    const { show, title, action, titleMap,   } = this.state; //
 
-    return <SmartModal 
-      show={show} onOk={this.onOk} onCancel={this.onCancel}
-      action={action}
-      titleMap={titleMap}
-    >
-      {this.renderModalContent()}
-    </SmartModal>
+  renderSmartModal(params) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return (
+      <SmartModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+      >
+        {this.renderModalContent()}
+      </SmartModal>
+    );
   }
-  
 
   render() {
-    console.log(' %c InspectMission 组件 this.state, this.props ： ', `color: #333; font-weight: bold`, this.state, this.props,  )// 
+    console.log(
+      ' %c InspectMission 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
 
     return (
       <div className="InspectMission">
-
         {this.renderSearchForm()}
 
         {this.renderTable()}
-        
+
         {this.renderSmartModal()}
-
-
-
       </div>
     );
   }

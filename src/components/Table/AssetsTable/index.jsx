@@ -28,28 +28,36 @@ import SmartTable from '@/common/SmartTable'; //
 
 const AssetsTable = props => {
   console.log(' AssetsTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
       title: '所属客户',
       dataIndex: 'customer_name',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '户号',
       dataIndex: 'code',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '电站',
       dataIndex: 'station_name',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '设备名称',
       dataIndex: 'name',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '设备型号',
@@ -69,21 +77,16 @@ const AssetsTable = props => {
     },
   ];
 
-  
-  const showQRCode = (e, ) => {
-    console.log(' showQRCode   e, ,   ： ', e,   )
-    
-  }
-
+  const showQRCode = e => {
+    console.log(' showQRCode   e, ,   ： ', e);
+  };
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      extra={
-        <a onClick={showQRCode}>生成二维码1</a>
-      }
+      isQRCode
       {...props}
     ></SmartTable>
   );
@@ -91,7 +94,6 @@ const AssetsTable = props => {
 
 AssetsTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default AssetsTable;

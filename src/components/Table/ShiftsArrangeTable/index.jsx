@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsArrangeTable = props => {
   console.log(' ShiftsArrangeTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -46,7 +46,6 @@ const ShiftsArrangeTable = props => {
     {
       title: '创建时间',
     },
-    
   ];
 
   return (
@@ -54,9 +53,6 @@ const ShiftsArrangeTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      extra={
-        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
-      }
       {...props}
     ></SmartTable>
   );

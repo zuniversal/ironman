@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const WorkOrderTable = props => {
   console.log(' WorkOrderTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -64,23 +64,24 @@ const WorkOrderTable = props => {
     {
       title: '创建时间',
     },
-    
-    
   ];
+
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>派单</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>导出</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>添加工作票</a>
+    </>
+  );
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
-      extra={
-        <>
-          <a onClick={() => tdClick({action: 'showList'})}>派单</a>
-          <a onClick={() => tdClick({action: 'showList'})}>导出</a>
-          <a onClick={() => tdClick({action: 'showList'})}>添加工作票</a>
-        </>
-      }
+
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -88,7 +89,6 @@ const WorkOrderTable = props => {
 
 WorkOrderTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default WorkOrderTable;

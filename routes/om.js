@@ -63,8 +63,8 @@ export default [
   },
 
   {
-    path: '/om/missions',
-    component: '@/pages/om/Missions',
+    path: '/om/missionsManage',
+    component: '@/pages/om/MissionsManage',
     title: '任务管理',
   },
   {

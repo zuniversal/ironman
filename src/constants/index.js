@@ -1,20 +1,13 @@
 import { animate, createProperty } from '@/utils';
 
+export const BASE_URL = `http://yapi.afafa.com.cn/mock/17/api/v1/console/`;
 
+export const URL = `${BASE_URL}`;
 
-
-export const BASE_URL = `http://yapi.afafa.com.cn/mock/19/api/v1/console/`
-
-export const URL = `${BASE_URL}`
-
-
-
-export const PRIMARY = '#00B460'
-
+export const PRIMARY = '#00B460';
 
 export const isDev = process.env.NODE_ENV === 'development';
 
-  
 export const SELECT_TXT = '请选择';
 export const INPUT_TXT = '请输入';
 export const WORD = '关键字';
@@ -27,10 +20,7 @@ export const CHECK_TXT = 'ON';
 export const UN_CHECK_TXT = 'OFF';
 export const TIME_ZERO = ' 00:00:00';
 
-
-export const HOUSENO = '/om/houseNo?'
-
-
+export const HOUSENO = '/om/houseNo?';
 
 const animations = [
   'bounce',

@@ -28,35 +28,39 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsManageTable = props => {
   console.log(' ShiftsManageTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      title: '班组名称'
+      title: '班组名称',
     },
     {
-      title: '组长'
+      title: '组长',
     },
     {
-      title: '组员'
+      title: '组员',
     },
     {
-      title: '班组类型'
+      title: '班组类型',
     },
     {
-      title: '车辆牌照'
+      title: '车辆牌照',
     },
   ];
+
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>查看排班</a>
+    </>
+  );
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
-      extra={
-        <a onClick={() => tdClick({action: 'showList'})}>查看排班</a>
-      }
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -64,7 +68,6 @@ const ShiftsManageTable = props => {
 
 ShiftsManageTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default ShiftsManageTable;

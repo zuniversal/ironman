@@ -16,16 +16,14 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//
-
-
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const ClientForm = props => {
   console.log(' ClientForm ： ', props); //
 
-  const {getCapture,  } = props// 
+  const { getCapture } = props; //
 
   const config = [
     {
@@ -40,7 +38,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '客户名称',
-        // name: '',  
+        // name: '',
       },
       comProps: {},
     },
@@ -48,7 +46,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '客户类型',
-        name: 'type',  
+        name: 'type',
       },
       comProps: {},
     },
@@ -56,7 +54,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '所属行业',
-        name: 'industry',  
+        name: 'industry',
       },
       comProps: {},
     },
@@ -64,7 +62,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '企业规模',
-        name: 'scale',  
+        name: 'scale',
       },
       comProps: {},
     },
@@ -72,7 +70,7 @@ const ClientForm = props => {
       formType: 'Select',
       itemProps: {
         label: '资产规模',
-        name: 'asset',  
+        name: 'asset',
       },
       comProps: {},
     },
@@ -80,7 +78,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '总面积',
-        name: 'total_area',  
+        name: 'total_area',
       },
       comProps: {},
     },
@@ -88,7 +86,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '占地面积',
-        name: 'covered_area',  
+        name: 'covered_area',
       },
       comProps: {},
     },
@@ -96,11 +94,11 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '企业LOGO',
-        name: 'logo',  
+        name: 'logo',
       },
       comProps: {},
     },
-  
+
     {
       formType: 'rowText',
       // rowText: '位置信息',
@@ -113,7 +111,7 @@ const ClientForm = props => {
       formType: 'Cascader',
       itemProps: {
         label: '区域',
-        name: 'region',  
+        name: 'region',
       },
       comProps: {
         options: regoins,
@@ -123,7 +121,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '详细地址',
-        // name: '', 
+        // name: '',
       },
       comProps: {},
     },
@@ -131,7 +129,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '经度',
-        name: 'longitude', 
+        name: 'longitude',
       },
       comProps: {},
     },
@@ -139,11 +137,11 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '纬度',
-        name: 'latitude', 
+        name: 'latitude',
       },
       comProps: {},
     },
-  
+
     {
       formType: 'rowText',
       rowText: '管理员信息',
@@ -157,15 +155,15 @@ const ClientForm = props => {
       itemProps: {
         // label: '',
         label: '用户名',
-        className: 'noMargin',  
+        className: 'noMargin',
       },
       comProps: {
-        extra: true,  
+        extra: true,
         itemProps: {
           label: '用户名',
         },
         comProps: {
-          className: 'w-320',  
+          className: 'w-320',
         },
       },
     },
@@ -173,7 +171,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '密码',
-        // name: 'pwd', 
+        // name: 'pwd',
       },
       comProps: {},
     },
@@ -181,11 +179,11 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '手机号',
-        // name: 'phone', 
+        // name: 'phone',
       },
       comProps: {},
     },
-  
+
     {
       formType: 'rowText',
       // rowText: '其他信息',
@@ -199,13 +197,16 @@ const ClientForm = props => {
         label: '附件',
       },
       comProps: {},
-      extra: <Button onClick={() => getCapture({action: 'userCapture',  })} className='m-l-5'  >用户画像</Button>, 
+      extra: (
+        <Button
+          onClick={() => getCapture({ action: 'userCapture' })}
+          className="m-l-5"
+        >
+          用户画像
+        </Button>
+      ),
     },
   ];
-  
-
-
-
 
   const formProps = {
     // layout: 'vertical',

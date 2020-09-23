@@ -71,14 +71,10 @@ const HouseNoTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-
-      // extra={
-      //   <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
-      // }
-
-      actionConfig={{
-        isQRCode: true,
-      }}
+      isQRCode
+      // actionConfig={{
+      //   isQRCode: true,
+      // }}
       {...props}
     ></SmartTable>
   );

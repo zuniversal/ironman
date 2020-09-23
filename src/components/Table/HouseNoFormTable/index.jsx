@@ -28,12 +28,14 @@ import SmartTable from '@/common/SmartTable'; //
 
 const HouseNoFormTable = props => {
   console.log(' HouseNoFormTable  ： ', props); //
-  const { tdClick,    } = props; //
+  const { tdClick } = props; //
 
   const columns = [
     {
       title: '电站名称',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '电源编号',
@@ -57,9 +59,6 @@ const HouseNoFormTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      extra={
-        <a onClick={() => tdClick({action: 'detail'})}>生成二维码</a>
-      }
       rowLength={2}
       {...props}
     ></SmartTable>

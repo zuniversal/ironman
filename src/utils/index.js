@@ -112,7 +112,10 @@ export const mockFormData = (config, init) => {
   return mockData;
 };
 
-export const formatConfig = config =>
+export const w320 = 'w-320'; //
+export const w240 = 'w-240'; //
+
+export const formatConfig = (config, { isSearchForm } = {}) =>
   config.map((v, i) => {
     // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
     const items = {
@@ -132,8 +135,12 @@ export const formatConfig = config =>
       // : { ...v.itemProps, key: `field${i}`, name: `field${i}` },
       // ? { ...v.itemProps, initialValue: `field${i}`, key: `field${i}` }
       // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
+      comProps: {
+        ...v.comProps,
+        className: isSearchForm ? w240 : w320,
+      },
     };
-    // console.log(' items ： ', items,  )//
+    console.log(' items ： ', items); //
     if (!React.isValidElement(v)) {
       items.formType = v.formType || 'Input';
     }

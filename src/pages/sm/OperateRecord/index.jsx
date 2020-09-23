@@ -14,6 +14,7 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import OperateRecordTable from '@/components/Table/OperateRecordTable'; //
 import OperateRecordForm from '@/components/Form/OperateRecordForm'; //
+import OperateRecordSearchForm from '@/components/Form/OperateRecordSearchForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
@@ -24,7 +25,7 @@ import { actions, mapStateToProps } from '@/models/operateRecord'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '物料';
+const TITLE = '操作记录';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -162,14 +163,9 @@ class OperateRecord extends PureComponent {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
-        <SearchForm></SearchForm>
+        <OperateRecordSearchForm></OperateRecordSearchForm>
         <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
+          <SearchForm></SearchForm>
           <Button type="primary" onClick={() => this.props.exportData()}>
             导出{TITLE}数据
           </Button>

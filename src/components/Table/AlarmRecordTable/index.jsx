@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const AlarmRecordTable = props => {
   console.log(' AlarmRecordTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -58,16 +58,22 @@ const AlarmRecordTable = props => {
     {
       title: '当前状态',
     },
-    
-    
   ];
+
+  const extra = props => (
+    <>
+      <a onClick={() => tdClick({ action: 'showList' })}>处理</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a>
+    </>
+  );
 
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -75,7 +81,6 @@ const AlarmRecordTable = props => {
 
 AlarmRecordTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default AlarmRecordTable;

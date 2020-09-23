@@ -149,10 +149,10 @@ export default {
         component: '../pages/om/Goods',
       },
       {
-        path: '/om/missions',
+        path: '/om/missionsManage',
         name: '任务管理',
         icon: <ScheduleFilled />,
-        component: '../pages/om/Missions',
+        component: '../pages/om/MissionsManage',
       },
       {
         path: '/om/workOrder',

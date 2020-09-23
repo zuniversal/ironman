@@ -9,12 +9,21 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography, Divider,  } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Menu,
+  Upload,
+  Result,
+  Typography,
+  Divider,
+} from 'antd';
 import {
   UploadOutlined,
   PlusOutlined,
   CloseCircleOutlined,
-
 } from '@ant-design/icons';
 
 import SmartModal from '@/common/SmartModal'; //
@@ -22,40 +31,30 @@ import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import OrganizeForm from '@/components/Form/OrganizeForm'; //
 import OrganizeTable from '@/components/Table/OrganizeTable'; //
-import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
+import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
-
-import { actions, mapStateToProps,  } from '@/models/organize'//
+import { actions, mapStateToProps } from '@/models/organize'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
+const TITLE = '部门';
 
-
-
-
-
-
-const TITLE = '组织'
-
-
-const titleMap =  {
+const titleMap = {
   add: `新增${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
-}
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
-
-@connect(mapStateToProps, )
+@connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
   modalForm: OrganizeForm,
-
 })
 class Organize extends PureComponent {
   constructor(props) {
@@ -63,60 +62,58 @@ class Organize extends PureComponent {
     this.state = {
       show: false,
 
-      showModalCom: null,  
+      showModalCom: null,
 
-      action: '',  
-      title: '',  
+      action: '',
+      title: '',
 
       titleMap,
-      
-      newTbData: [],  
 
+      newTbData: [],
     };
   }
 
-
-  onUploadChange = (params,  ) => {
-    console.log(' onUploadChange,  , ： ', params,    )
+  onUploadChange = params => {
+    console.log(' onUploadChange,  , ： ', params);
     if (params.file.status === 'done') {
       setTimeout(() => {
-        console.log('  延时器 ： ',  )
+        console.log('  延时器 ： ');
         this.setState({
           modalContent: <SuccResult></SuccResult>,
-        })
-        
-      }, 2000)
-      
+        });
+      }, 2000);
     }
-  }
-  showUploadModal = (params, ) => {
-    console.log('    showUploadModal ： ', params,  )
-    //   const {item,  } = this.props// 
-    const {action,  } = params
-    
+  };
+  showUploadModal = params => {
+    console.log('    showUploadModal ： ', params);
+    //   const {item,  } = this.props//
+    const { action } = params;
+
     this.setState({
       show: true,
       action,
-      modalContent: <UploadFileCom onChange={this.onUploadChange} label={titleMap[action]}  ></UploadFileCom>,
-    })
-  }
-  downloadFile = (params, ) => {
-    console.log('    downloadFile ： ', params,  )
-    this.props.downloadFile()
-  }
+      modalContent: (
+        <UploadFileCom
+          onChange={this.onUploadChange}
+          label={titleMap[action]}
+        ></UploadFileCom>
+      ),
+    });
+  };
+  downloadFile = params => {
+    console.log('    downloadFile ： ', params);
+    this.props.downloadFile();
+  };
 
-  menuClick = (params,  ) => {
-    const {key, clickFn, } = params
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+  menuClick = params => {
+    const { key, clickFn } = params;
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
     if (clickFn) {
-      this[clickFn](params)
-      return  
+      this[clickFn](params);
+      return;
     }
-    
-  }
+  };
 
-  
-  
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -124,8 +121,6 @@ class Organize extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-
-  
   showModal = e => {
     console.log('    showModal ： ', e);
     this.setState({
@@ -139,11 +134,11 @@ class Organize extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res); //
-      const {newTbData,  } = this.state// 
+      const { newTbData } = this.state; //
       this.setState({
         show: false,
-        newTbData: [res, ...newTbData,  ],
-      })
+        newTbData: [res, ...newTbData],
+      });
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -158,7 +153,6 @@ class Organize extends PureComponent {
     // .catch(info => {
     //   console.log('Validate Failed:', info);
     // });
-
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -167,32 +161,38 @@ class Organize extends PureComponent {
     });
   };
 
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
-    const {modalContent,  } = this.state// 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { modalContent } = this.state; //
     if (modalContent) {
-      return modalContent
+      return modalContent;
     }
-    
+
     // return null
+  };
+
+  renderSearchForm(params) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return (
+      <div className={'fsb '}>
+        <SearchForm></SearchForm>
+        <div className={'btnWrapper'}>
+          <Button
+            type="primary"
+            onClick={() => this.props.showFormModal({ action: 'add' })}
+          >
+            新增{TITLE}
+          </Button>
+        </div>
+      </div>
+    );
   }
 
-  renderSearchForm(params,  ) {
-    // console.log(' renderSearchForm ： ', params,  )
-    return <div className={'fsb '}  >
-      <SearchForm></SearchForm>
-      <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-      </div>
-    </div>
-  }
-  
-  renderTable(params,  ) {
-    console.log(' renderTable ： ', params, this.state, this.props,  )
+  renderTable(params) {
+    console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
       newTbData: this.state.newTbData,
-
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
@@ -200,24 +200,27 @@ class Organize extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
-    }
+    };
 
-    return <OrganizeTable {...tableProps}   ></OrganizeTable>
+    return <OrganizeTable {...tableProps}></OrganizeTable>;
   }
-  
-  renderSmartModal(params,  ) {
-    console.log(' renderSmartModal ： ', params, this.state, this.props,  )
-    const { show, title, action, titleMap,   } = this.state; //
 
-    return <SmartModal 
-      show={show} onOk={this.onOk} onCancel={this.onCancel}
-      action={action}
-      titleMap={titleMap}
-    >
-      {this.renderModalContent()}
-    </SmartModal>
+  renderSmartModal(params) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return (
+      <SmartModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+      >
+        {this.renderModalContent()}
+      </SmartModal>
+    );
   }
-  
 
   render() {
     console.log(
@@ -227,23 +230,13 @@ class Organize extends PureComponent {
       this.props,
     );
 
-
-
-
     return (
       <div className="Organize">
-
         {this.renderSearchForm()}
 
         {this.renderTable()}
-        
+
         {this.renderSmartModal()}
-
-
-
-        
-
-
       </div>
     );
   }

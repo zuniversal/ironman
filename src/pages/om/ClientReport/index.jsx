@@ -164,7 +164,7 @@ class ClientReport extends PureComponent {
     return (
       <div className={'fsb '}>
         <ClientReportSearchForm></ClientReportSearchForm>
-        <div className={'btnWrapper'}>
+        {/* <div className={'btnWrapper'}>
           <Button
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -174,7 +174,7 @@ class ClientReport extends PureComponent {
           <Button type="primary" onClick={() => this.props.exportData()}>
             导出{TITLE}数据
           </Button>
-        </div>
+        </div> */}
       </div>
     );
   }

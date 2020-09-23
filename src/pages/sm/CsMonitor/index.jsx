@@ -161,9 +161,9 @@ class CsMonitor extends PureComponent {
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
+      <div className={'fje '}>
         <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
+        {/* <div className={'btnWrapper'}>
           <Button
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -173,7 +173,7 @@ class CsMonitor extends PureComponent {
           <Button type="primary" onClick={() => this.props.exportData()}>
             导出{TITLE}数据
           </Button>
-        </div>
+        </div> */}
       </div>
     );
   }
