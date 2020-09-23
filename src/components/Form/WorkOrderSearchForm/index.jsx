@@ -51,7 +51,7 @@ const WorkOrderSearchForm = props => {
 
   const formProps = {
     // layout: 'vertical',
-    // layout: 'inline',
+    layout: 'inline',
   };
 
   return (

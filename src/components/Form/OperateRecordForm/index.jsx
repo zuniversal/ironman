@@ -20,35 +20,55 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'//
 
-
-
-
-
-
-const MissionsSearchForm = props => {
-  console.log(' MissionsSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
-
-    
-  const config = [
-    {
-      formType: 'Select', 
-      itemProps: {
-        label: '状态',
-      },
+export const config = [
+  {
+    formType: 'Select',  
+    noRule: true,
+    itemProps: {
+      label: '模块',
     },
-    
-  ];
+  },
+  {
+    itemProps: {
+      label: '名称',
+    },
+  },
+  {
+    formType: 'TextArea',  
+    noRule: true,
+    itemProps: {
+      label: '枚举值',
+    },
+  },
+  {
+    noRule: true,
+    itemProps: {
+      label: '关联设备',
+    },
+  },
+  {
+    formType: 'TextArea',  
+    noRule: true,
+    itemProps: {
+      label: '备注',
+    },
+  },
+
+  
+];
 
 
 
+const ShiftsForm = props => {
+  console.log(' ShiftsForm ： ', props); //
+  const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
-    <div className={' MissionsSearchForm '}>
+    <div className={' ShiftsForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -57,7 +77,6 @@ const MissionsSearchForm = props => {
         // init={init}
         // init={{}}
 
-        noRuleAll
         {...rest}
       ></SmartForm>
 
@@ -66,6 +85,6 @@ const MissionsSearchForm = props => {
   );
 };
 
-MissionsSearchForm.defaultProps = {};
+ShiftsForm.defaultProps = {};
 
-export default MissionsSearchForm;
+export default ShiftsForm;

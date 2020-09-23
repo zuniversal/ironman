@@ -84,6 +84,7 @@ export default ({
       this.setState({
         action,
         isShow: true,
+        formComProps,
         editData: action === 'edit' ? params.record : {},
       });
     };
@@ -216,7 +217,7 @@ export default ({
     };
 
     getList = params => {
-      console.log('    getList ： ', params, this.state, this.props);
+      console.log('    getList ： ', params, this.state);
       const { dispatch } = this.props; //
 
       dispatch(actions.getListAsync({}));
@@ -230,7 +231,7 @@ export default ({
     };
 
     renderSmartFormModal(params) {
-      console.log(' renderSmartFormModal ： ', params);
+      console.log(' renderSmartFormModal ： ', params, this.props);
       const { action, isShow } = this.state; //
 
       const formComProps = {

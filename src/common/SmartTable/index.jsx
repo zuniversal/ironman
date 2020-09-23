@@ -79,8 +79,8 @@ export const ActionCom = props => {
     showQRCode,
     noDefault,
     tableProps,
-  } = props; //
-  console.log(' ActionCom props ： ', props);
+  } = props; 
+  //console.log(' ActionCom props ： ', props);
   return (
     <span>
       {!props.noDefault && (
@@ -411,7 +411,7 @@ class SmartTable extends PureComponent {
           ...actionConfig,
         };
 
-        console.log(' restrest,  ： ', props); //
+        //console.log(' restrest,  ： ', props); 
         return <ActionCom {...props}></ActionCom>;
         // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
       },

@@ -9,112 +9,98 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result, Typography, Divider,  } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  CloseCircleOutlined,
-
-} from '@ant-design/icons';
-
-import SmartModal from '@/common/SmartModal'; //
+import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
+import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
+import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
+import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import GoodsForm from '@/components/Form/GoodsForm'; //
-import GoodsTable from '@/components/Table/GoodsTable'; //
-import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
+import DropDownBtn from '@/common/DropDownBtn'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import SuccResult from '@/components/Widgets/SuccResult'; //
 
+import { actions, mapStateToProps } from '@/models/alarmRecord'; //
+import SmartHOC from '@/common/SmartHOC';
+import { connect } from 'umi';
 
+const TITLE = '物料';
 
+const titleMap = {
+  add: `新建${TITLE}`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
+  newRelated: `关联新增`,
+  upload: `文件上传`,
+  down: `文件下载`,
+};
 
+// const mapStateToProps = ({ alarmRecord, }) => alarmRecord;
 
-
-export const TITLE = '物料'
-
-
-
-
-class Goods extends PureComponent {
+@connect(mapStateToProps)
+@SmartHOC({
+  actions,
+  titleMap,
+  modalForm: AlarmRecordForm,
+})
+class AlarmRecord extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      showResultModal: false,  
-      
-      showModalCom: null,  
-      modalContent: null,  
 
-      action: '',  
-      title: '',  
+      showModalCom: null,
 
-      titleMap: {
-        add: `新增${TITLE}`,
-        edit: `编辑${TITLE}`,
-        detail: `${TITLE}详情`,
-        newRelated: `关联新增`,
-        upload: `文件上传`,
-        down: `文件下载`,
-      },
+      action: '',
+      title: '',
 
+      titleMap,
+
+      newTbData: [],
     };
   }
 
-
-
-  onResultModalCancel = (e,  ) => {
-    console.log('    onResultModalCancel ： ', e,   )
-    this.setState({
-      showResultModal: false,
-    })
-    
-  }
-  showFormModal = (params, ) => {
-    const {action ,  } = params
-    console.log('    showFormModal ： ', action, params, this.state, this.props,  );
-    this.setState({
-      action,
-      show: true,
-      title: this.state.titleMap[action],  
-      modalForm: GoodsForm,
-    });
-  };
-
-
-  renderForm = (
-    <div className={'fsb '}  >
-      <SearchForm></SearchForm>
-      <div className={'btnWrapper'}>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary "onClick={() => this.showFormModal({action: 'add',  })}  >导出资产数据</Button>
-      </div>
-    </div>
-  );
-
-  renderModalForm = (e,  ) => {
-    console.log('    renderModalForm ： ', e, this.state, this.props,   )
-    const {modalForm,  } = this.state// 
-    if (modalForm) {
-      return modalForm
+  onUploadChange = params => {
+    console.log(' onUploadChange,  , ： ', params);
+    if (params.file.status === 'done') {
+      setTimeout(() => {
+        console.log('  延时器 ： ');
+        this.setState({
+          modalContent: <SuccResult></SuccResult>,
+        });
+      }, 2000);
     }
-    
-    // return null
-  }
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e,   )
-    const {modalContent,  } = this.state// 
-    
-    return modalContent
-  }
-  showModalContent = (params, ) => {
-    const {action,  } = params
-    console.log('    showModalContent ： ', action, params, this.state, this.props,  );
+  };
+  showUploadModal = params => {
+    console.log('    showUploadModal ： ', params);
+    //   const {item,  } = this.props//
+    const { action } = params;
+
     this.setState({
-      action,
       show: true,
-      title: this.state.titleMap[action],  
+      action,
+      modalContent: (
+        <UploadFileCom
+          onChange={this.onUploadChange}
+          label={titleMap[action]}
+        ></UploadFileCom>
+      ),
     });
   };
-  
+  downloadFile = params => {
+    console.log('    downloadFile ： ', params);
+    this.props.downloadFile();
+  };
+
+  menuClick = params => {
+    const { key, clickFn } = params;
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
+    if (clickFn) {
+      this[clickFn](params);
+      return;
+    }
+  };
+
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -122,8 +108,6 @@ class Goods extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-
-  
   showModal = e => {
     console.log('    showModal ： ', e);
     this.setState({
@@ -131,127 +115,141 @@ class Goods extends PureComponent {
     });
   };
   onOk = async props => {
-    console.log(' onOk ： ', props, this.state, this.props); //
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
-    // try {
-    //   const res = await form.validateFields();
-    //   console.log('  res await 结果  ：', res); //
-    // } catch (error) {
-    //   console.log(' error ： ', error); //
-    // }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res); //
+      const { newTbData } = this.state; //
+      this.setState({
+        show: false,
+        newTbData: [res, ...newTbData],
+      });
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
 
-    form
-    .validateFields()
-    .then(values => {
-      console.log('  values await 结果  ：', values,  )//
-      form.resetFields();
-      // onCreate(values);
-    })
-    .catch(info => {
-      console.log('Validate Failed:', info);
-    });
-
-    // this.setState({
-    //   show: false,
+    // form
+    // .validateFields()
+    // .then(values => {
+    //   console.log('  values await 结果  ：', values,  )//
+    //   form.resetFields();
+    //   // onCreate(values);
+    // })
+    // .catch(info => {
+    //   console.log('Validate Failed:', info);
     // });
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       show: false,
-      modalForm: null,  
-      modalContent: null,  
     });
   };
 
-  renderTable = (e,  ) => {
-    console.log('    renderTable ： ', e,   )
-    const tableProps = {
-      edit: this.showFormModal,
-      remove: this.showFormModal,
-      tdClick: this.showModalContent,
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { modalContent } = this.state; //
+    if (modalContent) {
+      return modalContent;
     }
 
-    return <GoodsTable {...tableProps}  ></GoodsTable>
+    // return null
+  };
+
+  renderSearchForm(params) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return (
+      <div className={'fsb '}>
+        <SearchForm></SearchForm>
+        <div className={'btnWrapper'}>
+          <Button
+            type="primary"
+            onClick={() => this.props.showFormModal({ action: 'add' })}
+          >
+            新增{TITLE}
+          </Button>
+          <Button type="primary" onClick={() => this.props.exportData()}>
+            导出{TITLE}数据
+          </Button>
+        </div>
+      </div>
+    );
   }
 
-  componentDidMount() {
-    console.log(
-      ' Goods 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
+  renderTable(params) {
+    console.log(' renderTable ： ', params, this.state, this.props);
 
-    // this.showFormModal({action: 'add',  });
+    const tableProps = {
+      newTbData: this.state.newTbData,
 
+      onSelectChange: this.props.onSelectChange,
+      tdClick: this.props.showFormModal,
+      showDetail: this.props.showFormModal,
+      dataSource: this.props.dataList,
+      edit: this.props.showFormModal,
+      remove: this.props.onRemove,
+    };
+
+    return <AlarmRecordTable {...tableProps}></AlarmRecordTable>;
+  }
+
+  renderSmartModal(params) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return (
+      <SmartModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+      >
+        {this.renderModalContent()}
+      </SmartModal>
+    );
   }
 
   render() {
     console.log(
-      ' %c Goods 组件 this.state, this.props ： ',
+      ' %c AlarmRecord 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
     );
-    const { show, title, action, showResultModal,  } = this.state; //
+    const { show, title, action, titleMap } = this.state; //
 
+    const formComProps = {
+      getCapture: this.showCapture,
+      action: this.state.action,
+    };
 
-    const modalProps = {
-      title: title,
-      show: showResultModal,
-      onOk: this.onResultModalOk,
-      onCancel: this.onResultModalCancel,
-    }
-    const resProps = {
-      status: 'error',  
-      title: '导入成功',  
-      subTitle: '请核对并修改以下信息后，再重新提交。',  
-      // extra: [
-      //   <Button  key="console" >返回列表</Button>,
-      // ],
-      // children: <ErrorInfo></ErrorInfo>,
-    }
-    
     return (
-      <div className="Goods">
-        
-        {this.renderForm}
-
+      <div className="AlarmRecord">
+        {this.renderSearchForm()}
 
         {this.renderTable()}
 
- 
+        {this.renderSmartModal()}
 
-        <SmartFormModal
+        {/* <SmartFormModal
           // width={'900px'}
-          formComProps={{action, }} 
+          formComProps={{...tableProps, ...formComProps, action, }} 
 
           title={title}
+          show={show}
           onOk={this.onOk}
           onCancel={this.onCancel}
           show={show}
           FormCom={this.renderModalForm()}
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
-        >
-          {this.renderModalContent()}
-        </SmartFormModal>
-
-
-        <ResultModal
-          modalProps={modalProps} 
-          resProps={resProps} 
-          
-        >
-          <ErrorInfo></ErrorInfo>
-        </ResultModal>
-        
-
-
+        ></SmartFormModal> */}
       </div>
     );
   }
 }
 
-export default Goods;
+export default AlarmRecord;

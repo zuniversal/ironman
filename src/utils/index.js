@@ -141,6 +141,11 @@ export const formatConfig = config =>
   });
 
 export const mockTbData = children => {
+  // https://segmentfault.com/a/1190000020221170
+  // Array.from({ length: end }, (_, index) => index);
+  // Array(length).map(() => init);
+  // Array.from({ length }, () => ({}));
+  // Array(length).fill({});
   return new Array(20).fill(0).map((v, i) => {
     const start = 10;
     const childrenObj = {};
