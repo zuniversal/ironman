@@ -46,6 +46,7 @@ export default ({
 
         newTbData: [],
         editData: {},
+        formComProps: {},
 
         topCom: null,
       };
@@ -61,11 +62,12 @@ export default ({
     };
 
     showFormModal = params => {
-      const { action } = params;
+      const { action, formComProps } = params;
       console.log(
         '    showFormModal ： ',
         action,
         params,
+        formComProps,
         this.state,
         this.props,
       );
@@ -233,6 +235,7 @@ export default ({
 
       const formComProps = {
         action,
+        ...this.state.formComProps,
         // init: this.state.editData,
       };
 

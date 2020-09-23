@@ -69,7 +69,7 @@ const foramtText = text => {
   return txt;
 };
 
-export const ActionCom = params => {
+export const ActionCom = props => {
   const {
     edit,
     remove,
@@ -78,9 +78,9 @@ export const ActionCom = params => {
     onRemove,
     showQRCode,
     noDefault,
-    props,
-  } = params;//
-  console.log(' ActionCom props ： ', params); 
+    tableProps,
+  } = props; //
+  console.log(' ActionCom props ： ', props);
   return (
     <span>
       {!props.noDefault && (
@@ -127,7 +127,7 @@ class SmartTable extends PureComponent {
 
       isShowResultModal: false,
 
-      mockTbData: mockTbData(props.haveChildren, ),
+      mockTbData: mockTbData(props.haveChildren),
       // mockTbData: [],
 
       selectionType: 'checkbox',
@@ -407,11 +407,11 @@ class SmartTable extends PureComponent {
           remove,
           showQRCode: this.showQRCode,
           extra,
-          props: this.props,
+          tableProps: this.props,
           ...actionConfig,
         };
-  
-        console.log(' restrest,  ： ', props )//
+
+        console.log(' restrest,  ： ', props); //
         return <ActionCom {...props}></ActionCom>;
         // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
       },

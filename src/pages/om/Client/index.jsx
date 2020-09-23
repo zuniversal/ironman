@@ -20,33 +20,26 @@ import ClientRadar from '@/components/Echarts/ClientRadar'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
-import { actions,  } from '@/models/client'//
+import { actions } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-
-
-export const TITLE = '客户'
-
+export const TITLE = '客户';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   userCapture: `${TITLE}画像`,
-}
+};
 
+const mapStateToProps = ({ client }) => client;
 
-
-const mapStateToProps = ({ client, }) => client;
-
-
-@connect(mapStateToProps, )
+@connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
   modalForm: ClientForm,
-
 })
 class CRUD extends PureComponent {
   constructor(props) {
@@ -54,101 +47,137 @@ class CRUD extends PureComponent {
     this.state = {
       show: false,
 
-      action: '',  
-      title: '',  
-      Title: '',  
+      action: '',
+      title: '',
+      Title: '',
       titleMap,
 
-      commonContent: null,  
-      commonTitle: '',  
-      isShowModal: false,  
+      commonContent: null,
+      commonTitle: '',
+      isShowModal: false,
 
-      modalContent: null,  
+      modalContent: null,
 
-
-      newTbData: [], 
-      editData: {},  
-
+      newTbData: [],
+      editData: {},
 
       selectedRowKeys: [],
       selectedRows: [],
-      
-
     };
   }
-  
-  renderFormBtn = (params, ) => {
-    console.log(' renderFormBtn ： ', params,    )// 
-    return <div className={'btnWrapper'}> 
-      {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
-      {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
-      <Button type="primary" onClick={() => this.props.search(params)}>搜索</Button>
-      <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
-      {/* <Button type="primary" onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button> */}
-      <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增客户</Button>
-      <Button type="primary" onClick={() => this.props.exportData()} >导出{TITLE}数据</Button>
-      <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
-    </div> 
-  }
+
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
+        {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
+        {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={this.props.syncOAAsync}
+        >
+          同步OA
+        </Button>
+        {/* <Button type="primary" onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button> */}
+        <Button
+          type="primary"
+          onClick={() =>
+            this.props.showFormModal({
+              action: 'add',
+              formComProps: {
+                getCapture: this.showCapture,
+              },
+            })
+          }
+        >
+          新增客户
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+          删除
+        </Button>
+      </div>
+    );
+  };
 
   onSelectChange = (selectedRowKeys, selectedRows) => {
-    console.log(' onSelectChange ： ', selectedRowKeys, selectedRows, this.state, this.props,    )// 
+    console.log(
+      ' onSelectChange ： ',
+      selectedRowKeys,
+      selectedRows,
+      this.state,
+      this.props,
+    ); //
 
-    this.setState({ 
-      selectedRowKeys, 
+    this.setState({
+      selectedRowKeys,
       selectedRows,
     });
-  }
-  syncOAAsync = (params,  ) => {
-    console.log(' syncOAAsync,  , ： ', params,    )
-    const {dispatch,    } = this.props// 
+  };
+  syncOAAsync = params => {
+    console.log(' syncOAAsync,  , ： ', params);
+    const { dispatch } = this.props; //
 
     // dispatch(syncOAAsync({
     // }))
-    
-  }
-  getPortraitAsync = (params,  ) => {
-    console.log(' getPortraitAsync,  , ： ', params,    )
-    const {dispatch,    } = this.props// 
-    
+  };
+  getPortraitAsync = params => {
+    console.log(' getPortraitAsync,  , ： ', params);
+    const { dispatch } = this.props; //
+
     // dispatch(
     //   getPortraitAsync({
     //   })
     // )
-    
-  }
+  };
 
-
-  showFormModal = (params, ) => {
-    const {action,  } = params
-    console.log('    showFormModal ： ', action, params, this.state, this.props,  );
-    const isEdit = action === 'edit'
+  showFormModal = params => {
+    const { action } = params;
+    console.log(
+      '    showFormModal ： ',
+      action,
+      params,
+      this.state,
+      this.props,
+    );
+    const isEdit = action === 'edit';
     if (isEdit) {
-      const {dispatch,  } = this.props// 
+      const { dispatch } = this.props; //
       // dispatch(getItemAsync({
-      //   d_id: 100, 
+      //   d_id: 100,
       // }))
-      
     }
-    
+
     this.setState({
       action,
       show: true,
-      // title: this.state.titleMap[action],  
+      // title: this.state.titleMap[action],
       modalForm: ClientForm,
 
-      editData: action === 'edit' ? params.record : {}, 
+      editData: action === 'edit' ? params.record : {},
     });
   };
 
-  showModalContent = (params, ) => {
-    const {action,  } = params
-    console.log('    showModalContent ： ', action, params, this.state, this.props,  );
+  showModalContent = params => {
+    const { action } = params;
+    console.log(
+      '    showModalContent ： ',
+      action,
+      params,
+      this.state,
+      this.props,
+    );
     this.setState({
       action,
       show: true,
-      // title: this.state.titleMap[action],  
+      // title: this.state.titleMap[action],
       modalForm: ClientForm,
     });
   };
@@ -174,8 +203,8 @@ class CRUD extends PureComponent {
   // };
 
   // onRemove = (props, ) => {
-  //   console.log(' onRemove ： ', props, this.state, this.props); 
-  //   const {dispatch,    } = this.props// 
+  //   console.log(' onRemove ： ', props, this.state, this.props);
+  //   const {dispatch,    } = this.props//
 
   //   // dispatch(removeItemAsync([
   //   //   // d_id: props.record.id,
@@ -186,38 +215,38 @@ class CRUD extends PureComponent {
 
   // };
   // onBatchRemove = (props, ) => {
-  //   console.log(' onBatchRemove ： ', props, this.state, this.props); 
-  //   const {dispatch,    } = this.props// 
-  //   const {selectedRows,  } = this.state// 
+  //   console.log(' onBatchRemove ： ', props, this.state, this.props);
+  //   const {dispatch,    } = this.props//
+  //   const {selectedRows,  } = this.state//
 
   //   // dispatch(removeItemAsync(selectedRows))
 
   // };
-  onOk = async (props, ) => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); 
-    const {action,  } = this.state// 
-    let actionFn = addItemAsync
-    if (action === 'edit') { 
-      actionFn = editItemAsync
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action } = this.state; //
+    let actionFn = addItemAsync;
+    if (action === 'edit') {
+      actionFn = editItemAsync;
     }
-    
+
     const { form } = props; //
 
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action, actionFn,    ); //
-      const {dispatch,    } = this.props// 
+      console.log('  res await 结果  ：', res, action, actionFn); //
+      const { dispatch } = this.props; //
       // dispatch(actionFn({
       //   data: res,
       // }))
-      // const {addItemAsync,  } = this.props// 
+      // const {addItemAsync,  } = this.props//
       //addItemAsync(res)
-      
-      const {newTbData,  } = this.state// 
+
+      const { newTbData } = this.state; //
       this.setState({
         show: false,
-        newTbData: [res, ...newTbData,  ],
-      })
+        newTbData: [res, ...newTbData],
+      });
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -232,7 +261,6 @@ class CRUD extends PureComponent {
     // .catch(info => {
     //   console.log('Validate Failed:', info);
     // });
-
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -241,106 +269,102 @@ class CRUD extends PureComponent {
     });
   };
 
-
-  showCapture = (params, ) => {
-    const {action,  } = params
-    console.log(' showCapture,  , ： ', action,    )
-    const {dispatch, portraitData,    } = this.props// 
+  showCapture = params => {
+    const { action } = params;
+    console.log(' showCapture,  , ： ', action);
+    const { dispatch, portraitData } = this.props; //
     // dispatch(getPortraitAsync({
-    //   d_id: 999, 
+    //   d_id: 999,
     // }))
 
     this.setState({
       isShowModal: true,
       action,
-      // commonTitle: this.state.titleMap[action],  
-      commonContent: <ClientRadar data={portraitData}  ></ClientRadar>, 
-    })
-  }
+      // commonTitle: this.state.titleMap[action],
+      commonContent: <ClientRadar data={portraitData}></ClientRadar>,
+    });
+  };
   // showCommonModal = (params,  ) => {
   //   console.log(' showCommonModal,  , ： ', params,    )
   //   this.setState({
   //     isShowModal: true,
-  //     // commonContent: , 
+  //     // commonContent: ,
   //   })
   // }
-  onModalOk = (params,  ) => {
-    console.log(' onModalOk,  , ： ', params,    )
+  onModalOk = params => {
+    console.log(' onModalOk,  , ： ', params);
     this.setState({
       isShowModal: false,
-    })
-  }
-  onModalCancel = (params,  ) => {
-    console.log(' onModalCancel,  , ： ', params,    )
+    });
+  };
+  onModalCancel = params => {
+    console.log(' onModalCancel,  , ： ', params);
     this.setState({
       isShowModal: false,
-    })
-  }
+    });
+  };
 
-
-  renderModalForm = (e,  ) => {
-    console.log('    renderModalForm ： ', e, this.state, this.props,   )
-    const {modalForm,  } = this.state// 
+  renderModalForm = e => {
+    console.log('    renderModalForm ： ', e, this.state, this.props);
+    const { modalForm } = this.state; //
     if (modalForm) {
-      return modalForm
+      return modalForm;
     }
-    
+
     // return null
-  }
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e,   )
-    const {modalContent,  } = this.state// 
-    
-    return modalContent
-  }
-  renderContent = (e,  ) => {
-    console.log('    renderContent ： ', e,   )
-    const {commonContent,  } = this.state// 
-    return commonContent
-  }
+  };
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e);
+    const { modalContent } = this.state; //
+
+    return modalContent;
+  };
+  renderContent = e => {
+    console.log('    renderContent ： ', e);
+    const { commonContent } = this.state; //
+    return commonContent;
+  };
 
   // getList = (e,  ) => {
   //   console.log('    getList ： ', e, this.state, this.props,   )
-    
-  //   const {dispatch,    } = this.props// 
+
+  //   const {dispatch,    } = this.props//
 
   //   // dispatch(getListAsync(params))
 
   // }
 
-  search = async (params, ) => {
-    console.log('    search ： ', params,  )
-    const {form,  } = params
-    
+  search = async params => {
+    console.log('    search ： ', params);
+    const { form } = params;
+
     const res = await form.validateFields();
-    console.log('  res await 结果  ：', res, form,    ); //
-  }
+    console.log('  res await 结果  ：', res, form); //
+  };
 
-
-  renderSearchForm(params,  ) {
+  renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
-    return <ClientSearchForm
-      formBtn={this.renderFormBtn}
-      // onSubmit={this.onSubmit}
-      // onFail={this.onFail}
-    ></ClientSearchForm>
+    return (
+      <ClientSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></ClientSearchForm>
+    );
   }
-  
 
-
-  renderTable(params,  ) {
-    console.log(' renderTable ： ', params, this.state, this.props,  )
+  renderTable(params) {
+    console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
       // edit: this.showModal,
       // remove: this.showModal,
       // tdClick: this.showModal,
-      
+
       // edit: this.showFormModal,
       // remove: this.showFormModal,
       // tdClick: this.showModalContent,
       newTbData: this.state.newTbData,
-
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
@@ -348,18 +372,15 @@ class CRUD extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
-    }
+    };
 
-    return <ClientTable {...tableProps}   ></ClientTable>
+    return <ClientTable {...tableProps}></ClientTable>;
   }
-  
 
   componentDidMount() {
-    console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props,  )// 
-    
+    console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props); //
 
     // this.getList()
-    
   }
 
   render() {
@@ -369,31 +390,29 @@ class CRUD extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showForm, title, isShowModal, commonTitle, action, titleMap,    } = this.state; //
-
-    
+    const {
+      show,
+      showForm,
+      title,
+      isShowModal,
+      commonTitle,
+      action,
+      titleMap,
+    } = this.state; //
 
     const formComProps = {
       getCapture: this.showCapture,
       action: this.state.action,
-      // init: this.state.editData, 
-    }
-
-    
-
-
+      // init: this.state.editData,
+    };
 
     return (
       <div className="CRUD">
         {/* CRUD */}
 
-
-
         {this.renderSearchForm()}
 
         {this.renderTable()}
-
-
 
         <SmartFormModal
           // width={'900px'}
@@ -414,17 +433,14 @@ class CRUD extends PureComponent {
           {this.renderModalContent()}
         </SmartFormModal>
 
-
-        <SmartModal 
-          title={commonTitle} 
-          show={isShowModal} 
-          onOk={this.onModalOk} 
+        <SmartModal
+          title={commonTitle}
+          show={isShowModal}
+          onOk={this.onModalOk}
           onCancel={this.onModalCancel}
-          
         >
           {this.renderContent()}
         </SmartModal>
-
 
         {/* <SmartModal show={show} onOk={this.onOk} onCancel={this.onCancel}>
           <ClientForm
@@ -432,11 +448,6 @@ class CRUD extends PureComponent {
             onFail={this.onFail}
           ></ClientForm>
         </SmartModal> */}
-
-
-
-
-
       </div>
     );
   }
