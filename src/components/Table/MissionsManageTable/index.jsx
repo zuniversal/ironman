@@ -28,7 +28,14 @@ import SmartTable from '@/common/SmartTable'; //
 
 const MissionsManageTable = props => {
   console.log(' MissionsManageTable  ： ', props); //
-  const { showModal, edit, remove, tdClick } = props; //
+  const {
+    showModal,
+    edit,
+    remove,
+    tdClick,
+    startWorkOrder,
+    linkContract,
+  } = props; //
 
   const columns = [
     {
@@ -59,9 +66,11 @@ const MissionsManageTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>发起工单</a>
+      <a onClick={() => startWorkOrder({ action: 'startWorkOrder' })}>
+        发起工单
+      </a>
       <a onClick={() => tdClick({ action: 'showList' })}>完成任务</a>
-      <a onClick={() => tdClick({ action: 'add' })}>关联合同</a>
+      <a onClick={() => linkContract({ action: 'linkContract' })}>关联合同</a>
     </>
   );
 

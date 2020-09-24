@@ -401,15 +401,15 @@ const SmartForm = (props, state) => {
       name: formItemProps.key,
       init: initialValues[comProps?.key],
     };
-    console.log(
-      ' realComProps11 ： ',
-      realComProps,
-      itemProps,
-      formItemProps,
-      comProps,
-      initialValues,
-      formItemLayout,
-    ); //
+    // console.log(
+    //   ' realComProps11 ： ',
+    //   realComProps,
+    //   itemProps,
+    //   formItemProps,
+    //   comProps,
+    //   initialValues,
+    //   formItemLayout,
+    // ); //
 
     // const renderRadioOptions = renderRadioOp(radioData, opType, )
     // const renderSelectOptions = renderSelectOp(selectData, opType, )

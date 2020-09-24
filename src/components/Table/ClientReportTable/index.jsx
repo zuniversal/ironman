@@ -30,7 +30,7 @@ import { linkUrlFn } from '@/utils'; //
 
 const ClientReportTable = props => {
   console.log(' ClientReportTable ： ', props); //
-  const { tdClick, showModal, add, edit } = props; //
+  const { tdClick, add, edit, showPdfModal } = props; //
 
   const columns = [
     {
@@ -81,7 +81,7 @@ const ClientReportTable = props => {
     <>
       <a onClick={() => add({ action: 'add' })}>录入</a>
       <a onClick={() => edit({ action: 'edit' })}>修改</a>
-      <a onClick={() => showModal({ action: 'pdf' })}>打印</a>
+      <a onClick={() => showPdfModal({ action: 'pdf' })}>打印</a>
     </>
   );
 

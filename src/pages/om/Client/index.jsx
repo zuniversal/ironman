@@ -41,7 +41,7 @@ const mapStateToProps = ({ client }) => client;
   titleMap,
   modalForm: ClientForm,
 })
-class CRUD extends PureComponent {
+class Client extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -407,8 +407,8 @@ class CRUD extends PureComponent {
     };
 
     return (
-      <div className="CRUD">
-        {/* CRUD */}
+      <div className="Client">
+        {/* Client */}
 
         {this.renderSearchForm()}
 
@@ -453,4 +453,4 @@ class CRUD extends PureComponent {
   }
 }
 
-export default CRUD;
+export default Client;

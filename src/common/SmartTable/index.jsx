@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
-import QRCodeCom from '@/common/QRCodeCom'; //
+import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
 import { tips, mockTbData } from '@/utils'; //
@@ -334,6 +334,8 @@ class SmartTable extends PureComponent {
       content = (
         <a onClick={() => showDetail({ action: 'detail', record })}>{txt}</a>
       );
+    } else if (config.render) {
+      content = config.render(text, record, index);
     } else {
       content = <span className={``}>{txt}</span>;
     }
@@ -453,7 +455,8 @@ class SmartTable extends PureComponent {
     console.log('    showQRCode ： ', params);
     this.setState({
       show: true,
-      modalContent: <QRCodeCom value={params.record}></QRCodeCom>,
+      // modalContent: <QRCodeCom value={params.record} ></QRCodeCom>,
+      modalContent: <QRCodeContent {...params}></QRCodeContent>,
     });
   };
   onOk = e => {

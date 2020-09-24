@@ -27,13 +27,14 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
 import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm'; //
 import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
+import WorkOrderDetail from '@/components/Detail/WorkOrderDetail'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/workOrder'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '工单';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -161,8 +162,8 @@ class WorkOrder extends PureComponent {
     return (
       <div className={'fsb '}>
         <WorkOrderSearchForm></WorkOrderSearchForm>
-        <SearchForm></SearchForm>
         <div className={'btnWrapper'}>
+          <SearchForm></SearchForm>
           <Button type="primary" onClick={() => this.props.exportData()}>
             导出
           </Button>
@@ -171,6 +172,14 @@ class WorkOrder extends PureComponent {
     );
   }
 
+  showDetail = params => {
+    console.log(' showDetail,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: <WorkOrderDetail></WorkOrderDetail>,
+    });
+  };
   renderTable(params) {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -179,7 +188,8 @@ class WorkOrder extends PureComponent {
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
+      showDetail: this.showDetail,
+      // showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,

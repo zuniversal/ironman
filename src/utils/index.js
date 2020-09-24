@@ -140,13 +140,13 @@ export const formatConfig = (config, { isSearchForm } = {}) =>
         className: isSearchForm ? w240 : w320,
       },
     };
-    console.log(' items ： ', items); //
+    // console.log(' items ： ', items); //
     if (!React.isValidElement(v)) {
       items.formType = v.formType || 'Input';
     }
-    
+
     if (isSearchForm) {
-      items.noRule = true
+      items.noRule = true;
     }
     return items;
   });

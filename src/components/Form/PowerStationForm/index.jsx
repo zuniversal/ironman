@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,28 +16,21 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
+import SmartForm from '@/common/SmartForm'; //
 import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
-import {DeviceInfoTable, WatchInfoTable, } from '@/components/Table/PowerStationInfoTable'; //
+  DeviceInfoTable,
+  WatchInfoTable,
+} from '@/components/Table/PowerStationInfoTable'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//  
-
-
-
-
-
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const PowerStationForm = props => {
-  console.log(' PowerStationForm ： ', props, config,  )//
-  const {action,  } = props// 
+  console.log(' PowerStationForm ： ', props, config); //
+  const { action } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -45,27 +38,24 @@ const PowerStationForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-    
-    
+
   const deciveRow = {
     formType: 'rowText',
     itemProps: {
       label: '设备信息',
     },
-  }
+  };
   const watchRow = {
     formType: 'rowText',
     itemProps: {
       label: '设备信息',
     },
-  }
-  
-
+  };
 
   const addCol = [
     deciveRow,
     {
-      noRule: true,  
+      noRule: true,
       formType: 'Select',
       itemProps: {
         label: '请筛选设备',
@@ -73,27 +63,29 @@ const PowerStationForm = props => {
     },
     watchRow,
     {
-      noRule: true,  
+      noRule: true,
       formType: 'Select',
       itemProps: {
         label: '请筛选监控点',
       },
-    }
-
-  ]
+    },
+  ];
 
   const editCol = [
     deciveRow,
-    // <DeviceInfoTable key={'DeviceInfoTable'}  pagination={false} ></DeviceInfoTable>,
+    <DeviceInfoTable
+      key={'DeviceInfoTable'}
+      pagination={false}
+    ></DeviceInfoTable>,
     watchRow,
-    // <WatchInfoTable key={'WatchInfoTable'}  pagination={false} ></WatchInfoTable>,
+    <WatchInfoTable key={'WatchInfoTable'} pagination={false}></WatchInfoTable>,
     {
       formType: 'rowText',
       itemProps: {
         label: '电气信息',
       },
     },
-    
+
     {
       itemProps: {
         label: '详细地址',
@@ -109,19 +101,21 @@ const PowerStationForm = props => {
         label: '纬度',
       },
     },
-  ]
+  ];
 
-  let typeCols = []
-  
+  let typeCols = [];
+
+  // if (action === 'add') {
+  //   typeCols = addCol
+  // } else if (action === 'edit') {
+  //   typeCols = editCol
+  // }
+
   if (action === 'add') {
-    typeCols = addCol
-  } else if (action === 'edit') {
-    typeCols = editCol
+    typeCols = addCol;
+  } else {
+    typeCols = editCol;
   }
-  
-  
-
-
 
   const config = [
     {
@@ -130,108 +124,103 @@ const PowerStationForm = props => {
       // noRule: true,
       itemProps: {
         label: '基本信息',
-x      },
+      },
     },
     {
       itemProps: {
         label: '所属客户',
-        name: '',  
+        name: '',
       },
     },
     {
       itemProps: {
         label: '户号',
-        name: 'electricity_user',  
+        name: 'electricity_user',
       },
     },
-    
+
     {
       itemProps: {
         label: '电站名称',
-        name: 'name',  
+        name: 'name',
       },
     },
-    
+
     {
       itemProps: {
         label: '托管电站数',
-        name: '',  
+        name: '',
       },
     },
-    
+
     {
       formType: 'rowText',
       itemProps: {
         label: '电气信息',
       },
     },
-    
+
     {
       itemProps: {
         label: '电源编号',
-        name: 'power_number',  
-      },
-    },
-    
-    {
-      itemProps: {
-        label: '进线名称',
-        name: '',  
-      },
-    },
-    
-    {
-      itemProps: {
-        label: '电压等级',
-        name: 'area_code',  
-      },
-    },
-    
-    {
-      itemProps: {
-        label: '倍率',
-        name: '',  
-      },
-    },
-    
-    {
-      itemProps: {
-        label: '变压器容童',
-        name: '',  
+        name: 'power_number',
       },
     },
 
+    {
+      itemProps: {
+        label: '进线名称',
+        name: '',
+      },
+    },
+
+    {
+      itemProps: {
+        label: '电压等级',
+        name: 'area_code',
+      },
+    },
+
+    {
+      itemProps: {
+        label: '倍率',
+        name: '',
+      },
+    },
+
+    {
+      itemProps: {
+        label: '变压器容童',
+        name: '',
+      },
+    },
 
     {
       itemProps: {
         label: '电表号',
-        name: '',  
+        name: '',
       },
     },
     {
       itemProps: {
         label: '电价类型',
-        name: '',  
+        name: '',
       },
     },
     {
       itemProps: {
         label: '电功率考核因数',
-        name: '',  
+        name: '',
       },
     },
     {
       itemProps: {
         label: '计费方式',
-        name: '',  
+        name: '',
       },
     },
 
-    
-    
-    ...typeCols, 
-
-
+    ...typeCols,
 
     {
       formType: 'rowText',
@@ -240,11 +229,10 @@ x      },
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'uploadCom'}    ></UploadCom>,
-    
-    
+    <UploadCom label={'上传铭牌'} key={'uploadCom'}></UploadCom>,
+
     // <Form.Item
-    //   key={'attach'} 
+    //   key={'attach'}
     //   name="upload"
     //   label="上传电气图"
     //   colon={false}
@@ -257,12 +245,7 @@ x      },
     //     </div>
     //   </Upload>
     // </Form.Item>,
-
-    
-    
   ];
-
-
 
   return (
     <div className={''}>
@@ -276,13 +259,10 @@ x      },
 
         {...props}
       ></SmartForm>
-
-
-
     </div>
-  )
-}
+  );
+};
 
-PowerStationForm.defaultProps = {}
+PowerStationForm.defaultProps = {};
 
-export default PowerStationForm
+export default PowerStationForm;

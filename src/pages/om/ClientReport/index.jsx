@@ -20,6 +20,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
+import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/clientReport'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -110,8 +111,8 @@ class ClientReport extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-  showModal = e => {
-    console.log('    showModal ： ', e);
+  showModal = params => {
+    console.log('    showModal ： ', params);
     this.setState({
       show: true,
     });
@@ -147,6 +148,14 @@ class ClientReport extends PureComponent {
     console.log(' onCancel ： ', e, this.state, this.props); //
     this.setState({
       show: false,
+    });
+  };
+
+  showPdfModal = params => {
+    console.log('    showPdfModal ： ', params);
+    this.setState({
+      show: true,
+      modalContent: <ClientReportPdf></ClientReportPdf>,
     });
   };
 
@@ -193,7 +202,7 @@ class ClientReport extends PureComponent {
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
 
-      showModal: this.showModal,
+      showPdfModal: this.showPdfModal,
       add: this.props.showFormModal,
     };
 

@@ -26,6 +26,10 @@ import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import MissionsManageForm from '@/components/Form/MissionsManageForm'; //
 import MissionsManageSearchForm from '@/components/Form/MissionsManageSearchForm'; //
+import {
+  MissionsManageWorkOrderForm,
+  MissionsManageContractForm,
+} from '@/components/Form/MissionsManageActionForm'; //
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
@@ -41,6 +45,8 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  startWorkOrder: '发起工单',
+  linkContract: '关联合同',
 };
 
 // const mapStateToProps = ({ missionsManage, }) => missionsManage;
@@ -174,6 +180,22 @@ class MissionsManage extends PureComponent {
     );
   }
 
+  startWorkOrder = params => {
+    console.log(' startWorkOrder,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: <MissionsManageWorkOrderForm></MissionsManageWorkOrderForm>,
+    });
+  };
+  linkContract = params => {
+    console.log(' linkContract,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: <MissionsManageContractForm></MissionsManageContractForm>,
+    });
+  };
   renderTable(params) {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -186,6 +208,9 @@ class MissionsManage extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
+
+      startWorkOrder: this.startWorkOrder,
+      linkContract: this.linkContract,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;

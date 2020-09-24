@@ -34,44 +34,50 @@ const PowerStationTable = props => {
     {
       title: '户号',
       dataIndex: 'electricity_user',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '电站名称',
       dataIndex: 'name',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '业务主体',
       dataIndex: 'business_entity',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '设备数',
       dataIndex: 'field4',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '监控点数',
       dataIndex: 'Monitoring',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '一次电气图',
       dataIndex: 'field6',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      detail: true,
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
   ];
 
