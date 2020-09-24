@@ -34,6 +34,7 @@ const titleMap = {
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
+  pdf: `月报`,
 };
 
 // const mapStateToProps = ({ clientReport, }) => clientReport;
@@ -191,6 +192,9 @@ class ClientReport extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
+
+      showModal: this.showModal,
+      add: this.props.showFormModal,
     };
 
     return <ClientReportTable {...tableProps}></ClientReportTable>;
