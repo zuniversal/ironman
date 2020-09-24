@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp,  } from '@/utils'//  
 
@@ -72,12 +72,12 @@ const HouseNoSearchForm = props => {
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
     <div className={'fsb HouseNoSearchForm '}>
-      <SmartForm
+      <SearchForm
         // flexRow={4}
         // flexRow={6}
         config={formatConfig(config)}
@@ -87,7 +87,7 @@ const HouseNoSearchForm = props => {
 
         noRuleAll
         {...rest}
-      ></SmartForm>
+      ></SearchForm>
 
       {formBtn}
     </div>

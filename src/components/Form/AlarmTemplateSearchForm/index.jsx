@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'//
 
@@ -165,7 +165,7 @@ const AlarmTemplateForm = props => {
 
   return (
     <div className={' AlarmTemplateForm '}>
-      <SmartForm
+      <SearchForm
         // flexRow={6}
         // config={config}
         config={formatConfig(config)}
@@ -174,7 +174,7 @@ const AlarmTemplateForm = props => {
         // init={{}}
 
         {...rest}
-      ></SmartForm>
+      ></SearchForm>
 
       {formBtn}
     </div>

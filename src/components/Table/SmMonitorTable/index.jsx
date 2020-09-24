@@ -26,8 +26,8 @@ import {
 
 import SmartTable from '@/common/SmartTable'; //
 
-const TemplateTable = props => {
-  console.log(' TemplateTable  ： ', props); //
+const SmMonitorTable = props => {
+  console.log(' SmMonitorTable  ： ', props); //
   const { showModal, edit, remove, tdClick,    } = props; //
 
   const columns = [
@@ -35,19 +35,10 @@ const TemplateTable = props => {
       title: 'id',
     },
     {
-      title: '模块',
+      title: '服务',
     },
     {
-      title: '名称',
-    },
-    {
-      title: '枚举值',
-    },
-    {
-      title: '关联设备',
-    },
-    {
-      title: '备注',
+      title: '状态',
     },
     
   ];
@@ -63,9 +54,9 @@ const TemplateTable = props => {
   );
 };
 
-TemplateTable.defaultProps = {
+SmMonitorTable.defaultProps = {
   tdClick: () => {},
   
 };
 
-export default TemplateTable;
+export default SmMonitorTable;

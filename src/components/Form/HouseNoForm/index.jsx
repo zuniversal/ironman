@@ -100,7 +100,7 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '邮编',
-        name: '',  
+        name: 'postcode',  
       },
     },
     {
@@ -141,7 +141,7 @@ const HouseNoForm = props => {
       formType: 'Select',
       itemProps: {
         label: '电价类型',
-        name: '',  
+        name: 'type',  
       },
     },
     

@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp,  } from '@/utils'//
 
@@ -56,7 +56,7 @@ const ShiftsArrangeSearchForm = props => {
 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
@@ -65,7 +65,7 @@ const ShiftsArrangeSearchForm = props => {
         <Button type="primary "onClick={() => {}}  >导出数据</Button>
       </div> */}
 
-      <SmartForm
+      <SearchForm
         // flexRow={4}
         config={formatConfig(config)}
         formProps={formProps}
@@ -77,7 +77,7 @@ const ShiftsArrangeSearchForm = props => {
         
         noRuleAll
         {...props}
-      ></SmartForm>
+      ></SearchForm>
     </div>
   );
 };

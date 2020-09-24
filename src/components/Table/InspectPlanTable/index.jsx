@@ -33,9 +33,19 @@ const InspectPlanTable = props => {
   const columns = [
     {
       title: '电站',
+      dataIndex: 'name',
     },
     {
-      title: '剩余/总巡检数量',
+      title: '客户',
+      dataIndex: 'customer',
+    },
+    {
+      title: '剩余',
+      dataIndex: 'surplus_plan_num',
+    },
+    {
+      title: '总巡检数量',
+      dataIndex: 'spect_plan_num',
     },
   ];
 

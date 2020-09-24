@@ -130,28 +130,32 @@ const PowerStationForm = props => {
       // noRule: true,
       itemProps: {
         label: '基本信息',
-      },
+x      },
     },
     {
       itemProps: {
         label: '所属客户',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '户号',
+        name: 'electricity_user',  
       },
     },
     
     {
       itemProps: {
         label: '电站名称',
+        name: 'name',  
       },
     },
     
     {
       itemProps: {
         label: '托管电站数',
+        name: '',  
       },
     },
     
@@ -165,30 +169,35 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '电源编号',
+        name: 'power_number',  
       },
     },
     
     {
       itemProps: {
         label: '进线名称',
+        name: '',  
       },
     },
     
     {
       itemProps: {
         label: '电压等级',
+        name: 'area_code',  
       },
     },
     
     {
       itemProps: {
         label: '倍率',
+        name: '',  
       },
     },
     
     {
       itemProps: {
         label: '变压器容童',
+        name: '',  
       },
     },
 
@@ -196,21 +205,25 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '电表号',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '电价类型',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '电功率考核因数',
+        name: '',  
       },
     },
     {
       itemProps: {
         label: '计费方式',
+        name: '',  
       },
     },
 

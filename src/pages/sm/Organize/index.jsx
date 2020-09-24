@@ -48,7 +48,7 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ houseNo, }) => houseNo;
+// const mapStateToProps = ({ organize, }) => organize;
 
 @connect(mapStateToProps)
 @SmartHOC({

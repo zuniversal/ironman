@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'//
 
@@ -51,12 +51,12 @@ const WorkOrderSearchForm = props => {
 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
     <div className={' WorkOrderSearchForm '}>
-      <SmartForm
+      <SearchForm
         // flexRow={6}
         // config={config}
         config={formatConfig(config)}
@@ -66,7 +66,7 @@ const WorkOrderSearchForm = props => {
 
         noRuleAll
         {...rest}
-      ></SmartForm>
+      ></SearchForm>
 
       {formBtn}
     </div>

@@ -48,17 +48,17 @@ const WeakTable = props => {
 
     {
       title: '客户名称',
-      dataIndex: '',
+      dataIndex: 'customer.name',
     },
 
     {
       title: '反馈人',
-      dataIndex: '',
+      dataIndex: 'team.name',
     },
 
     {
       title: '反馈时间',
-      dataIndex: '',
+      dataIndex: 'created_time',
     },
 
     {

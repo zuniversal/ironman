@@ -144,6 +144,10 @@ export const formatConfig = (config, { isSearchForm } = {}) =>
     if (!React.isValidElement(v)) {
       items.formType = v.formType || 'Input';
     }
+    
+    if (isSearchForm) {
+      items.noRule = true
+    }
     return items;
   });
 

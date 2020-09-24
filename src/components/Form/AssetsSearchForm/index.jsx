@@ -16,7 +16,7 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'//
 
@@ -50,12 +50,12 @@ const AssetsSearchForm = props => {
   const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
-    layout: 'inline',
+    // layout: 'inline',
   };
 
   return (
     <div className={'fsb assetsSearchForm '}>
-      <SmartForm
+      <SearchForm
         // flexRow={4}
         // flexRow={6}
         // config={config}
@@ -66,7 +66,7 @@ const AssetsSearchForm = props => {
         noRuleAll
 
         {...rest}
-      ></SmartForm>
+      ></SearchForm>
 
       {formBtn}
     </div>

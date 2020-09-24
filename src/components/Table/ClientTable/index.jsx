@@ -44,32 +44,35 @@ const ClientTable = props => {
       noFilter: true,
       detail: true,
       title: '客户名称',
-      dataIndex: 'name',
+      dataIndex: 'electricity_user',
     },
     {
       // noFilter: true,
       title: '客户类型',
-      dataIndex: 'type',
+      dataIndex: 'business_entity',
     },
     {
       // noFilter: true,
       title: '所属行业',
+      dataIndex: 'equipment',
     },
     {
       // noFilter: true,
       title: '企业规模',
+      dataIndex: 'Monitoring',
     },
     {
       title: '资产规模',
-      dataIndex: 'asset',
+      dataIndex: 'create_time',
     },
     {
       detail: true,
       title: '管理员',
+      dataIndex: 'admin',
     },
     {
       title: '户号',
-      dataIndex: 'code',
+      dataIndex: 'electricityuser_num',
       // linkUrl: '/om/houseNo',
       // linkUrlFn: (text, record, index) => {
       //   let linkUrl = HOUSENO
@@ -81,6 +84,7 @@ const ClientTable = props => {
     },
     {
       title: '客户地址',
+      dataIndex: 'addr',
     },
   ];
 

@@ -33,21 +33,21 @@ const PowerStationTable = props => {
   const columns = [
     {
       title: '户号',
-      dataIndex: 'customer',
+      dataIndex: 'electricity_user',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
     },
     {
       title: '电站名称',
-      dataIndex: 'field2',
+      dataIndex: 'name',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
     },
     {
       title: '业务主体',
-      dataIndex: 'signing_company',
+      dataIndex: 'business_entity',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
@@ -61,7 +61,7 @@ const PowerStationTable = props => {
     },
     {
       title: '监控点数',
-      dataIndex: 'field5',
+      dataIndex: 'Monitoring',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),

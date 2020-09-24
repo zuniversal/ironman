@@ -33,36 +33,36 @@ const HouseNoTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'customer',
+      dataIndex: 'electricity_user',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
     },
     {
       title: '户号',
-      dataIndex: 'code',
+      dataIndex: 'name',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
     },
     {
       title: '签约公司',
-      dataIndex: 'signing_company',
+      dataIndex: 'business_entity',
     },
     {
       title: '客户代表',
-      dataIndex: 'customer_representative',
+      dataIndex: 'equipment',
     },
     {
       title: '电站数',
-      dataIndex: 'electricityuser',
+      dataIndex: 'Monitoring',
       render: (text, record, index) => (
         <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
       ),
     },
     {
       title: '录入日期',
-      dataIndex: 'field6',
+      dataIndex: 'create_time',
     },
   ];
 

@@ -41,12 +41,12 @@ const InspectMissionTable = props => {
     },
     {
       title: '电站',
-      dataIndex: '',
+      dataIndex: 'station.name',
     },
 
     {
       title: '客户名称',
-      dataIndex: '',
+      dataIndex: 'plan.customer',
     },
     {
       title: '当前状态',
@@ -55,7 +55,7 @@ const InspectMissionTable = props => {
 
     {
       title: '领取人',
-      dataIndex: '',
+      // dataIndex: 'team.team',
     },
 
     {
