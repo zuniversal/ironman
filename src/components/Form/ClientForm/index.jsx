@@ -28,7 +28,6 @@ const ClientForm = props => {
   const config = [
     {
       formType: 'rowText',
-      // rowText: '基本信息',
       // noRule: true,
       itemProps: {
         label: '基本信息',
@@ -38,7 +37,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '客户名称',
-        // name: '',
+        name: 'name',
       },
       comProps: {},
     },
@@ -101,7 +100,6 @@ const ClientForm = props => {
 
     {
       formType: 'rowText',
-      // rowText: '位置信息',
       // noRule: true,
       itemProps: {
         label: '位置信息',
@@ -121,7 +119,7 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '详细地址',
-        // name: '',
+        name: 'addr',
       },
       comProps: {},
     },
@@ -144,7 +142,6 @@ const ClientForm = props => {
 
     {
       formType: 'rowText',
-      rowText: '管理员信息',
       noRule: true,
       itemProps: {
         label: '管理员信息',
@@ -186,7 +183,6 @@ const ClientForm = props => {
 
     {
       formType: 'rowText',
-      // rowText: '其他信息',
       noRule: true,
       itemProps: {
         label: '其他信息',

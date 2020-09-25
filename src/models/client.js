@@ -102,7 +102,7 @@ export default {
       yield put(action(res));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getItemAsync ： ', payload, type,     )//
+      console.log(' getItemAsync ： ', payload, type); //
       const res = yield call(services.getItem, payload);
       yield put(action(res));
     },

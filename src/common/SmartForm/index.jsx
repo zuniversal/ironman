@@ -190,7 +190,7 @@ const SmartForm = (props, state) => {
   // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
   const initialValues = Object.keys(init).length
     ? init
-    : isMockData && action === 'edit'
+    : isMockData && action && action !== 'add'
     ? mockFormData(configs, init)
     : initData;
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
@@ -681,7 +681,7 @@ SmartForm.defaultProps = {
   init: {}, // 表单初始值
   // formProps: {},
   isMockData: false,
-  isMockData: true, // 是否使用 mock 数据
+  // isMockData: true, // 是否使用 mock 数据
   action: '', // 表单的操作行为
   noPh: false, // 是否显示表单项的 placeholder 文本
   formLayouts: layoutObj,

@@ -24,6 +24,14 @@ import { Form, Input, Button, Spin } from 'antd';
   
 */
 
+const actionMap = {
+  add: 'addItemAsync',
+  edit: 'editItemAsync',
+  detail: 'getItemAsync',
+};
+
+const getAction = key => (actionMap[key] ? actionMap[key] : () => {});
+
 export default ({
   actions,
   modalForm,
@@ -63,6 +71,7 @@ export default ({
 
     showFormModal = params => {
       const { action, formComProps } = params;
+      const actionFn = getAction(action);
       console.log(
         '    showFormModal ： ',
         action,
@@ -70,16 +79,20 @@ export default ({
         formComProps,
         this.state,
         this.props,
+        actionFn,
       );
-      const isEdit = action === 'edit';
-      if (isEdit) {
-        const { dispatch } = this.props; //
-        dispatch(
-          actions.getItemAsync({
-            // d_id: 100,
-          }),
-        );
-      }
+
+      // const isEdit = action === 'edit';
+      // if (isEdit) {
+      //   const { dispatch } = this.props; //
+      //   dispatch(
+      //     actions.getItemAsync({
+      //       // d_id: 100,
+      //     }),
+      //   );
+      // }
+      const { dispatch } = this.props; //
+      dispatch(actions[actionFn](params));
 
       this.setState({
         action,

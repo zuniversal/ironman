@@ -197,7 +197,7 @@ export const linkUrlFn = (params = [], path = '') => (text, record, index) => {
     .map(key => `${key}=${record[key] != undefined ? record[key] : ''}`)
     .join('&');
   linkUrl += paramsStr;
-  console.log(' linkUrl ： ', linkUrl, paramsStr); //
+  // console.log(' linkUrl ： ', linkUrl, paramsStr); //
   return linkUrl;
 };
 

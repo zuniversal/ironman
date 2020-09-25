@@ -9,12 +9,11 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Spin,  } from 'antd';
-
-
+import { Form, Input, Button, Spin } from 'antd';
 
 const Loading = () => {
-  return <Spin className={'loadingWrapper'} size="large" ></Spin>;
+  return <></>;
+  // return <Spin className={'loadingWrapper'} size="large" ></Spin>;
 };
 
 export default Loading;

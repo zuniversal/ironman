@@ -30,7 +30,7 @@ import { linkUrlFn } from '@/utils'; //
 
 const ClientTable = props => {
   console.log(' ClientTable ： ', props); //
-  const { tdClick } = props; //
+  const { tdClick, showDetail } = props; //
 
   const columns = [
     {
@@ -41,34 +41,39 @@ const ClientTable = props => {
       linkUrlFn: linkUrlFn(['code', 'id', 'ids'], HOUSENO),
     },
     {
-      noFilter: true,
-      detail: true,
       title: '客户名称',
-      dataIndex: 'electricity_user',
+      dataIndex: 'name',
+      noFilter: true,
+      d_item: 'id',
+      // detailFn: (text, record, index) => {
+      //   console.log(' text, record, index ： ', text, record, index,  )//
+      //   showDetail(record.id)
+      // }
     },
     {
       // noFilter: true,
       title: '客户类型',
-      dataIndex: 'business_entity',
+      dataIndex: 'type',
     },
     {
       // noFilter: true,
       title: '所属行业',
-      dataIndex: 'equipment',
+      dataIndex: 'industry',
     },
     {
       // noFilter: true,
       title: '企业规模',
-      dataIndex: 'Monitoring',
+      dataIndex: 'scale',
     },
     {
       title: '资产规模',
-      dataIndex: 'create_time',
+      dataIndex: 'asset',
     },
     {
-      detail: true,
       title: '管理员',
       dataIndex: 'admin',
+      // detail: true,
+      detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '户号',

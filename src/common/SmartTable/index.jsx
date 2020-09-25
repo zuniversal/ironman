@@ -304,6 +304,8 @@ class SmartTable extends PureComponent {
     //   return config.render
     // }
 
+    const { linkUrl, linkUrlFn, link, d_item, render } = config;
+
     const { showDetail } = this.props; //
 
     const textLength = `${text}`.length;
@@ -314,28 +316,42 @@ class SmartTable extends PureComponent {
     // console.log('  渲染=== ：', text, txt, )//
 
     let content = '';
-    if (config.linkUrl) {
+    if (linkUrl) {
       content = (
-        <Link to={config.linkUrl} className={``}>
+        <Link to={linkUrl} className={``}>
           {txt}
         </Link>
       );
-    } else if (config.linkUrlFn) {
-      const path = config.linkUrlFn(text, record, index);
+    } else if (linkUrlFn) {
+      const path = linkUrlFn(text, record, index);
       // console.log('  path ：', path,  )//
       content = (
         <Link to={path} className={``}>
           {txt}
         </Link>
       );
-    } else if (config.link) {
+    } else if (link) {
       content = <a className={``}>{txt}</a>;
-    } else if (config.detail) {
+    } else if (d_item) {
       content = (
-        <a onClick={() => showDetail({ action: 'detail', record })}>{txt}</a>
+        <a
+          onClick={() =>
+            showDetail({
+              action: 'detail',
+              d_id: record[d_item],
+              [d_item]: record[d_item],
+            })
+          }
+        >
+          {txt}
+        </a>
       );
-    } else if (config.render) {
-      content = config.render(text, record, index);
+      // } else if (detailFn) {
+      //   content = (
+      //     <a onClick={detailFn}>{txt}</a>
+      //   );
+    } else if (render) {
+      content = render(text, record, index);
     } else {
       content = <span className={``}>{txt}</span>;
     }
