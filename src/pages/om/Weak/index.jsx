@@ -27,7 +27,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import WeakForm from '@/components/Form/WeakForm'; //
 import WeakTable from '@/components/Table/WeakTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
-import ResultModal, { ErrorInfo } from '@/components/Detail/WeakDetail'; //
+import WeakDetail from '@/components/Detail/WeakDetail'; //
 
 import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -178,7 +178,7 @@ class Weak extends PureComponent {
     this.setState({
       show: true,
       ...params,
-      modalContent: <AssetsDetailTable></AssetsDetailTable>,
+      modalContent: <WeakDetail></WeakDetail>,
     });
   };
   renderTable(params) {
