@@ -75,66 +75,27 @@ export default {
         component: '../pages/om/HouseNo',
       },
       {
+        path: '/om/powerStation',
+        name: '电站管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/om/PowerStation',
+        routes: [
+          {
+            path: '/om/clientReport',
+            name: '客户报告',
+            icon: <ScheduleFilled />,
+            component: '../pages/om/ClientReport',
+          },
+
+        ],
+      },
+      {
         path: '/om/assets',
         name: '资产管理',
         icon: <ScheduleFilled />,
         component: '../pages/om/Assets',
       },
-      {
-        path: '/om/powerStation',
-        name: '电站管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/om/PowerStation',
-      },
-      {
-        path: '/om/clientReport',
-        name: '客户报告',
-        icon: <ScheduleFilled />,
-        component: '../pages/om/ClientReport',
-      },
 
-      {
-        path: '/sm/userManage',
-        name: '用户管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/UserManage',
-      },
-      {
-        path: '/sm/organize',
-        name: '组织管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/Organize',
-      },
-      {
-        path: '/sm/role',
-        name: '角色管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/Role',
-      },
-      {
-        path: '/sm/dict',
-        name: '字典管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/Dict',
-      },
-      {
-        path: '/sm/msg',
-        name: '消息管理',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/Msg',
-      },
-      {
-        path: '/sm/csMonitor',
-        name: '系统监控',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/CsMonitor',
-      },
-      {
-        path: '/sm/operateRecord',
-        name: '操作记录',
-        icon: <ScheduleFilled />,
-        component: '../pages/sm/OperateRecord',
-      },
 
       {
         path: '/om/monitorManage',
@@ -211,6 +172,48 @@ export default {
             component: '../pages/om/AlarmRecord',
           },
         ],
+      },
+      {
+        path: '/sm/userManage',
+        name: '用户管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/UserManage',
+      },
+      {
+        path: '/sm/role',
+        name: '角色管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/Role',
+      },
+      {
+        path: '/sm/organize',
+        name: '组织管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/Organize',
+      },
+      {
+        path: '/sm/msg',
+        name: '消息管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/Msg',
+      },
+      {
+        path: '/sm/dict',
+        name: '字典管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/Dict',
+      },
+      {
+        path: '/sm/csMonitor',
+        name: '系统监控',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/CsMonitor',
+      },
+      {
+        path: '/sm/operateRecord',
+        name: '操作记录',
+        icon: <ScheduleFilled />,
+        component: '../pages/sm/OperateRecord',
       },
 
       {

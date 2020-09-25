@@ -38,6 +38,12 @@ const GoodsTable = props => {
       title: '物料名称',
     },
     {
+      title: '物料规格',
+    },
+    {
+      title: '物料单位',
+    },
+    {
       title: '单价(元)',
     },
   ];

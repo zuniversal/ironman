@@ -61,7 +61,7 @@ const ShiftsManageTable = props => {
       // rowKey={'source_no'}
       extra={extra}
       noDefault
-      {...props}
+      // {...props}
     ></SmartTable>
   );
 };

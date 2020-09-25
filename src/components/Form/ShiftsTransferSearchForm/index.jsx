@@ -24,31 +24,27 @@ export const config = [
   {
     formType: 'Select',
     itemProps: {
-      label: '交班人',
+      label: '值班站',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
   },
   {
     formType: 'DatePicker',
     itemProps: {
       label: '选择日期',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
   },
   {
     formType: 'Select',
     itemProps: {
-      label: '电站',
+      label: '交班人',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
   },
-
+  {
+    formType: 'Select',
+    itemProps: {
+      label: '接班人',
+    },
+  },
   
 ];
 
