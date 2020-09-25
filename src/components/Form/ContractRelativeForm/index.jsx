@@ -3,18 +3,7 @@ import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
   Upload,
   Result,
   Tabs 
