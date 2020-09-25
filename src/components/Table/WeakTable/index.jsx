@@ -34,11 +34,13 @@ const WeakTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      detail: true,
     },
 
     {
       title: '名称',
       dataIndex: 'name',
+      detail: true,
     },
 
     {
