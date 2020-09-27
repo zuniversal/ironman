@@ -264,7 +264,10 @@ export const tipsConfirm = res => {
   //   confirms(code, msg);
   // }
 };
-export const wrapParams = p => ({ ...p });
+export const wrapParams = p => ({
+  ...p,
+  // other: 'xxx',
+});
 
 export const backupFn = o => JSON.parse(JSON.stringify(o));
 let t;

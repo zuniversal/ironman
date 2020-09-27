@@ -27,6 +27,14 @@ import {
 } from '@ant-design/icons';
 
 import DynamicForm from './DynamicForm'; //
+import FormList from './FormList'; //
+import NestForm from './NestForm'; //
+import ComplexForm from './ComplexForm'; //
+import DepForm from './DepForm'; //
+// import SearchForm from './SearchForm'; //
+import ModalForm from './ModalForm'; //
+import DateForn from './DateForn'; //
+
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
 import {
   mockFormData,
@@ -97,6 +105,36 @@ export const getLabel = (label, key) => {
   return labelMap[key];
 };
 
+const formItemLayout = {
+  // labelCol: {
+  //   xs: { span: 24 },
+  //   sm: { span: 8 },
+  // },
+  // wrapperCol: {
+  //   xs: { span: 24 },
+  //   sm: { span: 16 },
+  // },
+};
+const tailFormItemLayout = {
+  // wrapperCol: {
+  //   xs: {
+  //     span: 24,
+  //     offset: 0,
+  //   },
+  //   sm: {
+  //     span: 16,
+  //     offset: 8,
+  //   },
+  // },
+};
+
+const formItemLayoutWithOutLabel = {
+  // wrapperCol: {
+  //   xs: { span: 24, offset: 0 },
+  //   sm: { span: 20, offset: 4 },
+  // },
+};
+
 /* 
   抽象表单组件为通用型表单 封装带有相关默认通用操作 
   支持表单配置形式传入 与 原来的直接传入表单组件形式
@@ -152,8 +190,7 @@ const SmartForm = (props, state) => {
   // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
   const initialValues = Object.keys(init).length
     ? init
-    : // : isMockData && (action && action !== 'add')
-    isMockData && true
+    : isMockData && action && action !== 'add'
     ? mockFormData(configs, init)
     : initData;
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
@@ -251,6 +288,27 @@ const SmartForm = (props, state) => {
     // setComponentSize(size);
   };
 
+  // const labelCom = <span>
+  //   Nickname
+  //   <Tooltip title="What do you want others to call you?">
+  //     <QuestionCircleOutlined />
+  //   </Tooltip>
+  // </span>
+  const labelCom = (
+    <span>
+      Nickname
+      <QuestionCircleOutlined />
+    </span>
+  );
+
+  const selectOptions = (
+    <>
+      <Option value="male">male</Option>
+      <Option value="female">female</Option>
+      <Option value="other">other</Option>
+    </>
+  );
+
   const onReset = () => {
     form.resetFields();
   };
@@ -314,10 +372,6 @@ const SmartForm = (props, state) => {
     //   formItemCommonProps.className = `dynamicRow ${formItemCommonProps.className}  `
     // }
 
-    const formItemDividerProps = {
-      ...formItemCommonProps,
-      className: `formItems w100 ${itemPropsCls}  `,
-    };
     const formItemNoRuleProps = {
       ...formItemCommonProps,
       className: `formItems rowText ${itemPropsCls}  `,
@@ -388,7 +442,17 @@ const SmartForm = (props, state) => {
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
       CheckboxGroup: <Checkbox.Group {...realComProps} />,
-      Radio: renderRadioOp(radioData, opType),
+      Radio:
+        // <Radio.Group>
+        //   {/* <Radio value="item">item</Radio> */}
+        //   {renderRadioOp(radioData, opType)}
+        // </Radio.Group>
+        renderRadioOp(radioData, opType),
+      // <Radio.Group>
+      //   <Radio value="small">Small</Radio>
+      //   <Radio value="yes">yes</Radio>
+      //   <Radio value="large">Large</Radio>
+      // </Radio.Group>
       DatePicker: <DatePicker {...realComProps} />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
@@ -402,9 +466,8 @@ const SmartForm = (props, state) => {
     }
 
     if (formType === 'Divider') {
-      console.log(' DividerDividerDivider ： ', formItemCom); //
       return (
-        <Form.Item labelAlign={'left'} {...rowLayout} {...formItemDividerProps}>
+        <Form.Item labelAlign={'left'} {...rowLayout} {...formItemNoRuleProps}>
           <Divider />
         </Form.Item>
       );
@@ -482,6 +545,9 @@ const SmartForm = (props, state) => {
 
       return (
         <Form.Item
+          // key= "field19"
+          // label= "field19"
+
           key={key}
           label={label}
           // rules={rules}
@@ -509,14 +575,7 @@ const SmartForm = (props, state) => {
     //   valuePropName: "checked"
     // }
 
-    console.log(
-      ' formItemProps ： ',
-      formItemProps,
-      normalItem,
-      initialValues,
-      init,
-      action,
-    ); //
+    console.log(' formItemProps ： ', formItemProps, normalItem); //
     return normalItem;
   });
 
@@ -557,13 +616,59 @@ const SmartForm = (props, state) => {
           </Form.Item>
         </Row>
       ) : (
-        <>
-          {formItems}
-          {formBtn && formBtn({ form })}
-        </>
+        formItems
       )}
 
       {children}
+
+      {/* <Form.Item label="Form Layout" name="layout">
+        <Radio.Group value={formLayout}>
+          <Radio.Button value="horizontal">Horizontal</Radio.Button>
+          <Radio.Button value="vertical">Vertical</Radio.Button>
+          <Radio.Button value="inline">Inline</Radio.Button>
+        </Radio.Group>
+      </Form.Item>
+
+      <Form.Item label="Form Size" name="size">
+        <Radio.Group>
+          <Radio.Button value="small">Small</Radio.Button>
+          <Radio.Button value="default">Default</Radio.Button>
+          <Radio.Button value="large">Large</Radio.Button>
+        </Radio.Group>
+      </Form.Item>
+
+
+      
+      <DateForn></DateForn>
+      <ModalForm></ModalForm>
+      <SearchForm></SearchForm> */}
+
+      {/* 
+      <SearchForm></SearchForm>
+      <SearchForm></SearchForm>
+      <SearchForm></SearchForm>
+      <SearchForm></SearchForm>
+      <SearchForm></SearchForm> */}
+      {/* <DepForm></DepForm> */}
+      {/* {ComplexForm()} */}
+      {/* <ComplexForm></ComplexForm> */}
+      {/* {NestForm()} */}
+      {/* <NestForm></NestForm> */}
+      {/* {FormList()} */}
+      {/* {DynamicForm()} */}
+      {/* <DynamicForm></DynamicForm> */}
+
+      {/* <Form.Item {...tailFormItemLayout}>
+        <Button type="primary" htmlType="submit">
+          Register
+        </Button>
+        <Button htmlType="button" onClick={onReset}>
+          Reset
+        </Button>
+        <Button type="link" htmlType="button" onClick={onFill}>
+          Fill form
+        </Button>
+      </Form.Item> */}
     </Form>
   );
 };
@@ -576,11 +681,11 @@ SmartForm.defaultProps = {
   init: {}, // 表单初始值
   // formProps: {},
   isMockData: false,
-  isMockData: true, // 是否使用 mock 数据
+  // isMockData: true, // 是否使用 mock 数据
   action: '', // 表单的操作行为
   noPh: false, // 是否显示表单项的 placeholder 文本
-  formLayouts: layoutObj, // 表单的布局配置
-  isSearchForm: false, // 是否使用搜索型表单
+  formLayouts: layoutObj,
+  isSearchForm: false,
   isFormat: true,
 };
 
@@ -600,8 +705,6 @@ SmartForm.propTypes = {
 };
 
 export default SmartForm;
-
-// 带有默认属性的搜索型表单组件
 
 // export const SearchForm = props => React.cloneElement(SmartForm, {
 //   isSearchForm: true,

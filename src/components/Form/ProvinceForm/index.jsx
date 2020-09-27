@@ -27,7 +27,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '省',
-      // name: 'province',
+      name: 'province',
       // key: 'province',
     },
     comProps: {
@@ -41,7 +41,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '市',
-      // name: 'city',
+      name: 'city',
       // key: 'city',
     },
     comProps: {
@@ -54,7 +54,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '县',
-      // name: 'site',
+      name: 'site',
       // key: 'site',
     },
     comProps: {

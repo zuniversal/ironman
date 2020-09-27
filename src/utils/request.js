@@ -17,7 +17,7 @@ import axios from 'axios';
 
 // 封装的项目通用的 请求方法 操作
 // 支持 根据请求方式 自动判别是否显示操作 tips
-
+export const NORMAL_CODE = 100000;
 
 const codeMap = {
   100000: '正常码',
@@ -29,14 +29,48 @@ const codeMap = {
   104004: '密码错误',
   104005: '第三方API错误',
   104006: 'API访问错误',
+};
 
-}
+export const getCodeMsg = code => {
+  // const {code,  } = data
+  const codeItem = codeMap[code];
+  // return true//
+  return codeItem || '未知状态码';
+};
 
+export const isTips = res => {
+  const { status, data, config } = res;
+  const { msg_show, code } = data;
+  const { noTips } = config.datas;
+
+  console.log(
+    ' 提示 对吗  code !== NORMAL_CODE ',
+    res,
+    code,
+    res.data,
+    config,
+    config.datas,
+  );
+  // if (code !== NORMAL_CODE) {
+  if (false) {
+    const codeMsg = getCodeMsg(code);
+    console.log(' 提示 对吗  !codeMsg ', !codeMsg, codeMsg);
+    if (!codeMsg) {
+      tips(codeMsg, 2);
+    }
+    return;
+  } else {
+    console.log(' 提示 对吗  !noTips ', !noTips, noTips);
+    if (!noTips) {
+      tips(msg_show);
+    }
+  }
+};
 
 const instance = axios.create({
   baseURL: URL,
-  // timeout: 5000,
   // timeout: 3000,
+  timeout: 0,
 });
 
 export class Request {
@@ -53,11 +87,14 @@ export class Request {
         config.headers.Authorization = getItems('token');
         // this.http.store.dispatch({type: LOAD, data: true})
         //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
-        config.data = wrapParams(config.data);
-        config.datas = wrapParams(
-          config.method === 'get' ? config.params : config.data,
+
+        // config.data = wrapParams(config.data);
+        config.data = config.datas = wrapParams(
+          config.method === 'get' || config.method === 'delete'
+            ? config.params
+            : config.data,
         );
-        // console.log(' 发送请求   ： ', config,  )//
+        console.log(' 发送请求   ： ', config); //
         return config;
       },
       err => Promise.reject(err),
@@ -67,7 +104,9 @@ export class Request {
       res => {
         // this.http.store.dispatch({type: LOAD, data: false})
         console.log(' 返回请求 ： ', res.data); //
-        tipsConfirm(res);
+        // tipsConfirm(res);
+        this.handleResponse(res);
+
         // console.log(' 返回请求22s ： ', res.data,   )//
         // return res.data
         return res.data.data;
@@ -101,6 +140,10 @@ export class Request {
       },
     );
   }
+  handleResponse = res => {
+    console.log(' handleResponse,  , ： ', res);
+    isTips(res);
+  };
 }
 
 export const request = new Request(); //
@@ -110,11 +153,16 @@ const { http } = request;
 export const get = (url, params) => http.get(url, { params: params });
 export const post = (url, params, o) => http.post(url, params, o);
 export const put = (url, params) => http.put(url, params);
-export const remove = (url, params) => http.delete(url, params);
+// export const remove = (url, params) => http.delete(url, {data: {dataAttr: params}, params: {paramsAttr: params, }, });
+export const remove = (url, params) => http.delete(url, { params });
 
 // 不显示 tips 的方法
 export const noTipsGet = (url, params) =>
-  get(url, { ...params, noTips: true } );
+  // get(url, { ...params, noTips: true } );
+  {
+    // console.log(' getListAsync paramsparamsparams ： ', params,  )//
+    return get(url, { ...params, test: 'zyb', noTips: true });
+  };
 export const noTipsPost = (url, params) =>
   post(url, { ...params, noTips: true });
 export const noTipsPut = (url, params) => put(url, { ...params, noTips: true });

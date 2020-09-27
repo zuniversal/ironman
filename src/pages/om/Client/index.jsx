@@ -378,14 +378,18 @@ class Client extends PureComponent {
   }
 
   componentDidMount() {
-    console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log(
+      ' Client 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
 
     // this.getList()
   }
 
   render() {
     console.log(
-      ' %c CURD 组件 this.state, this.props ： ',
+      ' %c Client 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,

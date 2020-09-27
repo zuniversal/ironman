@@ -16,53 +16,68 @@ import {
   InputNumber,
   Divider,
 } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import SearchForm from '@/common/SearchForm'; //
-import ProvinceForm from '@/components/Form/ProvinceForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+// import SearchForm from '@/common/SearchForm'; //
+import ProvinceForm, { config } from '@/components/Form/ProvinceForm'; //
 import { regoins } from '@/configs'; //
 
+console.log(' config ： ', config); //
 
+export const configs = [
+  ...config,
+  {
+    formType: 'Divider',
+    itemProps: {
+      label: '',
+    },
+    comProps: {},
+  },
+  {
+    // formType: 'Select',
+    itemProps: {
+      label: '',
+      name: 'keyword',
+      className: 'w50',
+    },
+    comProps: {
+      suffix: <SearchOutlined className="searchIcon" />,
+      // suffixIcon: <SearchOutlined className="searchIcon" />,
+    },
+  },
+];
 
 const ClientSearchForm = props => {
   console.log(' ClientSearchForm ： ', props); //
 
   const [form] = Form.useForm();
 
-  const { formBtn } = props; //
+  const { formBtn, ...rest } = props; //
 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
+  console.log(' configs ： ', configs); //
 
   return (
-    <div className='clientSearchForm'>
-      <ProvinceForm
-        propsForm={form}
-      ></ProvinceForm>
+    <div className="clientSearchForm">
+      <SearchForm
+        // flexRow={6}
+        config={configs}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
 
-      {/* <hr className='hrs'  /> */}
-      
-      <Divider />
+        noRuleAll
+        // {...rest}
+        {...props}
+      ></SearchForm>
 
-      <div className={'flex-bw'}>
-        {/* <SmartForm
-          flexRow={4}
-          config={config}
-          formProps={formProps}
-          // init={init}
-          // init={{}}
-
-          {...props}
-        ></SmartForm> */}
-
-        <SearchForm></SearchForm>
-
-        {formBtn && formBtn(
-          {form,  }
-        )}
-      </div>
+      {/* {formBtn && formBtn(
+        {form,  }
+      )} */}
     </div>
   );
 };

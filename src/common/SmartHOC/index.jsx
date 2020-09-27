@@ -26,7 +26,7 @@ import { Form, Input, Button, Spin } from 'antd';
 
 const actionMap = {
   add: 'addItemAsync',
-  edit: 'editItemAsync',
+  edit: 'getItemAsync',
   detail: 'getItemAsync',
 };
 
@@ -82,17 +82,17 @@ export default ({
         actionFn,
       );
 
-      // const isEdit = action === 'edit';
-      // if (isEdit) {
-      //   const { dispatch } = this.props; //
-      //   dispatch(
-      //     actions.getItemAsync({
-      //       // d_id: 100,
-      //     }),
-      //   );
-      // }
-      const { dispatch } = this.props; //
-      dispatch(actions[actionFn](params));
+      const isEdit = action === 'edit';
+      if (isEdit) {
+        const { dispatch } = this.props; //
+        dispatch(
+          actions.getItemAsync({
+            // d_id: 100,
+          }),
+        );
+      }
+      // const { dispatch } = this.props; //
+      // dispatch(actions[actionFn](params));
 
       this.setState({
         action,
@@ -124,8 +124,9 @@ export default ({
       console.log(' onOkonOk ： ', props, this.state, this.props);
       const { action } = this.state; //
       let actionFn = actions.addItemAsync;
-      if (action === 'edit') {
+      if (action === 'edit' || action === 'detail') {
         actionFn = actions.editItemAsync;
+        // actionFn = actions.putItemAsync;
       }
 
       const { form } = props; //
@@ -135,9 +136,10 @@ export default ({
         console.log('  res await 结果  ：', res, action, actionFn); //
         const { dispatch } = this.props; //
         dispatch(
-          actionFn({
-            data: res,
-          }),
+          // actionFn({
+          //   data: res,
+          // }),
+          actionFn(res),
         );
         // const {addItemAsync,  } = this.props//
         //addItemAsync(res)
@@ -206,10 +208,16 @@ export default ({
       const { dispatch } = this.props; //
 
       dispatch(
+        // actions.removeItemAsync([
+        //   // d_id: props.record.id,
+        //   // ...props.record,
+        //   props.record,
+        //   // record,
+        // ]),
         actions.removeItemAsync([
-          // d_id: props.record.id,
+          props.record.id,
           // ...props.record,
-          props.record,
+          // props.record,
           // record,
         ]),
       );
@@ -217,23 +225,28 @@ export default ({
     onBatchRemove = props => {
       console.log(' onBatchRemove ： ', props, this.state, this.props);
       const { dispatch } = this.props; //
-      const { selectedRows } = this.state; //
+      const { selectedRows, selectedRowKeys } = this.state; //
 
-      dispatch(actions.removeItemAsync(selectedRows));
+      dispatch(actions.removeItemAsync(selectedRowKeys));
     };
     search = async params => {
       console.log('    search ： ', params);
       const { form } = params;
 
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, form); //
+      try {
+        const res = await form.validateFields();
+        console.log('  res await 结果  ：', res); //
+        this.getList(res);
+      } catch (error) {
+        console.log(' error ： ', error); //
+      }
     };
 
-    getList = params => {
+    getList = (params = {}) => {
       console.log('    getList ： ', params, this.state);
       const { dispatch } = this.props; //
 
-      dispatch(actions.getListAsync({}));
+      dispatch(actions.getListAsync(params));
     };
     checkQuery = e => {
       const { location } = this.props; //

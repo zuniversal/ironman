@@ -36,6 +36,7 @@ const lengthMap = {
   letter: LETTER_LEN,
 };
 
+// 处理表格文本的长度 根据文本的类型返回对应的限定的长度值
 const getLengthLimit = text => {
   let textLength = text.length;
   if (!isNaN(text)) {
@@ -55,6 +56,7 @@ const getLengthLimit = text => {
   return textLength;
 };
 
+// 得到最终的格式化后的文本
 const foramtText = text => {
   if (!text) {
     return text;
@@ -69,6 +71,7 @@ const foramtText = text => {
   return txt;
 };
 
+// 通用的操作列组件
 export const ActionCom = props => {
   const {
     edit,
@@ -85,7 +88,14 @@ export const ActionCom = props => {
     <span>
       {!props.noDefault && (
         <>
-          <a onClick={() => edit({ action: 'edit', record })}>编辑</a>
+          <a
+            onClick={() => {
+              console.log(' record ： ', record); //
+              edit({ action: 'edit', record });
+            }}
+          >
+            编辑
+          </a>
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
           <a onClick={() => remove({ record })}>删除</a>
         </>
@@ -207,7 +217,7 @@ class SmartTable extends PureComponent {
   // 可关闭相关 mock 模拟数据
   dataFilter = () => {
     const { searchKey, searchText } = this.state; //
-    const { dataSource, noMock, rowLength, newTbData } = this.props; //
+    const { dataSource, noMock, rowLength, newTbData, rowKey } = this.props; //
 
     // const mpckAddData = newTbData.filter((v) => typeof v !== 'object')
     const mpckAddData = {};
@@ -242,6 +252,7 @@ class SmartTable extends PureComponent {
     console.log(
       ' dataFilter ：',
       this.state,
+      this.props,
       data,
       'k ：',
       searchKey,
@@ -340,6 +351,7 @@ class SmartTable extends PureComponent {
               action: 'detail',
               d_id: record[d_item],
               [d_item]: record[d_item],
+              // record,
             })
           }
         >
@@ -608,18 +620,18 @@ SmartTable.defaultProps = {
   // dataSource: [],
   dataSource: mockTbData(),
   // rowKey: 'key',
-  rowKey: 'd_id',
-  // rowKey: 'id',
+  rowKey: 'd_id', //
+  rowKey: 'id',
 
   edit: () => {},
   remove: () => {},
   showDetail: () => {},
   actionConfig: {},
   // extra: null,
-  extra: () => {},
+  extra: () => {}, // 操作列额外的内容
   noActionCol: false,
-  noDefault: false,
-  isQRCode: false,
+  noDefault: false, // 是否禁用默认的操作列
+  isQRCode: false, // 是否显示默认的二维码按钮
 };
 
 SmartTable.propTypes = {

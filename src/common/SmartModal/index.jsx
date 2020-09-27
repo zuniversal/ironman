@@ -42,7 +42,7 @@ class SmartModal extends PureComponent {
   getTitle = e => {
     const { titleMap, action, title } = this.props; //
     const actionTitle = titleMap[action];
-    console.log('    getTitle ： ', e, this.state, this.props, actionTitle);
+    // console.log('    getTitle ： ', e, this.state, this.props, actionTitle);
     if (actionTitle) {
       return actionTitle;
     }
