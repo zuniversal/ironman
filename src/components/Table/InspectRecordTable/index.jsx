@@ -28,7 +28,7 @@ import SmartTable from '@/common/SmartTable'; //
 
 const InspectRecordTable = props => {
   console.log(' InspectRecordTable  ： ', props); //
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
 
   const columns = [
     {
@@ -59,8 +59,10 @@ const InspectRecordTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>巡检报告</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>导出巡检报告</a>
+      <a onClick={() => showDetail({ action: 'detail' })}>巡检报告</a>
+      <a onClick={() => inspectReport({ action: 'inspectReport' })}>
+        导出巡检报告
+      </a>
     </>
   );
 

@@ -1,5 +1,10 @@
 export default [
   {
+    path: '/om/home',
+    component: '@/pages/om/Home',
+    title: '首页',
+  },
+  {
     path: '/om/client',
     component: '@/pages/om/Client',
     title: '客户管理',
@@ -43,6 +48,11 @@ export default [
   {
     path: '/om/shiftsArrange',
     component: '@/pages/om/ShiftsArrange',
+    title: '排班',
+  },
+  {
+    path: '/om/shiftsArrangeDetail',
+    component: '@/pages/om/ShiftsArrangeDetail',
     title: '排班',
   },
   {

@@ -18,7 +18,7 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
@@ -32,12 +32,23 @@ export const config = [
     },
   },
   {
+    formType: 'Dynamic',
     itemProps: {
       label: '组员姓名',
+      className: 'noMargin',
+    },
+    comProps: {
+      extra: true,
+      itemProps: {
+        label: '用户名',
+      },
+      comProps: {
+        className: 'w-320',
+      },
     },
   },
   {
-    formType: 'Select', 
+    formType: 'Select',
     itemProps: {
       label: '类型',
     },
@@ -47,16 +58,11 @@ export const config = [
       label: '车辆牌照',
     },
   },
-  
-
-  
 ];
-
-
 
 const ShiftsManageForm = props => {
   console.log(' ShiftsManageForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',

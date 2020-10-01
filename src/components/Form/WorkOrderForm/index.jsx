@@ -17,58 +17,141 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig, createArr } from '@/utils'; //
 
-export const config = [
-  {
-    formType: 'Select',  
-    noRule: true,
-    itemProps: {
-      label: '模块',
-    },
-  },
-  {
-    itemProps: {
-      label: '名称',
-    },
-  },
-  {
-    formType: 'TextArea',  
-    noRule: true,
-    itemProps: {
-      label: '枚举值',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '关联设备',
-    },
-  },
-  {
-    formType: 'TextArea',  
-    noRule: true,
-    itemProps: {
-      label: '备注',
-    },
-  },
-
-  
+const choiceRadios = [
+  { label: '种类1', value: 'yes', key: 'yes' },
+  { label: '种类2', value: 'no', key: 'no' },
 ];
 
+const WorkOrderTicketForm = props => {
+  console.log(' WorkOrderTicketForm ： ', props); //
+  const { formBtn, ...rest } = props; //
 
+  const config = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '基本信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '标题',
+      },
+    },
+    {
+      itemProps: {
+        label: '类型',
+      },
+    },
+    {
+      itemProps: {
+        label: '状态',
+      },
+    },
+    {
+      itemProps: {
+        label: '创建时间',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户',
+      },
+    },
+    {
+      itemProps: {
+        label: '设备id ',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '反馈信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '反馈人',
+      },
+    },
+    {
+      itemProps: {
+        label: '反馈电话',
+      },
+    },
+    {
+      itemProps: {
+        label: '详细内容',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: createArr(12).map((v, i) => (
+        <WeakDetailImg key={i}></WeakDetailImg>
+      )),
+      itemProps: {
+        label: '反馈图片',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '派单信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '处理人',
+      },
+    },
+    {
+      itemProps: {
+        label: '领取时间',
+      },
+    },
+    {
+      itemProps: {
+        label: '处理时间',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: createArr(4).map((v, i) => (
+        <WeakDetailImg key={i}></WeakDetailImg>
+      )),
+      itemProps: {
+        label: '施工图片',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户评价',
+      },
+    },
+    {
+      itemProps: {
+        label: '评价等级',
+      },
+    },
+    {
+      itemProps: {
+        label: '评价内容',
+      },
+    },
+  ];
 
-const WorkOrderForm = props => {
-  console.log(' WorkOrderForm ： ', props); //
-  const {formBtn, ...rest } = props// 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
   return (
-    <div className={' WorkOrderForm '}>
+    <div className={' WorkOrderTicketForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -77,14 +160,17 @@ const WorkOrderForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        isDisabledAll
+        noRuleAll
+        // {...rest}
+        {...props}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };
 
-WorkOrderForm.defaultProps = {};
+WorkOrderTicketForm.defaultProps = {};
 
-export default WorkOrderForm;
+export default WorkOrderTicketForm;

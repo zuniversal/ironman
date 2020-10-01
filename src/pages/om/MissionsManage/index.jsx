@@ -37,7 +37,7 @@ import { actions, mapStateToProps } from '@/models/missionsManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '任务';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -162,23 +162,48 @@ class MissionsManage extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <MissionsManageSearchForm></MissionsManageSearchForm>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-        </div>
-      </div>
+      <MissionsManageSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></MissionsManageSearchForm>
     );
   }
+  // renderSearchForm(params) {
+  //   // console.log(' renderSearchForm ： ', params,  )
+  //   return (
+  //     <div className={'fsb '}>
+  //       <MissionsManageSearchForm></MissionsManageSearchForm>
+  //       <div className={'btnWrapper'}>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => this.props.showFormModal({ action: 'add' })}
+  //         >
+  //           新增{TITLE}
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   startWorkOrder = params => {
     console.log(' startWorkOrder,  , ： ', params);

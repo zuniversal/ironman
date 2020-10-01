@@ -15,6 +15,7 @@ import SearchForm from '@/common/SearchForm'; //
 import ShiftsTransferTable from '@/components/Table/ShiftsTransferTable'; //
 import ShiftsTransferForm from '@/components/Form/ShiftsTransferForm'; //
 import ShiftsTransferSearchForm from '@/components/Form/ShiftsTransferSearchForm'; //
+import ShiftsTransferDetailForm from '@/components/Form/ShiftsTransferDetailForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
@@ -42,7 +43,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: ShiftsTransferForm,
+  modalForm: ShiftsTransferDetailForm,
 })
 class ShiftsTransfer extends PureComponent {
   constructor(props) {

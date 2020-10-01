@@ -26,9 +26,35 @@ const WeakSearchForm = props => {
 
   const config = [
     {
+      formType: 'Select',
       itemProps: {
         label: '处理状态',
       },
+    },
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '审批状态',
+      },
+    },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
     },
   ];
 
@@ -47,10 +73,11 @@ const WeakSearchForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

@@ -18,36 +18,46 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
     formType: 'Select',
     itemProps: {
       label: '客户',
+      name: 'customer',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
+    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '电站',
+      name: 'station',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
+    comProps: {},
   },
 
-  
+  {
+    formType: 'Divider',
+    itemProps: {
+      label: '',
+    },
+    comProps: {},
+  },
+  {
+    // formType: 'Select',
+    itemProps: {
+      label: '',
+      name: 'keyword',
+    },
+    searchSuffix: true,
+  },
 ];
-
-
 
 const AssetsSearchForm = props => {
   console.log(' AssetsSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -64,11 +74,11 @@ const AssetsSearchForm = props => {
         // init={init}
         // init={{}}
         noRuleAll
-
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

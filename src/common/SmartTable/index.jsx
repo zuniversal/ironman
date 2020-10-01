@@ -90,7 +90,7 @@ export const ActionCom = props => {
         <>
           <a
             onClick={() => {
-              console.log(' record ： ', record); //
+              console.log(' record ： ', record, edit); //
               edit({ action: 'edit', record });
             }}
           >
@@ -122,7 +122,7 @@ class SmartTable extends PureComponent {
     const pagination = {
       // current: 10,
       // pageSize: 6,
-      // showSizeChanger: true,
+      showSizeChanger: true,
       // showTotal: showTotal,
       position: ['bottomCenter'],
       pageSize: Number(size),
@@ -511,6 +511,7 @@ class SmartTable extends PureComponent {
     const { title, show } = this.state; //
     return (
       <SmartModal
+        width={'400px'}
         show={show}
         onOk={this.onOk}
         onCancel={this.onCancel}
@@ -623,7 +624,7 @@ SmartTable.defaultProps = {
   rowKey: 'd_id', //
   rowKey: 'id',
 
-  edit: () => {},
+  // edit: () => {},
   remove: () => {},
   showDetail: () => {},
   actionConfig: {},

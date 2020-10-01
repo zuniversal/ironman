@@ -29,6 +29,9 @@ export const MissionsManageWorkOrderForm = props => {
       itemProps: {
         label: '客户',
       },
+      comProps: {
+        disabled: true,
+      },
     },
     {
       itemProps: {
@@ -39,6 +42,9 @@ export const MissionsManageWorkOrderForm = props => {
       formType: 'Select',
       itemProps: {
         label: '类型',
+      },
+      comProps: {
+        disabled: true,
       },
     },
     {

@@ -57,7 +57,7 @@ const PowerStationTable = props => {
     },
     {
       title: '设备数',
-      dataIndex: 'field4',
+      // dataIndex: '',
       detail: true,
       // render: (text, record, index) => (
       //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
@@ -65,7 +65,7 @@ const PowerStationTable = props => {
     },
     {
       title: '监控点数',
-      dataIndex: 'Monitoring',
+      // dataIndex: '',
       detail: true,
       // render: (text, record, index) => (
       //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
@@ -73,7 +73,7 @@ const PowerStationTable = props => {
     },
     {
       title: '一次电气图',
-      dataIndex: 'field6',
+      // dataIndex: '',
       detail: true,
       // render: (text, record, index) => (
       //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>

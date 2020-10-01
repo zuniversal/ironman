@@ -24,6 +24,7 @@ import {
   QuestionCircleOutlined,
   MinusCircleOutlined,
   PlusOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 
 import DynamicForm from './DynamicForm'; //
@@ -33,6 +34,7 @@ import {
   renderSelectOp,
   renderRadioOp,
   formatConfig,
+  renderCheckboxOp,
 } from '@/utils'; //
 
 const { TextArea } = Input;
@@ -51,6 +53,16 @@ const layoutObj = {
     xs: { span: 24 },
     sm: { span: 18 }, //
     sm: { span: 17 }, //
+  },
+};
+const smallLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 5 }, //
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 19 }, //
   },
 };
 const noLabelLayout = {
@@ -125,9 +137,16 @@ const SmartForm = (props, state) => {
     formLayouts,
     isSearchForm,
     isFormat,
+    noBtnBlock,
+    searchRight,
+    isDisabledAll,
+    noRuleAll,
+    size,
   } = props; //
 
-  const configs = isFormat ? formatConfig(config, { isSearchForm }) : config; //
+  const configs = isFormat
+    ? formatConfig(config, { isSearchForm, isDisabledAll })
+    : config; //
   console.log('  configs ：', configs); //
 
   console.log(
@@ -234,7 +253,12 @@ const SmartForm = (props, state) => {
   //   setFormLayout(layout);
   // };
 
-  const formItemLayout = formLayout === 'horizontal' ? formLayouts : null;
+  const formItemLayout =
+    formLayout === 'horizontal'
+      ? size === 'small'
+        ? smallLayout
+        : formLayouts
+      : null;
   const isInline = {
     layout: isSearchForm ? 'inline' : 'horizontal',
   };
@@ -279,11 +303,18 @@ const SmartForm = (props, state) => {
       type,
       noRule,
       radioData = [],
+      checkboxData = [],
       selectData = [],
       opType,
       haveDivider,
       isSearchForm,
+      searchSuffix,
+      CustomCom,
+      noLabel,
+      LabelCom,
     } = items;
+
+    const flexRows = items.flexRow ? items.flexRow : flexRow; //
 
     // if (typeof type === 'function') {
     if (isValidElement(items)) {
@@ -291,7 +322,9 @@ const SmartForm = (props, state) => {
     }
 
     const { label } = itemProps;
-    const itemPropsCls = itemProps.className;
+    const itemPropsCls =
+      itemProps.className +
+      `${i === configs.length - 1 ? ' lastFormItem' : ''}`;
 
     const formItemCommonProps = {
       colon: false,
@@ -325,14 +358,23 @@ const SmartForm = (props, state) => {
     const formItemProps = {
       ...formItemCommonProps,
       className: `formItems ${itemPropsCls}  `,
-      rules: noRule ? undefined : rules({ items, label }),
+      rules: noRule || noRuleAll ? undefined : rules({ items, label }),
     };
 
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
 
     const placeholder = noPh ? '' : formLabel; //
-    // console.log('  placeholder ：', placeholder,  )
+    // conso
+    if (searchSuffix) {
+      comProps.suffix = <SearchOutlined className="searchIcon" />;
+    }
+    if (noLabel) {
+      console.log(' noLabel ： '); //
+      comProps.wrapperCol = {
+        sm: { span: 10 },
+      };
+    }
 
     const realComProps = {
       // className: 'w-320',
@@ -347,6 +389,7 @@ const SmartForm = (props, state) => {
       name: formItemProps.key,
       init: initialValues[comProps?.key],
     };
+
     // console.log(
     //   ' realComProps11 ： ',
     //   realComProps,
@@ -362,6 +405,8 @@ const SmartForm = (props, state) => {
 
     const formItemMap = {
       rowText: label,
+      Label: LabelCom,
+      CustomCom: CustomCom,
       Divider: <Divider />,
       Input: <Input allowClear {...realComProps} />,
       TextArea: (
@@ -387,7 +432,8 @@ const SmartForm = (props, state) => {
         </AutoComplete>
       ),
       Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
-      CheckboxGroup: <Checkbox.Group {...realComProps} />,
+      // CheckboxGroup: <Checkbox.Group {...realComProps} />,
+      Checkbox: renderCheckboxOp(checkboxData, opType),
       Radio: renderRadioOp(radioData, opType),
       DatePicker: <DatePicker {...realComProps} />,
 
@@ -437,10 +483,9 @@ const SmartForm = (props, state) => {
       );
     }
 
-    if (flexRow) {
-      // console.log(' flexRowflexRow ： ', flexRow); //
+    if (flexRows && formType !== 'rowText' && formType !== 'CustomCom') {
       const colForm = (
-        <Col span={flexRow} key={itemProps.key}>
+        <Col span={24 / Number(flexRows)} key={itemProps.key}>
           <Form.Item
             // name={key}
             // label={label}
@@ -522,49 +567,62 @@ const SmartForm = (props, state) => {
 
   // console.log(' formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
   return (
-    <Form
-      preserve={false}
-      {...formItemLayout}
-      // layout={formLayout}
-      {...isInline}
-      form={formControl}
-      name="smartForm"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      // initialValues={{}}
-      // initialValues={initialValues}
-      initialValues={{
-        ...initialValues,
-      }}
-      onValuesChange={onFormLayoutChange}
-      size={componentSize}
-      scrollToFirstError
-      {...formProps}
-      className={`smartForm ${className}`}
-      // layout="inline"
-    >
-      {flexRow ? (
-        <Row gutter={24}>
-          {formItems}
+    <>
+      <Form
+        preserve={false}
+        {...formItemLayout}
+        // layout={formLayout}
+        {...isInline}
+        form={formControl}
+        name="smartForm"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        // initialValues={{}}
+        // initialValues={initialValues}
+        initialValues={{
+          ...initialValues,
+        }}
+        onValuesChange={onFormLayoutChange}
+        size={componentSize}
+        scrollToFirstError
+        {...formProps}
+        className={`smartForm ${className} ${
+          searchRight ? 'searchRight' : ''
+        } `}
+        // layout="inline"
+      >
+        {flexRow ? (
+          <Row gutter={24}>
+            {formItems}
 
-          {/* {formBtn && <Col span={flexRow}  >
-          <Form.Item   >
-            {formBtn}   
-          </Form.Item>
-        </Col>} */}
-          <Form.Item noStyle>
-            {isRowBtn ? <div>{formBtn}</div> : formBtn}
-          </Form.Item>
-        </Row>
-      ) : (
-        <>
-          {formItems}
-          {formBtn && formBtn({ form })}
-        </>
-      )}
+            {/* {formBtn && <Col span={flexRows}  >
+            <Form.Item   >
+              {formBtn}   
+            </Form.Item>
+          </Col>} */}
+            {/* <Form.Item noStyle>
+              {isRowBtn ? <div>{formBtn}</div> : formBtn}
+            </Form.Item> */}
+          </Row>
+        ) : (
+          <>
+            {formItems}
+            <div className={'btnBlock'}>{formBtn && formBtn({ form })}</div>
+          </>
+        )}
+        {/* <Row gutter={24} className={'w100'}  >
+          <>
+            {formItems}
+            <div className={'btnBlock'}  >
+              {formBtn && formBtn({ form })}
+            </div>
+          </>
+        </Row> */}
 
-      {children}
-    </Form>
+        {children}
+      </Form>
+      {/* {formBtn && formBtn({ form })} */}
+    </>
   );
 };
 
@@ -577,11 +635,16 @@ SmartForm.defaultProps = {
   // formProps: {},
   isMockData: false,
   isMockData: true, // 是否使用 mock 数据
+  noBtnBlock: false,
+  searchRight: false,
   action: '', // 表单的操作行为
   noPh: false, // 是否显示表单项的 placeholder 文本
   formLayouts: layoutObj, // 表单的布局配置
   isSearchForm: false, // 是否使用搜索型表单
   isFormat: true,
+  isDisabledAll: false,
+  noRuleAll: false,
+  size: '',
 };
 
 SmartForm.propTypes = {
@@ -592,11 +655,16 @@ SmartForm.propTypes = {
   init: PropTypes.object,
   // formProps: PropTypes.object,
   isMockData: PropTypes.bool,
+  noBtnBlock: PropTypes.bool,
+  searchRight: PropTypes.bool,
   noPh: PropTypes.bool,
   action: PropTypes.string,
   formLayouts: PropTypes.object,
   isSearchForm: PropTypes.bool,
   isFormat: PropTypes.bool,
+  isDisabledAll: PropTypes.bool,
+  noRuleAll: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 export default SmartForm;

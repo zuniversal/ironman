@@ -35,7 +35,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '角色',
-      name: '',
+      name: 'custom_id',
     },
     comProps: {
       disabled: true,
@@ -52,14 +52,14 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '邮箱',
-      name: '',
+      name: 'email',
     },
   },
   {
     noRule: true,
     itemProps: {
       label: '业务部门',
-      name: '',
+      name: 'organization',
     },
     comProps: {
       disabled: true,
@@ -70,7 +70,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '密码重置',
-      name: '',
+      name: 'password',
     },
   },
   {
@@ -78,7 +78,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '再次输入密码',
-      name: '',
+      name: 'rePwd',
     },
   },
 ];
@@ -95,6 +95,7 @@ const formLayouts = {
 const UserCenterForm = props => {
   console.log(' UserCenterForm ： ', props); //
 
+  const [form] = Form.useForm();
   const { index } = props; //
 
   const formProps = {
@@ -106,6 +107,7 @@ const UserCenterForm = props => {
 
   const handleOk = e => {
     console.log(' handleOk   e, ,   ： ', e);
+    props.handleOk();
   };
 
   return (

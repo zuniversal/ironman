@@ -33,32 +33,26 @@ const HouseNoTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'electricity_user',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      dataIndex: 'customer',
+      detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '户号',
-      dataIndex: 'name',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      dataIndex: 'code',
+      detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '签约公司',
-      dataIndex: 'business_entity',
+      dataIndex: 'signing_company',
     },
     {
       title: '客户代表',
-      dataIndex: 'equipment',
+      dataIndex: 'customer_representative',
     },
     {
       title: '电站数',
-      dataIndex: 'Monitoring',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      dataIndex: 'electricityuser_num',
+      detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '录入日期',
@@ -71,10 +65,6 @@ const HouseNoTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      isQRCode
-      // actionConfig={{
-      //   isQRCode: true,
-      // }}
       {...props}
     ></SmartTable>
   );

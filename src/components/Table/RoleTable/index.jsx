@@ -28,14 +28,16 @@ import SmartTable from '@/common/SmartTable'; //
 
 const RoleTable = props => {
   console.log(' RoleTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     {
       title: '角色',
+      dataIndex: 'name',
     },
   ];
 
@@ -44,7 +46,7 @@ const RoleTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -52,7 +54,6 @@ const RoleTable = props => {
 
 RoleTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default RoleTable;

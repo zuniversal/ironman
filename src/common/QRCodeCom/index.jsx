@@ -26,6 +26,8 @@ const QRCodeCom = props => {
 
 QRCodeCom.defaultProps = {
   value: '按钮',
+  width: '200px',
+  height: '200px',
 };
 
 QRCodeCom.propTypes = {

@@ -34,7 +34,7 @@ const AssetsTable = props => {
     {
       title: '所属客户',
       dataIndex: 'customer_name',
-      detail: true,
+      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
@@ -42,7 +42,7 @@ const AssetsTable = props => {
     {
       title: '户号',
       dataIndex: 'code',
-      detail: true,
+      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
@@ -50,7 +50,7 @@ const AssetsTable = props => {
     {
       title: '电站',
       dataIndex: 'station_name',
-      detail: true,
+      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
@@ -58,7 +58,7 @@ const AssetsTable = props => {
     {
       title: '设备名称',
       dataIndex: 'name',
-      detail: true,
+      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),

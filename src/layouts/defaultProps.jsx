@@ -12,7 +12,13 @@ export default {
       //   component: '../DashBoard',
       // },
       {
-        path: '/',
+        path: '/om/home',
+        name: '首页',
+        icon: <ScheduleFilled />,
+        component: '../Home',
+      },
+      {
+        path: '/cs/csHome',
         name: '首页',
         icon: <ScheduleFilled />,
         component: '../Home',
@@ -24,10 +30,16 @@ export default {
       },
 
       {
-        path: '/cs/userCenter',
+        path: '/cs/csOrganize',
+        name: '组织管理',
+        icon: <ScheduleFilled />,
+        component: '../pages/cs/csOrganize',
+      },
+      {
+        path: '/cs/csUserCenter',
         name: '个人中心',
         icon: <ScheduleFilled />,
-        component: '../pages/UserCenter',
+        component: '../pages/csUserCenter',
       },
       {
         path: '/om/shifts',
@@ -47,6 +59,12 @@ export default {
             // icon: <ScheduleFilled />,
             component: '../pages/om/ShiftsArrange',
           },
+          // {
+          //   path: '/om/shiftsArrange/shiftsArrangeDetail',
+          //   name: '排班',
+          //   // icon: <ScheduleFilled />,
+          //   component: '../pages/om/ShiftsArrange/ShiftsArrangeDetail',
+          // },
           {
             path: '/om/shiftsTransfer',
             name: '交接班',
@@ -81,12 +99,15 @@ export default {
         component: '../pages/om/PowerStation',
         routes: [
           {
+            path: '/om/powerStation',
+            name: '电站管理',
+            component: '../pages/om/PowerStation',
+          },
+          {
             path: '/om/clientReport',
             name: '客户报告',
-            icon: <ScheduleFilled />,
             component: '../pages/om/ClientReport',
           },
-
         ],
       },
       {
@@ -95,7 +116,6 @@ export default {
         icon: <ScheduleFilled />,
         component: '../pages/om/Assets',
       },
-
 
       {
         path: '/om/monitorManage',

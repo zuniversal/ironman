@@ -7,13 +7,18 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
 
 const namespace = 'client';
-const { createAction, createCRUD } = init(namespace);
+const { createAction, createCRUD, newAction } = init(namespace);
 
 const otherActions = ['syncOAAsync', 'getPortraitAsync'];
 
 export const actions = {
   ...createCRUD(otherActions),
+  // ...newAction({
+  //   syncOAAsync: 'getList',
+  // }),
 };
+
+export const mapStateToProps = state => state[namespace];
 
 export default {
   namespace,
@@ -51,16 +56,9 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      const dataList = state.dataList.map(v => {
-        console.log(
-          ' v.id !== state.d_id ： ',
-          v.id,
-          v.id !== state.d_id,
-          state.d_id,
-        ); //
-        return v.id === state.d_id ? { ...v, ...payload.payload } : v;
-        // ...(v.id !== payload.payload.d_id ? payload : v),
-      });
+      const dataList = state.dataList.map(v =>
+        v.id === state.d_id ? { ...v, ...payload.payload } : v,
+      );
       console.log(' editItem 修改  ： ', state, payload, type, dataList); //
       return {
         ...state,
@@ -82,7 +80,7 @@ export default {
         ...state,
         // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
         dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
+          removeList.some(item => v.id !== item),
         ),
       };
     },
@@ -141,7 +139,10 @@ export default {
       // console.log(' syncOAAsync ： ', payload, type,     )//
       const res = yield call(services.syncOA, payload);
       console.log('  syncOA res ：', res); //
-      yield put(action({ ...res, payload }));
+      yield put({
+        type: 'getList',
+        payload: res,
+      });
     },
     *getPortraitAsync({ payload, action, type }, { call, put }) {
       // console.log(' getPortraitAsync ： ', payload, type,     )//

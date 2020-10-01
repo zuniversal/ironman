@@ -36,6 +36,7 @@ const MissionsForm = props => {
       },
     },
     {
+      formType: 'TextArea',
       itemProps: {
         label: '任务描述',
       },

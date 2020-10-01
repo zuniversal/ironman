@@ -17,42 +17,34 @@ import {
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//
-
-
-
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const ShiftsArrangeSearchForm = props => {
   console.log(' ShiftsArrangeSearchForm ： ', props); //
 
-  const {getCapture, showFormModal,  } = props// 
+  const { getCapture, showFormModal } = props; //
 
   const config = [
     {
-      formType: 'Select', 
+      formType: 'Select',
       itemProps: {
         label: '班组',
       },
-      comProps: {
-        className: 'w-240',  
-      },  
     },
     {
-      formType: 'DatePicker', 
+      formType: 'DatePicker',
       itemProps: {
-        label: '月份',
+        label: '月年份',
       },
-      comProps: {
-        className: 'w-240',  
-      },  
     },
-    
+    {
+      formType: 'DatePicker',
+      itemProps: {
+        label: '月',
+      },
+    },
   ];
-  
-
-
-
 
   const formProps = {
     // layout: 'vertical',
@@ -74,7 +66,7 @@ const ShiftsArrangeSearchForm = props => {
         // init={{
         //   key9: regoins,
         // }}
-        
+
         noRuleAll
         {...props}
       ></SearchForm>

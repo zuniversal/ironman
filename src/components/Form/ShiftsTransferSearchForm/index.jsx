@@ -18,15 +18,27 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
     formType: 'Select',
     itemProps: {
-      label: '值班站',
+      label: '交班人',
     },
   },
+  // {
+  //   formType: 'Select',
+  //   itemProps: {
+  //     label: '值班站',
+  //   },
+  // },
+  // {
+  //   formType: 'Select',
+  //   itemProps: {
+  //     label: '接班人',
+  //   },
+  // },
   {
     formType: 'DatePicker',
     itemProps: {
@@ -36,23 +48,14 @@ export const config = [
   {
     formType: 'Select',
     itemProps: {
-      label: '交班人',
+      label: '电站',
     },
   },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '接班人',
-    },
-  },
-  
 ];
-
-
 
 const ShiftsTransferSearchForm = props => {
   console.log(' ShiftsTransferSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -70,10 +73,11 @@ const ShiftsTransferSearchForm = props => {
         // init={{}}
 
         noRuleAll
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

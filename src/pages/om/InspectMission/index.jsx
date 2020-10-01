@@ -26,6 +26,11 @@ import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectMissionForm from '@/components/Form/InspectMissionForm'; //
 import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm'; //
+import {
+  InspectMissionAssignForm,
+  InspectMissionEditDateForm,
+} from '@/components/Form/InspectMissionActionForm'; //
+import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
 import InspectMissionTable from '@/components/Table/InspectMissionTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
@@ -41,6 +46,9 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  assignMission: `分配任务`,
+  editDate: `修改日期`,
+  mission: `确认领取/开始/完成该任务`,
 };
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
@@ -49,7 +57,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: InspectMissionForm,
+  modalForm: InspectMissionDetailForm,
 })
 class InspectMission extends PureComponent {
   constructor(props) {
@@ -171,6 +179,26 @@ class InspectMission extends PureComponent {
     );
   }
 
+  assignMission = params => {
+    console.log(' assignMission,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: (
+        <InspectMissionAssignForm size={'small'}></InspectMissionAssignForm>
+      ),
+    });
+  };
+  editDate = params => {
+    console.log(' editDate,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: (
+        <InspectMissionEditDateForm size={'small'}></InspectMissionEditDateForm>
+      ),
+    });
+  };
   renderTable(params) {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -183,6 +211,9 @@ class InspectMission extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
+
+      assignMission: this.assignMission,
+      editDate: this.editDate,
     };
 
     return <InspectMissionTable {...tableProps}></InspectMissionTable>;
@@ -199,6 +230,8 @@ class InspectMission extends PureComponent {
         onCancel={this.onCancel}
         action={action}
         titleMap={titleMap}
+        // width={'400px'}
+        size={'small'}
       >
         {this.renderModalContent()}
       </SmartModal>

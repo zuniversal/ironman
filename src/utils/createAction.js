@@ -106,8 +106,15 @@ export const init = prefix => {
     config.forEach(types => (actions[types] = createAction(types)));
     return actions;
   };
+  // const customActions = (actionMap = {}, ) => {
+  //   console.log(' actionMap ： ', actionMap,  )//
+  //   const actions = {};
+  //   Object.keys(actionMap).forEach(types => (actions[types] = action(actionMap[types])));
+  //   return actions
+  // };
   return {
     names: 'zyb',
+    // customActions,
     createAction,
     createActions,
     createCRUD: (config = []) => createActions([...crudConfigs, ...config]),

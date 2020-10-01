@@ -9,12 +9,8 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result,   } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons';
+import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import HouseNoTable from '@/components/Table/HouseNoTable'; //
 import HouseNoForm from '@/components/Form/HouseNoForm'; //
@@ -25,42 +21,43 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 
-import { actions, mapStateToProps,  } from '@/models/houseNo'//
+import { actions, mapStateToProps } from '@/models/houseNo'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-
-
-
-
-
 const menuConfig = [
-  { key: 'upload', clickFn: 'showUploadModal', action: 'upload', text: '上传文件' },
-  { key: 'down', clickFn: 'downloadFile', action: 'down', text: '下载数据模板' },
+  {
+    key: 'upload',
+    clickFn: 'showUploadModal',
+    action: 'upload',
+    text: '上传文件',
+  },
+  {
+    key: 'down',
+    clickFn: 'downloadFile',
+    action: 'down',
+    text: '下载数据模板',
+  },
 ];
 
+const TITLE = '户号';
 
-const TITLE = '户号'
-
-
-const titleMap =  {
+const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
-}
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
-
-@connect(mapStateToProps, )
+@connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
   modalForm: HouseNoForm,
-
 })
 class HouseNo extends PureComponent {
   constructor(props) {
@@ -68,60 +65,58 @@ class HouseNo extends PureComponent {
     this.state = {
       show: false,
 
-      showModalCom: null,  
+      showModalCom: null,
 
-      action: '',  
-      title: '',  
+      action: '',
+      title: '',
 
       titleMap,
-      
-      newTbData: [],  
 
+      newTbData: [],
     };
   }
 
-
-  onUploadChange = (params,  ) => {
-    console.log(' onUploadChange,  , ： ', params,    )
+  onUploadChange = params => {
+    console.log(' onUploadChange,  , ： ', params);
     if (params.file.status === 'done') {
       setTimeout(() => {
-        console.log('  延时器 ： ',  )
+        console.log('  延时器 ： ');
         this.setState({
           modalContent: <SuccResult></SuccResult>,
-        })
-        
-      }, 2000)
-      
+        });
+      }, 2000);
     }
-  }
-  showUploadModal = (params, ) => {
-    console.log('    showUploadModal ： ', params,  )
-    //   const {item,  } = this.props// 
-    const {action,  } = params
-    
+  };
+  showUploadModal = params => {
+    console.log('    showUploadModal ： ', params);
+    //   const {item,  } = this.props//
+    const { action } = params;
+
     this.setState({
       show: true,
       action,
-      modalContent: <UploadFileCom onChange={this.onUploadChange} label={titleMap[action]}  ></UploadFileCom>,
-    })
-  }
-  downloadFile = (params, ) => {
-    console.log('    downloadFile ： ', params,  )
-    this.props.downloadFile()
-  }
+      modalContent: (
+        <UploadFileCom
+          onChange={this.onUploadChange}
+          label={titleMap[action]}
+        ></UploadFileCom>
+      ),
+    });
+  };
+  downloadFile = params => {
+    console.log('    downloadFile ： ', params);
+    this.props.downloadFile();
+  };
 
-  menuClick = (params,  ) => {
-    const {key, clickFn, } = params
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key,    )
+  menuClick = params => {
+    const { key, clickFn } = params;
+    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
     if (clickFn) {
-      this[clickFn](params)
-      return  
+      this[clickFn](params);
+      return;
     }
-    
-  }
+  };
 
-  
-  
   onSubmit = (e, rest) => {
     console.log('    onSubmit ： ', e, rest);
   };
@@ -129,8 +124,6 @@ class HouseNo extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-
-  
   showModal = e => {
     console.log('    showModal ： ', e);
     this.setState({
@@ -144,11 +137,11 @@ class HouseNo extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res); //
-      const {newTbData,  } = this.state// 
+      const { newTbData } = this.state; //
       this.setState({
         show: false,
-        newTbData: [res, ...newTbData,  ],
-      })
+        newTbData: [res, ...newTbData],
+      });
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -163,7 +156,6 @@ class HouseNo extends PureComponent {
     // .catch(info => {
     //   console.log('Validate Failed:', info);
     // });
-
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //
@@ -172,10 +164,8 @@ class HouseNo extends PureComponent {
     });
   };
 
-
-  
   // renderFormBtn = (params, ) => {
-  //   console.log(' renderFormBtn ： ', params,    )// 
+  //   console.log(' renderFormBtn ： ', params,    )//
   //   return <div className={'fsb '}  >
   //     <HouseNoSearchForm></HouseNoSearchForm>
   //     <div className={'btnWrapper'}>
@@ -188,41 +178,67 @@ class HouseNo extends PureComponent {
   //   </div>
   // }
 
-  renderModalContent = (e,  ) => {
-    console.log('    renderModalContent ： ', e, this.state, this.props,   )
-    const {modalContent,  } = this.state// 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { modalContent } = this.state; //
     if (modalContent) {
-      return modalContent
+      return modalContent;
     }
-    
+
     // return null
+  };
+
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
+          Excel导入
+        </DropDownBtn>
+        <Button type="primary" onClick={this.props.syncOAAsync}>
+          同步OA
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+          删除
+        </Button>
+      </div>
+    );
+  };
+
+  renderSearchForm(params) {
+    // console.log(' renderSearchForm ： ', params,  )
+    // return <div className={'fsb '}  >
+    //   <HouseNoSearchForm
+    //     formBtn={this.renderFormBtn}
+    //   ></HouseNoSearchForm>
+
+    // </div>
+    return (
+      <HouseNoSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></HouseNoSearchForm>
+    );
   }
 
-  renderSearchForm(params,  ) {
-    // console.log(' renderSearchForm ： ', params,  )
-    return <div className={'fsb '}  >
-      <HouseNoSearchForm></HouseNoSearchForm>
-      <div className={'btnWrapper'}>
-        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}   >Excel导入</DropDownBtn>
-        <Button type="primary" htmlType="submit" onClick={this.props.syncOAAsync}>同步OA</Button>
-        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-        <Button type="primary" onClick={() => this.props.exportData()} >导出{TITLE}数据</Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()} >删除</Button>
-      </div>
-    </div>
-    return <HouseNoSearchForm
-      formBtn={this.renderFormBtn}
-      // onSubmit={this.onSubmit}
-      // onFail={this.onFail}
-    ></HouseNoSearchForm>
-  }
-  
-  renderTable(params,  ) {
-    console.log(' renderTable ： ', params, this.state, this.props,  )
+  renderTable(params) {
+    console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
       newTbData: this.state.newTbData,
-
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
@@ -230,24 +246,27 @@ class HouseNo extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
-    }
+    };
 
-    return <HouseNoTable {...tableProps}   ></HouseNoTable>
+    return <HouseNoTable {...tableProps}></HouseNoTable>;
   }
-  
-  renderSmartModal(params,  ) {
-    console.log(' renderSmartModal ： ', params, this.state, this.props,  )
-    const { show, title, action, titleMap,   } = this.state; //
 
-    return <SmartModal 
-      show={show} onOk={this.onOk} onCancel={this.onCancel}
-      action={action}
-      titleMap={titleMap}
-    >
-      {this.renderModalContent()}
-    </SmartModal>
+  renderSmartModal(params) {
+    console.log(' renderSmartModal ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return (
+      <SmartModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+      >
+        {this.renderModalContent()}
+      </SmartModal>
+    );
   }
-  
 
   render() {
     console.log(
@@ -256,27 +275,20 @@ class HouseNo extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, action, titleMap,   } = this.state; //
+    const { show, title, action, titleMap } = this.state; //
 
     const formComProps = {
       getCapture: this.showCapture,
       action: this.state.action,
-    }
-
-
+    };
 
     return (
       <div className="HouseNo">
-
         {this.renderSearchForm()}
 
         {this.renderTable()}
-        
+
         {this.renderSmartModal()}
-
-
-
-        
 
         {/* <SmartFormModal
           // width={'900px'}
@@ -291,8 +303,6 @@ class HouseNo extends PureComponent {
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
         ></SmartFormModal> */}
-
-
       </div>
     );
   }

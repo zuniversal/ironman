@@ -209,42 +209,84 @@ class Assets extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
+          Excel导入
+        </DropDownBtn>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={this.props.syncOAAsync}
+        >
+          同步OA
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+          删除
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={' '}>
-        <AssetsSearchForm></AssetsSearchForm>
-        <Divider />
-        <div className={'fsb '}>
-          <SearchForm></SearchForm>
-          <div className={'btnWrapper'}>
-            <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
-              Excel导入
-            </DropDownBtn>
-            <Button
-              type="primary"
-              htmlType="submit"
-              onClick={this.props.syncOAAsync}
-            >
-              同步OA
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => this.props.showFormModal({ action: 'add' })}
-            >
-              新增{TITLE}
-            </Button>
-            <Button type="primary" onClick={() => this.props.exportData()}>
-              导出{TITLE}数据
-            </Button>
-            <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-              删除
-            </Button>
-          </div>
-        </div>
-      </div>
+      <AssetsSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></AssetsSearchForm>
     );
   }
+  // renderSearchForm(params) {
+  //   // console.log(' renderSearchForm ： ', params,  )
+  //   return (
+  //     <div className={' '}>
+  //       <AssetsSearchForm></AssetsSearchForm>
+  //       <Divider />
+  //       <div className={'fsb '}>
+  //         <SearchForm></SearchForm>
+  //         <div className={'btnWrapper'}>
+  //           <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
+  //             Excel导入
+  //           </DropDownBtn>
+  //           <Button
+  //             type="primary"
+  //             htmlType="submit"
+  //             onClick={this.props.syncOAAsync}
+  //           >
+  //             同步OA
+  //           </Button>
+  //           <Button
+  //             type="primary"
+  //             onClick={() => this.props.showFormModal({ action: 'add' })}
+  //           >
+  //             新增{TITLE}
+  //           </Button>
+  //           <Button type="primary" onClick={() => this.props.exportData()}>
+  //             导出{TITLE}数据
+  //           </Button>
+  //           <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+  //             删除
+  //           </Button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   showDetail = params => {
     console.log(' showDetail,  , ： ', params);
@@ -271,7 +313,13 @@ class Assets extends PureComponent {
 
     return <AssetsTable {...tableProps}></AssetsTable>;
   }
-
+  getSize = e => {
+    console.log('    getSize ： ', e, this.state, this.props);
+    const { action } = this.state; //
+    if (action === 'upload') {
+      return 'small';
+    }
+  };
   renderSmartModal(params) {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
@@ -283,6 +331,7 @@ class Assets extends PureComponent {
         onCancel={this.onCancel}
         action={action}
         titleMap={titleMap}
+        size={this.getSize()}
       >
         {this.renderModalContent()}
       </SmartModal>

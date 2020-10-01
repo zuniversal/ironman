@@ -129,13 +129,13 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '所属客户',
-        name: '',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '户号',
-        name: 'electricity_user',
+        // name: 'electricity_user',
       },
     },
 
@@ -177,7 +177,7 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '电压等级',
-        name: 'area_code',
+        name: 'voltage_level',
       },
     },
 
@@ -229,7 +229,7 @@ const PowerStationForm = props => {
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'uploadCom'}></UploadCom>,
+    <UploadCom label={'上传铭牌'} key={'file'}></UploadCom>,
 
     // <Form.Item
     //   key={'attach'}

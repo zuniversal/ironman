@@ -1,4 +1,4 @@
-import React, {useState, } from 'react';
+import React, { useState } from 'react';
 import './style.less';
 import {
   Form,
@@ -16,68 +16,62 @@ import {
   InputNumber,
   Tabs,
   Tree,
-
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
+import { formatConfig } from '@/utils'; //
 
 const { TabPane } = Tabs;
-
-
 
 const treeData = [
   {
     title: '系统管理',
-    key: 'sys',  
+    key: 'sys',
     children: [
       {
         title: '用户管理',
-        key: 'user',  
+        key: 'user',
       },
       {
         title: '角色管理',
-        key: 'role',  
+        key: 'role',
       },
     ],
   },
 
   {
     title: '运维管理',
-    key: 'om',  
+    key: 'om',
     children: [
       {
         title: '巡检运维',
-        key: 'check',  
+        key: 'check',
       },
     ],
   },
-]
-
-
+];
 
 // const callback = (key,  ) => {
 //   // console.log(' callback   key,  ,   ： ', key,    )
-  
+
 // }
 
-const RoleTab = (props,  ) => {
-  console.log(' RoleTab   props,  ,   ： ', props,    )
+const RoleTab = props => {
+  console.log(' RoleTab   props,  ,   ： ', props);
   const [expandedKeys, setExpandedKeys] = useState(['sys', 'om']);
   const [checkedKeys, setCheckedKeys] = useState(['sys']);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-  const onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys); 
+  const onExpand = expandedKeys => {
+    console.log('onExpand', expandedKeys);
 
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
 
-  const onCheck = (checkedKeys) => {
+  const onCheck = checkedKeys => {
     console.log('onCheck', checkedKeys);
     setCheckedKeys(checkedKeys);
   };
@@ -87,52 +81,45 @@ const RoleTab = (props,  ) => {
     setSelectedKeys(selectedKeys);
   };
 
-
   const tabConfig = [
-    {tab: '菜单权限',   },
-    {tab: '操作权限', disabled: true,    },
-    {tab: '字典权限', disabled: true,    },
-    
-  ]
+    { tab: '菜单权限' },
+    { tab: '操作权限', disabled: true },
+    { tab: '字典权限', disabled: true },
+  ];
 
-
-  return <Tabs defaultActiveKey="1"  >
-    {tabConfig.map((v, i) => <TabPane tab={v.tab} key={v.tab} disabled={v.disabled} >
-
-      <Tree
-        checkable
-        onExpand={onExpand}
-        expandedKeys={expandedKeys}
-        autoExpandParent={autoExpandParent}
-        onCheck={onCheck}
-        checkedKeys={checkedKeys}
-        onSelect={onSelect}
-        selectedKeys={selectedKeys}
-        treeData={treeData}
-      />
-    </TabPane>)}
-  </Tabs>
-}
-
-
-
-
+  return (
+    <Tabs defaultActiveKey="1">
+      {tabConfig.map((v, i) => (
+        <TabPane tab={v.tab} key={v.tab} disabled={v.disabled}>
+          <Tree
+            checkable
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
+            autoExpandParent={autoExpandParent}
+            onCheck={onCheck}
+            checkedKeys={checkedKeys}
+            onSelect={onSelect}
+            selectedKeys={selectedKeys}
+            treeData={treeData}
+          />
+        </TabPane>
+      ))}
+    </Tabs>
+  );
+};
 
 export const config = [
   {
     itemProps: {
       label: '角色名',
+      name: 'name',
     },
   },
-
-  
 ];
-
-
 
 const RoleForm = props => {
   console.log(' RoleForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -151,12 +138,7 @@ const RoleForm = props => {
         {...rest}
       ></SmartForm>
 
-      <RoleTab
-
-      >
-
-      </RoleTab>
-
+      <RoleTab></RoleTab>
     </div>
   );
 };

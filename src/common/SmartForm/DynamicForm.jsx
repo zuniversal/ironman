@@ -15,7 +15,6 @@ import {
   Space,
   InputNumber,
   DatePicker,
-
 } from 'antd';
 
 import {
@@ -134,27 +133,32 @@ const DynamicForm = props => {
     noLabel,
     init,
     extra,
-
   } = props; //
 
   return (
-    <Form.List 
-      // name="dynamicForm" 
+    <Form.List
+      // name="dynamicForm"
       name={name}
       className={'dynamicForm '}
-      
     >
       {(fields, params) => {
         const { add, remove } = params;
-        console.log(' params ： ', fields.length, fields.length === 0, fields, params, itemProps); //
+        console.log(
+          ' params ： ',
+          fields.length,
+          fields.length === 0,
+          fields,
+          params,
+          itemProps,
+        ); //
 
         // if (fields.length === 0) {
-        //   console.log(' add ： ',    )// 
+        //   console.log(' add ： ',    )//
         //   add()
         //   add('add', 0)
         // }
 
-        const { label, className,   } = itemProps;
+        const { label, className } = itemProps;
 
         // const formItemProps = {
         //   ...itemProps,
@@ -162,20 +166,17 @@ const DynamicForm = props => {
         //   rules: noRule ? [] : rules({ items: props, label }),
         // };
         const formItemProps = {
-          colon: false,  
+          colon: false,
           ...itemProps,
           className: `dynamicFormItem formItems ${itemProps.className}  `,
           rules: noRule ? undefined : rules({ props, label }),
         };
 
-
-
         if (noLabel) {
-          formItemProps.label = ''
+          formItemProps.label = '';
         }
-        
 
-        const formLabel = (customLabel ? customLabel : getLabel(label, formType));
+        const formLabel = customLabel ? customLabel : getLabel(label, formType);
         // console.log('  formLabel ：', formLabel,  )//
 
         const realComProps = {
@@ -183,13 +184,13 @@ const DynamicForm = props => {
           className: ` ${comProps.className} `,
           placeholder: formLabel,
         };
-        console.log(' realComProps ： ', realComProps, formItemProps,    ); //
+        console.log(' realComProps ： ', realComProps, formItemProps); //
 
         const formItemMap = {
           rowText: '',
           Input: (
             // <Input allowClear {...realComProps} className={'inlineInput '} />
-            <Input allowClear {...realComProps}  />
+            <Input allowClear {...realComProps} />
           ),
           Select: (
             <Select allowClear {...realComProps}>
@@ -204,10 +205,12 @@ const DynamicForm = props => {
             </AutoComplete>
           ),
           Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
-          Radio:  <Radio.Group>
-            {/* <Radio value="item">item</Radio> */}
-            {radioOptions}
-          </Radio.Group>,
+          Radio: (
+            <Radio.Group>
+              {/* <Radio value="item">item</Radio> */}
+              {radioOptions}
+            </Radio.Group>
+          ),
           DatePicker: <DatePicker {...realComProps} />,
         };
 
@@ -215,10 +218,10 @@ const DynamicForm = props => {
         // console.log(' formItemCom ： ', formItemCom, formItemMap, formType,  )//
 
         const formItemLayout = layoutObj;
-        const fieldsData = fields
-        
+        const fieldsData = fields;
+
         // if (fields.length === 0) {
-        //   console.log(' fieldsDatafieldsData ： ', fieldsData,   )// 
+        //   console.log(' fieldsDatafieldsData ： ', fieldsData,   )//
         //   fieldsData.push({
         //     name: 'dfiled',
         //     key: 'dynamicField',
@@ -227,19 +230,24 @@ const DynamicForm = props => {
 
         return (
           <div>
-            {
-            // [
+            {// [
             //   // {
             //   //   name: 'dfiled',
             //   //   key: 'dynamicField',
             //   // },
-              
+
             //   // ...(fields.length === 0 ? init : []),
             //   ...fields,
             // ]
-              fieldsData.map((field, index) => {
+            fieldsData.map((field, index) => {
               const fieldKey = name ? name : field.name; //
-              console.log(' 动态表单 fieldKey ：', fields, field, name, fieldKey); //
+              console.log(
+                ' 动态表单 fieldKey ：',
+                fields,
+                field,
+                name,
+                fieldKey,
+              ); //
 
               // if (init) {
               //   init.forEach((v, i) => {
@@ -249,8 +257,7 @@ const DynamicForm = props => {
               //   // add('手动增加的', 0)
               // } else {
               //   add()
-              // } 
-              
+              // }
 
               const subBtn = (
                 <MinusCircleOutlined
@@ -294,63 +301,61 @@ const DynamicForm = props => {
                 </Form.Item>
               );
 
-              const normalItem = <Form.Item
-                // name={key}
-                // label={label}
-                // rules={rules}
-                // valuePropName="checked"
+              const normalItem = (
+                <Form.Item
+                  // name={key}
+                  // label={label}
+                  // rules={rules}
+                  // valuePropName="checked"
 
-                {...formItemLayout}
-                className={'formItems dynamicFormWrapper'}
-                {...formItemProps}
-                {...field}
-                // name={[field.name, fieldKey]}
-                // key={fieldKey}
-                // name={[name, fieldKey]}
-                // name={name}
-                // name={[field.fieldKey, 'itemKey']}
-                // fieldKey={[field.fieldKey, 'itemFieldKey']}
+                  {...formItemLayout}
+                  className={'formItems dynamicFormWrapper'}
+                  {...formItemProps}
+                  {...field}
+                  // name={[field.name, fieldKey]}
+                  // key={fieldKey}
+                  // name={[name, fieldKey]}
+                  // name={name}
+                  // name={[field.fieldKey, 'itemKey']}
+                  // fieldKey={[field.fieldKey, 'itemFieldKey']}
 
-                // name={[field.fieldKey, 'itemKey']}// 每个项 对象的 key 
-                // fieldKey={[field.fieldKey, 'itemFieldKey']}
-                // name={'itemKey'}// 
-                // fieldKey={'itemFieldKey'}
+                  // name={[field.fieldKey, 'itemKey']}// 每个项 对象的 key
+                  // fieldKey={[field.fieldKey, 'itemFieldKey']}
+                  // name={'itemKey'}//
+                  // fieldKey={'itemFieldKey'}
 
-                // key={field.name}
-                // key={field.key}
-                validateTrigger={['onChange', 'onBlur']}
-              >
-                {formItemCom}
-              </Form.Item>
+                  // key={field.name}
+                  // key={field.key}
+                  validateTrigger={['onChange', 'onBlur']}
+                >
+                  {formItemCom}
+                </Form.Item>
+              );
 
-              return (
-                extra ? <Form.Item
+              return extra ? (
+                <Form.Item
                   // <Form.Item
                   // key= "field19"
                   // label= "field19"
-          
+
                   key={field.key}
                   //  label={formLabel}
-                  className={'extraRow'} 
-
+                  className={'extraRow'}
                 >
                   <Form.Item
-                      // name= "field19"
-                      //  {...rest}
+                    // name= "field19"
+                    //  {...rest}
                     name={field.name}
                     {...formItemProps}
                     //  rules={rules}
-                    
-                    >
-                    {formItemCom} 
+                  >
+                    {formItemCom}
                     {/* {extra} */}
                   </Form.Item>
-                  <Form.Item
-                    className={'formItems '}
-                  >
-                    {actionBtn} 
-                  </Form.Item>
-                </Form.Item> : normalItem
+                  <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
+                </Form.Item>
+              ) : (
+                normalItem
               );
             })}
           </div>
@@ -361,9 +366,9 @@ const DynamicForm = props => {
 };
 
 DynamicForm.defaultProps = {
-  addText: '添加',
+  addText: '新增',
   subText: '刪除',
-  noLabel: true,  
+  noLabel: true,
 };
 
 export default DynamicForm; //

@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,26 +16,17 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
+import SmartForm from '@/common/SmartForm'; //
 import HouseNoFormTable from '@/components/Table/HouseNoFormTable'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//  
-
-
-
-
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const HouseNoForm = props => {
-  console.log(' HouseNoForm ： ', props, config,  )//
-  const {action,  } = props// 
+  console.log(' HouseNoForm ： ', props, config); //
+  const { action } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -43,9 +34,6 @@ const HouseNoForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-    
-  
-
 
   const config = [
     {
@@ -57,25 +45,25 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '客户',
-        name: 'customer',  
+        name: 'customer',
       },
     },
     {
       itemProps: {
         label: '户号',
-        name: 'code',  
+        name: 'code',
       },
     },
     {
       itemProps: {
         label: '签约公司',
-        name: 'signing_company',  
+        name: 'signing_company',
       },
     },
     {
       itemProps: {
         label: '客户代表',
-        name: 'customer_representative',  
+        name: 'customer_representative',
       },
     },
     {
@@ -88,31 +76,31 @@ const HouseNoForm = props => {
       formType: 'Cascader',
       itemProps: {
         label: '区域',
-        name: '',  
+        name: 'area_code',
       },
     },
     {
       itemProps: {
         label: '详细用电地址',
-        name: 'addr',  
+        name: 'addr',
       },
     },
     {
       itemProps: {
         label: '邮编',
-        name: 'postcode',  
+        name: 'postcode',
       },
     },
     {
       itemProps: {
         label: '经度',
-        name: 'longitude',  
+        name: 'longitude',
       },
     },
     {
       itemProps: {
         label: '纬度',
-        name: 'latitude',  
+        name: 'latitude',
       },
     },
     {
@@ -125,45 +113,37 @@ const HouseNoForm = props => {
       formType: 'Select',
       itemProps: {
         label: '变压器容量',
-        name: 'transformer_capacity',  
+        name: 'transformer_capacity',
       },
     },
-    
+
     {
       formType: 'Select',
       itemProps: {
         label: '电压等级',
-        name: 'voltage_level',  
+        name: 'voltage_level',
       },
     },
-    
+
     {
       formType: 'Select',
       itemProps: {
         label: '电价类型',
-        name: 'type',  
+        name: 'type',
       },
     },
-    
+
     {
       itemProps: {
         label: '电站数',
-        name: 'station_num',  
+        name: 'station_num',
       },
     },
-    
-    
   ];
 
   if (action === 'detail') {
-    config.push(
-      <HouseNoFormTable key={'table'}  ></HouseNoFormTable>
-    )
+    config.push(<HouseNoFormTable key={'table'}></HouseNoFormTable>);
   }
-
-
-
-
 
   return (
     <div className={''}>
@@ -177,13 +157,10 @@ const HouseNoForm = props => {
 
         {...props}
       ></SmartForm>
-
-
-
     </div>
-  )
-}
+  );
+};
 
-HouseNoForm.defaultProps = {}
+HouseNoForm.defaultProps = {};
 
-export default HouseNoForm
+export default HouseNoForm;

@@ -9,11 +9,12 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet('customer/', p);
-export const getItem = p => noTipsGet(`customer/${p.d_id}`, p);
-export const addItem = p => post('customer', p);
-export const editItem = p => put(`customer/${p.d_id}`, p);
-export const removeItem = p => remove(`customer/${p.d_id}`, p);
+export const getList = p => noTipsGet('OMS/spect/defect/', p);
+export const getItem = p => noTipsGet(`OMS/spect/defect/${p.d_id}`, p);
+export const addItem = p => post('OMS/spect/defect', p);
+export const editItem = p => put(`OMS/spect/defect/${p.d_id}`, p);
+export const removeItem = p => remove(`OMS/spect/defect/${p.d_id}`, p);
 
-export const syncOA = p => noTipsGet(`customer/oa`, p);
-export const getPortrait = p => noTipsGet(`customer/portrait/${p.d_id}`, p);
+export const syncOA = p => noTipsGet(`OMS/spect/defect/oa`, p);
+export const getPortrait = p =>
+  noTipsGet(`OMS/spect/defect/portrait/${p.d_id}`, p);

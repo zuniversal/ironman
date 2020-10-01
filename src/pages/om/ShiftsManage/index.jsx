@@ -14,6 +14,7 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import ShiftsManageTable from '@/components/Table/ShiftsManageTable'; //
 import ShiftsManageForm from '@/components/Form/ShiftsManageForm'; //
+import ShiftsManageSearchForm from '@/components/Form/ShiftsManageSearchForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
@@ -158,26 +159,36 @@ class ShiftsManage extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+          删除
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-          <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-            删除
-          </Button>
-        </div>
-      </div>
+      <ShiftsManageSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></ShiftsManageSearchForm>
     );
   }
 

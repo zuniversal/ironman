@@ -20,7 +20,7 @@ import ClientRadar from '@/components/Echarts/ClientRadar'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
-import { actions } from '@/models/client'; //
+import { actions, mapStateToProps } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -33,7 +33,7 @@ const titleMap = {
   userCapture: `${TITLE}画像`,
 };
 
-const mapStateToProps = ({ client }) => client;
+// const mapStateToProps = ({ client }) => client;
 
 @connect(mapStateToProps)
 @SmartHOC({

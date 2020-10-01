@@ -1,14 +1,17 @@
 export default [
-  { 
-    path: '/cs/userCenter',
-    component: '@/pages/cs/UserCenter',
+  {
+    path: '/cs/csHome',
+    component: '@/pages/cs/CsHome',
+    title: '首页',
+  },
+  {
+    path: '/cs/csUserCenter',
+    component: '@/pages/cs/CsUserCenter',
     title: '个人中心',
   },
   {
-    path: '/cs/organize',
-    component: '@/pages/cs/Organize',
+    path: '/cs/csOrganize',
+    component: '@/pages/cs/CsOrganize',
     title: '组织管理',
   },
-
 ];
-

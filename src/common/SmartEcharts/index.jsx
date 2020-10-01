@@ -18,6 +18,7 @@ import 'echarts/lib/component/timeline';
 
 import Pie from '@/common/SmartEcharts/charts/Pie';
 import Bar from '@/common/SmartEcharts/charts/Bar';
+import Line from '@/common/SmartEcharts/charts/Line';
 import TabBar from '@/common/SmartEcharts/charts/TabBar';
 import Radar from '@/common/SmartEcharts/charts/Radar';
 import Maps from '@/common/SmartEcharts/charts/Map';
@@ -34,7 +35,8 @@ echarts.registerMap('china', china);
 
 const optionMap = {
   bar: Bar,
-  tabBar: TabBar,
+  bar: Bar,
+  line: Line,
   pie: Pie,
   radar: Radar,
   map: Maps,
@@ -58,10 +60,10 @@ class SmartEcharts extends React.PureComponent {
 
     const option =
       type === 'tabBar'
-        ? optionMap[type](data, tabData, myExpenseBarTxt)
+        ? optionMap[type](this.props, tabData, myExpenseBarTxt)
         : type === 'bar'
-        ? optionMap[type](data)
-        : optionMap[type](data, legend);
+        ? optionMap[type](this.props)
+        : optionMap[type](this.props, legend);
     console.log(
       ' SmartEcharts myExpenseBar ：',
       type,

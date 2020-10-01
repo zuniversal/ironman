@@ -28,11 +28,13 @@ const InspectMissionSearchForm = props => {
     {
       itemProps: {
         label: '处理人',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '状态',
+        name: 'status',
       },
     },
   ];

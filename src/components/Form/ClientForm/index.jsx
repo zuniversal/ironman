@@ -17,6 +17,7 @@ import {
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
@@ -89,14 +90,15 @@ const ClientForm = props => {
       },
       comProps: {},
     },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '企业LOGO',
-        name: 'logo',
-      },
-      comProps: {},
-    },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '企业LoGo',
+    //     name: 'logo',
+    //   },
+    //   comProps: {},
+    // },
+    <UploadCom label={'企业LoGo'} key={'logo'}></UploadCom>,
 
     {
       formType: 'rowText',
@@ -152,6 +154,7 @@ const ClientForm = props => {
       itemProps: {
         // label: '',
         label: '用户名',
+        name: 'admin',
         className: 'noMargin',
       },
       comProps: {

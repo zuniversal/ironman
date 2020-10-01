@@ -28,7 +28,16 @@ import SmartTable from '@/common/SmartTable'; //
 
 const WorkOrderTable = props => {
   console.log(' WorkOrderTable  ： ', props); //
-  const { showModal, edit, remove, tdClick } = props; //
+  const {
+    showModal,
+    edit,
+    remove,
+    tdClick,
+    dispatchOrder,
+    exportData,
+    addTicket,
+    add,
+  } = props; //
 
   const columns = [
     {
@@ -68,9 +77,10 @@ const WorkOrderTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>派单</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>导出</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>添加工作票</a>
+      <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
+      <a onClick={() => exportData({ action: 'exportData' })}>导出</a>
+      <a onClick={() => add({ action: 'add' })}>添加工作票</a>
+      {/* <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a> */}
     </>
   );
 

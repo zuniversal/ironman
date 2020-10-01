@@ -34,28 +34,31 @@ const WeakTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
-      detail: true,
+      d_item: 'id',
     },
 
     {
       title: '名称',
       dataIndex: 'name',
-      detail: true,
+      d_item: 'id',
     },
 
     {
       title: '电站',
-      dataIndex: 'station.name',
+      // dataIndex: 'station.name',
+      dataIndex: ['station', 'name'],
     },
 
     {
       title: '客户名称',
-      dataIndex: 'customer.name',
+      // dataIndex: 'customer.name',
+      dataIndex: ['customer', 'name'],
     },
 
     {
       title: '反馈人',
-      dataIndex: 'team.name',
+      // dataIndex: 'team.name',
+      dataIndex: ['team', 'name'],
     },
 
     {

@@ -66,6 +66,18 @@ export const renderRadioOp = (configs, opType = 'option') => {
   );
 };
 
+export const renderCheckboxOp = (configs, opType = 'option') => {
+  // console.log(' configs, opType ： ', configs, opType,  )//
+  const CheckboxItems = configs.map(v => (
+    <Checkbox key={v.value}>{v.label}</Checkbox>
+  ));
+  return opType === 'group' ? (
+    <CheckboxGroup>{CheckboxItems}</CheckboxGroup>
+  ) : (
+    CheckboxItems
+  );
+};
+
 export const dateFormat = 'YYYY/MM/DD';
 export const monthFormat = 'YYYY/MM';
 
@@ -115,8 +127,8 @@ export const mockFormData = (config, init) => {
 export const w320 = 'w-320'; //
 export const w240 = 'w-240'; //
 
-export const formatConfig = (config, { isSearchForm } = {}) =>
-  config.map((v, i) => {
+export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
+  const configs = config.map((v, i) => {
     // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
     const items = {
       ...v,
@@ -137,7 +149,7 @@ export const formatConfig = (config, { isSearchForm } = {}) =>
       // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
       comProps: {
         ...v.comProps,
-        className: isSearchForm ? w240 : w320,
+        className: `${isSearchForm ? w240 : w320} ${v.comProps?.className} `,
       },
     };
     // console.log(' items ： ', items); //
@@ -151,12 +163,33 @@ export const formatConfig = (config, { isSearchForm } = {}) =>
     return items;
   });
 
+  if (isDisabledAll) {
+    configs.forEach((v, i) => {
+      console.log(' configs v ： ', v, i);
+      v.comProps.disabled = true;
+    });
+  }
+  return configs;
+};
+
+export const createArr = (length = 6) => {
+  const res = Array.from({ length }, (_, index) => console.log(_, index));
+  console.log('  res ：', res); //
+  return res;
+};
+
+export const createObj = (length = 6) => {
+  const res = Array.from({ length }, () => ({}));
+  console.log('  res ：', res); //
+  return res;
+};
+
 export const mockTbData = children => {
   // https://segmentfault.com/a/1190000020221170
-  // Array.from({ length: end }, (_, index) => index);
-  // Array(length).map(() => init);
+  // Array.from({ length: end }, (_, index) => index); // undefined 0
+  // Array(length).map(() => init); Array.from({ length: 8 }, () => ({}));
   // Array.from({ length }, () => ({}));
-  // Array(length).fill({});
+  // Array(length).fill({}); Array(8).fill(0)
   return new Array(20).fill(0).map((v, i) => {
     const start = 10;
     const childrenObj = {};

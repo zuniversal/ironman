@@ -189,6 +189,11 @@ class ShiftsArrange extends PureComponent {
     // return null
   };
 
+  goPage = page => {
+    console.log(' goPage,  , ： ', page, this.state, this.props);
+    const { history } = this.props; //
+    history.push(page);
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
@@ -197,7 +202,7 @@ class ShiftsArrange extends PureComponent {
         <div className={'btnWrapper'}>
           <Button
             type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
+            onClick={() => this.goPage('/om/shiftsArrangeDetail')}
           >
             {TITLE}
           </Button>

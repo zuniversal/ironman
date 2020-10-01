@@ -31,6 +31,25 @@ const MissionsManageSearchForm = props => {
         label: '状态',
       },
     },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
+    },
   ];
 
   const formProps = {
@@ -49,10 +68,11 @@ const MissionsManageSearchForm = props => {
         // init={{}}
 
         noRuleAll
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

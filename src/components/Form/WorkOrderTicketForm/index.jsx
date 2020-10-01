@@ -18,18 +18,17 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
-
-
-
-
+const choiceRadios = [
+  { label: '种类1', value: 'yes', key: 'yes' },
+  { label: '种类2', value: 'no', key: 'no' },
+];
 
 const WorkOrderTicketForm = props => {
   console.log(' WorkOrderTicketForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
 
-    
   const config = [
     {
       itemProps: {
@@ -52,6 +51,8 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      radioData: choiceRadios,
+      formType: 'Radio',
       itemProps: {
         label: '类型',
       },
@@ -67,25 +68,24 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'Radio',
       itemProps: {
         label: '施工日期',
       },
     },
     {
+      formType: 'Radio',
       itemProps: {
         label: '施工人员',
       },
     },
     {
+      formType: 'Radio',
       itemProps: {
         label: '施工负责人',
       },
     },
-    
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',

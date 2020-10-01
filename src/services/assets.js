@@ -1,24 +1,19 @@
-import {get, post, put, remove, noTipsGet, noTipsPost, noTipsPut, noTipsRemove,  } from "@/utils/request"
+import {
+  get,
+  post,
+  put,
+  remove,
+  noTipsGet,
+  noTipsPost,
+  noTipsPut,
+  noTipsRemove,
+} from '@/utils/request';
 
+export const getList = p => noTipsGet('OMS/equipment/list', p);
+export const getItem = p => noTipsGet(`OMS/equipment/${p.d_id}`, p);
+export const addItem = p => post('OMS/equipment/', p);
+export const editItem = p => put(`OMS/equipment/${p.d_id}`, p);
+export const removeItem = p => remove(`OMS/equipment/${p.d_id}`, p);
 
-
-
-export const getList = p => noTipsGet('OMS/equipment/list', p)
-export const getItem = p => noTipsGet(`OMS/equipment/get`, p)
-export const addItem = p => post('OMS/equipment/create', p)
-export const editItem = p => put(`OMS/equipment/modify`, p)
-export const removeItem = p => remove(`OMS/equipment/delete`, p)
-
-
-export const syncOA = p => noTipsGet(`OMS/equipment/OA`, p)
-export const exportData = p => noTipsGet(`OMS/equipment/export`, p)
-export const uploadFile = p => noTipsGet(`OMS/equipment/upload`, p)
-
-
-
-
-
-
-
-
-
+export const syncOA = p => noTipsGet(`OMS/equipment/OA/`, p);
+export const createQRCode = p => noTipsGet(`OMS/equipment/qrcode/${p.d_id}`, p);

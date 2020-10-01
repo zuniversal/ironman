@@ -18,7 +18,7 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
@@ -26,28 +26,32 @@ export const config = [
     itemProps: {
       label: '业务部门',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
+    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '角色',
     },
-    comProps: {
-      className: 'w-240',  
-    },  
+    comProps: {},
   },
 
-  
+  {
+    // formType: 'Select',
+    itemProps: {
+      label: '',
+      name: 'keyword',
+    },
+    comProps: {
+      className: 'lastFormItem',
+    },
+    searchSuffix: true,
+  },
 ];
-
-
 
 const UserManageSearchForm = props => {
   console.log(' UserManageSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -63,11 +67,13 @@ const UserManageSearchForm = props => {
         // init={init}
         // init={{}}
 
+        searchRight
         noRuleAll
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

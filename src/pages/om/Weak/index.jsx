@@ -25,6 +25,8 @@ import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import WeakForm from '@/components/Form/WeakForm'; //
+import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
+import WeakDetailForm from '@/components/Form/WeakDetailForm'; //
 import WeakTable from '@/components/Table/WeakTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import WeakDetail from '@/components/Detail/WeakDetail'; //
@@ -33,12 +35,12 @@ import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '缺陷';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `${TITLE}详情`,
+  detail: `${TITLE}单`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -156,29 +158,58 @@ class Weak extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        删除
+      </Button> */}
+      </div>
+    );
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fje '}>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-        </div>
-      </div>
+      <WeakSearchForm
+      // formBtn={this.renderFormBtn}
+      // onSubmit={this.onSubmit}
+      // onFail={this.onFail}
+      ></WeakSearchForm>
     );
   }
+  // renderSearchForm(params) {
+  //   // console.log(' renderSearchForm ： ', params,  )
+  //   return (
+  //     <div className={'fje '}>
+  //       <div className={'btnWrapper'}>
+  //         <SearchForm></SearchForm>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => this.props.showFormModal({ action: 'add' })}
+  //         >
+  //           新增{TITLE}
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   showDetail = params => {
     console.log(' showDetail,  , ： ', params);
     this.setState({
       show: true,
       ...params,
-      modalContent: <WeakDetail></WeakDetail>,
+      modalContent: <WeakDetailForm></WeakDetailForm>,
     });
   };
   renderTable(params) {

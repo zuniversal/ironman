@@ -71,7 +71,6 @@ export default ({
 
     showFormModal = params => {
       const { action, formComProps } = params;
-      const actionFn = getAction(action);
       console.log(
         '    showFormModal ： ',
         action,
@@ -79,8 +78,8 @@ export default ({
         formComProps,
         this.state,
         this.props,
-        actionFn,
       );
+      const actionFn = getAction(action);
 
       const isEdit = action === 'edit';
       if (isEdit) {

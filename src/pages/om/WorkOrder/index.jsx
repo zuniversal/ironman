@@ -26,6 +26,8 @@ import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
 import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm'; //
+import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm'; //
+import { InspectMissionAssignForm } from '@/components/Form/InspectMissionActionForm'; //
 import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
 import WorkOrderDetail from '@/components/Detail/WorkOrderDetail'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
@@ -37,11 +39,14 @@ import { connect } from 'umi';
 const TITLE = '工单';
 
 const titleMap = {
-  add: `新建${TITLE}`,
+  // add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  addTicket: `添加工作票`,
+  add: `添加工作票`,
+  dispatchOrder: `派单`,
 };
 
 // const mapStateToProps = ({ workOrder, }) => workOrder;
@@ -157,20 +162,49 @@ class WorkOrder extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          测试
+        </Button>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <WorkOrderSearchForm></WorkOrderSearchForm>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出
-          </Button>
-        </div>
-      </div>
+      <WorkOrderSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></WorkOrderSearchForm>
     );
   }
+  // renderSearchForm(params) {
+  //   // console.log(' renderSearchForm ： ', params,  )
+  //   return (
+  //     <div className={'fsb '}>
+  //       <WorkOrderSearchForm></WorkOrderSearchForm>
+  //       <div className={'btnWrapper'}>
+  //         <SearchForm></SearchForm>
+  //         <Button type="primary" onClick={() => this.props.exportData()}>
+  //           导出
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   showDetail = params => {
     console.log(' showDetail,  , ： ', params);
@@ -178,6 +212,24 @@ class WorkOrder extends PureComponent {
       show: true,
       ...params,
       modalContent: <WorkOrderDetail></WorkOrderDetail>,
+    });
+  };
+  dispatchOrder = params => {
+    console.log(' dispatchOrder,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: (
+        <InspectMissionAssignForm size={'small'}></InspectMissionAssignForm>
+      ),
+    });
+  };
+  addTicket = params => {
+    console.log(' addTicket,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: <WorkOrderTicketForm></WorkOrderTicketForm>,
     });
   };
   renderTable(params) {
@@ -193,6 +245,11 @@ class WorkOrder extends PureComponent {
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
+
+      exportData: this.props.exportData,
+      dispatchOrder: this.dispatchOrder,
+      add: this.props.showFormModal,
+      // addTicket: this.addTicket,
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
@@ -209,6 +266,7 @@ class WorkOrder extends PureComponent {
         onCancel={this.onCancel}
         action={action}
         titleMap={titleMap}
+        size={'small'}
       >
         {this.renderModalContent()}
       </SmartModal>

@@ -161,7 +161,7 @@ export const noTipsGet = (url, params) =>
   // get(url, { ...params, noTips: true } );
   {
     // console.log(' getListAsync paramsparamsparams ： ', params,  )//
-    return get(url, { ...params, test: 'zyb', noTips: true });
+    return get(url, { ...params, noTips: true });
   };
 export const noTipsPost = (url, params) =>
   post(url, { ...params, noTips: true });

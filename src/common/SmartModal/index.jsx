@@ -12,6 +12,8 @@ import './style.less';
 import { Table, Icon, notification, Modal, Button, Tag } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
+export const SMALL_WIDTH = '400px'; //
+
 // 封装带默认属性的 模态框
 
 class SmartModal extends PureComponent {
@@ -37,7 +39,21 @@ class SmartModal extends PureComponent {
     console.log('  onCancel  customShow ', customShow, this.state, this.props);
     onCancel && onCancel();
   };
-
+  getCls = e => {
+    console.log('    getCls ： ', e, this.state, this.props);
+    const { width, size } = this.props; //
+    if (size === 'default') {
+      return 'commonModal';
+    }
+  };
+  getWidth = e => {
+    console.log('    getWidth ： ', e, this.state, this.props);
+    const { width, size } = this.props; //
+    if (size === 'small') {
+      return SMALL_WIDTH;
+    }
+    return width;
+  };
   // 根据属性得出 title
   getTitle = e => {
     const { titleMap, action, title } = this.props; //
@@ -61,6 +77,7 @@ class SmartModal extends PureComponent {
       cancelTxt,
       maskClosable,
       show,
+      size,
     } = this.props;
 
     // const {show,  } = this.state//
@@ -72,11 +89,12 @@ class SmartModal extends PureComponent {
       this.props,
     ); //
 
+    const widths = this.getWidth();
+    console.log('  widths ：', widths); //
     return (
       <Modal
-        wrapClassName={`${className} smartModal  `}
+        wrapClassName={`smartModal ${className} ${this.getCls()}   `}
         // width={width != undefined ? width : '60%'}
-        width={width}
         visible={show}
         // onShow={this.onShow}
         onOk={this.onOk}
@@ -98,6 +116,7 @@ class SmartModal extends PureComponent {
           ) : null,
         ]}
         {...this.props}
+        width={widths}
         title={this.getTitle()}
       >
         {show ? children : null}
@@ -118,6 +137,7 @@ SmartModal.defaultProps = {
   show: false,
   isHideOk: false,
   titleMap: {}, // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
+  size: 'default',
 };
 
 SmartModal.propTypes = {
@@ -130,6 +150,7 @@ SmartModal.propTypes = {
   show: PropTypes.bool,
   isHideOk: PropTypes.bool,
   titleMap: PropTypes.object,
+  size: PropTypes.string,
 };
 
 export default SmartModal;

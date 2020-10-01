@@ -19,6 +19,7 @@ import {
   Result,
   Typography,
   Divider,
+  Tag,
 } from 'antd';
 import {
   UploadOutlined,
@@ -36,6 +37,7 @@ import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import { actions, mapStateToProps } from '@/models/organize'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { PRIMARY } from '@/constants';
 
 const TITLE = '部门';
 
@@ -174,14 +176,14 @@ class Organize extends PureComponent {
   renderSearchForm(params) {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
+      <div className={'fje '}>
+        {/* <SearchForm></SearchForm> */}
         <div className={'btnWrapper'}>
           <Button
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}
           >
-            新增{TITLE}
+            新增账户
           </Button>
         </div>
       </div>

@@ -17,15 +17,20 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//
+import InputCom from '@/components/Widgets/InputCom'; //
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
-
+const ticketConfig = [
+  { name: 'ing', left: '执行中', right: '张' },
+  { name: 'end', left: '结束', right: '张' },
+  { name: 'no', left: '未执行', right: '张' },
+];
 
 const ShiftsTransferForm = props => {
   console.log(' ShiftsTransferForm ： ', props); //
 
-  const {getCapture, showFormModal,  } = props// 
+  const { getCapture, showFormModal } = props; //
 
   const config = [
     {
@@ -39,13 +44,18 @@ const ShiftsTransferForm = props => {
       },
     },
     {
-      formType: 'DatePicker', 
+      itemProps: {
+        label: '接班班组',
+      },
+    },
+    {
+      formType: 'DatePicker',
       itemProps: {
         label: '1.接班时间',
       },
     },
     {
-      formType: 'TextArea', 
+      formType: 'TextArea',
       itemProps: {
         label: '2.值班检查情况',
       },
@@ -61,9 +71,36 @@ const ShiftsTransferForm = props => {
       },
     },
     {
-    formType: 'Select', 
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <InputCom disabled right={'付'}></InputCom>
+        </>
+      ),
       itemProps: {
         label: '5.装临时接电线',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <InputCom disabled right={'付'}></InputCom>
+        </>
+      ),
+      itemProps: {
+        label: '接地闸刀推上',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <InputCom disabled right={'把'}></InputCom>
+        </>
+      ),
+      itemProps: {
+        label: '加保安锁',
       },
     },
     {
@@ -77,6 +114,14 @@ const ShiftsTransferForm = props => {
       },
     },
     {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {ticketConfig.map((v, i) => (
+            <InputCom disabled {...v} key={i}></InputCom>
+          ))}
+        </>
+      ),
       itemProps: {
         label: '8.工作票情况',
       },
@@ -96,12 +141,7 @@ const ShiftsTransferForm = props => {
         label: '11.其他事项',
       },
     },
-    
   ];
-  
-
-
-
 
   const formProps = {
     // layout: 'vertical',
@@ -112,7 +152,9 @@ const ShiftsTransferForm = props => {
     <div className={'shiftsTransferForm'}>
       <div className="fje btnWrapper ">
         {/* <Button type="primary "onClick={() => showFormModal({action: 'export',  })}  >导出数据</Button> */}
-        <Button type="primary "onClick={() => {}}  >导出数据</Button>
+        <Button type="primary " onClick={() => {}}>
+          导出数据
+        </Button>
       </div>
 
       <SmartForm
@@ -125,6 +167,8 @@ const ShiftsTransferForm = props => {
         // init={{
         //   key9: regoins,
         // }}
+
+        isDisabledAll
         {...props}
       ></SmartForm>
     </div>

@@ -17,59 +17,57 @@ import {
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//  
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 export const config = [
   {
     formType: 'Select',
-    noRule: true,  
     itemProps: {
       label: '客户',
+      name: 'customer',
     },
     comProps: {
-      className: 'w-160',  
-    },  
+      className: 'w-160',
+    },
   },
   {
     formType: 'Select',
-    noRule: true,  
     itemProps: {
       label: '户号',
+      name: 'code',
     },
     comProps: {
-      className: 'w-160',  
-    },  
+      className: 'w-160',
+    },
   },
   {
     formType: 'Cascader',
-    noRule: true,  
     itemProps: {
       label: '区域',
+      name: 'region',
     },
     comProps: {
-      className: 'w-160',  
-    },  
+      className: 'w-160',
+    },
   },
   {
     formType: 'Input',
-    noRule: true,  
     itemProps: {
       label: '邮编',
+      name: 'postcode',
     },
     comProps: {
-      className: 'w-160',  
-    },  
+      className: 'w-160',
+    },
   },
-
-  
 ];
-
-
 
 const HouseNoSearchForm = props => {
   console.log(' HouseNoSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const [form] = Form.useForm();
+
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -85,11 +83,11 @@ const HouseNoSearchForm = props => {
         // init={init}
         // init={{}}
 
-        noRuleAll
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn && formBtn({ form })} */}
     </div>
   );
 };

@@ -10,9 +10,7 @@ const QRCodeContent = props => {
       <div className="title">M101进线柜</div>
       <QRCodeCom value={props.record}></QRCodeCom>
       <div className="btnWrapper">
-        <Button type="primary" onClick={() => {}}>
-          下载
-        </Button>
+        <Button onClick={() => {}}>下载</Button>
         <Button onClick={() => {}}>打印</Button>
       </div>
     </div>

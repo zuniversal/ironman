@@ -1,0 +1,21 @@
+@import '../../../static/css/variable.less'; //
+
+.timeChoice {
+  margin-right: 20px;
+  a {
+    &.active {
+      color: @primary;
+    }
+    font-size: 14px;
+    font-weight: 400;
+    color: #aaaaaa;
+    &:not(:last-child):after {
+      content: '|';
+      padding: 10px;
+      width: 2px;
+    }
+    // margin-right: 10px;
+    // border-right: 2px solid @primary;
+    display: inline-block;
+  }
+}

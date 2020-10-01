@@ -28,16 +28,18 @@ import SmartTable from '@/common/SmartTable'; //
 
 const InspectMissionTable = props => {
   console.log(' InspectMissionTable  ： ', props); //
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick, assignMission, editDate } = props; //
 
   const columns = [
     {
       title: 'id',
       dataIndex: 'id',
+      d_item: 'id',
     },
     {
       title: '名称',
       dataIndex: 'name',
+      d_item: 'id',
     },
     {
       title: '电站',
@@ -70,11 +72,12 @@ const InspectMissionTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>派发</a>
+      {/* <a onClick={() => tdClick({ action: 'showList' })}>派发</a>
       <a onClick={() => tdClick({ action: 'showList' })}>已领取</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>已开始</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>已完成</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>修改日期</a>
+      <a onClick={() => tdClick({ action: 'showList' })}>已开始</a> */}
+      {/* <a onClick={() => tdClick({ action: 'showList' })}>任务</a> */}
+      <a onClick={() => assignMission({ action: 'assignMission' })}>分配</a>
+      <a onClick={() => editDate({ action: 'editDate' })}>修改日期</a>
     </>
   );
 

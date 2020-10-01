@@ -18,87 +18,31 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
+import { formatConfig } from '@/utils'; //
 
 const choiceRadios = [
-  { label: '是', value: 'yes', key: 'yes',  },
-  { label: '否', value: 'no', key: 'no',  },
-]
-
-
-const config = [
-  {
-    itemProps: {
-      label: '单号',
-    },
-  },
-  {
-    itemProps: {
-      label: '工单类型',
-    },
-  },
-  {
-    itemProps: {
-      label: '客户',
-    },
-  },
-  {
-    formType: 'Radio',
-    noRule: true,
-    itemProps: {
-      label: '类型',
-    },
-    radioData: choiceRadios,
-    opType: 'group',
-  },
-  {
-    itemProps: {
-      label: '工作内容',
-    },
-  },
-  {
-    formType: 'TextArea',
-    itemProps: {
-      label: '安全措施',
-    },
-  },
-  {
-    itemProps: {
-      label: '施工日期',
-    },
-  },
-  {
-    itemProps: {
-      label: '施工人员',
-    },
-  },
-  {
-    itemProps: {
-      label: '施工负责人',
-    },
-  },
-  {
-    itemProps: {
-      label: '天气',
-    },
-  },
-
-  
+  { label: '是', value: 'yes', key: 'yes' },
+  { label: '否', value: 'no', key: 'no' },
 ];
 
+const config = [
+  // {
+  //   itemProps: {
+  //     label: '单号',
+  //   },
+  // },
+];
 
-
-const WorkOrderActionForm = props => {
-  console.log(' WorkOrderActionForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+export const WorkOrderDispatchOrderForm = props => {
+  console.log(' WorkOrderDispatchOrderForm ： ', props); //
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
   };
 
   return (
-    <div className={' WorkOrderActionForm '}>
+    <div className={' WorkOrderDispatchOrderForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -115,6 +59,6 @@ const WorkOrderActionForm = props => {
   );
 };
 
-WorkOrderActionForm.defaultProps = {};
+WorkOrderDispatchOrderForm.defaultProps = {};
 
-export default WorkOrderActionForm;
+export default WorkOrderDispatchOrderForm;
