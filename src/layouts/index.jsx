@@ -1,7 +1,7 @@
 import React, { useState, useRef, Suspense } from 'react';
 import { Button, Descriptions, Result, Avatar, Layout, Spin } from 'antd';
 import {
-  UserOutlined,
+  UserOutline1d,
   SearchOutlined,
   BellOutlined,
   MenuFoldOutlined,
@@ -13,9 +13,11 @@ import ProLayout, {
 } from '@ant-design/pro-layout';
 import defaultProps from './defaultProps';
 import { history, connect } from 'umi';
+import './index.less';
 import './style.less';
 import { ANIMATE } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
+import PageTitle from '@/components/Widgets/PageTitle'; //
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
@@ -45,6 +47,16 @@ const Layouts = props => {
     history.push(path);
   };
 
+  const getShowTitle = props => {
+    const { location } = props; //
+    const { pathname } = location;
+    const noTitlePath = ['/om/home'];
+    const isInclude = noTitlePath.every(v => v !== pathname);
+    console.log(' isInclude some  ： ', props, isInclude);
+    return isInclude;
+  };
+  const isShowTitle = getShowTitle(props);
+
   return (
     <div id="test-pro-layout" className={'layoutContainer'}>
       <ProLayout
@@ -72,7 +84,7 @@ const Layouts = props => {
             <a
               onClick={() => {
                 console.log(' onClickonClick ： ', item, pathname); //
-                // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   routes: null
+                // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
                 // const com = React.lazy(() => import(item.component))
                 // console.log(' com ： ', com, comRef.current, )//
                 // comRef.current = com//
@@ -139,7 +151,7 @@ const Layouts = props => {
               className={'actionItem'}
               shape="square"
               size="small"
-              icon={<UserOutlined />}
+              // icon={<UserOutlined />}
               onClick={() => goPage('/cs/userCenter')}
             />
             <span className={'actionItem userName '}>用户名</span>
@@ -168,9 +180,12 @@ const Layouts = props => {
                 }
               }
             >
-              <div className="titleWrapper">
+              {/* <div className="titleWrapper">
                 <div className="pageTitle">{title}</div>
-              </div>
+              </div> */}
+
+              {isShowTitle && <PageTitle {...props} title={title}></PageTitle>}
+
               {/* <Com></Com> */}
               {/* <UserCenterForm></UserCenterForm> */}
 

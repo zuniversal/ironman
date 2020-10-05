@@ -198,7 +198,10 @@ const ClientForm = props => {
       comProps: {},
       extra: (
         <Button
-          onClick={() => getCapture({ action: 'userCapture' })}
+          onClick={() => {
+            console.log(' getCapture ： ', getCapture); //
+            return getCapture({ action: 'userCapture' });
+          }}
           className="m-l-5"
         >
           用户画像

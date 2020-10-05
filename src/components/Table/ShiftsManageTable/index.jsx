@@ -33,18 +33,24 @@ const ShiftsManageTable = props => {
   const columns = [
     {
       title: '班组名称',
+      dataIndex: 'name',
     },
     {
       title: '组长',
+      dataIndex: 'team_headman',
     },
     {
       title: '组员',
+      // dataIndex: ['member', ''],
+      dataIndex: 'team_hememberadman',
     },
     {
       title: '班组类型',
+      dataIndex: 'type',
     },
     {
       title: '车辆牌照',
+      dataIndex: 'car_number',
     },
   ];
 

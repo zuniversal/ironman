@@ -93,7 +93,7 @@ export default {
         component: '../pages/om/HouseNo',
       },
       {
-        path: '/om/powerStation',
+        path: '/om/ps',
         name: '电站管理',
         icon: <ScheduleFilled />,
         component: '../pages/om/PowerStation',

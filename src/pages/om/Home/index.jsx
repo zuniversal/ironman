@@ -34,6 +34,7 @@ import HomeWorkOrderTable from '@/components/Table/HomeWorkOrderTable';
 import DropDownBtn from '@/common/DropDownBtn'; //
 import HomeStatBox from '@/components/Widgets/HomeStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
+import HomeTitleRow from '@/components/Widgets/HomeTitleRow';
 
 import { actions, mapStateToProps } from '@/models/client'; //
 import { connect } from 'umi';
@@ -174,6 +175,18 @@ class Home extends PureComponent {
     );
   }
 
+  getPageTitle = e => {
+    console.log('    getPageTitle ： ', e, this.state, this.props);
+    const { title } = this.props.route; //
+    return title;
+  };
+  showSetting = e => {
+    console.log('    showSetting ： ', e);
+    this.setState({
+      show: true,
+    });
+  };
+
   render() {
     console.log(
       ' %c Home 组件 this.state, this.props ： ',
@@ -184,6 +197,11 @@ class Home extends PureComponent {
 
     return (
       <div className="omHome">
+        <HomeTitleRow
+          {...this.props}
+          title={this.getPageTitle()}
+          showSetting={this.showSetting}
+        ></HomeTitleRow>
         {this.renderHomeStatBox()}
         {this.renderHomeStatEcharts()}
         {this.renderHomeInspectMissionTable()}

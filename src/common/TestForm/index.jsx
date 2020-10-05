@@ -191,6 +191,20 @@ const SmartForm = (props, state) => {
   const formControl = propsForm ? propsForm : form; //
   // const formControl = form; //
 
+  // setTimeout(() => {
+  //   console.log('  延时器 ： ',  )
+  //   form
+  //   .validateFields()
+  //   .then(values => {
+  //     console.log('  values await 结果  ：', values,  )//
+  //     form.resetFields();
+  //     // onCreate(values);
+  //   })
+  //   .catch(info => {
+  //     console.log('Validate Failed:', info);
+  //   });
+  // }, 2000)
+
   const onFinish = (values, rest) => {
     console.log(
       'Received values, rest,   of form: ',

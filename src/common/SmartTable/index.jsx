@@ -13,103 +13,17 @@ import {
   Tooltip,
 } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
+import ActionCom from '@/components/Widgets/ActionCom'; //
 import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
-import { tips, mockTbData } from '@/utils'; //
+import { tips, mockTbData, foramtText } from '@/utils'; //
 import { Link } from 'umi'; //
 
 /* 
   封装的通用 表格组件 封装带有相关通用操作 
 
 */
-
-const NUM_LEN = 9;
-// const NUM_LEN = 5
-const WORD_LEN = 10;
-const LETTER_LEN = 20;
-// const LETTER_LEN = 8
-
-const lengthMap = {
-  num: NUM_LEN,
-  word: WORD_LEN,
-  letter: LETTER_LEN,
-};
-
-// 处理表格文本的长度 根据文本的类型返回对应的限定的长度值
-const getLengthLimit = text => {
-  let textLength = text.length;
-  if (!isNaN(text)) {
-    // console.log(' 数字 ： ',    )//
-    // textLength = lengthMap.num
-    return lengthMap.num;
-  } else if (/^[a-zA-Z\s]+$/.test(text)) {
-    // console.log(' 字母 ： ',    )//
-    // textLength = lengthMap.letter
-    return lengthMap.letter;
-  } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
-    // console.log(' 文字 ： ',    )//
-    // textLength = lengthMap.word
-    return lengthMap.word;
-  }
-  // console.log(' 默认长度 ： ', isNaN(text), text, textLength,  )//
-  return textLength;
-};
-
-// 得到最终的格式化后的文本
-const foramtText = text => {
-  if (!text) {
-    return text;
-  }
-  const textStr = `${text}`;
-  let lengthLimit = getLengthLimit(textStr);
-  const txt =
-    textStr.length > lengthLimit
-      ? `${textStr}`.slice(0, lengthLimit) + '...'
-      : textStr;
-  // console.log(' lengthLimit, textStr, textStr.length ： ', txt, lengthLimit, textStr.length, textStr,   )//
-  return txt;
-};
-
-// 通用的操作列组件
-export const ActionCom = props => {
-  const {
-    edit,
-    remove,
-    extra,
-    record,
-    onRemove,
-    showQRCode,
-    noDefault,
-    tableProps,
-  } = props;
-  // console.log(' ActionCom props ： ', props);
-  return (
-    <span>
-      {!props.noDefault && (
-        <>
-          <a
-            onClick={() => {
-              console.log(' record ： ', record, edit); //
-              edit({ action: 'edit', record });
-            }}
-          >
-            编辑
-          </a>
-          {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-          <a onClick={() => remove({ record })}>删除</a>
-        </>
-      )}
-      {!props.noDefault && props.isQRCode && (
-        <a onClick={() => showQRCode({ action: 'QRCode', record })}>
-          生成二维码
-        </a>
-      )}
-      {/* {extra} */}
-      {extra(props)}
-    </span>
-  );
-}; //
 
 // const isMockData = true
 const isMockData = false;
@@ -243,10 +157,9 @@ class SmartTable extends PureComponent {
       .map((v, i) => ({ ...v, key: i }))
       .map((v, i) => ({
         ...v,
-        d_id: v.d_id
-          ? // && v.d_id !== 0
-            v.d_id
-          : Math.random(),
+        // d_id: v.d_id
+        // d_id: v.d_id ? v.d_id
+        d_id: v[rowKey] ? v[rowKey] : Math.random(),
       }));
 
     console.log(
@@ -317,7 +230,7 @@ class SmartTable extends PureComponent {
 
     const { linkUrl, linkUrlFn, link, d_item, render } = config;
 
-    const { showDetail } = this.props; //
+    const { showDetail, rowKey } = this.props; //
 
     const textLength = `${text}`.length;
     // const txt = foramtText(`${text}`)
@@ -349,7 +262,9 @@ class SmartTable extends PureComponent {
           onClick={() =>
             showDetail({
               action: 'detail',
-              d_id: record[d_item],
+              // d_id: record[d_item],
+              // [d_item]: record[d_item],
+              d_id: record[rowKey],
               [d_item]: record[d_item],
               // record,
             })
@@ -568,6 +483,7 @@ class SmartTable extends PureComponent {
     console.log(
       ' %c SmartTable 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
+      col,
       this.state,
       this.props,
     ); //
@@ -621,7 +537,7 @@ SmartTable.defaultProps = {
   // dataSource: [],
   dataSource: mockTbData(),
   // rowKey: 'key',
-  rowKey: 'd_id', //
+  // rowKey: 'd_id', //
   rowKey: 'id',
 
   // edit: () => {},

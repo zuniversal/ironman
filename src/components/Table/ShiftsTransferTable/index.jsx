@@ -33,18 +33,23 @@ const ShiftsTransferTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     {
       title: '交班人',
+      dataIndex: 'transfer_team',
     },
     {
       title: '接班人',
+      dataIndex: 'recieve_team',
     },
     {
       title: '类型',
+      dataIndex: 'type',
     },
     {
       title: '创建时间',
+      dataIndex: 'created_time',
     },
   ];
 

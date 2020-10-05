@@ -71,6 +71,7 @@ export default ({
 
     showFormModal = params => {
       const { action, formComProps } = params;
+      const actionFn = getAction(action);
       console.log(
         '    showFormModal ： ',
         action,
@@ -78,20 +79,24 @@ export default ({
         formComProps,
         this.state,
         this.props,
+        actions,
+        actionFn,
       );
-      const actionFn = getAction(action);
 
-      const isEdit = action === 'edit';
-      if (isEdit) {
+      // const isEdit = action === 'edit';
+      // if (isEdit) {
+      //   const { dispatch } = this.props; //
+      //   dispatch(
+      //     actions.getItemAsync(
+      //       params.record,
+      //     ),
+      //   );
+      // }
+
+      if (action !== 'add') {
         const { dispatch } = this.props; //
-        dispatch(
-          actions.getItemAsync({
-            // d_id: 100,
-          }),
-        );
+        dispatch(actions[actionFn](params));
       }
-      // const { dispatch } = this.props; //
-      // dispatch(actions[actionFn](params));
 
       this.setState({
         action,
@@ -234,7 +239,7 @@ export default ({
 
       try {
         const res = await form.validateFields();
-        console.log('  res await 结果  ：', res); //
+        console.log('  search res await 结果  ：', res); //
         this.getList(res);
       } catch (error) {
         console.log(' error ： ', error); //

@@ -34,32 +34,46 @@ const ClientReportTable = props => {
 
   const columns = [
     {
-      title: '客户名称',
-      dataIndex: 'name',
+      title: '户号',
     },
     {
-      title: '户号',
-      dataIndex: 'electricy_user',
+      title: '客户名称',
     },
     {
       title: '客户代表',
-      dataIndex: 'service_staff',
     },
     {
       title: '巡检组长',
-      dataIndex: 'team_headman',
-    },
-    {
-      title: '电源编号',
-      dataIndex: 'power_number',
     },
     {
       title: '电压等级',
-      dataIndex: 'voltage_level',
     },
     {
-      title: '加急',
-      dataIndex: '',
+      title: '申报/实际MD',
+    },
+    {
+      title: '基本电价',
+    },
+    {
+      title: '基本电价',
+    },
+    {
+      title: '基本电费',
+    },
+    {
+      title: '基本电费',
+    },
+    {
+      title: '利率调整',
+    },
+    {
+      title: '功率因数考核/实际',
+    },
+    {
+      title: '总金额',
+    },
+    {
+      title: '总电量',
     },
   ];
 

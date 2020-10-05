@@ -72,6 +72,7 @@ const ClientTable = props => {
     {
       title: '管理员',
       dataIndex: 'admin',
+      // dataIndex: ['admin', 'name'],
       // detail: true,
       detailFn: (text, record, index) => showDetail(record.id),
     },

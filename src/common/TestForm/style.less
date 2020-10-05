@@ -1,0 +1,116 @@
+.smartForm {
+  // margin-bottom: 20px;
+  width: initial;
+  width: 100%;
+  // .ant-input[disabled], .ant-picker-input > input[disabled]{
+  //   color: #333333;
+
+  // }
+  [disabled] {
+    color: #333333 !important;
+  }
+
+  .ant-btn-primary {
+    // margin-left: 10px;
+  }
+
+  .ant-picker {
+    width: 100%;
+  }
+
+  &.searchRight {
+    .lastFormItem {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      text-align: right;
+    }
+    .formItems:last-child {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .btnBlock {
+      flex: none;
+    }
+  }
+
+  .btnBlock {
+    // width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+  .btnWrapper {
+    // text-align: right;
+    // width: 50%;
+    .ant-btn {
+      margin-bottom: 10px;
+    }
+  }
+
+  .extraRow {
+    .ant-form-item-control-input-content {
+      display: flex;
+    }
+  }
+
+  .formItems {
+    margin-bottom: 10px;
+  }
+
+  .formItems {
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .w50 {
+    margin-right: 0;
+  }
+}
+
+.noMBottom {
+  margin-bottom: 0;
+}
+
+.dynamicFormWrapper {
+}
+
+.rowText {
+  .ant-form-item-control-input-content {
+    color: #aaa;
+  }
+}
+
+.dynamicFormItem {
+  margin-left: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .inlineInput {
+    width: 50%;
+  }
+}
+
+.extraRow {
+  margin-bottom: 0;
+  .actionBtn {
+    margin-left: 10px;
+    // &:last-child {
+    //   margin-left: 0;
+
+    // }
+  }
+  // .ant-form-item{
+  //   // &:not(:last-child) {
+  //   &:last-child {
+  //     margin-bottom: 0;
+
+  //   }
+
+  // }
+}

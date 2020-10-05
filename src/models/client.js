@@ -45,7 +45,7 @@ export default {
       return {
         ...state,
         d_id: payload.payload.d_id,
-        // dataList: [payload.bean, ],
+        itemDetail: payload.bean,
       };
     },
     addItem(state, { payload, type }) {
@@ -57,7 +57,7 @@ export default {
     },
     editItem(state, { payload, type }) {
       const dataList = state.dataList.map(v =>
-        v.id === state.d_id ? { ...v, ...payload.payload } : v,
+        v.id === state.d_id ? { ...v, ...payload.bean } : v,
       );
       console.log(' editItem 修改  ： ', state, payload, type, dataList); //
       return {
@@ -122,9 +122,10 @@ export default {
       console.log('  addItem res ：', res); //
       yield put(action(res));
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
+    *editItemAsync({ payload, action, type }, { call, put, select }) {
       // console.log(' editItemAsync ： ', payload, type,     )//
-      const res = yield call(services.editItem, payload);
+      const { itemDetail } = yield select(state => state[namespace]);
+      const res = yield call(services.editItem, { ...itemDetail, ...payload });
       console.log('  editItem res ：', res); //
       yield put(action({ ...res, payload }));
     },

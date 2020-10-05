@@ -157,7 +157,7 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
       items.formType = v.formType || 'Input';
     }
 
-    if (isSearchForm) {
+    if (isSearchForm || v.formType === 'Dynamic') {
       items.noRule = true;
     }
     return items;
@@ -221,6 +221,53 @@ export const mockTbData = children => {
 
     return item;
   });
+};
+
+const NUM_LEN = 9;
+// const NUM_LEN = 5
+const WORD_LEN = 10;
+const LETTER_LEN = 20;
+// const LETTER_LEN = 8
+
+const lengthMap = {
+  num: NUM_LEN,
+  word: WORD_LEN,
+  letter: LETTER_LEN,
+};
+
+// 处理表格文本的长度 根据文本的类型返回对应的限定的长度值
+export const getLengthLimit = text => {
+  let textLength = text.length;
+  if (!isNaN(text)) {
+    // console.log(' 数字 ： ',    )//
+    // textLength = lengthMap.num
+    return lengthMap.num;
+  } else if (/^[a-zA-Z\s]+$/.test(text)) {
+    // console.log(' 字母 ： ',    )//
+    // textLength = lengthMap.letter
+    return lengthMap.letter;
+  } else if (/^[\u4e00-\u9fa5]+$/.test(text)) {
+    // console.log(' 文字 ： ',    )//
+    // textLength = lengthMap.word
+    return lengthMap.word;
+  }
+  // console.log(' 默认长度 ： ', isNaN(text), text, textLength,  )//
+  return textLength;
+};
+
+// 得到最终的格式化后的文本
+export const foramtText = text => {
+  if (!text) {
+    return text;
+  }
+  const textStr = `${text}`;
+  let lengthLimit = getLengthLimit(textStr);
+  const txt =
+    textStr.length > lengthLimit
+      ? `${textStr}`.slice(0, lengthLimit) + '...'
+      : textStr;
+  // console.log(' lengthLimit, textStr, textStr.length ： ', txt, lengthLimit, textStr.length, textStr,   )//
+  return txt;
 };
 
 export const linkUrlFn = (params = [], path = '') => (text, record, index) => {

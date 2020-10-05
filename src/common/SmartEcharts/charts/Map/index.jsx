@@ -48,6 +48,21 @@ const option = (radar = [], data = []) => {
         saveAsImage: { show: true },
       },
     },
+    zoom: 1.8,
+    tooltip: {
+      formatter(params) {
+        console.log('  formatter : ', params);
+        return [
+          params.name + ':' + params.value + '<br/>',
+          // '1: ' + params.data.insfinshnum  +  '<br/>',
+          // '2: ' + params.data.comfinishnum + '<br/>',
+          // '3: ' + params.data.inscomenum+ '<br/>',
+          // '4: ' + params.data.comenum + '<br/>',
+          // '5: ' + params.data.insstucknum + '<br/>',
+          // '6: ' + params.data.comstucknum + '<br/>'
+        ].join('');
+      },
+    },
     geo: {
       //配置地图参数
       map: 'china',

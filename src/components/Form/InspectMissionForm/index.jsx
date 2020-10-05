@@ -18,18 +18,12 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
-
-
-
-
+import { formatConfig } from '@/utils'; //
 
 const InspectMissionForm = props => {
   console.log(' InspectMissionForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
 
-    
   const config = [
     {
       formType: 'rowText',
@@ -40,11 +34,13 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '设备状态',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
     {
@@ -56,16 +52,19 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '能耗过低',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '能耗过高',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
     {
@@ -77,16 +76,19 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '电流过低',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '电流过高',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
     {
@@ -98,16 +100,19 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '电压过低',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '电压过高',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
     {
@@ -119,16 +124,19 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '温度过低',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '温度过高',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
     {
@@ -140,23 +148,22 @@ const InspectMissionForm = props => {
     {
       itemProps: {
         label: '湿度过低',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '湿度过高',
+        // name: '',
       },
     },
     {
       itemProps: {
         label: '持续',
+        // name: '',
       },
     },
-
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',
