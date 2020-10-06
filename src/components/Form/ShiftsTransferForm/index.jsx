@@ -36,38 +36,45 @@ const ShiftsTransferForm = props => {
     {
       itemProps: {
         label: '交接班类型',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '交班班组',
+        name: 'transfer_team',
       },
     },
     {
       itemProps: {
         label: '接班班组',
+        name: 'receive_team',
       },
     },
     {
       formType: 'DatePicker',
       itemProps: {
         label: '1.接班时间',
+        name: 'created_time',
       },
     },
     {
       formType: 'TextArea',
       itemProps: {
         label: '2.值班检查情况',
+        name: 'inspect',
       },
     },
     {
       itemProps: {
         label: '3.当值电系变动情况',
+        name: 'changes',
       },
     },
     {
       itemProps: {
         label: '4.检修工作情况',
+        name: 'overhaul',
       },
     },
     {
@@ -79,6 +86,7 @@ const ShiftsTransferForm = props => {
       ),
       itemProps: {
         label: '5.装临时接电线',
+        name: 'work_situation',
       },
     },
     {
@@ -90,6 +98,7 @@ const ShiftsTransferForm = props => {
       ),
       itemProps: {
         label: '接地闸刀推上',
+        name: '',
       },
     },
     {
@@ -101,16 +110,19 @@ const ShiftsTransferForm = props => {
       ),
       itemProps: {
         label: '加保安锁',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '6.当值设备检查情况',
+        name: 'work_situation',
       },
     },
     {
       itemProps: {
         label: '7.本站站务工作',
+        name: '',
       },
     },
     {
@@ -124,21 +136,25 @@ const ShiftsTransferForm = props => {
       ),
       itemProps: {
         label: '8.工作票情况',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '9.交给下一班工作',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '10.工作、仪表、工具检查情况',
+        name: 'tool_check',
       },
     },
     {
       itemProps: {
         label: '11.其他事项',
+        name: 'other',
       },
     },
   ];

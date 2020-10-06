@@ -15,6 +15,7 @@ import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectPlanForm from '@/components/Form/InspectPlanForm'; //
+import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm'; //
 import InspectPlanTable from '@/components/Table/InspectPlanTable'; //
 import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
@@ -152,6 +153,29 @@ class InspectPlan extends PureComponent {
     // return null
   }
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          重置
+        </Button>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          保存计划
+        </Button>
+      </div>
+    );
+  };
+  renderSearchForm(params) {
+    // console.log(' renderSearchForm ： ', params,  )
+    return (
+      <InspectPlanSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></InspectPlanSearchForm>
+    );
+  }
   renderSearchForm(params,  ) {
     // console.log(' renderSearchForm ： ', params,  )
     return <div className={'fje '}  >

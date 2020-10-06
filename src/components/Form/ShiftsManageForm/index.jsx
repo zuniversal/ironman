@@ -24,11 +24,13 @@ export const config = [
   {
     itemProps: {
       label: '班组姓名',
+      name: 'name',
     },
   },
   {
     itemProps: {
       label: '组长姓名',
+      name: 'team_headman',
     },
   },
   {
@@ -41,6 +43,7 @@ export const config = [
       extra: true,
       itemProps: {
         label: '用户名',
+        name: 'member',
       },
       comProps: {
         className: 'w-320',
@@ -51,11 +54,13 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '类型',
+      name: 'type',
     },
   },
   {
     itemProps: {
       label: '车辆牌照',
+      name: 'car_number',
     },
   },
 ];

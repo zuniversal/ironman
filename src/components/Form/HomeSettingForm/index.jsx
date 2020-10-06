@@ -20,46 +20,54 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-const checkboxGroupOptions = [
-  { label: '应用内通知', value: 'app' },
-  { label: '短信', value: 'msg' },
-  { label: '邮件', value: 'email' },
-];
-
-const selectData = [
-  { label: '应用内通知', value: 'app' },
-  { label: '短信', value: 'msg' },
-  { label: '邮件', value: 'email' },
-];
-
 export const config = [
   {
-    formType: 'TextArea',
+    formType: 'Checkbox',
     itemProps: {
-      label: '消息内容',
+      label: '待巡检任务',
     },
   },
   {
-    formType: 'CheckboxGroup',
+    formType: 'Checkbox',
     itemProps: {
-      label: '通知方法',
+      label: '待处理工单',
     },
-    comProps: {
-      options: checkboxGroupOptions,
-    },
-    // checkboxContent:
   },
   {
-    formType: 'Select',
+    formType: 'Checkbox',
     itemProps: {
-      label: '通知人员',
+      label: '未领取巡检任务',
     },
-    selectData: selectData,
   },
+  {
+    formType: 'Checkbox',
+    itemProps: {
+      label: '未领取工单',
+    },
+  },
+  {
+    formType: 'Checkbox',
+    itemProps: {
+      label: '小组数据统计',
+    },
+  },
+  {
+    formType: 'Checkbox',
+    itemProps: {
+      label: '完成工单数',
+    },
+  },
+  {
+    formType: 'Checkbox',
+    itemProps: {
+      label: '完成巡检数',
+    },
+  },
+
 ];
 
-const MsgForm = props => {
-  console.log(' MsgForm ： ', props); //
+const HomeSettingForm = props => {
+  console.log(' HomeSettingForm ： ', props); //
   const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
@@ -67,7 +75,7 @@ const MsgForm = props => {
   };
 
   return (
-    <div className={' MsgForm '}>
+    <div className={' HomeSettingForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -84,6 +92,6 @@ const MsgForm = props => {
   );
 };
 
-MsgForm.defaultProps = {};
+HomeSettingForm.defaultProps = {};
 
-export default MsgForm;
+export default HomeSettingForm;

@@ -18,51 +18,37 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import { formatConfig } from '@/utils'//
 
-const MissionsForm = props => {
-  console.log(' MissionsForm ： ', props); //
-  const { formBtn, ...rest } = props; //
 
+
+
+
+
+const InspectPlanSearchForm = props => {
+  console.log(' InspectPlanSearchForm ： ', props); //
+  const {formBtn, ...rest } = props// 
+
+    
   const config = [
     {
+      formType: 'DatePicker',
       itemProps: {
-        label: '客户',
+        label: '年',
         name: '',
       },
     },
     {
+      formType: 'DatePicker',
       itemProps: {
-        label: '名称',
+        label: '月',
         name: '',
       },
     },
-    {
-      formType: 'TextArea',
-      itemProps: {
-        label: '任务描述',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '联系人',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '电话',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '地址',
-        name: '',
-      },
-    },
+    
   ];
+
+
 
   const formProps = {
     // layout: 'vertical',
@@ -70,7 +56,7 @@ const MissionsForm = props => {
   };
 
   return (
-    <div className={' MissionsForm '}>
+    <div className={' InspectPlanSearchForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -87,6 +73,6 @@ const MissionsForm = props => {
   );
 };
 
-MissionsForm.defaultProps = {};
+InspectPlanSearchForm.defaultProps = {};
 
-export default MissionsForm;
+export default InspectPlanSearchForm;

@@ -230,8 +230,11 @@ export default ({
       console.log(' onBatchRemove ： ', props, this.state, this.props);
       const { dispatch } = this.props; //
       const { selectedRows, selectedRowKeys } = this.state; //
-
-      dispatch(actions.removeItemAsync(selectedRowKeys));
+      if (selectedRowKeys.length) {
+        dispatch(actions.removeItemAsync(selectedRowKeys));
+      } else {
+        tips('请先勾选删除项再删除！', 2)
+      } 
     };
     search = async params => {
       console.log('    search ： ', params);

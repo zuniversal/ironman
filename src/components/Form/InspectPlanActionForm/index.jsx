@@ -16,28 +16,31 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import { formatConfig } from '@/utils'//
 
-const InspectMissionSearchForm = props => {
-  console.log(' InspectMissionSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
 
+
+
+
+
+export const InspectPlanNotifyForm = props => {
+  console.log(' InspectPlanNotifyForm ： ', props); //
+  const {formBtn, ...rest } = props// 
+
+    
   const config = [
     {
+      formType: 'Checkbox',
       itemProps: {
-        label: '处理人',
-        name: 'team',
-      },
-    },
-    {
-      itemProps: {
-        label: '状态',
-        name: 'status',
+        label: '短信通知客户',
+        name: '',
       },
     },
   ];
+
+
 
   const formProps = {
     // layout: 'vertical',
@@ -45,8 +48,8 @@ const InspectMissionSearchForm = props => {
   };
 
   return (
-    <div className={' InspectMissionSearchForm '}>
-      <SearchForm
+    <div className={' InspectPlanNotifyForm '}>
+      <SmartForm
         // flexRow={6}
         // config={config}
         config={formatConfig(config)}
@@ -55,13 +58,13 @@ const InspectMissionSearchForm = props => {
         // init={{}}
 
         {...rest}
-      ></SearchForm>
+      ></SmartForm>
 
       {formBtn}
     </div>
   );
 };
 
-InspectMissionSearchForm.defaultProps = {};
+InspectPlanNotifyForm.defaultProps = {};
 
-export default InspectMissionSearchForm;
+export default InspectPlanNotifyForm;

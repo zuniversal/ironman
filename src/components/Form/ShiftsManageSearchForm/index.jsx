@@ -25,6 +25,7 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '类型',
+      name: 'type',
     },
   },
   {

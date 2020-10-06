@@ -28,6 +28,7 @@ export const MissionsManageWorkOrderForm = props => {
     {
       itemProps: {
         label: '客户',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -36,12 +37,14 @@ export const MissionsManageWorkOrderForm = props => {
     {
       itemProps: {
         label: '名称',
+        name: '',
       },
     },
     {
       formType: 'Select',
       itemProps: {
         label: '类型',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -51,6 +54,7 @@ export const MissionsManageWorkOrderForm = props => {
       formType: 'Select',
       itemProps: {
         label: '分配给',
+        name: '',
       },
     },
   ];
@@ -89,6 +93,7 @@ export const MissionsManageContractForm = props => {
       formType: 'Select',
       itemProps: {
         label: '选择合同',
+        name: '',
       },
     },
   ];
