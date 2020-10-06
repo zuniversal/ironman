@@ -21,7 +21,6 @@ export default {
     d_id: '',
 
     syncOAData: [],
-    portraitData: {},
   },
 
   reducers: {
@@ -37,7 +36,7 @@ export default {
       return {
         ...state,
         d_id: payload.payload.d_id,
-        // dataList: [payload.bean, ],
+        itemDetail: { ...payload.bean, d_id: payload.payload.d_id },
       };
     },
     addItem(state, { payload, type }) {
@@ -49,7 +48,7 @@ export default {
     },
     editItem(state, { payload, type }) {
       const dataList = state.dataList.map(v =>
-        v.id === state.d_id ? { ...v, ...payload.payload } : v,
+        v.id === state.d_id ? { ...v, ...payload.bean } : v,
       );
       console.log(' editItem 修改  ： ', state, payload, type, dataList); //
       return {
@@ -61,7 +60,7 @@ export default {
     },
     removeItem(state, { payload, type }) {
       console.log(' removeItem 修改  ： ', state, payload, type); //
-      const removeList = payload.payload.filter(v => v.id);
+      const removeList = payload.payload;
       console.log(
         ' removeList  payload.payload.filter v ： ',
         state,
@@ -72,7 +71,7 @@ export default {
         ...state,
         // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
         dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
+          removeList.every(item => v.id !== item),
         ),
       };
     },
@@ -84,21 +83,12 @@ export default {
         // portraitData: payload.,
       };
     },
-    getPortrait(state, { payload, type }) {
-      // console.log(' getPortrait 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
   },
 
   effects: {
     *getListAsync(params, { call, put }) {
       const { payload, action, type } = params;
       console.log(' getListAsync ： ', payload, action, type, params); //
-      // const params = { name: 'zyb',  }
-      // const res = yield call(services.getList, params)
       const res = yield call(services.getList, payload);
       console.log('  getListAsync res ：', res); //
       yield put(action(res));
@@ -114,10 +104,11 @@ export default {
       console.log('  addItem res ：', res); //
       yield put(action(res));
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
+    *editItemAsync({ payload, action, type }, { call, put, select }) {
       // console.log(' editItemAsync ： ', payload, type,     )//
-      const res = yield call(services.editItem, payload);
-      console.log('  editItem res ：', res); //
+      const { itemDetail } = yield select(state => state[namespace]);
+      const res = yield call(services.editItem, { ...itemDetail, ...payload });
+      console.log('  editItem res ：', res, itemDetail); //
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
@@ -136,11 +127,15 @@ export default {
         payload: res,
       });
     },
-    *getPortraitAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getPortraitAsync ： ', payload, type,     )//
-      const res = yield call(services.getPortrait, payload);
-      console.log('  getPortrait res ：', res); //
-      yield put(action({ ...res, payload }));
+
+    *syncOAAsync({ payload, action, type }, { call, put }) {
+      // console.log(' syncOAAsync ： ', payload, type,     )//
+      const res = yield call(services.syncOA, payload);
+      console.log('  syncOA res ：', res); //
+      yield put({
+        type: 'getList',
+        payload: res,
+      });
     },
   },
 };

@@ -199,6 +199,7 @@ export default ({
     exportData = params => {
       console.log(' exportData,  , ： ', params);
       const { dispatch } = this.props; //
+      dispatch(actions.exportData({}));
       tips('模拟导出成功！');
     };
     syncOAAsync = params => {
@@ -233,8 +234,8 @@ export default ({
       if (selectedRowKeys.length) {
         dispatch(actions.removeItemAsync(selectedRowKeys));
       } else {
-        tips('请先勾选删除项再删除！', 2)
-      } 
+        tips('请先勾选删除项再删除！', 2);
+      }
     };
     search = async params => {
       console.log('    search ： ', params);

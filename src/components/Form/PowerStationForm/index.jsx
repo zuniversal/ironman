@@ -190,7 +190,7 @@ const PowerStationForm = props => {
 
     {
       itemProps: {
-        label: '变压器容童',
+        label: '变压器容量',
         name: '',
       },
     },

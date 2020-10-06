@@ -19,6 +19,7 @@ const QRCodeCom = props => {
   let str = value;
   if (typeof value === 'object') {
     str = JSON.stringify(value);
+    // str = JSON.stringify(`http://zuniversal.gitee.io/ep/#/om/contract`);
   }
   console.log(' str ： ', str); //
   return <QRCode {...props} value={str} />;

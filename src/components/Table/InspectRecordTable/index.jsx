@@ -33,27 +33,41 @@ const InspectRecordTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
+      d_item: 'id',
     },
     {
       title: '名称',
+      dataIndex: 'name',
+      d_item: 'id',
     },
     {
       title: '电站',
+      dataIndex: ['plan', 'station', 'name'],
     },
+
     {
       title: '客户名称',
+      // dataIndex: 'plan.customer',
+      dataIndex: ['plan', 'customer'],
     },
     {
       title: '当前状态',
+      dataIndex: 'status',
     },
+
     {
       title: '领取人',
+      dataIndex: ['team', 'team_headman'],
+    },
+
+    {
+      title: '执行时间',
+      dataIndex: 'work_date',
     },
     {
       title: '领取时间',
-    },
-    {
-      title: '完成时间',
+      dataIndex: 'assign_date',
     },
   ];
 

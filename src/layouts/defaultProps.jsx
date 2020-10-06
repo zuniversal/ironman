@@ -54,7 +54,8 @@ export default {
             component: '../pages/om/ShiftsManage',
           },
           {
-            path: '/om/shiftsArrange',
+            // path: '/om/shiftsArrange',
+            path: '/om/shiftsArrangeDetail',
             name: '排班',
             // icon: <ScheduleFilled />,
             component: '../pages/om/ShiftsArrange',

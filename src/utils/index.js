@@ -109,10 +109,12 @@ export const mockFormData = (config, init) => {
         Radio: 'no',
         DatePicker: mockDate,
 
-        Dynamic: ['值1'],
+        // Dynamic: ['值1'],
         // Dynamic: [{name: '值1', key: '值1', fieldKey: '值1', },   ],
         // Dynamic: ['值1', '值2',  ],
         // Dynamic: 'Dynamic初始值',
+
+        Dynamic: [{ first: 2222 }, { first: 333 }],
       }[formType];
       //
       // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//

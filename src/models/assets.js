@@ -4,7 +4,13 @@ import * as services from '@/services/assets';
 const namespace = 'assets';
 const { createAction, createCRUD } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = [
+  'syncOAAsync',
+  'getPortraitAsync',
+  'uploadFile',
+  'exportData',
+  'getTemplate,',
+];
 
 export const actions = {
   ...createCRUD(otherActions),

@@ -5,6 +5,7 @@ import {
   SearchOutlined,
   BellOutlined,
   MenuFoldOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import ProLayout, {
   PageContainer,

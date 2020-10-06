@@ -312,6 +312,7 @@ const DynamicForm = props => {
                   className={'formItems dynamicFormWrapper'}
                   {...formItemProps}
                   {...field}
+                  // name={[field.name, 'first']}
                   // name={[field.name, fieldKey]}
                   // key={fieldKey}
                   // name={[name, fieldKey]}
@@ -338,14 +339,16 @@ const DynamicForm = props => {
                   // key= "field19"
                   // label= "field19"
 
-                  key={field.key}
+                  key={field.name}
                   //  label={formLabel}
                   className={'extraRow'}
                 >
                   <Form.Item
                     // name= "field19"
                     //  {...rest}
-                    name={field.name}
+                    // name={field.name}
+                    name={[field.name, 'first']}
+                    // name={[field.key, 'first']}
                     {...formItemProps}
                     //  rules={rules}
                   >

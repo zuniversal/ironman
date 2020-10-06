@@ -45,7 +45,7 @@ export default {
       return {
         ...state,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: { ...payload.bean, d_id: payload.payload.d_id },
       };
     },
     addItem(state, { payload, type }) {
@@ -69,7 +69,7 @@ export default {
     },
     removeItem(state, { payload, type }) {
       console.log(' removeItem 修改  ： ', state, payload, type); //
-      const removeList = payload.payload
+      const removeList = payload.payload;
       console.log(
         ' removeList  payload.payload.filter v ： ',
         state,
@@ -105,8 +105,6 @@ export default {
     *getListAsync(params, { call, put }) {
       const { payload, action, type } = params;
       console.log(' getListAsync ： ', payload, action, type, params); //
-      // const params = { name: 'zyb',  }
-      // const res = yield call(services.getList, params)
       const res = yield call(services.getList, payload);
       console.log('  getListAsync res ：', res); //
       yield put(action(res));
@@ -126,7 +124,7 @@ export default {
       // console.log(' editItemAsync ： ', payload, type,     )//
       const { itemDetail } = yield select(state => state[namespace]);
       const res = yield call(services.editItem, { ...itemDetail, ...payload });
-      console.log('  editItem res ：', res); //
+      console.log('  editItem res ：', res, itemDetail); //
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
