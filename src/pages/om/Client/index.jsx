@@ -353,6 +353,16 @@ class Client extends PureComponent {
     );
   }
 
+  showFormModalWithProps = params => {
+    console.log('    showFormModalWithProps ： ', params);
+    const { form } = params;
+    this.props.showFormModal({
+      ...params,
+      formComProps: {
+        getCapture: this.showCapture,
+      },
+    });
+  };
   renderTable(params) {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -368,9 +378,9 @@ class Client extends PureComponent {
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
+      showDetail: this.showFormModalWithProps,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
+      edit: this.showFormModalWithProps,
       remove: this.props.onRemove,
     };
 
