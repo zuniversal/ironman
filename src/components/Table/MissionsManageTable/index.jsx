@@ -40,27 +40,37 @@ const MissionsManageTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     {
       title: '名称',
+      dataIndex: 'name',
     },
     {
       title: '客户',
+      // dataIndex: 'customer',
+      dataIndex: ['customer', 'name'],
     },
     {
       title: '任务类型',
+      dataIndex: 'type',
     },
     {
       title: '关联合同',
+      // dataIndex: 'contract',
+      dataIndex: ['contract', 'id'],
     },
     {
       title: '当前状态',
+      dataIndex: '',
     },
     {
       title: '发起工单数',
+      dataIndex: '',
     },
     {
       title: '创建时间',
+      dataIndex: '',
     },
   ];
 

@@ -19,6 +19,7 @@ import './style.less';
 import { ANIMATE } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
 import PageTitle from '@/components/Widgets/PageTitle'; //
+import LogoCom from '@/components/Widgets/LogoCom'; //
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
@@ -105,12 +106,11 @@ const Layouts = props => {
         //   </div>
         // )}
 
-        // logo={() => (
-        //   <div>
-        //     <SearchOutlined className={'m-r-10'}  />
-        //     logo
-        //   </div>
-        // )}
+        logo={() => (
+          <div>
+            <LogoCom></LogoCom>
+          </div>
+        )}
 
         // Warning: pro-layout: renderPageTitle return value should be a string
         // headerTitleRender={() => (
@@ -158,8 +158,9 @@ const Layouts = props => {
             <span className={'actionItem userName '}>用户名</span>
           </div>
         )}
-        title={'POWERKEEPER'}
-        logo={null}
+        // title={'POWERKEEPER'}
+        title={''}
+        // logo={null}
         siderWidth={200}
         {...settings}
       >

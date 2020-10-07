@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
-import ActionCom from '@/components/Widgets/ActionCom'; //
+import ActionCol from './ActionCol'; //
 import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
@@ -359,8 +359,8 @@ class SmartTable extends PureComponent {
         };
 
         //console.log(' restrest,  ： ', props);
-        return <ActionCom {...props}></ActionCom>;
-        // return <ActionCom text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCom>
+        return <ActionCol {...props}></ActionCol>;
+        // return <ActionCol text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCol>
       },
     }; //
 

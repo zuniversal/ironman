@@ -1,16 +1,10 @@
 import { init, action } from '@/utils/createAction'; //
-import * as services from '@/services/assets';
+import * as services from '@/services/csHome';
 
-const namespace = 'assets';
+const namespace = 'csHome';
 const { createAction, createCRUD } = init(namespace);
 
-const otherActions = [
-  'syncOAAsync',
-  'getPortraitAsync',
-  'uploadFileAsync',
-  'exportDataAsync',
-  'getTemplatAsync',
-];
+const otherActions = ['syncOAAsync', 'getPortraitAsync'];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -37,7 +31,7 @@ export default {
       // console.log(' getList 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        dataList: [payload.list],
+        dataList: [...payload.list],
       };
     },
     getItem(state, { payload, type }) {
@@ -84,21 +78,6 @@ export default {
         ),
       };
     },
-
-    syncOA(state, { payload, type }) {
-      // console.log(' syncOA 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
-    getPortrait(state, { payload, type }) {
-      // console.log(' getPortrait 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
   },
 
   effects: {
@@ -133,44 +112,6 @@ export default {
       const res = yield call(services.removeItem, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
-    },
-
-    *syncOAAsync({ payload, action, type }, { call, put }) {
-      // console.log(' syncOAAsync ： ', payload, type,     )//
-      const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res); //
-      yield put({
-        type: 'getList',
-        payload: res,
-      });
-    },
-    *getPortraitAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getPortraitAsync ： ', payload, type,     )//
-      const res = yield call(services.getPortrait, payload);
-      console.log('  getPortrait res ：', res); //
-      yield put(action({ ...res, payload }));
-    },
-
-    *uploadFile({ payload, action, type }, { call, put }) {
-      // console.log(' uploadFile ： ', payload, type,     )//
-      const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res); //
-      // yield put({
-      //   type: 'getList',
-      //   payload: res,
-      // });
-    },
-    *exportData({ payload, action, type }, { call, put }) {
-      // console.log(' exportData ： ', payload, type,     )//
-      const res = yield call(services.exportData, payload);
-      console.log('  exportData res ：', res); //
-      // yield put(action({ ...res, payload }));
-    },
-    *getTemplate({ payload, action, type }, { call, put }) {
-      // console.log(' getTemplate ： ', payload, type,     )//
-      const res = yield call(services.getTemplate, payload);
-      console.log('  getTemplate res ：', res); //
-      // yield put(action({ ...res, payload }));
     },
   },
 };

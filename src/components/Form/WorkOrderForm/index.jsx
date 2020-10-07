@@ -40,31 +40,37 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '标题',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '类型',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '状态',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '创建时间',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '客户',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '设备id ',
+        name: '',
       },
     },
     {
@@ -76,16 +82,19 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '反馈人',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '反馈电话',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '详细内容',
+        name: 'job_content',
       },
     },
     {
@@ -106,16 +115,19 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '处理人',
+        name: 'person_liable',
       },
     },
     {
       itemProps: {
         label: '领取时间',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '处理时间',
+        name: '',
       },
     },
     {
@@ -136,11 +148,13 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '评价等级',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '评价内容',
+        name: '',
       },
     },
   ];

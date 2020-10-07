@@ -47,12 +47,14 @@ export const config = [
   {
     itemProps: {
       label: '部门名称',
+      name: 'name',
     },
   },
   {
     formType: 'Select',
     itemProps: {
       label: '上级部门',
+      name: 'parent_id',
     },
     opType: 'group',  
     selectData: selectData,

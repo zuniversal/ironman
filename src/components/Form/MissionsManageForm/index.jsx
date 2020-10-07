@@ -28,26 +28,26 @@ const MissionsForm = props => {
     {
       itemProps: {
         label: '客户',
-        name: '',
+        name: 'name',
       },
     },
     {
       itemProps: {
         label: '名称',
-        name: '',
+        name: 'customer',
       },
     },
     {
       formType: 'TextArea',
       itemProps: {
         label: '任务描述',
-        name: '',
+        name: 'customer',
       },
     },
     {
       itemProps: {
         label: '联系人',
-        name: '',
+        name: 'contacts',
       },
     },
     {

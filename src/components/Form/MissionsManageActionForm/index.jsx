@@ -37,14 +37,14 @@ export const MissionsManageWorkOrderForm = props => {
     {
       itemProps: {
         label: '名称',
-        name: '',
+        name: 'name',
       },
     },
     {
       formType: 'Select',
       itemProps: {
         label: '类型',
-        name: '',
+        name: 'type',
       },
       comProps: {
         disabled: true,

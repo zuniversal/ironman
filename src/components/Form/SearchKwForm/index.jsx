@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -18,7 +19,7 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import { formatConfig } from '@/utils';//
 
 export const config = [
   {
@@ -33,10 +34,10 @@ export const config = [
 
 const SearchKwForm = props => {
   console.log(' SearchKwForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  const { formBtn, className, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
-    // layout: 'inline',
+    // layout: 'inline'
   };
 
   return (
