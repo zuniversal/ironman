@@ -187,7 +187,7 @@ class CsUserCenter extends PureComponent {
     // return null
   };
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

@@ -235,7 +235,7 @@ export default configs => Com =>
       }
     };
 
-    renderSmartFormModal(params) {
+    renderSmartFormModal = params => {
       console.log(' renderSmartFormModal ： ', params, this.state, this.props);
       const { action, isShow, configs } = this.state; //
       const { titleMap, modalForm } = configs; //

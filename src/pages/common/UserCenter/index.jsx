@@ -63,7 +63,7 @@ class UserCenter extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-  renderUserCenterTable(params) {
+  renderUserCenterTable = params => {
     console.log(' renderUserCenterTable ： ', params);
   }
 

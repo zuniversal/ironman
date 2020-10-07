@@ -181,7 +181,7 @@ class ShiftsManage extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <ShiftsManageSearchForm
@@ -192,7 +192,7 @@ class ShiftsManage extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -209,7 +209,7 @@ class ShiftsManage extends PureComponent {
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

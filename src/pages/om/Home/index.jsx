@@ -132,19 +132,19 @@ class Home extends PureComponent {
     history.push(page);
   };
 
-  renderHomeStatBox(params) {
+  renderHomeStatBox = params => {
     console.log(' renderHomeStatBox ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatBox></HomeStatBox>;
   }
-  renderHomeStatEcharts(params) {
+  renderHomeStatEcharts = params => {
     console.log(' renderHomeStatEcharts ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatEcharts></HomeStatEcharts>;
   }
-  renderHomeInspectMissionTable(params) {
+  renderHomeInspectMissionTable = params => {
     console.log(
       ' renderHomeInspectMissionTable ： ',
       params,
@@ -159,7 +159,7 @@ class Home extends PureComponent {
       </div>
     );
   }
-  renderHomeWorkOrderTable(params) {
+  renderHomeWorkOrderTable = params => {
     console.log(
       ' renderHomeWorkOrderTable ： ',
       params,

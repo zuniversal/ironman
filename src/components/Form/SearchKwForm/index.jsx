@@ -40,7 +40,7 @@ const SearchKwForm = props => {
   };
 
   return (
-    <div className={'fsb searchKwForm '}>
+    <div className={`fsb searchKwForm ${className}`}>
       <SearchForm
         // flexRow={4}
         // flexRow={6}
@@ -59,6 +59,12 @@ const SearchKwForm = props => {
   );
 };
 
-SearchKwForm.defaultProps = {};
+SearchKwForm.defaultProps = {
+  className: '',
+};
+
+SearchKwForm.propTypes = {
+  className: PropTypes.string,
+};
 
 export default SearchKwForm;

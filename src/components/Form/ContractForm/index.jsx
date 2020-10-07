@@ -27,7 +27,7 @@ import {
 import SmartForm from '@/common/SmartForm' //
 import { regoins } from '@/configs'//
 import { formatConfig, reportRadioOp, mockFormData,    } from '@/utils'//
-import { UploadCom } from '@/components/Widgets'
+import UploadCom from '@/components/Widgets/UploadCom'; 
 
 const normFile = e => {
   console.log('Upload event:', e);

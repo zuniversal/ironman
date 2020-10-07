@@ -211,7 +211,7 @@ class Contract extends PureComponent {
   }
 
 
-  renderSearchForm(params,  ) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return <div className={'fsb '}  >
       <SearchForm></SearchForm>
@@ -225,7 +225,7 @@ class Contract extends PureComponent {
     </div>
   }
   
-  renderTable(params,  ) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props,  )
 
     const tableProps = {
@@ -243,7 +243,7 @@ class Contract extends PureComponent {
     return <ContractTable {...tableProps}   ></ContractTable>
   }
   
-  renderSmartModal(params,  ) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props,  )
     const { show, title, action, titleMap,   } = this.state; //
 
@@ -256,7 +256,7 @@ class Contract extends PureComponent {
     </SmartModal>
   }
   
-  renderResultModal(params,  ) {
+  renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props,  )
     const { show, title, action, titleMap, showResultModal,   } = this.state; //
 
@@ -314,7 +314,7 @@ class Contract extends PureComponent {
       showContractFormModal: false,
     });
   };
-  renderContractStepFormModal(params,  ) {
+  renderContractStepFormModal = params => {
     console.log(' renderContractStepFormModal ： ', params, this.state, this.props,  )
     const { show, title, contractStepAction, showContractFormModal, contractTitle,   } = this.state; //
 

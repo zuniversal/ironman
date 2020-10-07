@@ -177,7 +177,7 @@ class InspectRecord extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <SearchKwForm
@@ -196,7 +196,7 @@ class InspectRecord extends PureComponent {
       modalContent: <InspectRecordForm></InspectRecordForm>,
     });
   };
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -215,7 +215,7 @@ class InspectRecord extends PureComponent {
     return <InspectRecordTable {...tableProps}></InspectRecordTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

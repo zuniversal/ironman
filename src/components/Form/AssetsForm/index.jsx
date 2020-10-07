@@ -28,7 +28,7 @@ import SmartForm from '@/common/SmartForm' //
 // import AssetsFormTable from 'smartTb/AssetsFormTable'; //
 import { regoins } from '@/configs'//
 import { formatConfig } from '@/utils'//
-import {UploadCom,  } from '@/components/Temp'// 
+import UploadCom from '@/components/Widgets/UploadCom'; //
 
 
 

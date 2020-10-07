@@ -158,7 +158,7 @@ class AlarmRecord extends PureComponent {
     // return null
   };
 
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
@@ -172,7 +172,7 @@ class AlarmRecord extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -189,7 +189,7 @@ class AlarmRecord extends PureComponent {
     return <AlarmRecordTable {...tableProps}></AlarmRecordTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

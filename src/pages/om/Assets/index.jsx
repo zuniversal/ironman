@@ -241,7 +241,7 @@ class Assets extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <AssetsSearchForm
@@ -251,7 +251,7 @@ class Assets extends PureComponent {
       ></AssetsSearchForm>
     );
   }
-  // renderSearchForm(params) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
   //     <div className={' '}>
@@ -296,7 +296,7 @@ class Assets extends PureComponent {
       modalContent: <AssetsDetailTable></AssetsDetailTable>,
     });
   };
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -320,7 +320,7 @@ class Assets extends PureComponent {
       return 'small';
     }
   };
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
@@ -338,7 +338,7 @@ class Assets extends PureComponent {
     );
   }
 
-  renderResultModal(params) {
+  renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap, showResultModal } = this.state; //
 

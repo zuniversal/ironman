@@ -181,7 +181,7 @@ class WorkOrder extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <WorkOrderSearchForm
@@ -191,7 +191,7 @@ class WorkOrder extends PureComponent {
       ></WorkOrderSearchForm>
     );
   }
-  // renderSearchForm(params) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
   //     <div className={'fsb '}>
@@ -232,7 +232,7 @@ class WorkOrder extends PureComponent {
       modalContent: <WorkOrderTicketForm></WorkOrderTicketForm>,
     });
   };
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -255,7 +255,7 @@ class WorkOrder extends PureComponent {
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

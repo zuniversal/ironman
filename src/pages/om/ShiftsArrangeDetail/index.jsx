@@ -195,7 +195,7 @@ class ShiftsArrangeDetail extends PureComponent {
   handleOk = e => {
     console.log('    handleOk ： ', e);
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
@@ -210,12 +210,12 @@ class ShiftsArrangeDetail extends PureComponent {
     );
   }
 
-  renderShiftsArrangeCalendar(params) {
+  renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

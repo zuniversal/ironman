@@ -191,17 +191,18 @@ class Role extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <SearchKwForm
         formBtn={this.renderFormBtn}
+        className={'fje'}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></SearchKwForm>
     );
   }
-  // renderSearchForm(params,  ) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return <div className={'fje '}  >
   //     <div className={'btnWrapper'}>
@@ -211,7 +212,7 @@ class Role extends PureComponent {
   //   </div>
   // }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -228,7 +229,7 @@ class Role extends PureComponent {
     return <RoleTable {...tableProps}></RoleTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

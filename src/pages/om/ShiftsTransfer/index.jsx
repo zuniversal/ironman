@@ -160,7 +160,7 @@ class ShiftsTransfer extends PureComponent {
     // return null
   };
 
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
@@ -174,7 +174,7 @@ class ShiftsTransfer extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -191,7 +191,7 @@ class ShiftsTransfer extends PureComponent {
     return <ShiftsTransferTable {...tableProps}></ShiftsTransferTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

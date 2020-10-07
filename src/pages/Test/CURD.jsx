@@ -228,7 +228,7 @@ class CRUD extends PureComponent {
   //   console.log('    onFail ： ', e, rest);
   // };
 
-  // renderClientTable(params) {
+  // renderClientTable = params => {
   //   console.log(' renderClientTable ： ', params);
   // }
 
@@ -381,7 +381,7 @@ class CRUD extends PureComponent {
     console.log('  res await 结果  ：', res, form); //
   };
 
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <ClientSearchForm
@@ -392,7 +392,7 @@ class CRUD extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     // console.log(' renderTable ： ', params,  )
 
     const tableProps = {

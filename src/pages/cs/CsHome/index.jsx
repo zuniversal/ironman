@@ -130,19 +130,19 @@ class CsHome extends PureComponent {
     history.push(page);
   };
 
-  renderCsHomeStatBox(params) {
+  renderCsHomeStatBox = params => {
     console.log(' renderCsHomeStatBox ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatBox></CsHomeStatBox>;
   }
-  renderCsHomeStatEcharts(params) {
+  renderCsHomeStatEcharts = params => {
     console.log(' renderCsHomeStatEcharts ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
   }
-  renderCsHomeTableCom(params) {
+  renderCsHomeTableCom = params => {
     console.log(' renderCsHomeTableCom ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
     return <CsHomeTableCom></CsHomeTableCom>;

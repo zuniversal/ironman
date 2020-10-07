@@ -177,7 +177,7 @@ class Weak extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <WeakSearchForm
@@ -187,7 +187,7 @@ class Weak extends PureComponent {
       ></WeakSearchForm>
     );
   }
-  // renderSearchForm(params) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
   //     <div className={'fje '}>
@@ -212,7 +212,7 @@ class Weak extends PureComponent {
       modalContent: <WeakDetailForm></WeakDetailForm>,
     });
   };
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -230,7 +230,7 @@ class Weak extends PureComponent {
     return <WeakTable {...tableProps}></WeakTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

@@ -191,7 +191,7 @@ class UserManage extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <UserManageSearchForm
@@ -201,7 +201,7 @@ class UserManage extends PureComponent {
       ></UserManageSearchForm>
     );
   }
-  // renderSearchForm(params,  ) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return <div className={'fsb '}  >
   //     <UserManageSearchForm></UserManageSearchForm>
@@ -214,7 +214,7 @@ class UserManage extends PureComponent {
   //   </div>
   // }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -231,7 +231,7 @@ class UserManage extends PureComponent {
     return <UserManageTable {...tableProps}></UserManageTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

@@ -152,7 +152,7 @@ class AlarmTemplate extends PureComponent {
     // return null
   }
 
-  renderSearchForm(params,  ) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return <div className={'fje '}  >
       <div className={'btnWrapper'}>
@@ -162,7 +162,7 @@ class AlarmTemplate extends PureComponent {
     </div>
   }
   
-  renderTable(params,  ) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props,  )
 
     const tableProps = {
@@ -180,7 +180,7 @@ class AlarmTemplate extends PureComponent {
     return <AlarmTemplateTable {...tableProps}   ></AlarmTemplateTable>
   }
   
-  renderSmartModal(params,  ) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props,  )
     const { show, title, action, titleMap,   } = this.state; //
 

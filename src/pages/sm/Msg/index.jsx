@@ -177,7 +177,7 @@ class Msg extends PureComponent {
     // return null
   }
 
-  renderSearchForm(params,  ) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return <div className={'fje '}  >
       <div className={'btnWrapper'}>
@@ -187,7 +187,7 @@ class Msg extends PureComponent {
     </div>
   }
   
-  renderTable(params,  ) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props,  )
 
     const tableProps = {
@@ -205,7 +205,7 @@ class Msg extends PureComponent {
     return <MsgTable {...tableProps}   ></MsgTable>
   }
   
-  renderSmartModal(params,  ) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props,  )
     const { show, title, action, titleMap,   } = this.state; //
 

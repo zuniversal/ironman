@@ -66,7 +66,7 @@ class Test extends PureComponent {
     console.log('    onFail ： ', e, rest);
   };
 
-  renderTestTable(params) {
+  renderTestTable = params => {
     console.log(' renderTestTable ： ', params);
   }
 

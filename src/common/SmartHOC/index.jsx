@@ -264,7 +264,7 @@ export default ({
       }
     };
 
-    renderSmartFormModal(params) {
+    renderSmartFormModal = params => {
       console.log(' renderSmartFormModal ： ', params, this.props);
       const { action, isShow } = this.state; //
 

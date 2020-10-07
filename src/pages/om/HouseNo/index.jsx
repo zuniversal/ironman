@@ -217,7 +217,7 @@ class HouseNo extends PureComponent {
     );
   };
 
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     // return <div className={'fsb '}  >
     //   <HouseNoSearchForm
@@ -234,7 +234,7 @@ class HouseNo extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -251,7 +251,7 @@ class HouseNo extends PureComponent {
     return <HouseNoTable {...tableProps}></HouseNoTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

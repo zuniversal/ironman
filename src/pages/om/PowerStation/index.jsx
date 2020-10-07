@@ -188,7 +188,7 @@ class PowerStation extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <PowerStationSearchForm
@@ -199,7 +199,7 @@ class PowerStation extends PureComponent {
     );
   }
 
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -216,7 +216,7 @@ class PowerStation extends PureComponent {
     return <PowerStationTable {...tableProps}></PowerStationTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 

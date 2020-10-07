@@ -178,7 +178,7 @@ class MissionsManage extends PureComponent {
       </div>
     );
   };
-  renderSearchForm(params) {
+  renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <MissionsManageSearchForm
@@ -188,7 +188,7 @@ class MissionsManage extends PureComponent {
       ></MissionsManageSearchForm>
     );
   }
-  // renderSearchForm(params) {
+  // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
   //     <div className={'fsb '}>
@@ -221,7 +221,7 @@ class MissionsManage extends PureComponent {
       modalContent: <MissionsManageContractForm></MissionsManageContractForm>,
     });
   };
-  renderTable(params) {
+  renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
     const tableProps = {
@@ -241,7 +241,7 @@ class MissionsManage extends PureComponent {
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
   }
 
-  renderSmartModal(params) {
+  renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
