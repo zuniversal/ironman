@@ -208,12 +208,16 @@ class ShiftsArrangeDetail extends PureComponent {
         </div>
       </div>
     );
-  }
+  };
 
+  renderShiftsArrangeCom = params => {
+    // console.log(' renderShiftsArrangeCom ： ', params,  )
+    return <FullCalendarCom data={this.props.dataList}></FullCalendarCom>;
+  };
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -230,7 +234,7 @@ class ShiftsArrangeDetail extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     console.log(
@@ -244,7 +248,8 @@ class ShiftsArrangeDetail extends PureComponent {
       <div className="ShiftsArrangeDetail">
         {this.renderSearchForm()}
 
-        <FullCalendarCom></FullCalendarCom>
+        {this.renderShiftsArrangeCom()}
+
         {this.renderShiftsArrangeCalendar()}
       </div>
     );

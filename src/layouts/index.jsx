@@ -84,6 +84,7 @@ const Layouts = props => {
 
           return (
             <a
+              className={'navItem'}
               onClick={() => {
                 console.log(' onClickonClick ： ', item, pathname); //
                 // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
@@ -106,12 +107,7 @@ const Layouts = props => {
         //   </div>
         // )}
 
-        logo={() => (
-          <div>
-            <LogoCom></LogoCom>
-          </div>
-        )}
-
+        logo={() => <LogoCom></LogoCom>}
         // Warning: pro-layout: renderPageTitle return value should be a string
         // headerTitleRender={() => (
         //   <div>

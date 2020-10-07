@@ -50,6 +50,7 @@ class SmartTable extends PureComponent {
       filtered: false,
       filterDropdownVisible: false,
 
+      removeParams: {},
       isShowResultModal: false,
 
       mockTbData: mockTbData(props.haveChildren),
@@ -286,10 +287,11 @@ class SmartTable extends PureComponent {
     return <Tooltip title={text}>{content}</Tooltip>;
   };
 
-  onRemove = e => {
-    console.log('    onRemove ： ', e, this.state, this.props);
+  onRemove = removeParams => {
+    console.log('    onRemove ： ', removeParams, this.state, this.props);
     const { remove } = this.props; //
     this.setState({
+      removeParams,
       isShowResultModal: true,
     });
   };
@@ -320,6 +322,8 @@ class SmartTable extends PureComponent {
   onResultModalOk = e => {
     console.log(' onResultModalOk   e,  ,   ： ', e);
     tips('删除成功！');
+    const { removeParams } = this.state; //
+    this.props.remove(removeParams);
     this.setState({
       isShowResultModal: false,
     });
@@ -351,8 +355,8 @@ class SmartTable extends PureComponent {
           record,
           index,
           edit,
-          // remove: this.onRemove,
           remove,
+          // remove: this.onRemove,
           showQRCode: this.showQRCode,
           extra,
           ...actionConfig,
@@ -392,7 +396,7 @@ class SmartTable extends PureComponent {
       </div> */}
       </RemoveModal>
     );
-  }
+  };
 
   showQRCode = params => {
     console.log('    showQRCode ： ', params);
@@ -437,7 +441,7 @@ class SmartTable extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     const {

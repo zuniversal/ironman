@@ -26,16 +26,16 @@ const ShiftsArrangeSearchForm = props => {
   const { getCapture, showFormModal } = props; //
 
   const config = [
-    {
-      formType: 'Select',
-      itemProps: {
-        label: '班组',
-      },
-    },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '班组',
+    //   },
+    // },
     {
       formType: 'DatePicker',
       itemProps: {
-        label: '月年份',
+        label: '年',
       },
     },
     {

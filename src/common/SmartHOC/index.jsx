@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartFormModal from '@/common/SmartFormModal'; //
+import { RemoveModal } from '@/components/Modal/ResultModal';
 import { tips } from '@/utils';
 
 import { Form, Input, Button, Spin } from 'antd';
@@ -57,8 +58,118 @@ export default ({
         formComProps: {},
 
         topCom: null,
+
+        // 删除弹框状态
+        isShowRemoveModal: false,
+        removeTitle: '',
       };
+      // this.onRemove = this.removeAction
     }
+
+    onRemove2 = props => {
+      console.log(' onRemove2 ： ', props, this.state, this.props);
+      const { dispatch } = this.props; //
+
+      dispatch(
+        // actions.removeItemAsync([
+        //   // d_id: props.record.id,
+        //   // ...props.record,
+        //   props.record,
+        //   // record,
+        // ]),
+        actions.removeItemAsync([
+          props.record.id,
+          // ...props.record,
+          // props.record,
+          // record,
+        ]),
+      );
+    };
+    onBatchRemove2 = props => {
+      console.log(' onBatchRemove2 ： ', props, this.state, this.props);
+      const { dispatch } = this.props; //
+      const { selectedRows, selectedRowKeys } = this.state; //
+      if (selectedRowKeys.length) {
+        dispatch(actions.removeItemAsync(selectedRowKeys));
+      } else {
+        tips('请先勾选删除项再删除！', 2);
+      }
+    };
+
+    removeAction = props => {
+      console.log(' removeAction ： ', props, this.state, this.props);
+      const { dispatch } = this.props; //
+      const params = Array.isArray(props)
+        ? props
+        : [
+            props.record.id,
+            // ...props.record,
+            // props.record,
+            // record,
+          ]; //
+      console.log('  params ：', params); //
+      dispatch(actions.removeItemAsync(params));
+      this.setState({
+        isShowRemoveModal: false,
+      });
+    };
+    onBatchRemove = props => {
+      console.log(' onBatchRemove ： ', props, this.state, this.props);
+      const { dispatch } = this.props; //
+      const { selectedRows, selectedRowKeys } = this.state; //
+      if (selectedRowKeys.length) {
+        this.onRemove(selectedRowKeys);
+      } else {
+        tips('请先勾选删除项再删除！', 2);
+      }
+    };
+
+    onRemove = removeParams => {
+      console.log('    onRemove ： ', removeParams, this.state, this.props);
+      const { remove } = this.props; //
+      this.setState({
+        removeParams,
+        isShowRemoveModal: true,
+      });
+    };
+    onResultModalOk = e => {
+      console.log(' onResultModalOk   e,  ,   ： ', e);
+      tips('删除成功！');
+      this.removeAction(this.state.removeParams);
+    };
+    onResultModalCancel = e => {
+      console.log(' onResultModalCancel   e, ,   ： ', e);
+      this.setState({
+        isShowRemoveModal: false,
+      });
+    };
+    renderRemoveModal = params => {
+      console.log(' renderRemoveModal ： ', params);
+      const { isShowRemoveModal } = this.state; //
+      const { removeTitle } = this.props; //
+
+      const modalProps = {
+        title: removeTitle,
+        show: isShowRemoveModal,
+        onOk: this.onResultModalOk,
+        onCancel: this.onResultModalCancel,
+      };
+      const resProps = {
+        // okFn: this.handleOk,
+        // offFn: this.handleOff,
+        okFn: this.onResultModalOk,
+        offFn: this.onResultModalCancel,
+      };
+
+      return (
+        <RemoveModal modalProps={modalProps} resProps={resProps}>
+          {/* <div className="dfc">
+          {okText && <Button key="buy">{okText}</Button>}
+          {okText && <Button type="primary" >{okText}</Button>}
+        </div> */}
+        </RemoveModal>
+      );
+    };
 
     setTopCom = topCom => {
       console.log('    setTopCom ： ', topCom);
@@ -208,35 +319,6 @@ export default ({
       tips('正在同步OA！');
       dispatch(actions.syncOAAsync({}));
     };
-    onRemove = props => {
-      console.log(' onRemove ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
-
-      dispatch(
-        // actions.removeItemAsync([
-        //   // d_id: props.record.id,
-        //   // ...props.record,
-        //   props.record,
-        //   // record,
-        // ]),
-        actions.removeItemAsync([
-          props.record.id,
-          // ...props.record,
-          // props.record,
-          // record,
-        ]),
-      );
-    };
-    onBatchRemove = props => {
-      console.log(' onBatchRemove ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
-      const { selectedRows, selectedRowKeys } = this.state; //
-      if (selectedRowKeys.length) {
-        dispatch(actions.removeItemAsync(selectedRowKeys));
-      } else {
-        tips('请先勾选删除项再删除！', 2);
-      }
-    };
     search = async params => {
       console.log('    search ： ', params);
       const { form } = params;
@@ -296,7 +378,7 @@ export default ({
           {this.renderModalContent()}
         </SmartFormModal>
       );
-    }
+    };
 
     componentDidMount() {
       console.log(
@@ -326,8 +408,10 @@ export default ({
           <Com
             {...this.state}
             {...this.props}
-            onRemove={this.onRemove}
-            onBatchRemove={this.onBatchRemove}
+            onRemove={this.onRemove2}
+            onBatchRemove={this.onBatchRemove2}
+            // onRemove={this.onRemove}
+            // onBatchRemove={this.onBatchRemove}
             onSelectChange={this.onSelectChange}
             showFormModal={this.showFormModal}
             syncOAAsync={this.syncOAAsync}
@@ -338,6 +422,8 @@ export default ({
           />
 
           {this.renderSmartFormModal()}
+
+          {this.renderRemoveModal()}
         </div>
       );
     }
