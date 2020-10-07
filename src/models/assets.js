@@ -9,7 +9,7 @@ const otherActions = [
   'getPortraitAsync',
   'uploadFile',
   'exportData',
-  'getTemplate,',
+  'getTemplat,',
 ];
 
 export const actions = {
@@ -149,6 +149,28 @@ export default {
       const res = yield call(services.getPortrait, payload);
       console.log('  getPortrait res ：', res); //
       yield put(action({ ...res, payload }));
+    },
+
+    *uploadFile({ payload, action, type }, { call, put }) {
+      // console.log(' uploadFile ： ', payload, type,     )//
+      const res = yield call(services.syncOA, payload);
+      console.log('  syncOA res ：', res); //
+      // yield put({
+      //   type: 'getList',
+      //   payload: res,
+      // });
+    },
+    *exportData({ payload, action, type }, { call, put }) {
+      // console.log(' exportData ： ', payload, type,     )//
+      const res = yield call(services.getPortrait, payload);
+      console.log('  getPortrait res ：', res); //
+      // yield put(action({ ...res, payload }));
+    },
+    *getTemplate({ payload, action, type }, { call, put }) {
+      // console.log(' getTemplate ： ', payload, type,     )//
+      const res = yield call(services.getPortrait, payload);
+      console.log('  getPortrait res ：', res); //
+      // yield put(action({ ...res, payload }));
     },
   },
 };
