@@ -30,7 +30,7 @@ export default {
       return {
         ...state,
         // ...payload,
-        dataList: [payload.bean],
+        dataList: [...payload.list],
       };
     },
     getItem(state, { payload, type }) {

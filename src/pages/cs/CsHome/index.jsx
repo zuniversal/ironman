@@ -31,6 +31,7 @@ import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import CsHomeTableCom from '@/components/Table/CsHomeTableCom';
 import DropDownBtn from '@/common/DropDownBtn'; //
+import CsHomeMonitor from '@/components/Widgets/CsHomeMonitor';
 import CsHomeStatBox from '@/components/Widgets/CsHomeStatBox';
 import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 
@@ -130,23 +131,29 @@ class CsHome extends PureComponent {
     history.push(page);
   };
 
+  renderCsHomeMonitor = params => {
+    console.log(' renderCsHomeMonitor ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return <CsHomeMonitor></CsHomeMonitor>;
+  };
   renderCsHomeStatBox = params => {
     console.log(' renderCsHomeStatBox ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatBox></CsHomeStatBox>;
-  }
+  };
   renderCsHomeStatEcharts = params => {
     console.log(' renderCsHomeStatEcharts ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
-  }
+  };
   renderCsHomeTableCom = params => {
     console.log(' renderCsHomeTableCom ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
     return <CsHomeTableCom></CsHomeTableCom>;
-  }
+  };
 
   render() {
     console.log(
@@ -159,6 +166,7 @@ class CsHome extends PureComponent {
     return (
       <div className="csHome">
         {this.renderCsHomeStatBox()}
+        {this.renderCsHomeMonitor()}
         {this.renderCsHomeStatEcharts()}
         {this.renderCsHomeTableCom()}
       </div>

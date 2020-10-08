@@ -32,22 +32,20 @@ const WorkOrderTicketForm = props => {
   const config = [
     {
       itemProps: {
-        label: '添加工作票',
-      },
-    },
-    {
-      itemProps: {
         label: '单号',
+        name: 'code',
       },
     },
     {
       itemProps: {
         label: '工单类型',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '客户',
+        name: 'customer_id',
       },
     },
     {
@@ -55,34 +53,40 @@ const WorkOrderTicketForm = props => {
       formType: 'Radio',
       itemProps: {
         label: '类型',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '工作内容',
+        name: 'job_content',
       },
     },
     {
       itemProps: {
         label: '安全措施',
+        name: 'safety_measure',
       },
     },
     {
       formType: 'Radio',
       itemProps: {
         label: '施工日期',
+        name: 'work_date',
       },
     },
     {
       formType: 'Radio',
       itemProps: {
         label: '施工人员',
+        name: '',
       },
     },
     {
       formType: 'Radio',
       itemProps: {
         label: '施工负责人',
+        name: 'person_liable',
       },
     },
   ];

@@ -389,6 +389,16 @@ const SmartForm = (props, state) => {
     // const renderRadioOptions = renderRadioOp(radioData, opType, )
     // const renderSelectOptions = renderSelectOp(selectData, opType, )
 
+    const onChange = e => {
+      console.log(' onChange   e,  ,   ： ', e);
+    };
+    const onSearch = e => {
+      console.log(' onSearch   e,  ,   ： ', e);
+    };
+    const onSelect = e => {
+      console.log(' onSelect   e,  ,   ： ', e);
+    };
+
     const formItemMap = {
       rowText: label,
       Label: LabelCom,
@@ -403,7 +413,15 @@ const SmartForm = (props, state) => {
         />
       ),
       Select: (
-        <Select allowClear {...realComProps} filterOption showSearch>
+        <Select
+          allowClear
+          {...realComProps}
+          filterOption
+          showSearch
+          onChange={onChange}
+          onSearch={onSearch}
+          onSelect={onSelect}
+        >
           {renderSelectOp(selectData, opType)}
           {/* <Option value="male">male</Option>
         <Option value="female">female</Option>

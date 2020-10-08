@@ -4,10 +4,10 @@ import { Form, Input } from 'antd';
 
 import InputCom from '@/components/Widgets/InputCom'; //
 
-const FlexInput = props => {
-  console.log(' FlexInput   props, ,   ： ', props);
+const CsHomeMonitorVideo = props => {
+  console.log(' CsHomeMonitorVideo   props, ,   ： ', props);
   return (
-    <div className="flexInput ">
+    <div className="csHomeMonitorVideo ">
       {props.config.map((v, i) => (
         <div {...v} key={i}>
           <InputCom {...v} key={i}></InputCom>
@@ -17,4 +17,4 @@ const FlexInput = props => {
   );
 };
 
-export default FlexInput;
+export default CsHomeMonitorVideo;

@@ -103,7 +103,7 @@ export const mockFormData = (config, init) => {
         Password: label,
         Cascader: [label],
         AutoComplete: label,
-        Checkbox: label,
+        Checkbox: true,
         CheckboxGroup: label,
 
         Radio: 'no',

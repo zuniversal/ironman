@@ -27,7 +27,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
 import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm'; //
 import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm'; //
-import { InspectMissionAssignForm } from '@/components/Form/InspectMissionActionForm'; //
+import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm'; //
 import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
 import WorkOrderDetail from '@/components/Detail/WorkOrderDetail'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
@@ -190,7 +190,7 @@ class WorkOrder extends PureComponent {
         // onFail={this.onFail}
       ></WorkOrderSearchForm>
     );
-  }
+  };
   // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
@@ -220,7 +220,7 @@ class WorkOrder extends PureComponent {
       show: true,
       ...params,
       modalContent: (
-        <InspectMissionAssignForm size={'small'}></InspectMissionAssignForm>
+        <WorkOrderDispatchOrderForm size={'small'}></WorkOrderDispatchOrderForm>
       ),
     });
   };
@@ -253,7 +253,7 @@ class WorkOrder extends PureComponent {
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -271,7 +271,7 @@ class WorkOrder extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     console.log(

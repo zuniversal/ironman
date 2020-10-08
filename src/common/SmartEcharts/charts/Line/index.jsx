@@ -11,9 +11,18 @@ const option = params => {
     myExpenseBarTxt,
   ); //
   return {
-    color: ['#108ee9', '#f50', '#13CE66', '#006699', '#e5323e', '#4cabce'],
+    color: [
+      '#1CBB51',
+      '#FD7D7D',
+      '#f50',
+      '#13CE66',
+      '#006699',
+      '#e5323e',
+      '#108ee9',
+      '#4cabce',
+    ],
     tooltip: {
-      trigger: 'axis',
+      trigger: 'item',
       axisPointer: {
         type: 'cross',
         crossStyle: {
@@ -23,7 +32,7 @@ const option = params => {
     },
     toolbox,
     legend: {
-      data: ['Year Expense', 'Expense Trend', '平均温度'],
+      data: ['数据源1', '数据源2', '平均温度'],
       // data: myExpenseBarTxt
     },
     xAxis: [
@@ -70,7 +79,7 @@ const option = params => {
     // }),
     series: [
       {
-        name: '数据源',
+        name: '数据源1',
         type: 'line',
         yAxisIndex: 1,
         data: [
@@ -89,7 +98,7 @@ const option = params => {
         ],
       },
       {
-        name: '数据源',
+        name: '数据源2',
         type: 'line',
         yAxisIndex: 1,
         data: [

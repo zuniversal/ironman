@@ -26,11 +26,15 @@ const choiceRadios = [
 ];
 
 const config = [
-  // {
-  //   itemProps: {
-  //     label: '单号',
-  //   },
-  // },
+  {
+    formType: 'Select',
+    itemProps: {
+      label: '分配给',
+    },
+    comProps: {
+      className: 'w-280',
+    },
+  },
 ];
 
 export const WorkOrderDispatchOrderForm = props => {

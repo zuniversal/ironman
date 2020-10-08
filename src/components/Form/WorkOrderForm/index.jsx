@@ -52,7 +52,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '状态',
-        name: '',
+        name: 'status',
       },
     },
     {
@@ -69,7 +69,7 @@ const WorkOrderTicketForm = props => {
     },
     {
       itemProps: {
-        label: '设备id ',
+        label: '设备id',
         name: '',
       },
     },

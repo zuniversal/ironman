@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, createRef } from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
 import FullCalendar from '@fullcalendar/react';
@@ -77,7 +77,7 @@ const items2 = {
   start: '2020-10-09',
   display: 'background',
 };
-const calendarEvents = [items, items2];
+const calendarEvents = [items, items, items, items, items2];
 
 const handleEventClick = info => {
   console.log(' handleEventClick   info,   ： ', info);
@@ -102,10 +102,12 @@ const ShiftsArrangeList = props => {
     `color: #333; font-weight: bold`,
     props,
   );
+
+  const domRef = React.createRef();
   useEffect(() => {
     // Cannot read property 'addEventListener' of null 如果没有该容器节点 会导致监听失败
     let draggableEl = document.getElementById('dataListWrapper');
-    console.log(' eventEleventEl 2： ', draggableEl); //
+    console.log(' eventEleventEl 2： ', draggableEl, domRef); //
     new Draggable(draggableEl, {
       itemSelector: '.dragItem',
       eventData: function(eventEl) {
@@ -125,7 +127,7 @@ const ShiftsArrangeList = props => {
   }, []);
 
   return (
-    <div id="dataListWrapper">
+    <div id="dataListWrapper" ref={domRef}>
       <div className="titleRow primaryBorderBottom fsb">
         <div>电站</div>
         <div>剩余/总巡检数量</div>
@@ -207,6 +209,22 @@ const FullCalendarCom = props => {
           week: '周',
           day: '天',
         }}
+        dayMaxEvents={3}
+        // moreLinkContent={(params) => { console.log(' params ： ', params,  ) return 'xxx'  }}
+        moreLinkContent={'...'}
+        fixedWeekCount
+        // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
+        // showNonCurrentDates={false}
+        dayCellContent={params => {
+          console.log(' dayCellContent params ： ', params);
+          return `${params.dayNumberText}`.split('日')[0];
+        }}
+        dayCellClassNames={'dayCellClassNames'}
+        eventClassNames={'eventClassNames'}
+        slotLabelClassNames={'slotLabelClassNames'}
+        moreLinkClassNames={'moreLinkClassNames'}
+        // aspectRatio={11/13}
+
         dayHeaderFormat={{ weekday: 'short' }}
         allDayText="全天"
         selectable

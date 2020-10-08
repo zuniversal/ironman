@@ -506,6 +506,7 @@ class SmartTable extends PureComponent {
           // scroll={{ x: 800,  }}
           // rowKey={rowKey}
 
+          size={'small'}
           rowSelection={{
             type: selectionType,
             ...rowSelection,

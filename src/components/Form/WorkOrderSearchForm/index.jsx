@@ -29,12 +29,14 @@ const WorkOrderSearchForm = props => {
       formType: 'Select',
       itemProps: {
         label: '处理人',
+        name: 'user_id',
       },
     },
     {
       formType: 'Select',
       itemProps: {
         label: '状态',
+        name: 'status',
       },
     },
 

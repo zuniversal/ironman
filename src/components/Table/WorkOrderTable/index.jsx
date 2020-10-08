@@ -42,36 +42,47 @@ const WorkOrderTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     {
       title: '名称',
+      dataIndex: 'name',
     },
     {
       title: '工单编号',
+      // dataIndex: '',
     },
     {
       title: '客户名称',
+      dataIndex: 'name',
     },
     {
       title: '工单类型',
+      dataIndex: 'type',
     },
     {
       title: '当前状态',
+      // dataIndex: '',
     },
     {
-      title: '处理人务',
+      title: '处理人',
+      dataIndex: ['recipient', 'name'],
     },
     {
-      title: '关联任',
+      title: '关联任务',
+      dataIndex: ['task', 'name'],
     },
     {
       title: '任务状态',
+      // dataIndex: '',
     },
     {
       title: '客户确认',
+      // dataIndex: '',
     },
     {
       title: '创建时间',
+      // dataIndex: '',
     },
   ];
 

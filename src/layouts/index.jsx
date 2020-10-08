@@ -137,20 +137,21 @@ const Layouts = props => {
         //   </div>
         // )}
         rightContentRender={() => (
-          <div>
+          <div className={'dfc'}>
             {/* <Avatar shape="square" size="small" icon={<SearchOutlined />} />
               <Avatar shape="square" size="small" icon={<UserOutlined />} /> */}
             {/* <SearchOutlined className={'actionItem '} /> */}
             {/* <BellOutlined className={'actionItem '} /> */}
             <Icon icon={'search'} className={'actionItem '} />
             <Icon icon={'bell'} className={'actionItem '} />
-            <Avatar
+            <span className="avatars"></span>
+            {/* <Avatar
               className={'actionItem'}
               shape="square"
               size="small"
               // icon={<UserOutlined />}
               onClick={() => goPage('/cs/userCenter')}
-            />
+            /> */}
             <span className={'actionItem userName '}>用户名</span>
           </div>
         )}
@@ -182,7 +183,13 @@ const Layouts = props => {
                 <div className="pageTitle">{title}</div>
               </div> */}
 
-              {isShowTitle && <PageTitle {...props} title={title}></PageTitle>}
+              {isShowTitle && (
+                <PageTitle
+                  {...props}
+                  title={title}
+                  className="titleWrapper"
+                ></PageTitle>
+              )}
 
               {/* <Com></Com> */}
               {/* <UserCenterForm></UserCenterForm> */}
