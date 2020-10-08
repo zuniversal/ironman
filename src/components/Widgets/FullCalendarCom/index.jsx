@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
 import FullCalendar from '@fullcalendar/react';
@@ -71,8 +71,13 @@ const datas = [
   { client: '客户5', team: '电站5', id: '5', all: 4, residue: 3 },
 ];
 
-const items = { title: '部门会议x', start: new Date() };
-const calendarEvents = [items];
+const items = { title: '部门会议x', start: '2020-10-08' };
+const items2 = {
+  title: '部门会议x',
+  start: '2020-10-09',
+  display: 'background',
+};
+const calendarEvents = [items, items2];
 
 const handleEventClick = info => {
   console.log(' handleEventClick   info,   ： ', info);
@@ -142,6 +147,7 @@ const ShiftsArrangeList = props => {
 
 const FullCalendarCom = props => {
   console.log(' FullCalendarCom   props, ,   ： ', props);
+  const cusRef = useRef();
 
   const events = [
     {
@@ -163,6 +169,7 @@ const FullCalendarCom = props => {
       display: 'block',
     },
   ];
+  console.log(' cusRef ： ', cusRef); //
 
   return (
     <div className="calendarWrapper ">
@@ -172,6 +179,7 @@ const FullCalendarCom = props => {
       }} ></Draggable> */}
 
       <FullCalendar
+        ref={cusRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         width={800}
@@ -199,6 +207,7 @@ const FullCalendarCom = props => {
           week: '周',
           day: '天',
         }}
+        dayHeaderFormat={{ weekday: 'short' }}
         allDayText="全天"
         selectable
         selectHelper
