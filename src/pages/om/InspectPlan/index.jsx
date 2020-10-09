@@ -17,6 +17,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectPlanForm from '@/components/Form/InspectPlanForm'; //
 import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm'; //
 import InspectPlanTable from '@/components/Table/InspectPlanTable'; //
+import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar'; //
 import ResultModal, {ErrorInfo, } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps,  } from '@/models/inspectPlan'//
@@ -176,33 +177,6 @@ class InspectPlan extends PureComponent {
       ></InspectPlanSearchForm>
     );
   }
-  renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
-    return <div className={'fje '}  >
-      <div className={'btnWrapper'}>
-        <SearchForm></SearchForm>
-        <Button type="primary" onClick={() => this.props.showFormModal({action: 'add',  })}  >新增{TITLE}</Button>
-      </div>
-    </div>
-  }
-  
-  renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props,  )
-
-    const tableProps = {
-      newTbData: this.state.newTbData,
-
-      onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
-      dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
-
-    }
-
-    return <InspectPlanTable {...tableProps}   ></InspectPlanTable>
-  }
   
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props,  )
@@ -216,6 +190,11 @@ class InspectPlan extends PureComponent {
       {this.renderModalContent()}
     </SmartModal>
   }
+
+  renderInspectPlanCalendar = params => {
+    // console.log(' renderInspectPlanCalendar ： ', params,  )
+    return <InspectPlanCalendar></InspectPlanCalendar>;
+  };
   
 
   render() {
@@ -226,8 +205,8 @@ class InspectPlan extends PureComponent {
 
         {this.renderSearchForm()}
 
-        {this.renderTable()}
-        
+        {this.renderInspectPlanCalendar()}
+
         {this.renderSmartModal()}
 
 

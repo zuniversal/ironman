@@ -54,7 +54,8 @@ const InspectMissionSearchForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
       {formBtn}

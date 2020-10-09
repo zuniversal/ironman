@@ -1,0 +1,119 @@
+import React, { useEffect, useRef, createRef } from 'react';
+import PropTypes from 'prop-types'
+import './style.less';
+import { Form, Input } from 'antd';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { Calendar } from '@fullcalendar/core';
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
+// import "@fullcalendar/core/main.css";
+import '@fullcalendar/common/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
+import DragCom from '@/common/SmartCalendar/CalendarDraggable'; //
+
+export const CalendarDraggable = DragCom
+
+
+const SmartCalendar = props => {
+  console.log(' SmartCalendar   props, ,   ： ', props);
+
+  const events = [
+    {
+      id: 1,
+      title: 'Available hours +Studio',
+      color: '#ffab91',
+      display: 'block',
+    },
+    {
+      id: 2,
+      title: 'Available hours',
+      color: '#ffff00',
+      display: 'block',
+    },
+    {
+      id: 3,
+      title: 'Whole Day Event',
+      color: '#76ff03',
+      display: 'block',
+    },
+  ];
+
+  return (
+    <div className="smartCalendar ">
+
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        editable
+        droppable
+        selectable
+        selectHelper
+        fixedWeekCount
+        locale="zh-cn"
+        allDayText="全天"
+        header={{
+          // 上一年，上一月，下一月，下一年 今天(逗号为紧相邻，空格为有间隙，不写哪个就不展示哪个按钮)
+          left: 'prevYear,prev,next,nextYear today',
+          // 默认显示当前年月
+          center: 'title',
+          // 右侧月 周 天切换按钮
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
+        buttonText={{
+          prev: '上个月',
+          next: '下个月',
+          today: '今天',
+          month: '月',
+          week: '周',
+          day: '天',
+        }}
+        dayMaxEvents={3}
+        // moreLinkContent={(params) => { console.log(' params ： ', params,  ) return 'xxx'  }}
+        moreLinkContent={'...'}
+        // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
+        // showNonCurrentDates={false}
+        dayCellContent={params => {
+          // console.log(' dayCellContent params ： ', params);
+          return <div className={`dayText`}>
+            {`${params.dayNumberText}`.split('日')[0]}
+          </div>
+          ;
+        }}
+        dayCellClassNames={'dayCellClassNames'}
+        eventClassNames={'eventClassNames'}
+        slotLabelClassNames={'slotLabelClassNames'}
+        moreLinkClassNames={'moreLinkClassNames'}
+        dayHeaderClassNames={'dayHeaderClassNames'}
+        // aspectRatio={11/13}
+        dayHeaderFormat={{ weekday: 'short' }}
+        // calendarEvents={calendarEvents}
+        // eventSources={[matchList, repeatMatchList]}
+        // eventSources={[matchList, ]}
+        // eventSources={[repeatMatchList]}
+        // events={events}
+        {...props}
+      />
+
+    </div>
+  );
+};
+
+SmartCalendar.defaultProps = {
+  dayMaxEvents: 3,
+  eventsSet: () => {},
+};
+
+SmartCalendar.propTypes = {
+  dayMaxEvents: PropTypes.number,
+  eventsSet: PropTypes.func,
+};
+
+
+export default SmartCalendar;

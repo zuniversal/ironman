@@ -79,7 +79,7 @@ const WorkOrderTicketForm = props => {
       formType: 'Radio',
       itemProps: {
         label: '施工人员',
-        name: '',
+        name: 'team_id',
       },
     },
     {

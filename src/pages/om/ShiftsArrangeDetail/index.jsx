@@ -34,8 +34,7 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
-import FullCalendarCom from '@/components/Widgets/FullCalendarCom';
-import ShiftsArrangeCalendar from '@/components/Widgets/ShiftsArrangeCalendar';
+import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -209,11 +208,7 @@ class ShiftsArrangeDetail extends PureComponent {
       </div>
     );
   };
-
-  renderShiftsArrangeCom = params => {
-    // console.log(' renderShiftsArrangeCom ： ', params,  )
-    return <FullCalendarCom data={this.props.dataList}></FullCalendarCom>;
-  };
+  
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
@@ -247,8 +242,6 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <div className="ShiftsArrangeDetail">
         {this.renderSearchForm()}
-
-        {this.renderShiftsArrangeCom()}
 
         {this.renderShiftsArrangeCalendar()}
       </div>

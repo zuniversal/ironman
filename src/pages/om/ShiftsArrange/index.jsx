@@ -35,7 +35,7 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
-import ShiftsArrangeCalendar from '@/components/Widgets/ShiftsArrangeCalendar';
+import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -194,23 +194,33 @@ class ShiftsArrange extends PureComponent {
     const { history } = this.props; //
     history.push(page);
   };
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.goPage('/om/shiftsArrangeDetail')}
+        >
+          {TITLE}
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <ShiftsArrangeSearchForm></ShiftsArrangeSearchForm>
-        <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.goPage('/om/shiftsArrangeDetail')}
-          >
-            {TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div>
-      </div>
+      <ShiftsArrangeSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></ShiftsArrangeSearchForm>
     );
   }
 
@@ -236,6 +246,11 @@ class ShiftsArrange extends PureComponent {
     );
   }
 
+  renderShiftsArrangeCalendar = params => {
+    // console.log(' renderShiftsArrangeCalendar ： ', params,  )
+    return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
+  };
+
   render() {
     console.log(
       ' %c ShiftsArrange 组件 this.state, this.props ： ',
@@ -244,7 +259,11 @@ class ShiftsArrange extends PureComponent {
       this.props,
     );
 
-    return <div className="ShiftsArrange">{this.renderSearchForm()}</div>;
+    return <div className="ShiftsArrange">
+      {this.renderSearchForm()}
+
+      {this.renderShiftsArrangeCalendar()}
+    </div>;
   }
 }
 

@@ -62,7 +62,7 @@ const WorkOrderTable = props => {
     },
     {
       title: '当前状态',
-      // dataIndex: '',
+      dataIndex: 'status',
     },
     {
       title: '处理人',
@@ -74,15 +74,11 @@ const WorkOrderTable = props => {
     },
     {
       title: '任务状态',
-      // dataIndex: '',
-    },
-    {
-      title: '客户确认',
-      // dataIndex: '',
+      dataIndex: ['task', 'status'],
     },
     {
       title: '创建时间',
-      // dataIndex: '',
+      dataIndex: 'created_time',
     },
   ];
 

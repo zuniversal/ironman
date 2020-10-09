@@ -72,6 +72,10 @@ const MissionsManageTable = props => {
       title: '创建时间',
       dataIndex: '',
     },
+    {
+      title: '客户确认',
+      dataIndex: '',
+    },
   ];
 
   const extra = props => (
