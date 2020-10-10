@@ -34,24 +34,25 @@ export const config = [
     },
   },
   {
-    formType: 'Dynamic',
+    formType: 'DynamicItem',
     itemProps: {
       label: '组员姓名',
       className: 'noMargin',
+      name: 'member',
     },
     comProps: {
       extra: true,
       itemProps: {
         label: '用户名',
-        name: 'member',
       },
       comProps: {
         className: 'w-320',
+        name: 'member',
       },
     },
   },
   {
-    formType: 'Select',
+    // formType: 'Select',
     itemProps: {
       label: '类型',
       name: 'type',

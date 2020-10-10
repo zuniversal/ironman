@@ -137,28 +137,6 @@ const InspectPlanCalendar = props => {
     console.log(' eventDrop   ,   ： ', params);
   };
 
-
-
-  const events = [
-    {
-      id: 1,
-      title: 'Available hours +Studio',
-      color: '#ffab91',
-      display: 'block',
-    },
-    {
-      id: 2,
-      title: 'Available hours',
-      color: '#ffff00',
-      display: 'block',
-    },
-    {
-      id: 3,
-      title: 'Whole Day Event',
-      color: '#76ff03',
-      display: 'block',
-    },
-  ];
   console.log(' cusRef ： ', cusRef); //
 
   return (

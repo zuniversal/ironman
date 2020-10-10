@@ -76,4 +76,14 @@ export default defineConfig({
 
   },
   
+  proxy: {
+    '/api': {
+      target: 'http://188.131.235.243:31002',
+      changeOrigin: true,
+      // pathRewrite: {
+      //   '^/api': '',
+      // },
+    },
+  },
+  
 });

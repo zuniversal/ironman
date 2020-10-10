@@ -9,7 +9,7 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet('OMS/customer/', p);
+export const getList = p => noTipsGet('OMS/customer/list', p);
 export const getItem = p => noTipsGet(`OMS/customer/${p.d_id}`, p);
 export const addItem = p => post('OMS/customer/', p);
 export const editItem = p => put(`OMS/customer/${p.d_id}`, p);

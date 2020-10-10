@@ -33,26 +33,32 @@ const MsgTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     
     {
       title: '消息',
+      dataIndex: 'content',
     },
     
     {
       title: '通知人员',
+      dataIndex: '',
     },
     
     {
       title: '通知方法',
+      dataIndex: '',
     },
     
     {
       title: '创建人',
+      dataIndex: 'create_by',
     },
     
     {
       title: '创建时间',
+      dataIndex: 'created_time',
     },
   ];
 

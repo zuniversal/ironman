@@ -72,13 +72,15 @@ const transferDetailConfig = [
   { label: '17.交接班后个人物品及垃圾是否带走，调度台是否保持整洁。' },
 ];
 
-const transferRadios = transferDetailConfig.map(v => ({
+const transferRadios = transferDetailConfig.map((v, i) => ({
   formType: 'Radio',
   radioData: choiceRadios,
   itemProps: {
     ...v,
     ...layout,
     className: 'customWidthForm',
+    // key: v.name, 
+    key: i, 
   },
 }));
 

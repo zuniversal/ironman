@@ -34,7 +34,8 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
-import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
+import ShiftsArrangeDetailCalendar from '@/components/Calendar/ShiftsArrangeDetailCalendar';
+import ChoiceRadio from '@/components/Widgets/ChoiceRadio'; //
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -74,6 +75,7 @@ class ShiftsArrangeDetail extends PureComponent {
       titleMap,
 
       newTbData: [],
+      isQuickArrange: false,  
     };
   }
 
@@ -209,9 +211,24 @@ class ShiftsArrangeDetail extends PureComponent {
     );
   };
   
-  renderShiftsArrangeCalendar = params => {
-    // console.log(' renderShiftsArrangeCalendar ： ', params,  )
-    return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
+  onChoiceRadio = (e, ) => {
+    console.log(' onChoiceRadio   e, ,   ： ', e,   )
+    this.setState({
+      isQuickArrange: !this.state.isQuickArrange,
+    })
+  }
+  renderChoiceRadio = params => {
+    // console.log(' renderChoiceRadio ： ', params,  )
+    const {isQuickArrange,  } = this.state// 
+    return <div className="choiceRadioWrapper" >
+      <div className="label" >按法定工作日快速排班</div> <ChoiceRadio onChange={this.onChoiceRadio} value={isQuickArrange} ></ChoiceRadio>
+    </div>;
+  };
+
+  renderShiftsArrangeDetailCalendar = params => {
+    // console.log(' renderShiftsArrangeDetailCalendar ： ', params,  )
+    const {isQuickArrange,  } = this.state// 
+    return <ShiftsArrangeDetailCalendar isQuickArrange={isQuickArrange}  ></ShiftsArrangeDetailCalendar>;
   };
 
   renderSmartModal = params => {
@@ -240,10 +257,12 @@ class ShiftsArrangeDetail extends PureComponent {
     );
 
     return (
-      <div className="ShiftsArrangeDetail">
+      <div className="shiftsArrangeDetail">
         {this.renderSearchForm()}
 
-        {this.renderShiftsArrangeCalendar()}
+        {this.renderChoiceRadio()}
+
+        {this.renderShiftsArrangeDetailCalendar()}
       </div>
     );
   }

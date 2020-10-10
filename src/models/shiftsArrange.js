@@ -14,6 +14,8 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const formartDataList = (data, ) => data.map((v) => ({...v, title: v.team, start: '2020-10-10', }))
+
 export default {
   namespace,
 
@@ -30,7 +32,7 @@ export default {
       return {
         ...state,
         // ...payload,
-        dataList: [payload.bean],
+        dataList: formartDataList(payload[' list']),
       };
     },
     getItem(state, { payload, type }) {

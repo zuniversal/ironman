@@ -15,6 +15,34 @@ import DragCom from '@/common/SmartCalendar/CalendarDraggable'; //
 
 export const CalendarDraggable = DragCom
 
+export const formartDay = data => `${data.dayNumberText}`.split('日')[0]
+export const dayCellContent = data => <div className={`dayText`}>
+  {formartDay(data)}
+</div>
+
+const toolBar = {
+  header: {
+    // 上一年，上一月，下一月，下一年 今天(逗号为紧相邻，空格为有间隙，不写哪个就不展示哪个按钮)
+    left: 'prevYear,prev,next,nextYear today',
+    // 默认显示当前年月
+    center: 'title',
+    // 右侧月 周 天切换按钮
+    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+  },
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+  },
+  buttonText: {
+    prev: '上个月',
+    next: '下个月',
+    today: '今天',
+    month: '月',
+    week: '周',
+    day: '天',
+  },
+}
 
 const SmartCalendar = props => {
   console.log(' SmartCalendar   props, ,   ： ', props);
@@ -44,6 +72,7 @@ const SmartCalendar = props => {
     <div className="smartCalendar ">
 
       <FullCalendar
+        // {...toolBar}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         editable
@@ -53,39 +82,13 @@ const SmartCalendar = props => {
         fixedWeekCount
         locale="zh-cn"
         allDayText="全天"
-        header={{
-          // 上一年，上一月，下一月，下一年 今天(逗号为紧相邻，空格为有间隙，不写哪个就不展示哪个按钮)
-          left: 'prevYear,prev,next,nextYear today',
-          // 默认显示当前年月
-          center: 'title',
-          // 右侧月 周 天切换按钮
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-        }}
-        headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-        }}
-        buttonText={{
-          prev: '上个月',
-          next: '下个月',
-          today: '今天',
-          month: '月',
-          week: '周',
-          day: '天',
-        }}
+        title={''}
         dayMaxEvents={3}
         // moreLinkContent={(params) => { console.log(' params ： ', params,  ) return 'xxx'  }}
         moreLinkContent={'...'}
         // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
         // showNonCurrentDates={false}
-        dayCellContent={params => {
-          // console.log(' dayCellContent params ： ', params);
-          return <div className={`dayText`}>
-            {`${params.dayNumberText}`.split('日')[0]}
-          </div>
-          ;
-        }}
+        dayCellContent={dayCellContent}
         dayCellClassNames={'dayCellClassNames'}
         eventClassNames={'eventClassNames'}
         slotLabelClassNames={'slotLabelClassNames'}

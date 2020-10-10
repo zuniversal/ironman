@@ -74,7 +74,7 @@ const MissionsManageTable = props => {
     },
     {
       title: '客户确认',
-      dataIndex: '',
+      dataIndex: 'confirm',
     },
   ];
 

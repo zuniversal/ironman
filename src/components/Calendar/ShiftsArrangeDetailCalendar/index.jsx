@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types'
 import './style.less';
-import { Form, Input } from 'antd';
-import SmartCalendar, {CalendarDraggable, } from '@/common/SmartCalendar'; //
+import { Form, Input, Checkbox, } from 'antd';
+import SmartCalendar, {CalendarDraggable, dayCellContent,  } from '@/common/SmartCalendar'; //
 
 
 const items = { title: '部门会议x', start: '2020-10-08' };
@@ -15,8 +15,21 @@ const calendarEvents = [items, items, items, items,
   // items2
 ];
 
-const ShiftsArrangeCalendar = props => {
-  console.log(' ShiftsArrangeCalendar   props, ,   ： ', props);
+
+// const CheckboxItem = (props,  ) => {
+//   console.log(' CheckboxItem   ,   ： ', props,   )
+//   return <Checkbox
+//     checked={this.state.checked}
+//     disabled={this.state.disabled}
+//     onChange={this.onChange}
+//   >
+//     {label}
+//   </Checkbox>
+// }
+
+
+const ShiftsArrangeDetailCalendar = props => {
+  console.log(' ShiftsArrangeDetailCalendar   props, ,   ： ', props);
 
   const eventClick = info => {
     console.log(' eventClick   info,   ： ', info);
@@ -35,10 +48,14 @@ const ShiftsArrangeCalendar = props => {
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
   };
+  const onChange = (data, ) => {
+    console.log(' onChange   data, ,   ： ', data,   )
+    
+  }
 
 
   return (
-    <div className="shiftsArrangeCalendar ">
+    <div className="shiftsArrangeDetailCalendar ">
 
       <SmartCalendar
         // events={calendarEvents}
@@ -48,20 +65,32 @@ const ShiftsArrangeCalendar = props => {
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
+        dayCellContent={
+          (params) => { 
+            return <div className={`fsb`}  >
+              {dayCellContent(params)}
+              <Checkbox
+                // checked={checked}
+                onChange={onChange}
+              >
+              </Checkbox>
+            </div>
+          }
+        }
       />
 
     </div>
   );
 };
 
-ShiftsArrangeCalendar.defaultProps = {
+ShiftsArrangeDetailCalendar.defaultProps = {
   data: calendarEvents,
   eventsSet: () => {},
 };
 
-ShiftsArrangeCalendar.propTypes = {
+ShiftsArrangeDetailCalendar.propTypes = {
   data: PropTypes.array,
   eventsSet: PropTypes.func,
 };
 
-export default ShiftsArrangeCalendar;
+export default ShiftsArrangeDetailCalendar;

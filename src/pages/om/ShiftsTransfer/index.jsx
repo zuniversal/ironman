@@ -160,17 +160,27 @@ class ShiftsTransfer extends PureComponent {
     // return null
   };
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <ShiftsTransferSearchForm></ShiftsTransferSearchForm>
-        <div className={'btnWrapper'}>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div>
-      </div>
+      <ShiftsTransferSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></ShiftsTransferSearchForm>
     );
   }
 

@@ -77,12 +77,13 @@ export default ({
         //   props.record,
         //   // record,
         // ]),
-        actions.removeItemAsync([
-          props.record.id,
-          // ...props.record,
-          // props.record,
-          // record,
-        ]),
+        // actions.removeItemAsync([
+        //   props.record.d_id,
+        //   // ...props.record,
+        //   // props.record,
+        //   // record,
+        // ]),
+        actions.removeItemAsync(props.record.d_id,),
       );
     };
     onBatchRemove2 = props => {
@@ -90,7 +91,7 @@ export default ({
       const { dispatch } = this.props; //
       const { selectedRows, selectedRowKeys } = this.state; //
       if (selectedRowKeys.length) {
-        dispatch(actions.removeItemAsync(selectedRowKeys));
+        dispatch(actions.removeItemsAsync(selectedRowKeys));
       } else {
         tips('请先勾选删除项再删除！', 2);
       }
@@ -308,9 +309,9 @@ export default ({
       tips('模拟文件下载成功！');
     };
     exportData = params => {
-      console.log(' exportData,  , ： ', params);
+      console.log(' exportData,  , ： ', params, );
       const { dispatch } = this.props; //
-      dispatch(actions.exportData({}));
+      dispatch(actions.exportDataAsync({}));
       tips('模拟导出成功！');
     };
     syncOAAsync = params => {

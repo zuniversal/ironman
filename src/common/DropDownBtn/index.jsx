@@ -24,6 +24,7 @@ import {
   Dropdown,
 } from 'antd';
 import { DownOutlined, EllipsisOutlined,    } from '@ant-design/icons';
+import {BASE_URL, } from '@/constants'
 
 const DropDownBtn = props => {
   console.log(' DropDownBtn ： ', props, ); //
@@ -37,12 +38,16 @@ const DropDownBtn = props => {
     menuClick && menuClick({ ...clickItem, ...item,  });
   };
 
+  // v.type === 'down'
   const menuCom = menu ? (
     menu
   ) : (
     <Menu onClick={handleMenuClick}>
       {menuConfig.map((v, i) => (
-        <Menu.Item key={v.key} action={v.action}>{v.text}</Menu.Item>
+        v.downFile ? <Menu.Item key={v.key} action={v.action}>
+          <a id="down" href={`${BASE_URL + v.downFile}`} download="zyb" >{v.text}</a>
+        </Menu.Item>
+        : <Menu.Item key={v.key} action={v.action}>{v.text}</Menu.Item>
       ))}
     </Menu>
   );

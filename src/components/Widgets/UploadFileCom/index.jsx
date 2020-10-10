@@ -18,6 +18,9 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { uploadFile, } from '@/services/assets'//
+import { tips } from '@/utils';
+
 
 const UploadFileCom = props => {
   console.log(' UploadFileCom   props, ,   ： ', props);
@@ -37,11 +40,20 @@ const UploadFileCom = props => {
   //     </div>
   //   </Upload>
   // </Form.Item>
+  const onChange = (params) => {
+    console.log(' onChange   params,   ： ', params  )
+    if (params.file.status === 'done') {
+      const {msg,  } = params.file.response
+      tips(msg)
+      props.onChange(params)
+    }
+  }
+  
   return (
     <div className="uploadFileWrapper">
       <span className="label">{props.label}</span>
 
-      <Upload listType="picture" onChange={props.onChange}>
+      <Upload listType="picture" onChange={onChange} action={uploadFile} >
         <Button className={'uploadBtn'} icon={<UploadOutlined />}>
           上传文件
         </Button>

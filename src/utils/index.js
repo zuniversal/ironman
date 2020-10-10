@@ -115,6 +115,7 @@ export const mockFormData = (config, init) => {
         // Dynamic: 'Dynamic初始值',
 
         Dynamic: [{ first: 2222 }, { first: 333 }],
+        DynamicItem: ['值1', '值2',  ],
       }[formType];
       //
       // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//
@@ -173,6 +174,26 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
   }
   return configs;
 };
+
+export const downLoad = ({url, }) => {
+  let a = document.createElement("a");
+  a.download = '';// 设置下载的文件名，默认是'下载'
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  a.remove(); // 下载之后把创建的元素删除
+}
+
+export const downLoadFile = (clickItem, {downEle = 'qrCode', }) => {
+  const canvasImg = document.getElementById(downEle); // 获取canvas类型的二维码
+  const img = new Image();
+  img.src = canvasImg.toDataURL('image/png'); // 将canvas对象转换为图片的data url
+  // const downLink = document.getElementById('down_link');
+  // console.log(' img ： ', img, clickItem, canvasImg,  )// 
+  clickItem.href = img.src;
+  clickItem.download = '二维码'; // 图片name
+}
+
 
 export const createArr = (length = 6) => {
   const res = Array.from({ length }, (_, index) => console.log(_, index));

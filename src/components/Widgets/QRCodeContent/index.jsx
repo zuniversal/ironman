@@ -2,16 +2,22 @@ import React from 'react';
 import './style.less';
 import { Button } from 'antd';
 import QRCodeCom from '@/common/QRCodeCom'; //
+import {downLoadFile, } from '@/utils'; //
 
 const QRCodeContent = props => {
-  console.log(' QRCodeContent   props, ,   ： ', props);
+  const downLoadRef = React.createRef()
+  console.log(' QRCodeContent   props, ,   ： ', props, downLoadRef, );
   return (
     <div className="qrcodeWrapper">
       <div className="title">M101进线柜</div>
       <QRCodeCom value={props.record}></QRCodeCom>
       <div className="btnWrapper">
-        <Button onClick={() => {}}>下载</Button>
-        <Button onClick={() => {}}>打印</Button>
+        <Button>
+          <a ref={downLoadRef} onClick={() => downLoadFile(downLoadRef.current, {downEle: 'qrCode',} )} >下载</a>
+        </Button>
+        <Button>
+          <a ref={downLoadRef} onClick={() => downLoadFile(downLoadRef.current, {downEle: 'qrCode',} )} >打印</a>
+        </Button>
       </div>
     </div>
   );

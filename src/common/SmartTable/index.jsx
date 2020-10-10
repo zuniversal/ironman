@@ -41,6 +41,7 @@ class SmartTable extends PureComponent {
       position: ['bottomCenter'],
       pageSize: Number(size),
       total,
+      size: 'default',
     };
     this.state = {
       pagination,

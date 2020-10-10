@@ -51,9 +51,11 @@ const menuConfig = [
   },
   {
     key: 'down',
-    clickFn: 'showResultModal',
+    // clickFn: 'showResultModal',
+    clickFn: 'downloadFile',
     action: 'down',
     text: '下载数据模板',
+    downFile: 'OMS/equipment/getTemplate',
   },
 ];
 
@@ -165,7 +167,7 @@ class Assets extends PureComponent {
       ...params,
     });
   };
-  onOk = async props => {
+  onOk = async (props = {}, ) => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 

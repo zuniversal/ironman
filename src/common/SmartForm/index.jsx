@@ -27,7 +27,8 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 
-import DynamicForm from './DynamicForm'; //
+import DynamicForm from './DynamicForm/index.jsx'; //
+import DynamicItem from './DynamicItem/index.jsx'; //
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
 import {
   mockFormData,
@@ -442,6 +443,7 @@ const SmartForm = (props, state) => {
       DatePicker: <DatePicker {...realComProps} />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
+      DynamicItem: <DynamicItem {...dynamicComProps}></DynamicItem>,
     };
 
     const formItemCom = formItemMap[formType];

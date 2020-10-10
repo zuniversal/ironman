@@ -33,21 +33,27 @@ const DictTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
     {
       title: '模块',
+      dataIndex: 'content',
     },
     {
       title: '名称',
+      dataIndex: 'name',
     },
     {
       title: '枚举值',
+      dataIndex: 'value',
     },
     {
       title: '关联设备',
+      dataIndex: ['equipment', 'id'],
     },
     {
       title: '备注',
+      dataIndex: 'remark',
     },
     
   ];

@@ -84,7 +84,8 @@ export class Request {
         // console.log('getToken() token ：', config, getToken(), getItems('token'),  )
         // config.headers.Authorization = getToken()
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
-        config.headers.Authorization = getItems('token');
+        // config.headers.Authorization = getItems('token');
+        config.headers.authorization = 'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAyOTQzNTI5LCJlbWFpbCI6IiJ9.mGMYXWB_-8CwINXCRLDhVpTLeEjpLVQuBha1xVXocR4';
         // this.http.store.dispatch({type: LOAD, data: true})
         //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
 
@@ -149,6 +150,8 @@ export class Request {
 export const request = new Request(); //
 const { http } = request;
 // console.log(' request ： ', request, URL, {...http},  )//
+
+export const parseUrl = (url, params) => URL + url
 
 export const get = (url, params) => http.get(url, { params: params });
 export const post = (url, params, o) => http.post(url, params, o);

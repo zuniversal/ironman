@@ -125,20 +125,20 @@ const ShiftsTransferForm = props => {
         name: '',
       },
     },
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <>
-          {ticketConfig.map((v, i) => (
-            <InputCom disabled {...v} key={i}></InputCom>
-          ))}
-        </>
-      ),
-      itemProps: {
-        label: '8.工作票情况',
-        name: '',
-      },
-    },
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: (
+    //     <>
+    //       {ticketConfig.map((v, i) => (
+    //         <InputCom disabled {...v} key={i}></InputCom>
+    //       ))}
+    //     </>
+    //   ),
+    //   itemProps: {
+    //     label: '8.工作票情况',
+    //     name: '',
+    //   },
+    // },
     {
       itemProps: {
         label: '9.交给下一班工作',

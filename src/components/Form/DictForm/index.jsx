@@ -26,11 +26,13 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '模块',
+      name: 'model',
     },
   },
   {
     itemProps: {
       label: '名称',
+      name: 'name',
     },
   },
   {
@@ -38,12 +40,14 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '枚举值',
+      name: 'value',
     },
   },
   {
     noRule: true,
     itemProps: {
       label: '关联设备',
+      name: 'equipment_id',
     },
   },
   {
@@ -51,6 +55,7 @@ export const config = [
     noRule: true,
     itemProps: {
       label: '备注',
+      name: 'remark',
     },
   },
 

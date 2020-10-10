@@ -34,6 +34,7 @@ const ShiftsManageTable = props => {
     {
       title: '班组名称',
       dataIndex: 'name',
+      d_item: 'name',
     },
     {
       title: '组长',
@@ -42,7 +43,7 @@ const ShiftsManageTable = props => {
     {
       title: '组员',
       // dataIndex: ['member', ''],
-      dataIndex: 'team_hememberadman',
+      dataIndex: 'member',
     },
     {
       title: '班组类型',

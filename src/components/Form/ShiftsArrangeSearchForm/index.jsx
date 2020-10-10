@@ -30,18 +30,21 @@ const ShiftsArrangeSearchForm = props => {
       formType: 'Select',
       itemProps: {
         label: '班组',
+        name: 'team',
       },
     },
     {
       formType: 'DatePicker',
       itemProps: {
         label: '年',
+        name: '',
       },
     },
     {
       formType: 'DatePicker',
       itemProps: {
         label: '月',
+        name: 'month',
       },
     },
   ];

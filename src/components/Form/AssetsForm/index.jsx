@@ -55,7 +55,7 @@ const AssetsForm = props => {
       formType: 'Select',
       itemProps: {
         label: '户号',
-        name: '',  
+        // name: '',  
       },
     },
     {
@@ -105,7 +105,7 @@ const AssetsForm = props => {
     {
       itemProps: {
         label: '设备型号',
-        name: 'type',  
+        name: 'model',  
       },
     },
     {
@@ -143,7 +143,7 @@ const AssetsForm = props => {
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'file'}    ></UploadCom>,
+    <UploadCom label={'上传铭牌'} key={'file'} name={'file'} ></UploadCom>,
     
   ];
 

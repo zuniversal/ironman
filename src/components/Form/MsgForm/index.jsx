@@ -44,12 +44,14 @@ export const config = [
     formType: 'TextArea',  
     itemProps: {
       label: '消息内容',
+      name: 'content',
     },
   },
   {
     formType: 'CheckboxGroup',  
     itemProps: {
       label: '通知方法',
+      name: 'method',
     },
     comProps: {
       options: checkboxGroupOptions,
@@ -60,6 +62,7 @@ export const config = [
     formType: 'Select',  
     itemProps: {
       label: '通知人员',
+      name: 'send_to',
     },
     selectData: selectData,
   },

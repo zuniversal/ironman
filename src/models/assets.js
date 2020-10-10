@@ -68,19 +68,18 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type); //
-      const removeList = payload.payload.filter(v => v.id);
-      console.log(
-        ' removeList  payload.payload.filter v ： ',
-        state,
-        payload,
-        removeList,
-      );
+      console.log(' removeItem 修改  ： ', state, payload, type, this); //
       return {
         ...state,
-        // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+        dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+      };
+    },
+    removeItems(state, { payload, type }) {
+      console.log(' removeItems 修改  ： ', state, payload, type, this); //
+      return {
+        ...state,
         dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
+          payload.payload.some(item => v.id === item),
         ),
       };
     },
@@ -134,6 +133,12 @@ export default {
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
     },
+    *removeItemsAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemsAsync ： ', payload, type); //
+      const res = yield call(services.removeItems, payload);
+      // console.log('  removeItem res ：', res, {...res, payload,} )//
+      yield put(action({ ...res, payload }));
+    },
 
     *syncOAAsync({ payload, action, type }, { call, put }) {
       // console.log(' syncOAAsync ： ', payload, type,     )//
@@ -160,10 +165,10 @@ export default {
       //   payload: res,
       // });
     },
-    *exportData({ payload, action, type }, { call, put }) {
-      // console.log(' exportData ： ', payload, type,     )//
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
-      console.log('  exportData res ：', res); //
+      console.log('  exportDataAsync res ：', res); //
       // yield put(action({ ...res, payload }));
     },
     *getTemplate({ payload, action, type }, { call, put }) {

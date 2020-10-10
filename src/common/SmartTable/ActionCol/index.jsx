@@ -3,16 +3,23 @@ import './style.less';
 import { Form, Input } from 'antd';
 
 // 通用的操作列组件
+const formartData = (record, rowKey) => {
+  const data = {...record, d_id: record[rowKey] ? record[rowKey] : {},} 
+  return data 
+}
+
 const ActionCol = props => {
   const {
     edit,
     remove,
     extra,
-    record,
     onRemove,
     showQRCode,
     noDefault,
     tableProps,
+    text,
+    record,
+    index,
   } = props;
   // console.log(' ActionCol props ： ', props);
   return (
@@ -28,7 +35,7 @@ const ActionCol = props => {
             编辑
           </a>
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-          <a onClick={() => remove({ record })}>删除</a>
+          <a onClick={() => remove({ record: formartData(record, props.rowKey, ), })}>删除</a>
         </>
       )}
       {!props.noDefault && props.isQRCode && (
@@ -37,7 +44,7 @@ const ActionCol = props => {
         </a>
       )}
       {/* {extra} */}
-      {extra(props)}
+      {extra(text, record, index, props)}
     </span>
   );
 }; //

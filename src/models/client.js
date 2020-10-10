@@ -37,7 +37,7 @@ export default {
       // console.log(' getList 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        dataList: [payload.bean],
+        dataList: [...payload.list],
       };
     },
     getItem(state, { payload, type }) {

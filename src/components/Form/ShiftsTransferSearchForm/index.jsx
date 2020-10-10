@@ -25,32 +25,36 @@ export const config = [
     formType: 'Select',
     itemProps: {
       label: '交班人',
-    },
-  },
-  // {
-  //   formType: 'Select',
-  //   itemProps: {
-  //     label: '值班站',
-  //   },
-  // },
-  // {
-  //   formType: 'Select',
-  //   itemProps: {
-  //     label: '接班人',
-  //   },
-  // },
-  {
-    formType: 'DatePicker',
-    itemProps: {
-      label: '选择日期',
+      name: 'transfer_team',
     },
   },
   {
     formType: 'Select',
     itemProps: {
-      label: '电站',
+      label: '值班站',
+      name: 'type',
     },
   },
+  {
+    formType: 'Select',
+    itemProps: {
+      label: '接班人',
+      name: 'receive_team',
+    },
+  },
+  {
+    formType: 'DatePicker',
+    itemProps: {
+      label: '选择日期',
+      name: 'created_time',
+    },
+  },
+  // {
+  //   formType: 'Select',
+  //   itemProps: {
+  //     label: '电站',
+  //   },
+  // },
 ];
 
 const ShiftsTransferSearchForm = props => {

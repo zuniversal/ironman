@@ -52,6 +52,7 @@ const crudConfigs = [
   'addItemAsync',
   'editItemAsync',
   'removeItemAsync',
+  'removeItemsAsync',
 ];
 
 // export const createCRUD = (config = []) => {

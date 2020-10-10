@@ -248,7 +248,7 @@ class ShiftsArrange extends PureComponent {
 
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
-    return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
+    return <ShiftsArrangeCalendar data={this.props.dataList} ></ShiftsArrangeCalendar>;
   };
 
   render() {
