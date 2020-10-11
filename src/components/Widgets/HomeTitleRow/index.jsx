@@ -17,7 +17,7 @@ const HomeSettingBtn = props => {
 const HomeTitleRow = props => {
   return (
     <div className="homeTitleRow fsb ">
-      <PageTitle {...props}></PageTitle>
+      <PageTitle {...props} noPadding ></PageTitle>
       <HomeSettingBtn {...props}></HomeSettingBtn>
     </div>
   );

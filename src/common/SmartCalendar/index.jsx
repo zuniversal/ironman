@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types'
 import './style.less';
-import { Form, Input } from 'antd';
+import { Form, Button } from 'antd';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -15,9 +15,9 @@ import DragCom from '@/common/SmartCalendar/CalendarDraggable'; //
 
 export const CalendarDraggable = DragCom
 
-export const formartDay = data => `${data.dayNumberText}`.split('日')[0]
+export const formatDay = data => `${data.dayNumberText}`.split('日')[0]
 export const dayCellContent = data => <div className={`dayText`}>
-  {formartDay(data)}
+  {formatDay(data)}
 </div>
 
 const toolBar = {
@@ -44,7 +44,8 @@ const toolBar = {
   },
 }
 
-const SmartCalendar = props => {
+const calendarRef = React.createRef()
+const SmartCalendar = React.forwardRef((props, ref) => {
   console.log(' SmartCalendar   props, ,   ： ', props);
 
   const events = [
@@ -71,7 +72,9 @@ const SmartCalendar = props => {
   return (
     <div className="smartCalendar ">
 
-      <FullCalendar
+      {/* <Button onClick={() => () => console.log(' handleCancel   ,   ： ', calendarRef  )}>取消</Button> */}
+      <FullCalendar 
+        ref={props.calendarRef} 
         // {...toolBar}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -106,7 +109,7 @@ const SmartCalendar = props => {
 
     </div>
   );
-};
+});
 
 SmartCalendar.defaultProps = {
   dayMaxEvents: 3,

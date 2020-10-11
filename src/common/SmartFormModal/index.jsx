@@ -52,9 +52,19 @@ const SmartFormModal = props => {
     // config,
   } = props; //
 
+  // const [form = {setFieldsValue: () => {}, }, ] = show ? Form.useForm() : [];
   const [form] = show ? Form.useForm() : [];
+  // const [form] = Form.useForm()
 
-  const { init = {} } = formComProps;
+  const { init, } = formComProps;
+
+  // const updateInit = (init) => {
+  //   console.log(' updateInit   ,   ： ', init,   )
+  //   if (form) {
+  //     form.setFieldsValue(init)
+  //   }
+  // }
+
 
   console.log(
     ' SmartFormModal ： ',
@@ -102,7 +112,7 @@ const SmartFormModal = props => {
 
         {children}
 
-        {FormCom && (
+        {FormCom && form && (
           <FormCom
             // flexRow={4}
             // config={formConfig}

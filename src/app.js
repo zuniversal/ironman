@@ -5,8 +5,8 @@ export const dva = {
   config: {
     // onAction: createLogger(),
     onError(e) {
-      console.log(' onError    ： ', e,  )
-      message.error(e.message, 3);
+      console.log(' onError 检测到错误   ： ', e,  )
+      // message.error(e.message, 3);
     },
   },
 };

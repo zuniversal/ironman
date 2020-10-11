@@ -3,7 +3,7 @@ import './style.less';
 import { Form, Input } from 'antd';
 
 // 通用的操作列组件
-const formartData = (record, rowKey) => {
+const formatData = (record, rowKey) => {
   const data = {...record, d_id: record[rowKey] ? record[rowKey] : {},} 
   return data 
 }
@@ -35,7 +35,7 @@ const ActionCol = props => {
             编辑
           </a>
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-          <a onClick={() => remove({ record: formartData(record, props.rowKey, ), })}>删除</a>
+          <a onClick={() => remove({ record: formatData(record, props.rowKey, ), })}>删除</a>
         </>
       )}
       {!props.noDefault && props.isQRCode && (

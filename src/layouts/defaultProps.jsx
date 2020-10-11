@@ -70,6 +70,14 @@ export default {
             component: '../pages/om/ShiftsArrange',
           },
           // {
+          //   path: '/om/shiftsArrangeDetail',
+          //   // path: '/om/shiftsArrangeDetail',
+          //   name: '新增/编辑排班',
+          //   // icon: <ScheduleFilled />,
+          //   icon: <Icon icon={''} className={'subIcon'} />,
+          //   component: '../pages/om/ShiftsArrange',
+          // },
+          // {
           //   path: '/om/shiftsArrange/shiftsArrangeDetail',
           //   name: '排班',
           //   // icon: <ScheduleFilled />,

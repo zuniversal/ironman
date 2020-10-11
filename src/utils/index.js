@@ -13,6 +13,42 @@ import {
   DatePicker,
 } from 'antd';
 import moment from 'moment';
+import business from 'moment-business';
+
+export const getWeek = (data, isGetWeek, ) => {
+  // console.log(' getWeek   data,   ： ', data  )
+  return data.map(v => {
+    // const isWeek = business.isWeekDay(moment(`2020-10-${v}`))
+    const isWeek = business.isWeekDay(moment(v))
+    // console.log(' onChange   isWeek, ,   ： ', isWeek, datasss, v  )
+    if (isGetWeek) {
+      return isWeek ? v : null
+    } else {
+      return !isWeek ? v : null
+    }
+  }).filter(v => v)
+}
+const datasss = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 
+]
+const resss = getWeek(datasss)
+
+
+export const nowYear = new Date().getFullYear()
+export const nowMonth = new Date().getMonth() + 1
+export const getCountDays = (month = nowMonth, year = nowYear, ) => new Date(year, month, 0).getDate()
+export const getMonthDays = (month, year, ) => Array.from({ length: getCountDays(month, year, ), }, (_, index) => index + 1);
+export const formatMonthDay = (data, month = nowMonth, year = nowYear, ) => data.map((v) => `${year}-${month}-${v}`)
+export const getNowMonthDays = formatMonthDay(getMonthDays(), )
+export const getMonthWeekDays = getWeek(getNowMonthDays, true)
+export const getMonthWeekDaysSimple = getMonthWeekDays.map((v) => v.split('-')[v.split('-').length - 1])
+
+var day = getCountDays();
+var months = getMonthDays();
+var formatMonthDayformatMonthDay = formatMonthDay(months, );
+const resss2222 = getWeek(formatMonthDayformatMonthDay)
+console.log('  resss ：', resss, day, months, formatMonthDayformatMonthDay, getNowMonthDays, getMonthWeekDays, getMonthWeekDaysSimple )// 
+
 
 // export {request, } from './request'
 
@@ -115,7 +151,8 @@ export const mockFormData = (config, init) => {
         // Dynamic: 'Dynamic初始值',
 
         Dynamic: [{ first: 2222 }, { first: 333 }],
-        DynamicItem: ['值1', '值2',  ],
+        // DynamicItem: ['值1', '值2',  ],
+        DynamicItem: [1, 2,  ],
       }[formType];
       //
       // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//
@@ -320,12 +357,13 @@ export const confirms = (type = 1, msg, time = 3, cb) => {
 
   message.config({
     duration: 3,
+    duration: 30000,
   });
   message[msgMap](msg, time, cb);
 };
 
 export const tips = (msg, type = 1, time = 3, cb) => {
-  // console.log('confirms ：', type, time, cb, )
+  console.log('confirms ：', type, time, cb, )
   const msgMap = {
     0: 'error',
     1: 'success',

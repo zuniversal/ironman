@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types'
 import './style.less';
-import { Form, Input, Checkbox, } from 'antd';
-import SmartCalendar, {CalendarDraggable, dayCellContent,  } from '@/common/SmartCalendar'; //
+import { Form, Input, Checkbox, Button, } from 'antd';
+import SmartCalendar, {CalendarDraggable, dayCellContent, formatDay,  } from '@/common/SmartCalendar'; //
+import moment from 'moment'// 
+import business from 'moment-business';
 
 
 const items = { title: '部门会议x', start: '2020-10-08' };
@@ -15,6 +17,13 @@ const calendarEvents = [items, items, items, items,
   // items2
 ];
 
+const weekendArr = ['Sat', 'Sun', ]
+
+
+const isWeekend = (date) => {
+  // console.log(' isWeekend   date,   ： ', date  )
+  return weekendArr.includes(`${date}`.slice(0, 3))
+}
 
 // const CheckboxItem = (props,  ) => {
 //   console.log(' CheckboxItem   ,   ： ', props,   )
@@ -27,6 +36,7 @@ const calendarEvents = [items, items, items, items,
 //   </Checkbox>
 // }
 
+const calendarRef = React.createRef()
 
 const ShiftsArrangeDetailCalendar = props => {
   console.log(' ShiftsArrangeDetailCalendar   props, ,   ： ', props);
@@ -48,30 +58,31 @@ const ShiftsArrangeDetailCalendar = props => {
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
   };
-  const onChange = (data, ) => {
-    console.log(' onChange   data, ,   ： ', data,   )
-    
-  }
-
+  
+  console.log(' calendarRef ： ', calendarRef, moment().get('month'),  )// 
 
   return (
     <div className="shiftsArrangeDetailCalendar ">
 
+      {/* <Button onClick={() => () => console.log(' handleCancel   ,   ： ', calendarRef  )}>取消</Button> */}
       <SmartCalendar
         // events={calendarEvents}
         events={props.data}
-        
+        calendarRef={calendarRef}
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
         dayCellContent={
           (params) => { 
+            // console.log(' onChange    params ： ', params, formatDay(params), params.date,  )// 
             return <div className={`fsb`}  >
               {dayCellContent(params)}
               <Checkbox
-                // checked={checked}
-                onChange={onChange}
+                checked={props.selectData.includes(formatDay(params)) && !params.isOther}
+                day={formatDay(params)}
+                isWeekend={isWeekend(params.date)}
+                onChange={props.onSelectChange}
               >
               </Checkbox>
             </div>
@@ -84,7 +95,8 @@ const ShiftsArrangeDetailCalendar = props => {
 };
 
 ShiftsArrangeDetailCalendar.defaultProps = {
-  data: calendarEvents,
+  data: [],
+  // data: calendarEvents,
   eventsSet: () => {},
 };
 

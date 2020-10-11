@@ -21,7 +21,9 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 
-import { actions, mapStateToProps } from '@/models/shiftsManage'; //
+import { actions, 
+  // mapStateToProps
+} from '@/models/shiftsManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -36,7 +38,7 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ shiftsManage, }) => shiftsManage;
+const mapStateToProps = ({ shiftsManage, user, }) => ({...shiftsManage, user, });
 
 @connect(mapStateToProps)
 @SmartHOC({

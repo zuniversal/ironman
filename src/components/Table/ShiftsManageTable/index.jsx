@@ -53,6 +53,10 @@ const ShiftsManageTable = props => {
       title: '车辆牌照',
       dataIndex: 'car_number',
     },
+    {
+      title: 'leader',
+      dataIndex: 'leader',
+    },
   ];
 
   const extra = props => (

@@ -1,4 +1,4 @@
-import React, { useState, isValidElement } from 'react';
+import React, { useState, useEffect, isValidElement,  } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import {
@@ -29,7 +29,7 @@ import {
 
 import DynamicForm from './DynamicForm/index.jsx'; //
 import DynamicItem from './DynamicItem/index.jsx'; //
-import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE,   } from '@/constants'; //
 import {
   mockFormData,
   renderSelectOp,
@@ -37,6 +37,9 @@ import {
   formatConfig,
   renderCheckboxOp,
 } from '@/utils'; //
+
+const animates = ANIMATE.bounceIn
+
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -161,7 +164,7 @@ const SmartForm = (props, state) => {
 
   const [initData, setInitData] = useState(() => {
     const dynamicFields = configs
-      .filter(v => v.formType === 'Dynamic')
+      .filter(v => v.formType === 'Dynamic' || v.formType === 'DynamicItem')
       .map(v => v.itemProps.key);
     const obj = {};
     dynamicFields.forEach(v => (obj[v] = ['']));
@@ -179,6 +182,8 @@ const SmartForm = (props, state) => {
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
   console.log(
     ' SmartForm initialValues ： ',
+    initData,
+    init,
     props,
     initialValues,
     action,
@@ -191,6 +196,13 @@ const SmartForm = (props, state) => {
   const [form] = Form.useForm();
   const formControl = propsForm ? propsForm : form; //
   // const formControl = form; //
+
+  useEffect(() => {
+    console.log(' useEffect 更新 ： ', init, formControl,    )// 
+    // updateInit(init)
+    formControl.setFieldsValue(init)
+  }, [init, ])
+
 
   const onFinish = (values, rest) => {
     console.log(
@@ -336,15 +348,15 @@ const SmartForm = (props, state) => {
 
     const formItemDividerProps = {
       ...formItemCommonProps,
-      className: `formItems w100 ${itemPropsCls}  `,
+      className: `formItems w100 ${animates} ${itemPropsCls}  `,
     };
     const formItemNoRuleProps = {
       ...formItemCommonProps,
-      className: `formItems rowText ${itemPropsCls}  `,
+      className: `formItems rowText ${animates} ${itemPropsCls}  `,
     };
     const formItemProps = {
       ...formItemCommonProps,
-      className: `formItems ${itemPropsCls}  `,
+      className: `formItems ${animates} ${itemPropsCls}  `,
       rules: noRule || noRuleAll ? undefined : rules({ items, label }),
     };
 
@@ -560,18 +572,11 @@ const SmartForm = (props, state) => {
     //   valuePropName: "checked"
     // }
 
-    console.log(
-      ' formItemProps ： ',
-      formItemProps,
-      normalItem,
-      initialValues,
-      init,
-      action,
-    ); //
+    // console.log(' formItemProps ： ',  formItemProps, normalItem, initialValues, init, action, ); //
     return normalItem;
   });
 
-  // console.log(' formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
+  console.log(' SmartForm formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
   return (
     <>
       <Form
@@ -640,7 +645,7 @@ SmartForm.defaultProps = {
   init: {}, // 表单初始值
   // formProps: {},
   isMockData: false,
-  isMockData: true, // 是否使用 mock 数据
+  // isMockData: true, // 是否使用 mock 数据
   noBtnBlock: false,
   searchRight: false,
   action: '', // 表单的操作行为

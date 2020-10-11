@@ -23,7 +23,7 @@ import { formatConfig } from '@/utils'; //
 export const config = [
   {
     itemProps: {
-      label: '班组姓名',
+      label: '班组名称',
       name: 'name',
     },
   },
@@ -62,6 +62,12 @@ export const config = [
     itemProps: {
       label: '车辆牌照',
       name: 'car_number',
+    },
+  },
+  {
+    itemProps: {
+      label: 'leader',
+      name: 'leader',
     },
   },
 ];

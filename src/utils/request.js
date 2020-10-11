@@ -60,9 +60,9 @@ export const isTips = res => {
     }
     return;
   } else {
-    console.log(' 提示 对吗  !noTips ', !noTips, noTips);
-    if (!noTips) {
-      tips(msg_show);
+    console.log(' 提示 对吗  !noTips ', !noTips, noTips, status, );
+    if (!noTips || status != 200) {
+      tips(msg_show, 2);
     }
   }
 };
@@ -116,6 +116,7 @@ export class Request {
         console.log(' 请求发生错误了：', err, err.message, err.response, {
           ...err,
         });
+        this.handleResponse(err.response);
         if (err.message.indexOf('timeout') > -1) {
           tips('请求超时！', 0);
         } else {

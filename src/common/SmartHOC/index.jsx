@@ -242,10 +242,9 @@ export default ({
       let actionFn = actions.addItemAsync;
       if (action === 'edit' || action === 'detail') {
         actionFn = actions.editItemAsync;
-        // actionFn = actions.putItemAsync;
       }
 
-      const { form } = props; //
+      const { form, init,  } = props; //
 
       try {
         const res = await form.validateFields();
@@ -255,7 +254,7 @@ export default ({
           // actionFn({
           //   data: res,
           // }),
-          actionFn(res),
+          actionFn({...init, ...res}),
         );
         // const {addItemAsync,  } = this.props//
         //addItemAsync(res)
@@ -309,7 +308,7 @@ export default ({
       tips('模拟文件下载成功！');
     };
     exportData = params => {
-      console.log(' exportData,  , ： ', params, );
+      console.log(' exportData,  , ： ', params, actions);
       const { dispatch } = this.props; //
       dispatch(actions.exportDataAsync({}));
       tips('模拟导出成功！');
@@ -355,6 +354,7 @@ export default ({
         action,
         ...this.state.formComProps,
         // init: this.state.editData,
+        init: this.props.itemDetail,
       };
 
       return (
