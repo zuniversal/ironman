@@ -35,7 +35,7 @@ const ClientForm = props => {
       },
     },
     {
-      // formType: 'Select',
+      formType: 'Search',
       itemProps: {
         label: '客户名称',
         name: 'name',

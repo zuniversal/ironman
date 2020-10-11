@@ -1,4 +1,4 @@
-import React, { useState, useEffect, isValidElement,  } from 'react';
+import React, { useState, useEffect, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import {
@@ -29,7 +29,7 @@ import {
 
 import DynamicForm from './DynamicForm/index.jsx'; //
 import DynamicItem from './DynamicItem/index.jsx'; //
-import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE,   } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
 import {
   mockFormData,
   renderSelectOp,
@@ -38,8 +38,7 @@ import {
   renderCheckboxOp,
 } from '@/utils'; //
 
-const animates = ANIMATE.bounceIn
-
+const animates = ANIMATE.bounceIn;
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -102,6 +101,7 @@ export const getLabel = (label, key) => {
     Input: INPUT_TXT + label,
     TextArea: INPUT_TXT + label,
     Select: SELECT_TXT + label,
+    Search: SELECT_TXT + label,
     Password: INPUT_TXT + label,
     Cascader: INPUT_TXT + label,
     AutoComplete: INPUT_TXT + label,
@@ -198,11 +198,10 @@ const SmartForm = (props, state) => {
   // const formControl = form; //
 
   useEffect(() => {
-    console.log(' useEffect 更新 ： ', init, formControl,    )// 
+    console.log(' useEffect 更新 ： ', init, formControl); //
     // updateInit(init)
-    formControl.setFieldsValue(init)
-  }, [init, ])
-
+    formControl.setFieldsValue(init);
+  }, [init]);
 
   const onFinish = (values, rest) => {
     console.log(
@@ -380,6 +379,7 @@ const SmartForm = (props, state) => {
       ...comProps,
       placeholder: placeholder,
     };
+
     const dynamicComProps = {
       // className: 'w-320',
       ...comProps,
@@ -412,6 +412,27 @@ const SmartForm = (props, state) => {
       console.log(' onSelect   e,  ,   ： ', e);
     };
 
+    const selectProps = {
+      allowClear: true,
+      ...realComProps,
+      filterOption: true,
+      showSearch: true,
+      onChange: onChange,
+      onSearch: onSearch,
+      onSelect: onSelect,
+    };
+    if (formType === 'Search') {
+      selectProps.showArrow = false;
+    }
+    const selectCom = (
+      <Select {...selectProps}>
+        {renderSelectOp(selectData, opType)}
+        {/* <Option value="male">male</Option>
+    <Option value="female">female</Option>
+    <Option value="other">other</Option> */}
+      </Select>
+    );
+
     const formItemMap = {
       rowText: label,
       Label: LabelCom,
@@ -425,22 +446,8 @@ const SmartForm = (props, state) => {
           {...realComProps}
         />
       ),
-      Select: (
-        <Select
-          allowClear
-          {...realComProps}
-          filterOption
-          showSearch
-          onChange={onChange}
-          onSearch={onSearch}
-          onSelect={onSelect}
-        >
-          {renderSelectOp(selectData, opType)}
-          {/* <Option value="male">male</Option>
-        <Option value="female">female</Option>
-        <Option value="other">other</Option> */}
-        </Select>
-      ),
+      Select: selectCom,
+      Search: selectCom,
       Password: <Input.Password {...realComProps} />,
       Cascader: <Cascader {...realComProps} />,
       AutoComplete: (
@@ -576,7 +583,14 @@ const SmartForm = (props, state) => {
     return normalItem;
   });
 
-  console.log(' SmartForm formProps ： ', form, formProps, formItemLayout, formLayout, initialValues,    ); //
+  console.log(
+    ' SmartForm formProps ： ',
+    form,
+    formProps,
+    formItemLayout,
+    formLayout,
+    initialValues,
+  ); //
   return (
     <>
       <Form

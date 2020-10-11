@@ -15,40 +15,52 @@ import {
 import moment from 'moment';
 import business from 'moment-business';
 
-export const getWeek = (data, isGetWeek, ) => {
+export const getWeek = (data, isGetWeek) => {
   // console.log(' getWeek   data,   ： ', data  )
-  return data.map(v => {
-    // const isWeek = business.isWeekDay(moment(`2020-10-${v}`))
-    const isWeek = business.isWeekDay(moment(v))
-    // console.log(' onChange   isWeek, ,   ： ', isWeek, datasss, v  )
-    if (isGetWeek) {
-      return isWeek ? v : null
-    } else {
-      return !isWeek ? v : null
-    }
-  }).filter(v => v)
-}
-const datasss = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 
-]
-const resss = getWeek(datasss)
+  return data
+    .map(v => {
+      // const isWeek = business.isWeekDay(moment(`2020-10-${v}`))
+      const isWeek = business.isWeekDay(moment(v));
+      // console.log(' onChange   isWeek, ,   ： ', isWeek, datasss, v  )
+      if (isGetWeek) {
+        return isWeek ? v : null;
+      } else {
+        return !isWeek ? v : null;
+      }
+    })
+    .filter(v => v);
+};
+const datasss = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const resss = getWeek(datasss);
 
-
-export const nowYear = new Date().getFullYear()
-export const nowMonth = new Date().getMonth() + 1
-export const getCountDays = (month = nowMonth, year = nowYear, ) => new Date(year, month, 0).getDate()
-export const getMonthDays = (month, year, ) => Array.from({ length: getCountDays(month, year, ), }, (_, index) => index + 1);
-export const formatMonthDay = (data, month = nowMonth, year = nowYear, ) => data.map((v) => `${year}-${month}-${v}`)
-export const getNowMonthDays = formatMonthDay(getMonthDays(), )
-export const getMonthWeekDays = getWeek(getNowMonthDays, true)
-export const getMonthWeekDaysSimple = getMonthWeekDays.map((v) => v.split('-')[v.split('-').length - 1])
+export const nowYear = new Date().getFullYear();
+export const nowMonth = new Date().getMonth() + 1;
+export const getCountDays = (month = nowMonth, year = nowYear) =>
+  new Date(year, month, 0).getDate();
+export const getMonthDays = (month, year) =>
+  Array.from({ length: getCountDays(month, year) }, (_, index) => index + 1);
+export const formatMonthDay = (data, month = nowMonth, year = nowYear) =>
+  data.map(v => `${year}-${month}-${v}`);
+export const getNowMonthDays = formatMonthDay(getMonthDays());
+export const getMonthWeekDays = getWeek(getNowMonthDays, true);
+export const getMonthWeekDaysSimple = getMonthWeekDays.map(
+  v => v.split('-')[v.split('-').length - 1],
+);
 
 var day = getCountDays();
 var months = getMonthDays();
-var formatMonthDayformatMonthDay = formatMonthDay(months, );
-const resss2222 = getWeek(formatMonthDayformatMonthDay)
-console.log('  resss ：', resss, day, months, formatMonthDayformatMonthDay, getNowMonthDays, getMonthWeekDays, getMonthWeekDaysSimple )// 
-
+var formatMonthDayformatMonthDay = formatMonthDay(months);
+const resss2222 = getWeek(formatMonthDayformatMonthDay);
+console.log(
+  '  resss ：',
+  resss,
+  day,
+  months,
+  formatMonthDayformatMonthDay,
+  getNowMonthDays,
+  getMonthWeekDays,
+  getMonthWeekDaysSimple,
+); //
 
 // export {request, } from './request'
 
@@ -136,6 +148,7 @@ export const mockFormData = (config, init) => {
         Input: label,
         TextArea: label,
         Select: [label],
+        Search: [label],
         Password: label,
         Cascader: [label],
         AutoComplete: label,
@@ -152,7 +165,7 @@ export const mockFormData = (config, init) => {
 
         Dynamic: [{ first: 2222 }, { first: 333 }],
         // DynamicItem: ['值1', '值2',  ],
-        DynamicItem: [1, 2,  ],
+        DynamicItem: [1, 2],
       }[formType];
       //
       // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//
@@ -212,25 +225,24 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
   return configs;
 };
 
-export const downLoad = ({url, }) => {
-  let a = document.createElement("a");
-  a.download = '';// 设置下载的文件名，默认是'下载'
+export const downLoad = ({ url }) => {
+  let a = document.createElement('a');
+  a.download = ''; // 设置下载的文件名，默认是'下载'
   a.href = url;
   document.body.appendChild(a);
   a.click();
   a.remove(); // 下载之后把创建的元素删除
-}
+};
 
-export const downLoadFile = (clickItem, {downEle = 'qrCode', }) => {
+export const downLoadFile = (clickItem, { downEle = 'qrCode' }) => {
   const canvasImg = document.getElementById(downEle); // 获取canvas类型的二维码
   const img = new Image();
   img.src = canvasImg.toDataURL('image/png'); // 将canvas对象转换为图片的data url
   // const downLink = document.getElementById('down_link');
-  // console.log(' img ： ', img, clickItem, canvasImg,  )// 
+  // console.log(' img ： ', img, clickItem, canvasImg,  )//
   clickItem.href = img.src;
   clickItem.download = '二维码'; // 图片name
-}
-
+};
 
 export const createArr = (length = 6) => {
   const res = Array.from({ length }, (_, index) => console.log(_, index));
@@ -363,7 +375,7 @@ export const confirms = (type = 1, msg, time = 3, cb) => {
 };
 
 export const tips = (msg, type = 1, time = 3, cb) => {
-  console.log('confirms ：', type, time, cb, )
+  console.log('confirms ：', type, time, cb);
   const msgMap = {
     0: 'error',
     1: 'success',

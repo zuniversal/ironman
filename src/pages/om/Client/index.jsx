@@ -351,7 +351,7 @@ class Client extends PureComponent {
         // onFail={this.onFail}
       ></ClientSearchForm>
     );
-  }
+  };
 
   showFormModalWithProps = params => {
     console.log('    showFormModalWithProps ： ', params);
@@ -360,6 +360,7 @@ class Client extends PureComponent {
       ...params,
       formComProps: {
         getCapture: this.showCapture,
+        onClientChange: this.props.onClientChange,
       },
     });
   };
@@ -385,7 +386,7 @@ class Client extends PureComponent {
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
-  }
+  };
 
   componentDidMount() {
     console.log(

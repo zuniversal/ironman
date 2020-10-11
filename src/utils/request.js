@@ -60,7 +60,7 @@ export const isTips = res => {
     }
     return;
   } else {
-    console.log(' 提示 对吗  !noTips ', !noTips, noTips, status, );
+    console.log(' 提示 对吗  !noTips ', !noTips, noTips, status);
     if (!noTips || status != 200) {
       tips(msg_show, 2);
     }
@@ -85,7 +85,8 @@ export class Request {
         // config.headers.Authorization = getToken()
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
         // config.headers.Authorization = getItems('token');
-        config.headers.authorization = 'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAyOTQzNTI5LCJlbWFpbCI6IiJ9.mGMYXWB_-8CwINXCRLDhVpTLeEjpLVQuBha1xVXocR4';
+        config.headers.authorization =
+          'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAzMDM5MjY2LCJlbWFpbCI6IiJ9.d63U0g4m55LO9K2Fj0IReE1CuL2n8F5sGMDQM4-8dCk';
         // this.http.store.dispatch({type: LOAD, data: true})
         //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
 
@@ -152,7 +153,7 @@ export const request = new Request(); //
 const { http } = request;
 // console.log(' request ： ', request, URL, {...http},  )//
 
-export const parseUrl = (url, params) => URL + url
+export const parseUrl = (url, params) => URL + url;
 
 export const get = (url, params) => http.get(url, { params: params });
 export const post = (url, params, o) => http.post(url, params, o);
