@@ -86,7 +86,7 @@ export class Request {
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
         // config.headers.Authorization = getItems('token');
         config.headers.authorization =
-          'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAzMDM5MjY2LCJlbWFpbCI6IiJ9.d63U0g4m55LO9K2Fj0IReE1CuL2n8F5sGMDQM4-8dCk';
+          'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAzMTA0NzY1LCJlbWFpbCI6IiJ9.TRDom9uskFCpxECSODg02bnQEeqhgS55pohcVfFvD98';
         // this.http.store.dispatch({type: LOAD, data: true})
         //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
 

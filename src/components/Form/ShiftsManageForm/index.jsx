@@ -28,6 +28,8 @@ export const config = [
     },
   },
   {
+    formType: 'Search',
+    selectSearch: props.getUser,
     itemProps: {
       label: '组长姓名',
       name: 'team_headman',

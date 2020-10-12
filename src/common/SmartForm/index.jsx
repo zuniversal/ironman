@@ -423,6 +423,7 @@ const SmartForm = (props, state) => {
     };
     if (formType === 'Search') {
       selectProps.showArrow = false;
+      selectProps.onSearch = items.selectSearch
     }
     const selectCom = (
       <Select {...selectProps}>

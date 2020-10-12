@@ -308,7 +308,7 @@ export default ({
       tips('模拟文件下载成功！');
     };
     exportData = params => {
-      console.log(' exportData,  , ： ', params, actions);
+      console.log(' exportData,  , ： ', params, actions, this.state, this.props, );
       const { dispatch } = this.props; //
       dispatch(actions.exportDataAsync({}));
       tips('模拟导出成功！');
@@ -386,6 +386,7 @@ export default ({
         ' SmartHoc 组件componentDidMount挂载 ： ',
         this.state,
         this.props,
+        isMountFetch,
       ); //
 
       if (!isMountFetch) {

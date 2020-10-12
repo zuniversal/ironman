@@ -27,7 +27,7 @@ const ShiftsArrangeSearchForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '班组',
         name: 'team',
@@ -36,17 +36,17 @@ const ShiftsArrangeSearchForm = props => {
     {
       formType: 'DatePicker',
       itemProps: {
-        label: '年',
-        name: '',
-      },
-    },
-    {
-      formType: 'DatePicker',
-      itemProps: {
         label: '月',
-        name: 'month',
+        name: 'schedule_date',
       },
     },
+    // {
+    //   formType: 'DatePicker',
+    //   itemProps: {
+    //     label: '月',
+    //     name: 'month',
+    //   },
+    // },
   ];
 
   const formProps = {

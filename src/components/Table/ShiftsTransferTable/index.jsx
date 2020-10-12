@@ -53,14 +53,27 @@ const ShiftsTransferTable = props => {
     },
   ];
 
-  const extra = (text, record, index, ) => {
-    console.log(' text, record, index  ： ', text, record, index); //
-    return (
-      <>
-        <a onClick={() => showDetail({ action: 'detail', record: record.id })}>查看</a>
-      </>
-    )
-  };
+  // const extra = (text, record, index, ) => {
+  //   console.log(' text, record, index  ： ', text, record, index); //
+  //   return (
+  //     <>
+  //       <a onClick={() => showDetail({ action: 'detail', record: record.id })}>查看</a>
+  //     </>
+  //   )
+  // };
+  const extra = (text, record, index, props, ) => (
+    <>
+      <a onClick={() => {
+        console.log(' propsprops ： ', props,  )// 
+        showDetail({
+          action: 'detail',
+          d_id: record[props.rowKey],
+          // [d_item]: record[d_item],
+          // record,
+        })
+      }}>查看</a>
+    </>
+  )
 
   return (
     <SmartTable

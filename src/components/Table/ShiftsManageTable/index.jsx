@@ -61,7 +61,15 @@ const ShiftsManageTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>查看排班</a>
+      <a onClick={() => {
+        console.log(' propsprops ： ', props,  )// 
+        props.showDetail({
+          action: 'detail',
+          d_id: record[props.rowKey],
+          // [d_item]: record[d_item],
+          // record,
+        })
+      }}>查看排班</a>
     </>
   );
 

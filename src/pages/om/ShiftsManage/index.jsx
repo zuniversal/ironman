@@ -38,7 +38,7 @@ const titleMap = {
   down: `文件下载`,
 };
 
-const mapStateToProps = ({ shiftsManage, user, }) => ({...shiftsManage, user, });
+const mapStateToProps = ({ shiftsManage, user, }) => ({...shiftsManage, teamList: user.dataList, });
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -170,7 +170,7 @@ class ShiftsManage extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
+          onClick={() => this.props.showFormModal({ action: 'add',  })}
         >
           新增{TITLE}
         </Button>
@@ -212,7 +212,7 @@ class ShiftsManage extends PureComponent {
   }
 
   renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
+    console.log(' renderSmartModalx ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return (

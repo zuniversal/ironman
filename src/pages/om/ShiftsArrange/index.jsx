@@ -58,6 +58,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
+  isMountFetch: false,  
 })
 class ShiftsArrange extends PureComponent {
   constructor(props) {

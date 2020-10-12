@@ -218,7 +218,7 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
 
   if (isDisabledAll) {
     configs.forEach((v, i) => {
-      console.log(' configs v ： ', v, i);
+      // console.log(' configs v ： ', v, i);
       v.comProps.disabled = true;
     });
   }

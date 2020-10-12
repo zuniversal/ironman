@@ -50,11 +50,12 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
+      console.log(' editItem ： ', state, payload,   )// 
       return {
         ...state,
-        d_id: payload.payload.d_id,
+        // d_id: payload.payload.d_id,
         dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
+          ...(v.id == payload.payload.d_id ? {...v, ...payload.bean} : v),
         })),
         // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
       };

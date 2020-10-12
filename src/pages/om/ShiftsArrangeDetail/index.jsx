@@ -210,18 +210,43 @@ class ShiftsArrangeDetail extends PureComponent {
   handleOk = e => {
     console.log('    handleOk ： ', e);
   };
+  search = async params => {
+    console.log('    search ： ', params);
+    const { form } = params;
+    try {
+      const res = await form.validateFields();
+      console.log('  search res await 结果  ：', res); //
+      actions.getItemAsync(res);
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params, actions); //
+    return (
+      <div className={'btnWrapper'}>
+        {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
+        {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
+        <Button type="primary" onClick={() => this.search(params)}>搜索</Button>
+        {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}>
+          搜索
+        </Button> */}
+        <Button onClick={() => this.handleCancel()}>取消</Button>
+        <Button type="primary" onClick={() => this.handleOk()}>
+          确定
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <ShiftsArrangeSearchForm></ShiftsArrangeSearchForm>
-        <div className={'btnWrapper'}>
-          <Button onClick={() => this.handleCancel()}>取消</Button>
-          <Button type="primary" onClick={() => this.handleOk()}>
-            确定
-          </Button>
-        </div>
-      </div>
+      <ShiftsArrangeSearchForm
+        formBtn={this.renderFormBtn}
+        // onSubmit={this.onSubmit}
+        // onFail={this.onFail}
+      ></ShiftsArrangeSearchForm>
     );
   };
   onSelectChange = (e, ) => {

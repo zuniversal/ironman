@@ -34,10 +34,11 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
+      console.log(' getItemgetItem ： ', payload,   )// 
       return {
         ...state,
         // ...payload,
-        // dataList: [payload.bean, ],
+        itemDetail: payload.list,
       };
     },
     addItem(state, { payload, type }) {

@@ -29,17 +29,17 @@ export default {
 
   reducers: {
     getList(state, { payload, type }) {
+      console.log(' formartDataList(payload) ： ', formartDataList(payload.list),  )// 
       return {
         ...state,
         // ...payload,
-        dataList: formartDataList(payload[' list']),
+        dataList: formartDataList(payload.list),
       };
     },
     getItem(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        // dataList: [payload.bean, ],
+        itemDetail: payload.list,
       };
     },
     addItem(state, { payload, type }) {
@@ -75,6 +75,7 @@ export default {
       yield put(action(res));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getItemAsyncgetItemAsync ： ', payload,   )// 
       const res = yield call(services.getItem, payload);
       yield put(action(res));
     },
