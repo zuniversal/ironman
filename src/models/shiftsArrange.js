@@ -1,5 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
+import moment from 'moment'// 
+
 
 const namespace = 'shiftsArrange';
 const { createAction, createCRUD } = init(namespace);
@@ -15,6 +17,7 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 const formartDataList = (data, ) => data.map((v) => ({...v, title: v.team, start: '2020-10-10', }))
+const formatSearch = (data, ) => ({...data, schedule_date: data.schedule_date ? (data.schedule_date).format("YYYY-MM") : '2020-10', })
 
 export default {
   namespace,
@@ -71,11 +74,11 @@ export default {
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getList, payload);
+      console.log(' getListAsyncgetListAsync ： ', payload,   )// 
+      const res = yield call(services.getList, formatSearch(payload));
       yield put(action(res));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsyncgetItemAsync ： ', payload,   )// 
       const res = yield call(services.getItem, payload);
       yield put(action(res));
     },

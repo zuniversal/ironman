@@ -210,13 +210,14 @@ class ShiftsArrangeDetail extends PureComponent {
   handleOk = e => {
     console.log('    handleOk ： ', e);
   };
+
   search = async params => {
     console.log('    search ： ', params);
     const { form } = params;
     try {
       const res = await form.validateFields();
       console.log('  search res await 结果  ：', res); //
-      actions.getItemAsync(res);
+      this.props.dispatch(actions.getItemAsync(res))
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -228,10 +229,11 @@ class ShiftsArrangeDetail extends PureComponent {
       <div className={'btnWrapper'}>
         {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
         {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-        <Button type="primary" onClick={() => this.search(params)}>搜索</Button>
-        {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}>
+        {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
+        {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}> */}
+        <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
-        </Button> */}
+        </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
         <Button type="primary" onClick={() => this.handleOk()}>
           确定
