@@ -108,6 +108,7 @@ export const getLabel = (label, key) => {
     Checkbox: INPUT_TXT + label,
     Radio: SELECT_TXT + label,
     DatePicker: SELECT_TXT + label,
+    MonthPicker: SELECT_TXT + label,
   };
 
   return labelMap[key];
@@ -417,13 +418,13 @@ const SmartForm = (props, state) => {
       ...realComProps,
       filterOption: true,
       showSearch: true,
-      onChange: onChange,
-      onSearch: onSearch,
-      onSelect: onSelect,
+      // onChange: onChange,
+      // onSearch: onSearch,
+      // onSelect: onSelect,
     };
     if (formType === 'Search') {
       selectProps.showArrow = false;
-      selectProps.onSearch = items.selectSearch
+      selectProps.onSearch = items.selectSearch;
     }
     const selectCom = (
       <Select {...selectProps}>
@@ -461,6 +462,7 @@ const SmartForm = (props, state) => {
       Checkbox: renderCheckboxOp(checkboxData, opType),
       Radio: renderRadioOp(radioData, opType),
       DatePicker: <DatePicker {...realComProps} />,
+      MonthPicker: <DatePicker {...realComProps} picker="month" />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
       DynamicItem: <DynamicItem {...dynamicComProps}></DynamicItem>,

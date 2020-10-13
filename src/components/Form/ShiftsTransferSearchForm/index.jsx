@@ -20,43 +20,6 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '交班人',
-      name: 'transfer_team',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '值班站',
-      name: 'type',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '接班人',
-      name: 'receive_team',
-    },
-  },
-  {
-    formType: 'DatePicker',
-    itemProps: {
-      label: '选择日期',
-      name: 'created_time',
-    },
-  },
-  // {
-  //   formType: 'Select',
-  //   itemProps: {
-  //     label: '电站',
-  //   },
-  // },
-];
-
 const ShiftsTransferSearchForm = props => {
   console.log(' ShiftsTransferSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
@@ -64,6 +27,49 @@ const ShiftsTransferSearchForm = props => {
     // layout: 'vertical',
     // layout: 'inline',
   };
+
+  const config = [
+    {
+      formType: 'Search',
+      selectSearch: props.getUser,
+      selectData: props.userList,
+      itemProps: {
+        label: '交班人',
+        name: 'transfer_team',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getUser,
+      selectData: props.userList,
+      itemProps: {
+        label: '值班站',
+        name: 'type',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getUser,
+      selectData: props.userList,
+      itemProps: {
+        label: '接班人',
+        name: 'receive_team',
+      },
+    },
+    {
+      formType: 'MonthPicker',
+      itemProps: {
+        label: '选择日期',
+        name: 'created_time',
+      },
+    },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '电站',
+    //   },
+    // },
+  ];
 
   return (
     <div className={'ShiftsTransferSearchForm '}>

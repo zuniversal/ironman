@@ -179,11 +179,13 @@ class ShiftsTransfer extends PureComponent {
     return (
       <ShiftsTransferSearchForm
         formBtn={this.renderFormBtn}
+        getUser={this.props.getUser}
+        userList={this.props.userList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsTransferSearchForm>
     );
-  }
+  };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
@@ -200,7 +202,7 @@ class ShiftsTransfer extends PureComponent {
     };
 
     return <ShiftsTransferTable {...tableProps}></ShiftsTransferTable>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -217,7 +219,7 @@ class ShiftsTransfer extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     console.log(

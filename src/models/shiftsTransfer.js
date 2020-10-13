@@ -1,10 +1,16 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsTransfer';
+import * as userServices from '@/services/user';
 
 const namespace = 'shiftsTransfer';
 const { createAction, createCRUD } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = [
+  'syncOAAsync',
+  'getPortraitAsync',
+  'getUserAsync',
+  'exportDataAsync',
+];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -23,6 +29,10 @@ export default {
 
     syncOAData: {},
     portraitData: {},
+    userList: [
+      { label: 'zyb', value: 'zyb1' },
+      { label: 'zyb1', value: 'zyb11' },
+    ],
   },
 
   reducers: {
@@ -34,7 +44,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload,   )// 
+      console.log(' getItemgetItem ： ', payload); //
       return {
         ...state,
         // ...payload,
@@ -66,6 +76,13 @@ export default {
         ),
       };
     },
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        // ...payload,
+        userList: [...payload.list],
+      };
+    },
   },
 
   effects: {
@@ -87,6 +104,16 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      // console.log(' exportDataAsync ： ', payload, type,     )//
+      const res = yield call(services.exportData, payload);
+      console.log('  exportDataAsync res ：', res); //
+      // yield put(action({ ...res, payload }));
+    },
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getUser, payload);
       yield put(action({ ...res, payload }));
     },
   },

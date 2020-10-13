@@ -34,7 +34,7 @@ const ShiftsArrangeSearchForm = props => {
       },
     },
     {
-      formType: 'DatePicker',
+      formType: 'MonthPicker',
       itemProps: {
         label: '月',
         name: 'schedule_date',

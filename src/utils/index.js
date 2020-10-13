@@ -71,6 +71,7 @@ const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
 
+// 注意 如果 select 的data数组里没有 value 属性会导致选中表单无值
 export const renderSelectOp = (configs, opType = 'option') => {
   const OptionMap = {
     Option,
