@@ -21,7 +21,7 @@ const ActionCol = props => {
     record,
     index,
   } = props;
-  console.log(' ActionCol props ： ', props);
+  // console.log(' ActionCol props ： ', props);
   return (
     <span>
       {!props.noDefault && (

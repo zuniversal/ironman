@@ -7,6 +7,8 @@ const { createAction, createCRUD } = init(namespace);
 const otherActions = [
   'syncOAAsync',
   'exportDataAsync',
+  'uploadFileAsync',
+  'exportDataAsync',
 ];
 
 export const actions = {
