@@ -1,10 +1,6 @@
-
-
-// import regions from './regions'// 
-// console.log(' regions ： ', regions,  )// 
+// import regions from './regions'//
+// console.log(' regions ： ', regions,  )//
 // export const regoins = regions
-
-
 
 export const regoins = [
   {
@@ -25,7 +21,6 @@ export const regoins = [
   },
 ];
 
-
 export const province = [
   {
     value: '广东省',
@@ -41,19 +36,30 @@ export const province = [
   },
 ];
 
-export const site = province
-export const city = province
+export const teamTypeConfig = [
+  {
+    value: '0',
+    label: '调度',
+  },
+  {
+    value: '1',
+    label: '值班',
+  },
+  {
+    value: '2',
+    label: '巡检',
+  },
+  {
+    value: '3',
+    label: '抢修',
+  },
+];
 
+export const site = province;
+export const city = province;
 
-export const httpTipsMap = { 
-  slow: '阿哦，加载中，请稍后', 
-  notNetWork: '阿哦，没有网络，请您检查网络设置',    
-  loadError: '阿哦，加载失败了，点击刷新试试（提供刷新按钮）',    
-}
-
-
-
-
-
-
-
+export const httpTipsMap = {
+  slow: '阿哦，加载中，请稍后',
+  notNetWork: '阿哦，没有网络，请您检查网络设置',
+  loadError: '阿哦，加载失败了，点击刷新试试（提供刷新按钮）',
+};

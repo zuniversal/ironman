@@ -20,60 +20,6 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    itemProps: {
-      label: '班组名称',
-      name: 'name',
-    },
-  },
-  {
-    formType: 'Search',
-    selectSearch: props.getUser,
-    itemProps: {
-      label: '组长姓名',
-      name: 'team_headman',
-    },
-  },
-  {
-    formType: 'DynamicItem',
-    itemProps: {
-      label: '组员姓名',
-      className: 'noMargin',
-      name: 'member',
-    },
-    comProps: {
-      extra: true,
-      itemProps: {
-        label: '用户名',
-      },
-      comProps: {
-        className: 'w-320',
-        name: 'member',
-      },
-    },
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '类型',
-      name: 'type',
-    },
-  },
-  {
-    itemProps: {
-      label: '车辆牌照',
-      name: 'car_number',
-    },
-  },
-  {
-    itemProps: {
-      label: 'leader',
-      name: 'leader',
-    },
-  },
-];
-
 const ShiftsManageForm = props => {
   console.log(' ShiftsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
@@ -81,6 +27,60 @@ const ShiftsManageForm = props => {
     // layout: 'vertical',
     // layout: 'inline',
   };
+
+  const config = [
+    {
+      itemProps: {
+        label: '班组名称',
+        name: 'name',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getUser,
+      itemProps: {
+        label: '组长姓名',
+        name: 'team_headman',
+      },
+    },
+    {
+      formType: 'DynamicItem',
+      itemProps: {
+        label: '组员姓名',
+        className: 'noMargin',
+        name: 'member',
+      },
+      comProps: {
+        extra: true,
+        itemProps: {
+          label: '用户名',
+        },
+        comProps: {
+          className: 'w-320',
+          name: 'member',
+        },
+      },
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '类型',
+        name: 'type',
+      },
+    },
+    {
+      itemProps: {
+        label: '车辆牌照',
+        name: 'car_number',
+      },
+    },
+    {
+      itemProps: {
+        label: 'leader',
+        name: 'leader',
+      },
+    },
+  ];
 
   return (
     <div className={' ShiftsManageForm '}>

@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
-import moment from 'moment'// 
-
+import * as userServices from '@/services/user';
+import moment from 'moment'; //
 
 const namespace = 'shiftsArrange';
 const { createAction, createCRUD } = init(namespace);
@@ -16,8 +16,14 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-const formartDataList = (data, ) => data.map((v) => ({...v, title: v.team, start: '2020-10-10', }))
-const formatSearch = (data, ) => ({...data, schedule_date: data.schedule_date ? (data.schedule_date).format("YYYY-MM") : '2020-10', })
+const formartDataList = data =>
+  data.map(v => ({ ...v, title: v.team, start: '2020-10-10' }));
+const formatSearch = data => ({
+  ...data,
+  schedule_date: data.schedule_date
+    ? data.schedule_date.format('YYYY-MM')
+    : '2020-10',
+});
 
 export default {
   namespace,
@@ -28,11 +34,18 @@ export default {
 
     syncOAData: {},
     portraitData: {},
+    userList: [
+      { label: 'zyb', value: 'zyb1' },
+      { label: 'zyb1', value: 'zyb11' },
+    ],
   },
 
   reducers: {
     getList(state, { payload, type }) {
-      console.log(' formartDataList(payload) ： ', formartDataList(payload.list),  )// 
+      console.log(
+        ' formartDataList(payload) ： ',
+        formartDataList(payload.list),
+      ); //
       return {
         ...state,
         // ...payload,
@@ -70,11 +83,18 @@ export default {
         ),
       };
     },
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        // ...payload,
+        userList: [...payload.list],
+      };
+    },
   },
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsyncgetListAsync ： ', payload,   )// 
+      console.log(' getListAsyncgetListAsync ： ', payload); //
       const res = yield call(services.getList, formatSearch(payload));
       yield put(action(res));
     },
@@ -92,6 +112,10 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getUser, payload);
       yield put(action({ ...res, payload }));
     },
   },

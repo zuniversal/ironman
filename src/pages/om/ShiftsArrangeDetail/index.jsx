@@ -71,7 +71,10 @@ class ShiftsArrangeDetail extends PureComponent {
       display: 'background',
     };
     const calendarEvents = [
-      items, { title: '班组一', start: '2020-10-09' }, { title: '班组一', start: '2020-10-10' }, { title: '班组一', start: '2020-10-11' }, 
+      items,
+      { title: '班组一', start: '2020-10-09' },
+      { title: '班组一', start: '2020-10-10' },
+      { title: '班组一', start: '2020-10-11' },
       // items2
     ];
     this.state = {
@@ -87,9 +90,9 @@ class ShiftsArrangeDetail extends PureComponent {
       titleMap,
 
       newTbData: [],
-      isQuickArrange: false,  
+      isQuickArrange: false,
       calendarEvents,
-      selectData: [],  
+      selectData: [],
     };
   }
 
@@ -217,7 +220,7 @@ class ShiftsArrangeDetail extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  search res await 结果  ：', res); //
-      this.props.dispatch(actions.getItemAsync(res))
+      this.props.dispatch(actions.getItemAsync(res));
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -246,47 +249,65 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
+        getUser={this.props.getUser}
+        userList={this.props.userList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>
     );
   };
-  onSelectChange = (e, ) => {
-    console.log(' onSelectChange   ,   ： ', e, e.target, this.state, this.props,  )
-    const {checked, day,  } = e.target 
-    const {selectData,  } = this.state// 
-    const datas = checked ? [...selectData, day, ] : selectData.filter((v) => v !== day)
-    console.log('  datas ：', datas,  )//     
+  onSelectChange = e => {
+    console.log(
+      ' onSelectChange   ,   ： ',
+      e,
+      e.target,
+      this.state,
+      this.props,
+    );
+    const { checked, day } = e.target;
+    const { selectData } = this.state; //
+    const datas = checked
+      ? [...selectData, day]
+      : selectData.filter(v => v !== day);
+    console.log('  datas ：', datas); //
     this.setState({
       selectData: datas,
-    })
-  }
-  onChoiceRadio = (e, ) => {
-    console.log(' onChoiceRadio   e, ,   ： ', e, this.state, this.props,   )
-    const {calendarEvents, selectData,   } = this.state// 
+    });
+  };
+  onChoiceRadio = e => {
+    console.log(' onChoiceRadio   e, ,   ： ', e, this.state, this.props);
+    const { calendarEvents, selectData } = this.state; //
     this.setState({
       isQuickArrange: !this.state.isQuickArrange,
-      calendarEvents: calendarEvents.map((v) => ({...v, isChecked: true,  })),
-      selectData: [...getMonthWeekDaysSimple, ],
-    })
-  }
+      calendarEvents: calendarEvents.map(v => ({ ...v, isChecked: true })),
+      selectData: [...getMonthWeekDaysSimple],
+    });
+  };
   renderChoiceRadio = params => {
     // console.log(' renderChoiceRadio ： ', params,  )
-    const {isQuickArrange,  } = this.state// 
-    return <div className="choiceRadioWrapper" >
-      <div className="label" >按法定工作日快速排班</div> <ChoiceRadio onChange={this.onChoiceRadio} value={isQuickArrange} ></ChoiceRadio>
-    </div>;
+    const { isQuickArrange } = this.state; //
+    return (
+      <div className="choiceRadioWrapper">
+        <div className="label">按法定工作日快速排班</div>{' '}
+        <ChoiceRadio
+          onChange={this.onChoiceRadio}
+          value={isQuickArrange}
+        ></ChoiceRadio>
+      </div>
+    );
   };
 
   renderShiftsArrangeDetailCalendar = params => {
     // console.log(' renderShiftsArrangeDetailCalendar ： ', params,  )
-    const {isQuickArrange, calendarEvents, selectData,  } = this.state// 
-    return <ShiftsArrangeDetailCalendar 
-      isQuickArrange={isQuickArrange} 
-      data={calendarEvents} 
-      selectData={selectData} 
-      onSelectChange={this.onSelectChange} 
-    ></ShiftsArrangeDetailCalendar>;
+    const { isQuickArrange, calendarEvents, selectData } = this.state; //
+    return (
+      <ShiftsArrangeDetailCalendar
+        isQuickArrange={isQuickArrange}
+        data={calendarEvents}
+        selectData={selectData}
+        onSelectChange={this.onSelectChange}
+      ></ShiftsArrangeDetailCalendar>
+    );
   };
 
   renderSmartModal = params => {
@@ -316,7 +337,7 @@ class ShiftsArrangeDetail extends PureComponent {
 
     return (
       <div className="shiftsArrangeDetail">
-        <PageTitle {...this.props} title={'新增/编辑排班'} ></PageTitle>
+        <PageTitle {...this.props} title={'新增/编辑排班'}></PageTitle>
 
         {this.renderSearchForm()}
 

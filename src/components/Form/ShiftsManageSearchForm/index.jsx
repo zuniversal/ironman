@@ -22,7 +22,7 @@ import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
-    formType: 'Select',
+    formType: 'Search',
     itemProps: {
       label: '类型',
       name: 'type',

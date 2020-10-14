@@ -58,7 +58,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  isMountFetch: false,  
+  isMountFetch: false,
 })
 class ShiftsArrange extends PureComponent {
   constructor(props) {
@@ -219,16 +219,18 @@ class ShiftsArrange extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
+        getUser={this.props.getUser}
+        userList={this.props.userList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>
     );
-  }
+  };
 
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return <ShiftsArrangeCalendar></ShiftsArrangeCalendar>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -245,11 +247,13 @@ class ShiftsArrange extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
-    return <ShiftsArrangeCalendar data={this.props.dataList} ></ShiftsArrangeCalendar>;
+    return (
+      <ShiftsArrangeCalendar data={this.props.dataList}></ShiftsArrangeCalendar>
+    );
   };
 
   render() {
@@ -260,11 +264,13 @@ class ShiftsArrange extends PureComponent {
       this.props,
     );
 
-    return <div className="ShiftsArrange">
-      {this.renderSearchForm()}
+    return (
+      <div className="ShiftsArrange">
+        {this.renderSearchForm()}
 
-      {this.renderShiftsArrangeCalendar()}
-    </div>;
+        {this.renderShiftsArrangeCalendar()}
+      </div>
+    );
   }
 }
 
