@@ -17,7 +17,7 @@ import { Form, Input, Button, Spin } from 'antd';
 
 /* 
   封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
-  支持 注入 actions, modalForm, titleMap, isMountFetch, isCheckQuery,  等配置参数 
+  支持 注入 actions, modalForm, titleMap, noMountFetch, isCheckQuery,  等配置参数 
   actions：注入的 models 里封装的相应操作页面的 action 
   modalForm：页面的操作表单 
   titleMap：模态框的标题映射
@@ -31,13 +31,12 @@ const actionMap = {
   detail: 'getItemAsync',
 };
 
-const getAction = key => (actionMap[key] ? actionMap[key] : () => {});
 
 export default ({
   actions,
   modalForm,
   titleMap,
-  isMountFetch,
+  noMountFetch,
   isCheckQuery,
 }) => Com =>
   class extends React.Component {
@@ -64,6 +63,24 @@ export default ({
         removeTitle: '',
       };
       // this.onRemove = this.removeAction
+      // const createActions = params => {
+      //   const actionObj = {}
+      //   Object.keys(actions).forEach((v) => actionObj[key] = this.props.dispatch(actions[]));
+      //   return actions 
+      // };
+    }
+    getAction = key => {
+      const action = actions[(actionMap[key] ? actionMap[key] : '')]
+      return action
+    }
+    dispatchAction = (action, params) => {
+      const actionFn = this.getAction(action)
+      console.log('  dispatchAction ：', action,  )//
+      if (actionFn) {
+        this.props.dispatch(actionFn(params));
+      } else {
+        tips('未匹配到相应的action方法！')
+      }
     }
 
     onRemove2 = props => {
@@ -182,12 +199,13 @@ export default ({
     };
 
     showFormModal = params => {
-      const { action, formComProps } = params;
-      const actionFn = getAction(action);
+      const { action, formComProps, formModalProps, } = params;
+      const actionFn = this.getAction(action);
       console.log(
         '    showFormModal ： ',
         action,
         params,
+        formModalProps,
         formComProps,
         this.state,
         this.props,
@@ -206,14 +224,16 @@ export default ({
       // }
 
       if (action !== 'add') {
-        const { dispatch } = this.props; //
-        dispatch(actions[actionFn](params));
+        // const { dispatch } = this.props; //
+        // dispatch(actionFn(params));
+        this.dispatchAction(action, params)
       }
 
       this.setState({
         action,
         isShow: true,
         formComProps,
+        formModalProps,
         editData: action === 'edit' ? params.record : {},
       });
     };
@@ -335,20 +355,20 @@ export default ({
     getList = (params = {}) => {
       console.log('    getList ： ', params, this.state);
       const { dispatch } = this.props; //
-
       dispatch(actions.getListAsync(params));
     };
     checkQuery = e => {
-      const { location } = this.props; //
+      const { location, dispatch, } = this.props; //
       if (location) {
         const { query } = location;
         console.log('    checkQuery ： ', e, this.state, this.props, query);
+        dispatch(actions.getListAsync(query));
       }
     };
 
     renderSmartFormModal = params => {
-      console.log(' renderSmartFormModal ： ', params, this.props);
-      const { action, isShow } = this.state; //
+      console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+      const { action, isShow, formModalProps,  } = this.state; //
 
       const formComProps = {
         action,
@@ -372,6 +392,7 @@ export default ({
           // FormCom={this.renderModalForm()}
           FormCom={modalForm}
           top={this.renderModalTop()}
+          {...formModalProps} 
 
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
@@ -386,15 +407,15 @@ export default ({
         ' SmartHoc 组件componentDidMount挂载 ： ',
         this.state,
         this.props,
-        isMountFetch,
+        noMountFetch,
       ); //
 
-      if (!isMountFetch) {
+      if (!noMountFetch) {
         this.getList();
       }
-      if (!isCheckQuery) {
+      // if (!isCheckQuery) {
         this.checkQuery();
-      }
+      // }
     }
 
     render() {

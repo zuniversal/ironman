@@ -41,7 +41,7 @@ import PageTitle from '@/components/Widgets/PageTitle'; //
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { getMonthWeekDaysSimple } from '@/utils';
+import { getMonthWeekDaysSimple, nowYear, } from '@/utils';
 
 export const TITLE = '排班';
 
@@ -60,6 +60,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
+  noMountFetch: true,
 })
 class ShiftsArrangeDetail extends PureComponent {
   constructor(props) {
@@ -210,8 +211,19 @@ class ShiftsArrangeDetail extends PureComponent {
   handleCancel = e => {
     console.log('    handleCancel ： ', e);
   };
-  handleOk = e => {
-    console.log('    handleOk ： ', e);
+  formatArrangeData = (data,  ) => {
+    console.log(' formatArrangeData,  , ： ', data, this.state, this.props,    )
+    const {selectData,  } = this.state// 
+    const {location,  } = this.props// 
+    return selectData.map((v) => ({team: location.query.team, schedule_date: `${nowYear}-${v}`, })) 
+  }
+  handleArrangeOk = params => {
+    console.log('    handleArrangeOk ： ', params, this.state, this.props, );
+    const res = this.formatArrangeData()
+    console.log('  res ：', res,  )// 
+    if (res.length) {
+      this.props.dispatch(actions.addItemAsync(res));
+    }
   };
 
   search = async params => {
@@ -238,7 +250,7 @@ class ShiftsArrangeDetail extends PureComponent {
           搜索
         </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
-        <Button type="primary" onClick={() => this.handleOk()}>
+        <Button type="primary" onClick={() => this.handleArrangeOk()}>
           确定
         </Button>
       </div>
@@ -249,8 +261,8 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
-        getUser={this.props.getUser}
-        userList={this.props.userList}
+        getTeam={this.props.getTeamAsync}
+        teamList={this.props.teamList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>

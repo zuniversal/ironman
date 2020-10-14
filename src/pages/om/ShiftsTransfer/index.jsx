@@ -187,6 +187,19 @@ class ShiftsTransfer extends PureComponent {
     );
   };
 
+  showTransferDetail = (params,  ) => {
+    console.log(' showTransferDetail,  , ： ', params,    )
+    this.props.showFormModal({
+      ...params,
+      formModalProps: {
+        top: <div className="fje btnWrapper ">
+          <Button type="primary " onClick={() => this.props.exportData()}>
+            导出数据
+          </Button>
+        </div>,
+      },  
+    })
+  }
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -196,6 +209,7 @@ class ShiftsTransfer extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
       showDetail: this.props.showFormModal,
+      showTransferDetail: this.showTransferDetail,
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,

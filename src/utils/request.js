@@ -47,7 +47,7 @@ export const isTips = res => {
     ' 提示 对吗  code !== NORMAL_CODE ',
     res,
     code,
-    res.data,
+    // res.data,
     config,
     config.datas,
   );

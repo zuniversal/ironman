@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -17,37 +18,9 @@ import {
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
+import { regoins, onDutyTypeConfig,  } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    formType: 'Search',
-    itemProps: {
-      label: '类型',
-      name: 'type',
-    },
-  },
-  {
-    formType: 'Divider',
-    itemProps: {
-      label: '',
-    },
-    comProps: {},
-  },
-
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '',
-      name: 'keyword',
-    },
-    comProps: {
-      className: 'lastFormItem',
-    },
-    searchSuffix: true,
-  },
-];
 
 const ShiftsManageSearchForm = props => {
   console.log(' ShiftsManageSearchForm ： ', props); //
@@ -56,6 +29,36 @@ const ShiftsManageSearchForm = props => {
     // layout: 'vertical',
     // layout: 'inline',
   };
+  
+  const config = [
+    {
+      formType: 'Search',
+      selectData: onDutyTypeConfig,
+      itemProps: {
+        label: '类型',
+        name: 'type',
+      },
+    },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+  
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
+    },
+  ];
 
   return (
     <div className={'ShiftsManageSearchForm '}>
@@ -78,6 +81,12 @@ const ShiftsManageSearchForm = props => {
   );
 };
 
-ShiftsManageSearchForm.defaultProps = {};
+ShiftsManageSearchForm.defaultProps = {
+  typeList: [],
+};
+
+ShiftsManageSearchForm.propTypes = {
+  typeList: PropTypes.array,
+};
 
 export default ShiftsManageSearchForm;

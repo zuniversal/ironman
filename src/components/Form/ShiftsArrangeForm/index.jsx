@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -34,13 +35,15 @@ const ShiftsArrangeForm = props => {
 
   const config = [
     {
-      formType: 'Select', 
+      formType: 'Search',
+      selectSearch: props.getTeam,
+      selectData: props.teamList,
       itemProps: {
         label: '选择班组',
       },
     },
     {
-      formType: 'DatePicker', 
+      formType: 'MonthPicker', 
       itemProps: {
         label: '选择月份',
       },
@@ -87,6 +90,12 @@ const ShiftsArrangeForm = props => {
   );
 };
 
-ShiftsArrangeForm.defaultProps = {};
+ShiftsArrangeForm.defaultProps = {
+  teamList: [],
+};
+
+ShiftsArrangeForm.propTypes = {
+  teamList: PropTypes.array,
+};
 
 export default ShiftsArrangeForm;

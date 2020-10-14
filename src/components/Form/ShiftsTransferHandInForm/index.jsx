@@ -22,9 +22,9 @@ import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const ticketConfig = [
-  { name: 'ing', left: '执行中', right: '张' },
-  { name: 'end', left: '结束', right: '张' },
-  { name: 'no', left: '未执行', right: '张' },
+  { name: 'executing', left: '执行中', right: '张', wrapperClass: 'formItems ', },
+  { name: 'finished', left: '结束', right: '张', wrapperClass: 'formItems ', },
+  { name: 'unExecuted', left: '未执行', right: '张', },
 ];
 
 const ShiftsTransferHandInForm = props => {
@@ -82,38 +82,38 @@ const ShiftsTransferHandInForm = props => {
       formType: 'CustomCom',
       CustomCom: (
         <>
-          <InputCom disabled right={'付'}></InputCom>
+          <InputCom disabled name={'wire'} right={'付'}></InputCom>
         </>
       ),
       itemProps: {
         label: '5.装临时接电线',
-        name: 'work_situation',
+        // name: 'work_situation',
       },
     },
-    // {
-    //   formType: 'CustomCom',
-    //   CustomCom: (
-    //     <>
-    //       <InputCom disabled right={'付'}></InputCom>
-    //     </>
-    //   ),
-    //   itemProps: {
-    //     label: '接地闸刀推上',
-    //     name: 'work_situation',
-    //   },
-    // },
-    // {
-    //   formType: 'CustomCom',
-    //   CustomCom: (
-    //     <>
-    //       <InputCom disabled right={'把'}></InputCom>
-    //     </>
-    //   ),
-    //   itemProps: {
-    //     label: '加保安锁',
-    //     name: 'work_situation',
-    //   },
-    // },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <InputCom disabled name={'knife'} right={'付'}></InputCom>
+        </>
+      ),
+      itemProps: {
+        label: '接地闸刀推上',
+        // name: 'work_situation',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <InputCom disabled name={'lock'} right={'把'}></InputCom>
+        </>
+      ),
+      itemProps: {
+        label: '加保安锁',
+        // name: 'work_situation',
+      },
+    },
 
 
     {
@@ -133,7 +133,7 @@ const ShiftsTransferHandInForm = props => {
       CustomCom: (
         <>
           {ticketConfig.map((v, i) => (
-            <InputCom disabled {...v} key={i}></InputCom>
+            <InputCom disabled {...v} key={i} ></InputCom>
           ))}
         </>
       ),
@@ -169,12 +169,7 @@ const ShiftsTransferHandInForm = props => {
 
   return (
     <div className={'ShiftsTransferHandInForm'}>
-      <div className="fje btnWrapper ">
-        {/* <Button type="primary "onClick={() => showFormModal({action: 'export',  })}  >导出数据</Button> */}
-        <Button type="primary " onClick={() => props.exportData()}>
-          导出数据
-        </Button>
-      </div>
+      
 
       <SmartForm
         // flexRow={4}

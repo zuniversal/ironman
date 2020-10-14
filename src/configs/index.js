@@ -55,6 +55,17 @@ export const teamTypeConfig = [
   },
 ];
 
+export const onDutyTypeConfig = [
+  {
+    value: '0',
+    label: '调度',
+  },
+  {
+    value: '1',
+    label: '值班',
+  },
+];
+
 export const site = province;
 export const city = province;
 

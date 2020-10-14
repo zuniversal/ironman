@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -17,7 +18,7 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
+import { regoins, onDutyTypeConfig,  } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
 const ShiftsManageForm = props => {
@@ -30,14 +31,16 @@ const ShiftsManageForm = props => {
 
   const config = [
     {
+      // formType: 'Search',
       itemProps: {
         label: '班组名称',
         name: 'name',
       },
     },
     {
-      formType: 'Search',
+      // formType: 'Search',
       selectSearch: props.getUser,
+      selectData: props.userList,
       itemProps: {
         label: '组长姓名',
         name: 'team_headman',
@@ -62,7 +65,8 @@ const ShiftsManageForm = props => {
       },
     },
     {
-      // formType: 'Select',
+      formType: 'Search',
+      selectData: onDutyTypeConfig,
       itemProps: {
         label: '类型',
         name: 'type',
@@ -100,6 +104,12 @@ const ShiftsManageForm = props => {
   );
 };
 
-ShiftsManageForm.defaultProps = {};
+ShiftsManageForm.defaultProps = {
+  typeList: [],
+};
+
+ShiftsManageForm.propTypes = {
+  typeList: PropTypes.array,
+};
 
 export default ShiftsManageForm;

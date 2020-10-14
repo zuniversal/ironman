@@ -106,7 +106,7 @@ const ShiftsTransferDetailForm = props => {
       },
     },
     {
-      formType: 'DatePicker',
+      formType: 'MonthPicker',
       itemProps: {
         label: '接班时间',
       },

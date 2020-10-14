@@ -16,4 +16,4 @@ export const editItem = p => put(`OMS/team/${p.d_id}`, p);
 export const removeItem = p => remove(`OMS/team/${p}`, p);
 
 export const syncOA = p => noTipsGet(`OMS/team/oa`, p);
-export const exportData = p => noTipsGet(`OMS/team/export`, p);
+export const exportData = p => noTipsGet(`OMS/team/files`, p);

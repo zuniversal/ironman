@@ -25,6 +25,7 @@ import {
 } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
+import { Link } from 'umi'; //
 
 const ShiftsManageTable = props => {
   console.log(' ShiftsManageTable  ： ', props); //
@@ -34,7 +35,7 @@ const ShiftsManageTable = props => {
     {
       title: '班组名称',
       dataIndex: 'name',
-      d_item: 'name',
+      d_item: 'id',
     },
     {
       title: '组长',
@@ -59,19 +60,25 @@ const ShiftsManageTable = props => {
     },
   ];
 
-  const extra = props => (
-    <>
-      <a onClick={() => {
-        console.log(' propsprops ： ', props,  )// 
-        props.showDetail({
-          action: 'detail',
-          d_id: record[props.rowKey],
-          // [d_item]: record[d_item],
-          // record,
-        })
-      }}>查看排班</a>
-    </>
-  );
+  const extra = (text, record, index, props, ) => {
+    console.log(' text, record, index, props ： ', text, record, index, props,  )// 
+    return (
+      <>
+        {/* <a onClick={() => {
+          console.log(' propsprops ： ', props,  )// 
+          props.showDetail({
+            action: 'detail',
+            d_id: record[props.rowKey],
+            // [d_item]: record[d_item],
+            // record,
+          })
+        }}>查看排班</a> */}
+        <Link to={`/om/shiftsArrangeDetail?team=${record.id}&schedule_date=${'2020-10'}`} className={``}>
+          查看排班
+        </Link>
+      </>
+    )
+  };
 
   return (
     <SmartTable

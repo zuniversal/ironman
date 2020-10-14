@@ -1,12 +1,17 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
-import * as userServices from '@/services/user';
+import * as teamServices from '@/services/shiftsTransfer';
 import moment from 'moment'; //
 
 const namespace = 'shiftsArrange';
 const { createAction, createCRUD } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = [
+  'syncOAAsync', 
+  'getPortraitAsync',
+  'getTeamAsync',
+  'exportDataAsync',
+];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -20,9 +25,9 @@ const formartDataList = data =>
   data.map(v => ({ ...v, title: v.team, start: '2020-10-10' }));
 const formatSearch = data => ({
   ...data,
-  schedule_date: data.schedule_date
-    ? data.schedule_date.format('YYYY-MM')
-    : '2020-10',
+  // schedule_date: data.schedule_date
+  //   ? data.schedule_date.format('YYYY-MM')
+  //   : '2020-10',
 });
 
 export default {
@@ -37,6 +42,10 @@ export default {
     userList: [
       { label: 'zyb', value: 'zyb1' },
       { label: 'zyb1', value: 'zyb11' },
+    ],
+    teamList: [
+      { label: 'xxx', value: 'xxx1' },
+      { label: 'yyy', value: 'yyy1' },
     ],
   },
 
@@ -90,6 +99,13 @@ export default {
         userList: [...payload.list],
       };
     },
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        // ...payload,
+        teamList: [...payload.list],
+      };
+    },
   },
 
   effects: {
@@ -114,8 +130,14 @@ export default {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getUser, payload);
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      // console.log(' exportDataAsync ： ', payload, type,     )//
+      const res = yield call(services.exportData, payload);
+      console.log('  exportDataAsync res ：', res); //
+      // yield put(action({ ...res, payload }));
+    },
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -17,8 +18,8 @@ import {
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import { regoins,  } from '@/configs'; //
+import { formatConfig,  } from '@/utils'; //
 
 const ShiftsArrangeSearchForm = props => {
   console.log(' ShiftsArrangeSearchForm ： ', props); //
@@ -27,7 +28,9 @@ const ShiftsArrangeSearchForm = props => {
 
   const config = [
     {
-      // formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getTeam,
+      selectData: props.teamList,
       itemProps: {
         label: '班组',
         name: 'team',
@@ -77,6 +80,12 @@ const ShiftsArrangeSearchForm = props => {
   );
 };
 
-ShiftsArrangeSearchForm.defaultProps = {};
+ShiftsArrangeSearchForm.defaultProps = {
+  teamList: [],
+};
+
+ShiftsArrangeSearchForm.propTypes = {
+  teamList: PropTypes.array,
+};
 
 export default ShiftsArrangeSearchForm;

@@ -58,7 +58,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  isMountFetch: false,
+  noMountFetch: true,
 })
 class ShiftsArrange extends PureComponent {
   constructor(props) {
@@ -219,8 +219,8 @@ class ShiftsArrange extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
-        getUser={this.props.getUser}
-        userList={this.props.userList}
+        getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
+        teamList={this.props.teamListAsync}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>

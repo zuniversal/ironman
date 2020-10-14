@@ -304,6 +304,7 @@ const SmartForm = (props, state) => {
       radioData = [],
       checkboxData = [],
       selectData = [],
+      selectSearch = () => {},
       opType,
       haveDivider,
       isSearchForm,
@@ -424,7 +425,7 @@ const SmartForm = (props, state) => {
     };
     if (formType === 'Search') {
       selectProps.showArrow = false;
-      selectProps.onSearch = items.selectSearch;
+      selectProps.onSearch = selectSearch;
     }
     const selectCom = (
       <Select {...selectProps}>
