@@ -170,7 +170,16 @@ class ShiftsManage extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add',  })}
+          onClick={() => this.props.showFormModal({ action: 'add', 
+            formComProps: {
+              userList: this.props.userList,
+              // getUser: this.props.getUserAsync,
+              getUser: (params) => {
+                console.log(' params ： ', params,  )// 
+                this.props.dispatch(actions.getUserAsync(params))
+              },
+            } 
+          })}
         >
           新增{TITLE}
         </Button>
@@ -194,6 +203,21 @@ class ShiftsManage extends PureComponent {
     );
   }
 
+  showFormModal = (params,  ) => {
+    console.log(' showFormModalshowFormModal    ： ', params,   )
+    this.props.showFormModal({
+      ...params,
+      formComProps: {
+        userList: this.props.userList,
+        // getUser: this.props.getUserAsync,
+        getUser: (params) => {
+          console.log(' params ： ', params,  )// 
+          this.props.dispatch(actions.getUserAsync(params))
+        },
+      } 
+    })
+    
+  }
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -204,7 +228,8 @@ class ShiftsManage extends PureComponent {
       tdClick: this.props.showFormModal,
       showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
+      // edit: this.props.showFormModal,
+      edit: this.showFormModal,
       remove: this.props.onRemove,
     };
 
@@ -227,6 +252,11 @@ class ShiftsManage extends PureComponent {
       </SmartModal>
     );
   }
+  componentDidMount() {
+    console.log(' ShiftsManage 组件componentDidMount挂载 ： ', this.state, this.props,  )// 
+    this.props.dispatch(actions.getUserAsync())
+  }
+  
 
   render() {
     console.log(

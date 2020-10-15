@@ -72,7 +72,7 @@ const Layouts = props => {
           // return
         }}
         menuItemRender={(item, dom) => {
-          // console.log(' menuItemRender ： ', item, dom, pathname,   )//
+          console.log(' menuItemRender ： ', item, dom, pathname,   )//
 
           // 调用 报错
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
@@ -81,6 +81,10 @@ const Layouts = props => {
             // setTitle(item.name)
             setTimeout(() => setTitle(item.name), 0);
           }
+          if (item.notShowItem) {
+            return null
+          }
+          
 
           return (
             <a

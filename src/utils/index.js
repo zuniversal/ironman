@@ -72,7 +72,7 @@ const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
 
 // 注意 如果 select 的data数组里没有 value 属性会导致选中表单无值
-export const renderSelectOp = (configs, opType = 'option') => {
+export const renderSelectOp = (configs = [], opType = 'option') => {
   const OptionMap = {
     Option,
     OptGroup,
@@ -86,7 +86,7 @@ export const renderSelectOp = (configs, opType = 'option') => {
         return (
           <OptGroup label={v.label} key={v.value}>
             {v.children.map(v => (
-              <Option value={v.value} key={v.value}>
+              <Option value={v.value} key={v.value} title={v.label}>
                 {v.label}
               </Option>
             ))}
@@ -94,13 +94,13 @@ export const renderSelectOp = (configs, opType = 'option') => {
         );
       })
     : configs.map(v => (
-        <Option value={v.value} key={v.value}>
+        <Option value={v.value} key={v.value} title={v.label}>
           {v.label}
         </Option>
       ));
 };
 
-export const renderRadioOp = (configs, opType = 'option') => {
+export const renderRadioOp = (configs = [], opType = 'option') => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   // return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
   const radioItems = configs.map(v => (
@@ -115,7 +115,7 @@ export const renderRadioOp = (configs, opType = 'option') => {
   );
 };
 
-export const renderCheckboxOp = (configs, opType = 'option') => {
+export const renderCheckboxOp = (configs = [], opType = 'option') => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   const CheckboxItems = configs.map(v => (
     <Checkbox key={v.value}>{v.label}</Checkbox>

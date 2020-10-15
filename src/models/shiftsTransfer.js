@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsTransfer';
-import * as userServices from '@/services/user';
+import * as teamServices from '@/services/shiftsTransfer';
+import * as powerStationServices from '@/services/powerStation';
 
 const namespace = 'shiftsTransfer';
 const { createAction, createCRUD } = init(namespace);
@@ -8,7 +9,8 @@ const { createAction, createCRUD } = init(namespace);
 const otherActions = [
   'syncOAAsync',
   'getPortraitAsync',
-  'getUserAsync',
+  'getTeamAsync',
+  'getPowerAsync',
   'exportDataAsync',
 ];
 
@@ -20,6 +22,22 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+export const formatDetail = data => {
+  console.log(' formatDetail ： ', data,   )// 
+  const {work_situation = '', work_ticket = '',  } = data
+  
+  return {
+    ...data,
+    wire: work_situation.split(',')[0], 
+    knife: work_situation.split(',')[1], 
+    lock: work_situation.split(',')[2], 
+    executing: work_ticket.split(',')[0], 
+    finished: work_ticket.split(',')[1], 
+    unExecuted: work_ticket.split(',')[2], 
+  } 
+}
+
+
 export default {
   namespace,
 
@@ -29,9 +47,13 @@ export default {
 
     syncOAData: {},
     portraitData: {},
-    userList: [
-      { label: 'zyb', value: 'zyb1' },
-      { label: 'zyb1', value: 'zyb11' },
+    teamList: [
+      { label: 'xxx', value: 'xxx1' },
+      { label: 'yyy', value: 'yyy1' },
+    ],
+    powerList: [
+      { label: 'power', value: 'power1' },
+      { label: 'power1', value: 'power11' },
     ],
   },
 
@@ -76,11 +98,16 @@ export default {
         ),
       };
     },
-    getUser(state, { payload, type }) {
+    getPower(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        userList: [...payload.list],
+        powerList: [...payload.list],
+      };
+    },
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        teamList: [...payload.list],
       };
     },
   },
@@ -92,7 +119,7 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action(res));
+      yield put(action(formatDetail(res)));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
@@ -112,8 +139,12 @@ export default {
       console.log('  exportDataAsync res ：', res); //
       // yield put(action({ ...res, payload }));
     },
-    *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getUser, payload);
+    *getPowerAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(powerStationServices.getPower, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

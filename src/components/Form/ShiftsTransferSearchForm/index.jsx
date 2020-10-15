@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './style.less';
 import {
   Form,
@@ -40,8 +41,8 @@ const ShiftsTransferSearchForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getUser,
-      selectData: props.userList,
+      selectSearch: props.getPower,
+      selectData: props.powerList,
       itemProps: {
         label: '值班站',
         name: 'type',
@@ -92,6 +93,14 @@ const ShiftsTransferSearchForm = props => {
   );
 };
 
-ShiftsTransferSearchForm.defaultProps = {};
+ShiftsTransferSearchForm.defaultProps = {
+  powerList: [],
+  userList: [],
+};
+
+ShiftsTransferSearchForm.propTypes = {
+  powerList: PropTypes.array,
+  userList: PropTypes.array,
+};
 
 export default ShiftsTransferSearchForm;

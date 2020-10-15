@@ -181,6 +181,8 @@ class ShiftsTransfer extends PureComponent {
         formBtn={this.renderFormBtn}
         getUser={this.props.getUser}
         userList={this.props.userList}
+        getPower={this.props.getPower}
+        powerList={this.props.powerList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsTransferSearchForm>

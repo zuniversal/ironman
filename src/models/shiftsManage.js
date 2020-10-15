@@ -8,6 +8,7 @@ const { createAction, createCRUD } = init(namespace);
 const otherActions = [
   'syncOAAsync',
   'exportDataAsync',
+  'getUserAsync',
   'uploadFileAsync',
   'exportDataAsync',
 ];
@@ -20,6 +21,15 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const formatUserList = (data, ) => {
+  const res = data.map(v => ({ 
+    ...v, label: v.nickname, 
+    value: v.id, 
+  }))
+  console.log(' formatUserList res ： ', res,  )// 
+  return res
+}
+
 export default {
   namespace,
 
@@ -30,8 +40,8 @@ export default {
     syncOAData: {},
     portraitData: {},
     userList: [
-      { label: 'zyb', value: 'zyb1' },
-      { label: 'zyb1', value: 'zyb11' },
+      { label: 'zyb', value: 'value1' },
+      { label: 'zyb1', value: 'value2' },
     ],
   },
 
@@ -80,8 +90,7 @@ export default {
     getUser(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        userList: [...payload.list],
+        userList: formatUserList(payload.list),
       };
     },
   },
@@ -119,7 +128,7 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getUser, payload);
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

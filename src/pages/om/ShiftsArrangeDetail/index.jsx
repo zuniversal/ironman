@@ -66,17 +66,11 @@ class ShiftsArrangeDetail extends PureComponent {
   constructor(props) {
     super(props);
     const items = { title: '班组一', start: '2020-10-08' };
-    const items2 = {
-      title: '部门会议x',
-      start: '2020-10-09',
-      display: 'background',
-    };
     const calendarEvents = [
       items,
       { title: '班组一', start: '2020-10-09' },
       { title: '班组一', start: '2020-10-10' },
       { title: '班组一', start: '2020-10-11' },
-      // items2
     ];
     this.state = {
       show: false,
@@ -93,6 +87,7 @@ class ShiftsArrangeDetail extends PureComponent {
       newTbData: [],
       isQuickArrange: false,
       calendarEvents,
+      calendarEvents: [],  
       selectData: [],
     };
   }
@@ -215,24 +210,29 @@ class ShiftsArrangeDetail extends PureComponent {
     console.log(' formatArrangeData,  , ： ', data, this.state, this.props,    )
     const {selectData,  } = this.state// 
     const {location,  } = this.props// 
-    return selectData.map((v) => ({team: location.query.team, schedule_date: `${nowYear}-${v}`, })) 
+    return selectData.map((v) => ({team: location.query.team, schedule_date: `${location.query.schedule_date}-${v}`, })) 
   }
   handleArrangeOk = params => {
     console.log('    handleArrangeOk ： ', params, this.state, this.props, );
     const res = this.formatArrangeData()
     console.log('  res ：', res,  )// 
     if (res.length) {
-      this.props.dispatch(actions.addItemAsync(res));
+      this.props.dispatch(actions.addItemAsync({teamschedule_list: res, }));
     }
   };
 
+  formatParams = (params,  ) => {
+    return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
+  }
   search = async params => {
     console.log('    search ： ', params);
     const { form } = params;
     try {
       const res = await form.validateFields();
       console.log('  search res await 结果  ：', res); //
-      this.props.dispatch(actions.getItemAsync(res));
+      const searchParams = this.formatParams(res)
+      console.log(' searchParams ： ', searchParams,  )// 
+      this.props.dispatch(actions.getListAsync(searchParams));
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -246,7 +246,8 @@ class ShiftsArrangeDetail extends PureComponent {
         {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
         {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
         {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}> */}
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        {/* <Button type="primary" onClick={() => this.props.search(params)}> */}
+        <Button type="primary" onClick={() => this.search(params)}>
           搜索
         </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
@@ -261,7 +262,7 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
-        getTeam={this.props.getTeamAsync}
+        getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
         teamList={this.props.teamList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
@@ -315,7 +316,7 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <ShiftsArrangeDetailCalendar
         isQuickArrange={isQuickArrange}
-        data={calendarEvents}
+        data={this.props.dataList}
         selectData={selectData}
         onSelectChange={this.onSelectChange}
       ></ShiftsArrangeDetailCalendar>

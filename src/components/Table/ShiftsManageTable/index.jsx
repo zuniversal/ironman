@@ -61,7 +61,7 @@ const ShiftsManageTable = props => {
   ];
 
   const extra = (text, record, index, props, ) => {
-    console.log(' text, record, index, props ： ', text, record, index, props,  )// 
+    // console.log(' text, record, index, props ： ', text, record, index, props,  )// 
     return (
       <>
         {/* <a onClick={() => {
@@ -73,7 +73,7 @@ const ShiftsManageTable = props => {
             // record,
           })
         }}>查看排班</a> */}
-        <Link to={`/om/shiftsArrangeDetail?team=${record.id}&schedule_date=${'2020-10'}`} className={``}>
+        <Link to={`/om/shiftsArrange?team=${record.id}&schedule_date=${'2020-10'}`} className={``}>
           查看排班
         </Link>
       </>

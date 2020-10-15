@@ -70,7 +70,8 @@ export default {
             component: '../pages/om/ShiftsArrange',
           },
           // {
-          //   path: '/om/shiftsArrangeDetail',
+          //   notShowItem: true,  
+          //   path: '/om/shiftsArrange',
           //   // path: '/om/shiftsArrangeDetail',
           //   name: '新增/编辑排班',
           //   // icon: <ScheduleFilled />,

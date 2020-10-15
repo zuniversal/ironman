@@ -15,6 +15,7 @@ import {
   Space,
   InputNumber,
   DatePicker,
+  Divider,
 } from 'antd';
 
 import {
@@ -24,7 +25,15 @@ import {
   MinusOutlined,
 } from '@ant-design/icons';
 import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
+import {
+  mockFormData,
+  renderSelectOp,
+  renderRadioOp,
+  formatConfig,
+  renderCheckboxOp,
+} from '@/utils'; //
 
+const { TextArea } = Input;
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -55,13 +64,16 @@ export const getLabel = (label, key) => {
   const labelMap = {
     rowText: '',
     Input: INPUT_TXT + label,
+    TextArea: INPUT_TXT + label,
     Select: SELECT_TXT + label,
+    Search: SELECT_TXT + label,
     Password: INPUT_TXT + label,
     Cascader: INPUT_TXT + label,
     AutoComplete: INPUT_TXT + label,
     Checkbox: INPUT_TXT + label,
     Radio: SELECT_TXT + label,
     DatePicker: SELECT_TXT + label,
+    MonthPicker: SELECT_TXT + label,
   };
 
   return labelMap[key];
@@ -133,6 +145,12 @@ const DynamicItemForm = props => {
     noLabel,
     init,
     extra,
+    opType,
+    radioData,
+    checkboxData,
+    selectData,
+    CustomCom,
+    LabelCom,
   } = props; //
 
   return (
@@ -186,17 +204,45 @@ const DynamicItemForm = props => {
         };
         console.log(' realComProps ： ', realComProps, formItemProps); //
 
+        const selectProps = {
+          allowClear: true,
+          ...realComProps,
+          filterOption: true,
+          showSearch: true,
+          // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的 
+          optionFilterProp: "children",
+          // onChange: onChange,
+          // onSearch: onSearch,
+          // onSelect: onSelect,
+        };
+        if (formType === 'Search') {
+          console.log(' selectSearch ： ', props.selectSearch,   )// 
+          selectProps.showArrow = false;
+          selectProps.onSearch = props.selectSearch;
+        }
+        const selectCom = (
+          <Select {...selectProps}>
+            {renderSelectOp(selectData, opType)}
+            {/* <Option value="male">male</Option>
+        <Option value="female">female</Option>
+        <Option value="other">other</Option> */}
+          </Select>
+        );
         const formItemMap = {
-          rowText: '',
-          Input: (
-            // <Input allowClear {...realComProps} className={'inlineInput '} />
-            <Input allowClear {...realComProps} />
+          rowText: label,
+          Label: LabelCom,
+          CustomCom: CustomCom,
+          Divider: <Divider />,
+          Input: <Input allowClear {...realComProps} />,
+          TextArea: (
+            <TextArea
+              autoSize={{ minRows: 3, maxRows: 5 }}
+              allowClear
+              {...realComProps}
+            />
           ),
-          Select: (
-            <Select allowClear {...realComProps}>
-              {selectOptions}
-            </Select>
-          ),
+          Select: selectCom,
+          Search: selectCom,
           Password: <Input.Password {...realComProps} />,
           Cascader: <Cascader {...realComProps} />,
           AutoComplete: (
@@ -205,17 +251,19 @@ const DynamicItemForm = props => {
             </AutoComplete>
           ),
           Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
-          Radio: (
-            <Radio.Group>
-              {/* <Radio value="item">item</Radio> */}
-              {radioOptions}
-            </Radio.Group>
-          ),
+          // CheckboxGroup: <Checkbox.Group {...realComProps} />,
+          Checkbox: renderCheckboxOp(checkboxData, opType),
+          Radio: renderRadioOp(radioData, opType),
           DatePicker: <DatePicker {...realComProps} />,
+          MonthPicker: <DatePicker {...realComProps} picker="month" />,
         };
-
+    
         const formItemCom = formItemMap[formType];
-        // console.log(' formItemCom ： ', formItemCom, formItemMap, formType,  )//
+        // console.log(' formItemCom ： ', formItemCom, formItemMap, formType, items, formLabel,  )//
+    
+        if (!formItemCom) {
+          return <div key={Math.random()}>没有匹配</div>;
+        }
 
         const formItemLayout = layoutObj;
         const fieldsData = fields;

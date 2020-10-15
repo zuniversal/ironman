@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
-import * as teamServices from '@/services/shiftsTransfer';
+import * as teamServices from '@/services/shiftsManage';
 import moment from 'moment'; //
 
 const namespace = 'shiftsArrange';
@@ -21,14 +21,33 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-const formartDataList = data =>
-  data.map(v => ({ ...v, title: v.team, start: '2020-10-10' }));
-const formatSearch = data => ({
-  ...data,
-  // schedule_date: data.schedule_date
-  //   ? data.schedule_date.format('YYYY-MM')
-  //   : '2020-10',
-});
+const formartDataList = (data, {id, teamList, }) => {
+  const label = teamList.find(v => v.value == id).label
+  console.log(' label ： ', data, label, id, teamList,  )// 
+  return data.map(v => ({ ...v, title: label, 
+    start: v.schedule_date, 
+    // start: '2020-10-10', 
+  }))
+}
+
+const formatTeamList = (data, ) => {
+  const res = data.map(v => ({ 
+    ...v, label: v.name, 
+    value: v.id, 
+  }))
+  console.log(' formatTeamList res ： ', res,  )// 
+  return res
+}
+
+const formatSearch = (data, ) => {
+  return {
+    ...data,
+    // title: data.team, 
+    // schedule_date: data.schedule_date
+    //   ? data.schedule_date.format('YYYY-MM')
+    //   : '2020-10',
+  }
+};
 
 export default {
   namespace,
@@ -43,9 +62,10 @@ export default {
       { label: 'zyb', value: 'zyb1' },
       { label: 'zyb1', value: 'zyb11' },
     ],
+    searchInfo: {},
     teamList: [
-      { label: 'xxx', value: 'xxx1' },
-      { label: 'yyy', value: 'yyy1' },
+      { label: 'xxx', value: '1' },
+      { label: 'yyy', value: '2' },
     ],
   },
 
@@ -53,12 +73,14 @@ export default {
     getList(state, { payload, type }) {
       console.log(
         ' formartDataList(payload) ： ',
-        formartDataList(payload.list),
+        payload,
+        state,
       ); //
+      const dataList = formartDataList(payload.list, {id: payload.payload.team, teamList: state.teamList, })
       return {
         ...state,
-        // ...payload,
-        dataList: formartDataList(payload.list),
+        searchInfo: payload.payload,
+        dataList,
       };
     },
     getItem(state, { payload, type }) {
@@ -102,8 +124,7 @@ export default {
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        teamList: [...payload.list],
+        teamList: formatTeamList(payload.list),
       };
     },
   },
@@ -112,7 +133,7 @@ export default {
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsyncgetListAsync ： ', payload); //
       const res = yield call(services.getList, formatSearch(payload));
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
@@ -137,7 +158,7 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(teamServices.getList, payload);
+      const res = yield call(teamServices.getList, {keyword: payload, });
       yield put(action({ ...res, payload }));
     },
   },

@@ -192,14 +192,33 @@ class ShiftsArrange extends PureComponent {
 
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
-    const { history } = this.props; //
-    history.push(page);
+    const { history, searchInfo,  } = this.props; //
+    const path = `${page}?team=${searchInfo.team}&schedule_date=${searchInfo.schedule_date}`
+    history.push(path);
   };
+  formatParams = (params,  ) => {
+    return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
+  }
+  search = async params => {
+    console.log('    search ： ', params);
+    const { form } = params;
+    try {
+      const res = await form.validateFields();
+      console.log('  search res await 结果  ：', res); //
+      const searchParams = this.formatParams(res)
+      console.log(' searchParams ： ', searchParams,  )// 
+      this.props.dispatch(actions.getListAsync(searchParams));
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        {/* <Button type="primary" onClick={() => this.props.search(params)}> */}
+        <Button type="primary" onClick={() => this.search(params)}>
           搜索
         </Button>
         <Button
@@ -215,12 +234,12 @@ class ShiftsArrange extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
+    console.log(' renderSearchForm ShiftsArrangeSearchForm ： ', params, this.state, this.props,  )
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
         getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
-        teamList={this.props.teamListAsync}
+        teamList={this.props.teamList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>

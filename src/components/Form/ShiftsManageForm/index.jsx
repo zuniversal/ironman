@@ -31,15 +31,14 @@ const ShiftsManageForm = props => {
 
   const config = [
     {
-      // formType: 'Search',
       itemProps: {
         label: '班组名称',
         name: 'name',
       },
     },
     {
-      // formType: 'Search',
-      selectSearch: props.getUser,
+      formType: 'Search',
+      // selectSearch: props.getUser,
       selectData: props.userList,
       itemProps: {
         label: '组长姓名',
@@ -55,12 +54,15 @@ const ShiftsManageForm = props => {
       },
       comProps: {
         extra: true,
+        formType: 'Search',
+        // selectSearch: props.getUser,
+        selectData: props.userList,
         itemProps: {
-          label: '用户名',
+          label: '组员',
         },
         comProps: {
           className: 'w-320',
-          name: 'member',
+          // name: 'member',
         },
       },
     },
@@ -79,6 +81,9 @@ const ShiftsManageForm = props => {
       },
     },
     {
+      formType: 'Search',
+      // selectSearch: props.getUser,
+      selectData: props.userList,
       itemProps: {
         label: 'leader',
         name: 'leader',
