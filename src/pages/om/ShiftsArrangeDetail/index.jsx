@@ -41,7 +41,7 @@ import PageTitle from '@/components/Widgets/PageTitle'; //
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { getMonthWeekDaysSimple, nowYear, } from '@/utils';
+import { getMonthWeekDaysSimple, nowYear } from '@/utils';
 
 export const TITLE = '排班';
 
@@ -94,10 +94,19 @@ class ShiftsArrangeDetail extends PureComponent {
       newTbData: [],
       isQuickArrange: false,
       calendarEvents,
-      calendarEvents: [],  
+      calendarEvents: [],
       selectData: this.props.dayList,
     };
   }
+  // static getDerivedStateFromProps(nextProps, prevState, ) {
+  //   console.log(' ShiftsArrangeDetail 组件getDerivedStateFromProps 数据变化 ： ', nextProps, prevState,   )//
+  //   if (nextProps.dayList.length !== prevState.selectData.length) {
+  //     return {
+  //       selectData: nextProps.dayList,
+  //     }
+  //   }
+  //   return null//
+  // }
 
   showResultModal = e => {
     console.log('    showResultModal ： ', e);
@@ -213,23 +222,26 @@ class ShiftsArrangeDetail extends PureComponent {
   handleCancel = e => {
     console.log('    handleCancel ： ', e);
   };
-  formatArrangeData = (data,  ) => {
-    console.log(' formatArrangeData,  , ： ', data, this.state, this.props,    )
-    const {selectData,  } = this.state// 
-    const {location,  } = this.props// 
-    return selectData.map((v) => ({team: location.query.team, schedule_date: `${location.query.schedule_date}-${v}`, })) 
-  }
+  formatArrangeData = data => {
+    console.log(' formatArrangeData,  , ： ', data, this.state, this.props);
+    const { selectData } = this.state; //
+    const { location } = this.props; //
+    return selectData.map(v => ({
+      team: location.query.team,
+      schedule_date: `${location.query.schedule_date}-${v}`,
+    }));
+  };
   handleArrangeOk = params => {
-    console.log('    handleArrangeOk ： ', params, this.state, this.props, );
-    const res = this.formatArrangeData()
-    console.log('  res ：', res,  )// 
+    console.log('    handleArrangeOk ： ', params, this.state, this.props);
+    const res = this.formatArrangeData();
+    console.log('  res ：', res); //
     if (res.length) {
-      this.props.dispatch(actions.addItemAsync({teamschedule_list: res, }));
+      this.props.dispatch(actions.addItemAsync({ teamschedule_list: res }));
     }
   };
 
   // formatParams = (params,  ) => {
-  //   return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
+  //   return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), }
   // }
   // search = async params => {
   //   console.log('    search ： ', params);
@@ -238,7 +250,7 @@ class ShiftsArrangeDetail extends PureComponent {
   //     const res = await form.validateFields();
   //     console.log('  search res await 结果  ：', res); //
   //     const searchParams = this.formatParams(res)
-  //     console.log(' searchParams ： ', searchParams,  )// 
+  //     console.log(' searchParams ： ', searchParams,  )//
   //     this.props.dispatch(actions.getListAsync(searchParams));
   //   } catch (error) {
   //     console.log(' error ： ', error); //
@@ -254,7 +266,7 @@ class ShiftsArrangeDetail extends PureComponent {
         {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
         {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}> */}
         <Button type="primary" onClick={() => this.props.search(params)}>
-        {/* <Button type="primary" onClick={() => this.search(params)}> */}
+          {/* <Button type="primary" onClick={() => this.search(params)}> */}
           搜索
         </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
@@ -269,7 +281,7 @@ class ShiftsArrangeDetail extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
-        getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
+        getTeam={params => this.props.dispatch(actions.getTeamAsync(params))}
         teamList={this.props.teamList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
@@ -288,7 +300,7 @@ class ShiftsArrangeDetail extends PureComponent {
     const { selectData } = this.state; //
     const datas = checked
       ? [...selectData, day]
-      : selectData.filter(v => v !== day);
+      : selectData.filter(v => v != day);
     console.log('  datas ：', datas); //
     this.setState({
       selectData: datas,
@@ -300,7 +312,7 @@ class ShiftsArrangeDetail extends PureComponent {
     this.setState({
       isQuickArrange: !this.state.isQuickArrange,
       calendarEvents: calendarEvents.map(v => ({ ...v, isChecked: true })),
-      selectData: [...getMonthWeekDaysSimple],
+      selectData: [...selectData, ...getMonthWeekDaysSimple],
     });
   };
   renderChoiceRadio = params => {

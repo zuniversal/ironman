@@ -21,7 +21,8 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 
-import { actions, 
+import {
+  actions,
   // mapStateToProps
 } from '@/models/shiftsManage'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -38,7 +39,10 @@ const titleMap = {
   down: `文件下载`,
 };
 
-const mapStateToProps = ({ shiftsManage, user, }) => ({...shiftsManage, teamList: user.dataList, });
+const mapStateToProps = ({ shiftsManage, user }) => ({
+  ...shiftsManage,
+  teamList: user.dataList,
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -170,23 +174,27 @@ class ShiftsManage extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add', 
-            formComProps: {
-              userList: this.props.userList,
-              // getUser: this.props.getUserAsync,
-              getUser: (params) => {
-                console.log(' params ： ', params,  )// 
-                this.props.dispatch(actions.getUserAsync(params))
+          onClick={() =>
+            this.props.showFormModal({
+              action: 'add',
+              formComProps: {
+                userList: this.props.userList,
+                // getUser: this.props.getUserAsync,
+                getUser: params => {
+                  console.log(' params ： ', params); //
+                  this.props.dispatch(actions.getUserAsync(params));
+                },
               },
-            } 
-          })}
+            })
+          }
         >
           新增{TITLE}
         </Button>
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
+        <Button type="primary" onClick={() => this.onBatchRemove()}>
           删除
         </Button>
       </div>
@@ -201,27 +209,36 @@ class ShiftsManage extends PureComponent {
         // onFail={this.onFail}
       ></ShiftsManageSearchForm>
     );
-  }
+  };
 
-  showFormModal = (params,  ) => {
-    console.log(' showFormModalshowFormModal    ： ', params,   )
+  showFormModal = params => {
+    console.log(' showFormModalshowFormModal    ： ', params);
     this.props.showFormModal({
       ...params,
       formComProps: {
         userList: this.props.userList,
         // getUser: this.props.getUserAsync,
-        getUser: (params) => {
-          console.log(' params ： ', params,  )// 
-          this.props.dispatch(actions.getUserAsync(params))
+        getUser: params => {
+          console.log(' params ： ', params); //
+          this.props.dispatch(actions.getUserAsync(params));
         },
-      } 
-    })
-    
-  }
-  onRemove = (params,  ) => {
-    console.log(' onRemove    ： ', params,   )
-    this.props.dispatch(actions.removeItemsAsync({id: `${params.record.id}`}))
-  }
+      },
+    });
+  };
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.dispatch(
+      actions.removeItemsAsync({ id: `${params.record.id}` }),
+    );
+  };
+  onBatchRemove = params => {
+    console.log(' onBatchRemove    ： ', params, this.state, this.props);
+    this.props.dispatch(
+      actions.removeItemsAsync({
+        id: `${this.props.selectedRowKeys.join(',')}`,
+      }),
+    );
+  };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
@@ -240,7 +257,7 @@ class ShiftsManage extends PureComponent {
     };
 
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModalx ： ', params, this.state, this.props);
@@ -257,12 +274,15 @@ class ShiftsManage extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
   componentDidMount() {
-    console.log(' ShiftsManage 组件componentDidMount挂载 ： ', this.state, this.props,  )// 
-    this.props.dispatch(actions.getUserAsync())
+    console.log(
+      ' ShiftsManage 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
+    this.props.dispatch(actions.getUserAsync());
   }
-  
 
   render() {
     console.log(

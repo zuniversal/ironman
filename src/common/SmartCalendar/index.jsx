@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, createRef } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Button } from 'antd';
 import FullCalendar from '@fullcalendar/react';
@@ -12,13 +12,15 @@ import '@fullcalendar/common/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 import DragCom from '@/common/SmartCalendar/CalendarDraggable'; //
+import { ANIMATE } from '@/constants'; //
+const { bounceIn } = ANIMATE;
 
-export const CalendarDraggable = DragCom
+export const CalendarDraggable = DragCom;
 
-export const formatDay = data => `${data.dayNumberText}`.split('日')[0]
-export const dayCellContent = data => <div className={`dayText`}>
-  {formatDay(data)}
-</div>
+export const formatDay = data => `${data.dayNumberText}`.split('日')[0];
+export const dayCellContent = data => (
+  <div className={`dayText`}>{formatDay(data)}</div>
+);
 
 const toolBar = {
   header: {
@@ -42,9 +44,9 @@ const toolBar = {
     week: '周',
     day: '天',
   },
-}
+};
 
-const calendarRef = React.createRef()
+const calendarRef = React.createRef();
 const SmartCalendar = React.forwardRef((props, ref) => {
   console.log(' SmartCalendar   props, ,   ： ', props);
 
@@ -71,10 +73,9 @@ const SmartCalendar = React.forwardRef((props, ref) => {
 
   return (
     <div className="smartCalendar ">
-
       {/* <Button onClick={() => () => console.log(' handleCancel   ,   ： ', calendarRef  )}>取消</Button> */}
-      <FullCalendar 
-        ref={props.calendarRef} 
+      <FullCalendar
+        ref={props.calendarRef}
         // {...toolBar}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -93,7 +94,7 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         // showNonCurrentDates={false}
         dayCellContent={dayCellContent}
         dayCellClassNames={'dayCellClassNames'}
-        eventClassNames={'eventClassNames'}
+        eventClassNames={`eventClassNames ${bounceIn}`}
         slotLabelClassNames={'slotLabelClassNames'}
         moreLinkClassNames={'moreLinkClassNames'}
         dayHeaderClassNames={'dayHeaderClassNames'}
@@ -106,7 +107,6 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         // events={events}
         {...props}
       />
-
     </div>
   );
 });
@@ -120,6 +120,5 @@ SmartCalendar.propTypes = {
   dayMaxEvents: PropTypes.number,
   eventsSet: PropTypes.func,
 };
-
 
 export default SmartCalendar;
