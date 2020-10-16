@@ -59,6 +59,7 @@ const titleMap = {
   actions,
   titleMap,
   noMountFetch: true,
+  isCheckQuery: true,
 })
 class ShiftsArrange extends PureComponent {
   constructor(props) {

@@ -413,9 +413,9 @@ export default ({
       if (!noMountFetch) {
         this.getList();
       }
-      // if (!isCheckQuery) {
+      if (isCheckQuery) {
         this.checkQuery();
-      // }
+      }// // 
     }
 
     render() {

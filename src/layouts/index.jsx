@@ -72,7 +72,7 @@ const Layouts = props => {
           // return
         }}
         menuItemRender={(item, dom) => {
-          console.log(' menuItemRender ： ', item, dom, pathname,   )//
+          //console.log(' menuItemRender ： ', item, dom, pathname,   )
 
           // 调用 报错
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
@@ -95,7 +95,7 @@ const Layouts = props => {
                 // const com = React.lazy(() => import(item.component))
                 // console.log(' com ： ', com, comRef.current, )//
                 // comRef.current = com//
-                setPathname(item.path || '/welcome');
+                // setPathname(item.path || '/welcome');
                 history.push(item.path);
               }}
             >

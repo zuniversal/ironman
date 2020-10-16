@@ -74,8 +74,8 @@ const ShiftsArrangeDetailCalendar = props => {
         eventsSet={eventsSet}
         eventDrop={eventDrop}
         dayCellContent={
-          (params) => { 
-            // console.log(' onChange    params ： ', params, formatDay(params), params.date,  )// 
+          (params) => { // 
+            console.log(' onChange    params ： ', params, formatDay(params), params.date,  )// 
             return <div className={`fsb`}  >
               {dayCellContent(params)}
               <Checkbox

@@ -23,8 +23,8 @@ export const mapStateToProps = state => state[namespace];
 
 const formartDataList = (data, {id, teamList, }) => {
   const label = teamList.find(v => v.value == id).label
-  console.log(' label ： ', data, label, id, teamList,  )// 
-  return data.map(v => ({ ...v, title: label, 
+  console.log(' label ： ,', data, label, id, teamList,  )// 
+  return data.map(v => ({ ...v, title: v.team, 
     start: v.schedule_date, 
     // start: '2020-10-10', 
   }))

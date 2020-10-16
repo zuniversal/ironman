@@ -61,6 +61,7 @@ const titleMap = {
   actions,
   titleMap,
   noMountFetch: true,
+  isCheckQuery: true,
 })
 class ShiftsArrangeDetail extends PureComponent {
   constructor(props) {
@@ -72,6 +73,12 @@ class ShiftsArrangeDetail extends PureComponent {
       { title: '班组一', start: '2020-10-10' },
       { title: '班组一', start: '2020-10-11' },
     ];
+    console.log(
+      ' %c ShiftsArrangeDetail 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    );
     this.state = {
       show: false,
       showResultModal: false,
@@ -341,12 +348,6 @@ class ShiftsArrangeDetail extends PureComponent {
   };
 
   render() {
-    console.log(
-      ' %c ShiftsArrangeDetail 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
 
     return (
       <div className="shiftsArrangeDetail">

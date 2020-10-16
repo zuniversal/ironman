@@ -140,7 +140,7 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(powerStationServices.getPower, payload);
+      const res = yield call(powerStationServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
