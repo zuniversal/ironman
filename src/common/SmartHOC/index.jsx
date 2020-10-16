@@ -362,7 +362,9 @@ export default ({
       if (location) {
         const { query } = location;
         console.log('    checkQuery ： ', e, this.state, this.props, query);
-        dispatch(actions.getListAsync(query));
+        if (Object.keys(query).length) {
+          dispatch(actions.getListAsync(query));
+        }
       }
     };
 
@@ -374,8 +376,12 @@ export default ({
         action,
         ...this.state.formComProps,
         // init: this.state.editData,
-        init: this.props.itemDetail,
+        // init: {...this.props.itemDetail, member: [1]},
+        // init: this.props.itemDetail,
       };
+      if (action !== 'add') {
+        formComProps.init = this.props.itemDetail 
+      }
 
       return (
         <SmartFormModal

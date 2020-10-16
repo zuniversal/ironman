@@ -52,10 +52,10 @@ const ShiftsTransferHandInForm = props => {
       },
     },
     {
-      formType: 'DatePicker',
+      // formType: 'DatePicker',
       itemProps: {
         label: '1.接班时间',
-        name: 'created_time',
+        name: 'handover_time',
       },
     },
     {

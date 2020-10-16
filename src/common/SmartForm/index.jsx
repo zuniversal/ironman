@@ -420,8 +420,6 @@ const SmartForm = (props, state) => {
       ...realComProps,
       filterOption: true,
       showSearch: true,
-      // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的 
-	    optionFilterProp: "children",
       // onChange: onChange,
       // onSearch: onSearch,
       // onSelect: onSelect,
@@ -429,7 +427,11 @@ const SmartForm = (props, state) => {
     if (formType === 'Search') {
       console.log(' selectSearch ： ', item.selectSearch,   )// 
       selectProps.showArrow = false;
-      selectProps.onSearch = item.selectSearch;
+      if (item.selectSearch) {
+        // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的 
+        selectProps.optionFilterProp = "children";
+        selectProps.onSearch = item.selectSearch;
+      }
     }
     const selectCom = (
       <Select {...selectProps}>

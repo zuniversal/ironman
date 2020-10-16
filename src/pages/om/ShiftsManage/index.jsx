@@ -203,7 +203,7 @@ class ShiftsManage extends PureComponent {
     );
   }
 
-  showFormModal = (params,  ) => {
+  onRemove = (params,  ) => {
     console.log(' showFormModalshowFormModal    ： ', params,   )
     this.props.showFormModal({
       ...params,
@@ -218,6 +218,11 @@ class ShiftsManage extends PureComponent {
     })
     
   }
+  onRemove = (params,  ) => {
+    console.log(' onRemove    ： ', params,   )
+    // this.props.dispatch(actions.removeItemAsync({id: [params]}))
+  }
+
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -230,7 +235,8 @@ class ShiftsManage extends PureComponent {
       dataSource: this.props.dataList,
       // edit: this.props.showFormModal,
       edit: this.showFormModal,
-      remove: this.props.onRemove,
+      // remove: this.props.onRemove,
+      remove: this.onRemove,
     };
 
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;

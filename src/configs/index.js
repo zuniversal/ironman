@@ -57,11 +57,11 @@ export const teamTypeConfig = [
 
 export const onDutyTypeConfig = [
   {
-    value: '0',
+    value: 0,
     label: '调度',
   },
   {
-    value: '1',
+    value: 1,
     label: '值班',
   },
 ];

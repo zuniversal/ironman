@@ -49,7 +49,7 @@ const ShiftsTransferTable = props => {
     },
     {
       title: '创建时间',
-      dataIndex: 'created_time',
+      dataIndex: 'handover_time',
     },
   ];
 

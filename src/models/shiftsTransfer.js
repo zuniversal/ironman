@@ -61,7 +61,6 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
         dataList: [...payload.list],
       };
     },
@@ -69,8 +68,7 @@ export default {
       console.log(' getItemgetItem ： ', payload); //
       return {
         ...state,
-        // ...payload,
-        itemDetail: payload.list,
+        itemDetail: formatDetail(payload.bean, ),
       };
     },
     addItem(state, { payload, type }) {
@@ -119,7 +117,7 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action(formatDetail(res)));
+      yield put(action(res));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
