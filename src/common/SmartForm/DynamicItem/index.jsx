@@ -216,9 +216,8 @@ const DynamicItemForm = props => {
         if (formType === 'Search') {
           console.log(' selectSearch ： ', props.selectSearch,   )// 
           selectProps.showArrow = false;
+          selectProps.optionFilterProp = "children";
           if (props.selectSearch) {
-            // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的 
-            selectProps.optionFilterProp = "children";
             selectProps.onSearch = props.selectSearch;
           }
         }

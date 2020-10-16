@@ -74,7 +74,7 @@ class ShiftsArrangeDetail extends PureComponent {
       { title: '班组一', start: '2020-10-11' },
     ];
     console.log(
-      ' %c ShiftsArrangeDetail 组件 this.state, this.props ： ',
+      ' %c ShiftsArrangeDetail 组件 初始化 ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
@@ -95,7 +95,7 @@ class ShiftsArrangeDetail extends PureComponent {
       isQuickArrange: false,
       calendarEvents,
       calendarEvents: [],  
-      selectData: [],
+      selectData: this.props.dayList,
     };
   }
 
@@ -228,22 +228,22 @@ class ShiftsArrangeDetail extends PureComponent {
     }
   };
 
-  formatParams = (params,  ) => {
-    return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
-  }
-  search = async params => {
-    console.log('    search ： ', params);
-    const { form } = params;
-    try {
-      const res = await form.validateFields();
-      console.log('  search res await 结果  ：', res); //
-      const searchParams = this.formatParams(res)
-      console.log(' searchParams ： ', searchParams,  )// 
-      this.props.dispatch(actions.getListAsync(searchParams));
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-  };
+  // formatParams = (params,  ) => {
+  //   return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
+  // }
+  // search = async params => {
+  //   console.log('    search ： ', params);
+  //   const { form } = params;
+  //   try {
+  //     const res = await form.validateFields();
+  //     console.log('  search res await 结果  ：', res); //
+  //     const searchParams = this.formatParams(res)
+  //     console.log(' searchParams ： ', searchParams,  )// 
+  //     this.props.dispatch(actions.getListAsync(searchParams));
+  //   } catch (error) {
+  //     console.log(' error ： ', error); //
+  //   }
+  // };
 
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params, actions); //
@@ -253,8 +253,8 @@ class ShiftsArrangeDetail extends PureComponent {
         {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
         {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
         {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}> */}
-        {/* <Button type="primary" onClick={() => this.props.search(params)}> */}
-        <Button type="primary" onClick={() => this.search(params)}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+        {/* <Button type="primary" onClick={() => this.search(params)}> */}
           搜索
         </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
@@ -348,6 +348,12 @@ class ShiftsArrangeDetail extends PureComponent {
   };
 
   render() {
+    console.log(
+      ' %c ShiftsArrangeDetail 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    );
 
     return (
       <div className="shiftsArrangeDetail">

@@ -39,6 +39,7 @@ import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
+import {tips, } from '@/utils';
 import { connect } from 'umi';
 
 export const TITLE = '排班';
@@ -206,6 +207,10 @@ class ShiftsArrange extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  search res await 结果  ：', res); //
+      if (!res.schedule_date) {
+        tips('搜索月份不能为空！', 1)     
+        return  
+      }
       const searchParams = this.formatParams(res)
       console.log(' searchParams ： ', searchParams,  )// 
       this.props.dispatch(actions.getListAsync(searchParams));

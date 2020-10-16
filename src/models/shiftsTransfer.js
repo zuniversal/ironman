@@ -22,6 +22,25 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+export const formatTeamList = (data, ) => {
+  const res = data.map(v => ({ 
+    ...v, label: v.name, 
+    value: v.id, 
+  }))
+  console.log(' formatTeamList res ： ', res,  )// 
+  return res
+}
+
+export const formatPowerList = (data, ) => {
+  const res = data.map(v => ({ 
+    ...v, label: v.name, 
+    value: v.id, 
+  }))
+  console.log(' formatPowerList res ： ', res,  )// 
+  return res
+}
+
+
 export const formatDetail = data => {
   console.log(' formatDetail ： ', data,   )// 
   const {work_situation = '', work_ticket = '',  } = data
@@ -48,12 +67,12 @@ export default {
     syncOAData: {},
     portraitData: {},
     teamList: [
-      { label: 'xxx', value: 'xxx1' },
-      { label: 'yyy', value: 'yyy1' },
+      // { label: 'xxx', value: 'xxx1' },
+      // { label: 'yyy', value: 'yyy1' },
     ],
     powerList: [
-      { label: 'power', value: 'power1' },
-      { label: 'power1', value: 'power11' },
+      // { label: 'power', value: 'power1' },
+      // { label: 'power1', value: 'power11' },
     ],
   },
 
@@ -99,13 +118,13 @@ export default {
     getPower(state, { payload, type }) {
       return {
         ...state,
-        powerList: [...payload.list],
+        powerList: formatPowerList(payload.list, ),
       };
     },
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: [...payload.list],
+        teamList: formatTeamList(payload.list, ),
       };
     },
   },

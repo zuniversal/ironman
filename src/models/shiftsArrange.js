@@ -26,6 +26,7 @@ const formartDataList = (data, {id, teamList, }) => {
   console.log(' label ： ,', data, label, id, teamList,  )// 
   return data.map(v => ({ ...v, title: v.team, 
     start: v.schedule_date, 
+    days: v.schedule_date.split('-')[2],
     // start: '2020-10-10', 
   }))
 }
@@ -42,6 +43,7 @@ const formatTeamList = (data, ) => {
 const formatSearch = (data, ) => {
   return {
     ...data,
+    page_size: 40,
     // title: data.team, 
     // schedule_date: data.schedule_date
     //   ? data.schedule_date.format('YYYY-MM')
@@ -59,14 +61,15 @@ export default {
     syncOAData: {},
     portraitData: {},
     userList: [
-      { label: 'zyb', value: 'zyb1' },
-      { label: 'zyb1', value: 'zyb11' },
+      // { label: 'zyb', value: 'zyb1' },
+      // { label: 'zyb1', value: 'zyb11' },
     ],
     searchInfo: {},
     teamList: [
-      { label: 'xxx', value: '1' },
-      { label: 'yyy', value: '2' },
+      // { label: 'xxx', value: '1' },
+      // { label: 'yyy', value: '2' },
     ],
+    dayList: [],
   },
 
   reducers: {
@@ -81,6 +84,7 @@ export default {
         ...state,
         searchInfo: payload.payload,
         dataList,
+        dayList: dataList.map((v) => v.days),
       };
     },
     getItem(state, { payload, type }) {
@@ -158,6 +162,7 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
+      console.log(' getTeamAsync ： ', payload,   )// 
       const res = yield call(teamServices.getList, {keyword: payload, });
       yield put(action({ ...res, payload }));
     },

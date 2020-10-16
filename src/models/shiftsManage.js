@@ -78,12 +78,20 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
+      console.log(' removeItem 修改  ： ', state, payload, type, this); //
       return {
         ...state,
-        // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+        dataList: state.dataList.filter((v) => v.id != payload.payload.d_id)
+      };
+    },
+    removeItems(state, { payload, type }) {
+      console.log(' removeItems 修改  ： ', state, payload, type, this); //
+      const removeList = payload.payload.id.split(',')
+      console.log(' removeList ： ', removeList,  )// 
+      return {
+        ...state,
         dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
+          removeList.every(item => v.id != item),
         ),
       };
     },
@@ -119,6 +127,12 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemAsync  payload ： ', payload); //
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *removeItemsAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemsAsync ： ', payload, type); //
+      const res = yield call(services.removeItems, payload);
+      // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {

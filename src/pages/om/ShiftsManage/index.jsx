@@ -203,7 +203,7 @@ class ShiftsManage extends PureComponent {
     );
   }
 
-  onRemove = (params,  ) => {
+  showFormModal = (params,  ) => {
     console.log(' showFormModalshowFormModal    ： ', params,   )
     this.props.showFormModal({
       ...params,
@@ -220,7 +220,7 @@ class ShiftsManage extends PureComponent {
   }
   onRemove = (params,  ) => {
     console.log(' onRemove    ： ', params,   )
-    // this.props.dispatch(actions.removeItemAsync({id: [params]}))
+    this.props.dispatch(actions.removeItemsAsync({id: `${params.record.id}`}))
   }
 
   renderTable = params => {

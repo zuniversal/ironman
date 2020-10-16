@@ -82,7 +82,7 @@ const ShiftsManageForm = props => {
     },
     {
       formType: 'Search',
-      // selectSearch: props.getUser,
+      selectSearch: props.getUser,
       selectData: props.userList,
       itemProps: {
         label: 'leader',
