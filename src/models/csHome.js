@@ -24,6 +24,8 @@ export default {
 
     syncOAData: [],
     portraitData: {},
+    timeType: '',
+    dateRange: null,
   },
 
   reducers: {

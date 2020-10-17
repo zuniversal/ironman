@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
 
@@ -8,13 +9,24 @@ const CsHomeMonitorVideo = props => {
   console.log(' CsHomeMonitorVideo   props, ,   ： ', props);
   return (
     <div className="csHomeMonitorVideo ">
-      {props.config.map((v, i) => (
-        <div {...v} key={i}>
-          <InputCom {...v} key={i}></InputCom>
-        </div>
+      <div className="row fsb">
+        <div className={'monitorTitle'}>监控视频</div>
+        <div className={'seeMore'}>查看更多</div>
+      </div>
+      {/* {props.config.map((v, i) => ( */}
+      {[0, 1].map((v, i) => (
+        <div className={`monitorVideo ${i === 0 ? 'first' : ''}`} key={i}></div>
       ))}
     </div>
   );
+};
+
+CsHomeMonitorVideo.defaultProps = {
+  config: [],
+};
+
+CsHomeMonitorVideo.propTypes = {
+  config: PropTypes.array,
 };
 
 export default CsHomeMonitorVideo;

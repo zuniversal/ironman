@@ -26,7 +26,7 @@ const CsHomeStatEcharts = props => {
   return (
     <div className="">
       <div className="fsb csHomeStatEcharts">
-        <div className={'title'}>电站实时信息</div>
+        <div className={'homeTitle'}>电站实时信息</div>
         <TimeChoice></TimeChoice>
       </div>
 

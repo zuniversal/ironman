@@ -1,20 +1,25 @@
-.inputFormWrapper {
+.csHomeMonitorVideo {
   display: flex;
-  // justify-content: center;
-  align-items: center;
-  div:not(:last-child) {
-    margin-right: 10px;
-  }
-  .inputFormItem {
-    margin-bottom: 0;
-    .inputCom {
-      text-align: center;
+  flex-direction: column;
+  flex: 1;
+  .row {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    .monitorTitle {
+      color: #333333;
+    }
+    .seeMore {
+      color: #00b460;
     }
   }
-  .left {
-    width: 50px;
-    text-align: right;
-  }
-  .right {
+  .monitorVideo {
+    flex: 1;
+    background: #000000;
+    opacity: 0.4;
+    border-radius: 5px;
+    &.first {
+      margin-bottom: 10px;
+    }
   }
 }

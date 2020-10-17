@@ -34,9 +34,10 @@ import DropDownBtn from '@/common/DropDownBtn'; //
 import CsHomeMonitor from '@/components/Widgets/CsHomeMonitor';
 import CsHomeVideo from '@/components/Widgets/CsHomeVideo';
 import CsHomeStatBox from '@/components/Widgets/CsHomeStatBox';
+import CsHomeMonitorVideo from '@/components/Widgets/CsHomeMonitorVideo';
 import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 
-import { actions, mapStateToProps } from '@/models/client'; //
+import { actions, mapStateToProps } from '@/models/csHome'; //
 import { connect } from 'umi';
 
 export const TITLE = '排班';
@@ -137,10 +138,20 @@ class CsHome extends PureComponent {
     const { show, title, action, titleMap } = this.state; //
 
     return (
-      <div className="df">
+      <div className="monitorWrapper df">
         <CsHomeMonitor></CsHomeMonitor>
         <CsHomeVideo></CsHomeVideo>
-        <CsHomeMonitor></CsHomeMonitor>
+        <CsHomeMonitorVideo></CsHomeMonitorVideo>
+      </div>
+    );
+  };
+  renderSelectForm = params => {
+    console.log(' renderSelectForm ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+    return (
+      <div className="selectWrapper">
+        <div className="label">站点</div>
+        <SearchForm suffixIcon={null}></SearchForm>
       </div>
     );
   };
@@ -173,6 +184,7 @@ class CsHome extends PureComponent {
     return (
       <div className="csHome">
         {this.renderCsHomeStatBox()}
+        {this.renderSelectForm()}
         {this.renderCsHomeMonitor()}
         {this.renderCsHomeStatEcharts()}
         {this.renderCsHomeTableCom()}

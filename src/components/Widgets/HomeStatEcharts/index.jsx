@@ -67,6 +67,7 @@ const StatTabPanes = props => {
           <TabPane tab={v.tab} key={i}>
             <Row gutter={24}>
               <Col span={16}>
+                <div className="homeTitle">趋势</div>
                 <SmartEcharts
                   data={[]}
                   type="bar"
@@ -77,7 +78,7 @@ const StatTabPanes = props => {
                 ></SmartEcharts>
               </Col>
               <Col span={8}>
-                <div className="title">小组排名</div>
+                <div className="homeTitle">小组排名</div>
                 <HomeGroupRank></HomeGroupRank>
               </Col>
             </Row>

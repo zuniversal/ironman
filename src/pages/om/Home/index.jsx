@@ -137,13 +137,13 @@ class Home extends PureComponent {
     const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatBox></HomeStatBox>;
-  }
+  };
   renderHomeStatEcharts = params => {
     console.log(' renderHomeStatEcharts ： ', params, this.state, this.props);
     const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatEcharts></HomeStatEcharts>;
-  }
+  };
   renderHomeInspectMissionTable = params => {
     console.log(
       ' renderHomeInspectMissionTable ： ',
@@ -154,11 +154,11 @@ class Home extends PureComponent {
     const { show, title, action, titleMap } = this.state; //
     return (
       <div className="">
-        <div className="title">待巡检任务</div>
+        <div className="homeTitle">待巡检任务</div>
         <HomeInspectMissionTable></HomeInspectMissionTable>
       </div>
     );
-  }
+  };
   renderHomeWorkOrderTable = params => {
     console.log(
       ' renderHomeWorkOrderTable ： ',
@@ -169,11 +169,11 @@ class Home extends PureComponent {
     const { show, title, action, titleMap } = this.state; //
     return (
       <div className="">
-        <div className="title">待处理工单</div>
+        <div className="homeTitle">待处理工单</div>
         <HomeWorkOrderTable></HomeWorkOrderTable>
       </div>
     );
-  }
+  };
 
   getPageTitle = e => {
     console.log('    getPageTitle ： ', e, this.state, this.props);

@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
-import { Form, Input } from 'antd';
+import { Form, Divider } from 'antd';
 import Icon from '@/components/Widgets/Icons'; //
 
 const DeviceStatus = props => {
   console.log(' DeviceStatus   props, ,   ： ', props);
   return (
-    <div className="deviceStatus ">
+    <div className="deviceInfo ">
       <div className="left">
         <div className="text">温度</div>
         <div className="val">26.4℃</div>
@@ -24,8 +24,9 @@ const CsHomeMonitor = props => {
   return (
     <div className="csHomeMonitor ">
       <DeviceStatus></DeviceStatus>
-      <div className="center">img</div>
-      <div className="right"></div>
+      <Divider></Divider>
+      <DeviceStatus></DeviceStatus>
+      <div className="deviceStatus">设备状态</div>
     </div>
   );
 };
