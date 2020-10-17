@@ -31,13 +31,13 @@ const actionMap = {
   detail: 'getItemAsync',
 };
 
-
 export default ({
   actions,
   modalForm,
   titleMap,
   noMountFetch,
   isCheckQuery,
+  noCreateActions,
 }) => Com =>
   class extends React.Component {
     constructor(props) {
@@ -63,25 +63,34 @@ export default ({
         removeTitle: '',
       };
       // this.onRemove = this.removeAction
-      // const createActions = params => {
-      //   const actionObj = {}
-      //   Object.keys(actions).forEach((v) => actionObj[key] = this.props.dispatch(actions[]));
-      //   return actions 
-      // };
+      this.actionProps = {};
+      if (!noCreateActions) {
+        const createActions = params => {
+          const actionObj = {};
+          Object.keys(actions).forEach(
+            key =>
+              (actionObj[key] = params =>
+                this.props.dispatch(actions[key](params))),
+          );
+          console.log('  actionObj ：', actionObj); //
+          return actionObj;
+        };
+        this.actionProps = createActions();
+      }
     }
     getAction = key => {
-      const action = actions[(actionMap[key] ? actionMap[key] : '')]
-      return action
-    }
+      const action = actions[actionMap[key] ? actionMap[key] : ''];
+      return action;
+    };
     dispatchAction = (action, params) => {
-      const actionFn = this.getAction(action)
-      console.log('  dispatchAction ：', action,  )//
+      const actionFn = this.getAction(action);
+      console.log('  dispatchAction ：', action); //
       if (actionFn) {
         this.props.dispatch(actionFn(params));
       } else {
-        tips('未匹配到相应的action方法！')
+        tips('未匹配到相应的action方法！');
       }
-    }
+    };
 
     onRemove2 = props => {
       console.log(' onRemove2 ： ', props, this.state, this.props);
@@ -100,7 +109,7 @@ export default ({
         //   // props.record,
         //   // record,
         // ]),
-        actions.removeItemAsync(props.record.d_id,),
+        actions.removeItemAsync(props.record.d_id),
       );
     };
     onBatchRemove2 = props => {
@@ -199,7 +208,7 @@ export default ({
     };
 
     showFormModal = params => {
-      const { action, formComProps, formModalProps, } = params;
+      const { action, formComProps, formModalProps } = params;
       const actionFn = this.getAction(action);
       console.log(
         '    showFormModal ： ',
@@ -226,7 +235,7 @@ export default ({
       if (action !== 'add') {
         // const { dispatch } = this.props; //
         // dispatch(actionFn(params));
-        this.dispatchAction(action, params)
+        this.dispatchAction(action, params);
       }
 
       this.setState({
@@ -264,7 +273,7 @@ export default ({
         actionFn = actions.editItemAsync;
       }
 
-      const { form, init,  } = props; //
+      const { form, init } = props; //
 
       try {
         const res = await form.validateFields();
@@ -274,7 +283,7 @@ export default ({
           // actionFn({
           //   data: res,
           // }),
-          actionFn({...init, ...res}),
+          actionFn({ ...init, ...res }),
         );
         // const {addItemAsync,  } = this.props//
         //addItemAsync(res)
@@ -328,7 +337,13 @@ export default ({
       tips('模拟文件下载成功！');
     };
     exportData = params => {
-      console.log(' exportData,  , ： ', params, actions, this.state, this.props, );
+      console.log(
+        ' exportData,  , ： ',
+        params,
+        actions,
+        this.state,
+        this.props,
+      );
       const { dispatch } = this.props; //
       dispatch(actions.exportDataAsync({}));
       tips('模拟导出成功！');
@@ -358,7 +373,7 @@ export default ({
       dispatch(actions.getListAsync(params));
     };
     checkQuery = e => {
-      const { location, dispatch, } = this.props; //
+      const { location, dispatch } = this.props; //
       if (location) {
         const { query } = location;
         console.log('    checkQuery ： ', e, this.state, this.props, query);
@@ -370,7 +385,7 @@ export default ({
 
     renderSmartFormModal = params => {
       console.log(' renderSmartFormModal ： ', params, this.state, this.props);
-      const { action, isShow, formModalProps,  } = this.state; //
+      const { action, isShow, formModalProps } = this.state; //
 
       const formComProps = {
         action,
@@ -380,7 +395,7 @@ export default ({
         // init: this.props.itemDetail,
       };
       if (action !== 'add') {
-        formComProps.init = this.props.itemDetail 
+        formComProps.init = this.props.itemDetail;
       }
 
       return (
@@ -398,7 +413,7 @@ export default ({
           // FormCom={this.renderModalForm()}
           FormCom={modalForm}
           top={this.renderModalTop()}
-          {...formModalProps} 
+          {...formModalProps}
 
           // onSubmit={this.onSubmit}
           // onFail={this.onFail}
@@ -421,7 +436,7 @@ export default ({
       }
       if (isCheckQuery) {
         this.checkQuery();
-      }// // 
+      } // //
     }
 
     render() {
@@ -437,10 +452,12 @@ export default ({
           <Com
             {...this.state}
             {...this.props}
+            {...this.actionProps}
             onRemove={this.onRemove2}
             onBatchRemove={this.onBatchRemove2}
             // onRemove={this.onRemove}
             // onBatchRemove={this.onBatchRemove}
+
             onSelectChange={this.onSelectChange}
             showFormModal={this.showFormModal}
             syncOAAsync={this.syncOAAsync}

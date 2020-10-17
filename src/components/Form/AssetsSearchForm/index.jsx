@@ -22,7 +22,9 @@ import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
-    formType: 'Select',
+    formType: 'Search',
+    selectSearch: props.getList,
+    selectData: props.dataList,
     itemProps: {
       label: '客户',
       name: 'customer',
@@ -30,7 +32,9 @@ export const config = [
     comProps: {},
   },
   {
-    formType: 'Select',
+    formType: 'Search',
+    selectSearch: props.getList,
+    selectData: props.dataList,
     itemProps: {
       label: '电站',
       name: 'station',

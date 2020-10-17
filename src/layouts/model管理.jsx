@@ -40,11 +40,21 @@ const Layouts = props => {
   const Com = comRef.current;
   const { children, location, loading } = props; //
   const path = location.pathname;
-  // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
-  console.log(' settings, pathname ： ', settings, pathname, props); //
+  // const {pathname,  } = props
+  console.log(
+    ' settings, pathname ： ',
+    settings,
+    pathname,
+    props,
+    location,
+    history,
+  ); //
   // return <div >{ props.children }</div>
 
+  // setTimeout(() => {
+  //   setPathname('/om/shiftsArrange');
+  // }, 4000)
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);
@@ -55,7 +65,7 @@ const Layouts = props => {
     const { pathname } = location;
     const noTitlePath = ['/om/home', '/om/shiftsArrangeDetail'];
     const isInclude = noTitlePath.every(v => v !== pathname);
-    console.log(' isInclude some  ： ', props, isInclude, pathname);
+    console.log(' isInclude some  ： ', props, isInclude);
     return isInclude;
   };
   const isShowTitle = getShowTitle(props);
@@ -65,7 +75,7 @@ const Layouts = props => {
       <ProLayout
         {...defaultProps}
         location={{
-          pathname: path,
+          pathname,
         }}
         onPageChange={e => {
           console.log(' onPageChange 切换页面 ： ', e); //
@@ -78,22 +88,14 @@ const Layouts = props => {
           // return
         }}
         menuItemRender={(item, dom) => {
-          //console.log(' menuItemRender ： ', item, dom, pathname,   )
+          // console.log(' menuItemRender ： ', item, dom, pathname, item.path === pathname  )
 
           // 调用 报错
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
           // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
-          if (item.path === path) {
-            console.log(
-              ' 路径相同 ： ',
-              item,
-              item.path === path,
-              item.path,
-              path,
-            ); //
+          if (item.path === pathname) {
             // setTitle(item.name)
-            props.dispatch(actions.setTitle(item.name));
-            // setTimeout(() => setTitle(item.name), 0);
+            setTimeout(() => setTitle(item.name), 0);
           }
           if (item.notShowItem) {
             return null;
@@ -101,17 +103,19 @@ const Layouts = props => {
 
           return (
             <a
-              className={'navItem'}
+              className={`navItem ${item.hide ? 'hide' : ''}`}
               onClick={() => {
                 console.log(' onClickonClick ： ', item, pathname); //
                 // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
                 // const com = React.lazy(() => import(item.component))
                 // console.log(' com ： ', com, comRef.current, )//
                 // comRef.current = com//
-                // setPathname(item.path || '/welcome');
-                // setTitle(item.name)
-                props.dispatch(actions.setTitle(item.name));
-                history.push(item.path);
+                setPathname(item.path || '/welcome');
+                // history.push(item.path);
+                // setTimeout(() => {
+                //   console.log(' setPathname 延时器 ： ',  )
+                //   props.dispatch(actions.setPathname(item.path));
+                // }, 10)
               }}
             >
               {dom}
@@ -125,7 +129,11 @@ const Layouts = props => {
         //     title
         //   </div>
         // )}
-
+        // menuProps={{
+        //   className: 'ZYB',
+        //   // selectedKeys: ["/om/shiftsManage"],
+        //   selectedKeys: [pathname],
+        // }}
         logo={() => <LogoCom></LogoCom>}
         // Warning: pro-layout: renderPageTitle return value should be a string
         // headerTitleRender={() => (
@@ -205,7 +213,7 @@ const Layouts = props => {
               {isShowTitle && (
                 <PageTitle
                   {...props}
-                  // title={title}
+                  title={title}
                   className="titleWrapper"
                 ></PageTitle>
               )}
@@ -233,6 +241,9 @@ const Layouts = props => {
   );
 };
 
-const mapStateToProps = ({ loading }) => ({ loading: loading.global });
+const mapStateToProps = ({ loading, layout }) => ({
+  loading: loading.global,
+  pathname: layout.pathname,
+});
 
 export default connect(mapStateToProps)(Layouts);

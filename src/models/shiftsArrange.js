@@ -2,20 +2,30 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
 import * as teamServices from '@/services/shiftsManage';
 import moment from 'moment'; //
-import { filterArr, getMonthWeekDaysSimple, tips, formatSelectList } from '@/utils';
+import {
+  filterArr,
+  getMonthWeekDaysSimple,
+  tips,
+  formatSelectList,
+  nowYearMonth,
+} from '@/utils';
 
 const namespace = 'shiftsArrange';
-const { createAction, createCRUD } = init(namespace);
+const { createAction, createCRUD, batchTurn } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
   'getPortraitAsync',
   'getTeamAsync',
   'exportDataAsync',
+  'setSearchAsync',
 ];
+
+const batchTurnActions = ['setSearchInfo', 'onChoiceRadio', 'onCheck'];
 
 export const actions = {
   ...createCRUD(otherActions),
+  ...batchTurn(batchTurnActions),
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -24,7 +34,7 @@ export const mapStateToProps = state => state[namespace];
 
 const formartDataList = (data, { id, teamList }) => {
   // const label = teamList.find(v => v.value == id).label;
-  const label = 'label'
+  const label = 'label';
   console.log(' label ： ,', data, label, id, teamList); //
   return data.map(v => ({
     ...v,
@@ -46,14 +56,14 @@ const formatTeamList = data => {
 };
 
 const formatSearch = data => {
-  console.log(' formatSearch ： ', data,    )// 
+  console.log(' formatSearch ： ', data); //
   return {
     ...data,
     page_size: 40,
     // title: data.team,
     schedule_date: data.schedule_date
       ? data.schedule_date.format('YYYY-MM')
-      : '2020-10',
+      : nowYearMonth,
   };
 };
 
@@ -71,7 +81,7 @@ export default {
       // { label: 'zyb1', value: 'zyb11' },
     ],
     searchInfo: {
-      team: 1,  
+      // team: 1,
       schedule_date: moment(),
     },
     teamList: [
@@ -145,36 +155,56 @@ export default {
       return {
         ...state,
         // teamList: formatTeamList(payload.list),
-        userList: formatSelectList(payload.list, 'name', ),
+        teamList: formatSelectList(payload.list, 'name'),
       };
     },
     onChoiceRadio(state, { payload, type }) {
-      console.log(' onChoiceRadio ： ', state, payload,   )// 
+      console.log(' onChoiceRadio ： ', state, payload); //
       const { dayList } = state; //
       return {
         ...state,
         isQuickArrange: !state.isQuickArrange,
-        dayList: filterArr([...dayList, ...payload.target.value ? getMonthWeekDaysSimple : []]),
-      }
+        dayList: filterArr([
+          ...dayList,
+          ...(payload.target.value ? getMonthWeekDaysSimple : []),
+        ]),
+      };
     },
-    onSelectChange(state, { payload, type }) {
-      console.log(' onSelectChange ： ', state, payload,   )// 
+    onCheck(state, { payload, type }) {
+      console.log(' onCheck ： ', state, payload); //
       const { checked, day } = payload.target;
       const { dayList } = state; //
-      const datas = checked
-        ? [...dayList, day]
-        : dayList.filter(v => v != day);
+      const datas = checked ? [...dayList, day] : dayList.filter(v => v != day);
       console.log('  datas ：', datas); //
       return {
         ...state,
         dayList: datas,
       };
     },
-    setState(state, { payload, type }) {
-      console.log(' setState ： ', payload,   )// 
+    setSearchInfo(state, { payload, type }) {
+      console.log(' setSearchInfo ： ', payload); //
       return {
         ...state,
-        ...payload,
+        searchInfo: {
+          ...state.searchInfo,
+          ...payload,
+        },
+      };
+    },
+    setSearch(state, { payload, type }) {
+      console.log(' setSearch ： ', payload); //
+      const dataList = formartDataList(payload.list, {
+        id: state.team,
+        teamList: state.teamList,
+      });
+      return {
+        ...state,
+        dataList,
+        dayList: dataList.map(v => v.days),
+        searchInfo: {
+          ...state.searchInfo,
+          ...payload.searchInfo,
+        },
       };
     },
   },
@@ -189,22 +219,26 @@ export default {
       const res = yield call(services.getItem, payload);
       yield put(action(res));
     },
-    *addItemAsync({ payload, action, type }, { call, put, select, }) {
-      const { dayList, searchInfo,  } = yield select(state => state[namespace]);
+    *addItemAsync({ payload, action, type }, { call, put, select }) {
+      const { dayList, searchInfo } = yield select(state => state[namespace]);
       if (dayList.length < 1) {
-        tips('至少需要一条排班记录！', 2)
-        return  
-      } 
+        tips('至少需要一条排班记录！', 2);
+        return;
+      }
+      if (!searchInfo.team || !searchInfo.schedule_date) {
+        tips('排班班组、日期不能为空！', 2);
+        return;
+      }
       const formatArrangeData = data => {
-        console.log(' formatArrangeData,  , ： ', data, );
+        console.log(' formatArrangeData,  , ： ', data, searchInfo);
         return dayList.map(v => ({
           team: searchInfo.team,
           schedule_date: `${searchInfo.schedule_date.format('YYYY-MM')}-${v}`,
         }));
       };
-      const params = formatArrangeData()
-      console.log('  params ：', params,  )// 
-      const res = yield call(services.addItem, {teamschedule_list: params, });
+      const params = formatArrangeData();
+      console.log('  params ：', params); //
+      const res = yield call(services.addItem, { teamschedule_list: params });
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
@@ -225,6 +259,27 @@ export default {
       console.log(' getTeamAsync ： ', payload); //
       const res = yield call(teamServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
+    },
+    // *setSearchAsync({ payload, type }, { call, put }) {
+    //   console.log(' setSearchAsync ： ', payload); //
+    //   const res = yield call(services.getList, formatSearch(payload));
+    //   yield put(action({ ...res, payload }));
+    //   // yield put(({
+    //   //   type: 'setSearch',
+    //   //   payload: {...res, payload},
+    //   // }));
+    // },
+    *setSearchAsync({ payload, type }, { call, put }) {
+      console.log(' setSearchAsync ： ', payload); //
+      const res = yield call(services.getList, formatSearch(payload));
+      yield put({
+        type: 'setSearchInfo',
+        payload,
+      });
+      yield put({
+        type: 'getList',
+        payload: { ...res, payload },
+      });
     },
   },
 };

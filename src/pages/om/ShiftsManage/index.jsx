@@ -25,8 +25,11 @@ import {
   actions,
   // mapStateToProps
 } from '@/models/shiftsManage'; //
+import { arrangeActions } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
-import { connect } from 'umi';
+import { history, connect } from 'umi';
+import { SHIFTSARRANGE } from '@/constants';
+import { nowYearMonth } from '@/utils';
 
 const TITLE = '班组';
 
@@ -179,11 +182,11 @@ class ShiftsManage extends PureComponent {
               action: 'add',
               formComProps: {
                 userList: this.props.userList,
-                // getUser: this.props.getUserAsync,
-                getUser: params => {
-                  console.log(' params ： ', params); //
-                  this.props.dispatch(actions.getUserAsync(params));
-                },
+                getUser: this.props.getUserAsync,
+                // getUser: params => {
+                //   console.log(' params ： ', params); //
+                //   this.props.dispatch(actions.getUserAsync(params));
+                // },
               },
             })
           }
@@ -217,29 +220,47 @@ class ShiftsManage extends PureComponent {
       ...params,
       formComProps: {
         userList: this.props.userList,
-        // getUser: this.props.getUserAsync,
-        getUser: params => {
-          console.log(' params ： ', params); //
-          this.props.dispatch(actions.getUserAsync(params));
-        },
+        getUser: this.props.getUserAsync,
+        // getUser: params => {
+        //   console.log(' params ： ', params); //
+        //   this.props.dispatch(actions.getUserAsync(params));
+        // },
       },
     });
   };
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.dispatch(
-      actions.removeItemsAsync({ id: `${params.record.id}` }),
-    );
+    // this.props.dispatch(
+    //   actions.removeItemsAsync({ id: `${params.record.id}` }),
+    // );
+    this.props.removeItemsAsync({ id: `${params.record.id}` });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.dispatch(
-      actions.removeItemsAsync({
-        id: `${this.props.selectedRowKeys.join(',')}`,
-      }),
-    );
+    // this.props.dispatch(
+    //   actions.removeItemsAsync({
+    //     id: `${this.props.selectedRowKeys.join(',')}`,
+    //   }),
+    // );
+    this.props.removeItemsAsync({
+      id: `${this.props.selectedRowKeys.join(',')}`,
+    });
   };
 
+  goPage = params => {
+    console.log(' goPage,  , ： ', params, this.state, this.props);
+    this.props.dispatch({
+      type: 'shiftsArrange/setSearchAsync',
+      payload: {
+        team: params.id,
+        // schedule_date: nowYearMonth,
+      },
+    });
+    const page = `${SHIFTSARRANGE}team=${params.id}&schedule_date=${nowYearMonth}`;
+    setTimeout(() => {
+      history.push(page);
+    }, 1000);
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -254,6 +275,7 @@ class ShiftsManage extends PureComponent {
       edit: this.showFormModal,
       // remove: this.props.onRemove,
       remove: this.onRemove,
+      goPage: this.goPage,
     };
 
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
@@ -281,7 +303,8 @@ class ShiftsManage extends PureComponent {
       this.state,
       this.props,
     ); //
-    this.props.dispatch(actions.getUserAsync());
+    // this.props.dispatch(actions.getUserAsync());
+    this.props.getUserAsync();
   }
 
   render() {

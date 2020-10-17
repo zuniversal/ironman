@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
+import { history, connect } from 'umi';
 import { Form, Input } from 'antd';
 
 const PageTitle = props => {
-  console.log(' PageTitle ： ', props); //
+  console.log(' PageTitle ： ', props, props.title); //
   return (
-    <div className={`${props.noPadding ? '' : 'paddingTop'}`}>
-      <div className="pageTitle">{props.title}</div>
-    </div>
+    props.title && (
+      <div
+        className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper`}
+      >
+        <div className="pageTitle">{props.title}</div>
+      </div>
+    )
     // props.isWrapper ? <div className="pageTitle">{props.title}</div> : <div className={props.className}>
     //   <div className="pageTitle">{props.title}</div>
     // </div>
@@ -23,4 +28,6 @@ PageTitle.propTypes = {
   className: PropTypes.string,
 };
 
-export default PageTitle;
+// export default PageTitle;
+const mapStateToProps = ({ layout }) => ({ title: layout.title });
+export default connect(mapStateToProps)(PageTitle);

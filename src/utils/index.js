@@ -15,15 +15,15 @@ import {
 import moment from 'moment';
 import business from 'moment-business';
 
-export const formatSelectList = (data, labelKey = 'label', idKey = 'id', ) => {
-  const res = data.map(v => ({ 
-    ...v, 
-    label: v[labelKey], 
-    value: v[idKey], 
-  }))
-  console.log(' formatSelectList res ： ', res,  )// 
-  return res
-}
+export const formatSelectList = (data, labelKey = 'label', idKey = 'id') => {
+  const res = data.map(v => ({
+    ...v,
+    label: v[labelKey],
+    value: v[idKey],
+  }));
+  console.log(' formatSelectList res ： ', res); //
+  return res;
+};
 
 export const getWeek = (data, isGetWeek) => {
   // console.log(' getWeek   data,   ： ', data  )
@@ -62,16 +62,16 @@ var day = getCountDays();
 var months = getMonthDays();
 var formatMonthDayformatMonthDay = formatMonthDay(months);
 const resss2222 = getWeek(formatMonthDayformatMonthDay);
-console.log(
-  '  resss ：',
-  resss,
-  day,
-  months,
-  formatMonthDayformatMonthDay,
-  getNowMonthDays,
-  getMonthWeekDays,
-  getMonthWeekDaysSimple,
-); //
+// console.log(
+//   '  resss ：',
+//   resss,
+//   day,
+//   months,
+//   formatMonthDayformatMonthDay,
+//   getNowMonthDays,
+//   getMonthWeekDays,
+//   getMonthWeekDaysSimple,
+// ); //
 
 // export {request, } from './request'
 

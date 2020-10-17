@@ -19,10 +19,10 @@ const DeviceStatus = props => {
   );
 };
 
-const CsHomeMonitor = props => {
-  console.log(' CsHomeMonitor   props, ,   ： ', props);
+const CsHomeVideo = props => {
+  console.log(' CsHomeVideo   props, ,   ： ', props);
   return (
-    <div className="csHomeMonitor ">
+    <div className="CsHomeVideo ">
       <DeviceStatus></DeviceStatus>
       <div className="center">img</div>
       <div className="right"></div>
@@ -30,4 +30,4 @@ const CsHomeMonitor = props => {
   );
 };
 
-export default CsHomeMonitor;
+export default CsHomeVideo;

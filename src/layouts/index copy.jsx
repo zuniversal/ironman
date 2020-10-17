@@ -20,7 +20,6 @@ import { ANIMATE } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
 import PageTitle from '@/components/Widgets/PageTitle'; //
 import LogoCom from '@/components/Widgets/LogoCom'; //
-import { actions } from '@/models/layout'; //
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
@@ -53,9 +52,9 @@ const Layouts = props => {
   const getShowTitle = props => {
     const { location } = props; //
     const { pathname } = location;
-    const noTitlePath = ['/om/home', '/om/shiftsArrangeDetail'];
+    const noTitlePath = ['/om/home'];
     const isInclude = noTitlePath.every(v => v !== pathname);
-    console.log(' isInclude some  ： ', props, isInclude, pathname);
+    console.log(' isInclude some  ： ', props, isInclude);
     return isInclude;
   };
   const isShowTitle = getShowTitle(props);
@@ -65,12 +64,7 @@ const Layouts = props => {
       <ProLayout
         {...defaultProps}
         location={{
-          pathname: path,
-        }}
-        onPageChange={e => {
-          console.log(' onPageChange 切换页面 ： ', e); //
-
-          // return
+          pathname,
         }}
         onMenuHeaderClick={e => {
           console.log(' onMenuHeaderClick ： ', e); //
@@ -83,17 +77,9 @@ const Layouts = props => {
           // 调用 报错
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
           // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
-          if (item.path === path) {
-            console.log(
-              ' 路径相同 ： ',
-              item,
-              item.path === path,
-              item.path,
-              path,
-            ); //
+          if (item.path === pathname) {
             // setTitle(item.name)
-            props.dispatch(actions.setTitle(item.name));
-            // setTimeout(() => setTitle(item.name), 0);
+            setTimeout(() => setTitle(item.name), 0);
           }
           if (item.notShowItem) {
             return null;
@@ -109,8 +95,6 @@ const Layouts = props => {
                 // console.log(' com ： ', com, comRef.current, )//
                 // comRef.current = com//
                 // setPathname(item.path || '/welcome');
-                // setTitle(item.name)
-                props.dispatch(actions.setTitle(item.name));
                 history.push(item.path);
               }}
             >
@@ -205,15 +189,10 @@ const Layouts = props => {
               {isShowTitle && (
                 <PageTitle
                   {...props}
-                  // title={title}
+                  title={title}
                   className="titleWrapper"
                 ></PageTitle>
               )}
-              {/* <PageTitle
-                {...props}
-                title={title}
-                className="titleWrapper"
-              ></PageTitle> */}
 
               {/* <Com></Com> */}
               {/* <UserCenterForm></UserCenterForm> */}

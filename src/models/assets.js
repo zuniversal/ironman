@@ -1,5 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/assets';
+import * as powerStationServices from '@/services/powerStation';
+import { formatSelectList } from '@/utils';
 
 const namespace = 'assets';
 const { createAction, createCRUD } = init(namespace);
@@ -10,6 +12,7 @@ const otherActions = [
   'uploadFileAsync',
   'exportDataAsync',
   'getTemplatAsync',
+  'getPowerAsync',
 ];
 
 export const actions = {
@@ -30,6 +33,7 @@ export default {
 
     syncOAData: [],
     portraitData: {},
+    powerList: [],
   },
 
   reducers: {
@@ -71,7 +75,7 @@ export default {
       console.log(' removeItem 修改  ： ', state, payload, type, this); //
       return {
         ...state,
-        dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+        dataList: state.dataList.filter(v => v.id !== payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
@@ -96,6 +100,12 @@ export default {
       return {
         ...state,
         // portraitData: payload.,
+      };
+    },
+    getPower(state, { payload, type }) {
+      return {
+        ...state,
+        powerList: formatSelectList(payload.list, 'name'),
       };
     },
   },
@@ -176,6 +186,10 @@ export default {
       const res = yield call(services.getTemplate, payload);
       console.log('  getTemplate res ：', res); //
       // yield put(action({ ...res, payload }));
+    },
+    *getPowerAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(powerStationServices.getList, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

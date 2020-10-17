@@ -25,40 +25,40 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-export const formatTeamList = (data, ) => {
-  const res = data.map(v => ({ 
-    ...v, label: v.name, 
-    value: v.id, 
-  }))
-  console.log(' formatTeamList res ： ', res,  )// 
-  return res
-}
+export const formatTeamList = data => {
+  const res = data.map(v => ({
+    ...v,
+    label: v.name,
+    value: v.id,
+  }));
+  console.log(' formatTeamList res ： ', res); //
+  return res;
+};
 
-export const formatPowerList = (data, ) => {
-  const res = data.map(v => ({ 
-    ...v, label: v.name, 
-    value: v.id, 
-  }))
-  console.log(' formatPowerList res ： ', res,  )// 
-  return res
-}
-
+export const formatPowerList = data => {
+  const res = data.map(v => ({
+    ...v,
+    label: v.name,
+    value: v.id,
+  }));
+  console.log(' formatPowerList res ： ', res); //
+  return res;
+};
 
 export const formatDetail = data => {
-  console.log(' formatDetail ： ', data,   )// 
-  const {work_situation = '', work_ticket = '',  } = data
-  
+  console.log(' formatDetail ： ', data); //
+  const { work_situation = '', work_ticket = '' } = data;
+
   return {
     ...data,
-    wire: work_situation.split(',')[0], 
-    knife: work_situation.split(',')[1], 
-    lock: work_situation.split(',')[2], 
-    executing: work_ticket.split(',')[0], 
-    finished: work_ticket.split(',')[1], 
-    unExecuted: work_ticket.split(',')[2], 
-  } 
-}
-
+    wire: work_situation.split(',')[0],
+    knife: work_situation.split(',')[1],
+    lock: work_situation.split(',')[2],
+    executing: work_ticket.split(',')[0],
+    finished: work_ticket.split(',')[1],
+    unExecuted: work_ticket.split(',')[2],
+  };
+};
 
 export default {
   namespace,
@@ -90,7 +90,7 @@ export default {
       console.log(' getItemgetItem ： ', payload); //
       return {
         ...state,
-        itemDetail: formatDetail(payload.bean, ),
+        itemDetail: formatDetail(payload.bean),
       };
     },
     addItem(state, { payload, type }) {
@@ -122,19 +122,19 @@ export default {
       return {
         ...state,
         // powerList: formatPowerList(payload.list, ),
-        userList: formatSelectList(payload.list, 'name', ),
+        powerList: formatSelectList(payload.list, 'name'),
       };
     },
     getUser(state, { payload, type }) {
       return {
         ...state,
-        userList: formatSelectList(payload.list, 'nickname', ),
+        userList: formatSelectList(payload.list, 'nickname'),
       };
     },
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: formatTeamList(payload.list, ),
+        teamList: formatTeamList(payload.list),
       };
     },
   },

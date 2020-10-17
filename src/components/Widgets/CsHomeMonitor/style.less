@@ -1,20 +1,33 @@
-.inputFormWrapper {
+.csHomeMonitor {
   display: flex;
-  // justify-content: center;
-  align-items: center;
-  div:not(:last-child) {
-    margin-right: 10px;
-  }
-  .inputFormItem {
-    margin-bottom: 0;
-    .inputCom {
-      text-align: center;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+
+  .deviceStatus {
+    display: flex;
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      font-weight: 400;
+      .text {
+        font-size: 14px;
+        color: #333333;
+      }
+      .val {
+        font-size: 34px;
+        color: #333333;
+      }
     }
-  }
-  .left {
-    width: 50px;
-    text-align: right;
-  }
-  .right {
+    .right {
+      flex: 1;
+      .status {
+        font-size: 13px;
+        font-weight: 400;
+        color: #1cbb51;
+      }
+    }
   }
 }

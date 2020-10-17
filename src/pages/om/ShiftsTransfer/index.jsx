@@ -179,9 +179,9 @@ class ShiftsTransfer extends PureComponent {
     return (
       <ShiftsTransferSearchForm
         formBtn={this.renderFormBtn}
-        getUser={(params) => this.props.dispatch(actions.getUserAsync(params))}
+        getUser={this.props.getUserAsync}
+        getPower={this.props.getPowerAsync}
         userList={this.props.userList}
-        getPower={(params) => this.props.dispatch(actions.getPowerAsync(params))}
         powerList={this.props.powerList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
@@ -189,19 +189,21 @@ class ShiftsTransfer extends PureComponent {
     );
   };
 
-  showTransferDetail = (params,  ) => {
-    console.log(' showTransferDetail,  , ： ', params,    )
+  showTransferDetail = params => {
+    console.log(' showTransferDetail,  , ： ', params);
     this.props.showFormModal({
       ...params,
       formModalProps: {
-        top: <div className="fje btnWrapper ">
-          <Button type="primary " onClick={() => this.props.exportData()}>
-            导出数据
-          </Button>
-        </div>,
-      },  
-    })
-  }
+        top: (
+          <div className="fje btnWrapper ">
+            <Button type="primary " onClick={() => this.props.exportData()}>
+              导出数据
+            </Button>
+          </div>
+        ),
+      },
+    });
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 

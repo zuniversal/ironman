@@ -97,6 +97,11 @@ const crudConfigs = [
 // }
 
 export const init = prefix => {
+  const turnAction = (types = '') => payload => ({
+    type: prefix + '/' + types,
+    payload,
+    action: action(types),
+  });
   const createAction = (types = '') => payload => ({
     type: prefix + '/' + types,
     payload,
@@ -105,6 +110,11 @@ export const init = prefix => {
   const createActions = (config = []) => {
     const actions = {};
     config.forEach(types => (actions[types] = createAction(types)));
+    return actions;
+  };
+  const batchTurn = (config = []) => {
+    const actions = {};
+    config.forEach(types => (actions[types] = turnAction(types)));
     return actions;
   };
   // const customActions = (actionMap = {}, ) => {
@@ -119,5 +129,7 @@ export const init = prefix => {
     createAction,
     createActions,
     createCRUD: (config = []) => createActions([...crudConfigs, ...config]),
+    turnAction,
+    batchTurn: (config = []) => batchTurn(config),
   };
 };

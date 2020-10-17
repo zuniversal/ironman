@@ -96,7 +96,7 @@ const ShiftsArrangeDetailCalendar = props => {
                 }
                 day={formatDay(params)}
                 isWeekend={isWeekend(params.date)}
-                onChange={props.onSelectChange}
+                onChange={props.onCheck}
               ></Checkbox>
             </div>
           );

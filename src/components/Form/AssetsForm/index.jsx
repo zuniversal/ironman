@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,29 +16,18 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
+import SmartForm from '@/common/SmartForm'; //
 // import AssetsFormTable from 'smartTb/AssetsFormTable'; //
-import { regoins } from '@/configs'//
-import { formatConfig } from '@/utils'//
+import { regoins } from '@/configs'; //
+import { formatConfig } from '@/utils'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 
-
-
-
-
-
-
 const AssetsForm = props => {
-  console.log(' AssetsForm ： ', props, config,  )//
-  const {action,  } = props// 
+  console.log(' AssetsForm ： ', props, config); //
+  const { action } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -46,105 +35,107 @@ const AssetsForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-    
-  
-
 
   const config = [
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getHouseNo,
+      selectData: props.houseNoList,
       itemProps: {
         label: '户号',
-        // name: '',  
+        // name: '',
       },
     },
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getPower,
+      selectData: props.powerList,
       itemProps: {
         label: '电站',
-        name: 'station',  
+        name: 'station',
       },
     },
     // {
     //   formType: 'Divider',
     //   itemProps: {
     //     label: '',
-    //     name: '',  
+    //     name: '',
     //   },
     // },
     {
-      formType: 'Select',
-      noRule: true,  
+      formType: 'Search',
+      selectSearch: props.getList,
+      selectData: props.dataList,
+      noRule: true,
       itemProps: {
         label: '上级设备',
-        name: 'parent_id',  
+        name: 'parent_id',
       },
     },
     {
       // formType: 'Select',
-      noRule: true,  
+      noRule: true,
       itemProps: {
         label: '设备名称',
-        name: 'name',  
+        name: 'name',
       },
     },
     {
-      noRule: true,  
+      noRule: true,
       itemProps: {
         label: '设备编号',
-        name: 'code',  
+        name: 'code',
       },
     },
     {
-      noRule: true,  
+      noRule: true,
       itemProps: {
         label: '出厂号',
-        name: '',  
+        name: '',
       },
     },
     {
       itemProps: {
         label: '设备型号',
-        name: 'model',  
+        name: 'model',
       },
     },
     {
       itemProps: {
         label: '额定电压',
-        name: 'voltage',  
+        name: 'voltage',
       },
     },
     {
       itemProps: {
         label: '额定电流',
-        name: 'electricity',  
+        name: 'electricity',
       },
     },
     {
       itemProps: {
         label: '变压容量',
-        name: 'transformer_capacity',  
+        name: 'transformer_capacity',
       },
     },
     {
       formType: 'DatePicker',
-      noRule: true,  
+      noRule: true,
       itemProps: {
         label: '出厂日期',
-        name: 'production_date',  
+        name: 'production_date',
       },
     },
     {
       formType: 'DatePicker',
-      noRule: true,  
+      noRule: true,
       itemProps: {
         label: '投运日期',
-        name: 'operation_date',  
+        name: 'operation_date',
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'file'} name={'file'} ></UploadCom>,
-    
+    <UploadCom label={'上传铭牌'} key={'file'} name={'file'}></UploadCom>,
   ];
 
   // if (action === 'detail') {
@@ -152,10 +143,6 @@ const AssetsForm = props => {
   //     <AssetsFormTable></AssetsFormTable>
   //   )
   // }
-
-
-
-
 
   return (
     <div className={''}>
@@ -169,13 +156,10 @@ const AssetsForm = props => {
 
         {...props}
       ></SmartForm>
-
-
-
     </div>
-  )
-}
+  );
+};
 
-AssetsForm.defaultProps = {}
+AssetsForm.defaultProps = {};
 
-export default AssetsForm
+export default AssetsForm;
