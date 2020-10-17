@@ -5,9 +5,10 @@ import { Form, Input } from 'antd';
 
 const InputCom = props => {
   console.log(' InputCom   props, ,   ： ', props);
+  const {wrapperClass, left, right,   } = props
   return (
-    <div className={`inputFormWrapper ${props.wrapperClass}`}>
-      {props.left && <div className="left">{props.left}</div>}
+    <div className={`inputFormWrapper ${wrapperClass}`}>
+      {left && <div className="left">{left}</div>}
       <Form.Item
         className={'inputFormItem  '}
         key={'attach'}
@@ -17,7 +18,7 @@ const InputCom = props => {
       >
         <Input name="logo" className={'inputCom w-64  '} {...props} />
       </Form.Item>
-      {props.right && <div className="right">{props.right}</div>}
+      {right && <div className="right">{right}</div>}
     </div>
   );
 };

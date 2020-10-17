@@ -195,8 +195,12 @@ class ShiftsArrange extends PureComponent {
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
     const { history, searchInfo,  } = this.props; //
-    const path = `${page}?team=${searchInfo.team}&schedule_date=${searchInfo.schedule_date}`
-    history.push(path);
+    if (searchInfo.team && searchInfo.schedule_date) {
+      const path = `${page}?team=${searchInfo.team}&schedule_date=${searchInfo.schedule_date.format('YYYY-MM')}`
+      history.push(path);
+    } else {
+      tips('请先选择班组及月份！', 2)
+    }
   };
   formatParams = (params,  ) => {
     return {...params, schedule_date: params.schedule_date.format('YYYY-MM'), } 
@@ -208,7 +212,7 @@ class ShiftsArrange extends PureComponent {
       const res = await form.validateFields();
       console.log('  search res await 结果  ：', res); //
       if (!res.schedule_date) {
-        tips('搜索月份不能为空！', 1)     
+        tips('搜索月份不能为空！', 2)     
         return  
       }
       const searchParams = this.formatParams(res)
@@ -246,11 +250,17 @@ class ShiftsArrange extends PureComponent {
         formBtn={this.renderFormBtn}
         getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
         teamList={this.props.teamList}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>
     );
   };
+  onFieldChange = (params,  ) => {
+    console.log('    onFieldChange ： ', params,   )
+    this.props.dispatch(actions.setState({searchInfo: params,}))
+  }
 
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )

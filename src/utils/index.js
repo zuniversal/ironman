@@ -15,6 +15,16 @@ import {
 import moment from 'moment';
 import business from 'moment-business';
 
+export const formatSelectList = (data, labelKey = 'label', idKey = 'id', ) => {
+  const res = data.map(v => ({ 
+    ...v, 
+    label: v[labelKey], 
+    value: v[idKey], 
+  }))
+  console.log(' formatSelectList res ： ', res,  )// 
+  return res
+}
+
 export const getWeek = (data, isGetWeek) => {
   // console.log(' getWeek   data,   ： ', data  )
   return data
@@ -35,6 +45,7 @@ const resss = getWeek(datasss);
 
 export const nowYear = new Date().getFullYear();
 export const nowMonth = new Date().getMonth() + 1;
+export const nowYearMonth = `${nowYear}-${nowMonth}`;
 export const getCountDays = (month = nowMonth, year = nowYear) =>
   new Date(year, month, 0).getDate();
 export const getMonthDays = (month, year) =>
@@ -496,6 +507,7 @@ export const createRow = l => {
   return arr;
 };
 
+// 去重
 export const filterArr = keys =>
   keys.filter((v, i, arr) => arr.indexOf(v) === i);
 

@@ -1,7 +1,9 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsTransfer';
-import * as teamServices from '@/services/shiftsTransfer';
+import * as teamServices from '@/services/shiftsManage';
+import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
+import { formatSelectList } from '@/utils';
 
 const namespace = 'shiftsTransfer';
 const { createAction, createCRUD } = init(namespace);
@@ -10,6 +12,7 @@ const otherActions = [
   'syncOAAsync',
   'getPortraitAsync',
   'getTeamAsync',
+  'getUserAsync',
   'getPowerAsync',
   'exportDataAsync',
 ];
@@ -118,7 +121,14 @@ export default {
     getPower(state, { payload, type }) {
       return {
         ...state,
-        powerList: formatPowerList(payload.list, ),
+        // powerList: formatPowerList(payload.list, ),
+        userList: formatSelectList(payload.list, 'name', ),
+      };
+    },
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        userList: formatSelectList(payload.list, 'nickname', ),
       };
     },
     getTeam(state, { payload, type }) {
@@ -158,6 +168,10 @@ export default {
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
       const res = yield call(powerStationServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {

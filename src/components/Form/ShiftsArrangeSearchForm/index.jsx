@@ -19,7 +19,8 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins,  } from '@/configs'; //
-import { formatConfig,  } from '@/utils'; //
+import { formatConfig, nowYearMonth,  } from '@/utils'; //
+
 
 const ShiftsArrangeSearchForm = props => {
   console.log(' ShiftsArrangeSearchForm ： ', props); //
@@ -57,6 +58,10 @@ const ShiftsArrangeSearchForm = props => {
     // layout: 'inline',
   };
 
+  // const init = {
+  //   // schedule_date: nowYearMonth,
+  // }
+  // console.log('  init ：', init,  )// 
   return (
     <div className={'ShiftsArrangeSearchForm'}>
       {/* <div className="fje btnWrapper ">

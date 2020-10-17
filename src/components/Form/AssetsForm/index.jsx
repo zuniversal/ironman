@@ -81,7 +81,7 @@ const AssetsForm = props => {
       },
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       noRule: true,  
       itemProps: {
         label: '设备名称',

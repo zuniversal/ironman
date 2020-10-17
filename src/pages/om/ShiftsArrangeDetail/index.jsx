@@ -41,7 +41,7 @@ import PageTitle from '@/components/Widgets/PageTitle'; //
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { getMonthWeekDaysSimple, nowYear } from '@/utils';
+import { getMonthWeekDaysSimple, nowYear, tips, filterArr } from '@/utils';
 
 export const TITLE = '排班';
 
@@ -61,7 +61,7 @@ const titleMap = {
   actions,
   titleMap,
   noMountFetch: true,
-  isCheckQuery: true,
+  // isCheckQuery: true,
 })
 class ShiftsArrangeDetail extends PureComponent {
   constructor(props) {
@@ -237,7 +237,9 @@ class ShiftsArrangeDetail extends PureComponent {
     console.log('  res ：', res); //
     if (res.length) {
       this.props.dispatch(actions.addItemAsync({ teamschedule_list: res }));
-    }
+    } else {
+      tips('请先对班组进行排班！', 1)
+    } 
   };
 
   // formatParams = (params,  ) => {
@@ -270,7 +272,10 @@ class ShiftsArrangeDetail extends PureComponent {
           搜索
         </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
-        <Button type="primary" onClick={() => this.handleArrangeOk()}>
+        {/* <Button type="primary" onClick={() => this.handleArrangeOk()}> */}
+        <Button type="primary" 
+          onClick={params => this.props.dispatch(actions.addItemAsync(params))}
+        >
           确定
         </Button>
       </div>
@@ -283,11 +288,17 @@ class ShiftsArrangeDetail extends PureComponent {
         formBtn={this.renderFormBtn}
         getTeam={params => this.props.dispatch(actions.getTeamAsync(params))}
         teamList={this.props.teamList}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>
     );
   };
+  onFieldChange = (params,  ) => {
+    console.log('    onFieldChange ： ', params,   )
+    this.props.dispatch(actions.setState({searchInfo: params,}))
+  }
   onSelectChange = e => {
     console.log(
       ' onSelectChange   ,   ： ',
@@ -312,7 +323,7 @@ class ShiftsArrangeDetail extends PureComponent {
     this.setState({
       isQuickArrange: !this.state.isQuickArrange,
       calendarEvents: calendarEvents.map(v => ({ ...v, isChecked: true })),
-      selectData: [...selectData, ...getMonthWeekDaysSimple],
+      selectData: filterArr([...selectData, ...e.target.value ? getMonthWeekDaysSimple : []]),
     });
   };
   renderChoiceRadio = params => {
@@ -322,22 +333,33 @@ class ShiftsArrangeDetail extends PureComponent {
       <div className="choiceRadioWrapper">
         <div className="label">按法定工作日快速排班</div>{' '}
         <ChoiceRadio
-          onChange={this.onChoiceRadio}
-          value={isQuickArrange}
+          // onChange={this.onChoiceRadio}
+          // value={isQuickArrange}
+          value={this.props.isQuickArrange}
+          onChange={params => this.props.dispatch({
+            type: 'shiftsArrange/onChoiceRadio',  
+            payload: params,
+          })}
         ></ChoiceRadio>
       </div>
     );
   };
 
   renderShiftsArrangeDetailCalendar = params => {
-    // console.log(' renderShiftsArrangeDetailCalendar ： ', params,  )
+    console.log(' renderShiftsArrangeDetailCalendar ： ', params, this.state.selectData, this.state, this.props,  )
     const { isQuickArrange, calendarEvents, selectData } = this.state; //
     return (
       <ShiftsArrangeDetailCalendar
-        isQuickArrange={isQuickArrange}
-        data={this.props.dataList}
-        selectData={selectData}
-        onSelectChange={this.onSelectChange}
+        // isQuickArrange={isQuickArrange}
+        // data={this.props.dataList}
+        // selectData={selectData}
+        // onSelectChange={this.onSelectChange}
+        isQuickArrange={this.props.isQuickArrange}
+        selectData={this.props.dayList}
+        onSelectChange={params => this.props.dispatch({
+          type: 'shiftsArrange/onSelectChange',  
+          payload: params,
+        })}
       ></ShiftsArrangeDetailCalendar>
     );
   };

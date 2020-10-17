@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
+import { formatSelectList } from '@/utils';
 
 const namespace = 'shiftsManage';
 const { createAction, createCRUD } = init(namespace);
@@ -98,7 +99,8 @@ export default {
     getUser(state, { payload, type }) {
       return {
         ...state,
-        userList: formatUserList(payload.list),
+        // userList: formatUserList(payload.list),
+        userList: formatSelectList(payload.list, 'nickname', ),
       };
     },
   },

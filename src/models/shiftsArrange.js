@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
 import * as teamServices from '@/services/shiftsManage';
 import moment from 'moment'; //
+import { filterArr, getMonthWeekDaysSimple, tips, formatSelectList } from '@/utils';
 
 const namespace = 'shiftsArrange';
 const { createAction, createCRUD } = init(namespace);
@@ -22,13 +23,14 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 const formartDataList = (data, { id, teamList }) => {
-  const label = teamList.find(v => v.value == id).label;
+  // const label = teamList.find(v => v.value == id).label;
+  const label = 'label'
   console.log(' label ： ,', data, label, id, teamList); //
   return data.map(v => ({
     ...v,
     title: v.team,
     start: v.schedule_date,
-    days: Number(v.schedule_date.split('-')[2]),
+    days: `${Number(v.schedule_date.split('-')[2])}`,
     // start: '2020-10-10',
   }));
 };
@@ -44,13 +46,14 @@ const formatTeamList = data => {
 };
 
 const formatSearch = data => {
+  console.log(' formatSearch ： ', data,    )// 
   return {
     ...data,
     page_size: 40,
     // title: data.team,
-    // schedule_date: data.schedule_date
-    //   ? data.schedule_date.format('YYYY-MM')
-    //   : '2020-10',
+    schedule_date: data.schedule_date
+      ? data.schedule_date.format('YYYY-MM')
+      : '2020-10',
   };
 };
 
@@ -67,11 +70,15 @@ export default {
       // { label: 'zyb', value: 'zyb1' },
       // { label: 'zyb1', value: 'zyb11' },
     ],
-    searchInfo: {},
+    searchInfo: {
+      team: 1,  
+      schedule_date: moment(),
+    },
     teamList: [
       // { label: 'xxx', value: '1' },
       // { label: 'yyy', value: '2' },
     ],
+    isQuickArrange: false,
     dayList: [],
   },
 
@@ -79,12 +86,13 @@ export default {
     getList(state, { payload, type }) {
       console.log(' formartDataList(payload) ： ', payload, state); //
       const dataList = formartDataList(payload.list, {
-        id: payload.payload.team,
+        // id: payload.payload.team,
+        id: state.team,
         teamList: state.teamList,
       });
       return {
         ...state,
-        searchInfo: payload.payload,
+        // searchInfo: payload.payload,
         dataList,
         dayList: dataList.map(v => v.days),
       };
@@ -96,9 +104,15 @@ export default {
       };
     },
     addItem(state, { payload, type }) {
+      const dataList = formartDataList(payload.list, {
+        // id: payload.payload.team,
+        id: state.team,
+        teamList: state.teamList,
+      });
       return {
         ...state,
-        dataList: [payload.bean, ...state.dataList],
+        // dataList: [payload.bean, ...state.dataList],
+        dataList,
       };
     },
     editItem(state, { payload, type }) {
@@ -130,7 +144,37 @@ export default {
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: formatTeamList(payload.list),
+        // teamList: formatTeamList(payload.list),
+        userList: formatSelectList(payload.list, 'name', ),
+      };
+    },
+    onChoiceRadio(state, { payload, type }) {
+      console.log(' onChoiceRadio ： ', state, payload,   )// 
+      const { dayList } = state; //
+      return {
+        ...state,
+        isQuickArrange: !state.isQuickArrange,
+        dayList: filterArr([...dayList, ...payload.target.value ? getMonthWeekDaysSimple : []]),
+      }
+    },
+    onSelectChange(state, { payload, type }) {
+      console.log(' onSelectChange ： ', state, payload,   )// 
+      const { checked, day } = payload.target;
+      const { dayList } = state; //
+      const datas = checked
+        ? [...dayList, day]
+        : dayList.filter(v => v != day);
+      console.log('  datas ：', datas); //
+      return {
+        ...state,
+        dayList: datas,
+      };
+    },
+    setState(state, { payload, type }) {
+      console.log(' setState ： ', payload,   )// 
+      return {
+        ...state,
+        ...payload,
       };
     },
   },
@@ -145,8 +189,22 @@ export default {
       const res = yield call(services.getItem, payload);
       yield put(action(res));
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
+    *addItemAsync({ payload, action, type }, { call, put, select, }) {
+      const { dayList, searchInfo,  } = yield select(state => state[namespace]);
+      if (dayList.length < 1) {
+        tips('至少需要一条排班记录！', 2)
+        return  
+      } 
+      const formatArrangeData = data => {
+        console.log(' formatArrangeData,  , ： ', data, );
+        return dayList.map(v => ({
+          team: searchInfo.team,
+          schedule_date: `${searchInfo.schedule_date.format('YYYY-MM')}-${v}`,
+        }));
+      };
+      const params = formatArrangeData()
+      console.log('  params ：', params,  )// 
+      const res = yield call(services.addItem, {teamschedule_list: params, });
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
