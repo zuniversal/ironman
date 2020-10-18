@@ -9,9 +9,11 @@ import React, {
 } from 'react';
 import './style.less';
 
+import PageTitle from '@/components/Widgets/PageTitle'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { tips } from '@/utils';
+import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
 
@@ -382,6 +384,9 @@ export default ({
         }
       }
     };
+    onPageChange = (pagination, filters, sorter, extra) => {
+      console.log('    onPageChange ： ', pagination, filters, sorter, extra);
+    };
 
     renderSmartFormModal = params => {
       console.log(' renderSmartFormModal ： ', params, this.state, this.props);
@@ -439,6 +444,28 @@ export default ({
       } // //
     }
 
+    get isShowTitle() {
+      console.log(' get 取属 isShowTitle ： ', this.state, this.props);
+      const getShowTitle = props => {
+        const { route } = props; //
+        const { path, title } = route;
+        const isInclude = noShowTitlePath.every(v => v != path);
+        console.log(
+          ' isInclude some  ： ',
+          props,
+          isInclude,
+          path,
+          route,
+          title,
+        );
+        return isInclude ? title : false;
+        // const isInclude = noShowTitlePath.some(v => v == path);
+        // console.log(' isInclude some  ： ', props, isInclude, path);
+        // return isInclude ? false : title;
+      };
+      return getShowTitle(this.props);
+    }
+
     render() {
       // console.log(' SmartHoc 组件 this.state, this.props ：', config, this.state, this.props, )
       console.log(
@@ -449,6 +476,10 @@ export default ({
 
       return (
         <div className="smartHocWrapper">
+          {this.isShowTitle && (
+            <PageTitle {...this.props} title={this.isShowTitle}></PageTitle>
+          )}
+
           <Com
             {...this.state}
             {...this.props}
@@ -465,6 +496,7 @@ export default ({
             exportData={this.exportData}
             search={this.search}
             setTopCom={this.setTopCom}
+            onPageChange={this.onPageChange}
           />
 
           {this.renderSmartFormModal()}

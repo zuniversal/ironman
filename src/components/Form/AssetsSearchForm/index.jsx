@@ -20,45 +20,6 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    formType: 'Search',
-    selectSearch: props.getList,
-    selectData: props.dataList,
-    itemProps: {
-      label: '客户',
-      name: 'customer',
-    },
-    comProps: {},
-  },
-  {
-    formType: 'Search',
-    selectSearch: props.getList,
-    selectData: props.dataList,
-    itemProps: {
-      label: '电站',
-      name: 'station',
-    },
-    comProps: {},
-  },
-
-  {
-    formType: 'Divider',
-    itemProps: {
-      label: '',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '',
-      name: 'keyword',
-    },
-    searchSuffix: true,
-  },
-];
-
 const AssetsSearchForm = props => {
   console.log(' AssetsSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
@@ -66,6 +27,45 @@ const AssetsSearchForm = props => {
     // layout: 'vertical',
     // layout: 'inline',
   };
+
+  const config = [
+    {
+      formType: 'Search',
+      selectSearch: props.getList,
+      selectData: props.dataList,
+      itemProps: {
+        label: '客户',
+        name: 'customer',
+      },
+      comProps: {},
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getList,
+      selectData: props.dataList,
+      itemProps: {
+        label: '电站',
+        name: 'station',
+      },
+      comProps: {},
+    },
+
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      searchSuffix: true,
+    },
+  ];
 
   return (
     <div className={'fsb assetsSearchForm '}>

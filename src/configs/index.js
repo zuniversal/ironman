@@ -69,6 +69,11 @@ export const onDutyTypeConfig = [
 export const site = province;
 export const city = province;
 
+export const noShowTitlePath = [
+  '/om/home',
+  // '/om/shiftsArrangeDetail'
+];
+
 export const httpTipsMap = {
   slow: '阿哦，加载中，请稍后',
   notNetWork: '阿哦，没有网络，请您检查网络设置',

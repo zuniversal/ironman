@@ -50,15 +50,15 @@ const Layouts = props => {
     history.push(path);
   };
 
-  const getShowTitle = props => {
-    const { location } = props; //
-    const { pathname } = location;
-    const noTitlePath = ['/om/home', '/om/shiftsArrangeDetail'];
-    const isInclude = noTitlePath.every(v => v !== pathname);
-    console.log(' isInclude some  ： ', props, isInclude, pathname);
-    return isInclude;
-  };
-  const isShowTitle = getShowTitle(props);
+  // const getShowTitle = props => {
+  //   const { location } = props; //
+  //   const { pathname } = location;
+  //   const noTitlePath = ['/om/home', '/om/shiftsArrangeDetail'];
+  //   const isInclude = noTitlePath.every(v => v !== pathname);
+  //   console.log(' isInclude some  ： ', props, isInclude, pathname);
+  //   return isInclude;
+  // };
+  // const isShowTitle = getShowTitle(props);
 
   return (
     <div id="test-pro-layout" className={'layoutContainer'}>
@@ -84,15 +84,15 @@ const Layouts = props => {
           // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
           // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
           if (item.path === path) {
-            console.log(
-              ' 路径相同 ： ',
-              item,
-              item.path === path,
-              item.path,
-              path,
-            ); //
+            // console.log(
+            //   ' 路径相同 ： ',
+            //   item,
+            //   item.path === path,
+            //   item.path,
+            //   path,
+            // ); //
             // setTitle(item.name)
-            props.dispatch(actions.setTitle(item.name));
+            // props.dispatch(actions.setTitle(item.name));
             // setTimeout(() => setTitle(item.name), 0);
           }
           if (item.notShowItem) {
@@ -110,7 +110,7 @@ const Layouts = props => {
                 // comRef.current = com//
                 // setPathname(item.path || '/welcome');
                 // setTitle(item.name)
-                props.dispatch(actions.setTitle(item.name));
+                // props.dispatch(actions.setTitle(item.name));
                 history.push(item.path);
               }}
             >
@@ -126,7 +126,7 @@ const Layouts = props => {
         //   </div>
         // )}
 
-        logo={() => <LogoCom></LogoCom>}
+        logo={() => <LogoCom className={`logoClass`}></LogoCom>}
         // Warning: pro-layout: renderPageTitle return value should be a string
         // headerTitleRender={() => (
         //   <div>
@@ -202,13 +202,6 @@ const Layouts = props => {
                 <div className="pageTitle">{title}</div>
               </div> */}
 
-              {isShowTitle && (
-                <PageTitle
-                  {...props}
-                  // title={title}
-                  className="titleWrapper"
-                ></PageTitle>
-              )}
               {/* <PageTitle
                 {...props}
                 title={title}

@@ -406,7 +406,7 @@ class ShiftsArrangeDetail extends PureComponent {
 
     return (
       <div className="shiftsArrangeDetail">
-        <PageTitle {...this.props} title={'新增/编辑排班'}></PageTitle>
+        {/* <PageTitle {...this.props} title={'新增/编辑排班'}></PageTitle> */}
 
         {this.renderSearchForm()}
 

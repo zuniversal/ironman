@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
 
 const InputCom = props => {
   console.log(' InputCom   props, ,   ： ', props);
-  const {wrapperClass, left, right,   } = props
+  const { wrapperClass, left, right, ...rest } = props;
   return (
     <div className={`inputFormWrapper ${wrapperClass}`}>
       {left && <div className="left">{left}</div>}
@@ -16,7 +16,7 @@ const InputCom = props => {
         label={props.label}
         colon={false}
       >
-        <Input name="logo" className={'inputCom w-64  '} {...props} />
+        <Input name="logo" className={'inputCom w-64  '} {...rest} />
       </Form.Item>
       {right && <div className="right">{right}</div>}
     </div>
@@ -24,7 +24,7 @@ const InputCom = props => {
 };
 
 InputCom.defaultProps = {
-  name: 'field_name',  
+  name: 'field_name',
 };
 
 InputCom.propTypes = {

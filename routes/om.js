@@ -53,7 +53,7 @@ export default [
   {
     path: '/om/shiftsArrangeDetail',
     component: '@/pages/om/ShiftsArrangeDetail',
-    title: '排班',
+    title: '新增/编辑排班',
   },
   {
     path: '/om/shiftsTransfer',

@@ -28,6 +28,6 @@ PageTitle.propTypes = {
   className: PropTypes.string,
 };
 
-// export default PageTitle;
-const mapStateToProps = ({ layout }) => ({ title: layout.title });
-export default connect(mapStateToProps)(PageTitle);
+export default PageTitle;
+// const mapStateToProps = ({ layout }) => ({ title: layout.title });
+// export default connect(mapStateToProps)(PageTitle);

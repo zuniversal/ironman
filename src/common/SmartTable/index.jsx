@@ -443,6 +443,10 @@ class SmartTable extends PureComponent {
       </SmartModal>
     );
   };
+  onPageChange = (pagination, filters, sorter, extra) => {
+    console.log('    onPageChange ： ', pagination, filters, sorter, extra);
+    // this.props.onPageChange &&
+  };
 
   render() {
     const {
@@ -512,6 +516,7 @@ class SmartTable extends PureComponent {
             type: selectionType,
             ...rowSelection,
           }}
+          onChange={this.props.onPageChange}
           pagination={pagination}
           rowClassName={(record, i) => ANIMATE.bounceIn}
           // rowClassName={(record, i) => ANIMATE.slideInRight}

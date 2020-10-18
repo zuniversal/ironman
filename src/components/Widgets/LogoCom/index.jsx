@@ -6,7 +6,7 @@ import Icon from '@/components/Widgets/Icons'; //
 
 const LogoCom = props => {
   // console.log(' LogoCom   props, ,   ： ', props,   );
-  return <Icon className="logoCom " icon="logo" />;
+  return <Icon className="logoCom " icon="logo" {...props} />;
 };
 
 export default LogoCom;
