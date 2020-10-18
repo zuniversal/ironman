@@ -9,8 +9,10 @@ import {
   tips,
   getLang,
   removeItems,
+  debounce,
 } from '@/utils';
 import axios from 'axios';
+// import debounce from 'lodash/debounce';
 // axios.defaults.baseURL = URL
 // axios.defaults.timeout = 30000
 // axios.defaults.headers.common['Authorization'] = getItems('token')
@@ -89,6 +91,10 @@ export class Request {
           'AFAJWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNjAzMTA0NzY1LCJlbWFpbCI6IiJ9.TRDom9uskFCpxECSODg02bnQEeqhgS55pohcVfFvD98';
         // this.http.store.dispatch({type: LOAD, data: true})
         //console.log(' codeExist 配置发送请求的信息 1s：', config, config.params, config.data, config.method, config.method === 'get' ? isUd(config.params) : isUd(config.data))
+        const { method } = config;
+        // if (method === 'get') {
+        //   debounce(http.get(url, { params: params }), 5000)
+        // }
 
         // config.data = wrapParams(config.data);
         config.data = config.datas = wrapParams(
@@ -155,6 +161,9 @@ const { http } = request;
 
 export const parseUrl = (url, params) => URL + url;
 
+// export const get = (url, params) => new Promise((resolve, reject) => debounce(resolve(http.get(url, { params: params }), 5000)));
+// export const get = (url, params) => new Promise((resolve, reject) => debounce(http.get(url, { params: params }), 5000));
+// export const get = (url, params) => debounce(http.get, url, { params: params }, 500);
 export const get = (url, params) => http.get(url, { params: params });
 export const post = (url, params, o) => http.post(url, params, o);
 export const put = (url, params) => http.put(url, params);

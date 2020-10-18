@@ -167,7 +167,7 @@ class Assets extends PureComponent {
       ...params,
     });
   };
-  onOk = async (props = {}, ) => {
+  onOk = async (props = {}) => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { form } = props; //
 
@@ -248,11 +248,17 @@ class Assets extends PureComponent {
     return (
       <AssetsSearchForm
         formBtn={this.renderFormBtn}
+        getHouseNo={this.props.getHouseNoAsync}
+        getPower={this.props.getPowerAsync}
+        getList={this.props.getListAsync}
+        dataList={this.props.dataList}
+        powerList={this.props.powerList}
+        houseNoList={this.props.houseNoList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></AssetsSearchForm>
     );
-  }
+  };
   // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
@@ -314,7 +320,7 @@ class Assets extends PureComponent {
     };
 
     return <AssetsTable {...tableProps}></AssetsTable>;
-  }
+  };
   getSize = e => {
     console.log('    getSize ： ', e, this.state, this.props);
     const { action } = this.state; //
@@ -338,7 +344,7 @@ class Assets extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props);
@@ -365,7 +371,7 @@ class Assets extends PureComponent {
         <ErrorInfo></ErrorInfo>
       </ResultModal>
     );
-  }
+  };
 
   render() {
     console.log(

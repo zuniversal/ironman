@@ -435,7 +435,6 @@ export const wrapParams = p => ({
 });
 
 export const backupFn = o => JSON.parse(JSON.stringify(o));
-let t;
 
 export const setItem = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 export const getItem = k => JSON.parse(localStorage.getItem(k));
@@ -444,9 +443,11 @@ export const setItems = (k, v) => sessionStorage.setItem(k, JSON.stringify(v));
 export const getItems = k => JSON.parse(sessionStorage.getItem(k));
 export const removeItems = k => sessionStorage.removeItem(k);
 
-export const debounce = (cb, v) => {
+let t;
+export const debounce = (cb, ...v) => {
+  console.log(' debounce cb, v ： ', cb, v); //
   if (t) clearTimeout(t);
-  t = setTimeout(() => cb(v), 300);
+  t = setTimeout(() => cb(...v), 300);
 };
 export const getAll = p => Promise.all(p).then(res => Promise.all(res));
 export const OPTIONS = p => ({ headers: { Authorization: p } });

@@ -36,6 +36,8 @@ const ClientForm = props => {
     },
     {
       formType: 'Search',
+      selectSearch: props.getXXXX,
+      selectData: props.XXXXList,
       itemProps: {
         label: '客户名称',
         name: 'name',

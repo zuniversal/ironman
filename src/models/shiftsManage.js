@@ -22,14 +22,15 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-const formatUserList = (data, ) => {
-  const res = data.map(v => ({ 
-    ...v, label: v.nickname, 
-    value: v.id, 
-  }))
-  console.log(' formatUserList res ： ', res,  )// 
-  return res
-}
+const formatUserList = data => {
+  const res = data.map(v => ({
+    ...v,
+    label: v.nickname,
+    value: v.id,
+  }));
+  console.log(' formatUserList res ： ', res); //
+  return res;
+};
 
 export default {
   namespace,
@@ -41,8 +42,8 @@ export default {
     syncOAData: {},
     portraitData: {},
     userList: [
-      { label: 'zyb', value: 'value1' },
-      { label: 'zyb1', value: 'value2' },
+      // { label: 'zyb', value: 'value1' },
+      // { label: 'zyb1', value: 'value2' },
     ],
   },
 
@@ -82,13 +83,13 @@ export default {
       console.log(' removeItem 修改  ： ', state, payload, type, this); //
       return {
         ...state,
-        dataList: state.dataList.filter((v) => v.id != payload.payload.d_id)
+        dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
       console.log(' removeItems 修改  ： ', state, payload, type, this); //
-      const removeList = payload.payload.id.split(',')
-      console.log(' removeList ： ', removeList,  )// 
+      const removeList = payload.payload.id.split(',');
+      console.log(' removeList ： ', removeList); //
       return {
         ...state,
         dataList: state.dataList.filter(v =>
@@ -100,7 +101,7 @@ export default {
       return {
         ...state,
         // userList: formatUserList(payload.list),
-        userList: formatSelectList(payload.list, 'nickname', ),
+        userList: formatSelectList(payload.list, 'nickname'),
       };
     },
   },
@@ -141,7 +142,6 @@ export default {
       console.log(' exportDataAsync ： ', payload, type); //
       const res = yield call(services.exportData, payload);
       console.log('  exportDataAsync res ：', res); //
-      // yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, payload);

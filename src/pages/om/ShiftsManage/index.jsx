@@ -267,6 +267,7 @@ class ShiftsManage extends PureComponent {
     const tableProps = {
       newTbData: this.state.newTbData,
 
+      onPageChange: this.props.onPageChange,
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
       showDetail: this.props.showFormModal,

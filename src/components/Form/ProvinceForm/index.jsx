@@ -21,9 +21,11 @@ import { regoins, province, site, city } from '@/configs'; //
 // import regoins from '@/configs/regions.js'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
-export const config = [
+export const config = props => [
   {
-    formType: 'Select',
+    formType: 'Search',
+    selectSearch: props.getArea,
+    selectData: props.areaList,
     noRule: true,
     itemProps: {
       label: '省',
@@ -37,7 +39,9 @@ export const config = [
     // customLabel: '自定义customLabel',
   },
   {
-    formType: 'Select',
+    formType: 'Search',
+    selectSearch: props.getArea,
+    selectData: props.areaList,
     noRule: true,
     itemProps: {
       label: '市',
@@ -50,7 +54,9 @@ export const config = [
     selectData: city,
   },
   {
-    formType: 'Select',
+    formType: 'Search',
+    selectSearch: props.getArea,
+    selectData: props.areaList,
     noRule: true,
     itemProps: {
       label: '县',
@@ -120,7 +126,7 @@ const ProvinceForm = props => {
       <SearchForm
         // flexRow={8}
         // config={config}
-        config={formatConfig(config)}
+        config={formatConfig(config(props))}
         formProps={formProps}
         // init={init}
         // init={{}}

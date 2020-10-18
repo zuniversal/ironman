@@ -46,7 +46,7 @@ export const action = type => payload => ({
   payload,
 });
 
-const crudConfigs = [
+export const crudConfigs = [
   'getListAsync',
   'getItemAsync',
   'addItemAsync',

@@ -15,7 +15,6 @@ const { createAction, createCRUD, batchTurn } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
-  'getPortraitAsync',
   'getTeamAsync',
   'exportDataAsync',
   'setSearchAsync',
@@ -253,7 +252,6 @@ export default {
       // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
       console.log('  exportDataAsync res ：', res); //
-      // yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
       console.log(' getTeamAsync ： ', payload); //

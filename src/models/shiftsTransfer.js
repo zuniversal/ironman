@@ -3,14 +3,13 @@ import * as services from '@/services/shiftsTransfer';
 import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
-import { formatSelectList } from '@/utils';
+import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'shiftsTransfer';
 const { createAction, createCRUD } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
-  'getPortraitAsync',
   'getTeamAsync',
   'getUserAsync',
   'getPowerAsync',
@@ -25,24 +24,13 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-export const formatTeamList = data => {
-  const res = data.map(v => ({
-    ...v,
-    label: v.name,
-    value: v.id,
-  }));
-  console.log(' formatTeamList res ： ', res); //
-  return res;
-};
-
-export const formatPowerList = data => {
-  const res = data.map(v => ({
-    ...v,
-    label: v.name,
-    value: v.id,
-  }));
-  console.log(' formatPowerList res ： ', res); //
-  return res;
+export const formatSearch = data => {
+  console.log(' formatSearch ： ', data); //
+  return {
+    ...data,
+    // page_size: 40,
+    data: data.data ? data.data.format('YYYY-MM') : nowYearMonth,
+  };
 };
 
 export const formatDetail = data => {
@@ -134,14 +122,15 @@ export default {
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: formatTeamList(payload.list),
+        teamList: formatSelectList(payload.list, 'name'),
       };
     },
   },
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getList, payload);
+      console.log(' getListAsync ： ', payload, action, type); //
+      const res = yield call(services.getList, formatSearch(payload));
       yield put(action(res));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
@@ -164,18 +153,19 @@ export default {
       // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
       console.log('  exportDataAsync res ：', res); //
-      // yield put(action({ ...res, payload }));
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(powerStationServices.getList, payload);
+      const res = yield call(powerStationServices.getList, {
+        keyword: payload,
+      });
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getList, payload);
+      const res = yield call(userServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(teamServices.getList, payload);
+      const res = yield call(teamServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
   },

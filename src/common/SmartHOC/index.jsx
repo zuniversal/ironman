@@ -16,6 +16,7 @@ import { tips } from '@/utils';
 import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
+import { SIZE } from '@/constants';
 
 /* 
   封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
@@ -385,7 +386,20 @@ export default ({
       }
     };
     onPageChange = (pagination, filters, sorter, extra) => {
-      console.log('    onPageChange ： ', pagination, filters, sorter, extra);
+      console.log(
+        '    onPageChange ： ',
+        pagination,
+        filters,
+        sorter,
+        extra,
+        this.state,
+        this.props,
+      );
+      const { current = 1, pageSize = SIZE } = pagination;
+      this.getList({
+        page: current,
+        page_size: pageSize,
+      });
     };
 
     renderSmartFormModal = params => {

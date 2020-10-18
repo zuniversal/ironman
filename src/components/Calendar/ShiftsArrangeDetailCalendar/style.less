@@ -1,18 +1,17 @@
 @import '../../../static/css/variable.less';
 
 .shiftsArrangeDetailCalendar {
-  .fc-daygrid-day-number{
-    width: 100%; 
+  .fc-daygrid-day-number {
+    width: 100%;
   }
-  
-  .fc-scrollgrid-section-header{
-    max-height: 37px!important;
-    height: 37px!important;
-    tr{
-      max-height: 37px!important;
-      height: 37px!important;
-    }
 
+  .fc-scrollgrid-section-header {
+    max-height: 37px !important;
+    height: 37px !important;
+    tr {
+      max-height: 37px !important;
+      height: 37px !important;
+    }
   }
   // .fc-scrollgrid-section{
   //   tr{
@@ -21,25 +20,26 @@
   //   }
 
   // }
-  
 
-  .dayCellClassNames{
+  .dayHeaderClassNames {
+    text-align: center !important;
+  }
+
+  .dayCellClassNames {
     width: 155px;
-    max-height: 80px!important;
-    height: 80px!important;
-    background: #FAFAFA;
+    max-height: 80px !important;
+    height: 80px !important;
+    background: #fafafa;
     .fc-daygrid-day-top {
       flex-direction: initial;
     }
-    .dayText{
+    .dayText {
       font-size: 14px;
       font-weight: 400;
-      color: #AAAAAA;
+      color: #aaaaaa;
     }
-    
   }
 
-  
   .fc-col-header-cell {
     // width: 110px;
     height: 37px;
@@ -59,16 +59,16 @@
     }
   }
 
-  &.smartCalendar{
+  &.smartCalendar {
     .fc-daygrid-event {
       // width: 90px;
       margin: 0 18px;
       height: 32px;
-      background: #18B263;
+      background: #18b263;
       // opacity: 0.1;
       border-radius: 2px;
       border-color: #fff;
-  
+
       .fc-event-title {
         font-size: 14px;
         font-weight: 400;
@@ -76,7 +76,5 @@
         color: #1bb65c;
       }
     }
-
   }
-
 }

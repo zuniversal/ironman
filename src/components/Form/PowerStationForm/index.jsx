@@ -127,12 +127,18 @@ const PowerStationForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getXXXX,
+      selectData: props.XXXXList,
       itemProps: {
         label: '所属客户',
         // name: '',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getXXXX,
+      selectData: props.XXXXList,
       itemProps: {
         label: '户号',
         // name: 'electricity_user',

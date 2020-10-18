@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/assets';
 import * as powerStationServices from '@/services/powerStation';
+import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList } from '@/utils';
 
 const namespace = 'assets';
@@ -8,11 +9,11 @@ const { createAction, createCRUD } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
-  'getPortraitAsync',
   'uploadFileAsync',
   'exportDataAsync',
   'getTemplatAsync',
   'getPowerAsync',
+  'getHouseNoAsync',
 ];
 
 export const actions = {
@@ -34,6 +35,7 @@ export default {
     syncOAData: [],
     portraitData: {},
     powerList: [],
+    houseNoList: [],
   },
 
   reducers: {
@@ -103,9 +105,17 @@ export default {
       };
     },
     getPower(state, { payload, type }) {
+      // console.log(' getPower 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         powerList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getPower(state, { payload, type }) {
+      // console.log(' getPower 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        houseNoList: formatSelectList(payload.list, 'name'),
       };
     },
   },
@@ -114,8 +124,6 @@ export default {
     *getListAsync(params, { call, put }) {
       const { payload, action, type } = params;
       console.log(' getListAsync ： ', payload, action, type, params); //
-      // const params = { name: 'zyb',  }
-      // const res = yield call(services.getList, params)
       const res = yield call(services.getList, payload);
       console.log('  getListAsync res ：', res); //
       yield put(action(res));
@@ -159,12 +167,6 @@ export default {
         payload: res,
       });
     },
-    *getPortraitAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getPortraitAsync ： ', payload, type,     )//
-      const res = yield call(services.getPortrait, payload);
-      console.log('  getPortrait res ：', res); //
-      yield put(action({ ...res, payload }));
-    },
 
     *uploadFile({ payload, action, type }, { call, put }) {
       // console.log(' uploadFile ： ', payload, type,     )//
@@ -188,7 +190,13 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(powerStationServices.getList, payload);
+      const res = yield call(powerStationServices.getList, {
+        keyword: payload,
+      });
+      yield put(action({ ...res, payload }));
+    },
+    *getHouseNoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(houseNoServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
   },

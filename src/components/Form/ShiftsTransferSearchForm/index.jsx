@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -61,7 +61,7 @@ const ShiftsTransferSearchForm = props => {
       formType: 'MonthPicker',
       itemProps: {
         label: '选择日期',
-        name: 'created_time',
+        name: 'data',
       },
     },
     // {

@@ -181,11 +181,7 @@ const Layouts = props => {
         {...settings}
       >
         <Suspense fallback={null}>
-          <Spin
-            // spinning={loading}
-            spinning={false}
-            className={'spinWrapper'}
-          >
+          <Spin spinning={loading} spinning={false} className={'spinWrapper'}>
             <Content
               key={pathname}
               // className={`${ANIMATE.flash} container `}

@@ -443,10 +443,6 @@ class SmartTable extends PureComponent {
       </SmartModal>
     );
   };
-  onPageChange = (pagination, filters, sorter, extra) => {
-    console.log('    onPageChange ： ', pagination, filters, sorter, extra);
-    // this.props.onPageChange &&
-  };
 
   render() {
     const {

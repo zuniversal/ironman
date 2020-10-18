@@ -25,35 +25,35 @@ import { regoins } from '@/configs'; //
 
 console.log(' config ： ', config); //
 
-export const configs = [
-  ...config,
-  {
-    formType: 'Divider',
-    itemProps: {
-      label: '',
-    },
-    comProps: {},
-  },
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '',
-      name: 'keyword',
-      className: 'w50',
-    },
-    comProps: {
-      suffix: <SearchOutlined className="searchIcon" />,
-      // suffixIcon: <SearchOutlined className="searchIcon" />,
-    },
-  },
-];
-
 const ClientSearchForm = props => {
   console.log(' ClientSearchForm ： ', props); //
 
   const [form] = Form.useForm();
 
   const { formBtn, ...rest } = props; //
+
+  const configs = [
+    ...config(props),
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+        className: 'w50',
+      },
+      comProps: {
+        suffix: <SearchOutlined className="searchIcon" />,
+        // suffixIcon: <SearchOutlined className="searchIcon" />,
+      },
+    },
+  ];
 
   const formProps = {
     // layout: 'vertical',
