@@ -26,7 +26,7 @@ const ClientRadar = props => {
 
   return (
     <div className={''}>
-      <SmartEcharts data={[]} type="radar" radar={[]} {...props}></SmartEcharts>
+      {/* <SmartEcharts data={[]} type="radar" radar={[]} {...props}></SmartEcharts> */}
     </div>
   );
 };

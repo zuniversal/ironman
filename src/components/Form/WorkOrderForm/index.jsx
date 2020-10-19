@@ -58,7 +58,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '创建时间',
-        name: '',
+        name: 'created_time',
       },
     },
     {
@@ -116,7 +116,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '处理人',
-        name: 'person_liable',
+        name: 'recipient.name',
       },
     },
     {

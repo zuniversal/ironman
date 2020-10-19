@@ -38,6 +38,7 @@ import CsHomeMonitorVideo from '@/components/Widgets/CsHomeMonitorVideo';
 import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 
 import { actions, mapStateToProps } from '@/models/csHome'; //
+import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
 export const TITLE = '排班';
@@ -54,6 +55,10 @@ const titleMap = {
 // const mapStateToProps = ({ client, }) => client;
 
 @connect(mapStateToProps)
+@SmartHOC({
+  actions,
+  titleMap,
+})
 class CsHome extends PureComponent {
   constructor(props) {
     super(props);

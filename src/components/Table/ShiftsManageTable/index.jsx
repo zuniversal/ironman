@@ -24,6 +24,7 @@ import {
   InputNumber,
 } from 'antd';
 
+import { onDutyTypeMap } from '@/configs'; //
 import SmartTable from '@/common/SmartTable'; //
 import { Link } from 'umi'; //
 
@@ -49,6 +50,7 @@ const ShiftsManageTable = props => {
     {
       title: '班组类型',
       dataIndex: 'type',
+      dataMap: onDutyTypeMap,
     },
     {
       title: '车辆牌照',

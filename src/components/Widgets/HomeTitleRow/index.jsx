@@ -4,7 +4,7 @@ import { Form, Input } from 'antd';
 import PageTitle from '@/components/Widgets/PageTitle'; //
 import Icon from '@/components/Widgets/Icons'; //
 
-const HomeSettingBtn = props => {
+export const HomeSettingBtn = props => {
   return (
     <div className="settingWrapper" onClick={props.showSetting}>
       {/* <Icon icon={'setting'} ></Icon> */}
@@ -17,7 +17,7 @@ const HomeSettingBtn = props => {
 const HomeTitleRow = props => {
   return (
     <div className="homeTitleRow fsb ">
-      <PageTitle {...props} noPadding ></PageTitle>
+      <PageTitle {...props}></PageTitle>
       <HomeSettingBtn {...props}></HomeSettingBtn>
     </div>
   );

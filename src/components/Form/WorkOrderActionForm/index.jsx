@@ -30,6 +30,7 @@ const config = [
     formType: 'Select',
     itemProps: {
       label: '分配给',
+      name: 'handler',
     },
     comProps: {
       className: 'w-280',

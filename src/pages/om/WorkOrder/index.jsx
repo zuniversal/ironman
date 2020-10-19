@@ -240,8 +240,8 @@ class WorkOrder extends PureComponent {
 
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
-      showDetail: this.showDetail,
-      // showDetail: this.props.showFormModal,
+      // showDetail: this.showDetail,
+      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
       edit: this.props.showFormModal,
       remove: this.props.onRemove,
@@ -249,11 +249,16 @@ class WorkOrder extends PureComponent {
       exportData: this.props.exportData,
       dispatchOrder: this.dispatchOrder,
       add: this.props.showFormModal,
-      // addTicket: this.addTicket,
+      addTicket: this.addTicket,
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
   };
+
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return this.state.action === 'dispatchOrder' ? 'small' : 'default';
+  }
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -266,7 +271,7 @@ class WorkOrder extends PureComponent {
         onCancel={this.onCancel}
         action={action}
         titleMap={titleMap}
-        size={'small'}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartModal>

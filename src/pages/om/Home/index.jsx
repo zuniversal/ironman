@@ -29,17 +29,21 @@ import SearchForm from '@/common/SearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import HomeSettingForm from '@/components/Form/HomeSettingForm'; //
 import HomeInspectMissionTable from '@/components/Table/HomeInspectMissionTable';
 import HomeWorkOrderTable from '@/components/Table/HomeWorkOrderTable';
 import DropDownBtn from '@/common/DropDownBtn'; //
 import HomeStatBox from '@/components/Widgets/HomeStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
-import HomeTitleRow from '@/components/Widgets/HomeTitleRow';
+import HomeTitleRow, {
+  HomeSettingBtn,
+} from '@/components/Widgets/HomeTitleRow';
 
-import { actions, mapStateToProps } from '@/models/client'; //
+import { actions, mapStateToProps } from '@/models/home'; //
+import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-export const TITLE = '排班';
+export const TITLE = '首页';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -48,11 +52,17 @@ const titleMap = {
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
+  setting: `${TITLE}设置`,
 };
 
 // const mapStateToProps = ({ client, }) => client;
 
 @connect(mapStateToProps)
+@SmartHOC({
+  actions,
+  titleMap,
+  // modalForm: HomeSettingForm,
+})
 class Home extends PureComponent {
   constructor(props) {
     super(props);
@@ -184,7 +194,38 @@ class Home extends PureComponent {
     console.log('    showSetting ： ', e);
     this.setState({
       show: true,
+      action: 'setting',
+      modalForm: HomeSettingForm,
     });
+  };
+
+  renderModalForm = e => {
+    console.log('    renderModalForm ： ', e, this.state, this.props);
+    const { modalForm } = this.state; //
+    if (modalForm) {
+      return modalForm;
+    }
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+    const { show, title, action, titleMap } = this.state; //
+
+    return (
+      <SmartFormModal
+        // width={'900px'}
+
+        title={title}
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+        // formComProps={formComProps}
+        FormCom={this.renderModalForm()}
+      >
+        {/* {this.renderFormModalContent()} */}
+      </SmartFormModal>
+    );
   };
 
   render() {
@@ -201,11 +242,14 @@ class Home extends PureComponent {
           {...this.props}
           title={this.getPageTitle()}
           showSetting={this.showSetting}
+          // right={<HomeSettingBtn showSetting={this.showSetting} ></HomeSettingBtn>}
         ></HomeTitleRow>
+
         {this.renderHomeStatBox()}
         {this.renderHomeStatEcharts()}
         {this.renderHomeInspectMissionTable()}
         {this.renderHomeWorkOrderTable()}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

@@ -55,6 +55,13 @@ export const teamTypeConfig = [
   },
 ];
 
+export const teamTypeMap = {
+  0: '调度',
+  1: '值班',
+  2: '巡检',
+  3: '抢修',
+};
+
 export const onDutyTypeConfig = [
   {
     value: 0,
@@ -65,6 +72,11 @@ export const onDutyTypeConfig = [
     label: '值班',
   },
 ];
+
+export const onDutyTypeMap = {
+  0: '调度',
+  1: '值班',
+};
 
 export const site = province;
 export const city = province;

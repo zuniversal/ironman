@@ -69,21 +69,19 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
-      formType: 'Radio',
+      formType: 'DatePicker',
       itemProps: {
         label: '施工日期',
         name: 'work_date',
       },
     },
     {
-      formType: 'Radio',
       itemProps: {
         label: '施工人员',
         name: 'team_id',
       },
     },
     {
-      formType: 'Radio',
       itemProps: {
         label: '施工负责人',
         name: 'person_liable',

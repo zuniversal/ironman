@@ -38,12 +38,12 @@ const AssetsForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getHouseNo,
-      selectData: props.houseNoList,
+      // formType: 'Search',
+      // selectSearch: props.getHouseNo,
+      // selectData: props.houseNoList,
       itemProps: {
         label: '户号',
-        // name: '',
+        name: '',
       },
     },
     {

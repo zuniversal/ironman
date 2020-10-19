@@ -88,7 +88,7 @@ const AssetsTable = props => {
   return (
     <SmartTable
       columns={columns}
-      rowKey={'code'}
+      // rowKey={'code'}
       isQRCode
       {...props}
     ></SmartTable>

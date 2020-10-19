@@ -15,6 +15,11 @@ import {
 import moment from 'moment';
 import business from 'moment-business';
 
+export const getDataMap = (text, dataMap) => {
+  const val = dataMap[text];
+  return val ? val : '没有匹配';
+};
+
 export const formatSelectList = (data, labelKey = 'label', idKey = 'id') => {
   const res = data.map(v => ({
     ...v,
@@ -484,8 +489,16 @@ export const createProperty = (arr, f) => {
   return origin;
 };
 
-export const getToken = (k = 'user_info') =>
-  getItem(k) != undefined ? getItem(k).token : '';
+export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
+  console.log(' prefix, k ： ', prefix, k); //
+  const token =
+    localStorage.getItem(k) != undefined
+      ? localStorage.getItem(k)
+      : '本地没有token';
+  return prefix + token;
+};
+// export const getToken = (k = 'user_info') =>
+//   getItem(k) != undefined ? getItem(k).token : '';
 
 export const wipe = (s, t = 'px') => s.substring(0, s.lastIndexOf(t));
 export const dateForm = (d, j = '-', s = '-') =>

@@ -24,47 +24,39 @@ import {
   InputNumber,
 } from 'antd';
 
-import { onDutyTypeMap } from '@/configs'; //
 import SmartTable from '@/common/SmartTable'; //
 
-const ShiftsTransferTable = props => {
-  console.log(' ShiftsTransferTable  ： ', props); //
-  const { showModal, edit, remove, tdClick, showTransferDetail } = props; //
+const CsHomeInspectTable = props => {
+  console.log(' CsHomeInspectTable  ： ', props); //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      title: 'id',
-      dataIndex: 'id',
+      title: '巡检ID',
     },
     {
-      title: '交班人',
-      dataIndex: 'transfer_team',
+      title: '巡检名称',
     },
     {
-      title: '接班人',
-      dataIndex: 'recieve_team',
+      title: '巡检状态',
     },
     {
-      title: '类型',
-      dataIndex: 'type',
-      dataMap: onDutyTypeMap,
+      title: '巡检人',
     },
     {
-      title: '创建时间',
-      dataIndex: 'handover_time',
+      title: '完成时间',
+    },
+    {
+      title: '巡检结果',
+    },
+    {
+      title: '是否有缺陷登记',
     },
   ];
 
-  // const extra = (text, record, index, ) => {
-  //   console.log(' text, record, index  ： ', text, record, index); //
-  //   return (
-  //     <>
-  //       <a onClick={() => showDetail({ action: 'detail', record: record.id })}>查看</a>
-  //     </>
-  //   )
-  // };
   const extra = (text, record, index, props) => (
     <>
+      <div>处理</div>
       <a
         onClick={() => {
           console.log(' propsprops ： ', props); //
@@ -76,7 +68,7 @@ const ShiftsTransferTable = props => {
           });
         }}
       >
-        查看
+        查看缺陷
       </a>
     </>
   );
@@ -86,7 +78,6 @@ const ShiftsTransferTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-
       extra={extra}
       noDefault
       {...props}
@@ -94,8 +85,8 @@ const ShiftsTransferTable = props => {
   );
 };
 
-ShiftsTransferTable.defaultProps = {
+CsHomeInspectTable.defaultProps = {
   tdClick: () => {},
 };
 
-export default ShiftsTransferTable;
+export default CsHomeInspectTable;

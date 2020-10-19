@@ -35,17 +35,39 @@ const option = params => {
       data: ['数据源1', '数据源2', '平均温度'],
       // data: myExpenseBarTxt
     },
+    // xAxis: [
+    //   {
+    //     type: 'category',
+    //     // data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //     // data: ["Airfare", "Hotel", "Meal", "Transportation", "Entertainment", "Purchase", "Other", "Visa", "Courier"],
+    //     data: tabData,
+    //     axisPointer: {
+    //       type: 'shadow',
+    //     },
+    //     // https://www.echartsjs.com/zh/option.html#xAxis.axisLabel.rotate
+    //     axisLabel: { rotate: -30 },
+    //   },
+    // ],
     xAxis: [
       {
         type: 'category',
-        // data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        // data: ["Airfare", "Hotel", "Meal", "Transportation", "Entertainment", "Purchase", "Other", "Visa", "Courier"],
-        data: tabData,
+        data: [
+          '00:00',
+          '02:00',
+          '04:00',
+          '06:00',
+          '08:00',
+          '10:00',
+          '12:00',
+          '14:00',
+          '16:00',
+          '18:00',
+          '20:00',
+          '22:00',
+        ],
         axisPointer: {
           type: 'shadow',
         },
-        // https://www.echartsjs.com/zh/option.html#xAxis.axisLabel.rotate
-        axisLabel: { rotate: -30 },
       },
     ],
     yAxis: [
@@ -54,7 +76,7 @@ const option = params => {
         name: 'Amount',
         axisLabel: {
           formatter: '{value}',
-          rotate: 30,
+          // rotate: 30,
         },
       },
       {
@@ -62,7 +84,7 @@ const option = params => {
         name: 'Expense Trend',
         axisLabel: {
           formatter: '{value}',
-          rotate: 30,
+          // rotate: 30,
         },
       },
     ],
@@ -82,8 +104,17 @@ const option = params => {
         name: '数据源1',
         type: 'line',
         yAxisIndex: 1,
+        symbol: 'circle',
+        symbolSize: 8,
+        itemStyle: {
+          normal: {
+            color: '#FD7D7D',
+            borderWidth: 10,
+            borderColor: '#FD7D7D', //拐点边框颜色
+          },
+        },
         data: [
-          2.6,
+          92.6,
           5.9,
           9.0,
           26.4,
@@ -94,15 +125,22 @@ const option = params => {
           48.7,
           18.8,
           6.0,
-          2.3,
+          82.3,
         ],
       },
       {
         name: '数据源2',
         type: 'line',
         yAxisIndex: 1,
+        itemStyle: {
+          normal: {
+            color: '#1CBB51',
+            borderWidth: 10,
+            borderColor: '#1CBB51', //拐点边框颜色
+          },
+        },
         data: [
-          21.6,
+          51.6,
           51.9,
           91.0,
           261.4,
@@ -113,7 +151,7 @@ const option = params => {
           481.7,
           181.8,
           61.0,
-          2.3,
+          52.3,
         ],
       },
     ],

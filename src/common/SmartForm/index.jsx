@@ -37,6 +37,7 @@ import {
   formatConfig,
   renderCheckboxOp,
 } from '@/utils'; //
+import debounce from 'lodash/debounce';
 
 const animates = ANIMATE.bounceIn;
 
@@ -425,12 +426,12 @@ const SmartForm = (props, state) => {
       // onSelect: onSelect,
     };
     if (formType === 'Search') {
-      console.log(' selectSearch ： ', item.selectSearch,   )// 
+      console.log(' selectSearch ： ', item.selectSearch); //
       selectProps.showArrow = false;
-      selectProps.optionFilterProp = "children";
+      selectProps.optionFilterProp = 'children';
       if (item.selectSearch) {
-        // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的 
-        selectProps.onSearch = item.selectSearch;
+        // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的
+        selectProps.onSearch = debounce(item.selectSearch, 500);
       }
     }
     const selectCom = (
@@ -476,7 +477,14 @@ const SmartForm = (props, state) => {
     };
 
     const formItemCom = formItemMap[formType];
-    // console.log(' formItemCom ： ', formItemCom, formItemMap, formType, items, formLabel,  )//
+    console.log(
+      ' formItemCom ： ',
+      formItemCom,
+      formItemMap,
+      formType,
+      items,
+      formLabel,
+    ); //
 
     if (!formItemCom) {
       return <div key={Math.random()}>没有匹配</div>;

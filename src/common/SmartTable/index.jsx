@@ -17,7 +17,7 @@ import ActionCol from './ActionCol'; //
 import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
-import { tips, mockTbData, foramtText } from '@/utils'; //
+import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
 import { Link } from 'umi'; //
 
 /* 
@@ -230,13 +230,17 @@ class SmartTable extends PureComponent {
     //   return config.render
     // }
 
-    const { linkUrl, linkUrlFn, link, d_item, render } = config;
+    const { linkUrl, linkUrlFn, link, d_item, render, dataMap } = config;
 
     const { showDetail, rowKey } = this.props; //
 
     const textLength = `${text}`.length;
     // const txt = foramtText(`${text}`)
-    const txt = foramtText(text);
+    let txt = foramtText(text);
+    if (dataMap) {
+      txt = getDataMap(txt, dataMap);
+    }
+
     // const txt = textLength > lengthLimit ? `${text}`.slice(0, lengthLimit) + '...' : text
 
     // console.log('  渲染=== ：', text, txt, )//

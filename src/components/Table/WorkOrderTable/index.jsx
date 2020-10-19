@@ -35,6 +35,7 @@ const WorkOrderTable = props => {
     tdClick,
     dispatchOrder,
     exportData,
+    showDetail,
     addTicket,
     add,
   } = props; //
@@ -84,10 +85,10 @@ const WorkOrderTable = props => {
 
   const extra = props => (
     <>
+      <a onClick={() => showDetail({ action: 'detail' })}>xx详情</a>
       <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
       <a onClick={() => exportData({ action: 'exportData' })}>导出</a>
-      <a onClick={() => add({ action: 'add' })}>添加工作票</a>
-      {/* <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a> */}
+      <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a>
     </>
   );
 

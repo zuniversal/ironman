@@ -5,6 +5,7 @@ export const isDev = process.env.NODE_ENV === 'development';
 // export const BASE_URL = `http://yapi.afafa.com.cn/mock/17/api/v1/console/`;
 // export const BASE_URL = `http://188.131.235.243:31002/api/v1/console/`;
 export const BASE_URL = `/api/v1/console/`;
+// export const BASE_URL = `/api/v1/cnosole/`;
 
 export const URL = `${BASE_URL}`;
 

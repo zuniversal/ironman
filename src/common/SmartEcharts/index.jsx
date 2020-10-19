@@ -64,6 +64,8 @@ class SmartEcharts extends React.PureComponent {
         : type === 'bar'
         ? optionMap[type](this.props)
         : optionMap[type](this.props, legend);
+
+    // const options = getOption(props.option)
     console.log(
       ' SmartEcharts myExpenseBar ：',
       type,
@@ -84,6 +86,7 @@ class SmartEcharts extends React.PureComponent {
         theme={'theme_name'}
         onChartReady={this.onChartReadyCallback}
         onEvents={onEvents}
+        {...this.props}
       />
     );
   }

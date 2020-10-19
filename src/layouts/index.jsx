@@ -25,10 +25,11 @@ import { actions } from '@/models/layout'; //
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
-// import { test,  } from '@/services/test'//
-// const res = test().then(res => {
-//   console.log('  resresres2  ： ', res,  )
-
+// import { login,  } from '@/services/user'//
+import axios from 'axios'; //
+// const res = axios.post('/api/v1/login', {username: 'admin', password: 'afafa',  }).then(res => {
+//   console.log('  login  ： ', res,  )
+//   // localStorage.setItem('token', res.data.token)
 // })
 
 const { Header, Sider, Content } = Layout;

@@ -3,6 +3,7 @@ import * as services from '@/services/assets';
 import * as powerStationServices from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList } from '@/utils';
+import moment from 'moment'; //
 
 const namespace = 'assets';
 const { createAction, createCRUD } = init(namespace);
@@ -43,7 +44,7 @@ export default {
       // console.log(' getList 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        dataList: [payload.list],
+        dataList: payload.list,
       };
     },
     getItem(state, { payload, type }) {
@@ -51,8 +52,15 @@ export default {
       return {
         ...state,
         d_id: payload.payload.d_id,
-        // dataList: [payload.bean, ],
+        itemDetail: {
+          ...payload.bean,
+          d_id: payload.payload.d_id,
+          created_time: moment(),
+          production_date: moment(),
+          operation_date: moment(),
+        },
       };
+      production_date;
     },
     addItem(state, { payload, type }) {
       console.log(' addItem 修改  ： ', state, payload, type); //
@@ -105,7 +113,7 @@ export default {
       };
     },
     getPower(state, { payload, type }) {
-      // console.log(' getPower 修改  ： ', state, payload, type,     )//
+      console.log(' getPower 修改  ： ', state, payload, type); //
       return {
         ...state,
         powerList: formatSelectList(payload.list, 'name'),
@@ -130,7 +138,7 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       console.log(' getItemAsync ： ', payload, type); //
-      const res = yield call(services.getItem, payload);
+      const res = yield call(services.getItem, { id: payload.d_id });
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
