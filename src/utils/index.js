@@ -180,7 +180,9 @@ export const mockFormData = (config, init) => {
         // Dynamic: ['值1', '值2',  ],
         // Dynamic: 'Dynamic初始值',
 
+        // 注意 如果Dynamic初始字段键名与内部键名不一致会导致虽然有相应数据量输入框 但是无值
         Dynamic: [{ first: 2222 }, { first: 333 }],
+        // Dynamic: [{}, ],
         // DynamicItem: ['值1', '值2',  ],
         DynamicItem: [1, 2],
       }[formType];
@@ -205,8 +207,15 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
       // itemProps: v.rowText || typeof type === 'function' ? { ...v.itemProps, key: `key${i}`,  } : { ...v.itemProps, key: `key${i}`, name: `name${i}` },
       itemProps:
-        v.rowText || v.formType === 'Dynamic' || v.formType === 'rowText'
-          ? { ...v.itemProps, key: `field${i}` }
+        v.rowText ||
+        v.formType === 'Dynamic' ||
+        v.formType === 'DynamicItem' ||
+        v.formType === 'rowText' ||
+        v.formType === 'PropsCom'
+          ? {
+              ...v.itemProps,
+              key: v.itemProps?.name ? v.itemProps.name : `field${i}`,
+            }
           : // : { ...v.itemProps, key: `field${i}`,  },
             {
               ...v.itemProps,

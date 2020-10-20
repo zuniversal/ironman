@@ -382,6 +382,14 @@ const DynamicForm = props => {
                 </Form.Item>
               );
 
+              // if (formType === 'DynamicArr') {
+              //   console.log(' selectSearch ： ', props.selectSearch,   )//
+              //   selectProps.showArrow = false;
+              //   selectProps.optionFilterProp = "children";
+              //   if (props.selectSearch) {
+              //     selectProps.onSearch = props.selectSearch;
+              //   }
+              // }
               return extra ? (
                 <Form.Item
                   // <Form.Item
@@ -396,7 +404,7 @@ const DynamicForm = props => {
                     // name= "field19"
                     //  {...rest}
                     // name={field.name}
-                    name={[field.name, 'first']}
+                    name={[field.name, itemProps.name]}
                     // name={[field.key, 'first']}
                     {...formItemProps}
                     //  rules={rules}

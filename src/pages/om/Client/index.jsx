@@ -66,6 +66,18 @@ class Client extends PureComponent {
     };
   }
 
+  addUserAsync = async props => {
+    console.log(' addUserAsync ： ', props, this.state, this.props);
+    const { action } = this.state; //
+    const { propsForm } = props; //
+    try {
+      const res = await propsForm.validateFields();
+      console.log('  res await 结果  ：', res); //
+      // this.props.addUserAsync(res)
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -91,6 +103,8 @@ class Client extends PureComponent {
               action: 'add',
               formComProps: {
                 getCapture: this.showCapture,
+                // addUserAsync: this.props.addUserAsync,
+                addUserAsync: this.addUserAsync,
               },
             })
           }

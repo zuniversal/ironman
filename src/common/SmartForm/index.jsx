@@ -167,20 +167,21 @@ const SmartForm = (props, state) => {
   const [initData, setInitData] = useState(() => {
     const dynamicFields = configs
       .filter(v => v.formType === 'Dynamic' || v.formType === 'DynamicItem')
-      .map(v => v.itemProps.key);
+      .map(v => v.itemProps.name);
     const obj = {};
     dynamicFields.forEach(v => (obj[v] = ['']));
-    console.log(' 惰性初始state   ： ', obj, dynamicFields);
+    console.log(' 惰性初始state   ： ', configs, obj, dynamicFields);
     return obj;
   });
 
-  // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
-  const initialValues = Object.keys(init).length
-    ? init
-    : // : isMockData && (action && action !== 'add')
-    isMockData && true
-    ? mockFormData(configs, init)
-    : initData;
+  // // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
+  // const initialValues = Object.keys(init).length
+  //   ? init
+  //   : // : isMockData && (action && action !== 'add')
+  //   isMockData && true
+  //   ? mockFormData(configs, init)
+  //   : initData;
+  const initialValues = mockFormData(configs, init);
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
   console.log(
     ' SmartForm initialValues ： ',
@@ -312,6 +313,7 @@ const SmartForm = (props, state) => {
       isSearchForm,
       searchSuffix,
       CustomCom,
+      PropsCom,
       noLabel,
       LabelCom,
     } = items;
@@ -465,7 +467,7 @@ const SmartForm = (props, state) => {
           <Input />
         </AutoComplete>
       ),
-      Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
+      // Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
       // CheckboxGroup: <Checkbox.Group {...realComProps} />,
       Checkbox: renderCheckboxOp(checkboxData, opType),
       Radio: renderRadioOp(radioData, opType),
@@ -485,6 +487,14 @@ const SmartForm = (props, state) => {
       items,
       formLabel,
     ); //
+
+    if (formType === 'PropsCom') {
+      return (
+        <Form.Item labelAlign={'left'} {...rowLayout} {...formItemNoRuleProps}>
+          {PropsCom(props)}
+        </Form.Item>
+      );
+    }
 
     if (!formItemCom) {
       return <div key={Math.random()}>没有匹配</div>;

@@ -21,10 +21,98 @@ import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
+export const AdminForm = props => {
+  console.log(' AdminForm ： ', props); //
+  const { action, getCapture, addUserAsync } = props; //
+
+  const config = [
+    {
+      formType: 'Dynamic',
+      itemProps: {
+        // label: '',
+        label: '用户名',
+        name: 'admin',
+        className: 'noMargin',
+      },
+      comProps: {
+        extra: true,
+        itemProps: {
+          label: '用户名',
+        },
+        comProps: {
+          className: 'w-320',
+        },
+      },
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '密码',
+        // name: 'pwd',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '手机号',
+        // name: 'phone',
+      },
+      comProps: {},
+    },
+    {
+      formType: 'PropsCom',
+      PropsCom: props => (
+        <div className="dfc">
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(' props addUserAsync ： ', props); //
+              addUserAsync(props);
+            }}
+          >
+            保存管理员信息
+          </Button>
+        </div>
+      ),
+      itemProps: {
+        label: ' ',
+        // className: 'dfc',
+      },
+    },
+  ];
+
+  // {
+  //   formType: 'CustomCom',
+  //   CustomCom: <AdminForm {...props}></AdminForm>,
+  // },
+
+  const formProps = {
+    // layout: 'vertical',
+    // layout: 'inline',
+  };
+
+  return (
+    <div className={' InspectMissionAssignForm '}>
+      <SmartForm
+        // flexRow={6}
+        // config={config}
+        config={formatConfig(config)}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
+
+        noRuleAll
+        {...props}
+      ></SmartForm>
+    </div>
+  );
+};
+
 const ClientForm = props => {
   console.log(' ClientForm ： ', props); //
 
-  const { getCapture } = props; //
+  const { action, getCapture, addUserAsync } = props; //
 
   const config = [
     {
@@ -35,9 +123,9 @@ const ClientForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getXXXX,
-      selectData: props.XXXXList,
+      // formType: 'Search',
+      // selectSearch: props.getXXXX,
+      // selectData: props.XXXXList,
       itemProps: {
         label: '客户名称',
         name: 'name',
@@ -45,7 +133,7 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '客户类型',
         name: 'type',
@@ -53,7 +141,7 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '所属行业',
         name: 'industry',
@@ -61,7 +149,7 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '企业规模',
         name: 'scale',
@@ -69,21 +157,21 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '资产规模',
         name: 'asset',
       },
       comProps: {},
     },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '总面积',
-        name: 'total_area',
-      },
-      comProps: {},
-    },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '总面积',
+    //     name: 'total_area',
+    //   },
+    //   comProps: {},
+    // },
     {
       // formType: 'Select',
       itemProps: {
@@ -92,15 +180,14 @@ const ClientForm = props => {
       },
       comProps: {},
     },
-    // {
-    //   // formType: 'Select',
-    //   itemProps: {
-    //     label: '企业LoGo',
-    //     name: 'logo',
-    //   },
-    //   comProps: {},
-    // },
-    <UploadCom label={'企业LoGo'} key={'logo'}></UploadCom>,
+    {
+      itemProps: {
+        label: '企业LoGo',
+        name: 'logo',
+      },
+      comProps: {},
+    },
+    // <UploadCom label={'企业LoGo'} key={'logo'}></UploadCom>,
 
     {
       formType: 'rowText',
@@ -151,6 +238,7 @@ const ClientForm = props => {
         label: '管理员信息',
       },
     },
+
     {
       formType: 'Dynamic',
       itemProps: {
@@ -169,21 +257,94 @@ const ClientForm = props => {
         },
       },
     },
+    // {
+    //   formType: 'Dynamic',
+    //   itemProps: {
+    //     // label: '',
+    //     label: '用户名',
+    //     // name: 'admin',
+    //     className: 'noMargin',
+    //   },
+    //   comProps: {
+    //     extra: true,
+    //     // noRule: true,
+    //     // formType: 'DynamicArr',
+    //     config: [
+    //       {
+    //         itemProps: {
+    //           name: 'nickname',
+    //           label: '用户名',
+    //         },
+    //         comProps: {
+    //           className: 'w-320',
+    //         },
+    //       },
+    //       {
+    //         itemProps: {
+    //           label: '密码',
+    //           name: 'password',
+    //         },
+    //         comProps: {},
+    //         // noRule: true,
+    //       },
+    //       {
+    //         itemProps: {
+    //           label: '手机号',
+    //           name: 'phone',
+    //         },
+    //         comProps: {},
+    //         // noRule: true,
+    //       },
+    //     ],
+    //     itemProps: {
+    //       name: 'nickname',
+    //       name: 'first',
+    //       label: '用户名',
+    //     },
+    //     comProps: {
+    //       className: 'w-320',
+    //     },
+    //   },
+    // },
+
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '密码',
+    //     name: 'password',
+    //   },
+    //   comProps: {},
+    //   noRule: true,
+    // },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '手机号',
+    //     name: 'phone',
+    //   },
+    //   comProps: {},
+    //   noRule: true,
+    // },
+
     {
-      // formType: 'Select',
-      itemProps: {
-        label: '密码',
-        // name: 'pwd',
-      },
-      comProps: {},
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '手机号',
-        // name: 'phone',
-      },
-      comProps: {},
+      formType: 'PropsCom',
+      PropsCom: props => (
+        <div className="dfc">
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(' props addUserAsync ： ', props); //
+              addUserAsync(props);
+            }}
+          >
+            保存管理员信息
+          </Button>
+        </div>
+      ),
+      // itemProps: {
+      //   label: ' ',
+      //   // className: 'dfc',
+      // },
     },
 
     {
@@ -193,11 +354,23 @@ const ClientForm = props => {
         label: '其他信息',
       },
     },
+  ];
+
+  const attach = [
     {
       itemProps: {
         label: '附件',
+        name: 'attach',
       },
-      comProps: {},
+    },
+  ];
+
+  const userCaptureInfo = [
+    {
+      itemProps: {
+        label: '下属户号',
+        name: 'owner',
+      },
       extra: (
         <Button
           onClick={() => {
@@ -210,7 +383,21 @@ const ClientForm = props => {
         </Button>
       ),
     },
+    {
+      itemProps: {
+        label: '附件',
+        name: 'attach',
+      },
+    },
   ];
+
+  if (action === 'add') {
+    config.push(...attach);
+    // } else if (action === '') {
+  } else {
+    config.push(...userCaptureInfo);
+  }
+  console.log(' configconfig ： ', config); //
 
   const formProps = {
     // layout: 'vertical',

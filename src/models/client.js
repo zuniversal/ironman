@@ -5,11 +5,12 @@
 
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
+import * as userServices from '@/services/user';
 
 const namespace = 'client';
 const { createAction, createCRUD, newAction } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = ['syncOAAsync', 'getPortraitAsync', 'addUserAsync'];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -30,6 +31,7 @@ export default {
 
     syncOAData: [],
     portraitData: {},
+    userList: [],
   },
 
   reducers: {
@@ -99,6 +101,12 @@ export default {
         // portraitData: payload.,
       };
     },
+    addUser(state, { payload, type }) {
+      return {
+        ...state,
+        userList: [payload.bean, ...state.userList],
+      };
+    },
   },
 
   effects: {
@@ -148,6 +156,12 @@ export default {
       const res = yield call(services.getPortrait, payload);
       console.log('  getPortrait res ：', res); //
       yield put(action({ ...res, payload }));
+    },
+    *addUserAsync({ payload, action, type }, { call, put }) {
+      // console.log(' addUserAsync ： ', payload, type,     )//
+      const res = yield call(userServices.addItem, payload);
+      console.log('  addUserAsync res ：', res); //
+      yield put(action(res));
     },
   },
 };

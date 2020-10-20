@@ -103,7 +103,7 @@ const option = params => {
       {
         name: '数据源1',
         type: 'line',
-        yAxisIndex: 1,
+        yAxisIndex: 0,
         symbol: 'circle',
         symbolSize: 8,
         itemStyle: {
@@ -132,6 +132,8 @@ const option = params => {
         name: '数据源2',
         type: 'line',
         yAxisIndex: 1,
+        symbol: 'circle',
+        symbolSize: 8,
         itemStyle: {
           normal: {
             color: '#1CBB51',
@@ -141,17 +143,17 @@ const option = params => {
         },
         data: [
           51.6,
-          51.9,
-          91.0,
+          751.9,
+          891.0,
           261.4,
           281.7,
-          701.7,
-          1751.6,
-          1821.2,
+          70.7,
+          151.6,
+          121.2,
           481.7,
           181.8,
           61.0,
-          52.3,
+          152.3,
         ],
       },
     ],
