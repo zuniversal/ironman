@@ -41,6 +41,11 @@ export const getCodeMsg = code => {
 };
 
 export const isTips = res => {
+  console.log('  isTips  !res ', !res);
+  if (!res) {
+    tips('未知错误', 2);
+  }
+
   const { status, data, config } = res;
   const { msg_show, code } = data;
   const { noTips } = config.datas;

@@ -142,7 +142,17 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       // console.log(' addItemAsync ： ', payload, type,     )//
-      const res = yield call(services.addItem, payload);
+      const params = {
+        ...payload,
+        customer_admin: [
+          {
+            id: 1,
+          },
+        ],
+      };
+      console.log(' params ： ', params); //
+      const res = yield call(services.editItem, params);
+      // const res = yield call(services.addItem, payload);
       console.log('  addItem res ：', res); //
       yield put(action(res));
     },
