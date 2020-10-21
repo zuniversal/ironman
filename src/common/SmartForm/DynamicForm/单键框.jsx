@@ -24,7 +24,7 @@ import {
   PlusOutlined,
   MinusOutlined,
 } from '@ant-design/icons';
-import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
 import {
   mockFormData,
   renderSelectOp,
@@ -32,8 +32,6 @@ import {
   formatConfig,
   renderCheckboxOp,
 } from '@/utils'; //
-
-const animates = ANIMATE.bounceIn;
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -61,7 +59,6 @@ const selectOptions = (
     <Option value="other">other</Option>
   </>
 );
-
 export const getLabel = (label, key) => {
   const labelMap = {
     rowText: '',
@@ -77,15 +74,12 @@ export const getLabel = (label, key) => {
     DatePicker: SELECT_TXT + label,
     MonthPicker: SELECT_TXT + label,
   };
-
   return labelMap[key];
 };
-
 const rules = (params, extra) => {
   const { items, label, formType } = params;
   const message = getLabel(label, formType);
   // console.log(' rules   params, extra,  ,   ： ', params, extra, message, label, formType,  );
-
   return [
     // {
     //   type: 'pwd',
@@ -97,7 +91,6 @@ const rules = (params, extra) => {
     },
   ];
 };
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -108,14 +101,12 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
     xs: { span: 24, offset: 0 },
     sm: { span: 20, offset: 4 },
   },
 };
-
 const rowLayout = {
   // labelCol: { span: 8 },
   // wrapperCol: { span: 14 },
@@ -128,7 +119,6 @@ const rowLayout = {
     sm: { span: 20 },
   },
 };
-
 const DynamicForm = props => {
   console.log(' DynamicForm ： ', props); //
   const {
@@ -153,7 +143,6 @@ const DynamicForm = props => {
     selectData,
     CustomCom,
     LabelCom,
-    config = [],
   } = props; //
 
   return (
@@ -189,7 +178,7 @@ const DynamicForm = props => {
         const formItemProps = {
           colon: false,
           ...itemProps,
-          className: `dynamicFormItem formItems ${animates} ${itemProps.className}  `,
+          className: `dynamicFormItem formItems ${itemProps.className}  `,
           rules: noRule ? undefined : rules({ props, label }),
         };
 
@@ -295,7 +284,6 @@ const DynamicForm = props => {
               const fieldKey = name ? name : field.name; //
               console.log(
                 ' 动态表单 fieldKey ：',
-                formItemLayout,
                 fields,
                 field,
                 name,
@@ -361,7 +349,7 @@ const DynamicForm = props => {
                   // rules={rules}
                   // valuePropName="checked"
 
-                  // {...formItemLayout}
+                  {...formItemLayout}
                   className={'formItems dynamicFormWrapper'}
                   {...formItemProps}
                   {...field}
@@ -385,38 +373,34 @@ const DynamicForm = props => {
                   {formItemCom}
                 </Form.Item>
               );
-              const extraItem = config.map((v, i) => (
+
+              return extra ? (
                 <Form.Item
                   // <Form.Item
                   // key= "field19"
                   // label= "field19"
 
-                  // key={field.name} // 关键
-                  key={v.itemProps.name} // 关键
+                  key={field.name} // 关键
                   //  label={formLabel}
                   className={'extraRow'}
-                  // {...formItemLayout}
                 >
                   <Form.Item
                     // name= "field19"
                     //  {...rest}
                     // name={field.name}
-                    {...formItemProps}
-                    // name={[field.name, 'first']}
-                    // name={[field.name, itemProps.name]}
-                    name={[field.name, v.itemProps.name]}
+                    name={[field.name, 'first']}
                     // name={[field.key, 'first']}
+                    {...formItemProps}
                     //  rules={rules}
                   >
                     {formItemCom}
                     {/* {extra} */}
                   </Form.Item>
-                  {i === 0 && (
-                    <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
-                  )}
+                  <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
                 </Form.Item>
-              ));
-              return extra ? <>{extraItem}</> : normalItem;
+              ) : (
+                normalItem
+              );
             })}
           </div>
         );
@@ -428,7 +412,7 @@ const DynamicForm = props => {
 DynamicForm.defaultProps = {
   addText: '新增',
   subText: '刪除',
-  // noLabel: true,
+  noLabel: true,
 };
 
 export default DynamicForm; //

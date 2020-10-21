@@ -18,47 +18,63 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
-import { regoins } from '@/configs'; //
+import { regoins, customerTypeConfig } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
 export const AdminForm = props => {
   console.log(' AdminForm ： ', props); //
   const { action, getCapture, addUserAsync } = props; //
 
+  const [form] = Form.useForm();
+
   const config = [
     {
       formType: 'Dynamic',
       itemProps: {
-        // label: '',
-        label: '用户名',
-        name: 'admin',
+        label: '',
+        // label: '用户名',
+        name: 'customer_admin', //
         className: 'noMargin',
       },
       comProps: {
         extra: true,
+        // noRule: true,
+        // formType: 'DynamicArr',
+        config: [
+          {
+            itemProps: {
+              name: 'nickname',
+              label: '用户名',
+            },
+            comProps: {
+              className: 'w-320',
+            },
+          },
+          {
+            itemProps: {
+              label: '密码',
+              name: 'password',
+            },
+            comProps: {},
+            // noRule: true,
+          },
+          {
+            itemProps: {
+              label: '手机号',
+              name: 'phone',
+            },
+            comProps: {},
+            // noRule: true,
+          },
+        ],
         itemProps: {
+          name: 'nickname',
           label: '用户名',
         },
         comProps: {
           className: 'w-320',
         },
       },
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '密码',
-        // name: 'pwd',
-      },
-      comProps: {},
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '手机号',
-        // name: 'phone',
-      },
-      comProps: {},
     },
     {
       formType: 'PropsCom',
@@ -82,11 +98,6 @@ export const AdminForm = props => {
     },
   ];
 
-  // {
-  //   formType: 'CustomCom',
-  //   CustomCom: <AdminForm {...props}></AdminForm>,
-  // },
-
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -102,6 +113,7 @@ export const AdminForm = props => {
         // init={init}
         // init={{}}
 
+        propsForm={form}
         noRuleAll
         {...props}
       ></SmartForm>
@@ -133,7 +145,8 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      // formType: 'Select',
+      formType: 'Search',
+      selectData: customerTypeConfig,
       itemProps: {
         label: '客户类型',
         name: 'type',
@@ -210,26 +223,26 @@ const ClientForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '详细地址',
-        name: 'addr',
+        name: 'address',
       },
       comProps: {},
     },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '经度',
-        name: 'longitude',
-      },
-      comProps: {},
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '纬度',
-        name: 'latitude',
-      },
-      comProps: {},
-    },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '经度',
+    //     name: 'longitude',
+    //   },
+    //   comProps: {},
+    // },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '纬度',
+    //     name: 'latitude',
+    //   },
+    //   comProps: {},
+    // },
 
     {
       formType: 'rowText',
@@ -239,66 +252,18 @@ const ClientForm = props => {
       },
     },
 
-    {
-      formType: 'Dynamic',
-      itemProps: {
-        // label: '',
-        label: '用户名',
-        name: 'admin',
-        className: 'noMargin',
-      },
-      comProps: {
-        extra: true,
-        itemProps: {
-          label: '用户名',
-        },
-        comProps: {
-          className: 'w-320',
-        },
-      },
-    },
     // {
     //   formType: 'Dynamic',
     //   itemProps: {
     //     // label: '',
     //     label: '用户名',
-    //     // name: 'admin',
+    //     name: 'admin',
     //     className: 'noMargin',
     //   },
     //   comProps: {
     //     extra: true,
-    //     // noRule: true,
-    //     // formType: 'DynamicArr',
-    //     config: [
-    //       {
-    //         itemProps: {
-    //           name: 'nickname',
-    //           label: '用户名',
-    //         },
-    //         comProps: {
-    //           className: 'w-320',
-    //         },
-    //       },
-    //       {
-    //         itemProps: {
-    //           label: '密码',
-    //           name: 'password',
-    //         },
-    //         comProps: {},
-    //         // noRule: true,
-    //       },
-    //       {
-    //         itemProps: {
-    //           label: '手机号',
-    //           name: 'phone',
-    //         },
-    //         comProps: {},
-    //         // noRule: true,
-    //       },
-    //     ],
     //     itemProps: {
-    //       name: 'nickname',
-    //       name: 'first',
+    //       name: 'nickname', //
     //       label: '用户名',
     //     },
     //     comProps: {
@@ -306,6 +271,56 @@ const ClientForm = props => {
     //     },
     //   },
     // },
+
+    {
+      formType: 'Dynamic',
+      // noLabel: true,
+      itemProps: {
+        // label: '',
+        label: '用户名',
+        name: 'customer_admin', //
+        className: 'noMargin',
+      },
+      comProps: {
+        extra: true,
+        // noRule: true,
+        // formType: 'DynamicArr',
+        config: [
+          {
+            itemProps: {
+              label: '用户名',
+              name: 'username',
+            },
+            comProps: {
+              className: 'w-320',
+            },
+          },
+          {
+            itemProps: {
+              label: '密码',
+              name: 'password',
+            },
+            comProps: {},
+            // noRule: true,
+          },
+          {
+            itemProps: {
+              label: '手机号',
+              name: 'phone',
+            },
+            comProps: {},
+            // noRule: true,
+          },
+        ],
+        itemProps: {
+          name: 'nickname',
+          label: '用户名',
+        },
+        comProps: {
+          className: 'w-320',
+        },
+      },
+    },
 
     // {
     //   // formType: 'Select',
@@ -347,6 +362,11 @@ const ClientForm = props => {
       // },
     },
 
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: <AdminForm {...props}></AdminForm>,
+    // },
+
     {
       formType: 'rowText',
       noRule: true,
@@ -357,12 +377,19 @@ const ClientForm = props => {
   ];
 
   const attach = [
-    {
-      itemProps: {
-        label: '附件',
-        name: 'attach',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '附件',
+    //     name: 'attach',
+    //   },
+    // },
+    <UploadCom
+      label={'附件'}
+      key={'attach'}
+      isInputUpload
+      text={'上传文件'}
+      contentClass={'dfc'}
+    ></UploadCom>,
   ];
 
   const userCaptureInfo = [
@@ -394,10 +421,12 @@ const ClientForm = props => {
   if (action === 'add') {
     config.push(...attach);
     // } else if (action === '') {
-  } else {
+  } else if (action === 'detail') {
     config.push(...userCaptureInfo);
   }
   console.log(' configconfig ： ', config); //
+
+  const { propsForm, ...restProps } = props;
 
   const formProps = {
     // layout: 'vertical',
@@ -406,17 +435,32 @@ const ClientForm = props => {
 
   return (
     <div className={''}>
-      <SmartForm
-        // flexRow={4}
-        config={formatConfig(config)}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
-        {...props}
-      ></SmartForm>
+      <Form.Provider
+        onFormFinish={(name, { values, forms }) => {
+          console.log(' name, values, forms ： ', name, values, forms); //
+          // if (name === 'userForm') {
+          //   const { basicForm } = forms;
+          //   const users = basicForm.getFieldValue('users') || [];
+          //   basicForm.setFieldsValue({ users: [...users, values] });
+          //   setVisible(false);
+          // }
+        }}
+      >
+        <SmartForm
+          // flexRow={4}
+          config={formatConfig(config)}
+          formProps={formProps}
+          // init={init}
+          // init={{}}
+          // init={{
+          //   key9: regoins,
+          // }}
+          isDisabledAll={action === 'detail'}
+          {...props}
+        ></SmartForm>
+
+        <AdminForm {...restProps}></AdminForm>
+      </Form.Provider>
     </div>
   );
 };

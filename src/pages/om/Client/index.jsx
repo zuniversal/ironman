@@ -72,8 +72,19 @@ class Client extends PureComponent {
     const { propsForm } = props; //
     try {
       const res = await propsForm.validateFields();
-      console.log('  res await 结果  ：', res); //
-      // this.props.addUserAsync(res)
+      console.log('  res await 结果  ：', res, res.values); //
+      const admin = {
+        ...res.admin.map(v => ({
+          nickname: 'zyb',
+          account: {
+            ...v,
+            certification_status: true,
+            account_type: 'manager',
+          },
+        })),
+      };
+      console.log(' admin ： ', admin); //
+      this.props.addUserAsync(admin[0]);
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -114,7 +125,8 @@ class Client extends PureComponent {
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
+        <Button type="primary" onClick={() => this.onBatchRemove()}>
           删除
         </Button>
       </div>
@@ -378,6 +390,16 @@ class Client extends PureComponent {
       },
     });
   };
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemsAsync({ id: `${params.record.id}` });
+  };
+  onBatchRemove = params => {
+    console.log(' onBatchRemove    ： ', params, this.state, this.props);
+    this.props.removeItemsAsync({
+      id: `${this.props.selectedRowKeys.join(',')}`,
+    });
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -396,7 +418,8 @@ class Client extends PureComponent {
       showDetail: this.showFormModalWithProps,
       dataSource: this.props.dataList,
       edit: this.showFormModalWithProps,
-      remove: this.props.onRemove,
+      // remove: this.props.onRemove,
+      remove: this.onRemove,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;

@@ -15,6 +15,7 @@ export const addItem = p => post('OMS/customer/', p);
 export const editItem = p => put(`OMS/customer/${p.d_id}`, p);
 // export const removeItem = p => remove(`OMS/customer/${p.d_id}`, p);
 export const removeItem = p => remove(`OMS/customer/${p}`, p);
+export const removeItems = p => remove(`OMS/customer/`, p);
 
 export const syncOA = p => noTipsGet(`OMS/customer/OA`, p);
 export const getPortrait = p => noTipsGet(`OMS/customer/portrait/${p.d_id}`, p);

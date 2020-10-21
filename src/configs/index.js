@@ -78,6 +78,21 @@ export const onDutyTypeMap = {
   1: '值班',
 };
 
+export const customerTypeConfig = [
+  {
+    value: 0,
+    label: '普通客户',
+  },
+  {
+    value: 1,
+    label: '托管客户',
+  },
+  {
+    value: 2,
+    label: 'VIP客户',
+  },
+];
+
 export const site = province;
 export const city = province;
 

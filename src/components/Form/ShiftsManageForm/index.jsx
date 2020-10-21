@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -18,7 +18,7 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins, onDutyTypeConfig,  } from '@/configs'; //
+import { regoins, onDutyTypeConfig } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
 const ShiftsManageForm = props => {
@@ -38,7 +38,7 @@ const ShiftsManageForm = props => {
     },
     {
       formType: 'Search',
-      // selectSearch: props.getUser,
+      selectSearch: props.getUser,
       selectData: props.userList,
       itemProps: {
         label: '组长姓名',

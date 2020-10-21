@@ -152,7 +152,7 @@ export const mockDate = moment('2020/02/02', dateFormat);
 export const mockMonth = moment('2020/02/02', monthFormat);
 
 export const mockFormData = (config, init) => {
-  // console.log(' mockFormData   formType, ,   ： ', config,   )
+  console.log(' mockFormData   formType, ,   ： ', config);
   const mockData = {
     d_id: Math.random(),
     ...init,
@@ -181,8 +181,12 @@ export const mockFormData = (config, init) => {
         // Dynamic: 'Dynamic初始值',
 
         // 注意 如果Dynamic初始字段键名与内部键名不一致会导致虽然有相应数据量输入框 但是无值
-        Dynamic: [{ first: 2222 }, { first: 333 }],
+        // Dynamic: [{ first: 2222 }, { first: 333 }],
         // Dynamic: [{}, ],
+        Dynamic: [
+          { username: 'zyb1', password: '1231', phone: 2222 },
+          { username: 'zyb2', password: '1232', phone: 333 },
+        ],
         // DynamicItem: ['值1', '值2',  ],
         DynamicItem: [1, 2],
       }[formType];

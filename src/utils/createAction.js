@@ -39,6 +39,8 @@
 //   })
 // })
 
+import { history } from 'umi';
+
 const suffix = 'Async';
 
 export const action = type => payload => ({
@@ -95,6 +97,25 @@ export const crudConfigs = [
 //     },
 //   }
 // }
+// console.log(' history ： ', history,  )//
+export const isLoading = ({
+  config = [],
+  path = '',
+  actions = {},
+  defConfig = [],
+}) => {
+  // console.log(' get 取属 isShowLoading config, path, actions,  ： ', config, path, actions,  )//
+  const configs = config.length > 0 ? config : crudConfigs; //
+  // console.log('  configs ：', configs,  )//
+  return configs.some(asyncSuffix => {
+    // console.log(' action === `${path}/${asyncSuffix}` ： ', config, actions, `${path}/${asyncSuffix}`,  actions[`${path}/${asyncSuffix}`], )//
+    return actions[`${path}/${asyncSuffix}`];
+    // return actions.some(action => {
+    //   console.log(' action === `${path}/${asyncSuffix}` ： ', config, actions, action, `${path}/${asyncSuffix}`,  )//
+    //   return action === `${path}/${asyncSuffix}`
+    // })
+  });
+};
 
 export const init = prefix => {
   const turnAction = (types = '') => payload => ({

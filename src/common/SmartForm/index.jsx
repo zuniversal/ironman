@@ -175,13 +175,13 @@ const SmartForm = (props, state) => {
   });
 
   // // const initialValues = (isMockData && action === 'edit') ? mockFormData(configs, ) : {}
-  // const initialValues = Object.keys(init).length
-  //   ? init
-  //   : // : isMockData && (action && action !== 'add')
-  //   isMockData && true
-  //   ? mockFormData(configs, init)
-  //   : initData;
-  const initialValues = mockFormData(configs, init);
+  const initialValues = Object.keys(init).length
+    ? init
+    : // : isMockData && (action && action !== 'add')
+    isMockData && true
+    ? mockFormData(configs, init)
+    : initData;
+  // const initialValues = mockFormData(configs, init);
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
   console.log(
     ' SmartForm initialValues ： ',
@@ -434,6 +434,7 @@ const SmartForm = (props, state) => {
       if (item.selectSearch) {
         // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的
         selectProps.onSearch = debounce(item.selectSearch, 500);
+        // selectProps.onSearch = item.selectSearch
       }
     }
     const selectCom = (

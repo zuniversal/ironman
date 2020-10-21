@@ -182,7 +182,7 @@ class ShiftsManage extends PureComponent {
               action: 'add',
               formComProps: {
                 userList: this.props.userList,
-                getUser: this.props.getUserAsync,
+                getUser: params => this.props.getUserAsync({ keyword: params }),
                 // getUser: params => {
                 //   console.log(' params ： ', params); //
                 //   this.props.dispatch(actions.getUserAsync(params));
@@ -220,7 +220,7 @@ class ShiftsManage extends PureComponent {
       ...params,
       formComProps: {
         userList: this.props.userList,
-        getUser: this.props.getUserAsync,
+        getUser: params => this.props.getUserAsync({ keyword: params }),
         // getUser: params => {
         //   console.log(' params ： ', params); //
         //   this.props.dispatch(actions.getUserAsync(params));

@@ -18,7 +18,8 @@ import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
 import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
-import { Link } from 'umi'; //
+import { isLoading } from '@/utils/createAction';
+import { Link, history, connect } from 'umi'; //
 
 /* 
   封装的通用 表格组件 封装带有相关通用操作 
@@ -29,6 +30,9 @@ import { Link } from 'umi'; //
 const isMockData = false;
 const mixinData = true;
 
+const mapStateToProps = ({ loading }) => ({ loadingData: loading });
+
+@connect(mapStateToProps)
 class SmartTable extends PureComponent {
   constructor(props) {
     super(props);
@@ -447,6 +451,27 @@ class SmartTable extends PureComponent {
       </SmartModal>
     );
   };
+  get isShowLoading() {
+    const { loadingData } = this.props; //
+    const pathArr = history.location.pathname.split('/');
+    const path = pathArr[pathArr.length - 1];
+    console.log(
+      ' get 取属 isShowLoading ： ',
+      this.state,
+      this.props,
+      history,
+      history.location,
+      pathArr,
+      path,
+      isLoading,
+    );
+    const isShowLoading = isLoading({
+      path: path,
+      actions: loadingData.effects,
+    });
+    // console.log('ction === `${path}/${asyncSuffi ************* ： ', isShowLoading, )
+    return isShowLoading;
+  }
 
   render() {
     const {
@@ -495,6 +520,8 @@ class SmartTable extends PureComponent {
       col,
       this.state,
       this.props,
+      history,
+      this.isShowLoading,
     ); //
 
     const realData = this.dataFilter();
@@ -510,7 +537,7 @@ class SmartTable extends PureComponent {
           // loading={loading}
           // scroll={{ x: 800,  }}
           // rowKey={rowKey}
-
+          loading={this.isShowLoading}
           size={'small'}
           rowSelection={{
             type: selectionType,

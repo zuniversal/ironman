@@ -69,20 +69,38 @@ export default {
         // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
       };
     },
+    // removeItem(state, { payload, type }) {
+    //   console.log(' removeItem 修改  ： ', state, payload, type); //
+    //   const removeList = payload.payload;
+    //   console.log(
+    //     ' removeList  payload.payload.filter v ： ',
+    //     state,
+    //     payload,
+    //     removeList,
+    //   );
+    //   return {
+    //     ...state,
+    //     // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+    //     dataList: state.dataList.filter(v =>
+    //       removeList.every(item => v.id !== item),
+    //     ),
+    //   };
+    // },
     removeItem(state, { payload, type }) {
       console.log(' removeItem 修改  ： ', state, payload, type); //
-      const removeList = payload.payload;
-      console.log(
-        ' removeList  payload.payload.filter v ： ',
-        state,
-        payload,
-        removeList,
-      );
       return {
         ...state,
-        // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
+        dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
+      };
+    },
+    removeItems(state, { payload, type }) {
+      console.log(' removeItems 修改  ： ', state, payload, type); //
+      const removeList = payload.payload.id.split(',');
+      console.log(' removeList ： ', removeList); //
+      return {
+        ...state,
         dataList: state.dataList.filter(v =>
-          removeList.every(item => v.id !== item),
+          removeList.every(item => v.id != item),
         ),
       };
     },
@@ -131,13 +149,30 @@ export default {
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       // console.log(' editItemAsync ： ', payload, type,     )//
       const { itemDetail } = yield select(state => state[namespace]);
-      const res = yield call(services.editItem, { ...itemDetail, ...payload });
+      const params = {
+        ...itemDetail,
+        ...payload,
+        // region: 'xxx',
+        customer_admin: [
+          {
+            id: 1,
+          },
+        ],
+      };
+      console.log(' params ： ', params); //
+      const res = yield call(services.editItem, params);
       console.log('  editItem res ：', res, itemDetail); //
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemAsync ： ', payload, type); //
       const res = yield call(services.removeItem, payload);
+      // console.log('  removeItem res ：', res, {...res, payload,} )//
+      yield put(action({ ...res, payload }));
+    },
+    *removeItemsAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemAsync ： ', payload, type); //
+      const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
     },
