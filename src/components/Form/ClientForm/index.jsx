@@ -234,6 +234,14 @@ const ClientForm = props => {
     {
       // formType: 'Select',
       itemProps: {
+        label: '客户代表',
+        name: 'service_staff',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
         label: '所属行业',
         name: 'industry',
       },
