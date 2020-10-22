@@ -148,6 +148,7 @@ const SmartForm = (props, state) => {
     isDisabledAll,
     noRuleAll,
     size,
+    noLabelLayout,
   } = props; //
 
   const configs = isFormat
@@ -254,12 +255,17 @@ const SmartForm = (props, state) => {
   //   setFormLayout(layout);
   // };
 
-  const formItemLayout =
+  let formItemLayout =
     formLayout === 'horizontal'
       ? size === 'small'
         ? smallLayout
         : formLayouts
       : null;
+
+  if (noLabelLayout) {
+    formItemLayout = noLabelLayout;
+  }
+
   const isInline = {
     layout: isSearchForm ? 'inline' : 'horizontal',
   };
@@ -628,7 +634,7 @@ const SmartForm = (props, state) => {
         // layout={formLayout}
         {...isInline}
         form={formControl}
-        name="smartForm"
+        name={name}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         // initialValues={{}}
@@ -681,6 +687,7 @@ const SmartForm = (props, state) => {
 };
 
 SmartForm.defaultProps = {
+  name: 'smartForm',
   className: '',
   config: [], // 表单配置项
   flexRow: 0, // 弹性布局值
@@ -702,6 +709,7 @@ SmartForm.defaultProps = {
 };
 
 SmartForm.propTypes = {
+  name: PropTypes.string,
   className: PropTypes.string,
   config: PropTypes.array,
   flexRow: PropTypes.number,

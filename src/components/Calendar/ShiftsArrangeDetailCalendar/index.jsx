@@ -72,6 +72,7 @@ const ShiftsArrangeDetailCalendar = props => {
       {/* <Button onClick={() => () => console.log(' handleCancel   ,   ： ', calendarRef  )}>取消</Button> */}
       <SmartCalendar
         // events={calendarEvents}
+        droppable={false}
         events={props.data}
         calendarRef={calendarRef}
         select={select}

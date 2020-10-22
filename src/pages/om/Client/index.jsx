@@ -74,8 +74,8 @@ class Client extends PureComponent {
       const res = await propsForm.validateFields();
       console.log('  res await 结果  ：', res, res.values); //
       const admin = {
-        ...res.admin.map(v => ({
-          nickname: 'zyb',
+        ...res.customer_admin.map(v => ({
+          nickname: v.username,
           account: {
             ...v,
             certification_status: true,
@@ -106,8 +106,13 @@ class Client extends PureComponent {
         >
           同步OA
         </Button>
-        {/* <Button type="primary" onClick={() => this.showFormModal({action: 'add',  })}  >新增客户</Button> */}
         <Button
+          type="primary"
+          onClick={() => this.showFormModal({ action: 'add' })}
+        >
+          新增客户
+        </Button>
+        {/* <Button
           type="primary"
           onClick={() =>
             this.props.showFormModal({
@@ -121,7 +126,7 @@ class Client extends PureComponent {
           }
         >
           新增客户
-        </Button>
+        </Button> */}
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
@@ -248,45 +253,35 @@ class Client extends PureComponent {
   //   // dispatch(removeItemAsync(selectedRows))
 
   // };
+
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action } = this.state; //
-    let actionFn = addItemAsync;
+    let actionFn = actions.addItemAsync;
     if (action === 'edit') {
-      actionFn = editItemAsync;
+      actionFn = actions.editItemAsync;
     }
 
-    const { form } = props; //
+    const { form, init } = props; //
 
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn); //
       const { dispatch } = this.props; //
-      // dispatch(actionFn({
-      //   data: res,
-      // }))
-      // const {addItemAsync,  } = this.props//
-      //addItemAsync(res)
+      dispatch(
+        actionFn({
+          ...init,
+          ...res,
+          customer_admin: this.props.customer_admin,
+        }),
+      );
 
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
+      // this.setState({
+      //   isShow: false,
+      // });
     } catch (error) {
       console.log(' error ： ', error); //
     }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
   };
   onCancel = e => {
     console.log(' onCancel ： ', e, this.state, this.props); //

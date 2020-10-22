@@ -13,13 +13,13 @@ export default defineConfig({
   },
   publicPath: './',
 
-  // 启用 语言本地化 需要在 src 下创建一个 locales 目录 
+  // 启用 语言本地化 需要在 src 下创建一个 locales 目录
   // Warning: The current popular language does not exist, please check the locales folder!
   locale: {
-    antd: true,  
-    default: 'zh-CN',// 
+    antd: true,
+    default: 'zh-CN', //
   },
-  
+
   dynamicImport: {
     loading: '@/common/Loading',
   },
@@ -32,27 +32,26 @@ export default defineConfig({
           chunks: 'async',
           minChunks: 1,
           minSize: 0,
-        }
+        },
       },
     });
   },
 
   alias: {
-    'smartTb': './src/components/Table',
-    'smartForm': './src/components/Form',
-    'widgets': './src/components/Widgets',
-    '_Widgets': './src/components/Widgets',
+    smartTb: './src/components/Table',
+    smartForm: './src/components/Form',
+    widgets: './src/components/Widgets',
+    _Widgets: './src/components/Widgets',
 
     '@smartTb': './src/components/Table',
     '@smartForm': './src/components/Form',
     '@Widgets': './src/components/Widgets',
-
-
   },
   routes: [
     // { path: '/login', component: 'login' },
     // { path: '/userCenter', component: '@/pages/UserCenter' },
 
+    ...common,
     {
       path: '/',
       component: '@/layouts/index',
@@ -64,7 +63,6 @@ export default defineConfig({
       ],
     },
 
-    ...common,
     // ...cs,
     // ...om,
     // ...sm,
@@ -72,10 +70,8 @@ export default defineConfig({
   theme: {
     '@primary-color': '#00B460',
     '@menu-dark-bg': '#2C2C2C',
-    
-
   },
-  
+
   proxy: {
     '/api': {
       target: 'http://188.131.235.243:31002',
@@ -85,5 +81,4 @@ export default defineConfig({
       // },
     },
   },
-  
 });

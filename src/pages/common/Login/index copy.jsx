@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './style.less';
-import { getItem, setItem, setItems, tips } from '@/utils';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { getItem, setItem, setItems } from 'utils';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { history } from 'umi';
-import axios from 'axios'; //
 const FormItem = Form.Item;
 
 const Login = () => {
@@ -12,52 +10,32 @@ const Login = () => {
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
-    // form.validateFields(async (err, values) => {
-    // if (!err) {
-    // console.log('Received values of form1: ', values)
-    // const haveToken = localStorage.getItem('token');
-    // console.log('  haveToken ：', haveToken); //
-    // if (!haveToken) {
-    const { username, password } = values;
-
-    const res = axios
-      .post(
-        '/api/v1/login',
-        // { username: 'admin', password: 'afafa' }
-        values,
-      )
-      .then(res => {
-        console.log('  login  ： ', res);
-        localStorage.setItem('token', res.data.token);
-        history.push('/om/home');
-      })
-      .catch(err => {
-        console.log('  err catch  ： ', err, { ...err });
-        tips(err.response.data.msg_show, 2);
-      });
-    // }
-    // return
-    // const {user_id, password, remember} = values
-    // setItem('remember', remember)
-    // login({user_id, password}).then(res => {
-    //   console.log('login  res ：', res, this.props,    )
-    //   const {code, mes, content, success, } = res
-    //   console.log(' success ： ', success   )//
-    //   if (success) {
-    //     // const {company_id} = data
-    //     // const datas = {
-    //     //   ...data[0]
-    //     // }
-    //     // setItems("company_id", company_id)
-    //     setItems("userInfo", content)
-    //     if (remember) {
-    //       setItem('user_id', content.user_id)
-    //     }
-    //     console.log(' 跳转  ： ',  )//
-    //   }
-    // })
-    // }
-    // })
+    form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        // return
+        // const {user_id, password, remember} = values
+        // setItem('remember', remember)
+        // login({user_id, password}).then(res => {
+        //   console.log('login  res ：', res, this.props,    )
+        //   const {code, mes, content, success, } = res
+        //   console.log(' success ： ', success   )//
+        //   if (success) {
+        //     // const {company_id} = data
+        //     // const datas = {
+        //     //   ...data[0]
+        //     // }
+        //     // setItems("company_id", company_id)
+        //     setItems("userInfo", content)
+        //     if (remember) {
+        //       setItem('user_id', content.user_id)
+        //     }
+        //     console.log(' 跳转  ： ',  )//
+        //     history.push('/')
+        //   }
+        // })
+      }
+    });
   };
   // handleSubmit = (e) => {
   //   e.preventDefault()
@@ -108,11 +86,7 @@ const Login = () => {
           form={form}
           name="normal_login"
           className="login-form"
-          initialValues={{
-            remember: true,
-            username: 'admin',
-            password: 'afafa',
-          }}
+          initialValues={{ remember: true }}
           onFinish={onFinish}
         >
           <Form.Item
@@ -155,7 +129,7 @@ const Login = () => {
             Or <a href="">register now!</a>
           </Form.Item>
         </Form>
-        {/* <div onClick={this.logins} className="logins"></div> */}
+        <div onClick={this.logins} className="logins"></div>
       </div>
     </div>
   );

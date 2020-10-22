@@ -79,22 +79,23 @@ const WorkOrderTicketForm = props => {
         label: '反馈信息',
       },
     },
+    // 反馈人是填客户的账号信息
     {
       itemProps: {
         label: '反馈人',
-        name: 'customer.name',
+        name: 'account.name',
       },
     },
     {
       itemProps: {
         label: '反馈电话',
-        name: '',
+        name: 'contacts_phone',
       },
     },
     {
       itemProps: {
         label: '详细内容',
-        name: 'job_content',
+        name: 'content',
       },
     },
     {

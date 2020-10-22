@@ -4,7 +4,7 @@ import * as services from '@/services/missionsManage';
 const namespace = 'missionsManage';
 const { createAction, createCRUD } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = [];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -30,7 +30,7 @@ export default {
       return {
         ...state,
         // ...payload,
-        dataList: [payload.bean],
+        dataList: payload.list,
       };
     },
     getItem(state, { payload, type }) {

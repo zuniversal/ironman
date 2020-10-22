@@ -28,38 +28,56 @@ const MissionsForm = props => {
     {
       itemProps: {
         label: '客户',
-        name: 'name',
+        name: 'customer_id',
       },
     },
     {
       itemProps: {
         label: '名称',
-        name: 'customer',
+        name: 'name',
+      },
+    },
+    {
+      itemProps: {
+        label: '任务类型',
+        name: 'type',
+      },
+    },
+    {
+      itemProps: {
+        label: '电站',
+        name: 'station_id',
+      },
+    },
+    {
+      itemProps: {
+        label: '设备',
+        name: 'equipment_id',
       },
     },
     {
       formType: 'TextArea',
       itemProps: {
         label: '任务描述',
-        name: 'customer',
+        name: 'content',
       },
     },
     {
       itemProps: {
         label: '联系人',
-        name: 'contacts',
+        name: 'person',
       },
     },
     {
       itemProps: {
         label: '电话',
-        name: '',
+        name: 'phone',
       },
     },
     {
       itemProps: {
         label: '地址',
-        name: '',
+        name: 'addr',
       },
     },
   ];

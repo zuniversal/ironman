@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, createRef } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
-import SmartCalendar, {CalendarDraggable, } from '@/common/SmartCalendar'; //
-
+import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
 
 const items = { title: '部门会议x', start: '2020-10-08' };
 const items2 = {
@@ -11,7 +10,11 @@ const items2 = {
   start: '2020-10-09',
   display: 'background',
 };
-const calendarEvents = [items, items, items, items, 
+const calendarEvents = [
+  items,
+  items,
+  items,
+  items,
   // items2
 ];
 
@@ -30,26 +33,23 @@ const ShiftsArrangeCalendar = props => {
   };
   const eventsSet = params => {
     console.log(' eventsSet   ,   ： ', params);
-    props.eventsSet(params)
+    props.eventsSet(params);
   };
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
   };
 
-
   return (
     <div className="shiftsArrangeCalendar ">
-
       <SmartCalendar
         // events={calendarEvents}
+        droppable={false}
         events={props.data}
-        
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
       />
-
     </div>
   );
 };

@@ -28,21 +28,19 @@ import SmartTable from '@/common/SmartTable'; //
 
 const AlarmTemplateTable = props => {
   console.log(' AlarmTemplateTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      title: 'id',
-    },
-    
-    {
       title: '名称',
     },
-    
-    {
-      title: '通知方法',
-    },
-    
+
+    // {
+    //   title: 'id',
+    // },
+    // {
+    //   title: '通知方法',
+    // },
   ];
 
   return (
@@ -50,7 +48,7 @@ const AlarmTemplateTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -58,7 +56,6 @@ const AlarmTemplateTable = props => {
 
 AlarmTemplateTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default AlarmTemplateTable;

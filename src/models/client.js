@@ -151,7 +151,7 @@ export default {
         ],
       };
       console.log(' params ： ', params); //
-      const res = yield call(services.editItem, params);
+      const res = yield call(services.addItem, params);
       // const res = yield call(services.addItem, payload);
       console.log('  addItem res ：', res); //
       yield put(action(res));

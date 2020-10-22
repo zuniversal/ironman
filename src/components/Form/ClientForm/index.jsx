@@ -21,6 +21,17 @@ import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins, customerTypeConfig } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
+const rowLayout = {
+  labelCol: {
+    xs: { span: 0 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 18 },
+  },
+};
+
 export const AdminForm = props => {
   console.log(' AdminForm ： ', props); //
   const { action, getCapture, addUserAsync } = props; //
@@ -28,6 +39,13 @@ export const AdminForm = props => {
   const [form] = Form.useForm();
 
   const config = [
+    {
+      formType: 'rowText',
+      noRule: true,
+      itemProps: {
+        label: '管理员信息',
+      },
+    },
     {
       formType: 'Dynamic',
       itemProps: {
@@ -43,7 +61,7 @@ export const AdminForm = props => {
         config: [
           {
             itemProps: {
-              name: 'nickname',
+              name: 'username',
               label: '用户名',
             },
             comProps: {
@@ -68,7 +86,7 @@ export const AdminForm = props => {
           },
         ],
         itemProps: {
-          name: 'nickname',
+          name: 'username',
           label: '用户名',
         },
         comProps: {
@@ -112,9 +130,11 @@ export const AdminForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-
+        name={'admin'}
         propsForm={form}
         noRuleAll
+        formLayouts={rowLayout}
+        noLabelLayout
         {...props}
       ></SmartForm>
     </div>
@@ -125,6 +145,64 @@ const ClientForm = props => {
   console.log(' ClientForm ： ', props); //
 
   const { action, getCapture, addUserAsync } = props; //
+
+  const adminItem = {
+    formType: 'Dynamic',
+    // noLabel: true,
+    itemProps: {
+      // label: '',
+      label: '用户名',
+      name: 'customer_admin', //
+      className: 'noMargin',
+    },
+    comProps: {
+      extra: true,
+      labelCol: {
+        xs: { span: 0 },
+        sm: { span: 0 }, //
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 24 }, //
+      },
+      // noRule: true,
+      // formType: 'DynamicArr',
+      config: [
+        {
+          itemProps: {
+            label: '用户名',
+            name: 'username',
+          },
+          comProps: {
+            className: 'w-320',
+          },
+        },
+        {
+          itemProps: {
+            label: '密码',
+            name: 'password',
+          },
+          comProps: {},
+          // noRule: true,
+        },
+        {
+          itemProps: {
+            label: '手机号',
+            name: 'phone',
+          },
+          comProps: {},
+          // noRule: true,
+        },
+      ],
+      itemProps: {
+        name: 'username',
+        label: '用户名',
+      },
+      comProps: {
+        className: 'w-320',
+      },
+    },
+  };
 
   const config = [
     {
@@ -244,13 +322,15 @@ const ClientForm = props => {
     //   comProps: {},
     // },
 
-    {
-      formType: 'rowText',
-      noRule: true,
-      itemProps: {
-        label: '管理员信息',
-      },
-    },
+    // adminItem,
+
+    // {
+    //   formType: 'rowText',
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '管理员信息',
+    //   },
+    // },
 
     // {
     //   formType: 'Dynamic',
@@ -263,7 +343,7 @@ const ClientForm = props => {
     //   comProps: {
     //     extra: true,
     //     itemProps: {
-    //       name: 'nickname', //
+    //       name: 'username', //
     //       label: '用户名',
     //     },
     //     comProps: {
@@ -271,56 +351,6 @@ const ClientForm = props => {
     //     },
     //   },
     // },
-
-    {
-      formType: 'Dynamic',
-      // noLabel: true,
-      itemProps: {
-        // label: '',
-        label: '用户名',
-        name: 'customer_admin', //
-        className: 'noMargin',
-      },
-      comProps: {
-        extra: true,
-        // noRule: true,
-        // formType: 'DynamicArr',
-        config: [
-          {
-            itemProps: {
-              label: '用户名',
-              name: 'username',
-            },
-            comProps: {
-              className: 'w-320',
-            },
-          },
-          {
-            itemProps: {
-              label: '密码',
-              name: 'password',
-            },
-            comProps: {},
-            // noRule: true,
-          },
-          {
-            itemProps: {
-              label: '手机号',
-              name: 'phone',
-            },
-            comProps: {},
-            // noRule: true,
-          },
-        ],
-        itemProps: {
-          name: 'nickname',
-          label: '用户名',
-        },
-        comProps: {
-          className: 'w-320',
-        },
-      },
-    },
 
     // {
     //   // formType: 'Select',
@@ -341,26 +371,22 @@ const ClientForm = props => {
     //   noRule: true,
     // },
 
-    {
-      formType: 'PropsCom',
-      PropsCom: props => (
-        <div className="dfc">
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(' props addUserAsync ： ', props); //
-              addUserAsync(props);
-            }}
-          >
-            保存管理员信息
-          </Button>
-        </div>
-      ),
-      // itemProps: {
-      //   label: ' ',
-      //   // className: 'dfc',
-      // },
-    },
+    // {
+    //   formType: 'PropsCom',
+    //   PropsCom: props => (
+    //     <div className="dfc">
+    //       <Button
+    //         type="primary"
+    //         onClick={() => {
+    //           console.log(' props addUserAsync ： ', props); //
+    //           addUserAsync(props);
+    //         }}
+    //       >
+    //         保存管理员信息
+    //       </Button>
+    //     </div>
+    //   ),
+    // },
 
     // {
     //   formType: 'CustomCom',

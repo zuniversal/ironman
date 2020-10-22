@@ -505,9 +505,7 @@ export const createProperty = (arr, f) => {
 export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
   console.log(' prefix, k ： ', prefix, k); //
   const token =
-    localStorage.getItem(k) != undefined
-      ? localStorage.getItem(k)
-      : '本地没有token';
+    localStorage.getItem(k) != undefined ? localStorage.getItem(k) : 'no_token';
   return prefix + token;
 };
 // export const getToken = (k = 'user_info') =>

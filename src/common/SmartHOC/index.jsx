@@ -272,13 +272,15 @@ export default ({
       console.log(' onOkonOk ： ', props, this.state, this.props);
       const { action } = this.state; //
       let actionFn = actions.addItemAsync;
-      if (action === 'edit' || action === 'detail') {
+      if (action === 'edit') {
         actionFn = actions.editItemAsync;
       }
 
       const { form, init } = props; //
 
       try {
+        // const res = await form.validateFields(['customer_admin']);
+        // console.log('  res await 结果 1 ：', res, action, actionFn); //
         const res = await form.validateFields();
         console.log('  res await 结果  ：', res, action, actionFn); //
         const { dispatch } = this.props; //

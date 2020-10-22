@@ -47,7 +47,7 @@ export const MissionsManageWorkOrderForm = props => {
         name: 'type',
       },
       comProps: {
-        disabled: true,
+        // disabled: true,
       },
     },
     {

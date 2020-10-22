@@ -361,7 +361,7 @@ const DynamicForm = props => {
                   // rules={rules}
                   // valuePropName="checked"
 
-                  // {...formItemLayout}
+                  {...formItemLayout}
                   className={'formItems dynamicFormWrapper'}
                   {...formItemProps}
                   {...field}
@@ -395,7 +395,7 @@ const DynamicForm = props => {
                   key={v.itemProps.name} // 关键
                   //  label={formLabel}
                   className={'extraRow'}
-                  // {...formItemLayout}
+                  {...formItemLayout}
                 >
                   <Form.Item
                     // name= "field19"

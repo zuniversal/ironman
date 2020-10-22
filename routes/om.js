@@ -36,11 +36,6 @@ export default [
   },
 
   {
-    path: '/om/shifts',
-    component: '@/pages/om/Shifts',
-    title: '班组管理',
-  },
-  {
     path: '/om/shiftsManage',
     component: '@/pages/om/ShiftsManage',
     title: '班组管理',

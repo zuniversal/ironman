@@ -25,19 +25,19 @@ import { actions } from '@/models/layout'; //
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
-// import { login,  } from '@/services/user'//
-import axios from 'axios'; //
-const haveToken = localStorage.getItem('token');
-console.log('  haveToken ：', haveToken); //
-console.log('  对吗  !haveToken ', !haveToken);
-if (!haveToken) {
-  const res = axios
-    .post('/api/v1/login', { username: 'admin', password: 'afafa' })
-    .then(res => {
-      console.log('  login  ： ', res);
-      localStorage.setItem('token', res.data.token);
-    });
-}
+// // import { login,  } from '@/services/user'//
+// import axios from 'axios'; //
+// const haveToken = localStorage.getItem('token');
+// console.log('  haveToken ：', haveToken); //
+// console.log('  对吗  !haveToken ', !haveToken);
+// if (!haveToken) {
+//   const res = axios
+//     .post('/api/v1/login', { username: 'admin', password: 'afafa' })
+//     .then(res => {
+//       console.log('  login  ： ', res);
+//       localStorage.setItem('token', res.data.token);
+//     });
+// }
 
 const { Header, Sider, Content } = Layout;
 

@@ -49,6 +49,7 @@ const InspectMissionDetailForm = props => {
       itemProps: {
         label: '电站',
         name: 'station.name',
+        name: ['plan', 'customer'],
       },
     },
     {
