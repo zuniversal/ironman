@@ -385,37 +385,42 @@ const DynamicForm = props => {
                   {formItemCom}
                 </Form.Item>
               );
-              const extraItem = config.map((v, i) => (
-                <Form.Item
-                  // <Form.Item
-                  // key= "field19"
-                  // label= "field19"
-
-                  // key={field.name} // 关键
-                  key={v.itemProps.name} // 关键
-                  //  label={formLabel}
-                  className={'extraRow'}
-                  {...formItemLayout}
-                >
+              const extraItem = config.map((v, i) => {
+                console.log(' extraItem v ： ', v); //
+                return (
                   <Form.Item
-                    // name= "field19"
-                    //  {...rest}
-                    // name={field.name}
-                    {...formItemProps}
-                    // name={[field.name, 'first']}
-                    // name={[field.name, itemProps.name]}
-                    name={[field.name, v.itemProps.name]}
-                    // name={[field.key, 'first']}
-                    //  rules={rules}
+                    // <Form.Item
+                    // key= "field19"
+                    // label= "field19"
+
+                    // key={field.name} // 关键
+                    key={v.itemProps.name} // 关键
+                    //  label={formLabel}
+                    className={'extraRow'}
+                    {...formItemLayout}
                   >
-                    {formItemCom}
-                    {/* {extra} */}
+                    <Form.Item
+                      // name= "field19"
+                      //  {...rest}
+                      // name={field.name}
+                      {...formItemProps}
+                      // name={[field.name, 'first']}
+                      // name={[field.name, itemProps.name]}
+                      name={[field.name, v.itemProps.name]}
+                      // name={[field.key, 'first']}
+                      //  rules={rules}
+                    >
+                      {formItemCom}
+                      {/* {extra} */}
+                    </Form.Item>
+                    {i === 0 && (
+                      <Form.Item className={'formItems '}>
+                        {actionBtn}
+                      </Form.Item>
+                    )}
                   </Form.Item>
-                  {i === 0 && (
-                    <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
-                  )}
-                </Form.Item>
-              ));
+                );
+              });
               return extra ? <>{extraItem}</> : normalItem;
             })}
           </div>
