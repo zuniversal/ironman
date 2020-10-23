@@ -421,6 +421,7 @@ const DynamicForm = props => {
                   </Form.Item>
                 );
               });
+
               return extra ? <>{extraItem}</> : normalItem;
             })}
           </div>
