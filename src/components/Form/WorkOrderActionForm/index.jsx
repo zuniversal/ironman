@@ -25,22 +25,25 @@ const choiceRadios = [
   { label: '否', value: 'no', key: 'no' },
 ];
 
-const config = [
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '分配给',
-      name: 'handler',
-    },
-    comProps: {
-      className: 'w-280',
-    },
-  },
-];
-
 export const WorkOrderDispatchOrderForm = props => {
   console.log(' WorkOrderDispatchOrderForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
+      itemProps: {
+        label: '分配给',
+        name: 'handler',
+      },
+      comProps: {
+        className: 'w-280',
+      },
+    },
+  ];
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',

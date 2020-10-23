@@ -26,14 +26,17 @@ const WorkOrderSearchForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '处理人',
         name: 'user_id',
       },
     },
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectData: props.statusList,
       itemProps: {
         label: '状态',
         name: 'status',

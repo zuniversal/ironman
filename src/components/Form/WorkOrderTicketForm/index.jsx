@@ -37,12 +37,17 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectData: props.teamList,
       itemProps: {
         label: '工单类型',
         name: 'type',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
         name: 'customer_id',

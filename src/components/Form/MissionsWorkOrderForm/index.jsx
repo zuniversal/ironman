@@ -18,20 +18,17 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
-
-
-
-
+import { formatConfig } from '@/utils'; //
 
 const MissionsWorkOrderForm = props => {
   console.log(' MissionsWorkOrderForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
 
-    
   const config = [
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
       },
@@ -51,11 +48,7 @@ const MissionsWorkOrderForm = props => {
         label: '分配给',
       },
     },
-
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',

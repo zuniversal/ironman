@@ -88,6 +88,10 @@ export default ({
     dispatchAction = (action, params) => {
       const actionFn = this.getAction(action);
       console.log('  dispatchAction ：', action); //
+      if (action === 'add') {
+        // tips('add没有相应的action方法！');
+        return;
+      }
       if (actionFn) {
         this.props.dispatch(actionFn(params));
       } else {
@@ -224,16 +228,6 @@ export default ({
         actions,
         actionFn,
       );
-
-      // const isEdit = action === 'edit';
-      // if (isEdit) {
-      //   const { dispatch } = this.props; //
-      //   dispatch(
-      //     actions.getItemAsync(
-      //       params.record,
-      //     ),
-      //   );
-      // }
 
       if (action !== 'add') {
         // const { dispatch } = this.props; //
@@ -513,6 +507,7 @@ export default ({
             search={this.search}
             setTopCom={this.setTopCom}
             onPageChange={this.onPageChange}
+            dispatchAction={this.dispatchAction}
           />
 
           {this.renderSmartFormModal()}

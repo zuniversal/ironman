@@ -26,6 +26,9 @@ const MissionsForm = props => {
 
   const config = [
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
         name: 'customer_id',

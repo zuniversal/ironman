@@ -26,7 +26,8 @@ const MissionsManageSearchForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectData: props.userList,
       itemProps: {
         label: '状态',
       },

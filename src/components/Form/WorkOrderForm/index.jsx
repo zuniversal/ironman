@@ -44,12 +44,16 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectData: props.userList,
       itemProps: {
         label: '类型',
         name: 'type',
       },
     },
     {
+      formType: 'Search',
+      selectData: props.userList,
       itemProps: {
         label: '状态',
         name: 'status',
@@ -62,12 +66,18 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
         name: 'customer.name',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
       itemProps: {
         label: '设备id',
         name: 'task.id',
@@ -115,6 +125,9 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '处理人',
         name: 'recipient.name',

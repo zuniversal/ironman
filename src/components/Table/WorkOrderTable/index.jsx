@@ -44,10 +44,12 @@ const WorkOrderTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      d_item: 'id',
     },
     {
       title: '名称',
       dataIndex: 'name',
+      d_item: 'id',
     },
     {
       title: '工单编号',
@@ -85,7 +87,7 @@ const WorkOrderTable = props => {
 
   const extra = props => (
     <>
-      <a onClick={() => showDetail({ action: 'detail' })}>xx详情</a>
+      {/* <a onClick={() => showDetail({ action: 'detail' })}>xx详情</a> */}
       <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
       <a onClick={() => exportData({ action: 'exportData' })}>导出</a>
       <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a>

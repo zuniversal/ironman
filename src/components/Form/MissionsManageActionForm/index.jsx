@@ -26,6 +26,9 @@ export const MissionsManageWorkOrderForm = props => {
 
   const config = [
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
         name: '',
@@ -41,7 +44,8 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectData: props.userList,
       itemProps: {
         label: '类型',
         name: 'type',
@@ -51,7 +55,9 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '分配给',
         name: '',
@@ -90,7 +96,9 @@ export const MissionsManageContractForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getContractAsync,
+      selectData: props.ContractList,
       itemProps: {
         label: '选择合同',
         name: '',
@@ -122,3 +130,95 @@ export const MissionsManageContractForm = props => {
 };
 
 MissionsManageContractForm.defaultProps = {};
+
+export const MissionsManageScheduleForm = props => {
+  console.log(' MissionsManageScheduleForm ： ', props); //
+  const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      formType: 'DatePicker',
+      itemProps: {
+        label: '选择日期',
+        name: '',
+      },
+    },
+  ];
+
+  const formProps = {
+    // layout: 'vertical',
+    // layout: 'inline',
+  };
+
+  return (
+    <div className={' MissionsManageScheduleForm '}>
+      <SmartForm
+        // flexRow={6}
+        // config={config}
+        config={formatConfig(config)}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
+
+        {...rest}
+      ></SmartForm>
+
+      {formBtn}
+    </div>
+  );
+};
+
+MissionsManageScheduleForm.defaultProps = {};
+
+const scheduleRadios = [
+  { label: '通过', value: 'yes', key: 'yes' },
+  { label: '驳回', value: 'no', key: 'no' },
+];
+
+export const MissionsManageConfirmScheduleForm = props => {
+  console.log(' MissionsManageConfirmScheduleForm ： ', props); //
+  const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      formType: 'Radio',
+      radioData: scheduleRadios,
+      opType: 'group',
+      itemProps: {
+        label: '确认排期',
+        name: '',
+      },
+    },
+    {
+      formType: 'TextArea',
+      itemProps: {
+        label: '理由',
+        name: '',
+      },
+    },
+  ];
+
+  const formProps = {
+    // layout: 'vertical',
+    // layout: 'inline',
+  };
+
+  return (
+    <div className={' MissionsManageConfirmScheduleForm '}>
+      <SmartForm
+        // flexRow={6}
+        // config={config}
+        config={formatConfig(config)}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
+
+        {...rest}
+      ></SmartForm>
+
+      {formBtn}
+    </div>
+  );
+};
+
+MissionsManageConfirmScheduleForm.defaultProps = {};

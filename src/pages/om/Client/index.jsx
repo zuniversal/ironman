@@ -23,6 +23,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import { actions, mapStateToProps } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 export const TITLE = '客户';
 
@@ -178,13 +179,7 @@ class Client extends PureComponent {
       this.state,
       this.props,
     );
-    const isEdit = action === 'edit';
-    if (isEdit) {
-      const { dispatch } = this.props; //
-      // dispatch(getItemAsync({
-      //   d_id: 100,
-      // }))
-    }
+    this.props.dispatchAction(action, params);
 
     this.setState({
       action,
@@ -269,12 +264,18 @@ class Client extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn); //
+      const { adminList } = this.props; //
+      console.log(' adminList ： ', adminList); //
+      if (adminList.length === 0) {
+        tips('必须添加管理员信息！', 2);
+        return;
+      }
       const { dispatch } = this.props; //
       dispatch(
         actionFn({
           ...init,
           ...res,
-          customer_admin: this.props.customer_admin,
+          customer_admin: adminList,
         }),
       );
 
@@ -413,10 +414,14 @@ class Client extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
       showDetail: this.showFormModalWithProps,
+      showDetail: this.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.showFormModalWithProps,
+      // edit: this.showFormModalWithProps,
+      edit: this.showFormModal,
       // remove: this.props.onRemove,
       remove: this.onRemove,
+      count: this.props.count,
+      getList: this.props.getListAsync,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
@@ -429,6 +434,8 @@ class Client extends PureComponent {
       action: this.state.action,
       getCapture: this.showCapture,
       addUserAsync: this.addUserAsync,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
     };
 
     if (action !== 'add') {

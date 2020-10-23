@@ -35,6 +35,8 @@ const MissionsManageTable = props => {
     tdClick,
     startWorkOrder,
     linkContract,
+    schedule,
+    confirmSchedule,
   } = props; //
 
   const columns = [
@@ -83,8 +85,19 @@ const MissionsManageTable = props => {
       <a onClick={() => startWorkOrder({ action: 'startWorkOrder' })}>
         发起工单
       </a>
-      <a onClick={() => tdClick({ action: 'showList' })}>完成任务</a>
+      <a onClick={() => schedule({ action: 'schedule' })}>排期</a>
+      <a onClick={() => {}}>关闭任务</a>
+      {/* <a onClick={() => closeMission({ action: 'closeMission' })}>关闭任务</a> */}
       <a onClick={() => linkContract({ action: 'linkContract' })}>关联合同</a>
+      <a disabled className={`disabled `}>
+        已排期
+      </a>
+      <a disabled className={`disabled `}>
+        已确认排期
+      </a>
+      <a disabled className={`disabled `}>
+        已关闭
+      </a>
     </>
   );
 

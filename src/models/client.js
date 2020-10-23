@@ -6,11 +6,17 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
 import * as userServices from '@/services/user';
+import { formatSelectList } from '@/utils';
 
 const namespace = 'client';
 const { createAction, createCRUD, newAction } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync', 'addUserAsync'];
+const otherActions = [
+  'syncOAAsync',
+  'getPortraitAsync',
+  'getUserAsync',
+  'addUserAsync',
+];
 
 export const actions = {
   ...createCRUD(otherActions),
@@ -26,20 +32,23 @@ export default {
 
   state: {
     dataList: [],
+    count: 0,
     itemDetail: {},
     d_id: '',
 
     syncOAData: [],
     portraitData: {},
     userList: [],
+    adminList: [],
   },
 
   reducers: {
     getList(state, { payload, type }) {
-      // console.log(' getList 修改  ： ', state, payload, type,     )//
+      console.log(' getList 修改  ： ', state, payload, type); //
       return {
         ...state,
         dataList: [...payload.list],
+        count: payload.rest.count,
       };
     },
     getItem(state, { payload, type }) {
@@ -54,6 +63,7 @@ export default {
       console.log(' addItem 修改  ： ', state, payload, type); //
       return {
         ...state,
+        count: state.count + 1,
         dataList: [payload.bean, ...state.dataList],
       };
     },
@@ -119,10 +129,16 @@ export default {
         // portraitData: payload.,
       };
     },
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        userList: formatSelectList(payload.list, 'nickname'),
+      };
+    },
     addUser(state, { payload, type }) {
       return {
         ...state,
-        userList: [payload.bean, ...state.userList],
+        adminList: [payload.bean, ...state.adminList],
       };
     },
   },
@@ -200,6 +216,10 @@ export default {
       // console.log(' getPortraitAsync ： ', payload, type,     )//
       const res = yield call(services.getPortrait, payload);
       console.log('  getPortrait res ：', res); //
+      yield put(action({ ...res, payload }));
+    },
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *addUserAsync({ payload, action, type }, { call, put }) {

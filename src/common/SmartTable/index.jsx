@@ -40,12 +40,14 @@ class SmartTable extends PureComponent {
     const pagination = {
       // current: 10,
       // pageSize: 6,
+      showQuickJumper: true,
       showSizeChanger: true,
       // showTotal: showTotal,
       position: ['bottomCenter'],
       pageSize: Number(size),
       total,
       size: 'default',
+      onChange: this.onPageChange,
     };
     this.state = {
       pagination,
@@ -304,7 +306,13 @@ class SmartTable extends PureComponent {
       isShowResultModal: true,
     });
   };
-
+  onPageChange = (page, page_size) => {
+    console.log(' onPageChange,  , ： ', page, page_size);
+    this.props.getList({
+      page,
+      page_size,
+    });
+  };
   onChange = (selectedRowKeys, selectedRows) => {
     console.log(
       ' onChange ： ',
@@ -493,6 +501,7 @@ class SmartTable extends PureComponent {
       extra,
       actionConfig,
       noActionCol,
+      count,
     } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -531,8 +540,6 @@ class SmartTable extends PureComponent {
       <div className="">
         <Table
           // bordered
-          // showQuickJumper
-          // showSizeChanger
           // size={'small'}
           // loading={loading}
           // scroll={{ x: 800,  }}
@@ -543,8 +550,7 @@ class SmartTable extends PureComponent {
             type: selectionType,
             ...rowSelection,
           }}
-          onChange={this.props.onPageChange}
-          pagination={pagination}
+          pagination={{ ...pagination, total: count }}
           rowClassName={(record, i) => ANIMATE.bounceIn}
           // rowClassName={(record, i) => ANIMATE.slideInRight}
 
@@ -587,6 +593,7 @@ SmartTable.defaultProps = {
   noActionCol: false,
   noDefault: false, // 是否禁用默认的操作列
   isQRCode: false, // 是否显示默认的二维码按钮
+  count: 0,
 };
 
 SmartTable.propTypes = {
@@ -602,6 +609,7 @@ SmartTable.propTypes = {
   noActionCol: PropTypes.bool,
   noDefault: PropTypes.bool,
   isQRCode: PropTypes.bool,
+  count: PropTypes.number,
 };
 
 export default SmartTable; //

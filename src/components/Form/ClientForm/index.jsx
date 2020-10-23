@@ -230,7 +230,9 @@ const ClientForm = props => {
       comProps: {},
     },
     {
-      // formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getUser,
+      selectData: props.userList,
       itemProps: {
         label: '客户代表',
         name: 'service_staff',
@@ -293,16 +295,16 @@ const ClientForm = props => {
         label: '位置信息',
       },
     },
-    {
-      formType: 'Cascader',
-      itemProps: {
-        label: '区域',
-        name: 'region',
-      },
-      comProps: {
-        options: regoins,
-      },
-    },
+    // {
+    //   formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'region',
+    //   },
+    //   comProps: {
+    //     options: regoins,
+    //   },
+    // },
     {
       // formType: 'Select',
       itemProps: {

@@ -166,12 +166,6 @@ class WorkOrder extends PureComponent {
     console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
-        <Button
-          type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
-        >
-          测试
-        </Button>
         <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button>
@@ -262,19 +256,32 @@ class WorkOrder extends PureComponent {
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+    const { show, action, titleMap } = this.state; //
+
+    const formComProps = {
+      action: this.state.action,
+      getCapture: this.showCapture,
+      addUserAsync: this.addUserAsync,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+    };
+
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
 
     return (
-      <SmartModal
+      <SmartFormModal
         show={show}
         onOk={this.onOk}
         onCancel={this.onCancel}
         action={action}
         titleMap={titleMap}
-        size={this.size}
+        formComProps={formComProps}
+        FormCom={this.state.modalForm}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
 

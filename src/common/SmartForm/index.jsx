@@ -170,7 +170,11 @@ const SmartForm = (props, state) => {
       .filter(v => v.formType === 'Dynamic' || v.formType === 'DynamicItem')
       .map(v => v.itemProps.name);
     const obj = {};
-    dynamicFields.forEach(v => (obj[v] = ['']));
+    const dynamicInitMap = {
+      Dynamic: [{}],
+      DynamicItem: [''],
+    };
+    dynamicFields.forEach(v => (obj[v] = dynamicInitMap[v.formType]));
     console.log(' 惰性初始state   ： ', configs, obj, dynamicFields);
     return obj;
   });

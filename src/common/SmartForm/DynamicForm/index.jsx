@@ -63,6 +63,7 @@ const selectOptions = (
 );
 
 export const getLabel = (label, key) => {
+  label = '';
   const labelMap = {
     rowText: '',
     Input: INPUT_TXT + label,
@@ -128,6 +129,38 @@ const rowLayout = {
     sm: { span: 20 },
   },
 };
+
+const ActionBtn = ({ fields, field, add, remove, addText, subText }) => (
+  <Form.Item
+    // label={'zyb'}
+    className={'formItems '}
+    noStyle
+  >
+    <Button
+      type="dashed"
+      className={'actionBtn addBtn'}
+      onClick={() => {
+        add();
+      }}
+      // style={{ width: '60%' }}
+    >
+      <PlusOutlined /> {addText}
+    </Button>
+
+    {fields.length > 1 ? (
+      <Button
+        type="dashed"
+        className={'actionBtn subBtn'}
+        onClick={() => {
+          remove(field.name);
+        }}
+        // style={{ width: '60%', marginTop: '20px' }}
+      >
+        <MinusOutlined /> {subText}
+      </Button>
+    ) : null}
+  </Form.Item>
+);
 
 const DynamicForm = props => {
   console.log(' DynamicForm ： ', props); //
@@ -312,38 +345,6 @@ const DynamicForm = props => {
             />
           );
 
-          const actionBtn = (
-            <Form.Item
-              // label={'zyb'}
-
-              noStyle
-            >
-              <Button
-                type="dashed"
-                className={'actionBtn addBtn'}
-                onClick={() => {
-                  add();
-                }}
-                // style={{ width: '60%' }}
-              >
-                <PlusOutlined /> {addText}
-              </Button>
-
-              {fields.length > 1 ? (
-                <Button
-                  type="dashed"
-                  className={'actionBtn subBtn'}
-                  onClick={() => {
-                    remove(field.name);
-                  }}
-                  // style={{ width: '60%', marginTop: '20px' }}
-                >
-                  <MinusOutlined /> {subText}
-                </Button>
-              ) : null}
-            </Form.Item>
-          );
-
           const normalItem = (
             <Form.Item
               // name={key}
@@ -375,8 +376,28 @@ const DynamicForm = props => {
               {formItemCom}
             </Form.Item>
           );
+
           const extraItem = config.map((v, i) => {
-            console.log(' extraItem v ： ', v.itemProps.name); //
+            console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
+            const { itemProps } = v;
+            const { label, className } = itemProps;
+
+            // const formItemProps = {
+            //   ...itemProps,
+            //   className: `dynamicFormItem  `,
+            //   rules: noRule ? [] : rules({ items: props, label }),
+            // };
+            const formItemProps = {
+              colon: false,
+              ...itemProps,
+              className: `dynamicFormItem dynamicRow formItems ${animates} ${itemProps.className}  `,
+              rules: noRule ? undefined : rules({ props, label }),
+            };
+
+            if (noLabel) {
+              formItemProps.label = '';
+            }
+
             return (
               <Form.Item
                 // <Form.Item
@@ -386,7 +407,8 @@ const DynamicForm = props => {
                 // key={field.name} // 关键
                 // fieldKey={v.itemProps.name} // 关键
                 //  label={formLabel}
-                key={v.itemProps.name + field.key} // 关键
+                // key={v.itemProps.name} // 关键
+                key={v.itemProps.name + field.key}
                 className={'extraRow'}
               >
                 <Form.Item
@@ -406,7 +428,14 @@ const DynamicForm = props => {
                   {/* {extra} */}
                 </Form.Item>
                 {i === 0 && (
-                  <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
+                  <ActionBtn
+                    fields={fields}
+                    field={field}
+                    add={add}
+                    remove={remove}
+                    addText={addText}
+                    subText={subText}
+                  ></ActionBtn>
                 )}
               </Form.Item>
             );

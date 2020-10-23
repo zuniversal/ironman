@@ -123,7 +123,12 @@ export class Request {
 
         // console.log(' 返回请求22s ： ', res.data,   )//
         // return res.data
-        return res.data.data;
+        const { data, ...rest } = res.data;
+
+        return {
+          ...data,
+          rest,
+        };
       },
       err => {
         console.log(' 请求发生错误了：', err, err.message, err.response, {
@@ -173,6 +178,7 @@ export const parseUrl = (url, params) => URL + url;
 export const get = (url, params) => http.get(url, { params: params });
 export const post = (url, params, o) => http.post(url, params, o);
 export const put = (url, params) => http.put(url, params);
+export const patch = (url, params) => http.patch(url, params);
 // export const remove = (url, params) => http.delete(url, {data: {dataAttr: params}, params: {paramsAttr: params, }, });
 export const remove = (url, params) => http.delete(url, { params });
 
@@ -185,7 +191,8 @@ export const noTipsGet = (url, params) =>
   };
 export const noTipsPost = (url, params) =>
   post(url, { ...params, noTips: true });
-export const noTipsPut = (url, params) => put(url, { ...params, noTips: true });
+export const noTipsPatch = (url, params) =>
+  patch(url, { ...params, noTips: true });
 export const noTipsRemove = (url, params) =>
   remove(url, { ...params, noTips: true });
 

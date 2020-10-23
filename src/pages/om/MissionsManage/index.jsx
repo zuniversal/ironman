@@ -29,6 +29,8 @@ import MissionsManageSearchForm from '@/components/Form/MissionsManageSearchForm
 import {
   MissionsManageWorkOrderForm,
   MissionsManageContractForm,
+  MissionsManageScheduleForm,
+  MissionsManageConfirmScheduleForm,
 } from '@/components/Form/MissionsManageActionForm'; //
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
@@ -47,6 +49,9 @@ const titleMap = {
   down: `文件下载`,
   startWorkOrder: '发起工单',
   linkContract: '关联合同',
+  schedule: '排期',
+  confirmSchedule: '确认排期',
+  closeMission: `关闭${TITLE}`,
 };
 
 // const mapStateToProps = ({ missionsManage, }) => missionsManage;
@@ -187,7 +192,7 @@ class MissionsManage extends PureComponent {
         // onFail={this.onFail}
       ></MissionsManageSearchForm>
     );
-  }
+  };
   // renderSearchForm = params => {
   //   // console.log(' renderSearchForm ： ', params,  )
   //   return (
@@ -221,6 +226,24 @@ class MissionsManage extends PureComponent {
       modalContent: <MissionsManageContractForm></MissionsManageContractForm>,
     });
   };
+  schedule = params => {
+    console.log(' schedule,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: <MissionsManageScheduleForm></MissionsManageScheduleForm>,
+    });
+  };
+  confirmSchedule = params => {
+    console.log(' confirmSchedule,  , ： ', params);
+    this.setState({
+      show: true,
+      ...params,
+      modalContent: (
+        <MissionsManageConfirmScheduleForm></MissionsManageConfirmScheduleForm>
+      ),
+    });
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
 
@@ -236,10 +259,12 @@ class MissionsManage extends PureComponent {
 
       startWorkOrder: this.startWorkOrder,
       linkContract: this.linkContract,
+      schedule: this.schedule,
+      confirmSchedule: this.confirmSchedule,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -256,7 +281,7 @@ class MissionsManage extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     console.log(
