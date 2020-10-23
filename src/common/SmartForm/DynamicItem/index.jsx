@@ -178,11 +178,6 @@ const DynamicItemForm = props => {
 
         const { label, className } = itemProps;
 
-        // const formItemProps = {
-        //   ...itemProps,
-        //   className: `dynamicFormItem  `,
-        //   rules: noRule ? [] : rules({ items: props, label }),
-        // };
         const formItemProps = {
           colon: false,
           ...itemProps,
@@ -202,7 +197,7 @@ const DynamicItemForm = props => {
           className: ` ${comProps.className} `,
           placeholder: formLabel,
         };
-        console.log(' realComProps ： ', realComProps, formItemProps); //
+        console.log(' realComProps ： ', realComProps); //
 
         const selectProps = {
           allowClear: true,
@@ -214,9 +209,9 @@ const DynamicItemForm = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          console.log(' selectSearch ： ', props.selectSearch,   )// 
+          console.log(' selectSearch ： ', props.selectSearch); //
           selectProps.showArrow = false;
-          selectProps.optionFilterProp = "children";
+          selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {
             selectProps.onSearch = props.selectSearch;
           }
@@ -258,10 +253,10 @@ const DynamicItemForm = props => {
           DatePicker: <DatePicker {...realComProps} />,
           MonthPicker: <DatePicker {...realComProps} picker="month" />,
         };
-    
+
         const formItemCom = formItemMap[formType];
         // console.log(' formItemCom ： ', formItemCom, formItemMap, formType, items, formLabel,  )//
-    
+
         if (!formItemCom) {
           return <div key={Math.random()}>没有匹配</div>;
         }
@@ -387,7 +382,7 @@ const DynamicItemForm = props => {
                   // key= "field19"
                   // label= "field19"
 
-                  key={field.name}// 关键 
+                  key={field.name} // 关键
                   //  label={formLabel}
                   className={'extraRow'}
                 >

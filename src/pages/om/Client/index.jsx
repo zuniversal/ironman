@@ -112,7 +112,7 @@ class Client extends PureComponent {
         >
           新增客户
         </Button>
-        {/* <Button
+        <Button
           type="primary"
           onClick={() =>
             this.props.showFormModal({
@@ -126,7 +126,7 @@ class Client extends PureComponent {
           }
         >
           新增客户
-        </Button> */}
+        </Button>
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
@@ -189,10 +189,12 @@ class Client extends PureComponent {
     this.setState({
       action,
       show: true,
-      // title: this.state.titleMap[action],
+      formComProps: {
+        getCapture: this.showCapture,
+        addUserAsync: this.addUserAsync,
+        onClientChange: this.props.onClientChange,
+      },
       modalForm: ClientForm,
-
-      editData: action === 'edit' ? params.record : {},
     });
   };
 
@@ -419,6 +421,34 @@ class Client extends PureComponent {
 
     return <ClientTable {...tableProps}></ClientTable>;
   };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+    const { action, show, titleMap } = this.state; //
+
+    const formComProps = {
+      action: this.state.action,
+      getCapture: this.showCapture,
+      addUserAsync: this.addUserAsync,
+    };
+
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+
+    return (
+      <SmartFormModal
+        show={show}
+        onOk={this.onOk}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+        formComProps={formComProps}
+        FormCom={this.state.modalForm}
+      >
+        {this.renderModalContent()}
+      </SmartFormModal>
+    );
+  };
 
   componentDidMount() {
     console.log(
@@ -447,12 +477,6 @@ class Client extends PureComponent {
       titleMap,
     } = this.state; //
 
-    const formComProps = {
-      getCapture: this.showCapture,
-      action: this.state.action,
-      // init: this.state.editData,
-    };
-
     return (
       <div className="Client">
         {/* Client */}
@@ -461,24 +485,7 @@ class Client extends PureComponent {
 
         {this.renderTable()}
 
-        <SmartFormModal
-          // width={'900px'}
-
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          action={action}
-          titleMap={titleMap}
-          // FormCom={<FormCom showRelativeForm={this.showRelativeForm}  ></FormCom>}
-
-          formComProps={formComProps}
-          FormCom={this.renderModalForm()}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        >
-          {this.renderModalContent()}
-        </SmartFormModal>
+        {this.renderSmartFormModal()}
 
         <SmartModal
           title={commonTitle}

@@ -122,22 +122,20 @@ export const AdminForm = props => {
   };
 
   return (
-    <div className={' InspectMissionAssignForm '}>
-      <SmartForm
-        // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        name={'admin'}
-        propsForm={form}
-        noRuleAll
-        formLayouts={rowLayout}
-        noLabelLayout
-        {...props}
-      ></SmartForm>
-    </div>
+    <SmartForm
+      // flexRow={6}
+      // config={config}
+      config={formatConfig(config)}
+      formProps={formProps}
+      // init={init}
+      // init={{}}
+      name={'admin'}
+      propsForm={form}
+      noRuleAll
+      formLayouts={rowLayout}
+      noLabelLayout
+      {...props}
+    ></SmartForm>
   );
 };
 
@@ -468,34 +466,26 @@ const ClientForm = props => {
   };
 
   return (
-    <div className={''}>
-      <Form.Provider
-        onFormFinish={(name, { values, forms }) => {
-          console.log(' name, values, forms ： ', name, values, forms); //
-          // if (name === 'userForm') {
-          //   const { basicForm } = forms;
-          //   const users = basicForm.getFieldValue('users') || [];
-          //   basicForm.setFieldsValue({ users: [...users, values] });
-          //   setVisible(false);
-          // }
-        }}
-      >
-        <SmartForm
-          // flexRow={4}
-          config={formatConfig(config)}
-          formProps={formProps}
-          // init={init}
-          // init={{}}
-          // init={{
-          //   key9: regoins,
-          // }}
-          isDisabledAll={action === 'detail'}
-          {...props}
-        ></SmartForm>
+    <Form.Provider
+      onFormFinish={(name, { values, forms }) => {
+        console.log(' name, values, forms ： ', name, values, forms); //
+      }}
+    >
+      <SmartForm
+        // flexRow={4}
+        config={formatConfig(config)}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
+        // init={{
+        //   key9: regoins,
+        // }}
+        isDisabledAll={action === 'detail'}
+        {...props}
+      ></SmartForm>
 
-        <AdminForm {...restProps}></AdminForm>
-      </Form.Provider>
-    </div>
+      <AdminForm {...restProps}></AdminForm>
+    </Form.Provider>
   );
 };
 

@@ -101,11 +101,11 @@ const rules = (params, extra) => {
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 },
+    sm: { span: 10 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 },
+    sm: { span: 14 },
   },
 };
 
@@ -160,6 +160,7 @@ const DynamicForm = props => {
     <Form.List
       // name="dynamicForm"
       name={name}
+      key={name}
       className={'dynamicForm '}
     >
       {(fields, params) => {
@@ -189,7 +190,7 @@ const DynamicForm = props => {
         const formItemProps = {
           colon: false,
           ...itemProps,
-          className: `dynamicFormItem formItems ${animates} ${itemProps.className}  `,
+          className: `dynamicFormItem dynamicRow formItems ${animates} ${itemProps.className}  `,
           rules: noRule ? undefined : rules({ props, label }),
         };
 
@@ -269,7 +270,7 @@ const DynamicForm = props => {
           return <div key={Math.random()}>没有匹配</div>;
         }
 
-        const formItemLayout = layoutObj;
+        // const formItemLayout = layoutObj;
         const fieldsData = fields;
 
         // if (fields.length === 0) {
@@ -280,152 +281,139 @@ const DynamicForm = props => {
         //   })
         // }
 
-        return (
-          <div>
-            {// [
-            //   // {
-            //   //   name: 'dfiled',
-            //   //   key: 'dynamicField',
-            //   // },
+        return fieldsData.map((field, index) => {
+          const fieldKey = name ? name : field.name; //
+          console.log(
+            ' 动态表单 fieldKey ：',
+            formItemLayout,
+            fields,
+            field,
+            name,
+            fieldKey,
+          ); //
 
-            //   // ...(fields.length === 0 ? init : []),
-            //   ...fields,
-            // ]
-            fieldsData.map((field, index) => {
-              const fieldKey = name ? name : field.name; //
-              console.log(
-                ' 动态表单 fieldKey ：',
-                formItemLayout,
-                fields,
-                field,
-                name,
-                fieldKey,
-              ); //
+          // if (init) {
+          //   init.forEach((v, i) => {
+          //     // console.log(' data v ： ', v, i,  )
+          //     add(v, 0)
+          //   })
+          //   // add('手动增加的', 0)
+          // } else {
+          //   add()
+          // }
 
-              // if (init) {
-              //   init.forEach((v, i) => {
-              //     // console.log(' data v ： ', v, i,  )
-              //     add(v, 0)
-              //   })
-              //   // add('手动增加的', 0)
-              // } else {
-              //   add()
-              // }
+          const subBtn = (
+            <MinusCircleOutlined
+              className="dynamic-delete-button actionBtn "
+              // style={{ margin: '0 8px' }}
+              onClick={() => {
+                remove(field.name);
+              }}
+            />
+          );
 
-              const subBtn = (
-                <MinusCircleOutlined
-                  className="dynamic-delete-button actionBtn "
-                  // style={{ margin: '0 8px' }}
+          const actionBtn = (
+            <Form.Item
+              // label={'zyb'}
+
+              noStyle
+            >
+              <Button
+                type="dashed"
+                className={'actionBtn addBtn'}
+                onClick={() => {
+                  add();
+                }}
+                // style={{ width: '60%' }}
+              >
+                <PlusOutlined /> {addText}
+              </Button>
+
+              {fields.length > 1 ? (
+                <Button
+                  type="dashed"
+                  className={'actionBtn subBtn'}
                   onClick={() => {
                     remove(field.name);
                   }}
-                />
-              );
-
-              const actionBtn = (
-                <Form.Item
-                  // label={'zyb'}
-
-                  noStyle
+                  // style={{ width: '60%', marginTop: '20px' }}
                 >
-                  <Button
-                    type="dashed"
-                    className={'actionBtn addBtn'}
-                    onClick={() => {
-                      add();
-                    }}
-                    // style={{ width: '60%' }}
-                  >
-                    <PlusOutlined /> {addText}
-                  </Button>
+                  <MinusOutlined /> {subText}
+                </Button>
+              ) : null}
+            </Form.Item>
+          );
 
-                  {fields.length > 1 ? (
-                    <Button
-                      type="dashed"
-                      className={'actionBtn subBtn'}
-                      onClick={() => {
-                        remove(field.name);
-                      }}
-                      // style={{ width: '60%', marginTop: '20px' }}
-                    >
-                      <MinusOutlined /> {subText}
-                    </Button>
-                  ) : null}
-                </Form.Item>
-              );
+          const normalItem = (
+            <Form.Item
+              // name={key}
+              // label={label}
+              // rules={rules}
+              // valuePropName="checked"
 
-              const normalItem = (
+              {...formItemLayout}
+              className={'formItems dynamicFormWrapper'}
+              {...formItemProps}
+              {...field}
+              // name={[field.name, 'first']}
+              // name={[field.name, fieldKey]}
+              // key={fieldKey}
+              // name={[name, fieldKey]}
+              // name={name}
+              // name={[field.fieldKey, 'itemKey']}
+              // fieldKey={[field.fieldKey, 'itemFieldKey']}
+
+              // name={[field.fieldKey, 'itemKey']}// 每个项 对象的 key
+              // fieldKey={[field.fieldKey, 'itemFieldKey']}
+              // name={'itemKey'}//
+              // fieldKey={'itemFieldKey'}
+
+              // key={field.name}
+              // key={field.key}
+              validateTrigger={['onChange', 'onBlur']}
+            >
+              {formItemCom}
+            </Form.Item>
+          );
+          const extraItem = config.map((v, i) => {
+            console.log(' extraItem v ： ', v.itemProps.name); //
+            return (
+              <Form.Item
+                // <Form.Item
+                // key= "field19"
+                // label= "field19"
+
+                // key={field.name} // 关键
+                // fieldKey={v.itemProps.name} // 关键
+                //  label={formLabel}
+                key={v.itemProps.name + field.key} // 关键
+                className={'extraRow'}
+              >
                 <Form.Item
-                  // name={key}
-                  // label={label}
-                  // rules={rules}
-                  // valuePropName="checked"
-
-                  {...formItemLayout}
-                  className={'formItems dynamicFormWrapper'}
+                  // name= "field19"
+                  //  {...rest}
+                  // name={field.name}
                   {...formItemProps}
-                  {...field}
                   // name={[field.name, 'first']}
-                  // name={[field.name, fieldKey]}
-                  // key={fieldKey}
-                  // name={[name, fieldKey]}
-                  // name={name}
-                  // name={[field.fieldKey, 'itemKey']}
-                  // fieldKey={[field.fieldKey, 'itemFieldKey']}
-
-                  // name={[field.fieldKey, 'itemKey']}// 每个项 对象的 key
-                  // fieldKey={[field.fieldKey, 'itemFieldKey']}
-                  // name={'itemKey'}//
-                  // fieldKey={'itemFieldKey'}
-
-                  // key={field.name}
-                  // key={field.key}
-                  validateTrigger={['onChange', 'onBlur']}
+                  // name={[field.name, itemProps.name]}
+                  name={[field.name, v.itemProps.name]}
+                  // fieldKey={[field.fieldKey, v.itemProps.name]}
+                  // name={[field.key, 'first']}
+                  //  rules={rules}
+                  {...formItemLayout}
                 >
                   {formItemCom}
+                  {/* {extra} */}
                 </Form.Item>
-              );
-              const extraItem = config.map((v, i) => {
-                console.log(' extraItem v ： ', v); //
-                return (
-                  <Form.Item
-                    // <Form.Item
-                    // key= "field19"
-                    // label= "field19"
+                {i === 0 && (
+                  <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
+                )}
+              </Form.Item>
+            );
+          });
 
-                    // key={field.name} // 关键
-                    key={v.itemProps.name} // 关键
-                    //  label={formLabel}
-                    className={'extraRow'}
-                    {...formItemLayout}
-                  >
-                    <Form.Item
-                      // name= "field19"
-                      //  {...rest}
-                      // name={field.name}
-                      {...formItemProps}
-                      // name={[field.name, 'first']}
-                      // name={[field.name, itemProps.name]}
-                      name={[field.name, v.itemProps.name]}
-                      // name={[field.key, 'first']}
-                      //  rules={rules}
-                    >
-                      {formItemCom}
-                      {/* {extra} */}
-                    </Form.Item>
-                    {i === 0 && (
-                      <Form.Item className={'formItems '}>
-                        {actionBtn}
-                      </Form.Item>
-                    )}
-                  </Form.Item>
-                );
-              });
-
-              return extra ? <>{extraItem}</> : normalItem;
-            })}
-          </div>
-        );
+          return extra ? extraItem : normalItem;
+        });
       }}
     </Form.List>
   );
