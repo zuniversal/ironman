@@ -53,6 +53,7 @@ export const InspectMissionAssignForm = props => {
         // init={init}
         // init={{}}
 
+        size={'small'}
         noRuleAll
         {...rest}
       ></SmartForm>
@@ -114,7 +115,7 @@ export const InspectMissionEditDateForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-
+        size={'small'}
         noRuleAll
         {...rest}
       ></SmartForm>

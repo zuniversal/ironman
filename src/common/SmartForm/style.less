@@ -6,8 +6,21 @@
   //   color: #333333;
 
   // }
+  .ant-select-disabled {
+    .ant-select-selection-item {
+      color: #333333 !important;
+    }
+  }
+
   [disabled] {
     color: #333333 !important;
+  }
+
+  &.small {
+    .ant-form-item-label
+      > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+      content: '';
+    }
   }
 
   .ant-btn-primary {

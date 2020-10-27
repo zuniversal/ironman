@@ -43,7 +43,7 @@ const ShiftsArrangeCalendar = props => {
     <div className="shiftsArrangeCalendar ">
       <SmartCalendar
         // events={calendarEvents}
-        droppable={false}
+        editable={false}
         events={props.data}
         select={select}
         eventClick={eventClick}

@@ -1,51 +1,21 @@
 import { init, action } from '@/utils/createAction'; //
-import * as services from '@/services/shiftsTransfer';
-import * as teamServices from '@/services/shiftsManage';
-import * as userServices from '@/services/user';
-import * as powerStationServices from '@/services/powerStation';
+import * as services from '@/services/csUserCenter';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
-const namespace = 'shiftsTransfer';
+const namespace = 'csUserCenter';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = [
-  'getTeamAsync',
-  'getUserAsync',
-  'getPowerAsync',
-  'exportDataAsync',
-];
+const otherActions = [];
+
+const batchTurnActions = [];
 
 export const actions = {
-  ...createActions(otherActions),
+  ...createActions(otherActions, batchTurnActions),
 };
 
 // console.log(' actions ： ', actions,  )//
 
 export const mapStateToProps = state => state[namespace];
-
-export const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
-  return {
-    ...data,
-    // page_size: 40,
-    data: data.data ? data.data.format('YYYY-MM') : nowYearMonth,
-  };
-};
-
-export const formatDetail = data => {
-  console.log(' formatDetail ： ', data); //
-  const { work_situation = '', work_ticket = '' } = data;
-
-  return {
-    ...data,
-    wire: work_situation.split(',')[0],
-    knife: work_situation.split(',')[1],
-    lock: work_situation.split(',')[2],
-    executing: work_ticket.split(',')[0],
-    finished: work_ticket.split(',')[1],
-    unExecuted: work_ticket.split(',')[2],
-  };
-};
 
 export default {
   namespace,
@@ -56,14 +26,6 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
-    teamList: [
-      // { label: 'xxx', value: 'xxx1' },
-      // { label: 'yyy', value: 'yyy1' },
-    ],
-    powerList: [
-      // { label: 'power', value: 'power1' },
-      // { label: 'power1', value: 'power11' },
-    ],
   },
 
   reducers: {
@@ -97,7 +59,7 @@ export default {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: formatDetail(payload.bean),
+        itemDetail: payload.bean,
       };
     },
     addItem(state, { payload, type }) {
@@ -126,31 +88,13 @@ export default {
         ),
       };
     },
-    getPower(state, { payload, type }) {
-      return {
-        ...state,
-        powerList: formatSelectList(payload.list, 'name'),
-      };
-    },
-    getUser(state, { payload, type }) {
-      return {
-        ...state,
-        userList: formatSelectList(payload.list, 'nickname'),
-      };
-    },
-    getTeam(state, { payload, type }) {
-      return {
-        ...state,
-        teamList: formatSelectList(payload.list, 'name'),
-      };
-    },
   },
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, formatSearch(payload));
-      yield put(action(res));
+      const res = yield call(services.getList, payload);
+      yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
@@ -158,7 +102,7 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
@@ -166,25 +110,6 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *exportDataAsync({ payload, action, type }, { call, put }) {
-      // console.log(' exportDataAsync ： ', payload, type,     )//
-      const res = yield call(services.exportData, payload);
-      console.log('  exportDataAsync res ：', res); //
-    },
-    *getPowerAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(powerStationServices.getList, {
-        keyword: payload,
-      });
-      yield put(action({ ...res, payload }));
-    },
-    *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getList, { keyword: payload });
-      yield put(action({ ...res, payload }));
-    },
-    *getTeamAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(teamServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
   },

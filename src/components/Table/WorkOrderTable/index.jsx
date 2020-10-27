@@ -85,12 +85,24 @@ const WorkOrderTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       {/* <a onClick={() => showDetail({ action: 'detail' })}>xx详情</a> */}
-      <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
-      <a onClick={() => exportData({ action: 'exportData' })}>导出</a>
-      <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a>
+      <a
+        onClick={() => props.edit({ action: 'dispatchOrder', d_id: record.id })}
+      >
+        派单
+      </a>
+      <a
+        onClick={() =>
+          props.exportData({ action: 'exportData', d_id: record.id })
+        }
+      >
+        导出
+      </a>
+      <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}>
+        添加工作票
+      </a>
     </>
   );
 

@@ -1,4 +1,12 @@
-import React, { Component, PureComponent } from 'react';
+import React, {
+  Component,
+  PureComponent,
+  lazy,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import './style.less';
 
 import { Form, Input, Button, Checkbox } from 'antd';
@@ -28,6 +36,16 @@ const titleMap = {
 
 // const mapStateToProps = ({ client }) => client;
 
+// // const {children,  } = props//
+// const Son = {
+//  ...children,
+//  props: {
+// //    ...children.props ? children.props : {},
+//   propsForm: form,
+//  }
+// }
+// console.log(' Son, children ： ', Son, children,  )//
+
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
@@ -38,13 +56,23 @@ class Client extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      show: false,
+
       action: '',
+      title: '',
+      Title: '',
       titleMap,
+
       commonContent: null,
       commonTitle: '',
       isShowModal: false,
 
       modalContent: null,
+
+      editData: {},
+
+      selectedRowKeys: [],
+      selectedRows: [],
     };
   }
 
@@ -55,26 +83,18 @@ class Client extends PureComponent {
     try {
       const res = await propsForm.validateFields();
       console.log('  res await 结果  ：', res, res.values); //
-      // const admin = {
-      //   ...res.customer_admin.map(v => ({
-      //     nickname: v.username,
-      //     account: {
-      //       ...v,
-      //       certification_status: true,
-      //       account_type: 'manager',
-      //     },
-      //   })),
-      // };
-      // console.log(' customeradmin ： ', admin); //
-      // const customerAdmin = res.customer_admin.map(v => ({
-      //   account: {
-      //     ...v,
-      //     certification_status: true,
-      //     account_type: 'manager',
-      //   },
-      // }))
-      console.log(' customeradmin ： ', res); //
-      this.props.addUserAsync({ customer_admin_list: res.customer_admin });
+      const admin = {
+        ...res.customer_admin.map(v => ({
+          nickname: v.username,
+          account: {
+            ...v,
+            certification_status: true,
+            account_type: 'manager',
+          },
+        })),
+      };
+      console.log(' admin ： ', admin); //
+      this.props.addUserAsync(admin[0]);
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -98,7 +118,7 @@ class Client extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
+          onClick={() => this.showFormModal({ action: 'add' })}
         >
           新增客户
         </Button>
@@ -107,6 +127,23 @@ class Client extends PureComponent {
           onClick={() =>
             this.props.showFormModal({
               action: 'add',
+              formComProps: {
+                getCapture: this.showCapture,
+                // addUserAsync: this.props.addUserAsync,
+                addUserAsync: this.addUserAsync,
+              },
+              modalFormContent: (
+                <ClientForm
+                  formComProps={{
+                    action: this.state.action,
+                    getCapture: this.showCapture,
+                    addUserAsync: this.addUserAsync,
+                    getUser: params =>
+                      this.props.getUserAsync({ keyword: params }),
+                    userList: this.props.userList,
+                  }}
+                ></ClientForm>
+              ),
             })
           }
         >
@@ -132,22 +169,18 @@ class Client extends PureComponent {
       this.state,
       this.props,
     );
-    if (action === 'add') {
-      this.props.showFormModal(action, params);
-    }
-    if (action === 'edit' || action === 'detail') {
-      this.props.getItemAsync(action, params);
-    }
+    // this.props.dispatchAction(action, params);
 
-    // this.setState({
-    //   action,
-    //   show: true,
-    //   // formComProps: {
-    //   //   getCapture: this.showCapture,
-    //   //   addUserAsync: this.addUserAsync,
-    //   //   onClientChange: this.props.onClientChange,
-    //   // },
-    // });
+    this.setState({
+      action,
+      show: true,
+      // formComProps: {
+      //   getCapture: this.showCapture,
+      //   addUserAsync: this.addUserAsync,
+      //   onClientChange: this.props.onClientChange,
+      // },
+      modalForm: ClientForm,
+    });
   };
 
   showModalContent = params => {
@@ -169,8 +202,7 @@ class Client extends PureComponent {
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
-    // const { action } = this.state; //
-    const { action } = this.props; //
+    const { action } = this.state; //
     let actionFn = actions.addItemAsync;
     if (action === 'edit') {
       actionFn = actions.editItemAsync;
@@ -181,9 +213,9 @@ class Client extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn); //
-      const { adminList, itemDetail } = this.props; //
+      const { adminList } = this.props; //
       console.log(' adminList ： ', adminList); //
-      if (adminList.length === 0 && action !== 'add') {
+      if (adminList.length === 0) {
         tips('必须添加管理员信息！', 2);
         return;
       }
@@ -248,6 +280,12 @@ class Client extends PureComponent {
 
     // return null
   };
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e);
+    const { modalContent } = this.state; //
+
+    return modalContent;
+  };
   renderContent = e => {
     console.log('    renderContent ： ', e);
     const { commonContent } = this.state; //
@@ -299,51 +337,48 @@ class Client extends PureComponent {
 
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
-      // tdClick: this.props.showFormModal,
-      // showDetail: this.showFormModalWithProps,
-      // showDetail: this.showFormModal,
-      showDetail: this.props.getItemAsync,
+      tdClick: this.props.showFormModal,
+      showDetail: this.showFormModalWithProps,
+      showDetail: this.showFormModal,
       dataSource: this.props.dataList,
-      count: this.props.count,
-      getListAsync: this.props.getListAsync,
       // edit: this.showFormModalWithProps,
-      edit: this.props.getItemAsync,
+      edit: this.showFormModal,
       // remove: this.props.onRemove,
       remove: this.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
   };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+    const { action, show, titleMap } = this.state; //
 
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { action } = this.props; //
     const formComProps = {
-      action,
+      action: this.state.action,
       getCapture: this.showCapture,
       addUserAsync: this.addUserAsync,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
     };
+
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
-    return <ClientForm {...formComProps}></ClientForm>;
-  };
-  renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+
     return (
       <SmartFormModal
-        show={this.props.isShowModal}
-        action={this.props.action}
-        titleMap={this.state.titleMap}
+        show={show}
         onOk={this.onOk}
-        onCancel={this.props.onCancel}
-        // formComProps={formComProps}
+        onCancel={this.onCancel}
+        action={action}
+        titleMap={titleMap}
+        formComProps={formComProps}
         // FormCom={this.state.modalForm}
       >
-        {this.renderModalContent()}
+        {/* {this.renderModalContent()} */}
+        <ClientForm {...formComProps}></ClientForm>
       </SmartFormModal>
     );
   };

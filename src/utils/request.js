@@ -33,6 +33,10 @@ const codeMap = {
   104006: 'API访问错误',
 };
 
+const statusMap = {
+  404: '404路径不对！',
+};
+
 export const getCodeMsg = code => {
   // const {code,  } = data
   const codeItem = codeMap[code];
@@ -41,7 +45,7 @@ export const getCodeMsg = code => {
 };
 
 export const isTips = res => {
-  console.log('  isTips  !res ', !res);
+  console.log('  isTips  !res ', !res, res);
   if (!res) {
     tips('未知错误', 2);
     return;
@@ -59,13 +63,18 @@ export const isTips = res => {
     config,
     config.datas,
   );
-  // if (code !== NORMAL_CODE) {
-  if (false) {
+  if (statusMap[status]) {
+    tips(statusMap[status], 2);
+    return;
+  }
+  if (code !== NORMAL_CODE) {
+    // if (false) {
     const codeMsg = getCodeMsg(code);
     console.log(' 提示 对吗  !codeMsg ', !codeMsg, codeMsg);
-    if (!codeMsg) {
-      tips(codeMsg, 2);
-    }
+    tips(msg_show, 2);
+    // if (!codeMsg) {
+    //   tips(codeMsg, 2);
+    // }
     return;
   } else {
     console.log(' 提示 对吗  !noTips ', !noTips, noTips, status);

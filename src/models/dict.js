@@ -1,13 +1,16 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/dict';
+import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'dict';
-const { createAction, createCRUD } = init(namespace);
+const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = [];
+
+const batchTurnActions = [];
 
 export const actions = {
-  ...createCRUD(otherActions),
+  ...createActions(otherActions, batchTurnActions),
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -18,32 +21,53 @@ export default {
   namespace,
 
   state: {
+    action: '',
+    isShowModal: false,
     dataList: [],
+    count: 0,
     itemDetail: {},
-
-    syncOAData: {},
-    portraitData: {},
   },
 
   reducers: {
+    showFormModal(state, { payload, type }) {
+      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: true,
+        action: payload.action,
+      };
+    },
+    onCancel(state, { payload, type }) {
+      console.log(' onCancel 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: false,
+        itemDetail: {},
+      };
+    },
     getList(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        dataList: [...payload.list],
+        dataList: payload.list,
+        count: payload.rest.count,
       };
     },
     getItem(state, { payload, type }) {
+      console.log(' getItemgetItem ： ', payload); //
       return {
         ...state,
-        // ...payload,
-        // dataList: [payload.bean, ],
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: payload.bean,
       };
     },
     addItem(state, { payload, type }) {
       return {
         ...state,
         dataList: [payload.bean, ...state.dataList],
+        isShowModal: false,
+        count: state.count + 1,
       };
     },
     editItem(state, { payload, type }) {
@@ -52,14 +76,13 @@ export default {
         dataList: state.dataList.map(v => ({
           ...(v.id !== payload.payload.d_id ? payload : v),
         })),
-        // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
+        isShowModal: false,
       };
     },
     removeItem(state, { payload, type }) {
       const removeList = payload.payload.filter(v => v.id);
       return {
         ...state,
-        // dataList: state.dataList.filter((v) => v.id !== payload.payload.d_id)
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
@@ -69,16 +92,17 @@ export default {
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
+      console.log(' getListAsync ： ', payload, action, type); //
       const res = yield call(services.getList, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);

@@ -34,6 +34,12 @@ export default {
       },
 
       {
+        path: '/cs/csClientReport',
+        name: '客户报告',
+        icon: <Icon icon={'csOrganize'} />,
+        component: '../pages/cs/CsClientReport',
+      },
+      {
         path: '/cs/csOrganize',
         name: '组织管理',
         icon: <ScheduleFilled />,
@@ -42,6 +48,13 @@ export default {
       },
       {
         path: '/cs/csUserCenter',
+        name: '个人中心',
+        icon: <ScheduleFilled />,
+        icon: <Icon icon={'csUserCenter'} />,
+        component: '../pages/csUserCenter',
+      },
+      {
+        path: '/cs/userCenter',
         name: '个人中心',
         icon: <ScheduleFilled />,
         icon: <Icon icon={'csUserCenter'} />,

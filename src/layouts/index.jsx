@@ -33,6 +33,7 @@ import { actions } from '@/models/layout'; //
 // if (!haveToken) {
 //   const res = axios
 //     .post('/api/v1/login', { username: 'admin', password: 'afafa' })
+//     // .delete('/api/v1/console/equipment', { ids: [] })
 //     .then(res => {
 //       console.log('  login  ： ', res);
 //       localStorage.setItem('token', res.data.token);

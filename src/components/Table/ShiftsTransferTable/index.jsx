@@ -29,7 +29,14 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsTransferTable = props => {
   console.log(' ShiftsTransferTable  ： ', props); //
-  const { showModal, edit, remove, tdClick, showTransferDetail } = props; //
+  const {
+    showModal,
+    edit,
+    remove,
+    tdClick,
+    showTransferDetail,
+    showDetail,
+  } = props; //
 
   const columns = [
     {
@@ -65,7 +72,7 @@ const ShiftsTransferTable = props => {
   // };
   const extra = (text, record, index, props) => (
     <>
-      <a
+      {/* <a
         onClick={() => {
           console.log(' propsprops ： ', props); //
           showTransferDetail({
@@ -75,6 +82,13 @@ const ShiftsTransferTable = props => {
             // record,
           });
         }}
+      >
+        查看
+      </a> */}
+      <a
+        onClick={() =>
+          showDetail({ action: 'detail', d_id: record[props.rowKey] })
+        }
       >
         查看
       </a>

@@ -16,6 +16,7 @@ import Dnd from './Dnd'; //
 import CalendarCom from './CalendarCom'; //
 // import SmartHOC from '@/common/SmartHOC';
 import DashMap from '@/components/Echarts/DashMap';
+import FormModal from './FormModal';
 // import CURD from './CURD'//
 import ProvinceForm from '@/components/Form/ProvinceForm'; //
 import { connect } from 'umi';
@@ -68,7 +69,7 @@ class Test extends PureComponent {
 
   renderTestTable = params => {
     console.log(' renderTestTable ： ', params);
-  }
+  };
 
   showContractModal = params => {
     const { action } = params;
@@ -150,7 +151,8 @@ class Test extends PureComponent {
         {/* <ProvinceForm></ProvinceForm> */}
         {/* <Dnd></Dnd> */}
         {/* <CalendarCom></CalendarCom> */}
-        <DashMap></DashMap>
+        <FormModal {...this.props}></FormModal>
+        {/* <DashMap></DashMap> */}
         {/* <CURD></CURD> */}
       </div>
     );

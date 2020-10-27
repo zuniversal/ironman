@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -20,11 +12,6 @@ import {
   Typography,
   Divider,
 } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
@@ -67,74 +54,9 @@ class Home extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      showResultModal: false,
-
-      showModalCom: null,
-      modalContent: null,
-
-      action: '',
-      title: '',
-
       titleMap,
     };
   }
-
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
 
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
@@ -144,13 +66,11 @@ class Home extends PureComponent {
 
   renderHomeStatBox = params => {
     console.log(' renderHomeStatBox ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatBox></HomeStatBox>;
   };
   renderHomeStatEcharts = params => {
     console.log(' renderHomeStatEcharts ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return <HomeStatEcharts></HomeStatEcharts>;
   };
@@ -161,7 +81,7 @@ class Home extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, action, titleMap } = this.state; //
+
     return (
       <div className="">
         <div className="homeTitle">待巡检任务</div>
@@ -176,7 +96,7 @@ class Home extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, action, titleMap } = this.state; //
+
     return (
       <div className="">
         <div className="homeTitle">待处理工单</div>
@@ -184,46 +104,55 @@ class Home extends PureComponent {
       </div>
     );
   };
-
-  getPageTitle = e => {
-    console.log('    getPageTitle ： ', e, this.state, this.props);
+  get pageTitle() {
+    console.log(' get 取属 pageTitle ： ', this.state, this.props);
     const { title } = this.props.route; //
     return title;
-  };
+  }
   showSetting = e => {
     console.log('    showSetting ： ', e);
-    this.setState({
-      show: true,
+    this.props.showFormModal({
       action: 'setting',
-      modalForm: HomeSettingForm,
     });
   };
 
-  renderModalForm = e => {
-    console.log('    renderModalForm ： ', e, this.state, this.props);
-    const { modalForm } = this.state; //
-    if (modalForm) {
-      return modalForm;
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'setting') {
+        // this.props.homeSetting({
+        //   ...res,
+        // });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
     }
+  };
+
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+    };
+    return <HomeSettingForm {...formComProps}></HomeSettingForm>;
   };
   renderSmartFormModal = params => {
     console.log(' renderSmartFormModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return (
       <SmartFormModal
-        // width={'900px'}
-
-        title={title}
-        show={show}
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
-        // formComProps={formComProps}
-        FormCom={this.renderModalForm()}
+        onCancel={this.props.onCancel}
       >
-        {/* {this.renderFormModalContent()} */}
+        {this.renderModalContent()}
       </SmartFormModal>
     );
   };
@@ -240,7 +169,7 @@ class Home extends PureComponent {
       <div className="omHome">
         <HomeTitleRow
           {...this.props}
-          title={this.getPageTitle()}
+          title={this.pageTitle}
           showSetting={this.showSetting}
           // right={<HomeSettingBtn showSetting={this.showSetting} ></HomeSettingBtn>}
         ></HomeTitleRow>

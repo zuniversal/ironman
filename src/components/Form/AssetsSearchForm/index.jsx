@@ -29,19 +29,19 @@ const AssetsSearchForm = props => {
   };
 
   const config = [
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getClientAsync,
+    //   selectData: props.clientList,
+    //   itemProps: {
+    //     label: '客户',
+    //     name: 'customer',
+    //   },
+    //   comProps: {},
+    // },
     {
       formType: 'Search',
-      selectSearch: props.getList,
-      selectData: props.dataList,
-      itemProps: {
-        label: '客户',
-        name: 'customer',
-      },
-      comProps: {},
-    },
-    {
-      formType: 'Search',
-      selectSearch: props.getPower,
+      selectSearch: props.getPowerAsync,
       selectData: props.dataPower,
       itemProps: {
         label: '电站',
@@ -57,14 +57,14 @@ const AssetsSearchForm = props => {
       },
       comProps: {},
     },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '',
-        name: 'keyword',
-      },
-      searchSuffix: true,
-    },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '',
+    //     name: 'keyword',
+    //   },
+    //   searchSuffix: true,
+    // },
   ];
 
   return (

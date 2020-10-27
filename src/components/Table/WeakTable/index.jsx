@@ -77,7 +77,7 @@ const WeakTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       <a onClick={() => tdClick({ action: 'showList' })}>处理</a>
       <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a>

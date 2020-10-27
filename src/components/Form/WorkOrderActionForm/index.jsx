@@ -58,7 +58,7 @@ export const WorkOrderDispatchOrderForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-
+        size={'small'}
         {...rest}
       ></SmartForm>
 

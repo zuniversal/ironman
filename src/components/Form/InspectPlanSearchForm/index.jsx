@@ -18,18 +18,12 @@ import {
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
-
-
-
-
+import { formatConfig } from '@/utils'; //
 
 const InspectPlanSearchForm = props => {
   console.log(' InspectPlanSearchForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
 
-    
   const config = [
     {
       formType: 'DatePicker',
@@ -45,10 +39,7 @@ const InspectPlanSearchForm = props => {
         name: '',
       },
     },
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',
@@ -69,7 +60,7 @@ const InspectPlanSearchForm = props => {
         {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

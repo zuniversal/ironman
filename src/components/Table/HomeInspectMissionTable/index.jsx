@@ -54,7 +54,7 @@ const HomeInspectMissionTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       <a onClick={() => complete({ action: 'complete' })}>完成</a>
       <a onClick={() => remove({ action: 'remove' })}>删除</a>

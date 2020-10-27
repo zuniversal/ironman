@@ -47,6 +47,7 @@ const SmartFormModal = props => {
     children,
     top,
     bottom,
+    isNoForm,
     ...modalProps // 其余传给表单的属性
 
     // config,
@@ -56,7 +57,7 @@ const SmartFormModal = props => {
   const [form] = show ? Form.useForm() : [];
   // const [form] = Form.useForm()
 
-  const { init, } = formComProps;
+  const { init } = formComProps;
 
   // const updateInit = (init) => {
   //   console.log(' updateInit   ,   ： ', init,   )
@@ -65,6 +66,11 @@ const SmartFormModal = props => {
   //   }
   // }
 
+  // if (form) {
+  //   form.setFieldsValue({
+  //     yyyy: 'zyb',
+  //   })
+  // }
 
   console.log(
     ' SmartFormModal ： ',
@@ -110,9 +116,9 @@ const SmartFormModal = props => {
       <div>
         {top}
 
-        {children}
+        {/* {children} */}
 
-        {FormCom && form && (
+        {/* {FormCom && form && (
           <FormCom
             // flexRow={4}
             // config={formConfig}
@@ -125,7 +131,13 @@ const SmartFormModal = props => {
             // onSubmit={onSubmit}
             // onFail={onFail}
           ></FormCom>
-        )}
+        )} */}
+
+        {children && !isNoForm
+          ? React.cloneElement(children, {
+              propsForm: form,
+            })
+          : children}
 
         {bottom}
       </div>

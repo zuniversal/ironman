@@ -71,14 +71,18 @@ const InspectMissionTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       {/* <a onClick={() => tdClick({ action: 'showList' })}>派发</a>
       <a onClick={() => tdClick({ action: 'showList' })}>已领取</a>
       <a onClick={() => tdClick({ action: 'showList' })}>已开始</a> */}
       {/* <a onClick={() => tdClick({ action: 'showList' })}>任务</a> */}
-      <a onClick={() => assignMission({ action: 'assignMission' })}>分配</a>
-      <a onClick={() => editDate({ action: 'editDate' })}>修改日期</a>
+      <a onClick={() => props.showFormModal({ action: 'assignMission' })}>
+        分配
+      </a>
+      <a onClick={() => props.showFormModal({ action: 'editDate' })}>
+        修改日期
+      </a>
     </>
   );
 

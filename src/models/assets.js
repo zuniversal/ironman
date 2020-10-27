@@ -2,11 +2,12 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/assets';
 import * as powerStationServices from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
+import * as clientServices from '@/services/client';
 import { formatSelectList } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'assets';
-const { createAction, createCRUD } = init(namespace);
+const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
@@ -15,43 +16,73 @@ const otherActions = [
   'getTemplatAsync',
   'getPowerAsync',
   'getHouseNoAsync',
+  'getClientAsync',
 ];
 
 export const actions = {
-  ...createCRUD(otherActions),
+  ...createActions(otherActions),
 };
 
 // console.log(' actions ： ', actions,  )//
 
 export const mapStateToProps = state => state[namespace];
 
+const formatParams = data => {
+  const params = {
+    ...data,
+    production_date: data.production_date.format('YYYY-MM-DD'),
+    operation_date: data.operation_date.format('YYYY-MM-DD'),
+  };
+  console.log(' formatParams params ： ', params); //
+  return params;
+};
+
 export default {
   namespace,
 
   state: {
+    action: '',
+    isShowModal: false,
     dataList: [],
+    count: 0,
     itemDetail: {},
     d_id: '',
 
     syncOAData: [],
-    portraitData: {},
     powerList: [],
     houseNoList: [],
+    clientList: [],
   },
 
   reducers: {
+    showFormModal(state, { payload, type }) {
+      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: true,
+        action: payload.action,
+      };
+    },
+    onCancel(state, { payload, type }) {
+      console.log(' onCancel 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: false,
+        itemDetail: {},
+      };
+    },
     getList(state, { payload, type }) {
       // console.log(' getList 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         dataList: payload.list,
+        count: payload.rest.count,
       };
     },
     getItem(state, { payload, type }) {
       console.log(' getItem 修改  ： ', state, payload, type); //
       return {
         ...state,
-        d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
           d_id: payload.payload.d_id,
@@ -59,6 +90,9 @@ export default {
           production_date: moment(),
           operation_date: moment(),
         },
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
       };
       production_date;
     },
@@ -67,6 +101,8 @@ export default {
       return {
         ...state,
         dataList: [payload.bean, ...state.dataList],
+        isShowModal: false,
+        count: state.count + 1,
       };
     },
     editItem(state, { payload, type }) {
@@ -78,6 +114,7 @@ export default {
         ...state,
         dataList: dataList,
         d_id: '',
+        isShowModal: false,
         // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
       };
     },
@@ -126,6 +163,13 @@ export default {
         houseNoList: formatSelectList(payload.list, 'name'),
       };
     },
+    getClient(state, { payload, type }) {
+      // console.log(' getClient 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
   },
 
   effects: {
@@ -143,13 +187,13 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       // console.log(' addItemAsync ： ', payload, type,     )//
-      const res = yield call(services.addItem, payload);
+      const res = yield call(services.addItem, formatParams(payload));
       console.log('  addItem res ：', res); //
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       // console.log(' editItemAsync ： ', payload, type,     )//
-      const res = yield call(services.editItem, payload);
+      const res = yield call(services.editItem, formatParams(payload));
       console.log('  editItem res ：', res); //
       yield put(action({ ...res, payload }));
     },
@@ -205,6 +249,10 @@ export default {
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {
       const res = yield call(houseNoServices.getList, { keyword: payload });
+      yield put(action({ ...res, payload }));
+    },
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
   },

@@ -64,7 +64,7 @@ const MissionsManageTable = props => {
     },
     {
       title: '当前状态',
-      dataIndex: '',
+      dataIndex: 'status',
     },
     {
       title: '发起工单数',
@@ -72,7 +72,7 @@ const MissionsManageTable = props => {
     },
     {
       title: '创建时间',
-      dataIndex: '',
+      dataIndex: 'created_time',
     },
     {
       title: '客户确认',
@@ -80,15 +80,49 @@ const MissionsManageTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => startWorkOrder({ action: 'startWorkOrder' })}>
+      <a
+        onClick={() =>
+          props.edit({ action: 'startWorkOrder', d_id: record.id })
+        }
+      >
         发起工单
       </a>
-      <a onClick={() => schedule({ action: 'schedule' })}>排期</a>
-      <a onClick={() => {}}>关闭任务</a>
-      {/* <a onClick={() => closeMission({ action: 'closeMission' })}>关闭任务</a> */}
-      <a onClick={() => linkContract({ action: 'linkContract' })}>关联合同</a>
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'schedule',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        排期
+      </a>
+      {/* <a onClick={() => props.edit({ action: 'confirmSchedule', d_id: record.id, itemDetail: record, })}>确认排期</a> */}
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'closeMission',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        关闭任务
+      </a>
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'linkContract',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        关联合同
+      </a>
       <a disabled className={`disabled `}>
         已排期
       </a>

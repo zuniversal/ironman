@@ -110,9 +110,13 @@ const WorkOrderTicketForm = props => {
     },
     {
       formType: 'CustomCom',
-      CustomCom: createArr(12).map((v, i) => (
-        <WeakDetailImg key={i}></WeakDetailImg>
-      )),
+      CustomCom: (
+        <>
+          {createArr(12).map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))}
+        </>
+      ),
       itemProps: {
         label: '反馈图片',
         name: 'task.file',
@@ -130,7 +134,8 @@ const WorkOrderTicketForm = props => {
       selectData: props.teamList,
       itemProps: {
         label: '处理人',
-        name: 'recipient.name',
+        // name: 'recipient.name',
+        name: ['recipient', 'nickname'],
       },
     },
     {
@@ -147,9 +152,13 @@ const WorkOrderTicketForm = props => {
     },
     {
       formType: 'CustomCom',
-      CustomCom: createArr(4).map((v, i) => (
-        <WeakDetailImg key={i}></WeakDetailImg>
-      )),
+      CustomCom: (
+        <>
+          {createArr(4).map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))}
+        </>
+      ),
       itemProps: {
         label: '施工图片',
         name: 'file',

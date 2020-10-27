@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 
 const WeakDetailImg = props => {
-  console.log(' WeakDetailImg   props, ,   ： ', props);
+  // console.log(' WeakDetailImg   props, ,   ： ', props);
   return props.src ? (
     <img className={'detailImg'} src={props.src} {...props} />
   ) : (

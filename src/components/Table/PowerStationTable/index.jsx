@@ -34,50 +34,32 @@ const PowerStationTable = props => {
     {
       title: '户号',
       dataIndex: 'electricity_user',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
     {
       title: '电站名称',
       dataIndex: 'name',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
     {
       title: '业务主体',
       dataIndex: 'business_entity',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
     {
       title: '设备数',
       // dataIndex: '',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
     {
       title: '监控点数',
       // dataIndex: '',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
     {
       title: '一次电气图',
       // dataIndex: '',
-      detail: true,
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      d_item: 'id',
     },
   ];
 

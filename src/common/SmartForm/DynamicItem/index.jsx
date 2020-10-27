@@ -151,6 +151,7 @@ const DynamicItemForm = props => {
     selectData,
     CustomCom,
     LabelCom,
+    isDisabledAll,
   } = props; //
 
   return (
@@ -191,6 +192,10 @@ const DynamicItemForm = props => {
 
         const formLabel = customLabel ? customLabel : getLabel(label, formType);
         // console.log('  formLabel ：', formLabel,  )//
+
+        if (isDisabledAll) {
+          comProps.disabled = true;
+        }
 
         const realComProps = {
           ...comProps,
@@ -396,7 +401,9 @@ const DynamicItemForm = props => {
                     {formItemCom}
                     {/* {extra} */}
                   </Form.Item>
-                  <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
+                  {!isDisabledAll && (
+                    <Form.Item className={'formItems '}>{actionBtn}</Form.Item>
+                  )}
                 </Form.Item>
               ) : (
                 normalItem

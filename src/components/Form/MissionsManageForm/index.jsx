@@ -27,11 +27,11 @@ const MissionsForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      // selectSearch: props.getClientAsync,
+      selectData: props.clientData,
       itemProps: {
         label: '客户',
-        name: 'customer_id',
+        name: ['customer', 'id'],
       },
     },
     {
@@ -46,13 +46,20 @@ const MissionsForm = props => {
         name: 'type',
       },
     },
+    // 选择客户所属电站
     {
+      // formType: 'Search',
+      // selectSearch: props.getPowerAsync,
+      // selectData: props.powerList,
       itemProps: {
         label: '电站',
         name: 'station_id',
       },
     },
     {
+      // formType: 'Search',
+      // selectSearch: props.getAssetsAsync,
+      // selectData: props.assetsList,
       itemProps: {
         label: '设备',
         name: 'equipment_id',

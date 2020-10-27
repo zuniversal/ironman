@@ -9,7 +9,7 @@ import * as userServices from '@/services/user';
 import { formatSelectList } from '@/utils';
 
 const namespace = 'client';
-const { createAction, createCRUD, newAction } = init(namespace);
+const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
@@ -19,10 +19,7 @@ const otherActions = [
 ];
 
 export const actions = {
-  ...createCRUD(otherActions),
-  // ...newAction({
-  //   syncOAAsync: 'getList',
-  // }),
+  ...createActions(otherActions),
 };
 
 export const mapStateToProps = state => state[namespace];
@@ -31,6 +28,8 @@ export default {
   namespace,
 
   state: {
+    action: '',
+    isShowModal: false,
     dataList: [],
     count: 0,
     itemDetail: {},
@@ -38,11 +37,30 @@ export default {
 
     syncOAData: [],
     portraitData: {},
-    userList: [],
+    userList: [
+      // { label: 'zyb', value: 'value1' },
+      // { label: 'zyb1', value: 'value2' },
+    ],
     adminList: [],
   },
 
   reducers: {
+    showFormModal(state, { payload, type }) {
+      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: true,
+        action: payload.action,
+      };
+    },
+    onCancel(state, { payload, type }) {
+      console.log(' onCancel 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: false,
+        itemDetail: {},
+      };
+    },
     getList(state, { payload, type }) {
       console.log(' getList 修改  ： ', state, payload, type); //
       return {
@@ -55,14 +73,22 @@ export default {
       console.log(' getItem 修改  ： ', state, payload, type); //
       return {
         ...state,
+        action: payload.payload.action,
+        isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: { ...payload.bean, d_id: payload.payload.d_id },
+        itemDetail: {
+          ...payload.bean,
+          d_id: payload.payload.d_id,
+          service_staff: 'zybxxx',
+        },
+        adminList: [payload.bean.customer_admin],
       };
     },
     addItem(state, { payload, type }) {
       console.log(' addItem 修改  ： ', state, payload, type); //
       return {
         ...state,
+        isShowModal: false,
         count: state.count + 1,
         dataList: [payload.bean, ...state.dataList],
       };
@@ -74,6 +100,7 @@ export default {
       console.log(' editItem 修改  ： ', state, payload, type, dataList); //
       return {
         ...state,
+        isShowModal: false,
         dataList: dataList,
         d_id: '',
         // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
@@ -224,7 +251,7 @@ export default {
     },
     *addUserAsync({ payload, action, type }, { call, put }) {
       // console.log(' addUserAsync ： ', payload, type,     )//
-      const res = yield call(userServices.addItem, payload);
+      const res = yield call(services.addAdmin, payload);
       console.log('  addUserAsync res ：', res); //
       yield put(action(res));
     },

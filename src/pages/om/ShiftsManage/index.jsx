@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
@@ -57,116 +49,9 @@ class ShiftsManage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-
-      showModalCom: null,
-
-      action: '',
-      title: '',
-
       titleMap,
-
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  downloadFile = params => {
-    console.log('    downloadFile ： ', params);
-    this.props.downloadFile();
-  };
-
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
@@ -177,19 +62,20 @@ class ShiftsManage extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() =>
-            this.props.showFormModal({
-              action: 'add',
-              formComProps: {
-                userList: this.props.userList,
-                getUser: params => this.props.getUserAsync({ keyword: params }),
-                // getUser: params => {
-                //   console.log(' params ： ', params); //
-                //   this.props.dispatch(actions.getUserAsync(params));
-                // },
-              },
-            })
-          }
+          // onClick={() =>
+          //   this.props.showFormModal({
+          //     action: 'add',
+          //     formComProps: {
+          //       userList: this.props.userList,
+          //       getUser: params => this.props.getUserAsync({ keyword: params }),
+          //       // getUser: params => {
+          //       //   console.log(' params ： ', params); //
+          //       //   this.props.dispatch(actions.getUserAsync(params));
+          //       // },
+          //     },
+          //   })
+          // }
+          onClick={() => this.props.showFormModal({ action: 'add' })}
         >
           新增{TITLE}
         </Button>
@@ -230,18 +116,10 @@ class ShiftsManage extends PureComponent {
   };
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    // this.props.dispatch(
-    //   actions.removeItemsAsync({ id: `${params.record.id}` }),
-    // );
     this.props.removeItemsAsync({ id: `${params.record.id}` });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    // this.props.dispatch(
-    //   actions.removeItemsAsync({
-    //     id: `${this.props.selectedRowKeys.join(',')}`,
-    //   }),
-    // );
     this.props.removeItemsAsync({
       id: `${this.props.selectedRowKeys.join(',')}`,
     });
@@ -257,23 +135,21 @@ class ShiftsManage extends PureComponent {
       },
     });
     const page = `${SHIFTSARRANGE}team=${params.id}&schedule_date=${nowYearMonth}`;
-    setTimeout(() => {
-      history.push(page);
-    }, 1000);
+    history.push(page);
   };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onPageChange: this.props.onPageChange,
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
+      // tdClick: this.props.showFormModal,
+      showDetail: this.props.getItemAsync,
       dataSource: this.props.dataList,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
       // edit: this.props.showFormModal,
-      edit: this.showFormModal,
+      // edit: this.showFormModal,
+      edit: this.props.getItemAsync,
       // remove: this.props.onRemove,
       remove: this.onRemove,
       goPage: this.goPage,
@@ -282,22 +158,57 @@ class ShiftsManage extends PureComponent {
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
   };
 
-  renderSmartModal = params => {
-    console.log(' renderSmartModalx ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
-
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <ShiftsManageForm {...formComProps}></ShiftsManageForm>;
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
+
   componentDidMount() {
     console.log(
       ' ShiftsManage 组件componentDidMount挂载 ： ',
@@ -305,44 +216,17 @@ class ShiftsManage extends PureComponent {
       this.props,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    this.props.getUserAsync();
+    // this.props.getUserAsync();
   }
 
   render() {
-    console.log(
-      ' %c ShiftsManage 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-    const { show, title, action, titleMap } = this.state; //
-
-    const formComProps = {
-      getCapture: this.showCapture,
-      action: this.state.action,
-    };
-
     return (
       <div className="ShiftsManage">
         {this.renderSearchForm()}
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
-
-        {/* <SmartFormModal
-          // width={'900px'}
-          formComProps={{...tableProps, ...formComProps, action, }} 
-
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          show={show}
-          FormCom={this.renderModalForm()}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal> */}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

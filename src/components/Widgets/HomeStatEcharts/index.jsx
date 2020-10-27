@@ -77,9 +77,11 @@ const StatTabPanes = props => {
                   {...props}
                 ></SmartEcharts>
               </Col>
-              <Col span={8}>
-                <div className="homeTitle">小组排名</div>
-                <HomeGroupRank></HomeGroupRank>
+              <Col span={8} className={`rankWrapper df `}>
+                <div className="homeGroupRankWrapper">
+                  <div className="homeTitle">小组排名</div>
+                  <HomeGroupRank></HomeGroupRank>
+                </div>
               </Col>
             </Row>
           </TabPane>

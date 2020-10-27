@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -21,11 +13,6 @@ import {
   Divider,
   Tag,
 } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
 
 import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
@@ -62,116 +49,9 @@ class Organize extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-
-      showModalCom: null,
-
-      action: '',
-      title: '',
-
       titleMap,
-
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  downloadFile = params => {
-    console.log('    downloadFile ： ', params);
-    this.props.downloadFile();
-  };
-
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
@@ -188,7 +68,7 @@ class Organize extends PureComponent {
         </div>
       </div>
     );
-  }
+  };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
@@ -205,7 +85,7 @@ class Organize extends PureComponent {
     };
 
     return <OrganizeTable {...tableProps}></OrganizeTable>;
-  }
+  };
 
   renderSmartModal = params => {
     console.log(' renderSmartModal ： ', params, this.state, this.props);
@@ -222,7 +102,7 @@ class Organize extends PureComponent {
         {this.renderModalContent()}
       </SmartModal>
     );
-  }
+  };
 
   render() {
     console.log(

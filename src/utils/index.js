@@ -124,6 +124,7 @@ export const renderRadioOp = (configs = [], opType = 'option') => {
       {v.label}
     </Radio>
   ));
+  return <RadioGroup>{radioItems}</RadioGroup>;
   return opType === 'group' ? (
     <RadioGroup>{radioItems}</RadioGroup>
   ) : (
@@ -136,6 +137,7 @@ export const renderCheckboxOp = (configs = [], opType = 'option') => {
   const CheckboxItems = configs.map(v => (
     <Checkbox key={v.value}>{v.label}</Checkbox>
   ));
+  return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
   return opType === 'group' ? (
     <CheckboxGroup>{CheckboxItems}</CheckboxGroup>
   ) : (
@@ -275,8 +277,12 @@ export const downLoadFile = (clickItem, { downEle = 'qrCode' }) => {
 };
 
 export const createArr = (length = 6) => {
-  const res = Array.from({ length }, (_, index) => console.log(_, index));
-  console.log('  res ：', res); //
+  const res = Array.from(
+    { length },
+    (_, index) => {},
+    // console.log(_, index)
+  );
+  // console.log('  res ：', res); //
   return res;
 };
 

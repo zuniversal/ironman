@@ -37,8 +37,8 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectData: props.teamList,
+      // formType: 'Search',
+      // selectData: props.teamList,
       itemProps: {
         label: '工单类型',
         name: 'type',
@@ -58,7 +58,7 @@ const WorkOrderTicketForm = props => {
       formType: 'Radio',
       itemProps: {
         label: '类型',
-        name: 'type',
+        name: 'types',
       },
     },
     {

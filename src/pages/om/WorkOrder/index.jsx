@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -61,106 +53,9 @@ class WorkOrder extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      action: '',
-      title: '',
       titleMap,
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
@@ -169,7 +64,7 @@ class WorkOrder extends PureComponent {
         <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        <Button type="primary" onClick={() => this.props.exportData({})}>
           导出
         </Button>
       </div>
@@ -185,100 +80,108 @@ class WorkOrder extends PureComponent {
       ></WorkOrderSearchForm>
     );
   };
-  // renderSearchForm = params => {
-  //   // console.log(' renderSearchForm ： ', params,  )
-  //   return (
-  //     <div className={'fsb '}>
-  //       <WorkOrderSearchForm></WorkOrderSearchForm>
-  //       <div className={'btnWrapper'}>
-  //         <SearchForm></SearchForm>
-  //         <Button type="primary" onClick={() => this.props.exportData()}>
-  //           导出
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
-  showDetail = params => {
-    console.log(' showDetail,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <WorkOrderDetail></WorkOrderDetail>,
-    });
-  };
-  dispatchOrder = params => {
-    console.log(' dispatchOrder,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: (
-        <WorkOrderDispatchOrderForm size={'small'}></WorkOrderDispatchOrderForm>
-      ),
-    });
-  };
-  addTicket = params => {
-    console.log(' addTicket,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <WorkOrderTicketForm></WorkOrderTicketForm>,
-    });
-  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      // showDetail: this.showDetail,
-      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
 
-      exportData: this.props.exportData,
-      dispatchOrder: this.dispatchOrder,
       add: this.props.showFormModal,
-      addTicket: this.addTicket,
+      showFormModal: this.props.showFormModal,
+      exportData: this.props.exportData,
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
   };
 
-  get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
-    return this.state.action === 'dispatchOrder' ? 'small' : 'default';
-  }
-
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, action, titleMap } = this.state; //
-
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail, d_id } = this.props; //
+    const { form, init } = props; //
+    // return
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
+        });
+      }
+      if (action === 'detail') {
+        this.props.detailAsync({
+          ...res,
+        });
+      }
+      if (action === 'dispatchOrder') {
+        this.props.dispatchOrderAsync({
+          ...res,
+          d_id,
+        });
+      }
+      if (action === 'addTicket') {
+        this.props.addTicketAsync({
+          ...res,
+          d_id,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
     const formComProps = {
-      action: this.state.action,
-      getCapture: this.showCapture,
-      addUserAsync: this.addUserAsync,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
+      action,
+      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
     };
-
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
+    if (action === 'detail') {
+      return <WorkOrderForm {...formComProps}></WorkOrderForm>;
+    }
+    if (action === 'dispatchOrder') {
+      return (
+        <WorkOrderDispatchOrderForm
+          {...formComProps}
+        ></WorkOrderDispatchOrderForm>
+      );
+    }
+    if (action === 'addTicket') {
+      return <WorkOrderTicketForm {...formComProps}></WorkOrderTicketForm>;
+    }
 
+    console.log(' formComProps ： ', formComProps); //
+    return <WorkOrderForm {...formComProps}></WorkOrderForm>;
+  };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return this.props.action === 'dispatchOrder' ? 'small' : 'default';
+  }
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
-        show={show}
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
-        formComProps={formComProps}
-        FormCom={this.state.modalForm}
+        onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
@@ -299,7 +202,7 @@ class WorkOrder extends PureComponent {
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

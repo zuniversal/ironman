@@ -101,6 +101,7 @@ const ShiftsManageForm = props => {
         // init={init}
         // init={{}}
 
+        isDisabledAll={props.action === 'detail'}
         {...rest}
       ></SmartForm>
 

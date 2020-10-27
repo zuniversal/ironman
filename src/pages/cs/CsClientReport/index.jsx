@@ -1,51 +1,43 @@
 import React, { Component, PureComponent } from 'react';
 import './style.less';
 
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
+import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
+import CsClientReportTable from '@/components/Table/CsClientReportTable'; //
+import ClientReportForm from '@/components/Form/ClientReportForm'; //
+import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm'; //
+import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import WeakForm from '@/components/Form/WeakForm'; //
-import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
-import WeakDetailForm from '@/components/Form/WeakDetailForm'; //
-import WeakTable from '@/components/Table/WeakTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
-import WeakDetail from '@/components/Detail/WeakDetail'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import SuccResult from '@/components/Widgets/SuccResult'; //
+import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
 
-import { actions, mapStateToProps } from '@/models/weak'; //
+import { actions, mapStateToProps } from '@/models/clientReport'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '缺陷';
+const TITLE = '客户';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `${TITLE}单`,
+  detail: `${TITLE}详情`,
+  newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
+  pdf: `月报`,
 };
 
-// const mapStateToProps = ({ weak, }) => weak;
+// const mapStateToProps = ({ clientReport, }) => clientReport;
 
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: WeakForm,
+  modalForm: ClientReportForm,
 })
-class Weak extends PureComponent {
+class ClientReport extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,33 +45,23 @@ class Weak extends PureComponent {
     };
   }
 
-  renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
-    return (
-      <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          搜索
-        </Button>
-        <Button
-          type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
-        >
-          新增{TITLE}
-        </Button>
-        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-        删除
-      </Button> */}
-      </div>
-    );
-  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <WeakSearchForm
-      // formBtn={this.renderFormBtn}
-      // onSubmit={this.onSubmit}
-      // onFail={this.onFail}
-      ></WeakSearchForm>
+      <div className={'fsb '}>
+        <ClientReportSearchForm></ClientReportSearchForm>
+        {/* <div className={'btnWrapper'}>
+          <Button
+            type="primary"
+            onClick={() => this.props.showFormModal({ action: 'add' })}
+          >
+            新增{TITLE}
+          </Button>
+          <Button type="primary" onClick={() => this.props.exportData()}>
+            导出{TITLE}数据
+          </Button>
+        </div> */}
+      </div>
     );
   };
 
@@ -94,15 +76,21 @@ class Weak extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+
+      add: this.props.showFormModal,
     };
 
-    return <WeakTable {...tableProps}></WeakTable>;
+    return <CsClientReportTable {...tableProps}></CsClientReportTable>;
   };
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'pdf') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -111,8 +99,8 @@ class Weak extends PureComponent {
           ...res,
         });
       }
-      if (action === 'inspectReport') {
-        this.props.inspectReportAsync({
+      if (action === 'edit') {
+        this.props.editItemAsync({
           ...itemDetail,
           ...res,
         });
@@ -135,12 +123,18 @@ class Weak extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    // if (action === 'inspectReport') {
-    //   return <InspectMissionDetailForm {...formComProps} ></InspectMissionDetailForm>
-    // }
+    if (action === 'pdf') {
+      return <ClientReportPdf></ClientReportPdf>;
+    }
     console.log(' formComProps ： ', formComProps); //
-    return <WeakForm {...formComProps}></WeakForm>;
+    return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return ['uploadFile'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   renderSmartFormModal = params => {
     console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
@@ -150,6 +144,7 @@ class Weak extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
@@ -158,14 +153,14 @@ class Weak extends PureComponent {
 
   render() {
     console.log(
-      ' %c Weak 组件 this.state, this.props ： ',
+      ' %c ClientReport 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
 
     return (
-      <div className="Weak">
+      <div className="ClientReport">
         {this.renderSearchForm()}
 
         {this.renderTable()}
@@ -176,4 +171,4 @@ class Weak extends PureComponent {
   }
 }
 
-export default Weak;
+export default ClientReport;

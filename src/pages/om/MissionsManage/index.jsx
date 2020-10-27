@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -66,106 +58,10 @@ class MissionsManage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
       action: '',
-      title: '',
       titleMap,
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
@@ -188,98 +84,158 @@ class MissionsManage extends PureComponent {
     return (
       <MissionsManageSearchForm
         formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></MissionsManageSearchForm>
     );
   };
-  // renderSearchForm = params => {
-  //   // console.log(' renderSearchForm ： ', params,  )
-  //   return (
-  //     <div className={'fsb '}>
-  //       <MissionsManageSearchForm></MissionsManageSearchForm>
-  //       <div className={'btnWrapper'}>
-  //         <Button
-  //           type="primary"
-  //           onClick={() => this.props.showFormModal({ action: 'add' })}
-  //         >
-  //           新增{TITLE}
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  startWorkOrder = params => {
-    console.log(' startWorkOrder,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <MissionsManageWorkOrderForm></MissionsManageWorkOrderForm>,
-    });
-  };
-  linkContract = params => {
-    console.log(' linkContract,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <MissionsManageContractForm></MissionsManageContractForm>,
-    });
-  };
-  schedule = params => {
-    console.log(' schedule,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <MissionsManageScheduleForm></MissionsManageScheduleForm>,
-    });
-  };
-  confirmSchedule = params => {
-    console.log(' confirmSchedule,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: (
-        <MissionsManageConfirmScheduleForm></MissionsManageConfirmScheduleForm>
-      ),
-    });
-  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
-
-      startWorkOrder: this.startWorkOrder,
-      linkContract: this.linkContract,
-      schedule: this.schedule,
-      confirmSchedule: this.confirmSchedule,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
+      closeMissionAsync: this.props.closeMissionAsync,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
   };
 
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail, d_id } = this.props; //
+    const { form, init } = props; //
+    if (action === 'closeMission') {
+      this.props.closeMissionAsync({});
+      return;
+    }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
+        });
+      }
+      if (action === 'startWorkOrder') {
+        this.props.startWorkOrderAsync({
+          ...res,
+          task_id: d_id,
+        });
+      }
+      if (action === 'linkContract') {
+        this.props.linkContractAsync({
+          ...res,
+          id: d_id,
+        });
+      }
+      if (action === 'schedule') {
+        this.props.scheduleAsync({
+          ...res,
+        });
+      }
+      if (action === 'confirmSchedule') {
+        this.props.confirmScheduleAsync({
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      clientList: this.props.clientList,
+      getAssetsAsync: params => this.props.getAssetsAsync({ keyword: params }),
+      assetsList: this.props.assetsList,
+      getPowerAsync: params => this.props.getPowerAsync({ keyword: params }),
+      powerList: this.props.powerList,
+      getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
+      teamList: this.props.teamList,
+      getContractAsync: params =>
+        this.props.getContractAsync({ keyword: params }),
+      contractList: this.props.contractList,
+      clientData: this.props.clientData,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'startWorkOrder') {
+      return (
+        <MissionsManageWorkOrderForm
+          {...formComProps}
+        ></MissionsManageWorkOrderForm>
+      );
+    }
+    if (action === 'closeMission') {
+      return <div className="dfc">确认关闭任务？</div>;
+    }
+    if (action === 'linkContract') {
+      return (
+        <MissionsManageContractForm
+          {...formComProps}
+        ></MissionsManageContractForm>
+      );
+    }
+    if (action === 'schedule') {
+      return (
+        <MissionsManageScheduleForm
+          {...formComProps}
+        ></MissionsManageScheduleForm>
+      );
+    }
+    if (action === 'confirmSchedule') {
+      return (
+        <MissionsManageConfirmScheduleForm
+          {...formComProps}
+        ></MissionsManageConfirmScheduleForm>
+      );
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <MissionsManageForm {...formComProps}></MissionsManageForm>;
+  };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return ['closeMission', 'linkContract', 'schedule', 'confirmSchedule'].some(
+      v => v === this.props.action,
+    )
+      ? 'small'
+      : 'default';
+  }
+  get isNoForm() {
+    console.log(' get 取属 isNoForm ： ', this.state, this.props);
+    return ['closeMission'].some(v => v === this.props.action);
+  }
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
+        size={this.size}
+        isNoForm={this.isNoForm}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
 
@@ -297,7 +253,7 @@ class MissionsManage extends PureComponent {
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

@@ -1,25 +1,13 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import PowerStationTable from '@/components/Table/PowerStationTable'; //
 import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
 
 import { actions, mapStateToProps } from '@/models/powerStation'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -48,116 +36,9 @@ class PowerStation extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-
-      showModalCom: null,
-
-      action: '',
-      title: '',
-
       titleMap,
-
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  downloadFile = params => {
-    console.log('    downloadFile ： ', params);
-    this.props.downloadFile();
-  };
-
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
@@ -193,45 +74,95 @@ class PowerStation extends PureComponent {
     return (
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></PowerStationSearchForm>
     );
-  }
+  };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
     };
 
     return <PowerStationTable {...tableProps}></PowerStationTable>;
+  };
+
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    if (action === 'removeAsync') {
+      this.props.removeAsync({});
+      return;
+    }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      clientList: this.props.clientList,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <PowerStationForm {...formComProps}></PowerStationForm>;
+  };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return ['removeStation'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
   }
-
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
-
+  get isNoForm() {
+    console.log(' get 取属 isNoForm ： ', this.state, this.props);
+    return ['removeStation'].some(v => v === this.props.action);
+  }
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
+        size={this.size}
+        isNoForm={this.isNoForm}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
-  }
+  };
 
   render() {
     console.log(
@@ -240,12 +171,6 @@ class PowerStation extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, title, action, titleMap } = this.state; //
-
-    const formComProps = {
-      getCapture: this.showCapture,
-      action: this.state.action,
-    };
 
     return (
       <div className="PowerStation">
@@ -253,21 +178,7 @@ class PowerStation extends PureComponent {
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
-
-        {/* <SmartFormModal
-          // width={'900px'}
-          formComProps={{...tableProps, ...formComProps, action, }} 
-
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          show={show}
-          FormCom={this.renderModalForm()}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal> */}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

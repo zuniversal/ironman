@@ -37,19 +37,19 @@ const AssetsForm = props => {
   // const formConfig = formatConfig(config);
 
   const config = [
+    // {
+    //   // formType: 'Search',
+    //   // selectSearch: props.getHouseNo,
+    //   // selectData: props.houseNoList,
+    //   itemProps: {
+    //     label: '户号',
+    //     name: 'nos',
+    //   },
+    // },
     {
       // formType: 'Search',
-      // selectSearch: props.getHouseNo,
-      // selectData: props.houseNoList,
-      itemProps: {
-        label: '户号',
-        name: '',
-      },
-    },
-    {
-      formType: 'Search',
-      selectSearch: props.getPower,
-      selectData: props.powerList,
+      // selectSearch: props.getPowerAsync,
+      // selectData: props.powerList,
       itemProps: {
         label: '电站',
         name: 'station',
@@ -63,9 +63,9 @@ const AssetsForm = props => {
     //   },
     // },
     {
-      formType: 'Search',
-      selectSearch: props.getList,
-      selectData: props.dataList,
+      // formType: 'Search',
+      // selectSearch: props.getListAsync,
+      // selectData: props.dataList,
       noRule: true,
       itemProps: {
         label: '上级设备',
@@ -91,7 +91,7 @@ const AssetsForm = props => {
       noRule: true,
       itemProps: {
         label: '出厂号',
-        name: '',
+        name: 'production_code',
       },
     },
     {

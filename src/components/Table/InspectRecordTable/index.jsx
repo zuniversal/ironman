@@ -71,10 +71,10 @@ const InspectRecordTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       <a onClick={() => showDetail({ action: 'detail' })}>巡检报告</a>
-      <a onClick={() => inspectReport({ action: 'inspectReport' })}>
+      <a onClick={() => props.showFormModal({ action: 'inspectReport' })}>
         导出巡检报告
       </a>
     </>

@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -20,11 +12,6 @@ import {
   Typography,
   Divider,
 } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
@@ -63,84 +50,12 @@ class CsHome extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      showResultModal: false,
-
-      showModalCom: null,
-      modalContent: null,
-
-      action: '',
-      title: '',
-
       titleMap,
     };
   }
 
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  goPage = page => {
-    console.log(' goPage,  , ： ', page, this.state, this.props);
-    const { history } = this.props; //
-    history.push(page);
-  };
-
   renderCsHomeMonitor = params => {
     console.log(' renderCsHomeMonitor ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return (
       <div className="monitorWrapper df">
@@ -152,7 +67,7 @@ class CsHome extends PureComponent {
   };
   renderSelectForm = params => {
     console.log(' renderSelectForm ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+
     return (
       <div className="selectWrapper">
         <div className="label">站点</div>
@@ -162,19 +77,17 @@ class CsHome extends PureComponent {
   };
   renderCsHomeStatBox = params => {
     console.log(' renderCsHomeStatBox ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatBox></CsHomeStatBox>;
   };
   renderCsHomeStatEcharts = params => {
     console.log(' renderCsHomeStatEcharts ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
 
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
   };
   renderCsHomeTableCom = params => {
     console.log(' renderCsHomeTableCom ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+
     return <CsHomeTableCom></CsHomeTableCom>;
   };
 

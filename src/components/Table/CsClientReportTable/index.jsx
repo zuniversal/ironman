@@ -28,38 +28,22 @@ import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
 
-const ClientReportTable = props => {
-  console.log(' ClientReportTable ： ', props); //
+const CsClientReportTable = props => {
+  console.log(' CsClientReportTable ： ', props); //
   const { tdClick, add, edit, showDetail } = props; //
 
   const columns = [
     {
-      title: '客户名称',
+      title: '报告名称',
       dataIndex: 'name',
     },
     {
-      title: '户号',
-      dataIndex: 'electricy_user',
+      title: '报告类型',
+      dataIndex: 'name',
     },
     {
-      title: '客户代表',
-      dataIndex: 'service_staff',
-    },
-    {
-      title: '巡检组长',
-      dataIndex: 'team_headman',
-    },
-    {
-      title: '电源编号',
-      dataIndex: 'power_number',
-    },
-    {
-      title: '电压等级',
-      dataIndex: 'voltage_level',
-    },
-    {
-      title: '加急',
-      dataIndex: '',
+      title: '报告时间',
+      dataIndex: 'name',
     },
   ];
 
@@ -85,8 +69,8 @@ const ClientReportTable = props => {
   );
 };
 
-ClientReportTable.defaultProps = {
+CsClientReportTable.defaultProps = {
   showModal: () => {},
 };
 
-export default ClientReportTable;
+export default CsClientReportTable;

@@ -57,6 +57,8 @@ export const crudConfigs = [
   'removeItemsAsync',
 ];
 
+export const commonConfigs = ['setSearchInfo', 'showFormModal', 'onCancel'];
+
 // export const createCRUD = (config = []) => {
 //   const actions = {}
 //   return [...crudConfigs, ...config, ]
@@ -128,7 +130,7 @@ export const init = prefix => {
     payload,
     action: action(types.split(suffix)[0]),
   });
-  const createActions = (config = []) => {
+  const createCRUD = (config = []) => {
     const actions = {};
     config.forEach(types => (actions[types] = createAction(types)));
     return actions;
@@ -148,9 +150,12 @@ export const init = prefix => {
     names: 'zyb',
     // customActions,
     createAction,
-    createActions,
-    createCRUD: (config = []) => createActions([...crudConfigs, ...config]),
+    createCRUD: (config = []) => createCRUD([...crudConfigs, ...config]),
     turnAction,
-    batchTurn: (config = []) => batchTurn(config),
+    batchTurn: (config = []) => batchTurn([...commonConfigs, ...config]),
+    createActions: (asyncConfig = [], config = []) => ({
+      ...createCRUD([...crudConfigs, ...asyncConfig]),
+      ...batchTurn([...commonConfigs, ...config]),
+    }),
   };
 };

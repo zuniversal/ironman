@@ -55,7 +55,6 @@ export default ({
         selectedRowKeys: [],
         selectedRows: [],
 
-        newTbData: [],
         editData: {},
         formComProps: {},
 
@@ -215,7 +214,7 @@ export default ({
     };
 
     showFormModal = params => {
-      const { action, formComProps, formModalProps } = params;
+      const { action, formComProps, formModalProps, modalFormContent } = params;
       const actionFn = this.getAction(action);
       console.log(
         '    showFormModal ： ',
@@ -241,6 +240,7 @@ export default ({
         formComProps,
         formModalProps,
         editData: action === 'edit' ? params.record : {},
+        modalFormContent,
       });
     };
 
@@ -287,10 +287,8 @@ export default ({
         // const {addItemAsync,  } = this.props//
         //addItemAsync(res)
 
-        const { newTbData } = this.state; //
         this.setState({
           isShow: false,
-          newTbData: [res, ...newTbData],
         });
       } catch (error) {
         console.log(' error ： ', error); //
@@ -434,6 +432,7 @@ export default ({
           // onFail={this.onFail}
         >
           {this.renderModalContent()}
+          {this.state.modalFormContent}
         </SmartFormModal>
       );
     };
@@ -500,7 +499,7 @@ export default ({
             // onBatchRemove={this.onBatchRemove}
 
             onSelectChange={this.onSelectChange}
-            showFormModal={this.showFormModal}
+            // showFormModal={this.showFormModal}
             syncOAAsync={this.syncOAAsync}
             downloadFile={this.downloadFile}
             exportData={this.exportData}

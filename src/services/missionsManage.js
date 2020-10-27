@@ -17,4 +17,8 @@ export const editItem = p => put(`OMS/task/${p.d_id}`, p);
 export const removeItem = p => remove(`OMS/task/${p.d_id}`, p);
 
 export const closeMissions = p => patch(`OMS/task/${p.d_id}`, p);
-export const linkContract = p => patch(`OMS/task/${p.d_id}/contract`, p);
+export const startWorkOrder = p => post(`OMS/task/order`, p);
+export const linkContract = p => patch(`OMS/task/${p.id}/contract`, p);
+export const schedule = p => patch(`OMS/task/${p.d_id}/schedule`, p);
+export const confirmSchedule = p =>
+  patch(`OMS/task/${p.d_id}/confirmSchedule`, p);

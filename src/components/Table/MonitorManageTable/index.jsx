@@ -60,11 +60,17 @@ const MonitorManageTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>发起工单</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>完成任务</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>关联合同</a>
+      <a onClick={() => props.showFormModal({ action: 'showList' })}>
+        发起工单
+      </a>
+      <a onClick={() => props.showFormModal({ action: 'showList' })}>
+        完成任务
+      </a>
+      <a onClick={() => props.showFormModal({ action: 'showList' })}>
+        关联合同
+      </a>
     </>
   );
 

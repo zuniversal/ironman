@@ -61,7 +61,7 @@ export const AdminForm = props => {
         config: [
           {
             itemProps: {
-              name: 'username',
+              name: 'nickname',
               label: '用户名',
             },
             comProps: {
@@ -86,7 +86,7 @@ export const AdminForm = props => {
           },
         ],
         itemProps: {
-          name: 'username',
+          name: 'nickname',
           label: '用户名',
         },
         comProps: {
@@ -169,7 +169,7 @@ const ClientForm = props => {
         {
           itemProps: {
             label: '用户名',
-            name: 'username',
+            name: 'nickname',
           },
           comProps: {
             className: 'w-320',
@@ -193,7 +193,7 @@ const ClientForm = props => {
         },
       ],
       itemProps: {
-        name: 'username',
+        name: 'nickname',
         label: '用户名',
       },
       comProps: {
@@ -351,7 +351,7 @@ const ClientForm = props => {
     //   comProps: {
     //     extra: true,
     //     itemProps: {
-    //       name: 'username', //
+    //       name: 'nickname', //
     //       label: '用户名',
     //     },
     //     comProps: {

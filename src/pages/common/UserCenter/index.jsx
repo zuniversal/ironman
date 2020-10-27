@@ -9,116 +9,77 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Menu,
+  Upload,
+  Result,
+  Typography,
+  Divider,
+} from 'antd';
+import {
+  UploadOutlined,
+  PlusOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons';
+import SearchForm from '@/common/SearchForm'; //
 import UserCenterForm from '@/components/Form/UserCenterForm'; //
+import ResultModal from '@/components/Modal/ResultModal'; //
+import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import DropDownBtn from '@/common/DropDownBtn'; //
+import ErrorInfo from '@/components/Widgets/ErrorInfo';
+import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import SuccResult from '@/components/Widgets/SuccResult'; //
 
 import { actions, mapStateToProps } from '@/models/userCenter'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
+export const TITLE = '用户';
+
+const titleMap = {
+  add: `新建${TITLE}`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
+  newRelated: `关联新增`,
+  upload: `文件上传`,
+  down: `文件下载`,
+};
+
+// const mapStateToProps = ({ userCenter, }) => userCenter;
+
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
+  titleMap,
 })
 class UserCenter extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-
-      action: '',
-      title: '',
-      contractTitle: '',
-      titleMap: {
-        add: '新增客户',
-        edit: '编辑客户',
-        detail: '客户详情',
-      },
+      titleMap,
     };
   }
 
-  renderFormBtn = (
-    <div className={'btnWrapper'}>
-      {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
-      {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-      <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
-        同步OA
-      </Button>
-      <Button
-        type="primary "
-        onClick={() => this.showContractModal({ action: 'add' })}
-      >
-        新增合同
-      </Button>
-      <Button type="primary">导出客户数据</Button>
-      <Button type="primary">删除</Button>
-    </div>
-  );
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  renderUserCenterTable = params => {
-    console.log(' renderUserCenterTable ： ', params);
-  }
-
-  showContractModal = params => {
-    const { action } = params;
-    console.log(
-      '    showContractModal ： ',
-      action,
-      params,
-      this.state,
-      this.props,
-    );
-    this.setState({
-      action,
-      show: true,
-      title: this.state.titleMap[action],
-    });
-  };
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
+  handleOk = async props => {
+    console.log(' handleOk,  , ： ', props);
+    const { action } = this.props; //
     const { form } = props; //
-
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'setting') {
+        // this.props.editItemAsync({
+        //   ...res,
+        // });
+      }
     } catch (error) {
       console.log(' error ： ', error); //
     }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-
-    this.setState({
-      // show: false,
-    });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
   };
 
   componentDidMount() {
@@ -127,7 +88,7 @@ class UserCenter extends PureComponent {
       this.state,
       this.props,
     ); //
-    // this.showModal();
+    // this.props.getItemAsync()
   }
 
   render() {
@@ -137,38 +98,10 @@ class UserCenter extends PureComponent {
       this.state,
       this.props,
     );
-    const { show, showContractForm, title } = this.state; //
-
-    const tableProps = {
-      edit: this.showContractModal,
-      remove: this.showContractModal,
-      tdClick: this.showContractModal,
-    };
 
     return (
-      <div className="userCenter dfc  ">
-        <UserCenterForm init={this.props.itemDetail}></UserCenterForm>
-
-        <SmartFormModal
-          // width={'900px'}
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          // FormCom={<ContractFormCom showRelativeForm={this.showRelativeForm}  ></ContractFormCom>}
-          FormCom={UserCenterForm}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal>
-
-        {/* <UserCenterSearchForm
-          formBtn={this.renderFormBtn}
-          onSubmit={this.onSubmit}
-          onFail={this.onFail}
-        ></UserCenterSearchForm>
-        
-
-        <UserCenterTable {...tableProps}  showModal={this.showModal} ></UserCenterTable> */}
+      <div className="UserCenter">
+        <UserCenterForm handleOk={this.handleOk}></UserCenterForm>
       </div>
     );
   }

@@ -187,6 +187,7 @@ const DynamicForm = props => {
     CustomCom,
     LabelCom,
     config = [],
+    isDisabledAll,
   } = props; //
 
   return (
@@ -233,6 +234,10 @@ const DynamicForm = props => {
 
         const formLabel = customLabel ? customLabel : getLabel(label, formType);
         // console.log('  formLabel ：', formLabel,  )//
+
+        if (isDisabledAll) {
+          comProps.disabled = true;
+        }
 
         const realComProps = {
           ...comProps,

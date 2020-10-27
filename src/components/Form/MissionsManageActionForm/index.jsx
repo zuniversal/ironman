@@ -28,13 +28,13 @@ export const MissionsManageWorkOrderForm = props => {
     {
       formType: 'Search',
       selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      selectData: props.clientData,
       itemProps: {
         label: '客户',
-        name: '',
+        name: 'client',
       },
       comProps: {
-        disabled: true,
+        // disabled: true,
       },
     },
     {
@@ -44,8 +44,8 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectData: props.userList,
+      // formType: 'Search',
+      // selectData: props.userList,
       itemProps: {
         label: '类型',
         name: 'type',
@@ -55,12 +55,12 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      // formType: 'Search',
+      // selectSearch: props.getTeamAsync,
+      // selectData: props.teamList,
       itemProps: {
         label: '分配给',
-        name: '',
+        name: 'team_id',
       },
     },
   ];
@@ -98,10 +98,13 @@ export const MissionsManageContractForm = props => {
     {
       formType: 'Search',
       selectSearch: props.getContractAsync,
-      selectData: props.ContractList,
+      selectData: props.contractList,
       itemProps: {
         label: '选择合同',
-        name: '',
+        name: 'contract_id',
+      },
+      comProps: {
+        className: 'w-280',
       },
     },
   ];
@@ -121,6 +124,7 @@ export const MissionsManageContractForm = props => {
         // init={init}
         // init={{}}
 
+        size={'small'}
         {...rest}
       ></SmartForm>
 
@@ -142,6 +146,9 @@ export const MissionsManageScheduleForm = props => {
         label: '选择日期',
         name: '',
       },
+      comProps: {
+        className: 'w-280',
+      },
     },
   ];
 
@@ -160,6 +167,7 @@ export const MissionsManageScheduleForm = props => {
         // init={init}
         // init={{}}
 
+        size={'small'}
         {...rest}
       ></SmartForm>
 
@@ -183,7 +191,6 @@ export const MissionsManageConfirmScheduleForm = props => {
     {
       formType: 'Radio',
       radioData: scheduleRadios,
-      opType: 'group',
       itemProps: {
         label: '确认排期',
         name: '',
@@ -194,6 +201,9 @@ export const MissionsManageConfirmScheduleForm = props => {
       itemProps: {
         label: '理由',
         name: '',
+      },
+      comProps: {
+        className: 'w-280',
       },
     },
   ];
@@ -213,6 +223,7 @@ export const MissionsManageConfirmScheduleForm = props => {
         // init={init}
         // init={{}}
 
+        size={'small'}
         {...rest}
       ></SmartForm>
 

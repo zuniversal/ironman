@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
 import {
@@ -20,11 +12,6 @@ import {
   Typography,
   Divider,
 } from 'antd';
-import {
-  UploadOutlined,
-  PlusOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import AssetsTable from '@/components/Table/AssetsTable'; //
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
@@ -46,7 +33,7 @@ const menuConfig = [
   {
     key: 'upload',
     clickFn: 'showUploadModal',
-    action: 'upload',
+    action: 'uploadFile',
     text: '上传文件',
   },
   {
@@ -67,7 +54,7 @@ const titleMap = {
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,
-  upload: `文件上传`,
+  uploadFile: `文件上传`,
   down: `文件下载`,
 };
 
@@ -86,16 +73,12 @@ class Assets extends PureComponent {
       show: false,
       showResultModal: false,
 
-      showModalCom: null,
       modalContent: null,
 
       action: '',
       title: '',
       assetsTitle: '',
-
       titleMap,
-
-      newTbData: [],
     };
   }
 
@@ -123,99 +106,32 @@ class Assets extends PureComponent {
       }, 2000);
     }
   };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
   downloadFile = params => {
     console.log('    downloadFile ： ', params);
     this.props.downloadFile();
   };
 
   menuClick = params => {
-    const { key, clickFn } = params;
+    const { key, clickFn, action } = params;
     console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
+    if (action === 'uploadFile') {
+      this.props.showFormModal(params);
+      return;
+    }
     if (clickFn) {
       this[clickFn](params);
       return;
     }
   };
 
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = (params = {}) => {
-    console.log('    showModal ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-    });
-  };
-  onOk = async (props = {}) => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
-
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        <Button
+          type="primary"
+          onClick={() => this.props.search({ keyword: params })}
+        >
           搜索
         </Button>
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
@@ -237,7 +153,7 @@ class Assets extends PureComponent {
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        <Button type="primary" onClick={() => this.onBatchRemove()}>
           删除
         </Button>
       </div>
@@ -248,101 +164,118 @@ class Assets extends PureComponent {
     return (
       <AssetsSearchForm
         formBtn={this.renderFormBtn}
-        getHouseNo={this.props.getHouseNoAsync}
-        getPower={this.props.getPowerAsync}
-        getList={this.props.getListAsync}
-        dataList={this.props.dataList}
+        getHouseNoAsync={this.props.getHouseNoAsync}
+        getPowerAsync={this.props.getPowerAsync}
+        getClientAsync={this.props.getClientAsync}
+        clientList={this.props.clientList}
         powerList={this.props.powerList}
         houseNoList={this.props.houseNoList}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></AssetsSearchForm>
     );
   };
-  // renderSearchForm = params => {
-  //   // console.log(' renderSearchForm ： ', params,  )
-  //   return (
-  //     <div className={' '}>
-  //       <AssetsSearchForm></AssetsSearchForm>
-  //       <Divider />
-  //       <div className={'fsb '}>
-  //         <SearchForm></SearchForm>
-  //         <div className={'btnWrapper'}>
-  //           <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
-  //             Excel导入
-  //           </DropDownBtn>
-  //           <Button
-  //             type="primary"
-  //             htmlType="submit"
-  //             onClick={this.props.syncOAAsync}
-  //           >
-  //             同步OA
-  //           </Button>
-  //           <Button
-  //             type="primary"
-  //             onClick={() => this.props.showFormModal({ action: 'add' })}
-  //           >
-  //             新增{TITLE}
-  //           </Button>
-  //           <Button type="primary" onClick={() => this.props.exportData()}>
-  //             导出{TITLE}数据
-  //           </Button>
-  //           <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-  //             删除
-  //           </Button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
-  showDetail = params => {
-    console.log(' showDetail,  , ： ', params);
-    this.setState({
-      show: true,
-      ...params,
-      modalContent: <AssetsDetailTable></AssetsDetailTable>,
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemAsync({ id: `${params.record.id}` });
+  };
+  onBatchRemove = params => {
+    console.log(' onBatchRemove    ： ', params, this.state, this.props);
+    this.props.removeItemsAsync({
+      ids: this.props.selectedRowKeys,
     });
   };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.showDetail,
-      // showDetail: (...rest) => this.showModal({...rest, modalContent: <AssetsDetailTable></AssetsDetailTable>,  }),
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+
+      add: this.props.showFormModal,
+      showFormModal: this.props.showFormModal,
     };
 
     return <AssetsTable {...tableProps}></AssetsTable>;
   };
-  getSize = e => {
-    console.log('    getSize ： ', e, this.state, this.props);
-    const { action } = this.state; //
-    if (action === 'upload') {
-      return 'small';
+
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
     }
   };
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
-
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getHouseNoAsync: params =>
+        this.props.getHouseNoAsync({ keyword: params }),
+      getPowerAsync: params => this.props.getPowerAsync({ keyword: params }),
+      getListAsync: params => this.props.getListAsync({ keyword: params }),
+      dataList: this.props.dataList,
+      powerList: this.props.powerList,
+      houseNoList: this.props.houseNoList,
+    };
+    if (action === 'detail') {
+      return <AssetsDetailTable></AssetsDetailTable>;
+    }
+    if (action === 'uploadFile') {
+      return (
+        <UploadFileCom
+          onChange={this.onUploadChange}
+          label={this.state.titleMap[action]}
+        ></UploadFileCom>
+      );
+    }
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <AssetsForm {...formComProps}></AssetsForm>;
+  };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    if (this.props.action === 'uploadFile') {
+      return 'small';
+    }
+    return 'default';
+  }
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
-        size={this.getSize()}
+        onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
 
@@ -387,7 +320,7 @@ class Assets extends PureComponent {
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
+        {this.renderSmartFormModal()}
 
         {this.renderResultModal()}
       </div>

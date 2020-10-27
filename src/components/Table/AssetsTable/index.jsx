@@ -31,14 +31,14 @@ const AssetsTable = props => {
   const { showModal, edit, remove, tdClick, showDetail } = props; //
 
   const columns = [
-    {
-      title: '所属客户',
-      dataIndex: 'customer_name',
-      d_item: 'id',
-      // render: (text, record, index) => (
-      //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
-      // ),
-    },
+    // {
+    //   title: '所属客户',
+    //   dataIndex: 'customer_name',
+    //   d_item: 'id',
+    //   // render: (text, record, index) => (
+    //   //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
+    //   // ),
+    // },
     {
       title: '户号',
       dataIndex: 'code',

@@ -15,7 +15,3 @@ export const addItem = p => post('OMS/electricityuser/', p);
 export const editItem = p => put(`OMS/electricityuser/${p.d_id}`, p);
 // export const removeItem = p => remove(`OMS/electricityuser/${p.d_id}`, p);
 export const removeItem = p => remove(`OMS/electricityuser/${p}`, p);
-
-export const syncOA = p => noTipsGet(`OMS/electricityuser/OA`, p);
-export const getPortrait = p =>
-  noTipsGet(`OMS/electricityuser/portrait/${p.d_id}`, p);

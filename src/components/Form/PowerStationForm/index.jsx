@@ -236,7 +236,6 @@ const PowerStationForm = props => {
     },
 
     <UploadCom label={'上传铭牌'} key={'file'}></UploadCom>,
-
     // <Form.Item
     //   key={'attach'}
     //   name="upload"
@@ -263,6 +262,7 @@ const PowerStationForm = props => {
         // init={init}
         // init={{}}
 
+        isDisabledAll={action === 'detail'}
         {...props}
       ></SmartForm>
     </div>

@@ -1,25 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Form,
-  Button,
-  Upload,
-  Result,
-  Tabs 
+import { Form, Button, Upload, Result, Tabs } from 'antd';
 
-} from 'antd';
-
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp,  } from '@/utils'//
-
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const { TabPane } = Tabs;
 
@@ -33,13 +21,10 @@ const normFile = e => {
   return e && e.fileList;
 };
 
-
-
 const choiceRadios = [
-  { label: '是', value: 'yes', key: 'yes',  },
-  { label: '否', value: 'no', key: 'no',  },
-]
-
+  { label: '是', value: 'yes', key: 'yes' },
+  { label: '否', value: 'no', key: 'no' },
+];
 
 export const clientConfig = [
   {
@@ -47,7 +32,6 @@ export const clientConfig = [
       label: '是否新客户',
     },
   },
-
 
   {
     formType: 'rowText',
@@ -154,16 +138,69 @@ export const clientConfig = [
   {
     formType: 'Dynamic',
     itemProps: {
-      // label: '',
-      label: '用户名',
+      label: '',
+      // label: '用户名',
+      name: 'customer_admin', //
+      className: 'noMargin',
     },
     comProps: {
+      extra: true,
+      // noRule: true,
+      // formType: 'DynamicArr',
+      config: [
+        {
+          itemProps: {
+            name: 'username',
+            label: '用户名',
+          },
+          comProps: {
+            className: 'w-320',
+          },
+        },
+        {
+          itemProps: {
+            label: '密码',
+            name: 'password',
+          },
+          comProps: {},
+          // noRule: true,
+        },
+        {
+          itemProps: {
+            label: '手机号',
+            name: 'phone',
+          },
+          comProps: {},
+          // noRule: true,
+        },
+      ],
       itemProps: {
+        name: 'username',
         label: '用户名',
       },
       comProps: {
-        className: 'w-320',  
+        className: 'w-320',
       },
+    },
+  },
+  {
+    formType: 'PropsCom',
+    PropsCom: props => (
+      <div className="dfc">
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(' props addUserAsync ： ', props); //
+            props.addUserAsync(props);
+          }}
+        >
+          保存管理员信息
+        </Button>
+      </div>
+    ),
+    itemProps: {
+      label: ' ',
+      // className: 'dfc',
     },
   },
 
@@ -277,7 +314,7 @@ export const contractConfig = [
   // // 如果没有给 Form.Item 组件指定 key  会导致报错
   // // Warning: Each child in a list should have a unique "key" prop.
   <Form.Item
-    key={'attach'} 
+    key={'attach'}
     name="upload"
     label="合同附件"
     valuePropName="fileList"
@@ -306,11 +343,7 @@ export const contractConfig = [
     radioData: choiceRadios,
     opType: 'group',
   },
-  
-  
-  
 ];
-
 
 export const houseNoConfig = [
   {
@@ -396,12 +429,7 @@ export const houseNoConfig = [
       label: '电站数',
     },
   },
-
-]
-
-
-
-
+];
 
 export const stationConfig = [
   {
@@ -422,19 +450,18 @@ export const stationConfig = [
       label: '户号',
     },
   },
-  
+
   {
     itemProps: {
       label: '电站名称',
     },
   },
-  
+
   {
     itemProps: {
       label: '托管电站数',
     },
   },
-
 
   {
     formType: 'rowText',
@@ -449,25 +476,24 @@ export const stationConfig = [
       label: '电源编号',
     },
   },
-  
+
   {
     itemProps: {
       label: '进线名称',
     },
   },
-  
+
   {
     itemProps: {
       label: '电压等级',
     },
   },
-  
+
   {
     itemProps: {
       label: '倍率',
     },
   },
-
 
   {
     itemProps: {
@@ -489,14 +515,12 @@ export const stationConfig = [
       label: '计费方式',
     },
   },
-  
-  
+
   {
     itemProps: {
       label: '变压器容童',
     },
   },
-  
 
   {
     formType: 'rowText',
@@ -520,7 +544,7 @@ export const stationConfig = [
       label: '监控信息',
     },
   },
-  
+
   {
     itemProps: {
       label: '请筛选监控点',
@@ -536,14 +560,16 @@ export const stationConfig = [
   //   },
   // },
   <Form.Item
-    key={'attach'} 
+    key={'attach'}
     name="upload"
     label="一次电气图"
     valuePropName="fileList"
     getValueFromEvent={normFile}
     extra="支持扩展名：.pdf"
   >
-    <Upload name="logo" action="/upload.do" 
+    <Upload
+      name="logo"
+      action="/upload.do"
       listType="picture-card"
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
     >
@@ -554,25 +580,22 @@ export const stationConfig = [
       </div>
     </Upload>
   </Form.Item>,
-]
-
-
+];
 
 export const SuccResult = props => {
-
-  return <Result
-    status="success"
-    title="关联新增成功"
-    // subTitle="subTitle"
-    extra={[
-      <Button type="primary" key="console">
-        返回合同列表
-      </Button>,
-    ]}
-  
-  /> 
-}
-
+  return (
+    <Result
+      status="success"
+      title="关联新增成功"
+      // subTitle="subTitle"
+      extra={[
+        <Button type="primary" key="console">
+          返回合同列表
+        </Button>,
+      ]}
+    />
+  );
+};
 
 const init = {
   name: 'zyb',
@@ -588,7 +611,7 @@ const init = {
 const ContractRelativeForm = props => {
   console.log(' ContractRelativeForm ： ', props); //
 
-  const {index, propsForm, formConfigs, } = props// 
+  const { index, propsForm, formConfigs } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -597,59 +620,47 @@ const ContractRelativeForm = props => {
 
   // const formConfigs = formatConfig(config);
   // console.log(' formConfigs ： ', formConfigs); //
-  const config1 = formatConfig(clientConfig)
-  const config2 = formatConfig(contractConfig)
-  const config3 = formatConfig(houseNoConfig)
-  const config4 = formatConfig(stationConfig)
-  // 
-  const configArr = [
-    config1,
-    config2,
-    config3,
-    config4,
-  ]
-  
-  const configs = configArr[index]
-  
+  const config1 = formatConfig(clientConfig);
+  const config2 = formatConfig(contractConfig);
+  const config3 = formatConfig(houseNoConfig);
+  const config4 = formatConfig(stationConfig);
+  //
+  const configArr = [config1, config2, config3, config4];
+
+  const configs = configArr[index];
 
   return (
     <div className={''}>
-      {formConfigs.map((v, i) => <div key={i} className={i === index ? `${i}` : `${i} hide `}   >
-        <SmartForm
-          // config={config}
-          // config={formatConfig(config)}
-          // config={v}
-          // config={v.config}
-          config={configArr[i]}
-          formProps={formProps}
-          // init={init}
-          // init={{}}
+      {formConfigs.map((v, i) => (
+        <div key={i} className={i === index ? `${i}` : `${i} hide `}>
+          <SmartForm
+            // config={config}
+            // config={formatConfig(config)}
+            // config={v}
+            // config={v.config}
+            config={configArr[i]}
+            formProps={formProps}
+            // init={init}
+            // init={{}}
 
-          // propsForm={propsForm}
-          // propsForm={formConfigs[index].form}
-          propsForm={v.form}
-          // propsForm={Form.useForm()[0]}
-          {...props}
-        ></SmartForm>
-      </div>)}
-
-
-
+            // propsForm={propsForm}
+            // propsForm={formConfigs[index].form}
+            propsForm={v.form}
+            // propsForm={Form.useForm()[0]}
+            {...props}
+          ></SmartForm>
+        </div>
+      ))}
     </div>
   );
 };
 
-
 ContractRelativeForm.defaultProps = {
   formConfigs: [],
-
-
 };
 
 ContractRelativeForm.propTypes = {
   formConfigs: PropTypes.array,
-  
-
-}
+};
 
 export default ContractRelativeForm;

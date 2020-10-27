@@ -66,7 +66,7 @@ const HomeWorkOrderTable = props => {
     },
   ];
 
-  const extra = props => (
+  const extra = (text, record, index, props) => (
     <>
       <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
       <a onClick={() => add({ action: 'add' })}>添加工作票</a>

@@ -72,9 +72,23 @@ export default defineConfig({
     '@menu-dark-bg': '#2C2C2C',
   },
 
+  chainWebpack(config) {
+    config.optimization.splitChunks({
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.(css|less)$/,
+          chunks: 'async',
+          minChunks: 1,
+          minSize: 0,
+        },
+      },
+    });
+  },
   proxy: {
     '/api': {
       target: 'http://188.131.235.243:31002',
+      // target: 'http://192.168.124.14:8001',
       changeOrigin: true,
       // pathRewrite: {
       //   '^/api': '',

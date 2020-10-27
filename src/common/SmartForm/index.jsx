@@ -44,7 +44,8 @@ const animates = ANIMATE.bounceIn;
 const { TextArea } = Input;
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
-
+// Warning: [antd: Form.Item] `children` is array of render props cannot have `name`.
+// 注意 form 表单里的组件不能是数组
 const layoutObj = {
   // labelCol: { span: 8 },
   // wrapperCol: { span: 14 },
@@ -166,15 +167,18 @@ const SmartForm = (props, state) => {
   ); //
 
   const [initData, setInitData] = useState(() => {
-    const dynamicFields = configs
-      .filter(v => v.formType === 'Dynamic' || v.formType === 'DynamicItem')
-      .map(v => v.itemProps.name);
+    const dynamicFields = configs.filter(
+      v => v.formType === 'Dynamic' || v.formType === 'DynamicItem',
+    );
+    // .map(v => v.itemProps.name);
     const obj = {};
     const dynamicInitMap = {
       Dynamic: [{}],
       DynamicItem: [''],
     };
-    dynamicFields.forEach(v => (obj[v] = dynamicInitMap[v.formType]));
+    dynamicFields.forEach(
+      v => (obj[v.itemProps.name] = dynamicInitMap[v.formType]),
+    );
     console.log(' 惰性初始state   ： ', configs, obj, dynamicFields);
     return obj;
   });
@@ -344,17 +348,17 @@ const SmartForm = (props, state) => {
       colon: false,
       ...itemProps,
     };
-    if (
-      formType === 'Radio' ||
-      formType === 'Switch' ||
-      formType === 'Checkbox'
-    ) {
-      console.log(
-        ' formItemCommonPropsformItemCommonPropsformItemCommonProps ： ',
-        formType,
-      ); //
-      // formItemCommonProps.valuePropName = `checked`;
-    }
+    // if (
+    //   formType === 'Radio' ||
+    //   formType === 'Switch' ||
+    //   formType === 'Checkbox'
+    // ) {
+    //   console.log(
+    //     ' formItemCommonPropsformItemCommonPropsformItemCommonProps ： ',
+    //     formType,
+    //   ); //
+    //   // formItemCommonProps.valuePropName = `checked`;
+    // }
 
     // if (formType === 'Dynamic') {
     //   console.log(' formTypeformType ： ', formItemCommonProps, formType, formType === 'Dynamic'    )//
@@ -400,6 +404,7 @@ const SmartForm = (props, state) => {
       // className: 'w-320',
       ...comProps,
       // comProps: {...comProps, className: `${comProps.className} dynamiRow` },
+      isDisabledAll,
       placeholder: placeholder,
       name: formItemProps.key,
       init: initialValues[comProps?.key],
@@ -438,9 +443,10 @@ const SmartForm = (props, state) => {
       // onSelect: onSelect,
     };
     if (formType === 'Search') {
-      console.log(' selectSearch ： ', item.selectSearch); //
       selectProps.showArrow = false;
+      // selectProps.labelInValue = true;
       selectProps.optionFilterProp = 'children';
+      console.log(' selectSearch ： ', selectProps, item.selectSearch); //
       if (item.selectSearch) {
         // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的
         selectProps.onSearch = debounce(item.selectSearch, 500);
@@ -490,15 +496,16 @@ const SmartForm = (props, state) => {
     };
 
     const formItemCom = formItemMap[formType];
-    console.log(
-      ' formItemCom ： ',
-      formItemCom,
-      formItemMap,
-      formType,
-      items,
-      formLabel,
-    ); //
+    // console.log(
+    //   ' formItemCom ： ',
+    //   formItemCom,
+    //   formItemMap,
+    //   formType,
+    //   items,
+    //   formLabel,
+    // ); //
 
+    console.log(' formItemCom ： ', formItemCom, formItemProps); //
     if (formType === 'PropsCom') {
       return (
         <Form.Item labelAlign={'left'} {...rowLayout} {...formItemNoRuleProps}>
@@ -521,15 +528,6 @@ const SmartForm = (props, state) => {
     }
 
     if (formType === 'rowText') {
-      // console.log(
-      //   ' rowText formItemProps ： ',
-      //   formItemProps,
-      //   formItemCom,
-      //   formItemMap,
-      //   formType,
-      //   rowLayout,
-      //   formItemNoRuleProps,
-      // ); //
       return (
         <Form.Item
           // name={key}
@@ -650,7 +648,7 @@ const SmartForm = (props, state) => {
         size={componentSize}
         scrollToFirstError
         {...formProps}
-        className={`smartForm ${className} ${
+        className={`smartForm ${className} ${size === 'small' ? 'small' : ''} ${
           searchRight ? 'searchRight' : ''
         } `}
         // layout="inline"

@@ -23,66 +23,6 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    noRule: true,
-    itemProps: {
-      label: '姓名',
-      name: 'name',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '角色',
-      name: 'custom_id',
-    },
-    comProps: {
-      disabled: true,
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '手机',
-      name: 'phone',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '邮箱',
-      name: 'email',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '业务部门',
-      name: 'organization',
-    },
-    comProps: {
-      disabled: true,
-    },
-  },
-  {
-    formType: 'Password',
-    noRule: true,
-    itemProps: {
-      label: '密码重置',
-      name: 'password',
-    },
-  },
-  {
-    formType: 'Password',
-    noRule: true,
-    itemProps: {
-      label: '再次输入密码',
-      name: 'rePwd',
-    },
-  },
-];
-
 const formLayouts = {
   labelCol: {
     sm: { span: 9 }, //
@@ -94,20 +34,71 @@ const formLayouts = {
 
 const UserCenterForm = props => {
   console.log(' UserCenterForm ： ', props); //
-
   const [form] = Form.useForm();
-  const { index } = props; //
+
+  const config = [
+    {
+      noRule: true,
+      itemProps: {
+        label: '姓名',
+        name: 'name',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '角色',
+        name: 'custom_id',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '手机',
+        name: 'phone',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '邮箱',
+        name: 'email',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '业务部门',
+        name: 'organization',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      formType: 'Password',
+      noRule: true,
+      itemProps: {
+        label: '密码重置',
+        name: 'password',
+      },
+    },
+    {
+      formType: 'Password',
+      noRule: true,
+      itemProps: {
+        label: '再次输入密码',
+        name: 'rePwd',
+      },
+    },
+  ];
 
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
-  };
-
-  // const formConfig = formatConfig(config);
-
-  const handleOk = e => {
-    console.log(' handleOk   e, ,   ： ', e);
-    props.handleOk();
   };
 
   return (
@@ -119,14 +110,14 @@ const UserCenterForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-
+        propsForm={form}
         action={'edit'}
         formLayouts={formLayouts}
         {...props}
       ></SmartForm>
 
       <div className="dfc actionBtn ">
-        <Button type="primary" onClick={handleOk}>
+        <Button type="primary" onClick={() => props.handleOk({ form })}>
           确认修改
         </Button>
       </div>

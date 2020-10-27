@@ -295,7 +295,9 @@ class SmartTable extends PureComponent {
       content = <span className={``}>{txt}</span>;
     }
 
-    return <Tooltip title={text}>{content}</Tooltip>;
+    return (
+      typeof text === 'string' && <Tooltip title={text}>{content}</Tooltip>
+    );
   };
 
   onRemove = removeParams => {
@@ -308,7 +310,7 @@ class SmartTable extends PureComponent {
   };
   onPageChange = (page, page_size) => {
     console.log(' onPageChange,  , ： ', page, page_size);
-    this.props.getList({
+    this.props.getListAsync({
       page,
       page_size,
     });
@@ -463,16 +465,7 @@ class SmartTable extends PureComponent {
     const { loadingData } = this.props; //
     const pathArr = history.location.pathname.split('/');
     const path = pathArr[pathArr.length - 1];
-    console.log(
-      ' get 取属 isShowLoading ： ',
-      this.state,
-      this.props,
-      history,
-      history.location,
-      pathArr,
-      path,
-      isLoading,
-    );
+    // console.log(' get 取属 isShowLoading ： ', this.state, this.props, history, history.location, pathArr, path, isLoading, );
     const isShowLoading = isLoading({
       path: path,
       actions: loadingData.effects,

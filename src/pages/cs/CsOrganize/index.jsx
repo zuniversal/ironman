@@ -1,41 +1,18 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { Component, PureComponent } from 'react';
 import './style.less';
 
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-  Tag,
-} from 'antd';
+import { Button, Tag } from 'antd';
 
 import SmartModal from '@/common/SmartModal'; //
-import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import CsOrganizeForm from '@/components/Form/CsOrganizeForm'; //
 import CsOrganizeTable from '@/components/Table/CsOrganizeTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
-
 import { actions, mapStateToProps } from '@/models/csOrganize'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { PRIMARY } from '@/constants';
 
-const TITLE = '操作';
+const TITLE = '账户';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -57,106 +34,9 @@ class CsOrganize extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      action: '',
-      title: '',
       titleMap,
-      newTbData: [],
     };
   }
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  showUploadModal = params => {
-    console.log('    showUploadModal ： ', params);
-    //   const {item,  } = this.props//
-    const { action } = params;
-
-    this.setState({
-      show: true,
-      action,
-      modalContent: (
-        <UploadFileCom
-          onChange={this.onUploadChange}
-          label={titleMap[action]}
-        ></UploadFileCom>
-      ),
-    });
-  };
-  menuClick = params => {
-    const { key, clickFn } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
-  onSubmit = (e, rest) => {
-    console.log('    onSubmit ： ', e, rest);
-  };
-  onFail = (e, rest) => {
-    console.log('    onFail ： ', e, rest);
-  };
-
-  showModal = e => {
-    console.log('    showModal ： ', e);
-    this.setState({
-      show: true,
-    });
-  };
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { form } = props; //
-
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res); //
-      const { newTbData } = this.state; //
-      this.setState({
-        show: false,
-        newTbData: [res, ...newTbData],
-      });
-    } catch (error) {
-      console.log(' error ： ', error); //
-    }
-
-    // form
-    // .validateFields()
-    // .then(values => {
-    //   console.log('  values await 结果  ：', values,  )//
-    //   form.resetFields();
-    //   // onCreate(values);
-    // })
-    // .catch(info => {
-    //   console.log('Validate Failed:', info);
-    // });
-  };
-  onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
-    this.setState({
-      show: false,
-    });
-  };
-
-  renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { modalContent } = this.state; //
-    if (modalContent) {
-      return modalContent;
-    }
-
-    // return null
-  };
 
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
@@ -177,7 +57,7 @@ class CsOrganize extends PureComponent {
         </div>
       </div>
     );
-  }
+  };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
@@ -194,24 +74,62 @@ class CsOrganize extends PureComponent {
     };
 
     return <CsOrganizeTable {...tableProps}></CsOrganizeTable>;
-  }
+  };
+  renderTable = params => {
+    console.log(' renderTable ： ', params, this.state, this.props);
+    const tableProps = {
+      onSelectChange: this.props.onSelectChange,
+      dataSource: this.props.dataList,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
+    };
 
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+    return <CsOrganizeTable {...tableProps}></CsOrganizeTable>;
+  };
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'setting') {
+        // this.props.homeSetting({
+        //   ...res,
+        // });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+    };
+    return <CsOrganizeForm {...formComProps}></CsOrganizeForm>;
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
 
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
-  }
+  };
 
   render() {
     console.log(
@@ -227,7 +145,7 @@ class CsOrganize extends PureComponent {
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

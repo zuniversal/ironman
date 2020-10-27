@@ -4,17 +4,12 @@ import * as userServices from '@/services/user';
 import { formatSelectList } from '@/utils';
 
 const namespace = 'shiftsManage';
-const { createAction, createCRUD } = init(namespace);
+const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = [
-  'syncOAAsync',
-  'getUserAsync',
-  'uploadFileAsync',
-  'exportDataAsync',
-];
+const otherActions = ['getUserAsync', 'uploadFileAsync', 'exportDataAsync'];
 
 export const actions = {
-  ...createCRUD(otherActions),
+  ...createActions(otherActions),
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -35,11 +30,12 @@ export default {
   namespace,
 
   state: {
+    action: '',
+    isShowModal: false,
     dataList: [],
+    count: 0,
     itemDetail: {},
-
-    syncOAData: {},
-    portraitData: {},
+    d_id: '',
     userList: [
       // { label: 'zyb', value: 'value1' },
       // { label: 'zyb1', value: 'value2' },
@@ -47,17 +43,36 @@ export default {
   },
 
   reducers: {
+    showFormModal(state, { payload, type }) {
+      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: true,
+        action: payload.action,
+      };
+    },
+    onCancel(state, { payload, type }) {
+      console.log(' onCancel 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isShowModal: false,
+        itemDetail: {},
+      };
+    },
     getList(state, { payload, type }) {
       return {
         ...state,
-        // ...payload,
-        dataList: [...payload.list],
+        dataList: payload.list,
+        count: payload.rest.count,
       };
     },
     getItem(state, { payload, type }) {
       console.log(' getItem ： ', payload); //
       return {
         ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
         itemDetail: { ...payload.list, d_id: payload.payload.d_id },
       };
     },
@@ -65,6 +80,8 @@ export default {
       return {
         ...state,
         dataList: [payload.bean, ...state.dataList],
+        isShowModal: false,
+        count: state.count + 1,
       };
     },
     editItem(state, { payload, type }) {
@@ -75,7 +92,7 @@ export default {
         dataList: state.dataList.map(v => ({
           ...(v.id == payload.payload.d_id ? { ...v, ...payload.bean } : v),
         })),
-        // dataList: state.dataList.map((v) => ({...v.id !== payload.payload.data.id ? payload.data : v,   })),
+        isShowModal: false,
       };
     },
     removeItem(state, { payload, type }) {
