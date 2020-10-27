@@ -34,7 +34,7 @@ const codeMap = {
 };
 
 const statusMap = {
-  404: '404路径不对！',
+  404: '404 请求路径不对！',
 };
 
 export const getCodeMsg = code => {

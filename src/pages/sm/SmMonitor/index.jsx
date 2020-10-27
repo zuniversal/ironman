@@ -1,22 +1,30 @@
 import React, { Component, PureComponent } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SearchForm from '@/common/SearchForm'; //
-import SmMonitorTable from '@/components/Table/SmMonitorTable'; //
-import SmMonitorForm from '@/components/Form/SmMonitorForm'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Menu,
+  Upload,
+  Result,
+  Typography,
+  Divider,
+} from 'antd';
 
-import { actions, mapStateToProps } from '@/models/smMonitor'; //
+import SmartModal from '@/common/SmartModal'; //
+import SearchForm from '@/common/SearchForm'; //
+import SmartFormModal from '@/common/SmartFormModal'; //
+import MsgForm from '@/components/Form/MsgForm'; //
+import MsgTable from '@/components/Table/MsgTable'; //
+import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
+
+import { actions, mapStateToProps } from '@/models/msg'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '物料';
+const TITLE = '消息';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -27,114 +35,113 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ smMonitor, }) => smMonitor;
+// const mapStateToProps = ({ houseNo, }) => houseNo;
 
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: SmMonitorForm,
+  modalForm: MsgForm,
 })
-class SmMonitor extends PureComponent {
+class Msg extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       titleMap,
     };
   }
-
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fje '}>
-        <SearchForm></SearchForm>
-        {/* <div className={'btnWrapper'}>
+        <div className={'btnWrapper'}>
+          <SearchForm></SearchForm>
           <Button
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}
           >
             新增{TITLE}
           </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div> */}
+        </div>
       </div>
     );
   };
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
     };
 
-    return <SmMonitorTable {...tableProps}></SmMonitorTable>;
+    return <MsgTable {...tableProps}></MsgTable>;
   };
 
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      clientList: this.props.clientList,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <MsgForm {...formComProps}></MsgForm>;
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
 
   render() {
-    console.log(
-      ' %c SmMonitor 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-    const { show, title, action, titleMap } = this.state; //
-
-    const formComProps = {
-      getCapture: this.showCapture,
-      action: this.state.action,
-    };
-
     return (
-      <div className="SmMonitor">
+      <div className="AlarmRecord">
         {this.renderSearchForm()}
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
-
-        {/* <SmartFormModal
-          // width={'900px'}
-          formComProps={{...tableProps, ...formComProps, action, }} 
-
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          show={show}
-          FormCom={this.renderModalForm()}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal> */}
+        {this.renderSmartFormModal()}
       </div>
     );
   }
 }
 
-export default SmMonitor;
+export default Msg;

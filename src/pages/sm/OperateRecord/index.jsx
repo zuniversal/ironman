@@ -60,73 +60,76 @@ class OperateRecord extends PureComponent {
 
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
-      newTbData: this.state.newTbData,
-
       onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
       dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
+      count: this.props.count,
+      getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
+      edit: this.props.getItemAsync,
+      remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
     };
 
     return <OperateRecordTable {...tableProps}></OperateRecordTable>;
   };
 
-  renderSmartModal = params => {
-    console.log(' renderSmartModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap } = this.state; //
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
 
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      clientList: this.props.clientList,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps); //
+    return <OperateRecordForm {...formComProps}></OperateRecordForm>;
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
-      <SmartModal
-        show={show}
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.onCancel}
-        action={action}
-        titleMap={titleMap}
+        onCancel={this.props.onCancel}
       >
         {this.renderModalContent()}
-      </SmartModal>
+      </SmartFormModal>
     );
   };
 
   render() {
-    console.log(
-      ' %c OperateRecord 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-    const { show, title, action, titleMap } = this.state; //
-
-    const formComProps = {
-      getCapture: this.showCapture,
-      action: this.state.action,
-    };
-
     return (
-      <div className="OperateRecord">
+      <div className="AlarmRecord">
         {this.renderSearchForm()}
 
         {this.renderTable()}
 
-        {this.renderSmartModal()}
-
-        {/* <SmartFormModal
-          // width={'900px'}
-          formComProps={{...tableProps, ...formComProps, action, }} 
-
-          title={title}
-          show={show}
-          onOk={this.onOk}
-          onCancel={this.onCancel}
-          show={show}
-          FormCom={this.renderModalForm()}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></SmartFormModal> */}
+        {this.renderSmartFormModal()}
       </div>
     );
   }
