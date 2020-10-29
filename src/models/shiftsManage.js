@@ -96,14 +96,14 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type, this); //
+      console.log(' removeItem 修改  ： ', state, payload, type); //
       return {
         ...state,
         dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type, this); //
+      console.log(' removeItems 修改  ： ', state, payload, type); //
       const removeList = payload.payload.id.split(',');
       console.log(' removeList ： ', removeList); //
       return {

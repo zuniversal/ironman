@@ -55,18 +55,11 @@ export default {
         modalAction: payload.action,
       };
     },
-    onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
-      return {
-        ...state,
-        isShowFormModal: false,
-      };
-    },
     onModalCancel(state, { payload, type }) {
       console.log(' onModalCancel 修改  ： ', state, payload, type); //
       return {
         ...state,
-        isShowModal: false,
+        isShowFormModal: false,
         itemDetail: {},
       };
     },

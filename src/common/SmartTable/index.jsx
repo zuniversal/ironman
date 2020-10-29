@@ -294,10 +294,11 @@ class SmartTable extends PureComponent {
     } else {
       content = <span className={``}>{txt}</span>;
     }
-
-    return (
-      typeof text === 'string' && <Tooltip title={text}>{content}</Tooltip>
-    );
+    // console.log(' texttext ： ', text, content )//
+    // return typeof text !== 'object' && text
+    return text && <Tooltip title={text}>{content}</Tooltip>;
+    // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
+    // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>
   };
 
   onRemove = removeParams => {

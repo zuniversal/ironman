@@ -49,6 +49,9 @@ class Goods extends PureComponent {
       <div className={'fsb '}>
         <SearchForm></SearchForm>
         <div className={'btnWrapper'}>
+          <Button type="primary" onClick={() => this.props.search(params)}>
+            搜索
+          </Button>
           <Button
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}

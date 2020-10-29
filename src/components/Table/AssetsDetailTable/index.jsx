@@ -29,29 +29,20 @@ import { ImgBlock } from '@/components/Temp';
 
 const AssetsDetailTable = props => {
   console.log(' AssetsDetailTable  ： ', props); //
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick, data } = props; //
 
   const columns1 = [
     {
       title: '设备编号',
       dataIndex: 'code',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
     },
     {
       title: '设备名称',
       dataIndex: 'name',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
     },
     {
       title: '变压容量',
       dataIndex: 'transformer_capacity',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
     },
   ];
 
@@ -93,7 +84,7 @@ const AssetsDetailTable = props => {
     },
     {
       title: '制造厂家',
-      dataIndex: 'manufacturer',
+      dataIndex: 'factory',
     },
     {
       title: '设备型号',
@@ -153,6 +144,14 @@ const AssetsDetailTable = props => {
       title: '出厂日期',
       dataIndex: 'production_date',
     },
+    {
+      title: '变比',
+      dataIndex: '',
+    },
+    {
+      title: '精准度',
+      dataIndex: '',
+    },
   ];
 
   const deviceCol3 = [
@@ -193,9 +192,15 @@ const AssetsDetailTable = props => {
     },
   ];
 
-  const infoCols = [columns1, columns1];
+  const infoCols = [
+    columns1,
+    // columns1
+  ];
 
-  const deviceCols = [deviceCol1, deviceCol2, deviceCol3];
+  const deviceCols = [
+    deviceCol1,
+    // deviceCol2, deviceCol3
+  ];
 
   const showQRCode = e => {
     console.log(' showQRCode   e, ,   ： ', e);
@@ -214,6 +219,8 @@ const AssetsDetailTable = props => {
           noActionCol
           pagination={false}
           className={'noThLine noMargin '}
+          dataSource={[data]}
+          rowSelection={null}
           {...props}
         ></SmartTable>
       ))}
@@ -231,9 +238,11 @@ const AssetsDetailTable = props => {
             // dataSource={noCalculateList}
             // rowKey={'source_no'}
             isQRCode
-            rowLength={1}
+            // rowLength={1}
             noActionCol
             pagination={false}
+            dataSource={data.list}
+            rowSelection={null}
             {...props}
           ></SmartTable>
         </div>

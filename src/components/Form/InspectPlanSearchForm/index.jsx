@@ -25,18 +25,27 @@ const InspectPlanSearchForm = props => {
   const { formBtn, ...rest } = props; //
 
   const config = [
+    // {
+    //   formType: 'DatePicker',
+    //   itemProps: {
+    //     label: '年',
+    //     name: '',
+    //   },
+    // },
     {
-      formType: 'DatePicker',
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
-        label: '年',
-        name: '',
+        label: '客户代表',
+        name: 'leader',
       },
     },
     {
-      formType: 'DatePicker',
+      formType: 'MonthPicker',
       itemProps: {
         label: '月',
-        name: '',
+        name: 'month',
       },
     },
   ];
@@ -56,6 +65,7 @@ const InspectPlanSearchForm = props => {
         // init={init}
         // init={{}}
 
+        noRule={false}
         // {...rest}
         {...props}
       ></SearchForm>

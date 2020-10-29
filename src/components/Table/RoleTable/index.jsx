@@ -47,6 +47,7 @@ const RoleTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
 
+      rowKey={'kind_id'}
       {...props}
     ></SmartTable>
   );

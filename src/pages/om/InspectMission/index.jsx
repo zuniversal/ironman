@@ -30,7 +30,7 @@ import { actions, mapStateToProps } from '@/models/inspectMission'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '巡检任务';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -59,18 +59,27 @@ class InspectMission extends PureComponent {
     };
   }
 
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <InspectMissionSearchForm></InspectMissionSearchForm>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出
-          </Button>
-        </div>
-      </div>
+      <InspectMissionSearchForm
+        formBtn={this.renderFormBtn}
+        getClientAsync={this.props.getClientAsync}
+        clientList={this.props.clientList}
+      ></InspectMissionSearchForm>
     );
   };
 
@@ -103,15 +112,17 @@ class InspectMission extends PureComponent {
         });
       }
       if (action === 'assignMission') {
-        this.props.assignMissionAsync({
+        this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          d_id: itemDetail.id,
         });
       }
       if (action === 'editDate') {
-        this.props.editDateAsync({
+        this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {
@@ -145,7 +156,9 @@ class InspectMission extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
-    return <InspectMissionForm {...formComProps}></InspectMissionForm>;
+    return (
+      <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
+    );
   };
   get size() {
     console.log(' get 取属 size ： ', this.state, this.props);

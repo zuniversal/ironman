@@ -135,86 +135,86 @@ export const clientConfig = [
     },
   },
 
-  {
-    formType: 'Dynamic',
-    itemProps: {
-      label: '',
-      // label: '用户名',
-      name: 'customer_admin', //
-      className: 'noMargin',
-    },
-    comProps: {
-      extra: true,
-      // noRule: true,
-      // formType: 'DynamicArr',
-      config: [
-        {
-          itemProps: {
-            name: 'username',
-            label: '用户名',
-          },
-          comProps: {
-            className: 'w-320',
-          },
-        },
-        {
-          itemProps: {
-            label: '密码',
-            name: 'password',
-          },
-          comProps: {},
-          // noRule: true,
-        },
-        {
-          itemProps: {
-            label: '手机号',
-            name: 'phone',
-          },
-          comProps: {},
-          // noRule: true,
-        },
-      ],
-      itemProps: {
-        name: 'username',
-        label: '用户名',
-      },
-      comProps: {
-        className: 'w-320',
-      },
-    },
-  },
-  {
-    formType: 'PropsCom',
-    PropsCom: props => (
-      <div className="dfc">
-        <Button
-          type="primary"
-          onClick={() => {
-            console.log(' props addUserAsync ： ', props); //
-            props.addUserAsync(props);
-          }}
-        >
-          保存管理员信息
-        </Button>
-      </div>
-    ),
-    itemProps: {
-      label: ' ',
-      // className: 'dfc',
-    },
-  },
+  // {
+  //   formType: 'Dynamic',
+  //   itemProps: {
+  //     label: '',
+  //     // label: '用户名',
+  //     name: 'customer_admin', //
+  //     className: 'noMargin',
+  //   },
+  //   comProps: {
+  //     extra: true,
+  //     // noRule: true,
+  //     // formType: 'DynamicArr',
+  //     config: [
+  //       {
+  //         itemProps: {
+  //           name: 'username',
+  //           label: '用户名',
+  //         },
+  //         comProps: {
+  //           className: 'w-320',
+  //         },
+  //       },
+  //       {
+  //         itemProps: {
+  //           label: '密码',
+  //           name: 'password',
+  //         },
+  //         comProps: {},
+  //         // noRule: true,
+  //       },
+  //       {
+  //         itemProps: {
+  //           label: '手机号',
+  //           name: 'phone',
+  //         },
+  //         comProps: {},
+  //         // noRule: true,
+  //       },
+  //     ],
+  //     itemProps: {
+  //       name: 'username',
+  //       label: '用户名',
+  //     },
+  //     comProps: {
+  //       className: 'w-320',
+  //     },
+  //   },
+  // },
+  // {
+  //   formType: 'PropsCom',
+  //   PropsCom: props => (
+  //     <div className="dfc">
+  //       <Button
+  //         type="primary"
+  //         onClick={() => {
+  //           console.log(' props addUserAsync ： ', props); //
+  //           props.addUserAsync(props);
+  //         }}
+  //       >
+  //         保存管理员信息
+  //       </Button>
+  //     </div>
+  //   ),
+  //   itemProps: {
+  //     label: ' ',
+  //     // className: 'dfc',
+  //   },
+  // },
 
-  {
-    itemProps: {
-      label: '密码',
-    },
-  },
+  // {
+  //   itemProps: {
+  //     label: '密码',
+  //   },
+  // },
 
-  {
-    itemProps: {
-      label: '手机号',
-    },
-  },
+  // {
+  //   itemProps: {
+  //     label: '手机号',
+  //   },
+  // },
 
   {
     formType: 'rowText',
@@ -576,7 +576,7 @@ export const stationConfig = [
       {/* <Button icon={<UploadOutlined />}>上传</Button> */}
       <div>
         <PlusOutlined />
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ marginTop: 8 }}>上传照片</div>
       </div>
     </Upload>
   </Form.Item>,

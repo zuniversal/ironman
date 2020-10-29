@@ -114,9 +114,9 @@ class HouseNo extends PureComponent {
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn>
-        <Button type="primary" onClick={this.props.syncOAAsync}>
+        {/* <Button type="primary" onClick={this.props.syncOAAsync}>
           同步OA
-        </Button>
+        </Button> */}
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -138,6 +138,14 @@ class HouseNo extends PureComponent {
     return (
       <HouseNoSearchForm
         formBtn={this.renderFormBtn}
+        getClientAsync={params =>
+          this.props.getClientAsync({ keyword: params })
+        }
+        clientList={this.props.clientList}
+        getHouseNoAsync={params =>
+          this.props.getHouseNoAsync({ keyword: params })
+        }
+        houseNoList={this.props.houseNoList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></HouseNoSearchForm>

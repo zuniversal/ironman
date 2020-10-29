@@ -28,23 +28,30 @@ import SmartTable from '@/common/SmartTable'; //
 
 const ContractTable = props => {
   console.log(' ContractTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
       title: '所属客户',
       dataIndex: 'key',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      d_item: 'id',
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '合同编号',
       dataIndex: 'field2',
-      render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
+      d_item: 'id',
+      render: (text, record, index) => (
+        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      ),
     },
     {
       title: '业务主体',
       dataIndex: 'field3',
-      link: true,  
+      d_item: 'id',
+      link: true,
     },
     {
       title: '业务员',
@@ -87,6 +94,8 @@ const ContractTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
+
+      noDefault
       {...props}
     ></SmartTable>
   );

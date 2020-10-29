@@ -117,7 +117,10 @@ const UserCenterForm = props => {
       ></SmartForm>
 
       <div className="dfc actionBtn ">
-        <Button type="primary" onClick={() => props.handleOk({ form })}>
+        <Button
+          type="primary"
+          onClick={() => props.handleOk({ form, action: 'edit' })}
+        >
           确认修改
         </Button>
       </div>

@@ -1,8 +1,19 @@
 export default [
   {
+    path: '/om/visitManage',
+    component: '@/pages/om/VisitManage',
+    title: '回访管理',
+  },
+
+  {
     path: '/om/home',
     component: '@/pages/om/Home',
     title: '首页',
+  },
+  {
+    path: '/om/userCenter',
+    component: '@/pages/om/UserCenter',
+    title: '个人中心',
   },
   {
     path: '/om/client',

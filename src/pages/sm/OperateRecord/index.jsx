@@ -44,14 +44,14 @@ class OperateRecord extends PureComponent {
     };
   }
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
+    // console.log(' renderSearchForm {TITLE}数据： ', params,  )
     return (
       <div className={'fsb '}>
         <OperateRecordSearchForm></OperateRecordSearchForm>
         <div className={'btnWrapper'}>
           <SearchForm></SearchForm>
           <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
+            导出
           </Button>
         </div>
       </div>

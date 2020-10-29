@@ -28,9 +28,12 @@ export const InspectMissionAssignForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      // formType: 'Search',
+      // selectSearch: props.getUser,
+      // selectData: props.userList,
       itemProps: {
         label: '分配给',
+        name: 'team_id',
       },
       comProps: {
         className: 'w-280',
@@ -74,6 +77,7 @@ export const InspectMissionEditDateForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '选择日期',
+        name: 'date',
       },
       comProps: {
         className: 'w-280',

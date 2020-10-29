@@ -38,16 +38,16 @@ const HouseNoFormTable = props => {
       ),
     },
     {
-      title: '电源编号',
-    },
-    {
       title: '托管电站数',
     },
     {
-      title: '变压器容量',
+      title: '设备数量',
     },
     {
-      title: '设备数量',
+      title: '电源编号',
+    },
+    {
+      title: '变压器容量',
     },
     {
       title: '备注',

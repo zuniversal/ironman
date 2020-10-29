@@ -32,7 +32,7 @@ import { actions, mapStateToProps } from '@/models/alarmTemplate'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '告警策略模板';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -69,6 +69,9 @@ class AlarmTemplate extends PureComponent {
             onClick={() => this.props.showFormModal({ action: 'add' })}
           >
             新增{TITLE}
+          </Button>
+          <Button type="primary" onClick={() => this.props.exportData()}>
+            导出
           </Button>
         </div>
       </div>

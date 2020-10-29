@@ -37,6 +37,25 @@ const InspectMissionSearchForm = props => {
         name: 'status',
       },
     },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
+    },
+
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '',
+    //     name: 'keyword',
+    //   },
+    //   comProps: {
+    //     className: 'lastFormItem',
+    //   },
+    //   searchSuffix: true,
+    // },
   ];
 
   const formProps = {

@@ -1,0 +1,88 @@
+import React, {
+  Component,
+  PureComponent,
+  lazy,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import './style.less';
+import {
+  Form,
+  Input,
+  Tooltip,
+  Cascader,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete,
+  Radio,
+  Space,
+  InputNumber,
+} from 'antd';
+
+import SmartTable from '@/common/SmartTable'; //
+
+const WeakTable = props => {
+  console.log(' WeakTable  ： ', props); //
+  const { showModal, edit, remove, tdClick } = props; //
+
+  const columns = [
+    {
+      title: '内容摘要',
+      // dataIndex: '',
+    },
+    {
+      title: 'ID',
+      // dataIndex: '',
+    },
+    {
+      title: '处理状态',
+      // dataIndex: '',
+    },
+    {
+      title: '消费时间',
+      // dataIndex: '',
+    },
+    {
+      title: '是否需要处理',
+      // dataIndex: '',
+    },
+  ];
+
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'detail',
+            d_id: record.id,
+          })
+        }
+      >
+        查看详情
+      </a>
+      <a onClick={() => props.showFormModal({ action: 'more' })}>更多</a>
+    </>
+  );
+
+  return (
+    <SmartTable
+      columns={columns}
+      // dataSource={noCalculateList}
+      // rowKey={'source_no'}
+      extra={extra}
+      noDefault
+      {...props}
+    ></SmartTable>
+  );
+};
+
+WeakTable.defaultProps = {
+  tdClick: () => {},
+};
+
+export default WeakTable;

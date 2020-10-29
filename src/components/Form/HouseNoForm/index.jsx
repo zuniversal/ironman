@@ -110,9 +110,14 @@ const HouseNoForm = props => {
       },
     },
     {
-      formType: 'Select',
       itemProps: {
         label: '变压器容量',
+        // name: 'transformer_capacity',
+      },
+    },
+    {
+      itemProps: {
+        label: '实际容量',
         name: 'transformer_capacity',
       },
     },
@@ -135,7 +140,7 @@ const HouseNoForm = props => {
 
     {
       itemProps: {
-        label: '电站数',
+        label: '托管电站数',
         name: 'station_num',
       },
     },

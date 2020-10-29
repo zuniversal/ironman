@@ -4,9 +4,9 @@ import { Form, Input } from 'antd';
 
 // 通用的操作列组件
 const formatData = (record, rowKey) => {
-  const data = {...record, d_id: record[rowKey] ? record[rowKey] : {},} 
-  return data 
-}
+  const data = { ...record, d_id: record[rowKey] ? record[rowKey] : {} };
+  return data;
+};
 
 const ActionCol = props => {
   const {
@@ -28,14 +28,24 @@ const ActionCol = props => {
         <>
           <a
             onClick={() => {
-              console.log(' record ： ', record, edit); //
-              edit({ action: 'edit', ...record });
+              // edit({ action: 'edit', ...record });
+              console.log(' record ： ', props, record, edit); //
+              props.dataSource.length > 0
+                ? edit({ action: 'edit', ...record })
+                : props.showFormModal({
+                    action: 'add',
+                    ...record,
+                  });
             }}
           >
             编辑
           </a>
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-          <a onClick={() => remove({ record: formatData(record, props.rowKey, ), })}>删除</a>
+          <a
+            onClick={() => remove({ record: formatData(record, props.rowKey) })}
+          >
+            删除
+          </a>
         </>
       )}
       {!props.noDefault && props.isQRCode && (

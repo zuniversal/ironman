@@ -109,7 +109,7 @@ const option = params => {
         itemStyle: {
           normal: {
             color: '#FD7D7D',
-            borderWidth: 10,
+            borderWidth: 5,
             borderColor: '#FD7D7D', //拐点边框颜色
           },
         },
@@ -137,7 +137,7 @@ const option = params => {
         itemStyle: {
           normal: {
             color: '#1CBB51',
-            borderWidth: 10,
+            borderWidth: 5,
             borderColor: '#1CBB51', //拐点边框颜色
           },
         },

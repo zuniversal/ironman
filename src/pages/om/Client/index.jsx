@@ -89,26 +89,16 @@ class Client extends PureComponent {
         <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           htmlType="submit"
           onClick={this.props.syncOAAsync}
         >
           同步OA
-        </Button>
+        </Button> */}
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
-        >
-          新增客户
-        </Button>
-        <Button
-          type="primary"
-          onClick={() =>
-            this.props.showFormModal({
-              action: 'add',
-            })
-          }
         >
           新增客户
         </Button>
@@ -310,6 +300,7 @@ class Client extends PureComponent {
       edit: this.props.getItemAsync,
       // remove: this.props.onRemove,
       remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
@@ -356,6 +347,7 @@ class Client extends PureComponent {
     ); //
 
     // this.getList()
+    this.props.getUserAsync();
   }
 
   render() {

@@ -20,52 +20,56 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
-export const config = [
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '客户',
-      name: 'customer',
-    },
-    comProps: {
-      className: 'w-160',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '户号',
-      name: 'code',
-    },
-    comProps: {
-      className: 'w-160',
-    },
-  },
-  {
-    formType: 'Cascader',
-    itemProps: {
-      label: '区域',
-      name: 'region',
-    },
-    comProps: {
-      className: 'w-160',
-    },
-  },
-  {
-    formType: 'Input',
-    itemProps: {
-      label: '邮编',
-      name: 'postcode',
-    },
-    comProps: {
-      className: 'w-160',
-    },
-  },
-];
-
 const HouseNoSearchForm = props => {
   console.log(' HouseNoSearchForm ： ', props); //
   const [form] = Form.useForm();
+
+  const config = [
+    {
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
+      itemProps: {
+        label: '客户',
+        name: 'customer',
+      },
+      comProps: {
+        className: 'w-160',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getHouseNoAsync,
+      selectData: props.houseNoList,
+      itemProps: {
+        label: '户号',
+        name: 'code',
+      },
+      comProps: {
+        className: 'w-160',
+      },
+    },
+    {
+      // formType: 'Cascader',
+      itemProps: {
+        label: '区域',
+        name: 'region',
+      },
+      comProps: {
+        className: 'w-160',
+      },
+    },
+    {
+      // formType: 'Input',
+      itemProps: {
+        label: '邮编',
+        name: 'postcode',
+      },
+      comProps: {
+        className: 'w-160',
+      },
+    },
+  ];
 
   const { formBtn, ...rest } = props; //
   const formProps = {

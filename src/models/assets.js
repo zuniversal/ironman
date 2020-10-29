@@ -89,6 +89,7 @@ export default {
           created_time: moment(),
           production_date: moment(),
           operation_date: moment(),
+          list: payload.list,
         },
         action: payload.payload.action,
         isShowModal: true,
@@ -119,18 +120,18 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type, this); //
+      console.log(' removeItem 修改  ： ', state, payload, type); //
       return {
         ...state,
-        dataList: state.dataList.filter(v => v.id !== payload.payload.d_id),
+        dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type, this); //
+      console.log(' removeItems 修改  ： ', state, payload, type); //
       return {
         ...state,
         dataList: state.dataList.filter(v =>
-          payload.payload.some(item => v.id === item),
+          payload.payload.ids.some(item => v.id != item),
         ),
       };
     },

@@ -16,7 +16,8 @@ import SearchForm from '@/common/SearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import CsHomeTableCom from '@/components/Table/CsHomeTableCom';
+import CsHomeStationTable from '@/components/Table/CsHomeStationTable';
+import CsHomeTabsTable from '@/components/Table/CsHomeTabsTable';
 import DropDownBtn from '@/common/DropDownBtn'; //
 import CsHomeMonitor from '@/components/Widgets/CsHomeMonitor';
 import CsHomeVideo from '@/components/Widgets/CsHomeVideo';
@@ -65,6 +66,16 @@ class CsHome extends PureComponent {
       </div>
     );
   };
+  renderCsHomeStationTable = params => {
+    console.log(
+      ' renderCsHomeStationTable ： ',
+      params,
+      this.state,
+      this.props,
+    );
+
+    return <CsHomeStationTable></CsHomeStationTable>;
+  };
   renderSelectForm = params => {
     console.log(' renderSelectForm ： ', params, this.state, this.props);
 
@@ -85,10 +96,56 @@ class CsHome extends PureComponent {
 
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
   };
-  renderCsHomeTableCom = params => {
-    console.log(' renderCsHomeTableCom ： ', params, this.state, this.props);
+  renderCsHomeTabsTable = params => {
+    console.log(' renderCsHomeTabsTable ： ', params, this.state, this.props);
 
-    return <CsHomeTableCom></CsHomeTableCom>;
+    return <CsHomeTabsTable></CsHomeTabsTable>;
+  };
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action, itemDetail } = this.props; //
+    const { form, init } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      if (action === 'setting') {
+        // this.props.homeSetting({
+        //   ...res,
+        // });
+      }
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
+
+  renderModalContent = e => {
+    console.log('    renderModalContent ： ', e, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+    };
+    if (action === 'weakDetail') {
+      return (
+        <CsHomeTabsTable
+          showFormModal={this.props.showFormModal}
+        ></CsHomeTabsTable>
+      );
+    }
+  };
+  renderSmartFormModal = params => {
+    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+
+    return (
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
+        onOk={this.onOk}
+        onCancel={this.props.onCancel}
+      >
+        {this.renderModalContent()}
+      </SmartFormModal>
+    );
   };
 
   render() {
@@ -105,7 +162,8 @@ class CsHome extends PureComponent {
         {this.renderSelectForm()}
         {this.renderCsHomeMonitor()}
         {this.renderCsHomeStatEcharts()}
-        {this.renderCsHomeTableCom()}
+        {this.renderCsHomeStationTable()}
+        {this.renderSmartFormModal()}
       </div>
     );
   }

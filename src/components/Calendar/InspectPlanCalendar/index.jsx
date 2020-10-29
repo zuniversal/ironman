@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, createRef } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
-import SmartCalendar, {CalendarDraggable, } from '@/common/SmartCalendar'; //
-
+import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
 
 let matchList = [
   {
@@ -71,10 +70,13 @@ const items2 = {
   start: '2020-10-09',
   display: 'background',
 };
-const calendarEvents = [items, items, items, items, 
+const calendarEvents = [
+  items,
+  items,
+  items,
+  items,
   // items2
 ];
-
 
 const ShiftsArrangeList = props => {
   console.log(
@@ -84,7 +86,7 @@ const ShiftsArrangeList = props => {
   );
 
   return (
-    <CalendarDraggable 
+    <CalendarDraggable
       itemSelector={'.dragItem'}
       // renderItem={(event, index) => (
       //   <div key={event.id} className="fsb rowItem ">
@@ -96,23 +98,35 @@ const ShiftsArrangeList = props => {
           <div>电站</div>
           <div>剩余/总巡检数量</div>
         </div>
-        {datas.map((event, index) => {
-          // console.log(' CalendarDraggable event ： ', event,  )// 
+        {props.events.map((event, index) => {
+          // console.log(' CalendarDraggable event ： ', event,)//
           return (
             <div key={event.id} className="fsb rowItem ">
               <div className={'left'}>
-                <div className="dragItem ">{event.team}</div>
-                <div>{event.client}</div>
+                {event.surplus_plan_num > 0 && (
+                  <div className="dragItem " id={event.id} test={'zyb'}>
+                    电站-{event.name}
+                  </div>
+                )}
+                <div>客户-{event.customer}</div>
               </div>
               <div>
-                {event.residue}/{event.all}
+                {event.surplus_plan_num} / {event.spect_plan_num}
               </div>
             </div>
-          )
+          );
         })}
       </>
     </CalendarDraggable>
   );
+};
+
+ShiftsArrangeList.defaultProps = {
+  events: [],
+};
+
+ShiftsArrangeList.propTypes = {
+  events: PropTypes.array,
 };
 
 const InspectPlanCalendar = props => {
@@ -131,7 +145,7 @@ const InspectPlanCalendar = props => {
   };
   const eventsSet = params => {
     console.log(' eventsSet   ,   ： ', params);
-    props.eventsSet(params)
+    props.eventsSet(params);
   };
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
@@ -141,26 +155,27 @@ const InspectPlanCalendar = props => {
 
   return (
     <div className="inspectPlanCalendar ">
-
       <SmartCalendar
-        events={calendarEvents}
-        
+        // events={calendarEvents}
+
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
       />
 
-      <ShiftsArrangeList></ShiftsArrangeList>
+      <ShiftsArrangeList events={props.events}></ShiftsArrangeList>
     </div>
   );
 };
 
 InspectPlanCalendar.defaultProps = {
+  events: [],
   eventsSet: () => {},
 };
 
 InspectPlanCalendar.propTypes = {
+  events: PropTypes.array,
   eventsSet: PropTypes.func,
 };
 

@@ -97,8 +97,8 @@ class SmartModal extends PureComponent {
         // width={width != undefined ? width : '60%'}
         visible={show}
         // onShow={this.onShow}
-        onOk={this.onOk}
-        onCancel={this.onCancel}
+        // onOk={this.onOk}
+        // onCancel={this.onCancel}
         maskClosable={maskClosable}
         footer={[
           <Button key="cancel" onClick={this.onCancel}>

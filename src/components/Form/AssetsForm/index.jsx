@@ -135,7 +135,7 @@ const AssetsForm = props => {
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'file'} name={'file'}></UploadCom>,
+    // <UploadCom label={'上传铭牌'} key={'file'} extra={'支持上传.DWG文件'} name={'file'} ></UploadCom>,
   ];
 
   // if (action === 'detail') {

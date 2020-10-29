@@ -42,6 +42,7 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
+  noMountFetch: true,
   modalForm: InspectPlanForm,
 })
 class InspectPlan extends PureComponent {
@@ -52,14 +53,32 @@ class InspectPlan extends PureComponent {
     };
   }
 
+  onSearch = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props); //
+    const { action } = this.props; //
+    const { form } = props; //
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action); //
+      this.props.getListAsync({
+        ...res,
+        month: res.month.format('YYYY-MM'),
+      });
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        <Button type="primary" onClick={() => this.onSearch(params)}>
+          搜索
+        </Button>
+        <Button type="primary" onClick={() => this.props.resetStationData()}>
           重置
         </Button>
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        <Button type="primary" onClick={() => this.props.changePlanAsync()}>
           保存计划
         </Button>
       </div>
@@ -70,9 +89,26 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanSearchForm
         formBtn={this.renderFormBtn}
+        getClientAsync={params =>
+          this.props.getClientAsync({ keyword: params })
+        }
+        clientList={this.props.clientList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></InspectPlanSearchForm>
+    );
+  };
+
+  eventsSet = params => {
+    console.log(' eventsSet,  , ： ', params);
+  };
+  renderInspectPlanCalendar = params => {
+    // console.log(' renderInspectPlanCalendar ： ', params,  )
+    return (
+      <InspectPlanCalendar
+        eventsSet={this.props.changeStationPlan}
+        events={this.props.dataList}
+      ></InspectPlanCalendar>
     );
   };
 
@@ -145,10 +181,13 @@ class InspectPlan extends PureComponent {
       </SmartFormModal>
     );
   };
-  renderInspectPlanCalendar = params => {
-    // console.log(' renderInspectPlanCalendar ： ', params,  )
-    return <InspectPlanCalendar></InspectPlanCalendar>;
-  };
+  componentDidMount() {
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getListAsync({
+      leader: 1,
+      month: '2020-10',
+    });
+  }
 
   render() {
     console.log(

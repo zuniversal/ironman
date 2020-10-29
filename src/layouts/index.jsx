@@ -76,16 +76,16 @@ const Layouts = props => {
         location={{
           pathname: path,
         }}
-        onPageChange={e => {
-          console.log(' onPageChange 切换页面 ： ', e); //
+        // onPageChange={e => {
+        //   console.log(' onPageChange 切换页面 ： ', e); //
 
-          // return
-        }}
-        onMenuHeaderClick={e => {
-          console.log(' onMenuHeaderClick ： ', e); //
+        //   // return
+        // }}
+        // onMenuHeaderClick={e => {
+        //   console.log(' onMenuHeaderClick ： ', e); //
 
-          // return
-        }}
+        //   // return
+        // }}
         menuItemRender={(item, dom) => {
           //console.log(' menuItemRender ： ', item, dom, pathname,   )
 

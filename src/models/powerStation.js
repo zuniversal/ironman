@@ -26,6 +26,9 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    clientList: [],
+    houseNoList: [],
   },
 
   reducers: {
@@ -89,6 +92,21 @@ export default {
         ),
       };
     },
+
+    getClient(state, { payload, type }) {
+      // console.log(' getClient 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getClient(state, { payload, type }) {
+      // console.log(' getClient 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        houseNoList: formatSelectList(payload.list, 'name'),
+      };
+    },
   },
 
   effects: {
@@ -111,6 +129,15 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getHouseNoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(houseNoServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
   },

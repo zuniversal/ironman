@@ -22,7 +22,15 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 const UploadCom = props => {
   console.log(' UploadCom   props, ,   ： ', props);
-  const { label, isInputUpload, text, contentClass, action, name } = props; //
+  const {
+    label,
+    isInputUpload,
+    text,
+    contentClass,
+    action,
+    name,
+    extra,
+  } = props; //
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
   return (
     <Form.Item
@@ -31,6 +39,7 @@ const UploadCom = props => {
       label={label}
       colon={false}
       // extra="支持扩展名：.pdf"
+      extra={extra}
     >
       <Upload
         name={name}
@@ -60,6 +69,7 @@ UploadCom.defaultProps = {
   text: '上传照片',
   action: '上传照片',
   name: 'file_name',
+  extra: '',
 };
 
 UploadCom.propTypes = {

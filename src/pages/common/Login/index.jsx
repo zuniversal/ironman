@@ -7,6 +7,11 @@ import { history } from 'umi';
 import axios from 'axios'; //
 const FormItem = Form.Item;
 
+export const isDev = process.env.NODE_ENV === 'development';
+
+export const TEST_URL = `http://188.131.235.243:31002/api/v1/`;
+export const PROXY_URL = `/api/v1/`;
+export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 const Login = () => {
   const [form] = Form.useForm();
 
@@ -15,14 +20,11 @@ const Login = () => {
     // form.validateFields(async (err, values) => {
     // if (!err) {
     // console.log('Received values of form1: ', values)
-    // const haveToken = localStorage.getItem('token');
-    // console.log('  haveToken ：', haveToken); //
-    // if (!haveToken) {
     const { username, password } = values;
 
     const res = axios
       .post(
-        '/api/v1/login',
+        BASE_URL + 'login',
         // { username: 'admin', password: 'afafa' }
         values,
       )
@@ -36,58 +38,7 @@ const Login = () => {
         tips(err.response.data.msg_show, 2);
       });
     // }
-    // return
-    // const {user_id, password, remember} = values
-    // setItem('remember', remember)
-    // login({user_id, password}).then(res => {
-    //   console.log('login  res ：', res, this.props,    )
-    //   const {code, mes, content, success, } = res
-    //   console.log(' success ： ', success   )//
-    //   if (success) {
-    //     // const {company_id} = data
-    //     // const datas = {
-    //     //   ...data[0]
-    //     // }
-    //     // setItems("company_id", company_id)
-    //     setItems("userInfo", content)
-    //     if (remember) {
-    //       setItem('user_id', content.user_id)
-    //     }
-    //     console.log(' 跳转  ： ',  )//
-    //   }
-    // })
-    // }
-    // })
   };
-  // handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   form.validateFields((err, values) => {
-  //     if (!err) {
-  //       console.log('Received values of form: ', values)
-  //       // return
-  //       const {user_id, password, remember} = values
-  //       setItem('remember', remember)
-  //       login({user_id, password}).then(res => {
-  //         console.log('login  res ：', res, this.props,    )
-  //         const {code, mes, content, success, } = res
-  //         console.log(' success ： ', success   )//
-  //         if (success) {
-  //           // const {company_id} = data
-  //           // const datas = {
-  //           //   ...data[0]
-  //           // }
-  //           // setItems("company_id", company_id)
-  //           setItems("userInfo", content)
-  //           if (remember) {
-  //             setItem('user_id', content.user_id)
-  //           }
-  //           console.log(' 跳转  ： ',  )//
-  //           history.push('calcYarn')
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
 
   // logins = () => {
   //   console.log('loginss ：', )

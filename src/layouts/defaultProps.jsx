@@ -13,6 +13,19 @@ export default {
       //   component: '../DashBoard',
       // },
       {
+        path: '/cs/visitManage',
+        name: '回访管理',
+        icon: <Icon icon={'csOrganize'} />,
+        component: '../pages/cs/visitManage',
+      },
+      {
+        path: '/login',
+        name: '登录页',
+        icon: <ScheduleFilled />,
+        icon: <Icon icon={'home'} />,
+        component: '../Home',
+      },
+      {
         path: '/om/home',
         name: '首页',
         icon: <ScheduleFilled />,
@@ -40,25 +53,46 @@ export default {
         component: '../pages/cs/CsClientReport',
       },
       {
+        path: '/cs/msgList',
+        name: '消息列表',
+        icon: <ScheduleFilled />,
+        icon: <Icon icon={'powerStation'} />,
+        component: '../pages/cs/PowerStation',
+        routes: [
+          {
+            path: '/cs/alarmNotify',
+            name: '告警通知',
+            icon: <Icon icon={''} className={'subIcon'} />,
+            component: '../pages/cs/PowerStation',
+          },
+          {
+            path: '/cs/systemNotify',
+            name: '系统通知',
+            icon: <Icon icon={''} className={'subIcon'} />,
+            component: '../pages/cs/ClientReport',
+          },
+        ],
+      },
+      {
         path: '/cs/csOrganize',
         name: '组织管理',
         icon: <ScheduleFilled />,
         icon: <Icon icon={'csOrganize'} />,
         component: '../pages/cs/csOrganize',
       },
+      // {
+      //   path: '/userCenter',
+      //   name: '个人中心',
+      //   icon: <ScheduleFilled />,
+      //   icon: <Icon icon={'csUserCenter'} />,
+      //   component: '../pages/csUserCenter',
+      // },
       {
-        path: '/cs/csUserCenter',
+        path: '/om/userCenter',
         name: '个人中心',
         icon: <ScheduleFilled />,
-        icon: <Icon icon={'csUserCenter'} />,
-        component: '../pages/csUserCenter',
-      },
-      {
-        path: '/cs/userCenter',
-        name: '个人中心',
-        icon: <ScheduleFilled />,
-        icon: <Icon icon={'csUserCenter'} />,
-        component: '../pages/csUserCenter',
+        icon: <Icon icon={'userCenter'} />,
+        component: '../pages/userCenter',
       },
       {
         path: '/om/shifts',
@@ -231,7 +265,7 @@ export default {
         routes: [
           {
             path: '/om/alarmTemplate',
-            name: '告警模板',
+            name: '告警策略模板',
             // icon: <ScheduleFilled />,
             icon: <Icon icon={''} className={'subIcon'} />,
             component: '../pages/om/AlarmTemplate',
@@ -253,13 +287,6 @@ export default {
         component: '../pages/sm/UserManage',
       },
       {
-        path: '/sm/role',
-        name: '角色管理',
-        icon: <ScheduleFilled />,
-        icon: <Icon icon={'role'} />,
-        component: '../pages/sm/Role',
-      },
-      {
         path: '/sm/organize',
         name: '组织管理',
         icon: <ScheduleFilled />,
@@ -267,11 +294,11 @@ export default {
         component: '../pages/sm/Organize',
       },
       {
-        path: '/sm/msg',
-        name: '消息管理',
+        path: '/sm/role',
+        name: '角色管理',
         icon: <ScheduleFilled />,
-        icon: <Icon icon={'msg'} />,
-        component: '../pages/sm/Msg',
+        icon: <Icon icon={'role'} />,
+        component: '../pages/sm/Role',
       },
       {
         path: '/sm/dict',
@@ -279,6 +306,13 @@ export default {
         icon: <ScheduleFilled />,
         icon: <Icon icon={'dict'} />,
         component: '../pages/sm/Dict',
+      },
+      {
+        path: '/sm/msg',
+        name: '消息管理',
+        icon: <ScheduleFilled />,
+        icon: <Icon icon={'msg'} />,
+        component: '../pages/sm/Msg',
       },
       {
         path: '/sm/csMonitor',

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef, } from 'react';
+import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import { Draggable } from '@fullcalendar/interaction';
@@ -13,10 +13,18 @@ const CalendarDraggable = props => {
       itemSelector: props.itemSelector,
       eventData(eventEl) {
         let title = eventEl.getAttribute('title');
-        let id = eventEl.getAttribute('data');
+        let id = eventEl.getAttribute('id');
         let color = eventEl.getAttribute('color');
         let display = eventEl.getAttribute('display');
-        console.log(' eventEleventEl  ： ', eventEl, title, id, color, display); //
+        console.log(
+          ' eventEleventEl  ： ',
+          eventEl,
+          title,
+          id,
+          color,
+          display,
+          eventEl.getAttribute,
+        ); //
         return {
           title: eventEl.innerText,
           id: id,

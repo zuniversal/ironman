@@ -50,7 +50,7 @@ const HouseNoTable = props => {
       dataIndex: 'customer_representative',
     },
     {
-      title: '电站数',
+      title: '托管电站数',
       dataIndex: 'electricityuser_num',
       detailFn: (text, record, index) => showDetail(record.id),
     },

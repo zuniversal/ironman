@@ -741,5 +741,5 @@ export default SmartForm;
 // })
 export const SearchForm = props => {
   console.log(' SearchFormSearchForm ：', props); //
-  return <SmartForm {...props} noRule isSearchForm></SmartForm>;
+  return <SmartForm noRule isSearchForm {...props}></SmartForm>;
 };

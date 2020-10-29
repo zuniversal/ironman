@@ -153,6 +153,7 @@ class ShiftsManage extends PureComponent {
       // remove: this.props.onRemove,
       remove: this.onRemove,
       goPage: this.goPage,
+      showFormModal: this.props.showFormModal,
     };
 
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
@@ -216,7 +217,7 @@ class ShiftsManage extends PureComponent {
       this.props,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    // this.props.getUserAsync();
+    this.props.getUserAsync(); //
   }
 
   render() {

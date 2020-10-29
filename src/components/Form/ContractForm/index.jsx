@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,18 +16,13 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp, mockFormData,    } from '@/utils'//
-import UploadCom from '@/components/Widgets/UploadCom'; 
+import SmartForm from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp, mockFormData } from '@/utils'; //
+import UploadCom from '@/components/Widgets/UploadCom';
 
 const normFile = e => {
   console.log('Upload event:', e);
@@ -39,13 +34,10 @@ const normFile = e => {
   return e && e.fileList;
 };
 
-
 const choiceRadios = [
-  { label: '是', value: 'yes', key: 'yes',  },
-  { label: '否', value: 'no', key: 'no',  },
-]
-
-
+  { label: '是', value: 'yes', key: 'yes' },
+  { label: '否', value: 'no', key: 'no' },
+];
 
 export const config = [
   {
@@ -130,12 +122,12 @@ export const config = [
   // // 如果没有给 Form.Item 组件指定 key  会导致报错
   // // Warning: Each child in a list should have a unique "key" prop.
   <Form.Item
-    key={'attach'} 
+    key={'attach'}
     name="upload"
     label="合同附件"
     valuePropName="fileList"
     getValueFromEvent={normFile}
-    extra="支持扩展名：.pdf"
+    extra="支持上传.DWG文件"
   >
     <Upload name="logo" action="/upload.do" listType="picture">
       <Button icon={<UploadOutlined />}>上传文件</Button>
@@ -160,13 +152,7 @@ export const config = [
     radioData: choiceRadios,
     opType: 'group',
   },
-  
-  
-  
-  
 ];
-
-
 
 const init = {
   name: 'zyb',
@@ -180,9 +166,9 @@ const init = {
 };
 
 const ContractForm = props => {
-  console.log(' ContractForm ： ', props,  )//
+  console.log(' ContractForm ： ', props); //
 
-  const {index,  } = props// 
+  const { index } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -190,7 +176,6 @@ const ContractForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-  
 
   return (
     <div className={''}>
@@ -201,16 +186,13 @@ const ContractForm = props => {
         formProps={formProps}
         // init={mockFormData(formatConfig(config), )}
         // init={{}}
-      
+
         {...props}
       ></SmartForm>
-
-
-
     </div>
-  )
-}
+  );
+};
 
-ContractForm.defaultProps = {}
+ContractForm.defaultProps = {};
 
-export default ContractForm
+export default ContractForm;

@@ -73,7 +73,19 @@ class Contract extends PureComponent {
       titleMap,
     };
   }
-
+  addUserAsync = async props => {
+    console.log(' addUserAsync,  , ： ', props);
+    const { propsForm, init } = props; //
+    try {
+      const res = await propsForm.validateFields();
+      console.log('  res await 结果  ：', res); //
+      // this.props.addUserAsync({
+      //   ...res,
+      // });
+    } catch (error) {
+      console.log(' error ： ', error); //
+    }
+  };
   showResultModal = e => {
     console.log('    showResultModal ： ', e);
     this.setState({
@@ -120,7 +132,7 @@ class Contract extends PureComponent {
     return (
       <div className={'fsb '}>
         <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
+        {/* <div className={'btnWrapper'}>
           <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
             Excel导入
           </DropDownBtn>
@@ -143,7 +155,7 @@ class Contract extends PureComponent {
           <Button type="primary" onClick={() => this.props.onBatchRemove()}>
             删除
           </Button>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -198,6 +210,7 @@ class Contract extends PureComponent {
       modalAction,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
+      addUserAsync: this.addUserAsync,
     };
     if (modalAction !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -296,12 +309,12 @@ class Contract extends PureComponent {
     return (
       <>
         <div className={'fje'}>
-          <Button
+          {/* <Button
             type="primary "
             onClick={() => this.props.showModal({ action: 'newRelated' })}
           >
             关联新增
-          </Button>
+          </Button> */}
         </div>
         <ContractForm {...formComProps}></ContractForm>
       </>

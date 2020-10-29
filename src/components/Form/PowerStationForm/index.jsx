@@ -128,20 +128,20 @@ const PowerStationForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getXXXX,
-      selectData: props.XXXXList,
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
         label: '所属客户',
-        // name: '',
+        name: '',
       },
     },
     {
       formType: 'Search',
-      selectSearch: props.getXXXX,
-      selectData: props.XXXXList,
+      selectSearch: props.getHouseNo,
+      selectData: props.houseNoList,
       itemProps: {
         label: '户号',
-        // name: 'electricity_user',
+        name: 'electricity_user',
       },
     },
 
@@ -235,7 +235,13 @@ const PowerStationForm = props => {
       },
     },
 
-    <UploadCom label={'上传铭牌'} key={'file'}></UploadCom>,
+    <UploadCom
+      label={'上传一次电气图'}
+      text={'上传文件'}
+      text={'上传文件'}
+      extra={'支持上传.DWG文件'}
+      key={'file'}
+    ></UploadCom>,
     // <Form.Item
     //   key={'attach'}
     //   name="upload"

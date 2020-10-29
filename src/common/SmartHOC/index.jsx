@@ -342,14 +342,14 @@ export default ({
         this.props,
       );
       const { dispatch } = this.props; //
-      dispatch(actions.exportDataAsync({}));
+      // dispatch(actions.exportDataAsync({}));
       tips('模拟导出成功！');
     };
     syncOAAsync = params => {
       console.log(' syncOAAsync,  , ： ', params);
       const { dispatch } = this.props; //
       tips('正在同步OA！');
-      dispatch(actions.syncOAAsync({}));
+      // dispatch(actions.syncOAAsync({}));
     };
     search = async params => {
       console.log('    search ： ', params);

@@ -79,7 +79,7 @@ export default {
         itemDetail: {
           ...payload.bean,
           d_id: payload.payload.d_id,
-          service_staff: 'zybxxx',
+          // service_staff: 'zybxxx',
         },
         adminList: [payload.bean.customer_admin],
       };

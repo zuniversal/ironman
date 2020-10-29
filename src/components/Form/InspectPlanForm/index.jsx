@@ -18,18 +18,12 @@ import {
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
-
-
-
-
+import { formatConfig } from '@/utils'; //
 
 const InspectPlanForm = props => {
   console.log(' InspectPlanForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
 
-    
   const config = [
     {
       formType: 'rowText',
@@ -39,6 +33,8 @@ const InspectPlanForm = props => {
       },
     },
     {
+      // formType: 'Search',
+      // selectData: props.userList,
       itemProps: {
         label: '设备状态',
         key: '',
@@ -175,11 +171,7 @@ const InspectPlanForm = props => {
         key: '',
       },
     },
-
-    
   ];
-
-
 
   const formProps = {
     // layout: 'vertical',

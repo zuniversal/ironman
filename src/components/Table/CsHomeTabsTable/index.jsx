@@ -12,8 +12,8 @@ import { Tabs } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 
-const CsHomeStationInfoTable = props => {
-  console.log(' CsHomeStationInfoTable  ：', props); //
+const CsHomeTabsTable = props => {
+  console.log(' CsHomeTabsTable  ：', props); //
   const { showModal, edit, remove, tdClick, complete } = props; //
 
   const columns = [
@@ -81,8 +81,8 @@ const CsHomeStationInfoTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => complete({ action: 'complete' })}>完成</a>
-      <a onClick={() => remove({ action: 'remove' })}>删除</a>
+      <a onClick={() => props.showFormModal({ action: 'complete' })}>完成</a>
+      <a onClick={() => props.showFormModal({ action: 'remove' })}>删除</a>
     </>
   );
 
@@ -138,8 +138,8 @@ const CsHomeAssetsTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => complete({ action: 'complete' })}>完成</a>
-      <a onClick={() => remove({ action: 'remove' })}>删除</a>
+      <a onClick={() => props.showFormModal({ action: 'complete' })}>完成</a>
+      <a onClick={() => props.showFormModal({ action: 'remove' })}>删除</a>
     </>
   );
 
@@ -161,7 +161,7 @@ const CsHomeAssetsTable = props => {
 const tableConfig = [
   {
     tab: '电站传感信息',
-    Table: CsHomeStationInfoTable,
+    Table: CsHomeTabsTable,
   },
   {
     tab: '电站资产',

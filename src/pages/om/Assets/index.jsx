@@ -130,20 +130,21 @@ class Assets extends PureComponent {
       <div className={'btnWrapper'}>
         <Button
           type="primary"
-          onClick={() => this.props.search({ keyword: params })}
+          // onClick={() => this.props.search({ keyword: params })}
+          onClick={() => this.props.search(params)}
         >
           搜索
         </Button>
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn>
-        <Button
+        {/* <Button
           type="primary"
           htmlType="submit"
           onClick={this.props.syncOAAsync}
         >
           同步OA
-        </Button>
+        </Button> */}
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -176,7 +177,10 @@ class Assets extends PureComponent {
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemAsync({ id: `${params.record.id}` });
+    this.props.removeItemAsync({
+      id: `${params.record.id}`,
+      d_id: `${params.record.id}`,
+    });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
@@ -226,7 +230,7 @@ class Assets extends PureComponent {
   };
   renderModalContent = e => {
     console.log('    renderModalContent ： ', e, this.state, this.props);
-    const { action } = this.props; //
+    const { action, itemDetail } = this.props; //
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -240,7 +244,7 @@ class Assets extends PureComponent {
       houseNoList: this.props.houseNoList,
     };
     if (action === 'detail') {
-      return <AssetsDetailTable></AssetsDetailTable>;
+      return <AssetsDetailTable data={itemDetail}></AssetsDetailTable>;
     }
     if (action === 'uploadFile') {
       return (

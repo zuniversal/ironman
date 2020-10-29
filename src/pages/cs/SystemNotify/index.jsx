@@ -16,18 +16,19 @@ import {
 import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import MsgForm from '@/components/Form/MsgForm'; //
-import MsgTable from '@/components/Table/MsgTable'; //
+import SystemNotifyForm from '@/components/Form/SystemNotifyForm'; //
+import SystemNotifySearchForm from '@/components/Form/SystemNotifySearchForm'; //
+import SystemNotifyTable from '@/components/Table/SystemNotifyTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
-import { actions, mapStateToProps } from '@/models/msg'; //
+import { actions, mapStateToProps } from '@/models/systemNotify'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '消息';
+const TITLE = '字典';
 
 const titleMap = {
-  add: `新建${TITLE}`,
+  add: `${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,
@@ -41,29 +42,30 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: MsgForm,
 })
-class Msg extends PureComponent {
+class SystemNotify extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       titleMap,
     };
   }
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          查询
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fje '}>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-        </div>
-      </div>
+      <SystemNotifySearchForm
+        formBtn={this.renderFormBtn}
+      ></SystemNotifySearchForm>
     );
   };
 
@@ -80,7 +82,7 @@ class Msg extends PureComponent {
       showFormModal: this.props.showFormModal,
     };
 
-    return <MsgTable {...tableProps}></MsgTable>;
+    return <SystemNotifyTable {...tableProps}></SystemNotifyTable>;
   };
 
   onOk = async props => {
@@ -114,7 +116,7 @@ class Msg extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
-    return <MsgForm {...formComProps}></MsgForm>;
+    return <SystemNotifyForm {...formComProps}></SystemNotifyForm>;
   };
   renderSmartFormModal = params => {
     console.log(' renderSmartFormModal ： ', params, this.state, this.props);
@@ -144,4 +146,4 @@ class Msg extends PureComponent {
   }
 }
 
-export default Msg;
+export default SystemNotify;

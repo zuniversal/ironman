@@ -79,7 +79,7 @@ const InspectMissionDetailForm = props => {
     {
       itemProps: {
         label: '开始时间',
-        name: 'work_date',
+        // name: '',
       },
     },
     {

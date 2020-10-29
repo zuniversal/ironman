@@ -53,13 +53,13 @@ class PowerStation extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           htmlType="submit"
           onClick={this.props.syncOAAsync}
         >
           同步OA
-        </Button>
+        </Button> */}
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
@@ -74,6 +74,14 @@ class PowerStation extends PureComponent {
     return (
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
+        getClientAsync={params =>
+          this.props.getClientAsync({ keyword: params })
+        }
+        clientList={this.props.clientList}
+        getHouseNoAsync={params =>
+          this.props.getHouseNoAsync({ keyword: params })
+        }
+        houseNoList={this.props.houseNoList}
       ></PowerStationSearchForm>
     );
   };

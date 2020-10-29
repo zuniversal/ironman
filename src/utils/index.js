@@ -365,6 +365,7 @@ export const getLengthLimit = text => {
 
 // 得到最终的格式化后的文本
 export const foramtText = text => {
+  // if (text == undefined) {
   if (!text) {
     return text;
   }

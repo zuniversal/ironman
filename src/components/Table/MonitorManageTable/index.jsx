@@ -60,26 +60,12 @@ const MonitorManageTable = props => {
     },
   ];
 
-  const extra = (text, record, index, props) => (
-    <>
-      <a onClick={() => props.showFormModal({ action: 'showList' })}>
-        发起工单
-      </a>
-      <a onClick={() => props.showFormModal({ action: 'showList' })}>
-        完成任务
-      </a>
-      <a onClick={() => props.showFormModal({ action: 'showList' })}>
-        关联合同
-      </a>
-    </>
-  );
-
   return (
     <SmartTable
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      extra={extra}
+
       isQRCode
       {...props}
     ></SmartTable>

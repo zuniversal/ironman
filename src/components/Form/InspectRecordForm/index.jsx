@@ -72,6 +72,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '户名',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -81,6 +82,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '户号',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -90,6 +92,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '客户名称',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -99,6 +102,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '电压等级',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -108,6 +112,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '总存量',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -117,6 +122,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '电源编号',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -126,6 +132,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '巡检人员',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -135,6 +142,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '巡检时间',
+        name: '',
       },
       comProps: {
         disabled: true,
@@ -143,16 +151,19 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '温度',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '湿度',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '天气',
+        name: '',
       },
     },
 
@@ -160,37 +171,44 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '房屋土建1',
+        name: '',
         className: 'w100',
       },
     },
     {
       itemProps: {
         label: '电缆沟及盖板',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '护网',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '地面裂縫',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '门窗',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '房屋渗水',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '电缆夹屋孔洞',
+        name: '',
       },
     },
 
@@ -198,37 +216,44 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '安全工器具状况/上次试验日期',
+        name: '',
         className: 'w100',
       },
     },
     {
       itemProps: {
         label: '高压试电笔(1年)',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '接地线(4年)',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '绝缘毯(4年)',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '绝缘手套(半年)',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '绝縐鞋(半年)',
+        name: '',
       },
     },
     {
       itemProps: {
         label: '灭火器压力(半年)',
+        name: '',
       },
     },
 
@@ -237,6 +262,7 @@ const InspectRecordForm = props => {
       CustomCom: <TabPanes></TabPanes>,
       itemProps: {
         label: '',
+        name: '',
         className: 'w100',
       },
     },
@@ -245,18 +271,21 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '电压等级',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '总容量',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '实际总容量',
+        name: '',
       },
     },
 
@@ -265,6 +294,7 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '电表读数',
+        name: '',
         className: 'w100',
       },
     },
@@ -272,102 +302,119 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '表号',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '倍事',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '考核功率因数',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '总有功(02)',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '峰(03)',
+        name: 'peak',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '平1 (41)',
+        name: 'flat_1',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '平2 (42)',
+        name: 'flat_2',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '谷(05)',
+        name: 'valley',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '峰MD1(61)',
+        name: 'peak_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '平1MD(62)',
+        name: 'flat_1_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '平2MD(63)',
+        name: 'flat_2_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '谷MD(64)',
+        name: 'valley_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '最大MD ',
+        name: 'valley_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '本月申报MD',
+        name: 'declare_md',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '无功1 (07)',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '无功2 (08)',
+        name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '实际功率因数',
+        name: '',
       },
     },
 
@@ -376,6 +423,7 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '高压进制线',
+        name: '',
         className: 'w100',
       },
     },
@@ -386,6 +434,7 @@ const InspectRecordForm = props => {
       formType: 'Label',
       itemProps: {
         label: ' ',
+        name: '',
       },
       LabelCom: '电压表',
     },
@@ -394,6 +443,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'AB',
+        name: '',
       },
       comProps: {
         className: 'w-78',
@@ -404,6 +454,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'BC',
+        name: '',
       },
       comProps: {
         className: 'w-78',
@@ -414,6 +465,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'CA',
+        name: '',
       },
       comProps: {
         className: 'w-78',
@@ -425,6 +477,7 @@ const InspectRecordForm = props => {
       formType: 'Label',
       itemProps: {
         label: ' ',
+        name: '',
       },
       LabelCom: '显示器',
     },
@@ -433,6 +486,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'A',
+        name: '',
       },
       comProps: {
         className: 'w-78',
@@ -443,6 +497,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'B',
+        name: '',
       },
       comProps: {
         className: 'w-78',
@@ -453,6 +508,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'C',
+        name: '',
       },
       comProps: {
         className: 'w-78',

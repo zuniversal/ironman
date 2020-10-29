@@ -100,6 +100,7 @@ class ShiftsTransfer extends PureComponent {
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
       remove: this.onRemove,
+      showFormModal: this.props.showFormModal,
 
       // showTransferDetail: this.showTransferDetail,
     };

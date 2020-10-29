@@ -112,10 +112,10 @@ class InspectRecord extends PureComponent {
         });
       }
       if (action === 'inspectReport') {
-        this.props.inspectReportAsync({
-          ...itemDetail,
-          ...res,
-        });
+        // this.props.inspectReportAsync({
+        //   ...itemDetail,
+        //   ...res,
+        // });
       }
     } catch (error) {
       console.log(' error ： ', error); //
@@ -136,12 +136,12 @@ class InspectRecord extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     if (action === 'inspectReport') {
-      return (
-        <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
-      );
+      return <InspectRecordForm {...formComProps}></InspectRecordForm>;
     }
     console.log(' formComProps ： ', formComProps); //
-    return <InspectRecordForm {...formComProps}></InspectRecordForm>;
+    return (
+      <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
+    );
   };
   renderSmartFormModal = params => {
     console.log(' renderSmartFormModal ： ', params, this.state, this.props);
