@@ -9,7 +9,7 @@ const FormItem = Form.Item;
 
 export const isDev = process.env.NODE_ENV === 'development';
 
-export const TEST_URL = `http://188.131.235.243:31002/api/v1/`;
+export const TEST_URL = `http://188.131.235.243:31005/api/v1/`;
 export const PROXY_URL = `/api/v1/`;
 export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 const Login = () => {

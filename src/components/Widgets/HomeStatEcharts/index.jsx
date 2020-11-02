@@ -20,6 +20,7 @@ import HomeGroupRank from '@/components/Widgets/HomeGroupRank';
 import one from '@/static/assets/one.png'; //
 import two from '@/static/assets/two.png'; //
 import three from '@/static/assets/three.png'; //
+import { ANIMATE } from '@/constants'; //
 
 const statConfig = [
   {
@@ -66,7 +67,7 @@ const StatTabPanes = props => {
         {statConfig.map((v, i) => (
           <TabPane tab={v.tab} key={i}>
             <Row gutter={24}>
-              <Col span={16}>
+              <Col span={16} className={`${ANIMATE.slideInLeft} `}>
                 <div className="homeTitle">趋势</div>
                 <SmartEcharts
                   data={[]}
@@ -77,7 +78,10 @@ const StatTabPanes = props => {
                   {...props}
                 ></SmartEcharts>
               </Col>
-              <Col span={8} className={`rankWrapper df `}>
+              <Col
+                span={8}
+                className={`rankWrapper df ${ANIMATE.slideInRight} `}
+              >
                 <div className="homeGroupRankWrapper">
                   <div className="homeTitle">小组排名</div>
                   <HomeGroupRank></HomeGroupRank>

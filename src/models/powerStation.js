@@ -75,10 +75,11 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
+      console.log(' editItem ： ', state, payload); //
       return {
         ...state,
         dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
+          ...(v.id == payload.payload.d_id ? payload.bean : v),
         })),
         isShowModal: false,
       };
@@ -89,6 +90,17 @@ export default {
         ...state,
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
+        ),
+      };
+    },
+    removeItems(state, { payload, type }) {
+      console.log(' removeItems 修改  ： ', state, payload, type); //
+      const removeList = payload.payload.id.split(',');
+      console.log(' removeList ： ', removeList); //
+      return {
+        ...state,
+        dataList: state.dataList.filter(v =>
+          removeList.every(item => v.id != item),
         ),
       };
     },
@@ -129,6 +141,11 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *removeItemsAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemsAsync ： ', payload, type); //
+      const res = yield call(services.removeItems, payload);
       yield put(action({ ...res, payload }));
     },
 

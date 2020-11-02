@@ -48,7 +48,7 @@ const PowerStationTable = props => {
     },
     {
       title: '设备数',
-      // dataIndex: '',
+      dataIndex: 'equipment_num',
       d_item: 'id',
     },
     {
@@ -58,7 +58,7 @@ const PowerStationTable = props => {
     },
     {
       title: '一次电气图',
-      // dataIndex: '',
+      dataIndex: 'file',
       d_item: 'id',
     },
   ];

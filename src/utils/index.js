@@ -292,19 +292,22 @@ export const createObj = (length = 6) => {
   return res;
 };
 
-export const mockTbData = children => {
-  // https://segmentfault.com/a/1190000020221170
+export const mockTbData = (params = {}) => {
+  console.log(' paramsparams ： ', params); //
+  const mockDataSource = new Array(20).fill(0);
+  const { columns = mockDataSource } = params;
   // Array.from({ length: end }, (_, index) => index); // undefined 0
   // Array(length).map(() => init); Array.from({ length: 8 }, () => ({}));
   // Array.from({ length }, () => ({}));
   // Array(length).fill({}); Array(8).fill(0)
-  return new Array(20).fill(0).map((v, i) => {
+  return mockDataSource.map((v, i) => {
     const start = 10;
     const childrenObj = {};
     const obj = {};
-    new Array(20).fill(0).forEach((v, index) => {
+    columns.forEach((v, index) => {
       // console.log(' vsssss ： ', v, i, index, )//
       // obj[`field${index}`] = `FieldFieldFieldFieldFieldField`;
+      obj[v.dataIndex] = `${v.dataIndex}-${i}`;
       obj[`field${index}`] = `Field${i}`;
       childrenObj[`field${start * index}`] = `Field_${i}`;
     });
@@ -323,7 +326,7 @@ export const mockTbData = children => {
       key: i,
       // [`field${i}`]: `Field${i}`,
     };
-    if (children) {
+    if (params && params.haveChildren) {
       item.children = [childrenItem];
     }
 

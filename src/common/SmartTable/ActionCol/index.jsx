@@ -42,7 +42,10 @@ const ActionCol = props => {
           </a>
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
           <a
-            onClick={() => remove({ record: formatData(record, props.rowKey) })}
+            onClick={() => {
+              console.log(' removeremove ： ', props); //
+              remove({ record: formatData(record, props.rowKey) });
+            }}
           >
             删除
           </a>

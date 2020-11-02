@@ -142,6 +142,12 @@ export default {
         dataList: initList,
       };
     },
+
+    changePlan(state, { payload, type }) {
+      return {
+        ...state,
+      };
+    },
   },
 
   effects: {

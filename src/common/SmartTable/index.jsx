@@ -21,6 +21,8 @@ import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
 import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi'; //
 
+const { slideInUp } = ANIMATE;
+
 /* 
   封装的通用 表格组件 封装带有相关通用操作 
 
@@ -36,7 +38,7 @@ const mapStateToProps = ({ loading }) => ({ loadingData: loading });
 class SmartTable extends PureComponent {
   constructor(props) {
     super(props);
-    const { total, size = SIZE } = this.props;
+    const { columns, total, size = SIZE } = this.props;
     const pagination = {
       // current: 10,
       // pageSize: 6,
@@ -49,6 +51,7 @@ class SmartTable extends PureComponent {
       size: 'default',
       onChange: this.onPageChange,
     };
+    console.log(' SmartTableSmartTable ： ', this.state, this.props); //
     this.state = {
       pagination,
 
@@ -60,7 +63,10 @@ class SmartTable extends PureComponent {
       removeParams: {},
       isShowResultModal: false,
 
-      mockTbData: mockTbData(props.haveChildren),
+      mockTbData: mockTbData({
+        columns,
+        haveChildren: props.haveChildren,
+      }),
       // mockTbData: [],
 
       selectionType: 'checkbox',
@@ -294,9 +300,15 @@ class SmartTable extends PureComponent {
     } else {
       content = <span className={``}>{txt}</span>;
     }
-    // console.log(' texttext ： ', text, content )//
+    // console.log(' texttext ： ', text, record, index, config, content )//
     // return typeof text !== 'object' && text
-    return text && <Tooltip title={text}>{content}</Tooltip>;
+    return text != undefined ? (
+      <Tooltip title={typeof text !== 'object' ? text : `${text}`}>
+        {content}
+      </Tooltip>
+    ) : (
+      text
+    );
     // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
     // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>
   };
@@ -545,7 +557,7 @@ class SmartTable extends PureComponent {
             ...rowSelection,
           }}
           pagination={{ ...pagination, total: count }}
-          rowClassName={(record, i) => ANIMATE.bounceIn}
+          rowClassName={(record, i) => ANIMATE.bounceInRight}
           // rowClassName={(record, i) => ANIMATE.slideInRight}
 
           {...this.props}
@@ -557,7 +569,7 @@ class SmartTable extends PureComponent {
           // dataSource={() => filters(dataSource, searchText, searchKey, )()}
           // dataSource={this.filters(dataSource, searchText, searchKey, )}
           columns={cols}
-          className={`smartTable ${className} `}
+          className={`smartTable ${className} ${slideInUp} `}
         />
 
         {this.renderRemoveModal()}

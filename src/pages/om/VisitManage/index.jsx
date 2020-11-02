@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from 'react';
 import './style.less';
 
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
+import { Form, Input, Button, Checkbox, Menu, Upload, Radio } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm'; //
 import VisitManageWaitTable from '@/components/Table/VisitManageWaitTable'; //
@@ -17,15 +17,18 @@ import { actions, mapStateToProps } from '@/models/visitManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '物料';
+const visitManageOptions = [
+  { label: '待回访', value: 'waitVisible' },
+  { label: '回访记录', value: 'visitRecord' },
+];
+
+const TITLE = '回访';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  newRelated: `关联新增`,
-  upload: `文件上传`,
-  down: `文件下载`,
+  complete: `文件下载`,
 };
 
 // const mapStateToProps = ({ VisitManage, }) => VisitManage;
@@ -43,16 +46,31 @@ class VisitManage extends PureComponent {
       titleMap,
     };
   }
+  renderFormBtn = params => {
+    console.log(' renderFormBtn ： ', params); //
+    return (
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
+      </div>
+    );
+  };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div>
+      <div>
+        <Radio.Group
+          options={visitManageOptions}
+          onChange={this.props.onRadioChange}
+          value={this.props.chenckItem}
+          optionType="button"
+        />
+        {/* <ShiftsManageSearchForm
+          formBtn={this.renderFormBtn}
+          // onSubmit={this.onSubmit}
+          // onFail={this.onFail}
+        ></ShiftsManageSearchForm> */}
       </div>
     );
   };
@@ -107,6 +125,12 @@ class VisitManage extends PureComponent {
     console.log(' formComProps ： ', formComProps); //
     return <VisitManageForm {...formComProps}></VisitManageForm>;
   };
+  get size() {
+    console.log(' get 取属 size ： ', this.state, this.props);
+    return ['complete'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   renderSmartFormModal = params => {
     console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
@@ -116,6 +140,7 @@ class VisitManage extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

@@ -5,7 +5,7 @@ import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import * as assetsServices from '@/services/assets';
 import * as clientServices from '@/services/client';
-import * as contractServices from '@/services/contract';
+import * as commonServices from '@/services/common';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'missionsManage';
@@ -23,6 +23,7 @@ const otherActions = [
   'linkContractAsync',
   'scheduleAsync',
   'confirmScheduleAsync',
+  'getEnumListAsync',
 ];
 
 export const actions = {
@@ -47,9 +48,17 @@ export default {
     clientList: [],
     contractList: [],
     clientData: [],
+    enumList: [],
   },
 
   reducers: {
+    getEnumList(state, { payload, type }) {
+      console.log(' getEnumList ： ', payload); //
+      return {
+        ...state,
+        enumList: payload.list,
+      };
+    },
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type); //
       return {
@@ -175,9 +184,9 @@ export default {
       console.log(' startWorkOrderstartWorkOrder ： '); //
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
+        // dataList: state.dataList.map(v => ({
+        //   ...(v.id != payload.payload.d_id ? payload : v),
+        // })),
         isShowModal: false,
       };
     },
@@ -293,8 +302,6 @@ export default {
       const params = {
         ...payload,
       };
-      return;
-      return;
       const res = yield call(services.schedule, params);
       yield put(action({ ...res, payload }));
     },
@@ -302,6 +309,11 @@ export default {
       console.log(' confirmScheduleAsync ： ', payload, type); //
       return;
       const res = yield call(services.confirmSchedule, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getEnumListAsync({ payload, action, type }, { call, put }) {
+      console.log(' getEnumListAsync ： ', payload, type); //
+      const res = yield call(commonServices.getEnumList, payload);
       yield put(action({ ...res, payload }));
     },
   },

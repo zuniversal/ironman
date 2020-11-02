@@ -16,6 +16,7 @@ const otherActions = [
   'getPortraitAsync',
   'getUserAsync',
   'addUserAsync',
+  'exportDataAsync',
 ];
 
 export const actions = {
@@ -254,6 +255,10 @@ export default {
       const res = yield call(services.addAdmin, payload);
       console.log('  addUserAsync res ：', res); //
       yield put(action(res));
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
   },
 };

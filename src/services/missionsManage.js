@@ -19,6 +19,7 @@ export const removeItem = p => remove(`OMS/task/${p.d_id}`, p);
 export const closeMissions = p => patch(`OMS/task/${p.d_id}`, p);
 export const startWorkOrder = p => post(`OMS/task/order`, p);
 export const linkContract = p => patch(`OMS/task/${p.id}/contract`, p);
-export const schedule = p => patch(`OMS/task/${p.d_id}/schedule`, p);
-export const confirmSchedule = p =>
-  patch(`OMS/task/${p.d_id}/confirmSchedule`, p);
+export const schedule = p => patch(`OMS/task/${p.d_id}/plan_date`, p);
+export const confirmSchedule = p => patch(`OMS/task/${p.d_id}/check_plan`, p);
+// export const confirmSchedule = p =>
+//   patch(`OMS/task/${p.d_id}/confirmSchedule`, p);

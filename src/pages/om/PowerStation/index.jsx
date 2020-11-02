@@ -63,7 +63,8 @@ class PowerStation extends PureComponent {
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
+        <Button type="primary" onClick={() => this.onBatchRemove()}>
           删除
         </Button>
       </div>
@@ -86,6 +87,16 @@ class PowerStation extends PureComponent {
     );
   };
 
+  onRemove = paramssss => {
+    console.log(' onRemove    ： ', paramssss);
+    this.props.removeItemsAsync({ id: `${paramssss.record.id}` });
+  };
+  onBatchRemove = params => {
+    console.log(' onBatchRemove    ： ', params, this.state, this.props);
+    this.props.removeItemsAsync({
+      id: `${this.props.selectedRowKeys.join(',')}`,
+    });
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
@@ -104,7 +115,7 @@ class PowerStation extends PureComponent {
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
+    const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
     if (action === 'removeAsync') {
       this.props.removeAsync({});
@@ -122,6 +133,7 @@ class PowerStation extends PureComponent {
         this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          d_id,
         });
       }
     } catch (error) {

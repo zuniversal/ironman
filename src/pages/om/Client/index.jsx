@@ -313,7 +313,7 @@ class Client extends PureComponent {
       action,
       getCapture: this.showCapture,
       addUserAsync: this.addUserAsync,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
+      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
     };
     if (action !== 'add') {

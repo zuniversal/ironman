@@ -56,29 +56,35 @@ const PowerStationForm = props => {
     deciveRow,
     {
       noRule: true,
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '请筛选设备',
+        name: '',
       },
     },
     watchRow,
     {
       noRule: true,
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '请筛选监控点',
+        name: '',
       },
     },
   ];
 
   const editCol = [
-    deciveRow,
-    <DeviceInfoTable
-      key={'DeviceInfoTable'}
-      pagination={false}
-    ></DeviceInfoTable>,
-    watchRow,
-    <WatchInfoTable key={'WatchInfoTable'} pagination={false}></WatchInfoTable>,
+    // deciveRow,
+    // <DeviceInfoTable
+    //   key={'DeviceInfoTable'}
+    //   pagination={false}
+    //   dataSource={[props.init]}
+    // ></DeviceInfoTable>,
+    // watchRow,
+    // <WatchInfoTable key={'WatchInfoTable'} pagination={false}
+    // dataSource={[props.init]}
+    // ></WatchInfoTable>,
+
     {
       formType: 'rowText',
       itemProps: {
@@ -86,19 +92,23 @@ const PowerStationForm = props => {
       },
     },
 
+    // {
+    //   itemProps: {
+    //     label: '详细地址',
+    //   },
+    // },
     {
-      itemProps: {
-        label: '详细地址',
-      },
-    },
-    {
+      noRule: true,
       itemProps: {
         label: '经度',
+        name: 'longitude',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '纬度',
+        name: 'latitude',
       },
     },
   ];
@@ -127,18 +137,18 @@ const PowerStationForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getClientAsync,
-      selectData: props.clientList,
+      // formType: 'Search',
+      // selectSearch: props.getClientAsync,
+      // selectData: props.clientList,
       itemProps: {
         label: '所属客户',
-        name: '',
+        name: 'customer',
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getHouseNo,
-      selectData: props.houseNoList,
+      // formType: 'Search',
+      // selectSearch: props.getHouseNo,
+      // selectData: props.houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user',
@@ -154,77 +164,109 @@ const PowerStationForm = props => {
 
     {
       itemProps: {
-        label: '托管电站数',
-        name: '',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电气信息',
+        label: '详细用电地址',
+        name: 'addr',
       },
     },
 
     {
       itemProps: {
-        label: '电源编号',
-        name: 'power_number',
+        label: '手机',
+        name: 'phone',
+      },
+    },
+    {
+      itemProps: {
+        label: '运行等级',
+        name: 'operation_level',
+      },
+    },
+    {
+      itemProps: {
+        label: 'person',
+        name: 'person',
+      },
+    },
+    {
+      itemProps: {
+        label: '电气图',
+        name: 'file',
       },
     },
 
-    {
-      itemProps: {
-        label: '进线名称',
-        name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '托管电站数',
+    //     name: '',
+    //   },
+    // },
 
-    {
-      itemProps: {
-        label: '电压等级',
-        name: 'voltage_level',
-      },
-    },
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '电气信息',
+    //   },
+    // },
 
-    {
-      itemProps: {
-        label: '倍率',
-        name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '电源编号',
+    //     name: 'power_number',
+    //   },
+    // },
 
-    {
-      itemProps: {
-        label: '变压器容量',
-        name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '进线名称',
+    //     name: '',
+    //   },
+    // },
 
-    {
-      itemProps: {
-        label: '电表号',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '电价类型',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '电功率考核因数',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '计费方式',
-        name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '电压等级',
+    //     name: 'voltage_level',
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '倍率',
+    //     name: '',
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '变压器容量',
+    //     name: '',
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '电表号',
+    //     name: '',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '电价类型',
+    //     name: '',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '电功率考核因数',
+    //     name: '',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '计费方式',
+    //     name: '',
+    //   },
+    // },
 
     ...typeCols,
 
@@ -235,13 +277,14 @@ const PowerStationForm = props => {
       },
     },
 
-    <UploadCom
-      label={'上传一次电气图'}
-      text={'上传文件'}
-      text={'上传文件'}
-      extra={'支持上传.DWG文件'}
-      key={'file'}
-    ></UploadCom>,
+    // <UploadCom
+    //   label={'上传一次电气图'}
+    //   text={'上传文件'}
+    //   text={'上传文件'}
+    //   extra={'支持上传.DWG文件'}
+    //   key={'file'}
+    // ></UploadCom>,
+
     // <Form.Item
     //   key={'attach'}
     //   name="upload"

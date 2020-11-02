@@ -43,66 +43,87 @@ const HouseNoForm = props => {
       },
     },
     {
+      // formType: 'Search',
+      // selectSearch: props.getClientAsync,
+      // selectData: props.clientList,
       itemProps: {
         label: '客户',
         name: 'customer',
       },
     },
     {
+      // 户号名称
+      // formType: 'Search',
+      // selectSearch: props.getListAsync,
+      // selectData: props.dataList,
       itemProps: {
         label: '户号',
-        name: 'code',
+        name: 'number',
       },
     },
     {
       itemProps: {
-        label: '签约公司',
-        name: 'signing_company',
+        label: '户主',
+        name: 'householder',
       },
     },
+
+    // {
+    //   itemProps: {
+    //     label: '签约公司',
+    //     name: 'signing_company',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '客户代表',
+    //     name: 'customer_representative',
+    //   },
+    // },
     {
       itemProps: {
-        label: '客户代表',
-        name: 'customer_representative',
+        label: '手机',
+        name: 'phone',
       },
     },
+
     {
       formType: 'rowText',
       itemProps: {
         label: '位置信息',
       },
     },
-    {
-      formType: 'Cascader',
-      itemProps: {
-        label: '区域',
-        name: 'area_code',
-      },
-    },
+    // {
+    //   formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'area_code',
+    //   },
+    // },
     {
       itemProps: {
         label: '详细用电地址',
         name: 'addr',
       },
     },
-    {
-      itemProps: {
-        label: '邮编',
-        name: 'postcode',
-      },
-    },
-    {
-      itemProps: {
-        label: '经度',
-        name: 'longitude',
-      },
-    },
-    {
-      itemProps: {
-        label: '纬度',
-        name: 'latitude',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '邮编',
+    //     name: 'postcode',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '经度',
+    //     name: 'longitude',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '纬度',
+    //     name: 'latitude',
+    //   },
+    // },
     {
       formType: 'rowText',
       itemProps: {
@@ -112,18 +133,18 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '变压器容量',
-        // name: 'transformer_capacity',
+        name: 'transformer_capacity',
       },
     },
     {
       itemProps: {
         label: '实际容量',
-        name: 'transformer_capacity',
+        name: 'real_capacity',
       },
     },
 
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '电压等级',
         name: 'voltage_level',
@@ -131,7 +152,7 @@ const HouseNoForm = props => {
     },
 
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '电价类型',
         name: 'type',
@@ -141,7 +162,7 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '托管电站数',
-        name: 'station_num',
+        name: 'trusteeship_num',
       },
     },
   ];

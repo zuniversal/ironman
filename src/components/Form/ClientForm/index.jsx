@@ -231,11 +231,21 @@ const ClientForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getUser,
+      selectSearch: props.getUserAsync,
       selectData: props.userList,
       itemProps: {
         label: '客户代表',
         name: 'service_staff',
+      },
+      comProps: {},
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
+      itemProps: {
+        label: '客户代表2',
+        name: 'last_service_staff',
       },
       comProps: {},
     },

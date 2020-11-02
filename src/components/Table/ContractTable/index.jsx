@@ -33,46 +33,57 @@ const ContractTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'key',
+      dataIndex: ['customer', 'name'],
       d_item: 'id',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '合同编号',
-      dataIndex: 'field2',
+      dataIndex: 'code',
       d_item: 'id',
-      render: (text, record, index) => (
-        <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      ),
+      // render: (text, record, index) => (
+      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
+      // ),
     },
     {
       title: '业务主体',
-      dataIndex: 'field3',
+      dataIndex: ['business_entity', 'name'],
       d_item: 'id',
       link: true,
     },
     {
       title: '业务员',
-      dataIndex: 'field4',
+      dataIndex: ['salesman', 'nickname'],
     },
     {
       title: '合同类型',
-      dataIndex: 'field5',
+      dataIndex: 'type',
     },
+    {
+      title: '生效日期',
+      dataIndex: '录入日期',
+    },
+    {
+      title: '生效日期',
+      dataIndex: 'effective_date',
+    },
+
     {
       title: '失效日期',
-      dataIndex: 'field6',
+      dataIndex: 'end_date',
     },
-    {
-      title: '户号',
-      dataIndex: 'field7',
-    },
-    {
-      title: '电站数量',
-      dataIndex: 'field8',
-    },
+
+    // {
+    //   title: '户号',
+    //   dataIndex: 'customer_id',
+    // },
+    // {
+    //   title: '电站数量',
+    //   dataIndex: 'field8',
+    // },
+
     // {
     //   noFilter: true,
     //   title: '操作',

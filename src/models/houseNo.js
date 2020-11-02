@@ -7,7 +7,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'houseNo';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = ['getClientAsync'];
+const otherActions = ['getClientAsync', 'getHouseNoAsync'];
 
 const batchTurnActions = [];
 
@@ -53,7 +53,7 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: formatSelectList(payload.list, 'number'),
         count: payload.rest.count,
       };
     },
@@ -85,11 +85,20 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
+      console.log(' removeItem 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
+      };
+    },
+    removeItems(state, { payload, type }) {
+      console.log(' removeItems 修改  ： ', state, payload, type); //
+      const removeList = payload.payload.id.split(',');
+      console.log(' removeList ： ', removeList); //
       return {
         ...state,
         dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
+          removeList.every(item => v.id != item),
         ),
       };
     },
@@ -101,13 +110,13 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
-    getClient(state, { payload, type }) {
-      // console.log(' getClient 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        houseNoList: formatSelectList(payload.list, 'name'),
-      };
-    },
+    // getClient(state, { payload, type }) {
+    //   // console.log(' getClient 修改  ： ', state, payload, type,     )//
+    //   return {
+    //     ...state,
+    //     houseNoList: formatSelectList(payload.list, 'name'),
+    //   };
+    // },
   },
 
   effects: {
@@ -128,8 +137,17 @@ export default {
       const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },
+
     *removeItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemAsync ： ', payload, type); //
       const res = yield call(services.removeItem, payload);
+      // console.log('  removeItem res ：', res, {...res, payload,} )//
+      yield put(action({ ...res, payload }));
+    },
+    *removeItemsAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeItemAsync ： ', payload, type); //
+      const res = yield call(services.removeItems, payload);
+      // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
     },
 
@@ -137,9 +155,9 @@ export default {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
-    *getHouseNoAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(houseNoServices.getList, { keyword: payload });
-      yield put(action({ ...res, payload }));
-    },
+    // *getHouseNoAsync({ payload, action, type }, { call, put }) {
+    // const res = yield call(houseNoServices.getList, { keyword: payload });
+    //   yield put(action({ ...res, payload }));
+    // },
   },
 };

@@ -4,6 +4,7 @@ import './style.less';
 import { DatePicker } from 'antd';
 import SmartEcharts from '@/common/SmartEcharts'; //
 import TimeChoice from '@/components/Widgets/TimeChoice';
+import { ANIMATE } from '@/constants'; //
 
 const legend = ['趋势'];
 
@@ -133,8 +134,8 @@ const option = params => {
 
 const CsHomeStatEcharts = props => {
   return (
-    <div className="">
-      <div className="fsb csHomeStatEcharts">
+    <div className={`${ANIMATE.flipInX} `}>
+      <div className={`fsb csHomeStatEcharts `}>
         <div className={'homeTitle'}>电站实时信息</div>
         <TimeChoice></TimeChoice>
       </div>

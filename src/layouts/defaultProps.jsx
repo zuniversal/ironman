@@ -13,10 +13,10 @@ export default {
       //   component: '../DashBoard',
       // },
       {
-        path: '/cs/visitManage',
+        path: '/om/visitManage',
         name: '回访管理',
         icon: <Icon icon={'csOrganize'} />,
-        component: '../pages/cs/visitManage',
+        component: '../pages/om/visitManage',
       },
       {
         path: '/login',

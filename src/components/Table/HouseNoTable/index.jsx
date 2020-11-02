@@ -38,7 +38,8 @@ const HouseNoTable = props => {
     },
     {
       title: '户号',
-      dataIndex: 'code',
+      // dataIndex: 'code',
+      dataIndex: 'number',
       detailFn: (text, record, index) => showDetail(record.id),
     },
     {
@@ -47,16 +48,16 @@ const HouseNoTable = props => {
     },
     {
       title: '客户代表',
-      dataIndex: 'customer_representative',
+      dataIndex: 'service_staff',
     },
     {
       title: '托管电站数',
-      dataIndex: 'electricityuser_num',
+      dataIndex: 'trusteeship_num',
       detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '录入日期',
-      dataIndex: 'create_time',
+      dataIndex: 'created_time',
     },
   ];
 

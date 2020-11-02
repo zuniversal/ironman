@@ -290,6 +290,9 @@ class Contract extends PureComponent {
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
     };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
     if (action === 'detail') {
       return <ContractForm {...formComProps}></ContractForm>;
     }
@@ -302,9 +305,6 @@ class Contract extends PureComponent {
       );
     }
 
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
     console.log(' formComProps ： ', formComProps); //
     return (
       <>

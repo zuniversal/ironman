@@ -33,13 +33,10 @@ export default {
 
   reducers: {
     getEnumList(state, { payload, type }) {
-      console.log(' enumList ： ', payload); //
+      console.log(' getEnumList ： ', payload); //
       return {
         ...state,
-        action: payload.payload.action,
-        isShowModal: true,
-        d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        enumList: payload.list,
       };
     },
     showFormModal(state, { payload, type }) {

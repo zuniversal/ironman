@@ -8,6 +8,7 @@ import operateDays from '@/static/assets/operateDays.png'; //
 import weights from '@/static/assets/weights.png'; //
 import completeInspect from '@/static/assets/completeInspect.png'; //
 import StatBox from '@/components/Widgets/StatBox';
+import { ANIMATE } from '@/constants'; //
 
 const { Countdown } = Statistic;
 
@@ -45,6 +46,7 @@ const StatBoxCom = props => {
   // console.log(' StatBoxCom   props, ,   ： ', props);
   return (
     <StatBox
+      statBoxCls={`${ANIMATE.flipInX}`}
       {...props}
       left={
         <>

@@ -5,7 +5,9 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'inspectMission';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = [
+  // 'editMissionAsync',
+];
 
 const batchTurnActions = [];
 

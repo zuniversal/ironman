@@ -27,7 +27,7 @@ export const MissionsManageWorkOrderForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getUserAsync,
+      selectSearch: props.getClientAsync,
       selectData: props.clientData,
       itemProps: {
         label: '客户',
@@ -144,7 +144,7 @@ export const MissionsManageScheduleForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '选择日期',
-        name: '',
+        name: 'plan_date',
       },
       comProps: {
         className: 'w-280',

@@ -39,7 +39,7 @@ import {
 } from '@/utils'; //
 import debounce from 'lodash/debounce';
 
-const animates = ANIMATE.bounceIn;
+const { bounceIn, slideInDown } = ANIMATE;
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -367,15 +367,15 @@ const SmartForm = (props, state) => {
 
     const formItemDividerProps = {
       ...formItemCommonProps,
-      className: `formItems w100 ${animates} ${itemPropsCls}  `,
+      className: `formItems w100 ${bounceIn} ${itemPropsCls}  `,
     };
     const formItemNoRuleProps = {
       ...formItemCommonProps,
-      className: `formItems rowText ${animates} ${itemPropsCls}  `,
+      className: `formItems rowText ${bounceIn} ${itemPropsCls}  `,
     };
     const formItemProps = {
       ...formItemCommonProps,
-      className: `formItems ${animates} ${itemPropsCls}  `,
+      className: `formItems ${bounceIn} ${itemPropsCls}  `,
       rules: noRule || noRuleAll ? undefined : rules({ items, label }),
     };
 
@@ -648,9 +648,13 @@ const SmartForm = (props, state) => {
         size={componentSize}
         scrollToFirstError
         {...formProps}
-        className={`smartForm ${className} ${size === 'small' ? 'small' : ''} ${
-          searchRight ? 'searchRight' : ''
-        } `}
+        // ${isSearchForm ? slideInDown : ''}
+        className={`
+          smartForm 
+          ${className} 
+          
+          ${size === 'small' ? 'small' : ''} 
+          ${searchRight ? 'searchRight' : ''}  `}
         // layout="inline"
       >
         {flexRow ? (

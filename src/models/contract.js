@@ -115,7 +115,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
+      const res = yield call(services.getItem, { id: payload.d_id });
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {

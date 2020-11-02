@@ -36,8 +36,10 @@ const CalendarDraggable = props => {
   }, []);
   console.log(' CalendarDraggable   props, ,   ： ', props);
 
+  const { className } = props; //
+
   return (
-    <div id="dataListWrapper" ref={domRef}>
+    <div id="dataListWrapper" className={`${className} `} ref={domRef}>
       {props.children}
     </div>
   );

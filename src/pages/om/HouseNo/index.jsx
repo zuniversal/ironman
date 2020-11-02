@@ -126,7 +126,8 @@ class HouseNo extends PureComponent {
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
+        <Button type="primary" onClick={() => this.onBatchRemove()}>
           删除
         </Button>
       </div>
@@ -152,6 +153,16 @@ class HouseNo extends PureComponent {
     );
   };
 
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemsAsync({ id: `${params.record.id}` });
+  };
+  onBatchRemove = params => {
+    console.log(' onBatchRemove    ： ', params, this.state, this.props);
+    this.props.removeItemsAsync({
+      id: `${this.props.selectedRowKeys.join(',')}`,
+    });
+  };
   renderTable = params => {
     console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
@@ -171,7 +182,7 @@ class HouseNo extends PureComponent {
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    const { form, d_id } = props; //
     if (action === 'removeAsync') {
       this.props.removeAsync({});
       return;
@@ -188,6 +199,7 @@ class HouseNo extends PureComponent {
         this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          d_id,
         });
       }
     } catch (error) {
@@ -204,6 +216,8 @@ class HouseNo extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getListAsync: params => this.props.getListAsync({ keyword: params }),
+      dataList: this.props.dataList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

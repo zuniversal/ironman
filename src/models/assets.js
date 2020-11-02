@@ -90,6 +90,7 @@ export default {
           production_date: moment(),
           operation_date: moment(),
           list: payload.list,
+          station: payload.bean.station.id,
         },
         action: payload.payload.action,
         isShowModal: true,
@@ -157,8 +158,8 @@ export default {
         powerList: formatSelectList(payload.list, 'name'),
       };
     },
-    getPower(state, { payload, type }) {
-      // console.log(' getPower 修改  ： ', state, payload, type,     )//
+    getHouseNo(state, { payload, type }) {
+      // console.log(' getHouseNo 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         houseNoList: formatSelectList(payload.list, 'name'),

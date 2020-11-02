@@ -28,6 +28,7 @@ import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 import { actions, mapStateToProps } from '@/models/csHome'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { ANIMATE } from '@/constants'; //
 
 export const TITLE = '排班';
 
@@ -60,9 +61,15 @@ class CsHome extends PureComponent {
 
     return (
       <div className="monitorWrapper df">
-        <CsHomeMonitor></CsHomeMonitor>
-        <CsHomeVideo></CsHomeVideo>
-        <CsHomeMonitorVideo></CsHomeMonitorVideo>
+        <div className={`left ${ANIMATE.bounceInLeft} `}>
+          <CsHomeMonitor></CsHomeMonitor>
+        </div>
+        <div className={`center ${ANIMATE.zoomIn} `}>
+          <CsHomeVideo></CsHomeVideo>
+        </div>
+        <div className={`right ${ANIMATE.bounceInRight} `}>
+          <CsHomeMonitorVideo></CsHomeMonitorVideo>
+        </div>
       </div>
     );
   };

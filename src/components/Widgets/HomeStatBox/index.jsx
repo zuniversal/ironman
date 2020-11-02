@@ -8,6 +8,9 @@ import completeInspect from '@/static/assets/completeInspect.png'; //
 import completeMissionNum from '@/static/assets/completeMissionNum.png'; //
 import completeWorkOrder from '@/static/assets/completeWorkOrder.png'; //
 import StatBox from '@/components/Widgets/StatBox';
+import { ANIMATE } from '@/constants'; //
+
+const { bounceIn, slideInDown } = ANIMATE;
 
 const { Countdown } = Statistic;
 
@@ -52,6 +55,7 @@ const StatBoxCom = props => {
   return (
     <StatBox
       {...props}
+      statBoxCls={`${ANIMATE.flipInX}`}
       left={
         <>
           <img src={props.icon} className="icon" />

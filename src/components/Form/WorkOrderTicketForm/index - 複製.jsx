@@ -20,75 +20,76 @@ import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-const MissionsForm = props => {
-  console.log(' MissionsForm ： ', props); //
+const choiceRadios = [
+  { label: '种类1', value: 'yes', key: 'yes' },
+  { label: '种类2', value: 'no', key: 'no' },
+];
+
+const WorkOrderTicketForm = props => {
+  console.log(' WorkOrderTicketForm ： ', props); //
   const { formBtn, ...rest } = props; //
 
   const config = [
     {
+      itemProps: {
+        label: '单号',
+        name: 'code',
+      },
+    },
+    {
       // formType: 'Search',
-      // selectSearch: props.getClientAsync,
-      // selectData: props.clientList,
+      // selectData: props.teamList,
+      itemProps: {
+        label: '工单类型',
+        name: 'type',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户',
-        // name: ['customer', 'id'],
         name: 'customer_id',
       },
     },
     {
+      radioData: choiceRadios,
+      formType: 'Radio',
       itemProps: {
-        label: '名称',
-        name: 'name',
+        label: '类型',
+        name: 'types',
       },
     },
     {
       itemProps: {
-        label: '任务类型',
-        name: 'type',
-      },
-    },
-    // 选择客户所属电站
-    {
-      // formType: 'Search',
-      // selectSearch: props.getPowerAsync,
-      // selectData: props.powerList,
-      itemProps: {
-        label: '电站',
-        name: 'station_id',
-      },
-    },
-    {
-      // formType: 'Search',
-      // selectSearch: props.getAssetsAsync,
-      // selectData: props.assetsList,
-      itemProps: {
-        label: '设备',
-        name: 'equipment_id',
-      },
-    },
-    {
-      formType: 'TextArea',
-      itemProps: {
-        label: '任务描述',
-        name: 'content',
+        label: '工作内容',
+        name: 'job_content',
       },
     },
     {
       itemProps: {
-        label: '联系人',
-        name: 'person',
+        label: '安全措施',
+        name: 'safety_measure',
+      },
+    },
+    {
+      formType: 'DatePicker',
+      itemProps: {
+        label: '施工日期',
+        name: 'work_date',
       },
     },
     {
       itemProps: {
-        label: '电话',
-        name: 'phone',
+        label: '施工人员',
+        name: 'team_id',
       },
     },
     {
       itemProps: {
-        label: '地址',
-        name: 'addr',
+        label: '施工负责人',
+        name: 'person_liable',
       },
     },
   ];
@@ -99,7 +100,7 @@ const MissionsForm = props => {
   };
 
   return (
-    <div className={' MissionsForm '}>
+    <div className={' WorkOrderTicketForm '}>
       <SmartForm
         // flexRow={6}
         // config={config}
@@ -116,6 +117,6 @@ const MissionsForm = props => {
   );
 };
 
-MissionsForm.defaultProps = {};
+WorkOrderTicketForm.defaultProps = {};
 
-export default MissionsForm;
+export default WorkOrderTicketForm;

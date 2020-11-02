@@ -36,6 +36,11 @@ export default defineConfig({
       },
     });
   },
+  terserOptions: {
+    compress: {
+      drop_console: true,
+    },
+  },
 
   alias: {
     smartTb: './src/components/Table',

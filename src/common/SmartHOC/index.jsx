@@ -333,7 +333,7 @@ export default ({
       const { dispatch } = this.props; //
       tips('模拟文件下载成功！');
     };
-    exportData = params => {
+    exportData = async params => {
       console.log(
         ' exportData,  , ： ',
         params,

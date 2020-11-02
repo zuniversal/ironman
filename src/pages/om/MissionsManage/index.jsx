@@ -141,6 +141,8 @@ class MissionsManage extends PureComponent {
       if (action === 'schedule') {
         this.props.scheduleAsync({
           ...res,
+          d_id,
+          plan_date: res.plan_date.format('YYYY-MM-DD'),
         });
       }
       if (action === 'confirmSchedule') {
@@ -238,6 +240,22 @@ class MissionsManage extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    console.log(
+      ' %c MissionsManage componentDidMount 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
+    this.props.getEnumListAsync({
+      model: '任务管理',
+      name: '任务类型',
+    });
+    this.props.getEnumListAsync({
+      model: '任务管理',
+      name: '工单类型',
+    });
+  }
 
   render() {
     console.log(

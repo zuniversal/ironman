@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
 import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
+import { ANIMATE } from '@/constants'; //
 
 let matchList = [
   {
@@ -84,9 +85,12 @@ const ShiftsArrangeList = props => {
     `color: #333; font-weight: bold`,
     props,
   );
+  const { className } = props; //
 
   return (
     <CalendarDraggable
+      className={`${className} `}
+      r
       itemSelector={'.dragItem'}
       // renderItem={(event, index) => (
       //   <div key={event.id} className="fsb rowItem ">
@@ -158,13 +162,17 @@ const InspectPlanCalendar = props => {
       <SmartCalendar
         // events={calendarEvents}
 
+        className={`${ANIMATE.slideInLeft} `}
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
       />
 
-      <ShiftsArrangeList events={props.events}></ShiftsArrangeList>
+      <ShiftsArrangeList
+        events={props.events}
+        className={`${ANIMATE.slideInRight} `}
+      ></ShiftsArrangeList>
     </div>
   );
 };

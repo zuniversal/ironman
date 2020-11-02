@@ -72,7 +72,7 @@ const SmartCalendar = React.forwardRef((props, ref) => {
   ];
 
   return (
-    <div className="smartCalendar ">
+    <div className={`smartCalendar ${props.className}`}>
       {/* <Button onClick={() => () => console.log(' handleCancel   ,   ： ', calendarRef  )}>取消</Button> */}
       <FullCalendar
         ref={props.calendarRef}
@@ -93,7 +93,7 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
         // showNonCurrentDates={false}
         dayCellContent={dayCellContent}
-        dayCellClassNames={'dayCellClassNames'}
+        dayCellClassNames={`dayCellClassNames ${ANIMATE.bounceIn}`}
         eventClassNames={`eventClassNames ${bounceIn}`}
         slotLabelClassNames={'slotLabelClassNames'}
         moreLinkClassNames={'moreLinkClassNames'}

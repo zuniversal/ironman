@@ -47,9 +47,9 @@ const AssetsForm = props => {
     //   },
     // },
     {
-      // formType: 'Search',
-      // selectSearch: props.getPowerAsync,
-      // selectData: props.powerList,
+      formType: 'Search',
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
       itemProps: {
         label: '电站',
         name: 'station',

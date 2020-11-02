@@ -16,6 +16,7 @@ import {
 import one from '@/static/assets/one.png'; //
 import two from '@/static/assets/two.png'; //
 import three from '@/static/assets/three.png'; //
+import { ANIMATE } from '@/constants'; //
 
 const groupData = [
   { title: '小组 1', right: '323222' },
@@ -36,7 +37,7 @@ const HomeGroupRank = props => {
   return (
     <div className={'homeGroupRank '}>
       {props.dataSource.map((v, i) => (
-        <div className="rowWrapper" key={i}>
+        <div className={`rowWrapper ${ANIMATE.flipInX} `} key={i}>
           <div className="left">
             {i < 3 ? (
               <img src={rankIconMap[i]} className="iconMg" />

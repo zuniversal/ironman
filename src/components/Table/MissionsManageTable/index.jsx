@@ -60,7 +60,7 @@ const MissionsManageTable = props => {
     {
       title: '关联合同',
       // dataIndex: 'contract',
-      dataIndex: ['contract', 'id'],
+      dataIndex: ['contract', 'code'],
     },
     {
       title: '当前状态',

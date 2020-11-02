@@ -2,6 +2,7 @@ import {
   get,
   post,
   put,
+  patch,
   remove,
   noTipsGet,
   noTipsPost,
@@ -15,4 +16,4 @@ export const getItem = p => noTipsGet(`OMS/spect/plan/${p.d_id}`, p);
 export const addItem = p => post('OMS/spect/plan', p);
 export const editItem = p => put(`OMS/spect/plan/${p.d_id}`, p);
 export const removeItem = p => remove(`OMS/spect/plan/${p.d_id}`, p);
-export const changePlan = p => put(`OMS/spect/plan/change_plan`, p);
+export const changePlan = p => patch(`OMS/spect/plan/change_plan`, p);
