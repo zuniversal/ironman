@@ -12,11 +12,11 @@ import './style.less';
 import PageTitle from '@/components/Widgets/PageTitle'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { tips } from '@/utils';
+import { tips, downLoad } from '@/utils';
 import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
-import { SIZE } from '@/constants';
+import { SIZE, DOWN_URL } from '@/constants';
 
 /* 
   封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
@@ -342,8 +342,19 @@ export default ({
         this.props,
       );
       const { dispatch } = this.props; //
-      // dispatch(actions.exportDataAsync({}));
-      tips('模拟导出成功！');
+      const url = (
+        await dispatch(
+          actions.exportDataAsync({
+            page: 1,
+            page_size: 100,
+          }),
+        )
+      ).bean;
+      const urlArr = `${url}`.split('/');
+      const name = urlArr[urlArr.length - 1];
+      console.log(' DOWN_URL +  url ：', url, name); //
+      downLoad(url, { name });
+      // tips('模拟导出成功！');
     };
     syncOAAsync = params => {
       console.log(' syncOAAsync,  , ： ', params);

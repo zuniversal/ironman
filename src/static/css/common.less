@@ -8,7 +8,23 @@ body {
   background: #f0f2f5;
 }
 
-#root,
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8492a6;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e2e2;
+}
+
+#root {
+  width: 100%;
+}
 .root,
 .ant-layout {
   width: 100%;
@@ -28,6 +44,10 @@ body {
 // ::-webkit-scrollbar-track {
 //     background: #e2e2e2;
 // }
+
+.textCenter {
+  text-align: center;
+}
 
 .fsb {
   display: flex;

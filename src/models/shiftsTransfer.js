@@ -169,9 +169,8 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
-      // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
-      console.log('  exportDataAsync res ：', res); //
+      return res;
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
       const res = yield call(powerStationServices.getList, {

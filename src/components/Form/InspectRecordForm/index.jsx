@@ -16,11 +16,8 @@ import {
   InputNumber,
   Tabs,
 } from 'antd';
-
 import SmartForm from '@/common/SmartForm'; //
 import InputCom from '@/components/Widgets/InputCom'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const { TabPane } = Tabs;
 
@@ -531,7 +528,6 @@ const InspectRecordForm = props => {
     <div className={' InspectRecordForm '}>
       <SmartForm
         flexRow={2}
-        // config={config}
         config={configs}
         formProps={formProps}
         // init={init}

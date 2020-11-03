@@ -9,4 +9,4 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getEnumList = p => noTipsGet('OMS/dictionary/info', p);
+export const getEnumList = p => noTipsGet('console/OMS/dictionary/info', p);

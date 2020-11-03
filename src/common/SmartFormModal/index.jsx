@@ -22,7 +22,6 @@ import {
   Col,
 } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm'; //
 import SmartModal from '@/common/SmartModal'; //
 import { regoins } from '@/configs'; //

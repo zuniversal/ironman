@@ -1,20 +1,5 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import InputCom from '@/components/Widgets/InputCom'; //
@@ -22,9 +7,14 @@ import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const ticketConfig = [
-  { name: 'executing', left: '执行中', right: '张', wrapperClass: 'formItems ', },
-  { name: 'finished', left: '结束', right: '张', wrapperClass: 'formItems ', },
-  { name: 'unExecuted', left: '未执行', right: '张', },
+  {
+    name: 'executing',
+    left: '执行中',
+    right: '张',
+    wrapperClass: 'formItems ',
+  },
+  { name: 'finished', left: '结束', right: '张', wrapperClass: 'formItems ' },
+  { name: 'unExecuted', left: '未执行', right: '张' },
 ];
 
 const ShiftsTransferHandInForm = props => {
@@ -115,7 +105,6 @@ const ShiftsTransferHandInForm = props => {
       },
     },
 
-
     {
       itemProps: {
         label: '6.当值设备检查情况',
@@ -133,7 +122,7 @@ const ShiftsTransferHandInForm = props => {
       CustomCom: (
         <>
           {ticketConfig.map((v, i) => (
-            <InputCom disabled {...v} key={i} ></InputCom>
+            <InputCom disabled {...v} key={i}></InputCom>
           ))}
         </>
       ),
@@ -169,18 +158,13 @@ const ShiftsTransferHandInForm = props => {
 
   return (
     <div className={'ShiftsTransferHandInForm'}>
-      
-
       <SmartForm
         // flexRow={4}
         noPh
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
 
         isDisabledAll
         {...props}

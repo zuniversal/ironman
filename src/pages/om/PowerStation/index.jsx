@@ -131,8 +131,9 @@ class PowerStation extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
+          // ...itemDetail,
           ...res,
+          id: d_id,
           d_id,
         });
       }

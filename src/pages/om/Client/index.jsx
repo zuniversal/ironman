@@ -47,7 +47,14 @@ class Client extends PureComponent {
       modalContent: null,
     };
   }
-
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    if (params.value.city) {
+      this.props.getDistrictAsync(params.formData);
+    } else {
+      this.props.getDistrictAsync(params.value);
+    }
+  };
   addUserAsync = async props => {
     console.log(' addUserAsync ： ', props, this.state, this.props);
     const { action } = this.state; //
@@ -257,6 +264,12 @@ class Client extends PureComponent {
     return (
       <ClientSearchForm
         formBtn={this.renderFormBtn}
+        // onFieldChange={params => this.getDistrictAsync({ keyword: params })}
+        onFieldChange={this.onFieldChange}
+        getDistrictAsync={this.props.getDistrictAsync}
+        provinceList={this.props.provinceList}
+        citytList={this.props.citytList}
+        countryList={this.props.countryList}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ClientSearchForm>
@@ -348,6 +361,7 @@ class Client extends PureComponent {
 
     // this.getList()
     this.props.getUserAsync();
+    this.props.getDistrictAsync({});
   }
 
   render() {

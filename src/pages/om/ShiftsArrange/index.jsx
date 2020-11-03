@@ -60,6 +60,7 @@ class ShiftsArrange extends PureComponent {
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
     const { history, searchInfo } = this.props; //
+    console.log(' searchInfo ： ', searchInfo); //
     if (searchInfo.team && searchInfo.schedule_date) {
       const path = `${page}?team=${
         searchInfo.team
@@ -91,6 +92,10 @@ class ShiftsArrange extends PureComponent {
     }
   };
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -131,10 +136,10 @@ class ShiftsArrange extends PureComponent {
       ></ShiftsArrangeSearchForm>
     );
   };
-  onFieldChange = params => {
-    console.log('    onFieldChange ： ', params);
-    this.props.setSearchInfo(params.value);
-  };
+  // onFieldChange = params => {
+  //   console.log('    onFieldChange ： ', params);
+  //   this.props.setSearchInfo(params.value);
+  // };
 
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
@@ -142,6 +147,9 @@ class ShiftsArrange extends PureComponent {
       <ShiftsArrangeCalendar data={this.props.dataList}></ShiftsArrangeCalendar>
     );
   };
+  componentDidMount() {
+    this.props.getTeamAsync();
+  }
 
   render() {
     return (

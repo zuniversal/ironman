@@ -176,13 +176,10 @@ const ShiftsTransferForm = props => {
       <SmartForm
         // flexRow={4}
         noPh
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
 
         isDisabledAll
         {...props}

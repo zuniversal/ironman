@@ -20,8 +20,6 @@ import {
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const formLayouts = {
   labelCol: {
@@ -92,6 +90,7 @@ const UserCenterForm = props => {
       itemProps: {
         label: '再次输入密码',
         name: 'rePwd',
+        dependencies: ['password'],
       },
     },
   ];
@@ -104,8 +103,7 @@ const UserCenterForm = props => {
   return (
     <div className={'userCenterForm'}>
       <SmartForm
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         // config={configs}
         formProps={formProps}
         // init={init}
@@ -118,6 +116,7 @@ const UserCenterForm = props => {
 
       <div className="dfc actionBtn ">
         <Button
+          className={`editBtn`}
           type="primary"
           onClick={() => props.handleOk({ form, action: 'edit' })}
         >

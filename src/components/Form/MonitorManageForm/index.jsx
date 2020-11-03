@@ -1,59 +1,37 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
-
-
-
+import { formatConfig } from '@/utils'; //
 
 const checkboxGroupOptions = [
   { label: '应用内通知', value: 'app' },
   { label: '短信', value: 'msg' },
   { label: '邮件', value: 'email' },
-
-]
+];
 
 const selectData = [
   { label: '应用内通知', value: 'app' },
   { label: '短信', value: 'msg' },
   { label: '邮件', value: 'email' },
-
-]
-
-
+];
 
 export const config = [
   {
-    formType: 'Select', 
+    formType: 'Select',
     itemProps: {
       label: '户号',
     },
   },
   {
-    formType: 'Select', 
+    formType: 'Select',
     itemProps: {
       label: '电站',
     },
   },
   {
-    formType: 'Select', 
+    formType: 'Select',
     itemProps: {
       label: '关联客户设备',
     },
@@ -79,7 +57,7 @@ export const config = [
     },
   },
   {
-    formType: 'Select', 
+    formType: 'Select',
     itemProps: {
       label: '设备类型',
     },
@@ -104,15 +82,11 @@ export const config = [
       label: '说明',
     },
   },
-
-  
 ];
-
-
 
 const MonitorManageForm = props => {
   console.log(' MonitorManageForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -122,8 +96,7 @@ const MonitorManageForm = props => {
     <div className={' MonitorManageForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

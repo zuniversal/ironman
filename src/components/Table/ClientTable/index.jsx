@@ -8,21 +8,6 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //

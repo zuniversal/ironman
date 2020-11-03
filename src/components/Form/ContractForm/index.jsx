@@ -18,7 +18,6 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp, mockFormData } from '@/utils'; //
@@ -192,8 +191,7 @@ const ContractForm = props => {
   return (
     <div className={''}>
       <SmartForm
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         // config={configs}
         formProps={formProps}
         // init={mockFormData(formatConfig(config), )}

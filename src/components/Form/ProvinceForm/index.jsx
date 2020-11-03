@@ -1,20 +1,5 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins, province, site, city } from '@/configs'; //
@@ -24,8 +9,9 @@ import { formatConfig, reportRadioOp } from '@/utils'; //
 export const config = props => [
   {
     formType: 'Search',
-    selectSearch: props.getArea,
-    selectData: props.areaList,
+    // selectSearch: params => props.getDistrictAsync({ province: params }),
+    selectData: props.provinceList,
+    // selectData: province,
     noRule: true,
     itemProps: {
       label: '省',
@@ -35,13 +21,13 @@ export const config = props => [
     comProps: {
       className: 'w-200',
     },
-    selectData: province,
     // customLabel: '自定义customLabel',
   },
   {
     formType: 'Search',
-    selectSearch: props.getArea,
-    selectData: props.areaList,
+    // selectSearch: params => props.getDistrictAsync({ city: params }),
+    selectData: props.citytList,
+    // selectData: city,
     noRule: true,
     itemProps: {
       label: '市',
@@ -51,12 +37,12 @@ export const config = props => [
     comProps: {
       className: 'w-200',
     },
-    selectData: city,
   },
   {
     formType: 'Search',
-    selectSearch: props.getArea,
-    selectData: props.areaList,
+    // selectSearch: props.getDistrictAsync,
+    selectData: props.countryList,
+    // selectData: site,
     noRule: true,
     itemProps: {
       label: '县',
@@ -66,7 +52,6 @@ export const config = props => [
     comProps: {
       className: 'w-200',
     },
-    selectData: site,
   },
 
   // <Form.Item
@@ -125,8 +110,7 @@ const ProvinceForm = props => {
     <div className={' provinceForm '}>
       <SearchForm
         // flexRow={8}
-        // config={config}
-        config={formatConfig(config(props))}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

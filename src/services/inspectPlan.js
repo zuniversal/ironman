@@ -10,10 +10,10 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet('OMS/spect/plan/stations', p);
-export const getLists = p => noTipsGet('OMS/spect/plan/', p);
-export const getItem = p => noTipsGet(`OMS/spect/plan/${p.d_id}`, p);
-export const addItem = p => post('OMS/spect/plan', p);
-export const editItem = p => put(`OMS/spect/plan/${p.d_id}`, p);
-export const removeItem = p => remove(`OMS/spect/plan/${p.d_id}`, p);
-export const changePlan = p => patch(`OMS/spect/plan/change_plan`, p);
+export const getList = p => get('console/OMS/spect/plan/stations', p);
+export const getLists = p => noTipsGet('console/OMS/spect/plan/', p);
+export const getItem = p => noTipsGet(`console/OMS/spect/plan/${p.d_id}`, p);
+export const addItem = p => post('console/OMS/spect/plan', p);
+export const editItem = p => put(`console/OMS/spect/plan/${p.d_id}`, p);
+export const removeItem = p => remove(`console/OMS/spect/plan/${p.d_id}`, p);
+export const changePlan = p => patch(`console/OMS/spect/plan/change_plan`, p);

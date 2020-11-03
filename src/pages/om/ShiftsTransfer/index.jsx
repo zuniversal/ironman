@@ -46,6 +46,10 @@ class ShiftsTransfer extends PureComponent {
     };
   }
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -68,6 +72,7 @@ class ShiftsTransfer extends PureComponent {
         getPower={this.props.getPowerAsync}
         userList={this.props.userList}
         powerList={this.props.powerList}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsTransferSearchForm>

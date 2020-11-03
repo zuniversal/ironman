@@ -8,27 +8,12 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 
 const UserManageTable = props => {
   console.log(' UserManageTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -62,7 +47,7 @@ const UserManageTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -70,7 +55,6 @@ const UserManageTable = props => {
 
 UserManageTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default UserManageTable;

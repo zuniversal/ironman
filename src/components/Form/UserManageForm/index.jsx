@@ -1,24 +1,9 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
@@ -59,15 +44,11 @@ export const config = [
       name: '',
     },
   },
-
-  
 ];
-
-
 
 const UserManageForm = props => {
   console.log(' UserManageForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -77,8 +58,7 @@ const UserManageForm = props => {
     <div className={' UserManageForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

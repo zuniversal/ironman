@@ -1,25 +1,7 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
-
 import SmartForm from '@/common/SmartForm'; //
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const datas = [
   {
@@ -109,8 +91,7 @@ const InspectMissionDetailForm = props => {
     <div className={' InspectMissionDetailForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

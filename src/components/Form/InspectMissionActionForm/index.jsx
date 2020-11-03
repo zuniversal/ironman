@@ -1,24 +1,6 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
-
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const renderCheckboxOp = [{ label: '短信通知客户', value: 'yes', key: 'yes' }];
 
@@ -50,8 +32,7 @@ export const InspectMissionAssignForm = props => {
     <div className={' InspectMissionAssignForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
@@ -114,8 +95,7 @@ export const InspectMissionEditDateForm = props => {
     <div className={' inspectMissionEditDateForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

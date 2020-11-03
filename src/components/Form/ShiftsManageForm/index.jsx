@@ -1,21 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins, onDutyTypeConfig } from '@/configs'; //
@@ -54,6 +39,7 @@ const ShiftsManageForm = props => {
       },
       comProps: {
         extra: true,
+        filterSelect: true,
         formType: 'Search',
         // selectSearch: props.getUser,
         selectData: props.userList,
@@ -95,8 +81,7 @@ const ShiftsManageForm = props => {
     <div className={' ShiftsManageForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

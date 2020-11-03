@@ -16,5 +16,3 @@ export const editItem = p => put(`organizations/accounts/${p.d_id}`, p);
 export const removeItem = p => remove(`organizations/accounts/${p.d_id}`, p);
 
 export const syncOA = p => noTipsGet(`organizations/accounts/oa`, p);
-export const getPortrait = p =>
-  noTipsGet(`organizations/accounts/portrait/${p.d_id}`, p);

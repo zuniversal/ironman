@@ -122,6 +122,10 @@ class ShiftsArrangeDetail extends PureComponent {
   //   }
   // };
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params, actions); //
     return (
@@ -161,10 +165,10 @@ class ShiftsArrangeDetail extends PureComponent {
       ></ShiftsArrangeSearchForm>
     );
   };
-  onFieldChange = params => {
-    console.log('    onFieldChange ： ', params);
-    this.props.setSearchInfo(params.value);
-  };
+  // onFieldChange = params => {
+  //   console.log('    onFieldChange ： ', params);
+  //   this.props.setSearchInfo(params.value);
+  // };
   onSelectChange = e => {
     console.log(
       ' onSelectChange   ,   ： ',
@@ -240,6 +244,9 @@ class ShiftsArrangeDetail extends PureComponent {
       ></ShiftsArrangeDetailCalendar>
     );
   };
+  componentDidMount() {
+    this.props.getTeamAsync();
+  }
 
   render() {
     return (

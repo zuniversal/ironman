@@ -19,7 +19,7 @@ import {
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins, customerTypeConfig } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import { formatConfig, reportRadioOp, tips } from '@/utils'; //
 
 const rowLayout = {
   labelCol: {
@@ -55,7 +55,9 @@ export const AdminForm = props => {
         className: 'noMargin',
       },
       comProps: {
+        limit: 5,
         extra: true,
+        filterSelect: true,
         // noRule: true,
         // formType: 'DynamicArr',
         config: [
@@ -96,19 +98,27 @@ export const AdminForm = props => {
     },
     {
       formType: 'PropsCom',
-      PropsCom: props => (
-        <div className="dfc">
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(' props addUserAsync ： ', props); //
-              addUserAsync(props);
-            }}
-          >
-            保存管理员信息
-          </Button>
-        </div>
-      ),
+      PropsCom: props =>
+        props.action !== 'detail' && (
+          <div className="dfc">
+            <Button
+              type="primary"
+              onClick={() => {
+                console.log(' props addUserAsync ： ', props); //
+                if (Object.keys(props.init).length) {
+                  console.log('  对吗  customer_admin.length ', props.init);
+                  if (props.init.customer_admin.length) {
+                    addUserAsync(props);
+                  } else {
+                    tips('无管理员初始数据！', 2);
+                  }
+                }
+              }}
+            >
+              保存管理员信息
+            </Button>
+          </div>
+        ),
       itemProps: {
         label: ' ',
         // className: 'dfc',
@@ -124,8 +134,7 @@ export const AdminForm = props => {
   return (
     <SmartForm
       // flexRow={6}
-      // config={config}
-      config={formatConfig(config)}
+      config={config}
       formProps={formProps}
       // init={init}
       // init={{}}
@@ -249,6 +258,24 @@ const ClientForm = props => {
       },
       comProps: {},
     },
+
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '客户等级',
+        name: 'level',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '客户编码',
+        name: 'code',
+      },
+      comProps: {},
+    },
+
     {
       // formType: 'Select',
       itemProps: {
@@ -289,14 +316,19 @@ const ClientForm = props => {
       },
       comProps: {},
     },
-    {
-      itemProps: {
-        label: '企业LoGo',
-        name: 'logo',
-      },
-      comProps: {},
-    },
-    // <UploadCom label={'企业LoGo'} key={'logo'}></UploadCom>,
+    // {
+    //   itemProps: {
+    //     label: '企业LoGo',
+    //     name: 'logo',
+    //   },
+    //   comProps: {},
+    // },
+    <UploadCom
+      label={'企业LoGo'}
+      action={'logo'}
+      action={'/v1/upload'}
+      name={'file'}
+    ></UploadCom>,
 
     {
       formType: 'rowText',
@@ -485,13 +517,10 @@ const ClientForm = props => {
     >
       <SmartForm
         // flexRow={4}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
         isDisabledAll={action === 'detail'}
         {...props}
       ></SmartForm>

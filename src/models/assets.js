@@ -232,10 +232,8 @@ export default {
       // });
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
-      // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
-      console.log('  exportDataAsync res ：', res); //
-      // yield put(action({ ...res, payload }));
+      return res;
     },
     *getTemplate({ payload, action, type }, { call, put }) {
       // console.log(' getTemplate ： ', payload, type,     )//

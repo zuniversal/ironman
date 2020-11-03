@@ -4,7 +4,6 @@ import './style.less';
 import { Form, Button, Upload, Result, Tabs } from 'antd';
 
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
@@ -635,7 +634,6 @@ const ContractRelativeForm = props => {
         <div key={i} className={i === index ? `${i}` : `${i} hide `}>
           <SmartForm
             // config={config}
-            // config={formatConfig(config)}
             // config={v}
             // config={v.config}
             config={configArr[i]}

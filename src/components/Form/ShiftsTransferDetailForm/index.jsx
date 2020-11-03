@@ -79,8 +79,8 @@ const transferRadios = transferDetailConfig.map((v, i) => ({
     ...v,
     ...layout,
     className: 'customWidthForm',
-    // key: v.name, 
-    key: i, 
+    // key: v.name,
+    key: i,
   },
 }));
 
@@ -143,13 +143,10 @@ const ShiftsTransferDetailForm = props => {
       <SmartForm
         // flexRow={4}
         noPh
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
 
         noRuleAll
         isDisabledAll

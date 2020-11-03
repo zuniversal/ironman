@@ -25,6 +25,7 @@ import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import { actions, mapStateToProps } from '@/models/inspectPlan'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '操作';
 
@@ -60,12 +61,17 @@ class InspectPlan extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      this.props.getListAsync({
-        ...res,
-        month: res.month.format('YYYY-MM'),
-      });
+      if (res.leader && res.month) {
+        this.props.getListAsync({
+          ...res,
+          month: res.month.format('YYYY-MM'),
+        });
+      } else {
+        tips('请先选择班组及月份！', 2);
+      }
     } catch (error) {
       console.log(' error ： ', error); //
+      tips('请先选择班组及月份！', 2);
     }
   };
   renderFormBtn = params => {

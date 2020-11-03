@@ -70,6 +70,7 @@ const ClientSearchForm = props => {
         // init={init}
         // init={{}}
 
+        // onFieldChange={props.onFieldChange}
         noRuleAll
         // {...rest}
         {...props}

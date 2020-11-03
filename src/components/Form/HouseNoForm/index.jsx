@@ -18,7 +18,6 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm'; //
 import HouseNoFormTable from '@/components/Table/HouseNoFormTable'; //
 import { regoins } from '@/configs'; //
@@ -34,6 +33,36 @@ const HouseNoForm = props => {
   };
 
   // const formConfig = formatConfig(config);
+  const areaInfo = [
+    {
+      noRule: true,
+      formType: 'Cascader',
+      itemProps: {
+        label: '区域',
+        name: 'area_code',
+      },
+    },
+    // {
+    //   itemProps: {
+    //     label: '邮编',
+    //     name: 'postcode',
+    //   },
+    // },
+    {
+      noRule: true,
+      itemProps: {
+        label: '经度',
+        name: 'longitude',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '纬度',
+        name: 'latitude',
+      },
+    },
+  ];
 
   const config = [
     {
@@ -52,7 +81,7 @@ const HouseNoForm = props => {
       },
     },
     {
-      // 户号名称
+      // 户号名称 唯一 直接输入
       // formType: 'Search',
       // selectSearch: props.getListAsync,
       // selectData: props.dataList,
@@ -93,37 +122,15 @@ const HouseNoForm = props => {
         label: '位置信息',
       },
     },
-    // {
-    //   formType: 'Cascader',
-    //   itemProps: {
-    //     label: '区域',
-    //     name: 'area_code',
-    //   },
-    // },
     {
       itemProps: {
         label: '详细用电地址',
         name: 'addr',
       },
     },
-    // {
-    //   itemProps: {
-    //     label: '邮编',
-    //     name: 'postcode',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '经度',
-    //     name: 'longitude',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '纬度',
-    //     name: 'latitude',
-    //   },
-    // },
+
+    ...(action === 'detail' ? areaInfo : []),
+
     {
       formType: 'rowText',
       itemProps: {
@@ -174,8 +181,7 @@ const HouseNoForm = props => {
   return (
     <div className={''}>
       <SmartForm
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         // config={configs}
         formProps={formProps}
         // init={init}

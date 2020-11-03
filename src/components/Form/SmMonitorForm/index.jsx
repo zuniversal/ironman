@@ -1,28 +1,13 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
-    formType: 'Select',  
+    formType: 'Select',
     noRule: true,
     itemProps: {
       label: '模块',
@@ -34,7 +19,7 @@ export const config = [
     },
   },
   {
-    formType: 'TextArea',  
+    formType: 'TextArea',
     noRule: true,
     itemProps: {
       label: '枚举值',
@@ -47,21 +32,17 @@ export const config = [
     },
   },
   {
-    formType: 'TextArea',  
+    formType: 'TextArea',
     noRule: true,
     itemProps: {
       label: '备注',
     },
   },
-
-  
 ];
-
-
 
 const SmMonitorForm = props => {
   console.log(' SmMonitorForm ： ', props); //
-  const {formBtn, ...rest } = props// 
+  const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -71,8 +52,7 @@ const SmMonitorForm = props => {
     <div className={' SmMonitorForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

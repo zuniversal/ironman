@@ -77,11 +77,11 @@ class UserCenter extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      // if (action === 'edit') {
-      //   this.props.editItemAsync({
-      //     ...res,
-      //   });
-      // }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error); //
     }

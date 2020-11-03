@@ -21,7 +21,7 @@ import { arrangeActions } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { history, connect } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';
-import { nowYearMonth } from '@/utils';
+import { nowYearMonth, tips } from '@/utils';
 
 const TITLE = '班组';
 
@@ -53,6 +53,10 @@ class ShiftsManage extends PureComponent {
     };
   }
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -94,6 +98,7 @@ class ShiftsManage extends PureComponent {
     return (
       <ShiftsManageSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></ShiftsManageSearchForm>
@@ -120,9 +125,17 @@ class ShiftsManage extends PureComponent {
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.removeItemsAsync({
-      id: `${this.props.selectedRowKeys.join(',')}`,
-    });
+    console.log(
+      '  对吗  this.props.selectedRowKeys.length ',
+      this.props.selectedRowKeys.length,
+    );
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.removeItemsAsync({
+        id: `${this.props.selectedRowKeys.join(',')}`,
+      });
+    } else {
+      tips('请您选中数据！', 2);
+    }
   };
 
   goPage = params => {

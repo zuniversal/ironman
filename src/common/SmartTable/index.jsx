@@ -38,7 +38,7 @@ const mapStateToProps = ({ loading }) => ({ loadingData: loading });
 class SmartTable extends PureComponent {
   constructor(props) {
     super(props);
-    const { columns, total, size = SIZE } = this.props;
+    const { columns, total, count, size = SIZE } = this.props;
     const pagination = {
       // current: 10,
       // pageSize: 6,
@@ -47,7 +47,8 @@ class SmartTable extends PureComponent {
       // showTotal: showTotal,
       position: ['bottomCenter'],
       pageSize: Number(size),
-      total,
+      pageSizeOptions: [10, 20, 50],
+      total: count,
       size: 'default',
       onChange: this.onPageChange,
     };
@@ -322,10 +323,25 @@ class SmartTable extends PureComponent {
     });
   };
   onPageChange = (page, page_size) => {
-    console.log(' onPageChange,  , ： ', page, page_size);
+    console.log(
+      ' onPageChange,  , ： ',
+      page,
+      page_size,
+      this.state,
+      this.props,
+    );
     this.props.getListAsync({
       page,
       page_size,
+    });
+    const { pagination } = this.state; //
+    const paginationObj = {
+      ...pagination,
+      current: page,
+      pageSize: page_size,
+    };
+    this.setState({
+      pagination: paginationObj,
     });
   };
   onChange = (selectedRowKeys, selectedRows) => {
@@ -584,8 +600,8 @@ SmartTable.defaultProps = {
   className: '',
   columns: [],
   newTbData: [],
-  // dataSource: [],
-  dataSource: mockTbData(),
+  dataSource: [],
+  // dataSource: mockTbData(),
   // rowKey: 'key',
   // rowKey: 'd_id', //
   rowKey: 'id',

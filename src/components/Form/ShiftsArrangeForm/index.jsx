@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -18,20 +18,18 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//
-
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const choiceRadios = [
-  { value: '是', key: 'yes',  },
-  { value: '否', key: 'no',  },
-]
-
+  { value: '是', key: 'yes' },
+  { value: '否', key: 'no' },
+];
 
 const ShiftsArrangeForm = props => {
   console.log(' ShiftsArrangeForm ： ', props); //
 
-  const {getCapture, showFormModal,  } = props// 
+  const { getCapture, showFormModal } = props; //
 
   const config = [
     {
@@ -43,25 +41,20 @@ const ShiftsArrangeForm = props => {
       },
     },
     {
-      formType: 'MonthPicker', 
+      formType: 'MonthPicker',
       itemProps: {
         label: '选择月份',
       },
     },
     {
-      formType: 'Radio', 
+      formType: 'Radio',
       itemProps: {
         label: '按法定工作日快速排班',
       },
       radioOptions: choiceRadios,
       opType: 'group',
     },
-    
   ];
-  
-
-
-
 
   const formProps = {
     // layout: 'vertical',
@@ -72,18 +65,17 @@ const ShiftsArrangeForm = props => {
     <div className={'ShiftsArrangeForm'}>
       <div className="fje btnWrapper ">
         {/* <Button type="primary "onClick={() => showFormModal({action: 'export',  })}  >导出数据</Button> */}
-        <Button type="primary "onClick={() => {}}  >导出数据</Button>
+        <Button type="primary " onClick={() => {}}>
+          导出数据
+        </Button>
       </div>
 
       <SmartForm
         // flexRow={4}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
         {...props}
       ></SmartForm>
     </div>

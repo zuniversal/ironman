@@ -1,25 +1,8 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const WeakDetailForm = props => {
   console.log(' WeakDetailForm ： ', props); //
@@ -97,8 +80,7 @@ const WeakDetailForm = props => {
     <div className={' WeakDetailForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

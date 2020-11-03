@@ -1,20 +1,5 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
@@ -72,22 +57,16 @@ const ClientReportSearchForm = props => {
     <div className={''}>
       {/* <SmartForm
         // flexRow={4}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
 
         isSearchForm
         {...props}
       ></SmartForm> */}
 
-      <SearchForm
-        config={formatConfig(config)}
-        formProps={formProps}
-      ></SearchForm>
+      <SearchForm config={config} formProps={formProps}></SearchForm>
     </div>
   );
 };

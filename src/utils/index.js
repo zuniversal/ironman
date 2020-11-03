@@ -242,6 +242,10 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
       items.formType = v.formType || 'Input';
     }
 
+    if (!v.formType || v.formType === 'Input') {
+      // items.itemProps.hasFeedback = true;
+      // items.comProps.onPressEnter = (params) => console.log(' onPressEnter params ： ', params,  )// ;
+    }
     if (isSearchForm || v.formType === 'Dynamic') {
       items.noRule = true;
     }
@@ -257,9 +261,9 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
   return configs;
 };
 
-export const downLoad = ({ url }) => {
+export const downLoad = (url, { name } = { name: '默认文件名' }) => {
   let a = document.createElement('a');
-  a.download = ''; // 设置下载的文件名，默认是'下载'
+  a.download = name; // 设置下载的文件名，默认是'下载'
   a.href = url;
   document.body.appendChild(a);
   a.click();

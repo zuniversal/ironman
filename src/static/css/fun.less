@@ -1,6 +1,4 @@
-
 // 自动生成基础样式
-
 
 .loop(@counter) when (@counter > 0) {
   // .p-@{counter} {
@@ -48,14 +46,11 @@
   // }
 
   .w-@{counter} {
-    width: (1px * @counter)!important;
+    width: (1px * @counter) !important;
     // width: (5px * @counter) !important;
   }
 
-
-  .loop((@counter - 1)); // 递归调用自身
+  .loop((@counter - 5)); // 递归调用自身
 }
 
 .loop(340);
-
-

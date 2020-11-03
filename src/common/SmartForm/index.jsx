@@ -280,11 +280,11 @@ const SmartForm = (props, state) => {
 
   const [componentSize, setComponentSize] = useState('default');
 
-  const onFormLayoutChange = (value, rest) => {
-    console.log(' onFormLayoutChange value, rest ： ', value, rest); //
+  const onFormLayoutChange = (value, formData) => {
+    console.log(' onFormLayoutChange value, formData,  ： ', value, formData); //
     const { layout, size } = value;
 
-    onFieldChange && onFieldChange({ value });
+    onFieldChange && onFieldChange({ value, formData });
 
     // setFormLayout(layout);
     // setComponentSize(size);
@@ -337,6 +337,10 @@ const SmartForm = (props, state) => {
     // if (typeof type === 'function') {
     if (isValidElement(items)) {
       return items;
+    }
+
+    if (!formType || formType === 'Input') {
+      items.comProps.onPressEnter = props.getList; // ;
     }
 
     const { label } = itemProps;
@@ -454,12 +458,7 @@ const SmartForm = (props, state) => {
       }
     }
     const selectCom = (
-      <Select {...selectProps}>
-        {renderSelectOp(selectData, opType)}
-        {/* <Option value="male">male</Option>
-    <Option value="female">female</Option>
-    <Option value="other">other</Option> */}
-      </Select>
+      <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
     );
 
     const formItemMap = {

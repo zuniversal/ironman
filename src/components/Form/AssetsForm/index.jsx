@@ -18,11 +18,8 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm'; //
 // import AssetsFormTable from 'smartTb/AssetsFormTable'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 
 const AssetsForm = props => {
@@ -74,45 +71,49 @@ const AssetsForm = props => {
     },
     {
       // formType: 'Select',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '设备名称',
         name: 'name',
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '设备编号',
         name: 'code',
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '出厂号',
         name: 'production_code',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '设备型号',
         name: 'model',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '额定电压',
         name: 'voltage',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '额定电流',
         name: 'electricity',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '变压容量',
         name: 'transformer_capacity',
@@ -120,7 +121,7 @@ const AssetsForm = props => {
     },
     {
       formType: 'DatePicker',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '出厂日期',
         name: 'production_date',
@@ -128,7 +129,7 @@ const AssetsForm = props => {
     },
     {
       formType: 'DatePicker',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '投运日期',
         name: 'operation_date',
@@ -147,8 +148,7 @@ const AssetsForm = props => {
   return (
     <div className={''}>
       <SmartForm
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         // config={configs}
         formProps={formProps}
         // init={init}

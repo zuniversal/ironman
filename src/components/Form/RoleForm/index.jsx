@@ -19,8 +19,6 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
 
 const { TabPane } = Tabs;
 
@@ -129,8 +127,7 @@ const RoleForm = props => {
     <div className={' RoleForm '}>
       <SmartForm
         // flexRow={6}
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

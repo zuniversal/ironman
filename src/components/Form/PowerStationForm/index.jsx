@@ -304,8 +304,7 @@ const PowerStationForm = props => {
   return (
     <div className={''}>
       <SmartForm
-        // config={config}
-        config={formatConfig(config)}
+        config={config}
         // config={configs}
         formProps={formProps}
         // init={init}

@@ -31,6 +31,7 @@ import {
   renderRadioOp,
   formatConfig,
   renderCheckboxOp,
+  tips,
 } from '@/utils'; //
 
 const { TextArea } = Input;
@@ -152,7 +153,32 @@ const DynamicItemForm = props => {
     CustomCom,
     LabelCom,
     isDisabledAll,
+    limit,
+    filterSelect,
+    value,
   } = props; //
+
+  // const selectDatas = filterSelect ? selectData.filter((v) => {
+  //   const isContain = value.every(item => v.id != item)
+  //   console.log(' value.some(item => v.id == item) ： ', v, value, isContain,  )//
+  //   return isContain
+  // }) : selectData
+  let selectDatas = selectData;
+  if (filterSelect) {
+    selectDatas = selectData.filter(v => {
+      const isContain = value.every(item => v.id != item);
+      console.log(' value.some(item => v.id == item) ： ', v, value, isContain); //
+      return isContain;
+    });
+  }
+
+  // filterSelect ? selectData.filter((v) => {
+  //   const isContain = value.every(item => v.id != item)
+  //   console.log(' value.some(item => v.id == item) ： ', v, value, isContain,  )//
+  //   return isContain
+  // }) : selectData
+  console.log(' selectDatas, selectData ： ', selectDatas, selectData); //
+  // const selectDatas = selectData
 
   return (
     <Form.List
@@ -223,7 +249,7 @@ const DynamicItemForm = props => {
         }
         const selectCom = (
           <Select {...selectProps}>
-            {renderSelectOp(selectData, opType)}
+            {renderSelectOp(selectDatas, opType)}
             {/* <Option value="male">male</Option>
         <Option value="female">female</Option>
         <Option value="other">other</Option> */}
@@ -296,6 +322,7 @@ const DynamicItemForm = props => {
                 field,
                 name,
                 fieldKey,
+                props,
               ); //
 
               // if (init) {
@@ -328,7 +355,12 @@ const DynamicItemForm = props => {
                     type="dashed"
                     className={'actionBtn addBtn'}
                     onClick={() => {
-                      add();
+                      console.log('  对吗  limit.length ', fields, limit);
+                      if (fields.length <= limit) {
+                        add();
+                      } else {
+                        tips(`最多新增${limit}条数据！`, 2);
+                      }
                     }}
                     // style={{ width: '60%' }}
                   >
@@ -420,6 +452,7 @@ DynamicItemForm.defaultProps = {
   addText: '新增',
   subText: '刪除',
   noLabel: true,
+  limit: 10,
 };
 
 export default DynamicItemForm; //

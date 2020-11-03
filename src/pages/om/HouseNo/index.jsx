@@ -197,9 +197,10 @@ class HouseNo extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
+          // ...itemDetail,
           ...res,
-          d_id,
+          d_id: itemDetail.id,
+          id: itemDetail.id,
         });
       }
     } catch (error) {

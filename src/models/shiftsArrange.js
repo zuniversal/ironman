@@ -2,6 +2,8 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsArrange';
 import * as teamServices from '@/services/shiftsManage';
 import moment from 'moment'; //
+import { history } from 'umi';
+import { SHIFTSARRANGE } from '@/constants';
 import {
   filterArr,
   getMonthWeekDaysSimple,
@@ -101,7 +103,7 @@ export default {
       });
       return {
         ...state,
-        // searchInfo: payload.payload,
+        searchInfo: payload.payload,
         dataList,
         dayList: dataList.map(v => v.days),
       };
@@ -239,6 +241,7 @@ export default {
       console.log('  params ：', params); //
       const res = yield call(services.addItem, { teamschedule_list: params });
       yield put(action(res));
+      history.push(SHIFTSARRANGE);
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
@@ -249,9 +252,8 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
-      // console.log(' exportDataAsync ： ', payload, type,     )//
       const res = yield call(services.exportData, payload);
-      console.log('  exportDataAsync res ：', res); //
+      return res;
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
       console.log(' getTeamAsync ： ', payload); //

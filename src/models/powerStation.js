@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'powerStation';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['exportDataAsync'];
 
 const batchTurnActions = [];
 
@@ -75,12 +75,11 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      console.log(' editItem ： ', state, payload); //
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id == payload.payload.d_id ? payload.bean : v),
-        })),
+        dataList: state.dataList.map(v =>
+          v.id == payload.payload.d_id ? { ...v, ...payload.bean } : v,
+        ),
         isShowModal: false,
       };
     },
@@ -147,6 +146,10 @@ export default {
       console.log(' removeItemsAsync ： ', payload, type); //
       const res = yield call(services.removeItems, payload);
       yield put(action({ ...res, payload }));
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
 
     *getClientAsync({ payload, action, type }, { call, put }) {

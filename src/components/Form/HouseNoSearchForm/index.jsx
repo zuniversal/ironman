@@ -82,7 +82,7 @@ const HouseNoSearchForm = props => {
       <SearchForm
         // flexRow={4}
         // flexRow={6}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}

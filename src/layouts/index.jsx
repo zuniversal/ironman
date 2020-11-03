@@ -172,7 +172,10 @@ const Layouts = props => {
             {/* <BellOutlined className={'actionItem '} /> */}
             <Icon icon={'search'} className={'actionItem '} />
             <Icon icon={'bell'} className={'actionItem '} />
-            <span className="avatars"></span>
+            <span
+              className="avatars"
+              onClick={() => goPage('/om/userCenter')}
+            ></span>
             {/* <Avatar
               className={'actionItem'}
               shape="square"
@@ -180,7 +183,12 @@ const Layouts = props => {
               // icon={<UserOutlined />}
               onClick={() => goPage('/cs/userCenter')}
             /> */}
-            <span className={'actionItem userName '}>用户名</span>
+            <span
+              className={'actionItem userName '}
+              onClick={() => goPage('/om/userCenter')}
+            >
+              用户名
+            </span>
           </div>
         )}
         // title={'POWERKEEPER'}

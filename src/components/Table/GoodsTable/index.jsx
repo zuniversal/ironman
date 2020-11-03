@@ -8,27 +8,12 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 
 const GoodsTable = props => {
   console.log(' GoodsTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -53,7 +38,7 @@ const GoodsTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -61,7 +46,6 @@ const GoodsTable = props => {
 
 GoodsTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default GoodsTable;

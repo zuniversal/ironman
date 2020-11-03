@@ -31,6 +31,7 @@ import {
   renderRadioOp,
   formatConfig,
   renderCheckboxOp,
+  tips,
 } from '@/utils'; //
 
 const animates = ANIMATE.bounceIn;
@@ -130,7 +131,7 @@ const rowLayout = {
   },
 };
 
-const ActionBtn = ({ fields, field, add, remove, addText, subText }) => (
+const ActionBtn = ({ fields, field, add, remove, addText, subText, limit }) => (
   <Form.Item
     // label={'zyb'}
     className={'formItems '}
@@ -140,7 +141,12 @@ const ActionBtn = ({ fields, field, add, remove, addText, subText }) => (
       type="dashed"
       className={'actionBtn addBtn'}
       onClick={() => {
-        add();
+        console.log('  对吗  limit.length ', fields, limit);
+        if (fields.length <= limit) {
+          add();
+        } else {
+          tips(`最多新增${limit}条数据！`, 2);
+        }
       }}
       // style={{ width: '60%' }}
     >
@@ -188,6 +194,8 @@ const DynamicForm = props => {
     LabelCom,
     config = [],
     isDisabledAll,
+    limit,
+    filterSelect,
   } = props; //
 
   return (
@@ -328,6 +336,7 @@ const DynamicForm = props => {
             field,
             name,
             fieldKey,
+            props,
           ); //
 
           // if (init) {
@@ -440,6 +449,7 @@ const DynamicForm = props => {
                     remove={remove}
                     addText={addText}
                     subText={subText}
+                    limit={limit}
                   ></ActionBtn>
                 )}
               </Form.Item>
@@ -457,6 +467,7 @@ DynamicForm.defaultProps = {
   addText: '新增',
   subText: '刪除',
   // noLabel: true,
+  limit: 10,
 };
 
 export default DynamicForm; //

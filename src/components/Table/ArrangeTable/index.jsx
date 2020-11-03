@@ -8,27 +8,12 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 
 const ArrangeTable = props => {
   console.log(' ArrangeTable  ： ', props); //
-  const { showModal, edit, remove, tdClick,    } = props; //
+  const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
@@ -49,7 +34,6 @@ const ArrangeTable = props => {
     {
       title: '备注',
     },
-    
   ];
 
   return (
@@ -57,7 +41,7 @@ const ArrangeTable = props => {
       columns={columns}
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
-      
+
       {...props}
     ></SmartTable>
   );
@@ -65,7 +49,6 @@ const ArrangeTable = props => {
 
 ArrangeTable.defaultProps = {
   tdClick: () => {},
-  
 };
 
 export default ArrangeTable;

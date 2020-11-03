@@ -1,26 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-} from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins,  } from '@/configs'; //
-import { formatConfig, nowYearMonth,  } from '@/utils'; //
-
+import { regoins } from '@/configs'; //
+import { formatConfig, nowYearMonth } from '@/utils'; //
 
 const ShiftsArrangeSearchForm = props => {
   console.log(' ShiftsArrangeSearchForm ： ', props); //
@@ -61,7 +45,7 @@ const ShiftsArrangeSearchForm = props => {
   // const init = {
   //   // schedule_date: nowYearMonth,
   // }
-  // console.log('  init ：', init,  )// 
+  // console.log('  init ：', init,  )//
   return (
     <div className={'ShiftsArrangeSearchForm'}>
       {/* <div className="fje btnWrapper ">
@@ -70,13 +54,10 @@ const ShiftsArrangeSearchForm = props => {
 
       <SearchForm
         // flexRow={4}
-        config={formatConfig(config)}
+        config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
-        // init={{
-        //   key9: regoins,
-        // }}
 
         noRuleAll
         {...props}

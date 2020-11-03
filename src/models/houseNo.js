@@ -7,7 +7,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'houseNo';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
 
-const otherActions = ['getClientAsync', 'getHouseNoAsync'];
+const otherActions = ['getClientAsync', 'getHouseNoAsync', 'exportDataAsync'];
 
 const batchTurnActions = [];
 
@@ -78,9 +78,9 @@ export default {
     editItem(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
+        dataList: state.dataList.map(v =>
+          v.id == payload.payload.d_id ? { ...v, ...payload.bean } : v,
+        ),
         isShowModal: false,
       };
     },
@@ -134,7 +134,8 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
+      const { latitude, longitude, ...rest } = payload;
+      const res = yield call(services.editItem, rest);
       yield put(action({ ...res, payload }));
     },
 
@@ -149,6 +150,10 @@ export default {
       const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       yield put(action({ ...res, payload }));
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
 
     *getClientAsync({ payload, action, type }, { call, put }) {
