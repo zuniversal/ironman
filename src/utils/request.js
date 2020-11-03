@@ -41,13 +41,13 @@ export const getCodeMsg = code => {
   // const {code,  } = data
   const codeItem = codeMap[code];
   // return true//
-  return codeItem || '未知状态码';
+  return codeItem || '未知状态码！';
 };
 
 export const isTips = res => {
   console.log('  isTips  !res ', !res, res);
   if (!res) {
-    tips('未知错误', 2);
+    tips('未知错误！', 2);
     return;
   }
 
@@ -71,7 +71,7 @@ export const isTips = res => {
     // if (false) {
     const codeMsg = getCodeMsg(code);
     console.log(' 提示 对吗  !codeMsg ', !codeMsg, codeMsg);
-    tips(msg_show, 2);
+    tips(msg_show || codeMsg, 2);
     // if (!codeMsg) {
     //   tips(codeMsg, 2);
     // }
@@ -79,7 +79,7 @@ export const isTips = res => {
   } else {
     console.log(' 提示 对吗  !noTips ', !noTips, noTips, status);
     if (!noTips || status != 200) {
-      tips(msg_show, 2);
+      tips(msg_show, status != 200 ? 2 : 1);
     }
   }
 };

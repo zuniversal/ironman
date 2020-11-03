@@ -54,6 +54,7 @@ class Client extends PureComponent {
     } else {
       this.props.getDistrictAsync(params.value);
     }
+    // this.props.getListAsync(params.formData);
   };
   addUserAsync = async props => {
     console.log(' addUserAsync ： ', props, this.state, this.props);
