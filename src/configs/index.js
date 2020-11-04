@@ -36,6 +36,12 @@ export const province = [
   },
 ];
 
+export const arrMapObj = arr => {
+  const obj = {};
+  arr.forEach(v => (obj[v.value] = v.label));
+  return obj;
+};
+
 export const teamTypeConfig = [
   {
     value: '0',
@@ -92,6 +98,73 @@ export const customerTypeConfig = [
     label: 'VIP客户',
   },
 ];
+
+export const missionsTypeConfig = [
+  {
+    label: '抢修',
+    value: 'rush_to_repair',
+  },
+  {
+    label: '电力施工',
+    value: 'power_construction',
+  },
+  {
+    label: '电气试验',
+    value: 'electrical_testing',
+  },
+  {
+    label: '需量申报',
+    value: 'demand_declaration',
+  },
+];
+
+export const missionsTypeMap = arrMapObj(missionsTypeConfig);
+
+export const missionsStatusConfig = [
+  {
+    label: '待排期',
+    value: 'waiting_plan',
+  },
+  {
+    label: '待确认排期',
+    value: 'waiting_confirm',
+  },
+  {
+    label: '待派单',
+    value: 'waiting_dispatch',
+  },
+  {
+    label: '处理中',
+    value: 'in_process',
+  },
+  {
+    label: '已完成',
+    value: 'completed',
+  },
+  {
+    label: '挂起',
+    value: 'hang-up',
+  },
+];
+
+export const missionsStatusMap = arrMapObj(missionsTypeConfig);
+
+export const workOrderStatusConfig = [
+  {
+    label: '待派单',
+    value: 'waiting_dispatch',
+  },
+  {
+    label: '待处理',
+    value: 'pending',
+  },
+  {
+    label: '已完成',
+    value: 'completed',
+  },
+];
+
+export const workOrderStatusMap = arrMapObj(workOrderStatusConfig);
 
 export const site = province;
 export const city = province;

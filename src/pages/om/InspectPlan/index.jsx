@@ -54,6 +54,10 @@ class InspectPlan extends PureComponent {
     };
   }
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   onSearch = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action } = this.props; //
@@ -84,7 +88,7 @@ class InspectPlan extends PureComponent {
         <Button type="primary" onClick={() => this.props.resetStationData()}>
           重置
         </Button>
-        <Button type="primary" onClick={() => this.props.changePlanAsync()}>
+        <Button type="primary" onClick={() => this.props.addItemAsync()}>
           保存计划
         </Button>
       </div>
@@ -99,6 +103,7 @@ class InspectPlan extends PureComponent {
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></InspectPlanSearchForm>
@@ -189,9 +194,10 @@ class InspectPlan extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getClientAsync();
     this.props.getListAsync({
       leader: 1,
-      month: '2020-10',
+      // month: '2020-10',
     });
   }
 

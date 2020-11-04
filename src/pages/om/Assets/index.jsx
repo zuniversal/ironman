@@ -309,6 +309,9 @@ class Assets extends PureComponent {
       </ResultModal>
     );
   };
+  componentDidMount() {
+    this.props.getPowerAsync();
+  }
 
   render() {
     console.log(

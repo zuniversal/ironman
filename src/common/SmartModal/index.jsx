@@ -45,6 +45,9 @@ class SmartModal extends PureComponent {
     if (size === 'default') {
       return 'commonModal';
     }
+    if (size === 'small') {
+      return 'smallModal';
+    }
   };
   getWidth = e => {
     // console.log('    getWidth ： ', e, this.state, this.props);

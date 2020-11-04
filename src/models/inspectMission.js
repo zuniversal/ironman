@@ -75,9 +75,9 @@ export default {
     editItem(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
+        // dataList: state.dataList.map(v => ({
+        //   ...(v.id !== payload.payload.d_id ? payload : v),
+        // })),
         isShowModal: false,
       };
     },
@@ -99,6 +99,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getItemAsync ： ', payload); //
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
@@ -107,7 +108,19 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
+      console.log(' editItemAsync ： ', payload); //
+      // if (payload.action === 'assignMission') {
+      //    res = yield call(services.assignMission, payload);
+      // } else if (payload.action === 'editDate') {
+      //    res = yield call(services.assignMission, payload);
+      // }
+      const params = {
+        ...payload,
+      };
+      if (payload.date) {
+        params.date = payload.date.format('YYYY-MM-DD');
+      }
+      const res = yield call(services.assignMission, params);
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {

@@ -20,6 +20,7 @@ const ClientTable = props => {
   const columns = [
     {
       title: '客户编号',
+      className: 'textCenter',
       dataIndex: 'id',
       // link: true,
       // render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,

@@ -73,7 +73,10 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          created_time: v.created_time.split('T')[0],
+        })),
         count: payload.rest.count,
       };
     },
@@ -136,9 +139,6 @@ export default {
     dispatchOrder(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
         isShowModal: false,
       };
     },

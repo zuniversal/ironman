@@ -284,7 +284,7 @@ const DynamicForm = props => {
           Label: LabelCom,
           CustomCom: CustomCom,
           Divider: <Divider />,
-          Input: <Input allowClear {...realComProps} />,
+          Input: <Input allowClear maxLength={32} {...realComProps} />,
           TextArea: (
             <TextArea
               autoSize={{ minRows: 3, maxRows: 5 }}

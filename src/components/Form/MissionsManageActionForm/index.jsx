@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
+import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
 
 export const MissionsManageWorkOrderForm = props => {
   console.log(' MissionsManageWorkOrderForm ： ', props); //
@@ -26,8 +27,8 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectData: props.userList,
+      formType: 'Search',
+      selectData: missionsTypeConfig,
       itemProps: {
         label: '类型',
         name: 'type',
@@ -77,9 +78,9 @@ export const MissionsManageContractForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getContractAsync,
-      selectData: props.contractList,
+      // formType: 'Search',
+      // selectSearch: props.getContractAsync,
+      // selectData: props.contractList,
       itemProps: {
         label: '选择合同',
         name: 'contract_id',

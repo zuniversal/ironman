@@ -88,9 +88,11 @@ class UserCenter extends PureComponent {
   };
 
   componentDidMount() {
-    this.props.getItemAsync({
-      d_id: '3',
-    });
+    // this.props.getItemAsync({
+    //   d_id: '1',
+    //   custom_id: '1',
+    // });
+    this.props.getItemAsync({});
   }
 
   render() {

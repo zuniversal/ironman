@@ -93,7 +93,7 @@ class InspectMission extends PureComponent {
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
       remove: this.onRemove,
-      showFormModal: this.props.showFormModal,
+      showFormModal: this.props.getItemAsync,
     };
 
     return <InspectMissionTable {...tableProps}></InspectMissionTable>;

@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectPlan';
 import * as clientServices from '@/services/client';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import moment from 'moment'; //
 
 const namespace = 'inspectPlan';
 const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
@@ -111,14 +112,20 @@ export default {
         start: v.startStr,
         plan_date: v.startStr,
         id: v.id,
+        station_id: v.id,
       }));
+      console.log(' dragList ： ', state, dragList); //
       const latestDrag = dragList[dragList.length - 1];
+      console.log(' latestDrag ： ', latestDrag); //
       const dataListFilter = dataList.map(v => {
         return v.id != latestDrag.id
           ? v
           : {
               ...v,
-              surplus_plan_num: v.surplus_plan_num - 1,
+              surplus_plan_num:
+                v.surplus_plan_num - 1 > 0
+                  ? v.surplus_plan_num - 1
+                  : v.surplus_plan_num,
             };
       });
       console.log(
@@ -153,7 +160,10 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
+      const res = yield call(services.getList, {
+        ...payload,
+        month: payload.month ? data.month.format('YYYY-MM') : nowYearMonth,
+      });
       yield put(action({ ...res, payload }));
       // const { form,  } = payload; //
       // try {
@@ -172,8 +182,12 @@ export default {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
+    *addItemAsync({ payload, action, type }, { call, put, select }) {
+      const { dragList } = yield select(state => state[namespace]);
+      console.log(' addItemAsync dragList ： ', dragList); //
+      const res = yield call(services.addItem, {
+        data: dragList,
+      });
       yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {

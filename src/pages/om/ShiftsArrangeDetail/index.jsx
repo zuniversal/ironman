@@ -122,6 +122,9 @@ class ShiftsArrangeDetail extends PureComponent {
   //   }
   // };
 
+  handleCancel = e => {
+    console.log('    handleCancel ： ', e);
+  };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);

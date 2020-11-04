@@ -68,7 +68,7 @@ class SmartTable extends PureComponent {
         columns,
         haveChildren: props.haveChildren,
       }),
-      // mockTbData: [],
+      mockTbData: [],
 
       selectionType: 'checkbox',
 
@@ -243,9 +243,19 @@ class SmartTable extends PureComponent {
     //   return config.render
     // }
 
-    const { linkUrl, linkUrlFn, link, d_item, render, dataMap } = config;
+    const {
+      linkUrl,
+      linkUrlFn,
+      link,
+      d_item,
+      render,
+      dataMap,
+      isMoment,
+    } = config;
 
-    const { showDetail, rowKey } = this.props; //
+    const { showDetail, rowKey } = this.props;
+
+    // const handledText = isMoment ? text.format('YYYY-MM-DD') : text;//
 
     const textLength = `${text}`.length;
     // const txt = foramtText(`${text}`)

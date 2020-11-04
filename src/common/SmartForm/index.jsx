@@ -339,7 +339,7 @@ const SmartForm = (props, state) => {
       return items;
     }
 
-    if (!formType || formType === 'Input') {
+    if ((!formType || formType === 'Input') && isSearchForm) {
       items.comProps.onPressEnter = props.getList; // ;
     }
 
@@ -378,9 +378,9 @@ const SmartForm = (props, state) => {
       className: `formItems rowText ${bounceIn} ${itemPropsCls}  `,
     };
     const formItemProps = {
+      rules: noRule || noRuleAll ? undefined : rules({ items, label }),
       ...formItemCommonProps,
       className: `formItems ${bounceIn} ${itemPropsCls}  `,
-      rules: noRule || noRuleAll ? undefined : rules({ items, label }),
     };
 
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
@@ -466,7 +466,7 @@ const SmartForm = (props, state) => {
       Label: LabelCom,
       CustomCom: CustomCom,
       Divider: <Divider />,
-      Input: <Input allowClear {...realComProps} />,
+      Input: <Input allowClear maxLength={32} {...realComProps} />,
       TextArea: (
         <TextArea
           autoSize={{ minRows: 3, maxRows: 5 }}

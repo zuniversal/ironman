@@ -162,7 +162,7 @@ const InspectPlanCalendar = props => {
       <SmartCalendar
         // events={calendarEvents}
 
-        initialDate={new Date(2020, 9, 1)}
+        // initialDate={new Date(2020, 9, 1)}
         className={`${ANIMATE.slideInLeft} `}
         select={select}
         eventClick={eventClick}

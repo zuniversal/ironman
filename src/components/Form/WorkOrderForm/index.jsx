@@ -3,7 +3,7 @@ import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
-import { regoins } from '@/configs'; //
+import { regoins, workOrderStatusConfig } from '@/configs'; //
 import { formatConfig, createArr } from '@/utils'; //
 
 const choiceRadios = [
@@ -38,7 +38,7 @@ const WorkOrderTicketForm = props => {
     },
     {
       formType: 'Search',
-      selectData: props.userList,
+      selectData: workOrderStatusConfig,
       itemProps: {
         label: '状态',
         name: 'status',

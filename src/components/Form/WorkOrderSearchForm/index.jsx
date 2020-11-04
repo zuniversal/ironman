@@ -2,6 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { workOrderStatusConfig } from '@/configs';
 
 const WorkOrderSearchForm = props => {
   console.log(' WorkOrderSearchForm ： ', props); //
@@ -19,7 +20,7 @@ const WorkOrderSearchForm = props => {
     },
     {
       formType: 'Search',
-      selectData: props.statusList,
+      selectData: workOrderStatusConfig,
       itemProps: {
         label: '状态',
         name: 'status',

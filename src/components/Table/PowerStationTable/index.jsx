@@ -34,11 +34,13 @@ const PowerStationTable = props => {
     {
       title: '设备数',
       dataIndex: 'equipment_num',
+      className: 'textCenter',
       d_item: 'id',
     },
     {
       title: '监控点数',
       // dataIndex: '',
+      className: 'textCenter',
       d_item: 'id',
     },
     {

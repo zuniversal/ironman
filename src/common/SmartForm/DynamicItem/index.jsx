@@ -170,6 +170,7 @@ const DynamicItemForm = props => {
       console.log(' value.some(item => v.id == item) ： ', v, value, isContain); //
       return isContain;
     });
+    // selectDatas = selectData.splice(0, 4)
   }
 
   // filterSelect ? selectData.filter((v) => {
@@ -255,12 +256,21 @@ const DynamicItemForm = props => {
         <Option value="other">other</Option> */}
           </Select>
         );
+        const selectCom2 = (
+          <Select {...selectProps}>
+            {renderSelectOp(selectData, opType)}
+            {/* <Option value="male">male</Option>
+        <Option value="female">female</Option>
+        <Option value="other">other</Option> */}
+          </Select>
+        );
+        console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2); //
         const formItemMap = {
           rowText: label,
           Label: LabelCom,
           CustomCom: CustomCom,
           Divider: <Divider />,
-          Input: <Input allowClear {...realComProps} />,
+          Input: <Input allowClear maxLength={32} {...realComProps} />,
           TextArea: (
             <TextArea
               autoSize={{ minRows: 3, maxRows: 5 }}

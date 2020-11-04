@@ -80,8 +80,12 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          confirm: v.confirm ? '已确认' : '未确认',
+        })),
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {
@@ -279,7 +283,7 @@ export default {
         ...payload,
         // task_id: itemDetail.id
       });
-      yield put(action(res));
+      // yield put(action(res));
       const dataList = yield call(services.getList, payload);
       yield put({
         type: 'getList',
@@ -288,9 +292,9 @@ export default {
     },
     *closeMissionAsync({ payload, action, type }, { call, put }) {
       console.log(' closeMissionAsync ： ', payload, type); //
-      return;
-      const res = yield call(services.linkContract, payload);
-      yield put(action({ ...res, payload }));
+      // return;
+      const res = yield call(services.closeMission, payload);
+      // yield put(action({ ...res, payload }));
     },
     *linkContractAsync({ payload, action, type }, { call, put }) {
       console.log(' linkContractAsync ： ', payload, type); //
@@ -303,7 +307,12 @@ export default {
         ...payload,
       };
       const res = yield call(services.schedule, params);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      const dataList = yield call(services.getList, payload);
+      yield put({
+        type: 'getList',
+        payload: dataList,
+      });
     },
     *confirmScheduleAsync({ payload, action, type }, { call, put }) {
       console.log(' confirmScheduleAsync ： ', payload, type); //

@@ -63,6 +63,10 @@ class MissionsManage extends PureComponent {
     };
   }
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -84,6 +88,7 @@ class MissionsManage extends PureComponent {
     return (
       <MissionsManageSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
       ></MissionsManageSearchForm>
     );
   };
@@ -109,7 +114,10 @@ class MissionsManage extends PureComponent {
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
     if (action === 'closeMission') {
-      this.props.closeMissionAsync({});
+      this.props.closeMissionAsync({
+        d_id,
+        id: d_id,
+      });
       return;
     }
     try {

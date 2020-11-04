@@ -38,6 +38,7 @@ const ShiftsManageForm = props => {
         name: 'member',
       },
       comProps: {
+        limit: 5,
         extra: true,
         filterSelect: true,
         formType: 'Search',

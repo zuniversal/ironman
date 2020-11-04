@@ -54,6 +54,12 @@ const InspectMissionDetailForm = props => {
     },
     {
       itemProps: {
+        label: '领取人',
+        // name: '',
+      },
+    },
+    {
+      itemProps: {
         label: '领取时间',
         name: 'assign_date',
       },

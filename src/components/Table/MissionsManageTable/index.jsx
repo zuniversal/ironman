@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const MissionsManageTable = props => {
   console.log(' MissionsManageTable  ： ', props); //
@@ -41,15 +42,17 @@ const MissionsManageTable = props => {
     {
       title: '任务类型',
       dataIndex: 'type',
+      dataMap: missionsTypeMap,
     },
     {
       title: '关联合同',
-      // dataIndex: 'contract',
-      dataIndex: ['contract', 'code'],
+      dataIndex: 'contacts',
+      // dataIndex: ['contract', 'code'],
     },
     {
       title: '当前状态',
       dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
     {
       title: '发起工单数',

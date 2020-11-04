@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.less';
 import {
   Form,
@@ -20,6 +20,7 @@ import {
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
+import { INPUT_TXT } from '@/utils';
 
 const formLayouts = {
   labelCol: {
@@ -33,6 +34,10 @@ const formLayouts = {
 const UserCenterForm = props => {
   console.log(' UserCenterForm ： ', props); //
   const [form] = Form.useForm();
+  const [noRule, setNoRule] = useState(false);
+
+  const res = form.getFieldValue('password'); //
+  console.log('  resresres ：', res, noRule); //
 
   const config = [
     {
@@ -78,19 +83,39 @@ const UserCenterForm = props => {
     },
     {
       formType: 'Password',
-      noRule: true,
+      noRule: !noRule, //
       itemProps: {
         label: '密码重置',
         name: 'password',
       },
+      comProps: {
+        onChange: e => {
+          console.log('  resresres onChange ：', e, e.target.value); //
+          setNoRule(e.target.value);
+        },
+      },
     },
     {
       formType: 'Password',
-      noRule: true,
+      // noRule: noRule,//
       itemProps: {
         label: '再次输入密码',
         name: 'rePwd',
         dependencies: ['password'],
+        rules: [
+          {
+            required: noRule,
+            message: '请再次输入密码',
+          },
+          ({ getFieldValue }) => ({
+            validator(rule, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(`2次输入密码不一致！`);
+            },
+          }),
+        ],
       },
     },
   ];
@@ -110,6 +135,7 @@ const UserCenterForm = props => {
         // init={{}}
         propsForm={form}
         action={'edit'}
+        noPh
         formLayouts={formLayouts}
         {...props}
       ></SmartForm>

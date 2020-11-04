@@ -248,6 +248,10 @@ class HouseNo extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getClientAsync();
+    this.props.getListAsync();
+  }
 
   render() {
     console.log(

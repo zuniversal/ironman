@@ -27,6 +27,7 @@ const ShiftsTransferTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      className: 'textCenter',
     },
     {
       title: '交班人',

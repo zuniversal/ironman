@@ -114,6 +114,10 @@ export const AdminForm = props => {
                   }
                 }
               }}
+              disabled={
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length
+              }
             >
               保存管理员信息
             </Button>
@@ -318,15 +322,15 @@ const ClientForm = props => {
     },
     // {
     //   itemProps: {
-    //     label: '企业LoGo',
+    //     label: '企业Logo',
     //     name: 'logo',
     //   },
     //   comProps: {},
     // },
     <UploadCom
-      label={'企业LoGo'}
+      label={'企业Logo'}
       action={'logo'}
-      action={'/v1/upload'}
+      action={'/api/v1/upload'}
       name={'file'}
     ></UploadCom>,
 

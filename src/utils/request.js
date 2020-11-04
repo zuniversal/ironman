@@ -22,7 +22,7 @@ import axios from 'axios';
 export const NORMAL_CODE = 100000;
 
 const codeMap = {
-  100000: '正常码',
+  // 100000: '正常码',
   105001: '系统错误',
   104000: '用户认证错误',
   104001: '错误的验证信息',
@@ -41,7 +41,7 @@ export const getCodeMsg = code => {
   // const {code,  } = data
   const codeItem = codeMap[code];
   // return true//
-  return codeItem || '未知状态码！';
+  return codeItem || `${code} - 未知状态码！`;
 };
 
 export const isTips = res => {
@@ -67,6 +67,10 @@ export const isTips = res => {
     tips(statusMap[status], 2);
     return;
   }
+  // if (codeMap[code]) {
+  //   tips(codeMap[code], 2);
+  //   return;
+  // }
   if (code !== NORMAL_CODE) {
     // if (false) {
     const codeMsg = getCodeMsg(code);

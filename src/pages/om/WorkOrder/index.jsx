@@ -57,6 +57,10 @@ class WorkOrder extends PureComponent {
     };
   }
 
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params); //
     return (
@@ -75,6 +79,7 @@ class WorkOrder extends PureComponent {
     return (
       <WorkOrderSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
         // onSubmit={this.onSubmit}
         // onFail={this.onFail}
       ></WorkOrderSearchForm>
@@ -187,6 +192,9 @@ class WorkOrder extends PureComponent {
       </SmartFormModal>
     );
   };
+  // componentDidMount() {
+  //   this.props.getEnumListAsync();
+  // }
 
   render() {
     console.log(

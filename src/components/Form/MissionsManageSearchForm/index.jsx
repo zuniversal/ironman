@@ -2,6 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { missionsStatusConfig } from '@/configs';
 
 const MissionsManageSearchForm = props => {
   console.log(' MissionsManageSearchForm ： ', props); //
@@ -10,7 +11,7 @@ const MissionsManageSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectData: props.userList,
+      selectData: missionsStatusConfig,
       itemProps: {
         label: '状态',
       },
