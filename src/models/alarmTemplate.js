@@ -3,7 +3,7 @@ import * as services from '@/services/alarmTemplate';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'alarmTemplate';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [];
 
@@ -50,6 +50,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

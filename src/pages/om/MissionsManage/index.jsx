@@ -93,7 +93,6 @@ class MissionsManage extends PureComponent {
     );
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -156,6 +155,7 @@ class MissionsManage extends PureComponent {
       if (action === 'confirmSchedule') {
         this.props.confirmScheduleAsync({
           ...res,
+          d_id: d_id,
         });
       }
     } catch (error) {
@@ -164,7 +164,6 @@ class MissionsManage extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -221,7 +220,7 @@ class MissionsManage extends PureComponent {
     return <MissionsManageForm {...formComProps}></MissionsManageForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
+    // console.log(' get 取属 size ： ', this.state, this.props);
     return ['closeMission', 'linkContract', 'schedule', 'confirmSchedule'].some(
       v => v === this.props.action,
     )
@@ -229,11 +228,10 @@ class MissionsManage extends PureComponent {
       : 'default';
   }
   get isNoForm() {
-    console.log(' get 取属 isNoForm ： ', this.state, this.props);
+    // console.log(' get 取属 isNoForm ： ', this.state, this.props);
     return ['closeMission'].some(v => v === this.props.action);
   }
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -255,14 +253,19 @@ class MissionsManage extends PureComponent {
       this.state,
       this.props,
     ); //
-    this.props.getEnumListAsync({
-      model: '任务管理',
-      name: '任务类型',
-    });
-    this.props.getEnumListAsync({
-      model: '任务管理',
-      name: '工单类型',
-    });
+    // this.props.getEnumListAsync({
+    //   model: '任务管理',
+    //   name: '任务类型',
+    // });
+    // this.props.getEnumListAsync({
+    //   model: '任务管理',
+    //   name: '工单类型',
+    // });
+    this.props.getClientAsync();
+    this.props.getPowerAsync();
+    this.props.getTeamAsync();
+    // this.props.getAssetsAsync();
+    // this.props.getContractAsync();
   }
 
   render() {

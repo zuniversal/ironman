@@ -99,8 +99,6 @@ class ShiftsManage extends PureComponent {
       <ShiftsManageSearchForm
         formBtn={this.renderFormBtn}
         onFieldChange={this.onFieldChange}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></ShiftsManageSearchForm>
     );
   };
@@ -151,7 +149,6 @@ class ShiftsManage extends PureComponent {
     history.push(page);
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onPageChange: this.props.onPageChange,
       onSelectChange: this.props.onSelectChange,
@@ -195,7 +192,6 @@ class ShiftsManage extends PureComponent {
     }
   };
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -209,7 +205,6 @@ class ShiftsManage extends PureComponent {
     return <ShiftsManageForm {...formComProps}></ShiftsManageForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

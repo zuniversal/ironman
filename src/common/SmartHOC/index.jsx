@@ -177,7 +177,7 @@ export default ({
       });
     };
     renderRemoveModal = params => {
-      console.log(' renderRemoveModal ： ', params);
+      // console.log(' renderRemoveModal ： ', params);
       const { isShowRemoveModal } = this.state; //
       const { removeTitle } = this.props; //
 
@@ -209,24 +209,24 @@ export default ({
       this.setState(topCom);
     };
     renderModalTop = e => {
-      console.log('    renderModalTop ： ', e, this.state, this.props);
+      // console.log('    renderModalTop ： ', e, this.state, this.props);
       return this.state.topCom;
     };
 
     showFormModal = params => {
       const { action, formComProps, formModalProps, modalFormContent } = params;
       const actionFn = this.getAction(action);
-      console.log(
-        '    showFormModal ： ',
-        action,
-        params,
-        formModalProps,
-        formComProps,
-        this.state,
-        this.props,
-        actions,
-        actionFn,
-      );
+      // console.log(
+      //   '    showFormModal ： ',
+      //   action,
+      //   params,
+      //   formModalProps,
+      //   formComProps,
+      //   this.state,
+      //   this.props,
+      //   actions,
+      //   actionFn,
+      // );
 
       if (action !== 'add') {
         // const { dispatch } = this.props; //
@@ -408,7 +408,7 @@ export default ({
     };
 
     renderSmartFormModal = params => {
-      console.log(' renderSmartFormModal ： ', params, this.state, this.props);
+      // console.log(' renderSmartFormModal ： ', params, this.state, this.props);
       const { action, isShow, formModalProps } = this.state; //
 
       const formComProps = {
@@ -449,12 +449,12 @@ export default ({
     };
 
     componentDidMount() {
-      console.log(
-        ' SmartHoc 组件componentDidMount挂载 ： ',
-        this.state,
-        this.props,
-        noMountFetch,
-      ); //
+      // console.log(
+      //   ' SmartHoc 组件componentDidMount挂载 ： ',
+      //   this.state,
+      //   this.props,
+      //   noMountFetch,
+      // ); //
 
       if (!noMountFetch) {
         this.getList();
@@ -465,19 +465,10 @@ export default ({
     }
 
     get isShowTitle() {
-      console.log(' get 取属 isShowTitle ： ', this.state, this.props);
       const getShowTitle = props => {
         const { route } = props; //
         const { path, title } = route;
         const isInclude = noShowTitlePath.every(v => v != path);
-        console.log(
-          ' isInclude some  ： ',
-          props,
-          isInclude,
-          path,
-          route,
-          title,
-        );
         return isInclude ? title : false;
         // const isInclude = noShowTitlePath.some(v => v == path);
         // console.log(' isInclude some  ： ', props, isInclude, path);
@@ -488,11 +479,6 @@ export default ({
 
     render() {
       // console.log(' SmartHoc 组件 this.state, this.props ：', config, this.state, this.props, )
-      console.log(
-        'SmartHoc 组件 this.state, this.props111 ：',
-        this.state,
-        this.props,
-      );
 
       return (
         <div className="smartHocWrapper">

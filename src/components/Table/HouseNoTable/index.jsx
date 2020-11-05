@@ -19,6 +19,7 @@ const HouseNoTable = props => {
     {
       title: '所属客户',
       dataIndex: 'customer',
+      className: 'textCenter',
       detailFn: (text, record, index) => showDetail(record.id),
     },
     {

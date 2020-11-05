@@ -155,16 +155,6 @@ const SmartForm = (props, state) => {
   const configs = isFormat
     ? formatConfig(config, { isSearchForm, isDisabledAll })
     : config; //
-  console.log('  configs ：', configs); //
-
-  console.log(
-    ' %c SmartForm 组件 state, props ： ',
-    `color: #333; font-weight: bold`,
-    state,
-    props,
-    configs,
-    configs[configs.length - 1],
-  ); //
 
   const [initData, setInitData] = useState(() => {
     const dynamicFields = configs.filter(
@@ -192,15 +182,6 @@ const SmartForm = (props, state) => {
     : initData;
   // const initialValues = mockFormData(configs, init);
   // const initialValues = Object.keys(init).length ? init : (isMockData ) ? mockFormData(configs, init, ) : {}
-  console.log(
-    ' SmartForm initialValues ： ',
-    initData,
-    init,
-    props,
-    initialValues,
-    action,
-    action === 'edit',
-  ); //
   // const initialValues = init ? init : {}
   // const initialValues = { field2: 'zyb',    }
 
@@ -495,16 +476,6 @@ const SmartForm = (props, state) => {
     };
 
     const formItemCom = formItemMap[formType];
-    // console.log(
-    //   ' formItemCom ： ',
-    //   formItemCom,
-    //   formItemMap,
-    //   formType,
-    //   items,
-    //   formLabel,
-    // ); //
-
-    console.log(' formItemCom ： ', formItemCom, formItemProps); //
     if (formType === 'PropsCom') {
       return (
         <Form.Item labelAlign={'left'} {...rowLayout} {...formItemNoRuleProps}>
@@ -518,7 +489,6 @@ const SmartForm = (props, state) => {
     }
 
     if (formType === 'Divider') {
-      console.log(' DividerDividerDivider ： ', formItemCom); //
       return (
         <Form.Item labelAlign={'left'} {...rowLayout} {...formItemDividerProps}>
           <Divider />
@@ -605,28 +575,9 @@ const SmartForm = (props, state) => {
         </Form.Item>
       );
     }
-
-    // console.log(' itemProps ： ', formItemCom, formType, items, itemProps, comProps,   )//
-
-    // const formItemProps = {
-    //   name: key,
-    //   label: label,
-    //   rules: rules,
-    //   valuePropName: "checked"
-    // }
-
-    // console.log(' formItemProps ： ',  formItemProps, normalItem, initialValues, init, action, ); //
     return normalItem;
   });
 
-  console.log(
-    ' SmartForm formProps ： ',
-    form,
-    formProps,
-    formItemLayout,
-    formLayout,
-    initialValues,
-  ); //
   return (
     <>
       <Form

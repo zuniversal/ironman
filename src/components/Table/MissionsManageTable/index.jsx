@@ -29,6 +29,7 @@ const MissionsManageTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      className: 'textCenter',
     },
     {
       title: '名称',
@@ -88,7 +89,17 @@ const MissionsManageTable = props => {
       >
         排期
       </a>
-      {/* <a onClick={() => props.edit({ action: 'confirmSchedule', d_id: record.id, itemDetail: record, })}>确认排期</a> */}
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'confirmSchedule',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        确认排期
+      </a>
       <a
         onClick={() =>
           props.showFormModal({

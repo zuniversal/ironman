@@ -21,7 +21,6 @@ import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm'; //
 import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm'; //
 import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm'; //
 import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
-import WorkOrderDetail from '@/components/Detail/WorkOrderDetail'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/workOrder'; //
@@ -80,14 +79,11 @@ class WorkOrder extends PureComponent {
       <WorkOrderSearchForm
         formBtn={this.renderFormBtn}
         onFieldChange={this.onFieldChange}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></WorkOrderSearchForm>
     );
   };
 
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -146,7 +142,6 @@ class WorkOrder extends PureComponent {
     }
   };
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -178,7 +173,6 @@ class WorkOrder extends PureComponent {
     return this.props.action === 'dispatchOrder' ? 'small' : 'default';
   }
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

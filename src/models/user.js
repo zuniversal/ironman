@@ -1,11 +1,14 @@
-import { init, action } from '@/utils/createAction'; //
+import { init } from '@/utils/createAction'; //
 import * as services from '@/services/user';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import * as userCenterServices from '@/services/userCenter';
+import { formatSelectList, nowYearMonth, setItem, getItem } from '@/utils';
+import { history } from 'umi';
+import { HOME } from '@/constants';
 
 const namespace = 'user';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['loginAsync'];
 
 const batchTurnActions = [];
 
@@ -17,6 +20,8 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
+
 export default {
   namespace,
 
@@ -26,6 +31,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    userInfo,
   },
 
   reducers: {
@@ -50,6 +56,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {
@@ -88,9 +95,30 @@ export default {
         ),
       };
     },
+    login(state, { payload, type }) {
+      console.log(' login ： ', state, payload); //
+      return {
+        ...state,
+        userInfo: payload.bean,
+      };
+    },
   },
 
   effects: {
+    *loginAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.login, payload);
+      console.log(' loginAsync ： ', res, payload, action); //
+      setItem('token', res.rest.token, true);
+      setItem('tokens', res.rest.token);
+      const userInfo = yield call(userCenterServices.getItem, payload);
+      console.log(' userInfo ： ', userInfo); //
+      yield put({
+        type: 'login',
+        payload: userInfo,
+      });
+      setItem('userInfo', userInfo.bean);
+      history.push(HOME);
+    },
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsync ： ', payload, action, type); //
       const res = yield call(services.getList, payload);

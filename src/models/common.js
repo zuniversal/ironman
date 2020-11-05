@@ -3,7 +3,7 @@ import * as services from '@/services/common';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'common';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = ['getEnumListAsync'];
 
@@ -63,6 +63,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

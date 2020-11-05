@@ -20,6 +20,7 @@ import { ANIMATE } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
 import PageTitle from '@/components/Widgets/PageTitle'; //
 import LogoCom from '@/components/Widgets/LogoCom'; //
+import HeaderWidget from '@/components/Widgets/HeaderWidget'; //
 import { actions } from '@/models/layout'; //
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
@@ -47,7 +48,7 @@ const Layouts = props => {
   const [title, setTitle] = useState('');
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
-  const { children, location, loading } = props; //
+  const { children, location, loading, userInfo } = props; //
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
@@ -165,31 +166,7 @@ const Layouts = props => {
         //   </div>
         // )}
         rightContentRender={() => (
-          <div className={'dfc'}>
-            {/* <Avatar shape="square" size="small" icon={<SearchOutlined />} />
-              <Avatar shape="square" size="small" icon={<UserOutlined />} /> */}
-            {/* <SearchOutlined className={'actionItem '} /> */}
-            {/* <BellOutlined className={'actionItem '} /> */}
-            <Icon icon={'search'} className={'actionItem '} />
-            <Icon icon={'bell'} className={'actionItem '} />
-            <span
-              className="avatars"
-              onClick={() => goPage('/om/userCenter')}
-            ></span>
-            {/* <Avatar
-              className={'actionItem'}
-              shape="square"
-              size="small"
-              // icon={<UserOutlined />}
-              onClick={() => goPage('/cs/userCenter')}
-            /> */}
-            <span
-              className={'actionItem userName '}
-              onClick={() => goPage('/om/userCenter')}
-            >
-              用户名
-            </span>
-          </div>
+          <HeaderWidget userInfo={userInfo}></HeaderWidget>
         )}
         // title={'POWERKEEPER'}
         title={''}
@@ -239,6 +216,9 @@ const Layouts = props => {
   );
 };
 
-const mapStateToProps = ({ loading }) => ({ loading: loading.global });
+const mapStateToProps = ({ loading, user }) => ({
+  loading: loading.global,
+  userInfo: user.userInfo,
+});
 
 export default connect(mapStateToProps)(Layouts);

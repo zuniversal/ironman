@@ -302,13 +302,7 @@ class Client extends PureComponent {
 
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
-    return (
-      <ClientSearchForm
-        formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
-      ></ClientSearchForm>
-    );
+    return <ClientSearchForm formBtn={this.renderFormBtn}></ClientSearchForm>;
   };
 
   showFormModalWithProps = params => {
@@ -333,8 +327,6 @@ class Client extends PureComponent {
     });
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       tdClick: this.props.showFormModal,
@@ -352,7 +344,6 @@ class Client extends PureComponent {
     return <ClientTable {...tableProps}></ClientTable>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     const { action, show, titleMap } = this.state; //
 
     const formComProps = {

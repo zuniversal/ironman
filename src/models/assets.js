@@ -7,7 +7,7 @@ import { formatSelectList } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'assets';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
@@ -77,6 +77,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

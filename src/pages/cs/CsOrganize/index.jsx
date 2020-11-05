@@ -60,23 +60,6 @@ class CsOrganize extends PureComponent {
   };
 
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
-
-    const tableProps = {
-      newTbData: this.state.newTbData,
-
-      onSelectChange: this.props.onSelectChange,
-      tdClick: this.props.showFormModal,
-      showDetail: this.props.showFormModal,
-      dataSource: this.props.dataList,
-      edit: this.props.showFormModal,
-      remove: this.props.onRemove,
-    };
-
-    return <CsOrganizeTable {...tableProps}></CsOrganizeTable>;
-  };
-  renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -108,7 +91,6 @@ class CsOrganize extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -116,8 +98,6 @@ class CsOrganize extends PureComponent {
     return <CsOrganizeForm {...formComProps}></CsOrganizeForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
-
     return (
       <SmartFormModal
         show={this.props.isShowModal}

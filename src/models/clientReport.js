@@ -3,7 +3,7 @@ import * as services from '@/services/clientReport';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'clientReport';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [];
 
@@ -50,6 +50,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

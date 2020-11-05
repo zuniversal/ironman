@@ -207,14 +207,6 @@ const DynamicForm = props => {
     >
       {(fields, params) => {
         const { add, remove } = params;
-        console.log(
-          ' params ： ',
-          fields.length,
-          fields.length === 0,
-          fields,
-          params,
-          itemProps,
-        ); //
 
         // if (fields.length === 0) {
         //   console.log(' add ： ',    )//
@@ -252,7 +244,6 @@ const DynamicForm = props => {
           className: ` ${comProps.className} `,
           placeholder: formLabel,
         };
-        console.log(' realComProps ： ', realComProps, formItemProps); //
 
         const selectProps = {
           allowClear: true,
@@ -272,12 +263,7 @@ const DynamicForm = props => {
           }
         }
         const selectCom = (
-          <Select {...selectProps}>
-            {renderSelectOp(selectData, opType)}
-            {/* <Option value="male">male</Option>
-        <Option value="female">female</Option>
-        <Option value="other">other</Option> */}
-          </Select>
+          <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
         );
         const formItemMap = {
           rowText: label,
@@ -392,7 +378,7 @@ const DynamicForm = props => {
           );
 
           const extraItem = config.map((v, i) => {
-            console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
+            // console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
             const { itemProps } = v;
             const { label, className } = itemProps;
 

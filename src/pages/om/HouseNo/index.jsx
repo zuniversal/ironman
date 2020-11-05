@@ -147,8 +147,6 @@ class HouseNo extends PureComponent {
           this.props.getHouseNoAsync({ keyword: params })
         }
         houseNoList={this.props.houseNoList}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></HouseNoSearchForm>
     );
   };
@@ -164,7 +162,6 @@ class HouseNo extends PureComponent {
     });
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -209,7 +206,6 @@ class HouseNo extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -235,7 +231,6 @@ class HouseNo extends PureComponent {
     return <HouseNoForm {...formComProps}></HouseNoForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

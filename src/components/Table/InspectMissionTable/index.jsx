@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsStatusMap } from '@/configs';
 
 const InspectMissionTable = props => {
   console.log(' InspectMissionTable  ： ', props); //
@@ -20,6 +21,7 @@ const InspectMissionTable = props => {
       title: 'id',
       dataIndex: 'id',
       d_item: 'id',
+      className: 'textCenter',
     },
     {
       title: '名称',
@@ -39,6 +41,7 @@ const InspectMissionTable = props => {
     {
       title: '当前状态',
       dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
 
     {

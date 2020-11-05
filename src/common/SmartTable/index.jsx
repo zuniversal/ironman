@@ -395,7 +395,7 @@ class SmartTable extends PureComponent {
   };
 
   actionCol = e => {
-    console.log('    actionCol ： ', e, this.state, this.props);
+    // console.log('    actionCol ： ', e, this.state, this.props);
     const { edit, remove, extra, actionConfig } = this.props;
 
     // 通用操作列
@@ -430,7 +430,7 @@ class SmartTable extends PureComponent {
   };
 
   renderRemoveModal = params => {
-    console.log(' renderRemoveModal ： ', params);
+    // console.log(' renderRemoveModal ： ', params);
     const { isShowResultModal } = this.state; //
 
     const modalProps = {
@@ -479,12 +479,12 @@ class SmartTable extends PureComponent {
     });
   };
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e);
+    // console.log('    renderModalContent ： ', e);
     const { modalContent } = this.state;
     return modalContent;
   };
   renderQRCodeModal = params => {
-    console.log(' renderQRCodeModal ： ', params);
+    // console.log(' renderQRCodeModal ： ', params);
     const { title, show } = this.state; //
     return (
       <SmartModal
@@ -510,7 +510,11 @@ class SmartTable extends PureComponent {
       actions: loadingData.effects,
     });
     // console.log('ction === `${path}/${asyncSuffi ************* ： ', isShowLoading, )
-    return isShowLoading;
+    return {
+      spinning: isShowLoading,
+      size: 'large',
+      tip: '内容加载中，请等待!',
+    };
   }
 
   render() {
@@ -566,7 +570,7 @@ class SmartTable extends PureComponent {
     ); //
 
     const realData = this.dataFilter();
-    console.log('  realData ：', realData); //
+    // console.log('  realData ：', realData); //
 
     return (
       <div className="">

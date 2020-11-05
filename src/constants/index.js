@@ -30,6 +30,7 @@ export const CHECK_TXT = 'ON';
 export const UN_CHECK_TXT = 'OFF';
 export const TIME_ZERO = ' 00:00:00';
 
+export const HOME = '/om/home';
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 

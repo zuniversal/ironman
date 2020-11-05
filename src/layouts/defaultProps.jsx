@@ -87,13 +87,13 @@ export default {
       //   icon: <Icon icon={'csUserCenter'} />,
       //   component: '../pages/csUserCenter',
       // },
-      {
-        path: '/om/userCenter',
-        name: '个人中心',
-        icon: <ScheduleFilled />,
-        icon: <Icon icon={'userCenter'} />,
-        component: '../pages/userCenter',
-      },
+      // {
+      //   path: '/om/userCenter',
+      //   name: '个人中心',
+      //   icon: <ScheduleFilled />,
+      //   icon: <Icon icon={'userCenter'} />,
+      //   component: '../pages/userCenter',
+      // },
       {
         path: '/om/shifts',
         name: '班组管理',

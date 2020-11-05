@@ -383,14 +383,8 @@ class CRUD extends PureComponent {
 
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
-    return (
-      <ClientSearchForm
-        formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
-      ></ClientSearchForm>
-    );
-  }
+    return <ClientSearchForm formBtn={this.renderFormBtn}></ClientSearchForm>;
+  };
 
   renderTable = params => {
     // console.log(' renderTable ： ', params,  )
@@ -413,7 +407,7 @@ class CRUD extends PureComponent {
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
-  }
+  };
 
   componentDidMount() {
     console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props); //

@@ -5,11 +5,12 @@ import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import * as assetsServices from '@/services/assets';
 import * as clientServices from '@/services/client';
+import * as contractServices from '@/services/contract';
 import * as commonServices from '@/services/common';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'missionsManage';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [
   'getTeamAsync',
@@ -86,6 +87,7 @@ export default {
         })),
         count: payload.rest.count,
         isShowModal: false,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {
@@ -160,7 +162,7 @@ export default {
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: formatSelectList(payload.list, 'name'),
+        teamList: formatSelectList(payload.list, 'team_headman'),
       };
     },
     getClient(state, { payload, type }) {
@@ -188,36 +190,24 @@ export default {
       console.log(' startWorkOrderstartWorkOrder ： '); //
       return {
         ...state,
-        // dataList: state.dataList.map(v => ({
-        //   ...(v.id != payload.payload.d_id ? payload : v),
-        // })),
         isShowModal: false,
       };
     },
     closeMission(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
         isShowModal: false,
       };
     },
     schedule(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
         isShowModal: false,
       };
     },
     confirmSchedule(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
         isShowModal: false,
       };
     },
@@ -236,11 +226,6 @@ export default {
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
       yield put(action(res));
-      const dataList = yield call(services.getList, payload);
-      yield put({
-        type: 'getList',
-        payload: dataList,
-      });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
@@ -284,22 +269,21 @@ export default {
         // task_id: itemDetail.id
       });
       // yield put(action(res));
-      const dataList = yield call(services.getList, payload);
-      yield put({
-        type: 'getList',
-        payload: dataList,
-      });
+      // const dataList = yield call(services.getList, payload);
+      yield put(actions.getListAsync());
     },
     *closeMissionAsync({ payload, action, type }, { call, put }) {
       console.log(' closeMissionAsync ： ', payload, type); //
       // return;
       const res = yield call(services.closeMission, payload);
       // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
     *linkContractAsync({ payload, action, type }, { call, put }) {
       console.log(' linkContractAsync ： ', payload, type); //
       const res = yield call(services.linkContract, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
     *scheduleAsync({ payload, action, type }, { call, put }) {
       console.log(' scheduleAsync ： ', payload, type); //
@@ -308,22 +292,20 @@ export default {
       };
       const res = yield call(services.schedule, params);
       // yield put(action({ ...res, payload }));
-      const dataList = yield call(services.getList, payload);
-      yield put({
-        type: 'getList',
-        payload: dataList,
-      });
+      yield put(actions.getListAsync());
     },
     *confirmScheduleAsync({ payload, action, type }, { call, put }) {
       console.log(' confirmScheduleAsync ： ', payload, type); //
-      return;
+      // return;
       const res = yield call(services.confirmSchedule, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
     *getEnumListAsync({ payload, action, type }, { call, put }) {
       console.log(' getEnumListAsync ： ', payload, type); //
       const res = yield call(commonServices.getEnumList, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
   },
 };

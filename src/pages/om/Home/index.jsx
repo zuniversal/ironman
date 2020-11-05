@@ -134,7 +134,6 @@ class Home extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -142,8 +141,6 @@ class Home extends PureComponent {
     return <HomeSettingForm {...formComProps}></HomeSettingForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
-
     return (
       <SmartFormModal
         show={this.props.isShowModal}

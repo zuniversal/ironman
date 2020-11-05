@@ -163,8 +163,6 @@ class ShiftsArrangeDetail extends PureComponent {
         teamList={this.props.teamList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></ShiftsArrangeSearchForm>
     );
   };

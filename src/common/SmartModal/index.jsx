@@ -85,15 +85,8 @@ class SmartModal extends PureComponent {
 
     // const {show,  } = this.state//
 
-    console.log(
-      ' %c SmartModal 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
-
     const widths = this.getWidth();
-    console.log('  widths ：', widths); //
+
     return (
       <Modal
         wrapClassName={`smartModal ${className} ${this.getCls()}   `}

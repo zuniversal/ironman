@@ -9,7 +9,7 @@ import * as userServices from '@/services/user';
 import { formatSelectList } from '@/utils';
 
 const namespace = 'client';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [
   'syncOAAsync',
@@ -73,6 +73,7 @@ export default {
         ...state,
         dataList: [...payload.list],
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

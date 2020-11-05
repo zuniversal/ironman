@@ -59,7 +59,6 @@ class OperateRecord extends PureComponent {
   };
 
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -92,7 +91,6 @@ class OperateRecord extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -108,7 +106,6 @@ class OperateRecord extends PureComponent {
     return <OperateRecordForm {...formComProps}></OperateRecordForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

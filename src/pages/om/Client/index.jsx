@@ -271,8 +271,6 @@ class Client extends PureComponent {
         provinceList={this.props.provinceList}
         citytList={this.props.citytList}
         countryList={this.props.countryList}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></ClientSearchForm>
     );
   };
@@ -299,8 +297,6 @@ class Client extends PureComponent {
     });
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
-
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       // tdClick: this.props.showFormModal,
@@ -321,7 +317,6 @@ class Client extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -337,7 +332,6 @@ class Client extends PureComponent {
     return <ClientForm {...formComProps}></ClientForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

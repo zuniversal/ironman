@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'inspectPlan';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = ['getClientAsync'];
 
@@ -60,6 +60,7 @@ export default {
         dataList: payload.list,
         initList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {
@@ -106,7 +107,7 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
-    changeStationPlan(state, { payload, type }) {
+    changeStationPlan(state, { payload = [], type }) {
       const { initList, dataList } = state;
       const dragList = payload.map(v => ({
         start: v.startStr,
@@ -118,7 +119,7 @@ export default {
       const latestDrag = dragList[dragList.length - 1];
       console.log(' latestDrag ： ', latestDrag); //
       const dataListFilter = dataList.map(v => {
-        return v.id != latestDrag.id
+        return latestDrag && v.id != latestDrag.id
           ? v
           : {
               ...v,
@@ -162,7 +163,7 @@ export default {
       console.log(' getListAsync ： ', payload, action, type); //
       const res = yield call(services.getList, {
         ...payload,
-        month: payload.month ? data.month.format('YYYY-MM') : nowYearMonth,
+        month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
       });
       yield put(action({ ...res, payload }));
       // const { form,  } = payload; //

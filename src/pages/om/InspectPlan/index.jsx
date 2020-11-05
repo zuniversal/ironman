@@ -68,7 +68,7 @@ class InspectPlan extends PureComponent {
       if (res.leader && res.month) {
         this.props.getListAsync({
           ...res,
-          month: res.month.format('YYYY-MM'),
+          // month: res.month.format('YYYY-MM'),
         });
       } else {
         tips('请先选择班组及月份！', 2);
@@ -104,8 +104,6 @@ class InspectPlan extends PureComponent {
         }
         clientList={this.props.clientList}
         onFieldChange={this.onFieldChange}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
       ></InspectPlanSearchForm>
     );
   };
@@ -151,7 +149,6 @@ class InspectPlan extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -177,7 +174,6 @@ class InspectPlan extends PureComponent {
     // return [, ].some((v) => v === this.props.action);
   }
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

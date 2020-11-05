@@ -85,7 +85,7 @@ const UserCenterForm = props => {
       formType: 'Password',
       noRule: !noRule, //
       itemProps: {
-        label: '密码重置',
+        label: '重置密码',
         name: 'password',
       },
       comProps: {

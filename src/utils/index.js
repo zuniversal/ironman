@@ -17,7 +17,7 @@ import business from 'moment-business';
 
 export const getDataMap = (text, dataMap) => {
   const val = dataMap[text];
-  return val ? val : '没有匹配';
+  return val ? val : text;
 };
 
 export const formatSelectList = (data, labelKey = 'label', idKey = 'id') => {
@@ -311,7 +311,8 @@ export const mockTbData = (params = {}) => {
     columns.forEach((v, index) => {
       // console.log(' vsssss ： ', v, i, index, )//
       // obj[`field${index}`] = `FieldFieldFieldFieldFieldField`;
-      obj[v.dataIndex] = `${v.dataIndex}-${i}`;
+      // obj[v.dataIndex] = `${v.dataIndex}-${i}`;
+      obj[v.dataIndex] = `Field-${i}`;
       obj[`field${index}`] = `Field${i}`;
       childrenObj[`field${start * index}`] = `Field_${i}`;
     });
@@ -468,7 +469,8 @@ export const wrapParams = p => ({
 
 export const backupFn = o => JSON.parse(JSON.stringify(o));
 
-export const setItem = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+export const setItem = (k, v, isString) =>
+  localStorage.setItem(k, isString ? v : JSON.stringify(v));
 export const getItem = k => JSON.parse(localStorage.getItem(k));
 export const removeItem = k => localStorage.removeItem(k);
 export const setItems = (k, v) => sessionStorage.setItem(k, JSON.stringify(v));
@@ -517,9 +519,9 @@ export const createProperty = (arr, f) => {
 };
 
 export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
-  console.log(' prefix, k ： ', prefix, k); //
   const token =
     localStorage.getItem(k) != undefined ? localStorage.getItem(k) : 'no_token';
+  console.log(' prefix, k ： ', prefix, k, token); //
   return prefix + token;
 };
 // export const getToken = (k = 'user_info') =>

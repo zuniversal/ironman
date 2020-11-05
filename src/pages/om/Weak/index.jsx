@@ -21,7 +21,6 @@ import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
 import WeakDetailForm from '@/components/Form/WeakDetailForm'; //
 import WeakTable from '@/components/Table/WeakTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
-import WeakDetail from '@/components/Detail/WeakDetail'; //
 
 import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -84,7 +83,6 @@ class Weak extends PureComponent {
   };
 
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -123,7 +121,6 @@ class Weak extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -142,7 +139,6 @@ class Weak extends PureComponent {
     return <WeakForm {...formComProps}></WeakForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

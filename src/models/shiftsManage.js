@@ -4,7 +4,7 @@ import * as userServices from '@/services/user';
 import { formatSelectList } from '@/utils';
 
 const namespace = 'shiftsManage';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = ['getUserAsync', 'uploadFileAsync', 'exportDataAsync'];
 
@@ -64,6 +64,7 @@ export default {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

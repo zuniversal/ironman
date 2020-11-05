@@ -60,15 +60,10 @@ class UserManage extends PureComponent {
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
     return (
-      <UserManageSearchForm
-        formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
-      ></UserManageSearchForm>
+      <UserManageSearchForm formBtn={this.renderFormBtn}></UserManageSearchForm>
     );
   };
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -101,7 +96,6 @@ class UserManage extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -117,7 +111,6 @@ class UserManage extends PureComponent {
     return <UserManageForm {...formComProps}></UserManageForm>;
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

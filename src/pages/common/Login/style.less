@@ -1,3 +1,84 @@
+.loginWrapper {
+  width: 100%;
+  height: 100%;
+  background: url(~@/static/assets/loginBg.png) no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5faf7;
+  .loginFormWrapper {
+    // width: 1123px;
+    // height: 552px;
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    .loginRow {
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding-left: 60px;
+      margin-bottom: 30px;
+      .loginAvatar {
+      }
+      .sysystemTitle {
+        width: 216px;
+        // height: 24px;
+        font-size: 24px;
+        font-weight: 500;
+        font-weight: bolder;
+        // line-height: 41px;
+        color: #333333;
+        flex: 1;
+        margin-left: 10px;
+      }
+    }
+
+    .loginForm {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      .formItem {
+        width: 360px;
+        height: 44px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+        border-radius: 2px;
+      }
+      .loginBtn {
+        width: 360px;
+        height: 54px;
+        background: linear-gradient(90deg, #00b460 0%, #00b491 100%);
+        border-radius: 4px;
+        span {
+          width: 40px;
+          height: 20px;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 34px;
+          color: #ffffff;
+        }
+      }
+      .forgetPwdRow {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        .forgetPwd {
+          width: 64px;
+          // height: 16px;
+          font-size: 16px;
+          font-weight: 400;
+          // line-height: 27px;
+          color: #00b65c;
+        }
+      }
+    }
+  }
+}
+
 .login {
   width: 100%;
   height: 100%;

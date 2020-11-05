@@ -31,6 +31,7 @@ const WorkOrderTable = props => {
       title: 'id',
       dataIndex: 'id',
       d_item: 'id',
+      className: 'textCenter',
     },
     {
       title: '名称',

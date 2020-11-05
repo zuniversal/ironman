@@ -14,6 +14,7 @@ const MissionsManageSearchForm = props => {
       selectData: missionsStatusConfig,
       itemProps: {
         label: '状态',
+        name: 'status',
       },
     },
     {

@@ -126,6 +126,7 @@ export const missionsStatusConfig = [
     value: 'waiting_plan',
   },
   {
+    // 确认排期
     label: '待确认排期',
     value: 'waiting_confirm',
   },
@@ -147,7 +148,7 @@ export const missionsStatusConfig = [
   },
 ];
 
-export const missionsStatusMap = arrMapObj(missionsTypeConfig);
+export const missionsStatusMap = arrMapObj(missionsStatusConfig);
 
 export const workOrderStatusConfig = [
   {

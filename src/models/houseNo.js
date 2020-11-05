@@ -5,7 +5,7 @@ import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'houseNo';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = ['getClientAsync', 'getHouseNoAsync', 'exportDataAsync'];
 
@@ -55,6 +55,7 @@ export default {
         ...state,
         dataList: formatSelectList(payload.list, 'number'),
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

@@ -3,15 +3,15 @@ import './style.less';
 import SmartForm from '@/common/SmartForm'; //
 import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
 
-const MissionsForm = props => {
-  console.log(' MissionsForm ： ', props); //
+const MissionsManageForm = props => {
+  console.log(' MissionsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
 
   const config = [
     {
-      // formType: 'Search',
-      // selectSearch: props.getClientAsync,
-      // selectData: props.clientList,
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
         label: '客户',
         // name: ['customer', 'id'],
@@ -34,9 +34,9 @@ const MissionsForm = props => {
     },
     // 选择客户所属电站
     {
-      // formType: 'Search',
-      // selectSearch: props.getPowerAsync,
-      // selectData: props.powerList,
+      formType: 'Search',
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
       itemProps: {
         label: '电站',
         name: 'station_id',
@@ -84,7 +84,7 @@ const MissionsForm = props => {
   };
 
   return (
-    <div className={' MissionsForm '}>
+    <div className={' MissionsManageForm '}>
       <SmartForm
         // flexRow={6}
         config={config}
@@ -100,6 +100,6 @@ const MissionsForm = props => {
   );
 };
 
-MissionsForm.defaultProps = {};
+MissionsManageForm.defaultProps = {};
 
-export default MissionsForm;
+export default MissionsManageForm;

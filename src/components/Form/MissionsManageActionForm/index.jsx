@@ -17,7 +17,7 @@ export const MissionsManageWorkOrderForm = props => {
         name: 'client',
       },
       comProps: {
-        // disabled: true,
+        disabled: true, //
       },
     },
     {
@@ -38,9 +38,9 @@ export const MissionsManageWorkOrderForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getTeamAsync,
-      // selectData: props.teamList,
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '分配给',
         name: 'team_id',
@@ -159,8 +159,10 @@ export const MissionsManageScheduleForm = props => {
 MissionsManageScheduleForm.defaultProps = {};
 
 const scheduleRadios = [
-  { label: '通过', value: 'yes', key: 'yes' },
-  { label: '驳回', value: 'no', key: 'no' },
+  // { label: '通过', value: 'yes', key: 'yes' },
+  // { label: '驳回', value: 'no', key: 'no' },
+  { label: '通过', value: true, key: 'yes' },
+  { label: '驳回', value: false, key: 'no' },
 ];
 
 export const MissionsManageConfirmScheduleForm = props => {
@@ -173,14 +175,14 @@ export const MissionsManageConfirmScheduleForm = props => {
       radioData: scheduleRadios,
       itemProps: {
         label: '确认排期',
-        name: '',
+        name: 'result',
       },
     },
     {
       formType: 'TextArea',
       itemProps: {
         label: '理由',
-        name: '',
+        name: 'reason',
       },
       comProps: {
         className: 'w-280',

@@ -469,6 +469,8 @@ const ClientForm = props => {
       isInputUpload
       text={'上传文件'}
       contentClass={'dfc'}
+      action={'/api/v1/upload'}
+      name={'file'}
     ></UploadCom>,
   ];
 

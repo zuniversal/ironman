@@ -6,7 +6,7 @@ import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'workOrder';
-const { createAction, createCRUD, batchTurn, createActions } = init(namespace);
+const { createActions } = init(namespace);
 
 const otherActions = [
   'getTeamAsync',
@@ -78,6 +78,7 @@ export default {
           created_time: v.created_time.split('T')[0],
         })),
         count: payload.rest.count,
+        isShowModal: false,
       };
     },
     getItem(state, { payload, type }) {

@@ -74,17 +74,10 @@ class InspectRecord extends PureComponent {
   };
   renderSearchForm = params => {
     // console.log(' renderSearchForm ： ', params,  )
-    return (
-      <SearchKwForm
-        formBtn={this.renderFormBtn}
-        // onSubmit={this.onSubmit}
-        // onFail={this.onFail}
-      ></SearchKwForm>
-    );
+    return <SearchKwForm formBtn={this.renderFormBtn}></SearchKwForm>;
   };
 
   renderTable = params => {
-    console.log(' renderTable ： ', params, this.state, this.props);
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
@@ -123,7 +116,6 @@ class InspectRecord extends PureComponent {
   };
 
   renderModalContent = e => {
-    console.log('    renderModalContent ： ', e, this.state, this.props);
     const { action } = this.props; //
     const formComProps = {
       action,
@@ -144,7 +136,6 @@ class InspectRecord extends PureComponent {
     );
   };
   renderSmartFormModal = params => {
-    console.log(' renderSmartFormModal ： ', params, this.state, this.props);
     return (
       <SmartFormModal
         show={this.props.isShowModal}

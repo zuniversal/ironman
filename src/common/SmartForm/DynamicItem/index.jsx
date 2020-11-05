@@ -163,13 +163,10 @@ const DynamicItemForm = props => {
   //   console.log(' value.some(item => v.id == item) ： ', v, value, isContain,  )//
   //   return isContain
   // }) : selectData
-  let selectDatas = selectData;
+  let selectDatas = [...selectData];
   if (filterSelect) {
-    selectDatas = selectData.filter(v => {
-      const isContain = value.every(item => v.id != item);
-      console.log(' value.some(item => v.id == item) ： ', v, value, isContain); //
-      return isContain;
-    });
+    selectDatas = selectData.filter(v => !value.some(item => v.id == item));
+    // selectDatas = selectData.filter(v => !value.includes(item => v.id == item));//
     // selectDatas = selectData.splice(0, 4)
   }
 
@@ -189,14 +186,6 @@ const DynamicItemForm = props => {
     >
       {(fields, params) => {
         const { add, remove } = params;
-        console.log(
-          ' params ： ',
-          fields.length,
-          fields.length === 0,
-          fields,
-          params,
-          itemProps,
-        ); //
 
         // if (fields.length === 0) {
         //   console.log(' add ： ',    )//
@@ -229,7 +218,7 @@ const DynamicItemForm = props => {
           className: ` ${comProps.className} `,
           placeholder: formLabel,
         };
-        console.log(' realComProps ： ', realComProps); //
+        // console.log(' realComProps ： ', realComProps); //
 
         const selectProps = {
           allowClear: true,
@@ -241,7 +230,7 @@ const DynamicItemForm = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          console.log(' selectSearch ： ', props.selectSearch); //
+          // console.log(' selectSearch ： ', props.selectSearch); //
           selectProps.showArrow = false;
           selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {
@@ -251,20 +240,12 @@ const DynamicItemForm = props => {
         const selectCom = (
           <Select {...selectProps}>
             {renderSelectOp(selectDatas, opType)}
-            {/* <Option value="male">male</Option>
-        <Option value="female">female</Option>
-        <Option value="other">other</Option> */}
           </Select>
         );
         const selectCom2 = (
-          <Select {...selectProps}>
-            {renderSelectOp(selectData, opType)}
-            {/* <Option value="male">male</Option>
-        <Option value="female">female</Option>
-        <Option value="other">other</Option> */}
-          </Select>
+          <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
         );
-        console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2); //
+        // console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2); //
         const formItemMap = {
           rowText: label,
           Label: LabelCom,

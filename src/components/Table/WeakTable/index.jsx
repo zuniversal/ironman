@@ -20,6 +20,7 @@ const WeakTable = props => {
       title: 'id',
       dataIndex: 'id',
       d_item: 'id',
+      className: 'textCenter',
     },
 
     {
