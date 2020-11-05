@@ -33,15 +33,20 @@ const codeMap = {
   104006: 'API访问错误',
 };
 
-const statusMap = {
-  404: '404 请求路径不存在！',
-};
-
 export const getCodeMsg = code => {
   // const {code,  } = data
   const codeItem = codeMap[code];
   // return true//
   return codeItem || `${code} - 未知状态码！`;
+};
+
+const statusMap = {
+  404: '404 请求路径不存在！',
+};
+
+export const getStatusMsg = (status, url) => {
+  const statusItem = statusMap[status];
+  return statusItem || `${url} - 未知状态码！`;
 };
 
 export const isTips = res => {
@@ -53,7 +58,9 @@ export const isTips = res => {
 
   const { status, data, config } = res;
   const { msg_show, code } = data;
-  const { noTips } = config.datas;
+  const { noTips } = config.data;
+  // const { noTips } = config.formatParams;
+  const { url } = config;
 
   console.log(
     ' 提示 对吗  code !== NORMAL_CODE ',
@@ -62,6 +69,7 @@ export const isTips = res => {
     // res.data,
     config,
     config.datas,
+    config.formatParams,
   );
   if (statusMap[status]) {
     tips(statusMap[status], 2);
@@ -116,12 +124,18 @@ export class Request {
         // }
 
         // config.data = wrapParams(config.data);
+        const formatParams = wrapParams(
+          config.method === 'get' || config.method === 'delete'
+            ? config.params
+            : config.data,
+        );
         config.data = config.datas = wrapParams(
           config.method === 'get' || config.method === 'delete'
             ? config.params
             : config.data,
         );
-        console.log(' 发送请求   ： ', config); //
+        config.customInfo = formatParams;
+        console.log(' 发送请求   ： ', config, formatParams); //
         return config;
       },
       err => Promise.reject(err),
