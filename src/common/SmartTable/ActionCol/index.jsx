@@ -31,7 +31,11 @@ const ActionCol = props => {
               // edit({ action: 'edit', ...record });
               console.log(' record ： ', props, record, edit); //
               props.dataSource.length > 0
-                ? edit({ action: 'edit', ...record })
+                ? edit({
+                    action: 'edit',
+                    // ...record,
+                    d_id: record[props.rowKey],
+                  })
                 : props.showFormModal({
                     action: 'add',
                     ...record,

@@ -171,14 +171,14 @@ const PowerStationForm = props => {
 
     {
       itemProps: {
-        label: '手机',
-        name: 'phone',
+        label: '运行等级',
+        name: 'operation_level',
       },
     },
     {
       itemProps: {
-        label: '运行等级',
-        name: 'operation_level',
+        label: '电话',
+        name: 'phone',
       },
     },
     {

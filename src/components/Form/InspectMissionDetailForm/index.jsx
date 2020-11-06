@@ -79,7 +79,10 @@ const InspectMissionDetailForm = props => {
     {
       formType: 'CustomCom',
       CustomCom: (
-        <InspectMissionTimeline datas={datas}></InspectMissionTimeline>
+        // <InspectMissionTimeline datas={datas}></InspectMissionTimeline>
+        <InspectMissionTimeline
+          datas={props.init.task_log}
+        ></InspectMissionTimeline>
       ),
       itemProps: {
         label: '任务日志',
@@ -94,7 +97,7 @@ const InspectMissionDetailForm = props => {
   };
 
   return (
-    <div className={' InspectMissionDetailForm '}>
+    <div className={' inspectMissionDetailForm '}>
       <SmartForm
         // flexRow={6}
         config={config}

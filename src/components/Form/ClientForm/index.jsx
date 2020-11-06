@@ -262,20 +262,20 @@ const ClientForm = props => {
       },
       comProps: {},
     },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '客户编码',
+        name: 'code',
+      },
+      comProps: {},
+    },
 
     {
       // formType: 'Select',
       itemProps: {
         label: '客户等级',
         name: 'level',
-      },
-      comProps: {},
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '客户编码',
-        name: 'code',
       },
       comProps: {},
     },

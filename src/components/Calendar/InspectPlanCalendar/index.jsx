@@ -65,7 +65,7 @@ const datas = [
   { client: '客户5', team: '电站5', id: '5', all: 4, residue: 3 },
 ];
 
-const items = { title: '部门会议x', start: '2020-10-08' };
+const items = { title: '部门会议x', start: '2020-11-08' };
 const items2 = {
   title: '部门会议x',
   start: '2020-10-09',
@@ -90,7 +90,6 @@ const ShiftsArrangeList = props => {
   return (
     <CalendarDraggable
       className={`${className} `}
-      r
       itemSelector={'.dragItem'}
       // renderItem={(event, index) => (
       //   <div key={event.id} className="fsb rowItem ">
@@ -108,7 +107,13 @@ const ShiftsArrangeList = props => {
             <div key={event.id} className="fsb rowItem ">
               <div className={'left'}>
                 {event.surplus_plan_num > 0 && (
-                  <div className="dragItem " id={event.id} test={'zyb'}>
+                  <div
+                    className="dragItem "
+                    id={event.id}
+                    // data-isdraged={event.isdraged}
+                    data-datas={event}
+                    test={'zyb'}
+                  >
                     电站-{event.name}
                   </div>
                 )}
@@ -126,11 +131,11 @@ const ShiftsArrangeList = props => {
 };
 
 ShiftsArrangeList.defaultProps = {
-  events: [],
+  unScheduleList: [],
 };
 
 ShiftsArrangeList.propTypes = {
-  events: PropTypes.array,
+  unScheduleList: PropTypes.array,
 };
 
 const InspectPlanCalendar = props => {
@@ -163,7 +168,8 @@ const InspectPlanCalendar = props => {
         // events={calendarEvents}
 
         // initialDate={new Date(2020, 9, 1)}
-        className={`${ANIMATE.slideInLeft} `}
+        // className={`${ANIMATE.slideInLeft} `}
+        events={props.scheduleList}
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
@@ -171,20 +177,20 @@ const InspectPlanCalendar = props => {
       />
 
       <ShiftsArrangeList
-        events={props.events}
-        className={`${ANIMATE.slideInRight} `}
+        events={props.unScheduleList}
+        // className={`${ANIMATE.slideInRight} `}
       ></ShiftsArrangeList>
     </div>
   );
 };
 
 InspectPlanCalendar.defaultProps = {
-  events: [],
+  scheduleList: [],
   eventsSet: () => {},
 };
 
 InspectPlanCalendar.propTypes = {
-  events: PropTypes.array,
+  scheduleList: PropTypes.array,
   eventsSet: PropTypes.func,
 };
 

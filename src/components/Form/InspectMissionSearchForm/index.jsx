@@ -9,6 +9,9 @@ const InspectMissionSearchForm = props => {
 
   const config = [
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '处理人',
         name: 'team',
@@ -28,17 +31,17 @@ const InspectMissionSearchForm = props => {
       comProps: {},
     },
 
-    // {
-    //   // formType: 'Select',
-    //   itemProps: {
-    //     label: '',
-    //     name: 'keyword',
-    //   },
-    //   comProps: {
-    //     className: 'lastFormItem',
-    //   },
-    //   searchSuffix: true,
-    // },
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
+    },
   ];
 
   const formProps = {

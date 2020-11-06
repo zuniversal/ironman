@@ -53,7 +53,6 @@ class Role extends PureComponent {
   }
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -72,7 +71,6 @@ class Role extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <SearchKwForm
         formBtn={this.renderFormBtn}

@@ -46,7 +46,6 @@ class ClientReport extends PureComponent {
   }
 
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
         <ClientReportSearchForm></ClientReportSearchForm>
@@ -128,7 +127,6 @@ class ClientReport extends PureComponent {
     return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return ['uploadFile'].some(v => v === this.props.action)
       ? 'small'
       : 'default';

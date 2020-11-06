@@ -10,7 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { workOrderStatusMap } from '@/configs';
+import { workOrderStatusMap, missionsTypeMap } from '@/configs';
 
 const WorkOrderTable = props => {
   console.log(' WorkOrderTable  ： ', props); //
@@ -49,6 +49,7 @@ const WorkOrderTable = props => {
     {
       title: '工单类型',
       dataIndex: 'type',
+      dataMap: missionsTypeMap,
     },
     {
       title: '当前状态',

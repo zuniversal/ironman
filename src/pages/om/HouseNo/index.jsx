@@ -105,7 +105,6 @@ class HouseNo extends PureComponent {
   };
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -135,7 +134,6 @@ class HouseNo extends PureComponent {
   };
 
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <HouseNoSearchForm
         formBtn={this.renderFormBtn}

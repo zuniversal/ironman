@@ -43,7 +43,6 @@ class AlarmRecord extends PureComponent {
     };
   }
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fsb '}>
         <SearchForm></SearchForm>

@@ -148,19 +148,19 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '温度',
-        name: '',
+        name: 'temperature',
       },
     },
     {
       itemProps: {
         label: '湿度',
-        name: '',
+        name: 'humidity',
       },
     },
     {
       itemProps: {
         label: '天气',
-        name: '',
+        name: 'weather',
       },
     },
 
@@ -168,44 +168,43 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '房屋土建1',
-        name: '',
         className: 'w100',
       },
     },
     {
       itemProps: {
         label: '电缆沟及盖板',
-        name: '',
+        name: ['building', ''],
       },
     },
     {
       itemProps: {
         label: '护网',
-        name: '',
+        name: ['building', ''],
       },
     },
     {
       itemProps: {
         label: '地面裂縫',
-        name: '',
+        name: ['building', ''],
       },
     },
     {
       itemProps: {
         label: '门窗',
-        name: '',
+        name: ['building', ''],
       },
     },
     {
       itemProps: {
         label: '房屋渗水',
-        name: '',
+        name: ['building', ''],
       },
     },
     {
       itemProps: {
         label: '电缆夹屋孔洞',
-        name: '',
+        name: ['building', ''],
       },
     },
 
@@ -220,37 +219,37 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '高压试电笔(1年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
     {
       itemProps: {
         label: '接地线(4年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
     {
       itemProps: {
         label: '绝缘毯(4年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
     {
       itemProps: {
         label: '绝缘手套(半年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
     {
       itemProps: {
         label: '绝縐鞋(半年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
     {
       itemProps: {
         label: '灭火器压力(半年)',
-        name: '',
+        name: ['safety_equirpment', ''],
       },
     },
 
@@ -383,7 +382,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '最大MD ',
-        name: 'valley_md',
+        name: 'max_md',
       },
     },
     {

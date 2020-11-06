@@ -11,8 +11,8 @@ const WorkOrderSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getTeamAsync,
-      selectData: props.teamList,
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '处理人',
         name: 'user_id',

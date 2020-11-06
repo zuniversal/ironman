@@ -16,6 +16,7 @@ const CalendarDraggable = props => {
         let id = eventEl.getAttribute('id');
         let color = eventEl.getAttribute('color');
         let display = eventEl.getAttribute('display');
+        let isdraged = eventEl.getAttribute('isdraged');
         console.log(
           ' eventEleventEl  ： ',
           eventEl,
@@ -30,6 +31,7 @@ const CalendarDraggable = props => {
           id: id,
           display: display,
           color: color,
+          isdraged,
         };
       },
     });

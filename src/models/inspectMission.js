@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectMission';
-// import * as services from '@/services/userManage';
+import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'inspectMission';
@@ -8,6 +8,7 @@ const { createActions } = init(namespace);
 
 const otherActions = [
   // 'editMissionAsync',
+  'getUserAsync',
 ];
 
 const batchTurnActions = [];
@@ -29,6 +30,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    userList: [],
   },
 
   reducers: {
@@ -92,6 +95,14 @@ export default {
         ),
       };
     },
+
+    getUser(state, { payload, type }) {
+      console.log(' getUserAsync 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        userList: formatSelectList(payload.list, 'nickname'),
+      };
+    },
   },
 
   effects: {
@@ -127,6 +138,12 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      console.log(' getUserAsync ： ', payload); //
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

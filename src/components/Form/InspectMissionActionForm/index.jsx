@@ -11,7 +11,7 @@ export const InspectMissionAssignForm = props => {
   const config = [
     {
       // formType: 'Search',
-      // selectSearch: props.getUser,
+      // selectSearch: props.getUserAsync,
       // selectData: props.userList,
       itemProps: {
         label: '分配给',

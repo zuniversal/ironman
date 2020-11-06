@@ -61,7 +61,6 @@ class WorkOrder extends PureComponent {
     this.props.getListAsync(params.formData);
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -74,10 +73,11 @@ class WorkOrder extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <WorkOrderSearchForm
         formBtn={this.renderFormBtn}
+        getUser={this.props.getUserAsync}
+        userList={this.props.userList}
         onFieldChange={this.onFieldChange}
       ></WorkOrderSearchForm>
     );
@@ -169,7 +169,6 @@ class WorkOrder extends PureComponent {
     return <WorkOrderForm {...formComProps}></WorkOrderForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return this.props.action === 'dispatchOrder' ? 'small' : 'default';
   }
   renderSmartFormModal = params => {
@@ -186,9 +185,9 @@ class WorkOrder extends PureComponent {
       </SmartFormModal>
     );
   };
-  // componentDidMount() {
-  //   this.props.getEnumListAsync();
-  // }
+  componentDidMount() {
+    this.props.getUserAsync();
+  }
 
   render() {
     console.log(

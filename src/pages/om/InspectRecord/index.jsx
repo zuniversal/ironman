@@ -25,6 +25,7 @@ import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import { actions, mapStateToProps } from '@/models/inspectRecord'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { inspectMissionStatusMap } from '@/configs';
 
 const TITLE = '巡检';
 
@@ -54,7 +55,6 @@ class InspectRecord extends PureComponent {
   }
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -73,7 +73,6 @@ class InspectRecord extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return <SearchKwForm formBtn={this.renderFormBtn}></SearchKwForm>;
   };
 
@@ -125,7 +124,10 @@ class InspectRecord extends PureComponent {
       clientList: this.props.clientList,
     };
     if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
+      formComProps.init = {
+        ...this.props.itemDetail,
+        status: inspectMissionStatusMap[this.props.itemDetail.status],
+      };
     }
     if (action === 'inspectReport') {
       return <InspectRecordForm {...formComProps}></InspectRecordForm>;

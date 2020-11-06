@@ -47,7 +47,6 @@ class VisitManage extends PureComponent {
     };
   }
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -57,7 +56,6 @@ class VisitManage extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <div>
         <Radio.Group
@@ -124,7 +122,6 @@ class VisitManage extends PureComponent {
     return <VisitManageForm {...formComProps}></VisitManageForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return ['complete'].some(v => v === this.props.action)
       ? 'small'
       : 'default';

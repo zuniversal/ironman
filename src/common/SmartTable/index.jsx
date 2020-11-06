@@ -68,7 +68,7 @@ class SmartTable extends PureComponent {
         columns,
         haveChildren: props.haveChildren,
       }),
-      mockTbData: [],
+      // mockTbData: [],
 
       selectionType: 'checkbox',
 

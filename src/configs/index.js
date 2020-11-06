@@ -167,6 +167,36 @@ export const workOrderStatusConfig = [
 
 export const workOrderStatusMap = arrMapObj(workOrderStatusConfig);
 
+export const inspectMissionStatusConfig = [
+  {
+    label: '待处理',
+    value: 'pending',
+  },
+  {
+    label: '处理中',
+    value: 'in_process',
+  },
+  {
+    label: '已完成',
+    value: 'completed',
+  },
+];
+
+export const inspectMissionStatusMap = arrMapObj(inspectMissionStatusConfig);
+
+export const weakStatusConfig = [
+  {
+    label: '已处理',
+    value: true,
+  },
+  {
+    label: '未处理',
+    value: false,
+  },
+];
+
+export const weakStatusMap = arrMapObj(weakStatusConfig);
+
 export const site = province;
 export const city = province;
 

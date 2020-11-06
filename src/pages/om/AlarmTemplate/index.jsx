@@ -59,7 +59,6 @@ class AlarmTemplate extends PureComponent {
   }
 
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <div className={'fje '}>
         <div className={'btnWrapper'}>

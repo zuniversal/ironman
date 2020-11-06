@@ -14,7 +14,12 @@ const InspectMissionTimeline = props => {
       className={'inspectMissionTimeline'}
     >
       {props.datas.map((v, i) => (
-        <Step title={v.title} description={v.description} key={i} />
+        // <Step title={v.title} description={v.description} key={i} />
+        <Step
+          title={v.created_time.split('T')[0]}
+          description={v.content}
+          key={i}
+        />
       ))}
     </Steps>
   );

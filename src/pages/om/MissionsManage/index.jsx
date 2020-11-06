@@ -68,7 +68,6 @@ class MissionsManage extends PureComponent {
     this.props.getListAsync(params.formData);
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -84,7 +83,6 @@ class MissionsManage extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <MissionsManageSearchForm
         formBtn={this.renderFormBtn}

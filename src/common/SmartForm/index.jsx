@@ -428,7 +428,7 @@ const SmartForm = (props, state) => {
       // onSelect: onSelect,
     };
     if (formType === 'Search') {
-      selectProps.showArrow = false;
+      // selectProps.showArrow = false;
       // selectProps.labelInValue = true;
       selectProps.optionFilterProp = 'children';
       console.log(' selectSearch ： ', selectProps, item.selectSearch); //
@@ -466,8 +466,8 @@ const SmartForm = (props, state) => {
       ),
       // Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
       // CheckboxGroup: <Checkbox.Group {...realComProps} />,
-      Checkbox: renderCheckboxOp(checkboxData, opType),
-      Radio: renderRadioOp(radioData, opType),
+      Checkbox: renderCheckboxOp(checkboxData, { opType, isDisabledAll }),
+      Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
       DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
 

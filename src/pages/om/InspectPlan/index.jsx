@@ -54,10 +54,6 @@ class InspectPlan extends PureComponent {
     };
   }
 
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
-  };
   onSearch = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action } = this.props; //
@@ -79,23 +75,23 @@ class InspectPlan extends PureComponent {
     }
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.onSearch(params)}>
           搜索
         </Button>
-        <Button type="primary" onClick={() => this.props.resetStationData()}>
+        {/* <Button type="primary" onClick={() => this.props.getListAsync()}> */}
+        <Button type="primary" onClick={() => this.props.reset()}>
           重置
         </Button>
-        <Button type="primary" onClick={() => this.props.addItemAsync()}>
+        {/* <Button type="primary" onClick={() => this.props.addItemAsync()}> */}
+        <Button type="primary" onClick={() => this.props.editItemAsync()}>
           保存计划
         </Button>
       </div>
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <InspectPlanSearchForm
         formBtn={this.renderFormBtn}
@@ -104,8 +100,13 @@ class InspectPlan extends PureComponent {
         }
         clientList={this.props.clientList}
         onFieldChange={this.onFieldChange}
+        init={this.props.searchInfo}
       ></InspectPlanSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   eventsSet = params => {
@@ -116,7 +117,8 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanCalendar
         eventsSet={this.props.changeStationPlan}
-        events={this.props.dataList}
+        scheduleList={this.props.scheduleList}
+        unScheduleList={this.props.unScheduleList}
       ></InspectPlanCalendar>
     );
   };
@@ -162,14 +164,12 @@ class InspectPlan extends PureComponent {
     // return <PowerStationForm {...formComProps} ></PowerStationForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return 'small';
     return ['removeStation'].some(v => v === this.props.action)
       ? 'small'
       : 'default';
   }
   get isNoForm() {
-    console.log(' get 取属 isNoForm ： ', this.state, this.props);
     return true;
     // return [, ].some((v) => v === this.props.action);
   }

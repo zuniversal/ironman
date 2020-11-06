@@ -88,7 +88,6 @@ class Client extends PureComponent {
     }
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
@@ -261,7 +260,6 @@ class Client extends PureComponent {
   };
 
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <ClientSearchForm
         formBtn={this.renderFormBtn}

@@ -142,7 +142,7 @@ const ActionBtn = ({ fields, field, add, remove, addText, subText, limit }) => (
       className={'actionBtn addBtn'}
       onClick={() => {
         console.log('  对吗  limit.length ', fields, limit);
-        if (fields.length <= limit) {
+        if (fields.length < limit) {
           add();
         } else {
           tips(`最多新增${limit}条数据！`, 2);
@@ -289,8 +289,8 @@ const DynamicForm = props => {
           ),
           Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
           // CheckboxGroup: <Checkbox.Group {...realComProps} />,
-          Checkbox: renderCheckboxOp(checkboxData, opType),
-          Radio: renderRadioOp(radioData, opType),
+          Checkbox: renderCheckboxOp(checkboxData, { opType, isDisabledAll }),
+          Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
           DatePicker: <DatePicker {...realComProps} />,
           MonthPicker: <DatePicker {...realComProps} picker="month" />,
         };

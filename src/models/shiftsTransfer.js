@@ -86,7 +86,10 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          handover_time: v.handover_time.split('T')[0],
+        })),
         count: payload.rest.count,
         isShowModal: false,
       };

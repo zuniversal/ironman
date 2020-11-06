@@ -48,14 +48,14 @@ const ShiftsTransferForm = props => {
     {
       itemProps: {
         label: '接班班组',
-        name: 'receive_team',
+        name: 'recieve_team',
       },
     },
     {
-      formType: 'DatePicker',
+      // formType: 'DatePicker',
       itemProps: {
         label: '1.接班时间',
-        name: 'created_time',
+        name: 'handover_time',
       },
     },
     {

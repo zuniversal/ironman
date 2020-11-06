@@ -29,6 +29,7 @@ import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import { actions, mapStateToProps } from '@/models/inspectMission'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { inspectMissionStatusMap } from '@/configs';
 
 const TITLE = '巡检任务';
 
@@ -60,7 +61,6 @@ class InspectMission extends PureComponent {
   }
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -73,10 +73,11 @@ class InspectMission extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <InspectMissionSearchForm
         formBtn={this.renderFormBtn}
+        getUserAsync={params => this.props.getUserAsync({ keyword: params })}
+        userList={this.props.userList}
         getClientAsync={this.props.getClientAsync}
         clientList={this.props.clientList}
       ></InspectMissionSearchForm>
@@ -133,13 +134,16 @@ class InspectMission extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
+      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
     };
     if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
+      formComProps.init = {
+        ...this.props.itemDetail,
+        status: inspectMissionStatusMap[this.props.itemDetail.status],
+      };
     }
     if (action === 'assignMission') {
       return (
@@ -159,7 +163,6 @@ class InspectMission extends PureComponent {
     );
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return ['assignMission', 'editDate'].some(v => v === this.props.action)
       ? 'small'
       : 'default';
@@ -178,15 +181,13 @@ class InspectMission extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getUserAsync();
+    this.props.getTeamAsync();
+    this.props.getListAsync();
+  }
 
   render() {
-    console.log(
-      ' %c InspectMission 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
-
     return (
       <div className="InspectMission">
         {this.renderSearchForm()}

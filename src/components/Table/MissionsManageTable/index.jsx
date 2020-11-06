@@ -78,59 +78,78 @@ const MissionsManageTable = props => {
       >
         发起工单
       </a>
-      <a
-        onClick={() =>
-          props.edit({
-            action: 'schedule',
-            d_id: record.id,
-            itemDetail: record,
-          })
-        }
-      >
-        排期
-      </a>
-      <a
-        onClick={() =>
-          props.edit({
-            action: 'confirmSchedule',
-            d_id: record.id,
-            itemDetail: record,
-          })
-        }
-      >
-        确认排期
-      </a>
-      <a
-        onClick={() =>
-          props.showFormModal({
-            action: 'closeMission',
-            d_id: record.id,
-            itemDetail: record,
-          })
-        }
-      >
-        关闭任务
-      </a>
-      <a
-        onClick={() =>
-          props.edit({
-            action: 'linkContract',
-            d_id: record.id,
-            itemDetail: record,
-          })
-        }
-      >
-        关联合同
-      </a>
-      <a disabled className={`disabled `}>
-        已排期
-      </a>
-      <a disabled className={`disabled `}>
-        已确认排期
-      </a>
-      <a disabled className={`disabled `}>
-        已关闭
-      </a>
+      {record.status === 'waiting_plan' && (
+        <a
+          onClick={() =>
+            props.edit({
+              action: 'schedule',
+              d_id: record.id,
+              itemDetail: record,
+            })
+          }
+        >
+          排期
+        </a>
+      )}
+      {record.status === 'waiting_confirm' && (
+        <a
+          onClick={() =>
+            props.edit({
+              action: 'confirmSchedule',
+              d_id: record.id,
+              itemDetail: record,
+            })
+          }
+        >
+          确认排期
+        </a>
+      )}
+      {record.tags === 'completed' && (
+        <a
+          onClick={() =>
+            props.showFormModal({
+              action: 'closeMission',
+              d_id: record.id,
+              itemDetail: record,
+            })
+          }
+        >
+          关闭任务
+        </a>
+      )}
+      {record.status === 'waiting_plan' && (
+        <a
+          onClick={() =>
+            props.edit({
+              action: 'linkContract',
+              d_id: record.id,
+              itemDetail: record,
+            })
+          }
+        >
+          关联合同
+        </a>
+      )}
+      {(record.type === 'power_construction' ||
+        record.type === 'power_construction' ||
+        record.type !== 'waiting_plan') && (
+        <a disabled className={`disabled `}>
+          已排期
+        </a>
+      )}
+      {(record.type === 'power_construction' ||
+        record.type === 'power_construction' ||
+        record.type !== 'waiting_plan' ||
+        record.type !== 'waiting_confirm') && (
+        <a disabled className={`disabled `}>
+          已确认排期
+        </a>
+      )}
+      {record.type === 'completed' && (
+        <a disabled className={`disabled `}>
+          已关闭
+        </a>
+      )}
     </>
   );
 

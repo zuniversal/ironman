@@ -154,7 +154,6 @@ class ShiftsArrangeDetail extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}

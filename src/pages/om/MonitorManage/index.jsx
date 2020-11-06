@@ -51,7 +51,6 @@ class MonitorManage extends PureComponent {
   }
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button
@@ -70,7 +69,6 @@ class MonitorManage extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return <SearchKwForm formBtn={this.renderFormBtn}></SearchKwForm>;
   };
 

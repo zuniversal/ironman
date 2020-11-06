@@ -18,6 +18,7 @@ import SuccResult from '@/components/Widgets/SuccResult'; //
 import { actions, mapStateToProps } from '@/models/shiftsTransfer'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { teamTypeMap } from '@/configs';
 
 const TITLE = '交接班';
 
@@ -51,7 +52,6 @@ class ShiftsTransfer extends PureComponent {
     this.props.getListAsync(params.formData);
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -64,7 +64,6 @@ class ShiftsTransfer extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <ShiftsTransferSearchForm
         formBtn={this.renderFormBtn}
@@ -114,6 +113,10 @@ class ShiftsTransfer extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -133,17 +136,43 @@ class ShiftsTransfer extends PureComponent {
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action, itemDetail } = this.props; //
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
     };
     if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
+      const radioInit = {};
+      if (itemDetail.type == 1) {
+        new Array(20).fill(false).forEach((v, i) => {
+          // console.log(' i, radioInit, v ： ', i, radioInit, v,  )//
+          radioInit[`radio${i}`] = v;
+        });
+        itemDetail.dispatch_options.split(',').map((v, i) => {
+          radioInit[`radio${i + 1}`] = v ? v : false;
+        });
+        console.log(' radioInit ： ', radioInit); //
+      }
+      formComProps.init = {
+        ...itemDetail,
+        type: teamTypeMap[itemDetail.type],
+        handover_time: itemDetail.handover_time
+          ? itemDetail.handover_time.split('T')[0]
+          : null,
+        ...radioInit,
+        // [`radio1`]: false
+        // dispatch_options: itemDetail.type == 1 ? : [],
+      };
     }
-    console.log(' formComProps ： ', formComProps); //
-    return <ShiftsTransferForm {...formComProps}></ShiftsTransferForm>;
+    console.log(' formComProps ： ', formComProps, itemDetail, itemDetail.type); //
+    if (itemDetail.type == 0) {
+      return <ShiftsTransferForm {...formComProps}></ShiftsTransferForm>;
+    } else if (itemDetail.type == 1) {
+      return (
+        <ShiftsTransferDetailForm {...formComProps}></ShiftsTransferDetailForm>
+      );
+    }
   };
   renderSmartFormModal = params => {
     return (
@@ -158,6 +187,9 @@ class ShiftsTransfer extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getUserAsync(); //
+  }
 
   render() {
     return (

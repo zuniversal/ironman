@@ -7,9 +7,9 @@ import moment from 'moment'; //
 const namespace = 'inspectPlan';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientAsync'];
+const otherActions = ['getClientAsync', 'getScheduledListAsync'];
 
-const batchTurnActions = ['changeStationPlan', 'changePlanAsync'];
+const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -28,10 +28,17 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    searchInfo: {
+      month: moment(),
+    },
 
     clientList: [],
     dragList: [],
     initList: [],
+    unScheduleList: [],
+    scheduleList: [],
+    unScheduleListOrigin: [],
+    scheduleListOrigin: [],
   },
 
   reducers: {
@@ -51,15 +58,47 @@ export default {
         itemDetail: {},
       };
     },
+    reset(state, { payload, type }) {
+      const { unScheduleListOrigin, scheduleListOrigin } = state;
+      return {
+        ...state,
+        unScheduleList: unScheduleListOrigin,
+        scheduleList: scheduleListOrigin,
+      };
+    },
     getList(state, { payload, type }) {
       console.log(' getList ： ', state, payload); //
       // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, client: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
+      const unScheduleListData = payload.unScheduleList.map(v => {
+        // console.log(' unScheduleListData v ： ', v,  )//
+        return { ...v, isdraged: false };
+      });
+      const scheduleListData = payload.scheduleList.map(v => {
+        // console.log(' scheduleListData v ： ', v,  )//
+        return {
+          ...v,
+          title: `电站-${v.station.name}-${v.station.id}`,
+          client: `客户`,
+          start: v.plan_date,
+          isdraged: true,
+          id: v.station.id,
+        };
+      });
+      console.log(
+        ' unScheduleListData, scheduleListData,  ： ',
+        unScheduleListData,
+        scheduleListData,
+      ); //
       return {
         ...state,
-        dataList: payload.list,
-        initList: payload.list,
-        count: payload.rest.count,
+        // dataList: payload.list,
+        // initList: payload.list,
+        // count: payload.rest.count,
+        unScheduleList: unScheduleListData,
+        scheduleList: scheduleListData,
+        unScheduleListOrigin: unScheduleListData,
+        scheduleListOrigin: scheduleListData,
         isShowModal: false,
       };
     },
@@ -108,38 +147,40 @@ export default {
       };
     },
     changeStationPlan(state, { payload = [], type }) {
-      const { initList, dataList } = state;
+      const { initList, unScheduleList } = state;
       const dragList = payload.map(v => ({
         start: v.startStr,
         plan_date: v.startStr,
         id: v.id,
+        // station_id: v.station.station_id,
         station_id: v.id,
       }));
-      console.log(' dragList ： ', state, dragList); //
-      const latestDrag = dragList[dragList.length - 1];
+      console.log(' dragList ： ', state, dragList, payload); //
+      const latestDrag = dragList[dragList.length - 1]; // 当前拖动的最新的一个电站
       console.log(' latestDrag ： ', latestDrag); //
-      const dataListFilter = dataList.map(v => {
+      const unScheduleListFilter = unScheduleList.map(v => {
         return latestDrag && v.id != latestDrag.id
           ? v
           : {
               ...v,
               surplus_plan_num:
-                v.surplus_plan_num - 1 > 0
+                v.surplus_plan_num > 0
                   ? v.surplus_plan_num - 1
                   : v.surplus_plan_num,
+              isdraged: true,
             };
       });
       console.log(
         ' res  dragList.map v ： ',
         dragList,
-        dataList,
-        dataListFilter,
+        unScheduleList,
+        unScheduleListFilter,
         latestDrag,
       );
       return {
         ...state,
         dragList: dragList,
-        dataList: dataListFilter,
+        unScheduleList: unScheduleListFilter,
       };
     },
     resetStationData(state, { payload, type }) {
@@ -159,13 +200,32 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, {
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      console.log(' getListAsync ： ', payload, searchInfo, type); //
+      const params = {
         ...payload,
-        month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
-      });
-      yield put(action({ ...res, payload }));
+        // month: searchInfo.month ? searchInfo.month.format('YYYY-MM') : nowYearMonth,
+        month: searchInfo.month.format('YYYY-MM'),
+      };
+      const unScheduleList = yield call(services.getUnScheduleList, params);
+      const scheduleList = yield call(services.getScheduledList, params);
+      // const scheduleList = []
+      console.log(
+        ' unScheduleList, scheduleList ： ',
+        unScheduleList,
+        scheduleList,
+        params,
+      ); //
+      yield put(
+        action({
+          unScheduleList: unScheduleList.list,
+          scheduleList: scheduleList.list,
+          // scheduleList: [],
+          ...scheduleList,
+          payload,
+        }),
+      );
       // const { form,  } = payload; //
       // try {
       //   const res = yield form.validateFields();
@@ -179,6 +239,14 @@ export default {
       //   console.log(' error ： ', error); //
       // }
     },
+    *getScheduledListAsync({ payload, action, type }, { call, put }) {
+      console.log(' getScheduledListAsync ： ', payload, action, type); //
+      const res = yield call(services.getList, {
+        ...payload,
+        month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
+      });
+      yield put(action({ ...res, payload }));
+    },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
@@ -191,8 +259,12 @@ export default {
       });
       yield put(action({ ...res, payload }));
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
+    *editItemAsync({ payload, action, type }, { call, put, select }) {
+      const { dragList } = yield select(state => state[namespace]);
+      console.log(' editItemAsync dragList ： ', dragList); //
+      const res = yield call(services.editItem, {
+        data: dragList,
+      });
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
@@ -201,7 +273,7 @@ export default {
     },
     *changePlanAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' dragList ： ', dragList); //
+      console.log(' changePlanAsync dragList ： ', dragList); //
       const res = yield call(services.changePlan, {
         data: dragList,
       });

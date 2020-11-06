@@ -41,7 +41,6 @@ class PowerStation extends PureComponent {
   }
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -71,7 +70,6 @@ class PowerStation extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
@@ -157,13 +155,11 @@ class PowerStation extends PureComponent {
     return <PowerStationForm {...formComProps}></PowerStationForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     return ['removeStation'].some(v => v === this.props.action)
       ? 'small'
       : 'default';
   }
   get isNoForm() {
-    console.log(' get 取属 isNoForm ： ', this.state, this.props);
     return ['removeStation'].some(v => v === this.props.action);
   }
   renderSmartFormModal = params => {

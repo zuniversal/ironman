@@ -97,7 +97,6 @@ class ShiftsArrange extends PureComponent {
     this.props.getListAsync(params.formData);
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>

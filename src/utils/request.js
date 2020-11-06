@@ -58,8 +58,8 @@ export const isTips = res => {
 
   const { status, data, config } = res;
   const { msg_show, code } = data;
-  const { noTips } = config.data;
-  // const { noTips } = config.formatParams;
+  // const { noTips } = config.data;
+  const { noTips } = res.config.customInfo;
   const { url } = config;
 
   console.log(
@@ -69,7 +69,7 @@ export const isTips = res => {
     // res.data,
     config,
     config.datas,
-    config.formatParams,
+    res.config.customInfo,
   );
   if (statusMap[status]) {
     tips(statusMap[status], 2);
@@ -129,11 +129,11 @@ export class Request {
             ? config.params
             : config.data,
         );
-        config.data = config.datas = wrapParams(
-          config.method === 'get' || config.method === 'delete'
-            ? config.params
-            : config.data,
-        );
+        // config.data = config.datas = wrapParams(
+        //   config.method === 'get' || config.method === 'delete'
+        //     ? config.params
+        //     : config.data,
+        // );
         config.customInfo = formatParams;
         console.log(' 发送请求   ： ', config, formatParams); //
         return config;
@@ -188,7 +188,7 @@ export class Request {
     );
   }
   handleResponse = res => {
-    console.log(' handleResponse,  , ： ', res);
+    // console.log(' handleResponse,  , ： ', res);
     isTips(res);
   };
 }
@@ -196,7 +196,7 @@ export class Request {
 export const request = new Request(); //
 const { http } = request;
 // console.log(' request ： ', request, URL, {...http},  )//
-
+//
 export const parseUrl = (url, params) => URL + url;
 
 // export const get = (url, params) => new Promise((resolve, reject) => debounce(resolve(http.get(url, { params: params }), 5000)));

@@ -102,7 +102,7 @@ export const renderSelectOp = (configs = [], opType = 'option') => {
         return (
           <OptGroup label={v.label} key={v.value}>
             {v.children.map(v => (
-              <Option value={v.value} key={v.value} title={v.label}>
+              <Option value={v.value} key={v.value} title={v.label} {...v}>
                 {v.label}
               </Option>
             ))}
@@ -116,11 +116,14 @@ export const renderSelectOp = (configs = [], opType = 'option') => {
       ));
 };
 
-export const renderRadioOp = (configs = [], opType = 'option') => {
+export const renderRadioOp = (
+  configs = [],
+  { opType = 'option', isDisabledAll },
+) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   // return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
   const radioItems = configs.map(v => (
-    <Radio value={v.value} key={v.value}>
+    <Radio value={v.value} key={v.value} {...v}>
       {v.label}
     </Radio>
   ));
@@ -132,7 +135,10 @@ export const renderRadioOp = (configs = [], opType = 'option') => {
   );
 };
 
-export const renderCheckboxOp = (configs = [], opType = 'option') => {
+export const renderCheckboxOp = (
+  configs = [],
+  { opType = 'option', isDisabledAll },
+) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   const CheckboxItems = configs.map(v => (
     <Checkbox key={v.value}>{v.label}</Checkbox>
@@ -521,7 +527,7 @@ export const createProperty = (arr, f) => {
 export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
   const token =
     localStorage.getItem(k) != undefined ? localStorage.getItem(k) : 'no_token';
-  console.log(' prefix, k ： ', prefix, k, token); //
+  // console.log(' prefix, k ： ', prefix, k, token); //
   return prefix + token;
 };
 // export const getToken = (k = 'user_info') =>

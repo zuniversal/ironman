@@ -125,7 +125,6 @@ class Assets extends PureComponent {
   };
 
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button
@@ -161,7 +160,6 @@ class Assets extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <AssetsSearchForm
         formBtn={this.renderFormBtn}
@@ -259,7 +257,6 @@ class Assets extends PureComponent {
     return <AssetsForm {...formComProps}></AssetsForm>;
   };
   get size() {
-    console.log(' get 取属 size ： ', this.state, this.props);
     if (this.props.action === 'uploadFile') {
       return 'small';
     }

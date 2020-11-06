@@ -39,7 +39,6 @@ class UserManage extends PureComponent {
     };
   }
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params); //
     return (
       <div className={'btnWrapper'}>
         <Button type="primary" onClick={() => this.props.search(params)}>
@@ -58,7 +57,6 @@ class UserManage extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    // console.log(' renderSearchForm ： ', params,  )
     return (
       <UserManageSearchForm formBtn={this.renderFormBtn}></UserManageSearchForm>
     );

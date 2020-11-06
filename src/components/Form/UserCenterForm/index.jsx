@@ -138,9 +138,21 @@ const UserCenterForm = props => {
         noPh
         formLayouts={formLayouts}
         {...props}
-      ></SmartForm>
+      >
+        <Form.Item label={' '} colon={false}>
+          <Form.Item>
+            <Button
+              className={`editBtn`}
+              type="primary"
+              onClick={() => props.handleOk({ form, action: 'edit' })}
+            >
+              确认修改
+            </Button>
+          </Form.Item>
+        </Form.Item>
+      </SmartForm>
 
-      <div className="dfc actionBtn ">
+      {/* <div className="dfc actionBtn ">
         <Button
           className={`editBtn`}
           type="primary"
@@ -148,7 +160,7 @@ const UserCenterForm = props => {
         >
           确认修改
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
