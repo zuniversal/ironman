@@ -1,26 +1,44 @@
-.uploadCom {
-  &.inputUpload {
-    .ant-upload-select {
-      width: 320px;
-      height: 32px;
-      .ant-upload {
-        background: #fff;
+.uploadFormItem {
+  &.uploadBox {
+    .ant-upload-select-picture-card {
+      width: 104px;
+      height: 104px;
+      background: #f4f3f4;
+      margin: 0;
+      margin-right: 10px;
+    }
+  }
+
+  .uploadCom {
+    &.inputUpload {
+      .ant-upload-select {
+        width: 320px;
+        height: 32px;
+        .ant-upload {
+          background: #fff;
+        }
       }
     }
-  }
-  .ant-upload {
-    background: #f4f3f4;
-  }
-
-  .icon {
-    svg {
-      width: 17px;
-      height: 17px;
+    .ant-upload {
+      background: #f4f3f4;
     }
-  }
 
-  .text {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.65);
+    .icon {
+      svg {
+        width: 17px;
+        height: 17px;
+      }
+    }
+
+    .text {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.65);
+    }
+    .uploadContent {
+      flex-direction: column;
+      .icon {
+        margin-bottom: 16px;
+      }
+    }
   }
 }

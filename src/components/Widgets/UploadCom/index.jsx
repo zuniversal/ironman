@@ -30,24 +30,27 @@ const UploadCom = props => {
     action,
     name,
     extra,
+    formItemCls,
   } = props; //
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
   return (
     <Form.Item
       key={'attach'}
-      name="upload"
+      // name="upload"
+      name={name}
       label={label}
       colon={false}
       // extra="支持扩展名：.pdf"
       extra={extra}
+      className={`uploadFormItem ${isInputUpload ? '' : 'uploadBox'}`}
     >
       <Upload
-        name={name}
         action={action}
         // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?
         fileList={[]}
         listType="picture-card"
         className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
+        multiple={false}
       >
         {isInputUpload ? (
           <div className={`${contentClass}`}>
@@ -55,7 +58,7 @@ const UploadCom = props => {
             <div className={'text'}>{text}</div>
           </div>
         ) : (
-          <div className={`dfc`}>
+          <div className={`dfc uploadContent`}>
             <IconCom className={'icon'} />
             <div className={'text'}>{text}</div>
           </div>
@@ -66,8 +69,8 @@ const UploadCom = props => {
 };
 
 UploadCom.defaultProps = {
-  text: '上传照片',
-  action: '上传照片',
+  text: '上传文件',
+  action: '上传文件',
   name: 'file_name',
   extra: '',
 };

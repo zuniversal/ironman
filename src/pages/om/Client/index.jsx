@@ -184,11 +184,15 @@ class Client extends PureComponent {
         tips('必须添加管理员信息！', 2);
         return;
       }
+      const fileList = res.file.fileList;
+      const logoFileList = res.logo.fileList;
       const { dispatch } = this.props; //
       dispatch(
         actionFn({
           ...init,
           ...res,
+          file: fileList[fileList.length - 1].response.url,
+          logo: logoFileList[logoFileList.length - 1].response.url,
           customer_admin: adminList,
         }),
       );

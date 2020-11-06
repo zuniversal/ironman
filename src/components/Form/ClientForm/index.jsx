@@ -105,14 +105,14 @@ export const AdminForm = props => {
               type="primary"
               onClick={() => {
                 console.log(' props addUserAsync ： ', props); //
-                if (Object.keys(props.init).length) {
-                  console.log('  对吗  customer_admin.length ', props.init);
-                  if (props.init.customer_admin.length) {
-                    addUserAsync(props);
-                  } else {
-                    tips('无管理员初始数据！', 2);
-                  }
-                }
+                // if (Object.keys(props.init).length) {
+                console.log('  对吗  customer_admin.length ', props.init);
+                // if (props.init.customer_admin.length) {
+                addUserAsync(props);
+                // } else {
+                //   tips('无管理员初始数据！', 2);
+                // }
+                // }
               }}
               disabled={
                 form.getFieldsError().filter(({ errors }) => errors.length)
@@ -331,7 +331,8 @@ const ClientForm = props => {
       label={'企业Logo'}
       action={'logo'}
       action={'/api/v1/upload'}
-      name={'file'}
+      name={'logo'}
+      extra={'支持扩展名:pdf、jpg、png'}
     ></UploadCom>,
 
     {
@@ -471,6 +472,7 @@ const ClientForm = props => {
       contentClass={'dfc'}
       action={'/api/v1/upload'}
       name={'file'}
+      extra={'支持扩展名:pdf、jpg、png'}
     ></UploadCom>,
   ];
 
@@ -516,23 +518,25 @@ const ClientForm = props => {
   };
 
   return (
-    <Form.Provider
-      onFormFinish={(name, { values, forms }) => {
-        console.log(' name, values, forms ： ', name, values, forms); //
-      }}
-    >
-      <SmartForm
-        // flexRow={4}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        isDisabledAll={action === 'detail'}
-        {...props}
-      ></SmartForm>
+    <div className="clientForm">
+      <Form.Provider
+        onFormFinish={(name, { values, forms }) => {
+          console.log(' name, values, forms ： ', name, values, forms); //
+        }}
+      >
+        <SmartForm
+          // flexRow={4}
+          config={config}
+          formProps={formProps}
+          // init={init}
+          // init={{}}
+          isDisabledAll={action === 'detail'}
+          {...props}
+        ></SmartForm>
 
-      <AdminForm {...restProps}></AdminForm>
-    </Form.Provider>
+        <AdminForm {...restProps}></AdminForm>
+      </Form.Provider>
+    </div>
   );
 };
 
