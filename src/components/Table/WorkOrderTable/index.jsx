@@ -89,9 +89,9 @@ const WorkOrderTable = props => {
       >
         导出
       </a>
-      <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}>
+      {/* <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}>
         添加工作票
-      </a>
+      </a> */}
     </>
   );
 

@@ -165,7 +165,7 @@ const DynamicItemForm = props => {
   // }) : selectData
   let selectDatas = [...selectData];
   if (filterSelect) {
-    selectDatas = selectData.filter(v => !value.some(item => v.id == item));
+    // selectDatas = selectData.filter(v => !value.some(item => v.id == item));
     // selectDatas = selectData.filter(v => !value.includes(item => v.id == item));//
     // selectDatas = selectData.splice(0, 4)
   }

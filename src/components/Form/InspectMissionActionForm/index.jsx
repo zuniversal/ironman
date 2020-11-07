@@ -66,6 +66,7 @@ export const InspectMissionEditDateForm = props => {
     },
     {
       formType: 'Checkbox',
+      noRule: true,
       itemProps: {
         label: '',
         className: 'centerFormItem',

@@ -65,9 +65,13 @@ class InspectPlan extends PureComponent {
     const dragListlen = dragList.length; //
     const scheduleListlen = scheduleList.length; //
     console.log(' savePlan dragList ： ', dragListlen, scheduleListlen); //
-    dragListlen == scheduleListlen
-      ? this.props.editItemAsync()
-      : this.props.addItemAsync();
+    if (dragListlen) {
+      dragListlen == scheduleListlen
+        ? this.props.editItemAsync()
+        : this.props.addItemAsync();
+    } else {
+      tips('请先对电站进行操作！', 2);
+    }
   };
   onSearch = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
@@ -210,10 +214,10 @@ class InspectPlan extends PureComponent {
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
     this.props.getClientAsync();
-    this.props.getListAsync({
-      leader: 1,
-      // month: '2020-10',
-    });
+    // this.props.getListAsync({
+    //   leader: 1,
+    //   // month: '2020-10',
+    // });
   }
 
   render() {

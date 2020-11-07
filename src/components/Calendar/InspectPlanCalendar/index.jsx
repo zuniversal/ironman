@@ -160,6 +160,7 @@ const InspectPlanCalendar = props => {
   };
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
+    // props.eventDrop(params);
   };
   const eventAdd = params => {
     console.log(' eventAdd   ,   ： ', params);
@@ -191,9 +192,9 @@ const InspectPlanCalendar = props => {
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
-        // eventAdd={eventAdd}
+        eventAdd={eventAdd}
         // eventRemove={eventRemove}
-        // eventChange={eventChange}
+        eventChange={eventChange}
       />
 
       <ShiftsArrangeList

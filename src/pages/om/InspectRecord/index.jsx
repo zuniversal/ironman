@@ -75,7 +75,16 @@ class InspectRecord extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return <SearchKwForm formBtn={this.renderFormBtn}></SearchKwForm>;
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
+      ></SearchKwForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -97,7 +106,7 @@ class InspectRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (action === 'detail') {
+    if (action === 'detail' || action === 'inspectReport') {
       this.props.onCancel({});
       return;
     }
@@ -216,9 +225,9 @@ class InspectRecord extends PureComponent {
 
         {this.renderSmartFormModal()}
 
-        <Button type="primary" onClick={this.doPrint}>
+        {/* <Button type="primary" onClick={this.doPrint}>
           导出
-        </Button>
+        </Button> */}
         {/* {this.renderExportPdf()} */}
         {this.renderExportPdf2()}
       </div>

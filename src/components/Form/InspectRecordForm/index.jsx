@@ -568,6 +568,8 @@ const InspectRecordForm = props => {
         // init={init}
         // init={{}}
         formLayouts={formLayouts}
+        noRuleAll
+        isDisabledAll
         {...rest}
       ></SmartForm>
 
