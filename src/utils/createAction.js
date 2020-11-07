@@ -129,6 +129,7 @@ export const init = prefix => {
     type: prefix + '/' + types,
     payload,
     action: action(types.split(suffix)[0]),
+    // action: action(['addItemAsync', 'editItemAsync', 'removeItemAsync', 'removeItemsAsync', ].includes(types) ? 'getListAsync' : types.split(suffix)[0]),
   });
   const createCRUD = (config = []) => {
     const actions = {};

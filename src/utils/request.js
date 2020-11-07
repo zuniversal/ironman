@@ -129,12 +129,17 @@ export class Request {
             ? config.params
             : config.data,
         );
+
         // config.data = config.datas = wrapParams(
         //   config.method === 'get' || config.method === 'delete'
         //     ? config.params
         //     : config.data,
         // );
         config.customInfo = formatParams;
+        if (config.params) {
+          const { noTips, ...rest } = config.params;
+          config.params = rest;
+        }
         console.log(' 发送请求   ： ', config, formatParams); //
         return config;
       },

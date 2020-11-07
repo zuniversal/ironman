@@ -223,7 +223,7 @@ class ShiftsManage extends PureComponent {
       this.props,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    this.props.getUserAsync(); //
+    this.props.getUserAsync({ page: 1, page_size: 50 }); //
   }
 
   render() {

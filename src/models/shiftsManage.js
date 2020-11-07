@@ -36,6 +36,7 @@ export default {
     count: 0,
     itemDetail: {},
     d_id: '',
+    searchInfo: {},
     userList: [
       // { label: 'zyb', value: 'value1' },
       // { label: 'zyb1', value: 'value2' },
@@ -60,11 +61,13 @@ export default {
       };
     },
     getList(state, { payload, type }) {
+      console.log(' getListgetList ： ', payload); //
       return {
         ...state,
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -124,10 +127,21 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync  payload ： ', payload); //
-      const res = yield call(services.getList, payload);
-      yield put(action(res));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       console.log(' getItemAsync  payload ： ', payload); //
@@ -137,24 +151,33 @@ export default {
     *addItemAsync({ payload, action, type }, { call, put }) {
       console.log(' addItemAsync  payload ： ', payload); //
       const res = yield call(services.addItem, payload);
-      yield put(action(res));
+      // yield put(action(res));
+      yield put({ type: 'getListAsync' });
+      // yield put(action());
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       console.log(' editItemAsync  payload ： ', payload); //
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
+      // yield put(action());
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemAsync  payload ： ', payload); //
       const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
+      // yield put(action());
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemsAsync ： ', payload, type); //
       const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
+      // yield put(action());
     },
+
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
       return res;

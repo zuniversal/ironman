@@ -18,4 +18,6 @@ export const removeItem = p => remove(`console/OMS/spect/task/${p.d_id}`, p);
 
 export const assignMission = p =>
   patch(`console/OMS/spect/task/${p.d_id}/assign`, p);
-// export const editMission = p => patch(`console/OMS/spect/task/${p.d_id}`, p);
+// export const editMission = p => patch(`console/OMS/spect/task/${p.d_id}`, p);p);
+
+export const exportData = p => get('console/OMS/team/files', p);

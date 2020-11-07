@@ -67,22 +67,33 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      console.log(' getList ： ', state, payload); //
+      console.log(' getList ： ', state, payload, payload.searchInfo); //
       // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, client: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
       const unScheduleListData = payload.unScheduleList.map(v => {
         // console.log(' unScheduleListData v ： ', v,  )//
-        return { ...v, isdraged: false };
+        return {
+          ...v,
+          extendedProps: {
+            ...v,
+            isScheduled: false,
+          },
+        };
       });
       const scheduleListData = payload.scheduleList.map(v => {
         // console.log(' scheduleListData v ： ', v,  )//
         return {
           ...v,
-          title: `电站-${v.station.name}-${v.station.id}`,
+          title: `电站-${v.station.name} id:${v.station.id}`,
           client: `客户`,
           start: v.plan_date,
-          isdraged: true,
-          id: v.station.id,
+          // isdraged: true,
+          // station_id: v.station.station_id,
+          extendedProps: {
+            ...v,
+            isScheduled: true,
+          },
+          // id: v.station.id,
         };
       });
       console.log(
@@ -100,6 +111,7 @@ export default {
         unScheduleListOrigin: unScheduleListData,
         scheduleListOrigin: scheduleListData,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -152,11 +164,12 @@ export default {
         start: v.startStr,
         plan_date: v.startStr,
         id: v.id,
+        extendedProps: v.extendedProps,
         // station_id: v.station.station_id,
-        station_id: v.id,
+        // station_id: v.id,
       }));
       console.log(' dragList ： ', state, dragList, payload); //
-      const latestDrag = dragList[dragList.length - 1]; // 当前拖动的最新的一个电站
+      const latestDrag = payload[payload.length - 1]; // 当前拖动的最新的一个电站
       console.log(' latestDrag ： ', latestDrag); //
       const unScheduleListFilter = unScheduleList.map(v => {
         return latestDrag && v.id != latestDrag.id
@@ -167,7 +180,7 @@ export default {
                 v.surplus_plan_num > 0
                   ? v.surplus_plan_num - 1
                   : v.surplus_plan_num,
-              isdraged: true,
+              // isdraged: true,
             };
       });
       console.log(
@@ -176,6 +189,7 @@ export default {
         unScheduleList,
         unScheduleListFilter,
         latestDrag,
+        [...payload],
       );
       return {
         ...state,
@@ -205,8 +219,8 @@ export default {
       console.log(' getListAsync ： ', payload, searchInfo, type); //
       const params = {
         ...payload,
-        // month: searchInfo.month ? searchInfo.month.format('YYYY-MM') : nowYearMonth,
-        month: searchInfo.month.format('YYYY-MM'),
+        month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
+        // month: searchInfo.month.format('YYYY-MM'),
       };
       const unScheduleList = yield call(services.getUnScheduleList, params);
       const scheduleList = yield call(services.getScheduledList, params);
@@ -222,8 +236,8 @@ export default {
           unScheduleList: unScheduleList.list,
           scheduleList: scheduleList.list,
           // scheduleList: [],
-          ...scheduleList,
-          payload,
+          // ...scheduleList,
+          searchInfo: payload,
         }),
       );
       // const { form,  } = payload; //
@@ -254,15 +268,24 @@ export default {
     *addItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
       console.log(' addItemAsync dragList ： ', dragList); //
+      const planData = dragList.map(v => {
+        const { station } = v.extendedProps;
+        return {
+          plan_date: v.plan_date,
+          station_id: station ? station.id : v.id,
+        };
+      });
+      console.log(' planData ： ', planData); //
+      // return
       const res = yield call(services.addItem, {
-        data: dragList,
+        data: planData,
       });
       yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
       console.log(' editItemAsync dragList ： ', dragList); //
-      const res = yield call(services.editItem, {
+      const res = yield call(services.changePlan, {
         data: dragList,
       });
       yield put(action({ ...res, payload }));
@@ -274,10 +297,10 @@ export default {
     *changePlanAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
       console.log(' changePlanAsync dragList ： ', dragList); //
-      const res = yield call(services.changePlan, {
-        data: dragList,
-      });
-      yield put(action({ ...res, payload }));
+      // const res = yield call(services.changePlan, {
+      //   data: dragList,
+      // });
+      // yield put(action({ ...res, payload }));
     },
 
     *getClientAsync({ payload, action, type }, { call, put }) {

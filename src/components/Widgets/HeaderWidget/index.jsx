@@ -4,7 +4,7 @@ import Icon from '@/components/Widgets/Icons'; //
 import { history, connect } from 'umi';
 
 const HeaderWidget = props => {
-  console.log(' HeaderWidget   props, ,   ： ', props);
+  // console.log(' HeaderWidget   props, ,   ： ', props);
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);

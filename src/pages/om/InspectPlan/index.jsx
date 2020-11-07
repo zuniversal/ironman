@@ -22,7 +22,10 @@ import InspectPlanTable from '@/components/Table/InspectPlanTable'; //
 import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
-import { actions, mapStateToProps } from '@/models/inspectPlan'; //
+import {
+  actions,
+  // mapStateToProps
+} from '@/models/inspectPlan'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -37,7 +40,10 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ inspectPlan, }) => inspectPlan;
+const mapStateToProps = ({ inspectPlan, loading }) => ({
+  ...inspectPlan,
+  loading: loading.effects['inspectPlan/getListAsync'],
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -53,7 +59,16 @@ class InspectPlan extends PureComponent {
       titleMap,
     };
   }
-
+  savePlan = e => {
+    console.log('    savePlan ： ', e, this.state, this.props);
+    const { dragList, scheduleList } = this.props;
+    const dragListlen = dragList.length; //
+    const scheduleListlen = scheduleList.length; //
+    console.log(' savePlan dragList ： ', dragListlen, scheduleListlen); //
+    dragListlen == scheduleListlen
+      ? this.props.editItemAsync()
+      : this.props.addItemAsync();
+  };
   onSearch = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action } = this.props; //
@@ -80,12 +95,15 @@ class InspectPlan extends PureComponent {
         <Button type="primary" onClick={() => this.onSearch(params)}>
           搜索
         </Button>
-        {/* <Button type="primary" onClick={() => this.props.getListAsync()}> */}
-        <Button type="primary" onClick={() => this.props.reset()}>
+        <Button
+          type="primary"
+          onClick={() => this.props.getListAsync(this.props.searchInfo)}
+        >
+          {/* <Button type="primary" onClick={() => this.props.reset()}> */}
           重置
         </Button>
         {/* <Button type="primary" onClick={() => this.props.addItemAsync()}> */}
-        <Button type="primary" onClick={() => this.props.editItemAsync()}>
+        <Button type="primary" onClick={this.savePlan}>
           保存计划
         </Button>
       </div>
@@ -117,6 +135,7 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanCalendar
         eventsSet={this.props.changeStationPlan}
+        // scheduleList={this.props.scheduleList}
         scheduleList={this.props.scheduleList}
         unScheduleList={this.props.unScheduleList}
       ></InspectPlanCalendar>

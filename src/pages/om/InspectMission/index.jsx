@@ -80,8 +80,14 @@ class InspectMission extends PureComponent {
         userList={this.props.userList}
         getClientAsync={this.props.getClientAsync}
         clientList={this.props.clientList}
+        onFieldChange={this.onFieldChange}
+        init={this.props.searchInfo}
       ></InspectMissionSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -103,6 +109,10 @@ class InspectMission extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -138,6 +148,8 @@ class InspectMission extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
+      teamList: this.props.teamList,
     };
     if (action !== 'add') {
       formComProps.init = {

@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectMission';
 import * as userServices from '@/services/user';
+import * as teamServices from '@/services/shiftsManage';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'inspectMission';
@@ -9,6 +10,8 @@ const { createActions } = init(namespace);
 const otherActions = [
   // 'editMissionAsync',
   'getUserAsync',
+  'getTeamAsync',
+  'exportDataAsync',
 ];
 
 const batchTurnActions = [];
@@ -30,8 +33,11 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    d_id: '',
+    searchInfo: {},
 
     userList: [],
+    teamList: [],
   },
 
   reducers: {
@@ -57,6 +63,7 @@ export default {
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -103,13 +110,30 @@ export default {
         userList: formatSelectList(payload.list, 'nickname'),
       };
     },
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        teamList: formatSelectList(payload.list, 'team_headman'),
+      };
+    },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       console.log(' getItemAsync ： ', payload); //
@@ -134,7 +158,8 @@ export default {
         params.date = payload.date.format('YYYY-MM-DD');
       }
       const res = yield call(services.assignMission, params);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
@@ -145,6 +170,15 @@ export default {
       console.log(' getUserAsync ： ', payload); //
       const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
+    },
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(teamServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
   },
 };

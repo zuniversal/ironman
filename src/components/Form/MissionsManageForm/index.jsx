@@ -43,9 +43,9 @@ const MissionsManageForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getAssetsAsync,
-      // selectData: props.assetsList,
+      formType: 'Search',
+      selectSearch: props.getAssetsAsync,
+      selectData: props.assetsList,
       itemProps: {
         label: '设备',
         name: 'equipment_id',

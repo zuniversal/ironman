@@ -51,6 +51,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    d_id: '',
+    searchInfo: {},
   },
 
   reducers: {
@@ -79,6 +81,7 @@ export default {
         })),
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -155,10 +158,22 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, formatSearch(payload));
-      yield put(action(res));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...formatSearch(payload),
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
@@ -199,7 +214,8 @@ export default {
     *dispatchOrderAsync({ payload, action, type }, { call, put }) {
       console.log(' dispatchOrderAsync ： ', payload, type); //
       const res = yield call(services.dispatchOrder, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *addTicketAsync({ payload, action, type }, { call, put }) {
       console.log(' addTicketAsync ： ', payload, type); //
@@ -209,7 +225,8 @@ export default {
       };
       console.log(' params ： ', params); //
       const res = yield call(services.addTicket, params);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
   },
 };

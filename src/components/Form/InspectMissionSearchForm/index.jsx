@@ -2,6 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { inspectMissionStatusConfig } from '@/configs';
 
 const InspectMissionSearchForm = props => {
   console.log(' InspectMissionSearchForm ： ', props); //
@@ -18,6 +19,8 @@ const InspectMissionSearchForm = props => {
       },
     },
     {
+      formType: 'Search',
+      selectData: inspectMissionStatusConfig,
       itemProps: {
         label: '状态',
         name: 'status',
@@ -62,7 +65,7 @@ const InspectMissionSearchForm = props => {
         {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

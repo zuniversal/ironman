@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import { Form, Input } from 'antd';
+import { Spin } from 'antd';
 import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
 
 const items = { title: '部门会议x', start: '2020-10-08' };
@@ -41,15 +41,22 @@ const ShiftsArrangeCalendar = props => {
 
   return (
     <div className="shiftsArrangeCalendar ">
-      <SmartCalendar
-        // events={calendarEvents}
-        editable={false}
-        events={props.data}
-        select={select}
-        eventClick={eventClick}
-        eventsSet={eventsSet}
-        eventDrop={eventDrop}
-      />
+      <Spin
+        className={''}
+        size="large"
+        spinning={props.loading}
+        tip="请求发送中，请稍等..."
+      >
+        <SmartCalendar
+          // events={calendarEvents}
+          editable={false}
+          events={props.data}
+          select={select}
+          eventClick={eventClick}
+          eventsSet={eventsSet}
+          eventDrop={eventDrop}
+        />
+      </Spin>
     </div>
   );
 };

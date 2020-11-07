@@ -167,10 +167,14 @@ class Client extends PureComponent {
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     // const { action } = this.state; //
-    const { action } = this.props; //
-    let actionFn = actions.addItemAsync;
+    const { action, addItemAsync, editItemAsync } = this.props; //
+    // let actionFn = actions.addItemAsync;
+    // if (action === 'edit') {
+    //   actionFn = actions.editItemAsync;
+    // }
+    let actionFn = addItemAsync;
     if (action === 'edit') {
-      actionFn = actions.editItemAsync;
+      actionFn = editItemAsync;
     }
 
     const { form, init } = props; //
@@ -180,26 +184,30 @@ class Client extends PureComponent {
       console.log('  res await 结果  ：', res, action, actionFn); //
       const { adminList, itemDetail } = this.props; //
       console.log(' adminList ： ', adminList); //
-      if (adminList.length === 0 && action !== 'add') {
+      // if (adminList.length === 0 && action !== 'add') {
+      if (adminList.length === 0) {
         tips('必须添加管理员信息！', 2);
         return;
       }
-      const fileList = res.file.fileList;
-      const logoFileList = res.logo.fileList;
-      const { dispatch } = this.props; //
-      dispatch(
-        actionFn({
-          ...init,
-          ...res,
-          file: fileList[fileList.length - 1].response.url,
-          logo: logoFileList[logoFileList.length - 1].response.url,
-          customer_admin: adminList,
-        }),
-      );
-
-      // this.setState({
-      //   isShow: false,
-      // });
+      const params = {
+        ...init,
+        ...res,
+        customer_admin: adminList,
+      };
+      if (res.file) {
+        const fileList = res.file.fileList;
+        params.file = fileList[fileList.length - 1].response.url;
+      }
+      if (res.logo) {
+        const logoFileList = res.logo.fileList;
+        params.logo = fileList[fileList.length - 1].response.url;
+      }
+      console.log(' params ： ', params); //
+      actionFn(params);
+      // const { dispatch } = this.props; //
+      // dispatch(
+      //   actionFn(params),
+      // );
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -389,7 +397,7 @@ class Client extends PureComponent {
         {this.renderSmartFormModal()}
 
         <SmartModal
-          title={commonTitle}
+          title={'客户画像'}
           show={isShowModal}
           onOk={this.onModalOk}
           onCancel={this.onModalCancel}

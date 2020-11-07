@@ -33,15 +33,15 @@ const HouseNoForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-  const areaInfo = [
-    {
-      noRule: true,
-      formType: 'Cascader',
-      itemProps: {
-        label: '区域',
-        name: 'area_code',
-      },
-    },
+  const areaConfig = [
+    // {
+    //   noRule: true,
+    //   formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'area_code',
+    //   },
+    // },
     // {
     //   itemProps: {
     //     label: '邮编',
@@ -97,18 +97,18 @@ const HouseNoForm = props => {
       },
     },
 
-    // {
-    //   itemProps: {
-    //     label: '签约公司',
-    //     name: 'signing_company',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '客户代表',
-    //     name: 'customer_representative',
-    //   },
-    // },
+    {
+      itemProps: {
+        label: '签约公司',
+        name: 'signing_company',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户代表',
+        name: 'customer_representative',
+      },
+    },
     {
       itemProps: {
         label: '手机',
@@ -129,7 +129,7 @@ const HouseNoForm = props => {
       },
     },
 
-    ...(action === 'detail' ? areaInfo : []),
+    ...(action !== 'add' ? areaConfig : []),
 
     {
       formType: 'rowText',

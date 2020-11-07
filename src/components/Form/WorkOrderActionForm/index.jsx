@@ -22,7 +22,7 @@ export const WorkOrderDispatchOrderForm = props => {
         name: 'handler',
       },
       comProps: {
-        mode: 'multiple',
+        // mode: 'multiple',
         className: 'w-280',
       },
     },

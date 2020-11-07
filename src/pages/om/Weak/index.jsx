@@ -33,7 +33,7 @@ const titleMap = {
   edit: `编辑${TITLE}`,
   detail: `${TITLE}单`,
   upload: `文件上传`,
-  down: `文件下载`,
+  handleWeak: `缺陷单`,
 };
 
 // const mapStateToProps = ({ weak, }) => weak;
@@ -71,13 +71,11 @@ class Weak extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return (
-      <WeakSearchForm
-      // formBtn={this.renderFormBtn}
-      // onSubmit={this.onSubmit}
-      // onFail={this.onFail}
-      ></WeakSearchForm>
-    );
+    return <WeakSearchForm onFieldChange={this.onFieldChange}></WeakSearchForm>;
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -90,6 +88,8 @@ class Weak extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      handleWeakAsync: this.props.handleWeakAsync,
+      exportDataAsync: this.props.exportDataAsync,
     };
 
     return <WeakTable {...tableProps}></WeakTable>;
@@ -99,17 +99,15 @@ class Weak extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'handleWeak' || action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
       if (action === 'add') {
         this.props.addItemAsync({
-          ...res,
-        });
-      }
-      if (action === 'inspectReport') {
-        this.props.inspectReportAsync({
-          ...itemDetail,
           ...res,
         });
       }
@@ -130,7 +128,7 @@ class Weak extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    // if (action === 'inspectReport') {
+    // if (action === 'handleWeak') {
     //   return <InspectMissionDetailForm {...formComProps} ></InspectMissionDetailForm>
     // }
     console.log(' formComProps ： ', formComProps); //

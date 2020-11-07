@@ -138,6 +138,8 @@ ShiftsArrangeList.propTypes = {
   unScheduleList: PropTypes.array,
 };
 
+const calendarRef = React.createRef();
+
 const InspectPlanCalendar = props => {
   console.log(' InspectPlanCalendar   props, ,   ： ', props);
   const cusRef = useRef();
@@ -159,8 +161,17 @@ const InspectPlanCalendar = props => {
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
   };
+  const eventAdd = params => {
+    console.log(' eventAdd   ,   ： ', params);
+  };
+  const eventRemove = params => {
+    console.log(' eventRemove   ,   ： ', params);
+  };
+  const eventChange = params => {
+    console.log(' eventChange   ,   ： ', params);
+  };
 
-  console.log(' cusRef ： ', cusRef); //
+  console.log(' cusRef ： ', cusRef, calendarRef); //
 
   return (
     <div className="inspectPlanCalendar ">
@@ -169,11 +180,20 @@ const InspectPlanCalendar = props => {
 
         // initialDate={new Date(2020, 9, 1)}
         // className={`${ANIMATE.slideInLeft} `}
+        calendarRef={calendarRef}
+        validRange={nowDate => {
+          return {
+            start: nowDate,
+          };
+        }}
         events={props.scheduleList}
         select={select}
         eventClick={eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
+        // eventAdd={eventAdd}
+        // eventRemove={eventRemove}
+        // eventChange={eventChange}
       />
 
       <ShiftsArrangeList

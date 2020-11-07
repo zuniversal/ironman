@@ -104,7 +104,7 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {record.tags === 'completed' && (
+      {!record.finished_tag && (
         <a
           onClick={() =>
             props.showFormModal({
@@ -117,35 +117,34 @@ const MissionsManageTable = props => {
           关闭任务
         </a>
       )}
-      {record.status === 'waiting_plan' && (
-        <a
-          onClick={() =>
-            props.edit({
-              action: 'linkContract',
-              d_id: record.id,
-              itemDetail: record,
-            })
-          }
-        >
-          关联合同
-        </a>
-      )}
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'linkContract',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        关联合同
+      </a>
+
       {(record.type === 'power_construction' ||
-        record.type === 'power_construction' ||
-        record.type !== 'waiting_plan') && (
-        <a disabled className={`disabled `}>
-          已排期
-        </a>
-      )}
+        record.type === 'electrical_testing') &&
+        record.status !== 'waiting_plan' && (
+          <a disabled className={`disabled `}>
+            已排期
+          </a>
+        )}
       {(record.type === 'power_construction' ||
-        record.type === 'power_construction' ||
-        record.type !== 'waiting_plan' ||
-        record.type !== 'waiting_confirm') && (
-        <a disabled className={`disabled `}>
-          已确认排期
-        </a>
-      )}
-      {record.type === 'completed' && (
+        record.type === 'electrical_testing') &&
+        record.status !== 'waiting_plan' &&
+          record.status !== 'waiting_confirm' && (
+          <a disabled className={`disabled `}>
+            已确认排期
+          </a>
+        )}
+      {record.status === 'completed' && (
         <a disabled className={`disabled `}>
           已关闭
         </a>

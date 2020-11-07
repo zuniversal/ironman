@@ -262,8 +262,8 @@ class MissionsManage extends PureComponent {
     this.props.getClientAsync();
     this.props.getPowerAsync();
     this.props.getTeamAsync();
-    // this.props.getAssetsAsync();
-    // this.props.getContractAsync();
+    this.props.getAssetsAsync();
+    this.props.getContractAsync(); //
   }
 
   render() {

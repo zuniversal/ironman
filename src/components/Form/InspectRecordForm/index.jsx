@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.less';
 import {
   Form,
@@ -60,9 +60,14 @@ const subFormLayouts = {
   },
 };
 
+const formRef = React.createRef();
+
 const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const counterRef = React.useRef();
+  const htmlRef = React.useRef();
 
   const config = [
     {
@@ -174,37 +179,37 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '电缆沟及盖板',
-        name: ['building', ''],
+        name: ['building', 'cable_conduit_status'],
       },
     },
     {
       itemProps: {
         label: '护网',
-        name: ['building', ''],
+        name: ['building', 'frame_status'],
       },
     },
     {
       itemProps: {
         label: '地面裂縫',
-        name: ['building', ''],
+        name: ['building', 'ground_status'],
       },
     },
     {
       itemProps: {
         label: '门窗',
-        name: ['building', ''],
+        name: ['building', 'window_status'],
       },
     },
     {
       itemProps: {
         label: '房屋渗水',
-        name: ['building', ''],
+        name: ['building', 'house_status'],
       },
     },
     {
       itemProps: {
         label: '电缆夹屋孔洞',
-        name: ['building', ''],
+        name: ['building', 'cable_holes_status'],
       },
     },
 
@@ -219,37 +224,37 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '高压试电笔(1年)',
-        name: ['safety_equirpment', ''],
+        name: ['safety_equirpment', 'electroprobe_status'],
       },
     },
     {
       itemProps: {
         label: '接地线(4年)',
-        name: ['safety_equirpment', ''],
+        name: ['safety_equirpment', 'ground_wire'],
       },
     },
     {
       itemProps: {
         label: '绝缘毯(4年)',
-        name: ['safety_equirpment', ''],
+        name: ['safety_equirpment', 'insulating_mat'],
       },
     },
     {
       itemProps: {
         label: '绝缘手套(半年)',
-        name: ['safety_equirpment', ''],
+        name: ['safety_equirpment', 'insulating_gloves'],
       },
     },
     {
       itemProps: {
-        label: '绝縐鞋(半年)',
-        name: ['safety_equirpment', ''],
+        label: '绝缘鞋(半年)',
+        name: ['safety_equirpment', 'insulating_shoes'],
       },
     },
     {
       itemProps: {
         label: '灭火器压力(半年)',
-        name: ['safety_equirpment', ''],
+        name: ['safety_equirpment', 'extinguisher'],
       },
     },
 
@@ -258,7 +263,6 @@ const InspectRecordForm = props => {
       CustomCom: <TabPanes></TabPanes>,
       itemProps: {
         label: '',
-        name: '',
         className: 'w100',
       },
     },
@@ -523,15 +527,46 @@ const InspectRecordForm = props => {
     // layout: 'inline',
   };
 
+  const doPrint = () => {
+    console.log(' doPrint   ,   ： ', counterRef);
+    const newStr = counterRef.current.innerHTML;
+    document.body.innerHTML = newStr;
+    htmlRef.current = document.body.innerHTML;
+    window.print();
+  };
+
+  // useEffect(() => {
+  //   const {matchMedia, } = window
+  //   const mediaQueryList = matchMedia('print')
+  //   console.log(' InspectRecordForm  useEffect ： ', mediaQueryList, );
+  //   if (matchMedia) {
+  //     console.log(' InspectRecordForm matchMediamatchMedia ： ', matchMedia,  )
+  //     mediaQueryList.addListener(mql => {
+  //       console.log(' InspectRecordForm mql ： ', mql, mql.matches, counterRef,  )
+  //       if (mql.matches) {
+
+  //       }
+  //       if (!mql.matches) {
+  //         console.log(' InspectRecordForm mql 关闭 ： ', mql, mql.matches, counterRef,  )
+  //         // console.log(' this.close ： ', this.close,  )
+  //         // this.close()
+  //         document.body.innerHTML = htmlRef.current
+  //       }
+  //     })
+  //   }
+  // }, [])
+
   return (
-    <div className={' InspectRecordForm '}>
+    <div className={' InspectRecordForm '} ref={counterRef}>
+      {/* <Button type="primary" onClick={doPrint}>
+        导出
+      </Button> */}
       <SmartForm
         flexRow={2}
         config={configs}
         formProps={formProps}
         // init={init}
         // init={{}}
-
         formLayouts={formLayouts}
         {...rest}
       ></SmartForm>

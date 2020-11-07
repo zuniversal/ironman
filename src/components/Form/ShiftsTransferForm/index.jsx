@@ -137,6 +137,7 @@ const ShiftsTransferForm = props => {
       itemProps: {
         label: '8.工作票情况',
         name: '',
+        className: 'workSituation',
       },
     },
     {

@@ -85,13 +85,6 @@ const PowerStationForm = props => {
     // dataSource={[props.init]}
     // ></WatchInfoTable>,
 
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电气信息',
-      },
-    },
-
     // {
     //   itemProps: {
     //     label: '详细地址',
@@ -164,13 +157,6 @@ const PowerStationForm = props => {
 
     {
       itemProps: {
-        label: '详细用电地址',
-        name: 'addr',
-      },
-    },
-
-    {
-      itemProps: {
         label: '运行等级',
         name: 'operation_level',
       },
@@ -183,16 +169,16 @@ const PowerStationForm = props => {
     },
     {
       itemProps: {
-        label: 'person',
+        label: '业务主体',
         name: 'person',
       },
     },
-    {
-      itemProps: {
-        label: '电气图',
-        name: 'file',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '电气图',
+    //     name: 'file',
+    //   },
+    // },
 
     // {
     //   itemProps: {
@@ -268,6 +254,19 @@ const PowerStationForm = props => {
     //   },
     // },
 
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '位置信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '详细用电地址',
+        name: 'addr',
+      },
+    },
+
     ...typeCols,
 
     {
@@ -277,6 +276,14 @@ const PowerStationForm = props => {
       },
     },
 
+    <UploadCom
+      label={'上传电气图'}
+      action={'file'}
+      action={'/api/v1/upload'}
+      name={'file'}
+      key={'file'}
+      // extra={'支持扩展名:pdf、jpg、png'}
+    ></UploadCom>,
     // <UploadCom
     //   label={'上传一次电气图'}
     //   text={'上传文件'}

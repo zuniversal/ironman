@@ -46,10 +46,12 @@ export default {
     itemDetail: {},
     d_id: '',
 
+    searchInfo: {},
     clientList: [],
     contractList: [],
     clientData: [],
     enumList: [],
+    teamList: [],
   },
 
   reducers: {
@@ -183,7 +185,7 @@ export default {
       // console.log(' getContract 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        contractList: formatSelectList(payload.list, 'name'),
+        contractList: formatSelectList(payload.list, 'code'),
       };
     },
     startWorkOrder(state, { payload, type }) {
@@ -225,15 +227,18 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      yield put(action(res));
+      // yield put(action(res));
+      yield put(actions.getListAsync());
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put(actions.getListAsync());
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
       const res = yield call(powerStationServices.getList, payload);

@@ -24,7 +24,10 @@ import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
 
-import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
+import {
+  actions,
+  // mapStateToProps
+} from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { tips } from '@/utils';
 import { connect } from 'umi';
@@ -40,7 +43,10 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ shiftsArrange, }) => shiftsArrange;
+const mapStateToProps = ({ shiftsArrange, loading }) => ({
+  ...shiftsArrange,
+  loading: loading.models.shiftsArrange,
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -141,7 +147,10 @@ class ShiftsArrange extends PureComponent {
   renderShiftsArrangeCalendar = params => {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return (
-      <ShiftsArrangeCalendar data={this.props.dataList}></ShiftsArrangeCalendar>
+      <ShiftsArrangeCalendar
+        data={this.props.dataList}
+        loading={this.props.loading}
+      ></ShiftsArrangeCalendar>
     );
   };
   componentDidMount() {
@@ -149,6 +158,13 @@ class ShiftsArrange extends PureComponent {
   }
 
   render() {
+    console.log(
+      ' %c ShiftsArrange 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+      this.props.loading,
+    ); //
     return (
       <div className="ShiftsArrange">
         {this.renderSearchForm()}

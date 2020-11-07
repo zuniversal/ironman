@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
 import { Timeline, Steps } from 'antd';
 
@@ -23,6 +24,14 @@ const InspectMissionTimeline = props => {
       ))}
     </Steps>
   );
+};
+
+InspectMissionTimeline.defaultProps = {
+  datas: [],
+};
+
+InspectMissionTimeline.propTypes = {
+  datas: PropTypes.array,
 };
 
 export default InspectMissionTimeline; //

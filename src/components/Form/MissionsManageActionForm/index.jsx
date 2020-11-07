@@ -78,9 +78,9 @@ export const MissionsManageContractForm = props => {
 
   const config = [
     {
-      // formType: 'Search',
-      // selectSearch: props.getContractAsync,
-      // selectData: props.contractList,
+      formType: 'Search',
+      selectSearch: props.getContractAsync,
+      selectData: props.contractList,
       itemProps: {
         label: '选择合同',
         name: 'contract_id',

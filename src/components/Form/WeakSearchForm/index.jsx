@@ -2,6 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { weakStatusConfig } from '@/configs';
 
 const WeakSearchForm = props => {
   console.log(' WeakSearchForm ： ', props); //
@@ -9,17 +10,19 @@ const WeakSearchForm = props => {
 
   const config = [
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectData: weakStatusConfig,
       itemProps: {
         label: '处理状态',
+        name: 'status',
       },
     },
-    {
-      formType: 'Select',
-      itemProps: {
-        label: '审批状态',
-      },
-    },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '审批状态',
+    //   },
+    // },
     {
       formType: 'Divider',
       itemProps: {

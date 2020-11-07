@@ -135,7 +135,7 @@ const Layouts = props => {
         //     title
         //   </div>
         // )}
-
+        className={'spinWrapperinWrap'}
         logo={() => <LogoCom className={`logoClass`}></LogoCom>}
         // Warning: pro-layout: renderPageTitle return value should be a string
         // headerTitleRender={() => (
@@ -174,36 +174,36 @@ const Layouts = props => {
         siderWidth={200}
         {...settings}
       >
-        <Suspense fallback={null}>
-          <Spin spinning={loading} spinning={false} className={'spinWrapper'}>
-            <Content
-              key={pathname}
-              // className={`${ANIMATE.flash} container `}
-              className={` container `}
-              style={
-                {
-                  // margin: '20px',
-                  // padding: '100px',
-                  // minHeight: '100px',
-                }
+        <Suspense fallback={null} className={'spper'}>
+          {/* <Spin spinning={loading} spinning={false} className={'spinWrapper'}> */}
+          <Content
+            key={pathname}
+            // className={`${ANIMATE.flash} container `}
+            className={` container `}
+            style={
+              {
+                // margin: '20px',
+                // padding: '100px',
+                // minHeight: '100px',
               }
-            >
-              {/* <div className="titleWrapper">
+            }
+          >
+            {/* <div className="titleWrapper">
                 <div className="pageTitle">{title}</div>
               </div> */}
 
-              {/* <PageTitle
+            {/* <PageTitle
                 {...props}
                 title={title}
                 className="titleWrapper"
               ></PageTitle> */}
 
-              {/* <Com></Com> */}
-              {/* <UserCenterForm></UserCenterForm> */}
+            {/* <Com></Com> */}
+            {/* <UserCenterForm></UserCenterForm> */}
 
-              <div className="content">{children}</div>
-            </Content>
-          </Spin>
+            <div className="content">{children}</div>
+          </Content>
+          {/* </Spin> */}
         </Suspense>
       </ProLayout>
 

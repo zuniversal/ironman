@@ -2,8 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 
 const WeakForm = props => {
   console.log(' WeakForm ： ', props); //
@@ -11,124 +10,77 @@ const WeakForm = props => {
 
   const config = [
     {
-      formType: 'rowText',
       itemProps: {
-        label: '电气告警条件',
+        label: '名称',
+        name: 'name',
       },
     },
     {
       itemProps: {
-        label: '设备状态',
+        label: '电站',
+        name: ['station', 'name'],
       },
     },
     {
       itemProps: {
-        label: '持续',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '能耗阈值',
+        label: '客户',
+        name: ['customer', 'name'],
       },
     },
     {
       itemProps: {
-        label: '能耗过低',
+        label: '登记日期',
+        name: '',
       },
     },
     {
       itemProps: {
-        label: '能耗过高',
+        label: '状态',
+        name: 'status',
       },
     },
     {
       itemProps: {
-        label: '持续',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电流阈值',
+        label: '巡检人',
+        name: ['team', 'name'],
       },
     },
     {
       itemProps: {
-        label: '电流过低',
+        label: '巡检组长',
+        name: ['team', 'team_headman'],
       },
     },
     {
       itemProps: {
-        label: '电流过高',
+        label: '缺陷描述',
+        name: 'content',
       },
     },
     {
       itemProps: {
-        label: '持续',
+        label: '使用耗材',
+        name: '',
       },
     },
     {
-      formType: 'rowText',
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {[1, 2, 3, 4, 5, 6, 7].map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))}
+        </>
+      ),
       itemProps: {
-        label: '电压阈值',
+        label: '图片',
       },
     },
     {
+      formType: 'TextArea',
       itemProps: {
-        label: '电压过低',
-      },
-    },
-    {
-      itemProps: {
-        label: '电压过高',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '温度阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '温度过低',
-      },
-    },
-    {
-      itemProps: {
-        label: '温度过高',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '湿度阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '湿度过低',
-      },
-    },
-    {
-      itemProps: {
-        label: '湿度过高',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
+        label: '备注',
+        name: 'remark',
       },
     },
   ];
@@ -147,6 +99,8 @@ const WeakForm = props => {
         // init={init}
         // init={{}}
 
+        isDisabledAll
+        noRuleAll
         {...rest}
       ></SmartForm>
 

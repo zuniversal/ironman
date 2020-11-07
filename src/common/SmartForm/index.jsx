@@ -50,23 +50,29 @@ const layoutObj = {
   // labelCol: { span: 8 },
   // wrapperCol: { span: 14 },
   labelCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     sm: { span: 6 }, //
+    xs: { span: 7 }, //
     sm: { span: 7 }, //
+    md: { span: 7 }, //
+    lg: { span: 7 }, //
   },
   wrapperCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     sm: { span: 18 }, //
+    xs: { span: 17 }, //
     sm: { span: 17 }, //
+    md: { span: 17 }, //
+    lg: { span: 17 }, //
   },
 };
 const smallLayout = {
   labelCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     sm: { span: 5 }, //
   },
   wrapperCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     sm: { span: 19 }, //
   },
 };
@@ -74,11 +80,11 @@ const noLabelLayout = {
   // labelCol: { span: 8 },
   // wrapperCol: { span: 14 },
   labelCol: {
-    // xs: { span: 24 },
+    xs: { span: 24 },
     sm: { span: 0 },
   },
   wrapperCol: {
-    // xs: { span: 24 },
+    xs: { span: 24 },
     sm: { span: 24 },
   },
 };
@@ -86,12 +92,12 @@ const rowLayout = {
   // labelCol: { span: 8 },
   // wrapperCol: { span: 14 },
   labelCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     // sm: { span: 4 },
     sm: { span: 0 },
   },
   wrapperCol: {
-    xs: { span: 24 },
+    // xs: { span: 24 },
     // sm: { span: 20 },
     sm: { span: 24 },
   },

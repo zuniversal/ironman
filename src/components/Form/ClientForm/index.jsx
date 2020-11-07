@@ -215,6 +215,37 @@ const ClientForm = props => {
     },
   };
 
+  const areaConfig = [
+    // {
+    //   formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'region',
+    //   },
+    //   comProps: {
+    //     options: regoins,
+    //   },
+    // },
+    {
+      // formType: 'Select',
+      noRule: true,
+      itemProps: {
+        label: '经度',
+        name: 'longitude',
+      },
+      comProps: {},
+    },
+    {
+      // formType: 'Select',
+      noRule: true,
+      itemProps: {
+        label: '纬度',
+        name: 'latitude',
+      },
+      comProps: {},
+    },
+  ];
+
   const config = [
     {
       formType: 'rowText',
@@ -329,6 +360,7 @@ const ClientForm = props => {
     // },
     <UploadCom
       label={'企业Logo'}
+      key={'logo'}
       action={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
@@ -342,16 +374,6 @@ const ClientForm = props => {
         label: '位置信息',
       },
     },
-    // {
-    //   formType: 'Cascader',
-    //   itemProps: {
-    //     label: '区域',
-    //     name: 'region',
-    //   },
-    //   comProps: {
-    //     options: regoins,
-    //   },
-    // },
     {
       // formType: 'Select',
       itemProps: {
@@ -360,23 +382,7 @@ const ClientForm = props => {
       },
       comProps: {},
     },
-    // {
-    //   // formType: 'Select',
-    //   itemProps: {
-    //     label: '经度',
-    //     name: 'longitude',
-    //   },
-    //   comProps: {},
-    // },
-    // {
-    //   // formType: 'Select',
-    //   itemProps: {
-    //     label: '纬度',
-    //     name: 'latitude',
-    //   },
-    //   comProps: {},
-    // },
-
+    ...(action !== 'add' ? areaConfig : []),
     // adminItem,
 
     // {
@@ -473,6 +479,9 @@ const ClientForm = props => {
       action={'/api/v1/upload'}
       name={'file'}
       extra={'支持扩展名:pdf、jpg、png'}
+      // formItemProps={{
+
+      // }}
     ></UploadCom>,
   ];
 
@@ -481,6 +490,7 @@ const ClientForm = props => {
       itemProps: {
         label: '下属户号',
         name: 'owner',
+        colon: false,
       },
       extra: (
         <Button
@@ -505,7 +515,7 @@ const ClientForm = props => {
   if (action === 'add') {
     config.push(...attach);
     // } else if (action === '') {
-  } else if (action === 'detail') {
+  } else if (action === 'edit' || action === 'detail') {
     config.push(...userCaptureInfo);
   }
   console.log(' configconfig ： ', config); //

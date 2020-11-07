@@ -21,8 +21,10 @@ import InspectRecordForm from '@/components/Form/InspectRecordForm'; //
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
 import InspectRecordTable from '@/components/Table/InspectRecordTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
+import ExportPdf from '@/components/Pdf/ExportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/inspectRecord'; //
+import ReactDOM from 'react-dom';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { inspectMissionStatusMap } from '@/configs';
@@ -95,6 +97,10 @@ class InspectRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -151,6 +157,49 @@ class InspectRecord extends PureComponent {
     );
   };
 
+  renderExportPdf = params => {
+    return this.state.isShowPdf ? <ExportPdf></ExportPdf> : null;
+  };
+
+  renderExportPdf2 = params => {
+    console.log(' renderExportPdf2 ： '); //
+    const formComProps = {
+      init: {
+        ...this.props.itemDetail,
+      },
+    };
+    return this.state.isShowPdf
+      ? ReactDOM.createPortal(
+          <ExportPdf>
+            <InspectRecordForm {...formComProps}></InspectRecordForm>
+          </ExportPdf>,
+          document.getElementById('root'),
+        )
+      : null;
+  };
+
+  doPrint = () => {
+    console.log(' doPrint   ,   ： ');
+    // const newStr = counterRef.current.innerHTML
+    // document.body.innerHTML = newStr
+    // this.current = document.body.innerHTML
+    this.setState(
+      {
+        isShowPdf: true,
+      },
+      () =>
+        setTimeout(() => {
+          console.log('  延时器 ： ');
+          // window.print()
+        }, 2000),
+    );
+
+    // setTimeout(() => {
+    //   console.log('  延时器 ： ',  )
+    //   window.print()
+    // }, 2000)
+  };
+
   render() {
     console.log(
       ' %c InspectRecord 组件 this.state, this.props ： ',
@@ -166,6 +215,12 @@ class InspectRecord extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        <Button type="primary" onClick={this.doPrint}>
+          导出
+        </Button>
+        {/* {this.renderExportPdf()} */}
+        {this.renderExportPdf2()}
       </div>
     );
   }

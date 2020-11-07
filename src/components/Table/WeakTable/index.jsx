@@ -65,9 +65,16 @@ const WeakTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => tdClick({ action: 'showList' })}>处理</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a>
-      <a onClick={() => tdClick({ action: 'showList' })}>导出</a>
+      {/* <a onClick={() => props.showDetail({ action: 'handleWeak', d_id: record.id })}>处理</a> */}
+      <a
+        onClick={() =>
+          props.handleWeakAsync({ action: 'handleWeak', d_id: record.id })
+        }
+      >
+        处理
+      </a>
+      {/* <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a> */}
+      <a onClick={() => props.exportDataAsync({ action: 'showList' })}>导出</a>
     </>
   );
 

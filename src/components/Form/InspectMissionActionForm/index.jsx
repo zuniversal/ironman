@@ -10,9 +10,9 @@ export const InspectMissionAssignForm = props => {
 
   const config = [
     {
-      // formType: 'Search',
-      // selectSearch: props.getUserAsync,
-      // selectData: props.userList,
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '分配给',
         name: 'team_id',
@@ -38,11 +38,11 @@ export const InspectMissionAssignForm = props => {
         // init={{}}
 
         size={'small'}
-        noRuleAll
+        // noRuleAll
         {...rest}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };
@@ -72,7 +72,7 @@ export const InspectMissionEditDateForm = props => {
       },
       // checkboxContent: '短信通知客户',
       checkboxData: renderCheckboxOp,
-      noLabel: true,
+      // noLabel: true,
       comProps: {
         labelCol: {
           xs: { span: 0 },
@@ -100,11 +100,11 @@ export const InspectMissionEditDateForm = props => {
         // init={init}
         // init={{}}
         size={'small'}
-        noRuleAll
+        // noRuleAll
         {...rest}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };
