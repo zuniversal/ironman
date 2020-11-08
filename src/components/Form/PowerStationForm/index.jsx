@@ -96,12 +96,18 @@ const PowerStationForm = props => {
         label: '经度',
         name: 'longitude',
       },
+      comProps: {
+        disabled: true,
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '纬度',
         name: 'latitude',
+      },
+      comProps: {
+        disabled: true,
       },
     },
   ];
@@ -139,9 +145,9 @@ const PowerStationForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getHouseNo,
-      // selectData: props.houseNoList,
+      formType: 'Search',
+      selectSearch: props.getHouseNoAsync,
+      selectData: props.houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user',

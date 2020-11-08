@@ -110,6 +110,7 @@ const ShiftsArrangeList = props => {
                   <div
                     className="dragItem "
                     id={event.id}
+                    url={event.surplus_plan_num}
                     // data-isdraged={event.isdraged}
                     data-datas={event}
                     test={'zyb'}

@@ -63,6 +63,8 @@ export default ({
         // 删除弹框状态
         isShowRemoveModal: false,
         removeTitle: '',
+
+        isShowTitle: true,
       };
       // this.onRemove = this.removeAction
       this.actionProps = {};
@@ -100,30 +102,24 @@ export default ({
 
     onRemove2 = props => {
       console.log(' onRemove2 ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
 
-      dispatch(
-        // actions.removeItemAsync([
-        //   // d_id: props.record.id,
-        //   // ...props.record,
-        //   props.record,
-        //   // record,
-        // ]),
-        // actions.removeItemAsync([
-        //   props.record.d_id,
-        //   // ...props.record,
-        //   // props.record,
-        //   // record,
-        // ]),
-        actions.removeItemAsync(props.record.d_id),
-      );
+      // dispatch(
+      //   actions.removeItemAsync(props.record.d_id),
+      // );
+      this.props.dispatch(actions.removeItemsAsync(props));
     };
     onBatchRemove2 = props => {
       console.log(' onBatchRemove2 ： ', props, this.state, this.props);
       const { dispatch } = this.props; //
       const { selectedRows, selectedRowKeys } = this.state; //
       if (selectedRowKeys.length) {
-        dispatch(actions.removeItemsAsync(selectedRowKeys));
+        // const params = props.key ? { [props.key]: selectedRowKeys, } : selectedRowKeys
+        // console.log(' params ： ', params,  )//
+        // dispatch(actions.removeItemsAsync(selectedRowKeys));
+        dispatch(actions.removeItemsAsync(props ? props : selectedRowKeys));
+        this.setState({
+          selectedRowKeys: [],
+        });
       } else {
         tips('请先勾选删除项再删除！', 2);
       }
@@ -464,7 +460,13 @@ export default ({
       } // //
     }
 
-    get isShowTitle() {
+    toggleShowTitle = () => {
+      console.log(' toggleShowTitle   ,   ： ');
+      this.setState({
+        isShowTitle: !this.state.isShowTitle,
+      });
+    };
+    get pageTitle() {
       const getShowTitle = props => {
         const { route } = props; //
         const { path, title } = route;
@@ -482,8 +484,8 @@ export default ({
 
       return (
         <div className="smartHocWrapper">
-          {this.isShowTitle && (
-            <PageTitle {...this.props} title={this.isShowTitle}></PageTitle>
+          {this.state.isShowTitle && (
+            <PageTitle {...this.props} title={this.pageTitle}></PageTitle>
           )}
 
           <Com
@@ -504,6 +506,7 @@ export default ({
             setTopCom={this.setTopCom}
             onPageChange={this.onPageChange}
             dispatchAction={this.dispatchAction}
+            toggleShowTitle={this.toggleShowTitle}
           />
 
           {this.renderSmartFormModal()}

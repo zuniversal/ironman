@@ -126,7 +126,7 @@ class HouseNo extends PureComponent {
           导出{TITLE}数据
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
-        <Button type="primary" onClick={() => this.onBatchRemove()}>
+        <Button type="primary" onClick={this.onBatchRemove}>
           删除
         </Button>
       </div>
@@ -141,21 +141,24 @@ class HouseNo extends PureComponent {
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
-        getHouseNoAsync={params =>
-          this.props.getHouseNoAsync({ keyword: params })
-        }
-        houseNoList={this.props.houseNoList}
+        getListAsync={params => this.props.getListAsync({ keyword: params })}
+        dataList={this.props.dataList}
+        onFieldChange={this.onFieldChange}
       ></HouseNoSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemsAsync({ id: `${params.record.id}` });
+    this.props.onRemove({ id: `${params.record.id}` });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.removeItemsAsync({
+    this.props.onBatchRemove({
       id: `${this.props.selectedRowKeys.join(',')}`,
     });
   };

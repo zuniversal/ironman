@@ -22,6 +22,7 @@ import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm
 import InspectRecordTable from '@/components/Table/InspectRecordTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import ExportPdf from '@/components/Pdf/ExportPdf'; //
+import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader'; //
 
 import { actions, mapStateToProps } from '@/models/inspectRecord'; //
 import ReactDOM from 'react-dom';
@@ -53,6 +54,8 @@ class InspectRecord extends PureComponent {
     super(props);
     this.state = {
       titleMap,
+      isShowExportPdf: false,
+      isShowPdfDetail: false,
     };
   }
 
@@ -62,15 +65,6 @@ class InspectRecord extends PureComponent {
         <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button>
-        {/* <Button
-        type="primary"
-        onClick={() => this.props.showFormModal({ action: 'add' })}
-      >
-        新增{TITLE}
-      </Button> */}
-        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-        删除
-      </Button> */}
       </div>
     );
   };
@@ -97,6 +91,8 @@ class InspectRecord extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      getMissionItemAsync: this.props.getMissionItemAsync,
+      showExportPdf: this.showExportPdf,
     };
 
     return <InspectRecordTable {...tableProps}></InspectRecordTable>;
@@ -106,7 +102,11 @@ class InspectRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (action === 'detail' || action === 'inspectReport') {
+    if (
+      action === 'detail' ||
+      action === 'inspectReport' ||
+      action === 'inspectMission'
+    ) {
       this.props.onCancel({});
       return;
     }
@@ -141,16 +141,22 @@ class InspectRecord extends PureComponent {
     if (action !== 'add') {
       formComProps.init = {
         ...this.props.itemDetail,
-        status: inspectMissionStatusMap[this.props.itemDetail.status],
+        // status: inspectMissionStatusMap[this.props.itemDetail.status],
       };
     }
-    if (action === 'inspectReport') {
-      return <InspectRecordForm {...formComProps}></InspectRecordForm>;
+    if (action === 'inspectMission') {
+      return (
+        <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
+      );
     }
     console.log(' formComProps ： ', formComProps); //
-    return (
-      <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
-    );
+    return <InspectRecordForm {...formComProps}></InspectRecordForm>;
+    // if (action === 'inspectReport') {
+    //   return <InspectRecordForm {...formComProps}></InspectRecordForm>;
+    // }
+    // return (
+    //   <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
+    // );
   };
   renderSmartFormModal = params => {
     return (
@@ -166,18 +172,50 @@ class InspectRecord extends PureComponent {
     );
   };
 
-  renderExportPdf = params => {
-    return this.state.isShowPdf ? <ExportPdf></ExportPdf> : null;
-  };
+  get renderInspectRecordForm() {
+    return (
+      <div className={`pdfDetail`}>
+        {!this.state.isShowExportPdf && (
+          <ExportHeader
+            goBack={this.showExportPdf}
+            print={this.exportPdf}
+          ></ExportHeader>
+        )}
+        <InspectRecordForm init={this.props.itemDetail}></InspectRecordForm>
+      </div>
+    );
+  }
 
-  renderExportPdf2 = params => {
-    console.log(' renderExportPdf2 ： '); //
+  showExportPdf = e => {
+    console.log('    showExportPdf ： ', e);
+    this.props.toggleShowTitle();
+    this.setState({
+      isShowPdfDetail: !this.state.isShowPdfDetail,
+    });
+  };
+  onClose = e => {
+    console.log('    onClose ： ', e, this.state, this.props);
+    this.setState({
+      isShowExportPdf: false,
+    });
+  };
+  exportPdf = e => {
+    console.log('    exportPdfexportPdf ： ', e, this.state, this.props);
+    this.setState(
+      {
+        isShowExportPdf: !this.state.isShowExportPdf,
+      },
+      () => window.print(),
+    );
+  };
+  renderExportPdf = params => {
+    console.log(' renderExportPdf ： '); //
     const formComProps = {
       init: {
         ...this.props.itemDetail,
       },
     };
-    return this.state.isShowPdf
+    return this.state.isShowExportPdf
       ? ReactDOM.createPortal(
           <ExportPdf>
             <InspectRecordForm {...formComProps}></InspectRecordForm>
@@ -187,6 +225,9 @@ class InspectRecord extends PureComponent {
       : null;
   };
 
+  close = e => {
+    console.log('    close ： ', e);
+  };
   doPrint = () => {
     console.log(' doPrint   ,   ： ');
     // const newStr = counterRef.current.innerHTML
@@ -194,7 +235,7 @@ class InspectRecord extends PureComponent {
     // this.current = document.body.innerHTML
     this.setState(
       {
-        isShowPdf: true,
+        isShowExportPdf: true,
       },
       () =>
         setTimeout(() => {
@@ -202,7 +243,18 @@ class InspectRecord extends PureComponent {
           // window.print()
         }, 2000),
     );
-
+    const { matchMedia } = window;
+    const mediaQueryList = matchMedia('print');
+    console.log(' InspectRecordForm  useEffect ： ', mediaQueryList);
+    if (matchMedia) {
+      console.log(' InspectRecordForm matchMediamatchMedia ： ', matchMedia);
+      mediaQueryList.addListener(mql => {
+        console.log(' InspectRecordForm mql ： ', mql, mql.matches);
+      });
+    }
+    window.onafterprint = e => {
+      console.log('    close ： ', e);
+    };
     // setTimeout(() => {
     //   console.log('  延时器 ： ',  )
     //   window.print()
@@ -217,6 +269,18 @@ class InspectRecord extends PureComponent {
       this.props,
     ); //
 
+    if (this.state.isShowExportPdf) {
+      console.log(' 111111111 ： '); //
+      return (
+        <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+          {this.renderInspectRecordForm}
+        </ExportPdf>
+      );
+    }
+    if (this.state.isShowPdfDetail) {
+      return this.renderInspectRecordForm;
+    }
+
     return (
       <div className="InspectRecord">
         {this.renderSearchForm()}
@@ -229,7 +293,6 @@ class InspectRecord extends PureComponent {
           导出
         </Button> */}
         {/* {this.renderExportPdf()} */}
-        {this.renderExportPdf2()}
       </div>
     );
   }

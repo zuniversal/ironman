@@ -131,11 +131,30 @@ const rowLayout = {
   },
 };
 
-const ActionBtn = ({ fields, field, add, remove, addText, subText, limit }) => (
+const propsLayout = {
+  labelCol: {
+    sm: { span: 7 },
+  },
+  wrapperCol: {
+    sm: { span: 17 },
+  },
+};
+
+const ActionBtn = ({
+  fields,
+  field,
+  add,
+  remove,
+  addText,
+  subText,
+  limit,
+  keys,
+}) => (
   <Form.Item
     // label={'zyb'}
     className={'formItems '}
     noStyle
+    // key={keys}
   >
     <Button
       type="dashed"
@@ -145,7 +164,7 @@ const ActionBtn = ({ fields, field, add, remove, addText, subText, limit }) => (
         if (fields.length < limit) {
           add();
         } else {
-          tips(`最多新增${limit}条数据！`, 2);
+          tips(`最多新增${limit}次数据！`, 2);
         }
       }}
       // style={{ width: '60%' }}
@@ -157,9 +176,10 @@ const ActionBtn = ({ fields, field, add, remove, addText, subText, limit }) => (
       <Button
         type="dashed"
         className={'actionBtn subBtn'}
-        onClick={() => {
-          remove(field.name);
-        }}
+        // onClick={() => {
+        //   remove(field.name);
+        // }}
+        onClick={remove}
         // style={{ width: '60%', marginTop: '20px' }}
       >
         <MinusOutlined /> {subText}
@@ -196,6 +216,8 @@ const DynamicForm = props => {
     isDisabledAll,
     limit,
     filterSelect,
+    rowExtra,
+    extraChildren,
   } = props; //
 
   return (
@@ -427,22 +449,59 @@ const DynamicForm = props => {
                   {formItemCom}
                   {/* {extra} */}
                 </Form.Item>
-                {i === 0 && (
-                  <ActionBtn
-                    fields={fields}
-                    field={field}
-                    add={add}
-                    remove={remove}
-                    addText={addText}
-                    subText={subText}
-                    limit={limit}
-                  ></ActionBtn>
-                )}
+                {!rowExtra &&
+                  i === 0 && (
+                    <ActionBtn
+                      fields={fields}
+                      field={field}
+                      add={add}
+                      // remove={remove}
+                      remove={() => remove(field.name)}
+                      addText={addText}
+                      subText={subText}
+                      limit={limit}
+                      keys={field.key}
+                    ></ActionBtn>
+                  )}
               </Form.Item>
             );
           });
 
-          return extra ? extraItem : normalItem;
+          return (
+            <>
+              {index === 0 && (
+                <Form.Item label={' '} colon={false} {...propsLayout}>
+                  <div className="w-315 rowExtraWrapper">
+                    <Button
+                      type="dashed"
+                      className={'actionBtn addBtn'}
+                      onClick={() => {
+                        console.log('  对吗  limit.length ', fields, limit);
+                        if (fields.length < limit) {
+                          add();
+                        } else {
+                          tips(`最多新增${limit}次数据！`, 2);
+                        }
+                      }}
+                    >
+                      <PlusOutlined /> {addText}
+                    </Button>
+                    <Button
+                      type="dashed"
+                      className={'actionBtn subBtn'}
+                      onClick={() => {
+                        remove(fields[fields.length - 1].name);
+                      }}
+                    >
+                      <MinusOutlined /> {subText}
+                    </Button>
+                    {extraChildren}
+                  </div>
+                </Form.Item>
+              )}
+              {extra ? extraItem : normalItem}
+            </>
+          );
         });
       }}
     </Form.List>
@@ -454,6 +513,7 @@ DynamicForm.defaultProps = {
   subText: '刪除',
   // noLabel: true,
   limit: 10,
+  rowExtra: false,
 };
 
 export default DynamicForm; //

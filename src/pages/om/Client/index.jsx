@@ -113,7 +113,7 @@ class Client extends PureComponent {
           导出{TITLE}数据
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
-        <Button type="primary" onClick={() => this.onBatchRemove()}>
+        <Button type="primary" onClick={this.onBatchRemove}>
           删除
         </Button>
       </div>
@@ -194,11 +194,11 @@ class Client extends PureComponent {
         ...res,
         customer_admin: adminList,
       };
-      if (res.file) {
+      if (res.file && res.file.fileLis) {
         const fileList = res.file.fileList;
         params.file = fileList[fileList.length - 1].response.url;
       }
-      if (res.logo) {
+      if (res.logo && res.logo.fileLis) {
         const logoFileList = res.logo.fileList;
         params.logo = fileList[fileList.length - 1].response.url;
       }
@@ -298,11 +298,17 @@ class Client extends PureComponent {
   };
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemsAsync({ id: `${params.record.id}` });
+    // this.props.removeItemsAsync({ id: `${params.record.id}` });
+    this.props.onRemove({
+      id: `${params.record.id}`,
+    });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.removeItemsAsync({
+    // this.props.removeItemsAsync({
+    //   id: `${this.props.selectedRowKeys.join(',')}`,
+    // });
+    this.props.onBatchRemove({
       id: `${this.props.selectedRowKeys.join(',')}`,
     });
   };
@@ -336,6 +342,12 @@ class Client extends PureComponent {
       userList: this.props.userList,
     };
     if (action !== 'add') {
+      // const { customer_admin } = this.props.itemDetail; //
+      // console.log(' customer_admin ： ', customer_admin); //
+      // formComProps.init = {
+      //   ...this.props.itemDetail,
+      //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
+      // };
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //

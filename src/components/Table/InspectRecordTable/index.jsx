@@ -25,7 +25,20 @@ const InspectRecordTable = props => {
     {
       title: '名称',
       dataIndex: 'name',
-      d_item: 'id',
+      // d_item: 'id',
+      render: (text, record, index) => (
+        <a
+          onClick={() =>
+            props.getMissionItemAsync({
+              action: 'inspectMission',
+              d_id: record.id,
+              d: record.id,
+            })
+          }
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: '电站',
@@ -59,10 +72,19 @@ const InspectRecordTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => showDetail({ action: 'detail', d_id: record.id })}>
+      {/* <a onClick={() => showDetail({ action: 'detail', d_id: record.id })}>
         巡检报告
-      </a>
-      <a onClick={() => props.showFormModal({ action: 'inspectReport' })}>
+      </a> */}
+      <a onClick={() => props.showFormModal({ action: 'detail' })}>巡检报告</a>
+      <a
+        onClick={() => {
+          // props.showFormModal({ action: 'inspectReport' })
+          props.showExportPdf({ action: 'showExportPdf' });
+          // setTimeout(() => {
+          //   window.print()
+          // }, 3000)
+        }}
+      >
         导出巡检报告
       </a>
     </>

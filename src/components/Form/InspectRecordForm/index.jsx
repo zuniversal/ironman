@@ -60,7 +60,46 @@ const subFormLayouts = {
   },
 };
 
+const weatherFormLayouts = {
+  labelCol: {
+    sm: { span: 18 }, //
+  },
+  wrapperCol: {
+    sm: { span: 6 }, //
+  },
+};
+
+const electricLabelFormLayouts = {
+  labelCol: {
+    sm: { span: 19 }, //
+  },
+  wrapperCol: {
+    sm: { span: 5 }, //
+  },
+};
+
+const electricFormLayouts = {
+  // labelCol: {
+  //   sm: { span: 1 }, //
+  // },
+  // wrapperCol: {
+  //   sm: { span: 23 }, //
+  // },
+  labelCol: {
+    sm: { span: 10 }, //
+  },
+  wrapperCol: {
+    sm: { span: 14 }, //
+  },
+};
+
 const formRef = React.createRef();
+
+const inputBefore = (
+  <Select defaultValue="正常" className="select-before">
+    <Option value="正常">正常</Option>
+  </Select>
+);
 
 const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props); //
@@ -71,101 +110,121 @@ const InspectRecordForm = props => {
 
   const config = [
     {
-      noRule: true,
+      formType: 'plainText',
+      plainText: props.init[name],
       itemProps: {
-        label: '户名',
+        label: '客户名称：',
         name: '',
-      },
-      comProps: {
-        disabled: true,
       },
     },
     {
-      noRule: true,
+      formType: 'plainText',
+      plainText: props.init[name],
       itemProps: {
-        label: '户号',
+        label: '户号：',
         name: '',
       },
-      comProps: {
-        disabled: true,
+    },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '电压等级',
+    //     name: '',
+    //   },
+    //   comProps: {
+    //     disabled: true,
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '总存量',
+    //     name: '',
+    //   },
+    //   comProps: {
+    //     disabled: true,
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '电源编号',
+    //     name: '',
+    //   },
+    //   comProps: {
+    //     disabled: true,
+    //   },
+    // },
+    {
+      formType: 'plainText',
+      plainText: props.init[name],
+      itemProps: {
+        label: '巡检人员：',
+        name: '',
       },
     },
     {
-      noRule: true,
+      formType: 'plainText',
+      plainText: props.init[name],
       itemProps: {
-        label: '客户名称',
+        label: '巡检时间：',
         name: '',
-      },
-      comProps: {
-        disabled: true,
       },
     },
     {
-      noRule: true,
+      formType: 'plainText',
+      plainText: props.init[name],
       itemProps: {
-        label: '电压等级',
+        label: '备注：',
         name: '',
-      },
-      comProps: {
-        disabled: true,
       },
     },
     {
-      noRule: true,
+      formType: 'plainText',
+      plainText: '',
       itemProps: {
-        label: '总存量',
-        name: '',
+        label: ' ',
       },
       comProps: {
-        disabled: true,
+        // labelCol: {
+        //   sm: { span: 9 }, //
+        // },
+        // wrapperCol: {
+        //   sm: { span: 15 }, //
+        // },
       },
     },
     {
-      noRule: true,
-      itemProps: {
-        label: '电源编号',
-        name: '',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '巡检人员',
-        name: '',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '巡检时间',
-        name: '',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
+      flexRow: 4,
       itemProps: {
         label: '温度',
         name: 'temperature',
+        ...weatherFormLayouts,
+      },
+      comProps: {
+        className: 'w-100',
       },
     },
     {
+      flexRow: 3,
       itemProps: {
         label: '湿度',
         name: 'humidity',
+        ...weatherFormLayouts,
+      },
+      comProps: {
+        className: 'w-100',
       },
     },
     {
+      flexRow: 3,
       itemProps: {
         label: '天气',
         name: 'weather',
+        ...weatherFormLayouts,
+      },
+      comProps: {
+        className: 'w-100',
       },
     },
 
@@ -217,7 +276,6 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '安全工器具状况/上次试验日期',
-        name: '',
         className: 'w100',
       },
     },
@@ -226,11 +284,19 @@ const InspectRecordForm = props => {
         label: '高压试电笔(1年)',
         name: ['safety_equirpment', 'electroprobe_status'],
       },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
+      },
     },
     {
       itemProps: {
         label: '接地线(4年)',
         name: ['safety_equirpment', 'ground_wire'],
+      },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
       },
     },
     {
@@ -238,11 +304,19 @@ const InspectRecordForm = props => {
         label: '绝缘毯(4年)',
         name: ['safety_equirpment', 'insulating_mat'],
       },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
+      },
     },
     {
       itemProps: {
         label: '绝缘手套(半年)',
         name: ['safety_equirpment', 'insulating_gloves'],
+      },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
       },
     },
     {
@@ -250,11 +324,19 @@ const InspectRecordForm = props => {
         label: '绝缘鞋(半年)',
         name: ['safety_equirpment', 'insulating_shoes'],
       },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
+      },
     },
     {
       itemProps: {
         label: '灭火器压力(半年)',
         name: ['safety_equirpment', 'extinguisher'],
+      },
+      comProps: {
+        addonBefore: inputBefore,
+        className: 'w-130',
       },
     },
 
@@ -294,7 +376,6 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '电表读数',
-        name: '',
         className: 'w100',
       },
     },
@@ -308,7 +389,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       itemProps: {
-        label: '倍事',
+        label: '倍率',
         name: '',
       },
     },
@@ -423,20 +504,34 @@ const InspectRecordForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '高压进制线',
-        name: '',
         className: 'w100',
       },
     },
 
+    // {
+    //   flexRow: 4,
+    //   noRule: true,
+    //   formType: 'Label',
+    //   itemProps: {
+    //     label: ' ',
+    //     ...weatherFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-100',
+    //   },
+    //   LabelCom: '电压表',
+    // },
     {
       flexRow: 4,
       noRule: true,
-      formType: 'Label',
+      formType: 'plainText',
       itemProps: {
-        label: ' ',
-        name: '',
+        label: '电压表',
+        ...electricLabelFormLayouts,
       },
-      LabelCom: '电压表',
+      comProps: {
+        className: 'w-100',
+      },
     },
     {
       noRule: true,
@@ -444,6 +539,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'AB',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
@@ -455,6 +551,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'BC',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
@@ -466,20 +563,33 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'CA',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
       },
     },
+
+    // {
+    //   flexRow: 4,
+    //   noRule: true,
+    //   formType: 'Label',
+    //   itemProps: {
+    //     label: ' ',
+    //   },
+    //   LabelCom: '显示器',
+    // },
     {
       flexRow: 4,
       noRule: true,
-      formType: 'Label',
+      formType: 'plainText',
       itemProps: {
-        label: ' ',
-        name: '',
+        label: '显示器',
+        ...electricLabelFormLayouts,
       },
-      LabelCom: '显示器',
+      comProps: {
+        className: 'w-78',
+      },
     },
     {
       noRule: true,
@@ -487,6 +597,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'A',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
@@ -498,6 +609,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'B',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
@@ -509,6 +621,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: 'C',
         name: '',
+        ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
@@ -529,9 +642,9 @@ const InspectRecordForm = props => {
 
   const doPrint = () => {
     console.log(' doPrint   ,   ： ', counterRef);
-    const newStr = counterRef.current.innerHTML;
-    document.body.innerHTML = newStr;
-    htmlRef.current = document.body.innerHTML;
+    // const newStr = counterRef.current.innerHTML;
+    // document.body.innerHTML = newStr;
+    // htmlRef.current = document.body.innerHTML;
     window.print();
   };
 
@@ -557,7 +670,7 @@ const InspectRecordForm = props => {
   // }, [])
 
   return (
-    <div className={' InspectRecordForm '} ref={counterRef}>
+    <div className={' inspectRecordForm '} ref={counterRef}>
       {/* <Button type="primary" onClick={doPrint}>
         导出
       </Button> */}

@@ -191,6 +191,8 @@ const SmartForm = (props, state) => {
   // const initialValues = init ? init : {}
   // const initialValues = { field2: 'zyb',    }
 
+  // console.log(' initialValues, init, initData ： ', initialValues, init, initData,  )//
+
   // const [form] = Form.useForm(initialValues, );// 不行
   const [form] = Form.useForm();
   const formControl = propsForm ? propsForm : form; //
@@ -317,6 +319,7 @@ const SmartForm = (props, state) => {
       PropsCom,
       noLabel,
       LabelCom,
+      plainText,
     } = items;
 
     const flexRows = items.flexRow ? items.flexRow : flexRow; //
@@ -452,8 +455,10 @@ const SmartForm = (props, state) => {
       rowText: label,
       Label: LabelCom,
       CustomCom: CustomCom,
+      plainText: <span className={`plainText`}>{plainText}</span>,
       Divider: <Divider />,
       Input: <Input allowClear maxLength={32} {...realComProps} />,
+      // InputCompact: <Input allowClear maxLength={32} {...realComProps} />,
       TextArea: (
         <TextArea
           autoSize={{ minRows: 3, maxRows: 5 }}
@@ -520,6 +525,8 @@ const SmartForm = (props, state) => {
       );
     }
 
+    // Warning: [antd: Form.Item] `name` is only used for validate React element. If you are using Form.Item as layout display, please remove `name` instead.
+    // 注意 自定义的不带 name 的展示型 Form.Item 项不要带 name 属性 不然报错
     if (flexRows && formType !== 'rowText' && formType !== 'CustomCom') {
       const colForm = (
         <Col span={24 / Number(flexRows)} key={itemProps.key}>

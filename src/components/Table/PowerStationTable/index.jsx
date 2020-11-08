@@ -46,7 +46,10 @@ const PowerStationTable = props => {
     {
       title: '一次电气图',
       dataIndex: 'file',
-      d_item: 'id',
+      render: (text, record, index) => {
+        // console.log(' text, record ： ', text, record,  )//
+        return text ? <img src={text} className={`thumbImg`} /> : null;
+      },
     },
   ];
 

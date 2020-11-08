@@ -156,7 +156,7 @@ const ResultModal = props => {
     warning: 'warning',
   }[status];
 
-  console.log(' statusMap ： ', statusMap, status); //
+  // console.log(' statusMap ： ', statusMap, status); //
 
   return (
     <SmartModal

@@ -110,7 +110,7 @@ export const renderSelectOp = (configs = [], opType = 'option') => {
         );
       })
     : configs.map(v => (
-        <Option value={v.value} key={v.value} title={v.label}>
+        <Option value={v.value} key={v.value} title={v.label} {...v}>
           {v.label}
         </Option>
       ));
@@ -222,7 +222,9 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
         v.rowText ||
         v.formType === 'Dynamic' ||
         v.formType === 'DynamicItem' ||
+        v.formType === 'Label' ||
         v.formType === 'rowText' ||
+        v.formType === 'plainText' ||
         v.formType === 'PropsCom'
           ? {
               ...v.itemProps,
@@ -372,8 +374,12 @@ export const getLengthLimit = text => {
     // console.log(' 文字 ： ',    )//
     // textLength = lengthMap.word
     return lengthMap.word;
+  } else {
+    // console.log(' 文字 ： ',    )//
+    // textLength = lengthMap.word
+    return 15;
   }
-  // console.log(' 默认长度 ： ', isNaN(text), text, textLength,  )//
+  console.log(' 默认长度 ： ', isNaN(text), text, textLength); //
   return textLength;
 };
 

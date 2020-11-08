@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'inspectRecord';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getMissionItemAsync'];
 
 const batchTurnActions = [];
 
@@ -33,6 +33,13 @@ export default {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type); //
+      if (payload.action === 'inspectReport') {
+        // setTimeout(() => {
+        //   window.print()
+        // }, 3000)
+        // setTimeout(() => window.print(), 2000)
+      }
+
       return {
         ...state,
         isShowModal: true,
@@ -111,10 +118,6 @@ export default {
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
-    },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
       yield put(action({ ...res, payload }));
@@ -126,6 +129,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
+    },
+
+    *getMissionItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getMissionItem, payload);
+      yield put({ type: 'getItem', payload: { ...res, payload } });
     },
   },
 };

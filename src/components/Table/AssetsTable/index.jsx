@@ -34,7 +34,7 @@ const AssetsTable = props => {
     },
     {
       title: '电站',
-      dataIndex: 'station_name',
+      dataIndex: 'station',
       d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
@@ -63,6 +63,7 @@ const AssetsTable = props => {
     {
       title: '状态',
       dataIndex: 'status',
+      render: (text, record, index) => (text ? '正常' : '异常'),
     },
   ];
 

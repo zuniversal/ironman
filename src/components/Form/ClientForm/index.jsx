@@ -58,6 +58,27 @@ export const AdminForm = props => {
         limit: 5,
         extra: true,
         filterSelect: true,
+        rowExtra: true,
+        extraChildren: (
+          <Button
+            onClick={() => {
+              console.log(' props addUserAsync ： ', props); //
+              // if (Object.keys(props.init).length) {
+              console.log('  对吗  customer_admin.length ', props.init);
+              // if (props.init.customer_admin.length) {
+              addUserAsync({ ...props, propsForm: form });
+              // } else {
+              //   tips('无管理员初始数据！', 2);
+              // }
+              // }
+            }}
+            disabled={
+              form.getFieldsError().filter(({ errors }) => errors.length).length
+            }
+          >
+            保存
+          </Button>
+        ),
         // noRule: true,
         // formType: 'DynamicArr',
         config: [
@@ -96,38 +117,39 @@ export const AdminForm = props => {
         },
       },
     },
-    {
-      formType: 'PropsCom',
-      PropsCom: props =>
-        props.action !== 'detail' && (
-          <div className="dfc">
-            <Button
-              type="primary"
-              onClick={() => {
-                console.log(' props addUserAsync ： ', props); //
-                // if (Object.keys(props.init).length) {
-                console.log('  对吗  customer_admin.length ', props.init);
-                // if (props.init.customer_admin.length) {
-                addUserAsync(props);
-                // } else {
-                //   tips('无管理员初始数据！', 2);
-                // }
-                // }
-              }}
-              disabled={
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length
-              }
-            >
-              保存管理员信息
-            </Button>
-          </div>
-        ),
-      itemProps: {
-        label: ' ',
-        // className: 'dfc',
-      },
-    },
+
+    // {
+    //   formType: 'PropsCom',
+    //   PropsCom: props =>
+    //     props.action !== 'detail' && (
+    //       <div className="dfc">
+    //         <Button
+    //           type="primary"
+    //           onClick={() => {
+    //             console.log(' props addUserAsync ： ', props); //
+    //             // if (Object.keys(props.init).length) {
+    //             console.log('  对吗  customer_admin.length ', props.init);
+    //             // if (props.init.customer_admin.length) {
+    //             addUserAsync(props);
+    //             // } else {
+    //             //   tips('无管理员初始数据！', 2);
+    //             // }
+    //             // }
+    //           }}
+    //           disabled={
+    //             form.getFieldsError().filter(({ errors }) => errors.length)
+    //               .length
+    //           }
+    //         >
+    //           保存管理员信息
+    //         </Button>
+    //       </div>
+    //     ),
+    //   itemProps: {
+    //     label: ' ',
+    //     // className: 'dfc',
+    //   },
+    // },
   ];
 
   const formProps = {
@@ -227,22 +249,24 @@ const ClientForm = props => {
     //   },
     // },
     {
-      // formType: 'Select',
       noRule: true,
       itemProps: {
         label: '经度',
         name: 'longitude',
       },
-      comProps: {},
+      comProps: {
+        disabled: true,
+      },
     },
     {
-      // formType: 'Select',
       noRule: true,
       itemProps: {
         label: '纬度',
         name: 'latitude',
       },
-      comProps: {},
+      comProps: {
+        disabled: true,
+      },
     },
   ];
 

@@ -63,7 +63,7 @@ class PowerStation extends PureComponent {
           导出{TITLE}数据
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
-        <Button type="primary" onClick={() => this.onBatchRemove()}>
+        <Button type="primary" onClick={this.onBatchRemove}>
           删除
         </Button>
       </div>
@@ -77,21 +77,22 @@ class PowerStation extends PureComponent {
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
-        getHouseNoAsync={params =>
-          this.props.getHouseNoAsync({ keyword: params })
-        }
-        houseNoList={this.props.houseNoList}
+        onFieldChange={this.onFieldChange}
       ></PowerStationSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   onRemove = paramssss => {
     console.log(' onRemove    ： ', paramssss);
-    this.props.removeItemsAsync({ id: `${paramssss.record.id}` });
+    this.props.onRemove({ id: `${paramssss.record.id}` });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.removeItemsAsync({
+    this.props.onBatchRemove({
       id: `${this.props.selectedRowKeys.join(',')}`,
     });
   };
@@ -121,15 +122,23 @@ class PowerStation extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      const params = {
+        ...init,
+        ...res,
+      };
+      if (res.file && res.file.fileLis) {
+        const fileList = res.file.fileList;
+        params.file = fileList[fileList.length - 1].response.url;
+      }
       if (action === 'add') {
         this.props.addItemAsync({
-          ...res,
+          ...params,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           // ...itemDetail,
-          ...res,
+          ...params,
           id: d_id,
           d_id,
         });
@@ -147,6 +156,9 @@ class PowerStation extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getHouseNoAsync: params =>
+        this.props.getHouseNoAsync({ keyword: params }),
+      houseNoList: this.props.houseNoList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -177,6 +189,9 @@ class PowerStation extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getHouseNoAsync();
+  }
 
   render() {
     console.log(

@@ -1,11 +1,12 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/powerStation';
+import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
 
-const otherActions = ['exportDataAsync'];
+const otherActions = ['exportDataAsync', 'getHouseNoAsync'];
 
 const batchTurnActions = [];
 
@@ -115,11 +116,11 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
-    getClient(state, { payload, type }) {
-      // console.log(' getClient 修改  ： ', state, payload, type,     )//
+    getHouseNo(state, { payload, type }) {
+      // console.log(' getHouseNo 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        houseNoList: formatSelectList(payload.list, 'name'),
+        houseNoList: formatSelectList(payload.list, 'number'),
       };
     },
   },

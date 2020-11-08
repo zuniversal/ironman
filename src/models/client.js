@@ -80,6 +80,7 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItem 修改  ： ', state, payload, type); //
+      const { customer_admin } = payload.bean; //
       return {
         ...state,
         action: payload.payload.action,
@@ -87,6 +88,8 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
+          customer_admin:
+            customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           d_id: payload.payload.d_id,
           // service_staff: 'zybxxx',
         },

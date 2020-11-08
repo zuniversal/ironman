@@ -163,18 +163,36 @@ const DynamicItemForm = props => {
   //   console.log(' value.some(item => v.id == item) ： ', v, value, isContain,  )//
   //   return isContain
   // }) : selectData
-  let selectDatas = [...selectData];
-  if (filterSelect) {
-    // selectDatas = selectData.filter(v => !value.some(item => v.id == item));
-    // selectDatas = selectData.filter(v => !value.includes(item => v.id == item));//
-    // selectDatas = selectData.splice(0, 4)
-  }
+  // if (filterSelect) {
+  //   // selectDatas = selectData.filter(v => !value.some(item => v.id == item));
+  //   // selectDatas = selectData.filter(v => v.id != 1 && v.id != 2);
+  //   selectDatas = selectData.filter(v => {
+  //     // const res = !value.includes(`${v.id}`)
+  //     let res = false
+  //     const isInclude = !value.includes(`${v.id}`)
+  //     if (isInclude) {
+  //       res = true
+  //     }
+  //     // const res = !['1', '2'].includes(`${v.id}`)
+  //     console.log(' selectData res ：', res, isInclude, value, v.id, value.includes(`${v.id}`) )//
+  //     return res
+  //   });//
+  //   // selectDatas = selectData.splice(0, 4)
+  // }
 
   // filterSelect ? selectData.filter((v) => {
   //   const isContain = value.every(item => v.id != item)
   //   console.log(' value.some(item => v.id == item) ： ', v, value, isContain,  )//
   //   return isContain
   // }) : selectData
+
+  let selectDatas = selectData;
+  if (filterSelect) {
+    selectDatas = selectDatas.map(v => ({
+      ...v,
+      disabled: value.includes(`${v.value}`),
+    }));
+  }
   console.log(' selectDatas, selectData ： ', selectDatas, selectData); //
   // const selectDatas = selectData
 
@@ -240,11 +258,12 @@ const DynamicItemForm = props => {
         const selectCom = (
           <Select {...selectProps}>
             {renderSelectOp(selectDatas, opType)}
+            {/* {renderSelectOp(selectDatas.map(v => ({...v, disabled: value.includes(`${v.id}`)})), opType)} */}
           </Select>
         );
-        const selectCom2 = (
-          <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
-        );
+        // const selectCom2 = (
+        //   <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
+        // );
         // console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2); //
         const formItemMap = {
           rowText: label,
@@ -350,7 +369,7 @@ const DynamicItemForm = props => {
                       if (fields.length < limit) {
                         add();
                       } else {
-                        tips(`最多新增${limit}条数据！`, 2);
+                        tips(`最多新增${limit}次数据！`, 2);
                       }
                     }}
                     // style={{ width: '60%' }}

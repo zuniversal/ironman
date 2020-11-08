@@ -153,7 +153,7 @@ class Assets extends PureComponent {
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={() => this.onBatchRemove()}>
+        <Button type="primary" onClick={this.onBatchRemove}>
           删除
         </Button>
       </div>
@@ -169,20 +169,25 @@ class Assets extends PureComponent {
         clientList={this.props.clientList}
         powerList={this.props.powerList}
         houseNoList={this.props.houseNoList}
+        onFieldChange={this.onFieldChange}
       ></AssetsSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
     this.props.removeItemAsync({
-      id: `${params.record.id}`,
+      // id: `${params.record.id}`,
       d_id: `${params.record.id}`,
     });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.removeItemsAsync({
+    this.props.onBatchRemove({
       ids: this.props.selectedRowKeys,
     });
   };

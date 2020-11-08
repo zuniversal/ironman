@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectPlan';
 import * as clientServices from '@/services/client';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'inspectPlan';
@@ -70,10 +70,11 @@ export default {
       console.log(' getList ： ', state, payload, payload.searchInfo); //
       // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, client: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
-      const unScheduleListData = payload.unScheduleList.map(v => {
+      const unScheduleListData = payload.unScheduleList.map((v, i) => {
         // console.log(' unScheduleListData v ： ', v,  )//
         return {
           ...v,
+          url: i,
           extendedProps: {
             ...v,
             isScheduled: false,
@@ -177,7 +178,7 @@ export default {
           : {
               ...v,
               surplus_plan_num:
-                v.surplus_plan_num > 0
+                v.surplus_plan_num > 0 && latestDrag.url == v.surplus_plan_num
                   ? v.surplus_plan_num - 1
                   : v.surplus_plan_num,
               // isdraged: true,
@@ -222,6 +223,13 @@ export default {
         month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
         // month: searchInfo.month.format('YYYY-MM'),
       };
+
+      if (!params.leader || !params.month) {
+        if (!payload.isReset) {
+          tips('请先选择客户代表及月份！', 2);
+        }
+        return;
+      }
       const unScheduleList = yield call(services.getUnScheduleList, params);
       const scheduleList = yield call(services.getScheduledList, params);
       // const scheduleList = []

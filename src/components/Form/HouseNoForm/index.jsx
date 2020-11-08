@@ -54,12 +54,18 @@ const HouseNoForm = props => {
         label: '经度',
         name: 'longitude',
       },
+      comProps: {
+        disabled: true,
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '纬度',
         name: 'latitude',
+      },
+      comProps: {
+        disabled: true,
       },
     },
   ];

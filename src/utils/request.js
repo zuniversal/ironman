@@ -46,7 +46,7 @@ const statusMap = {
 
 export const getStatusMsg = (status, url) => {
   const statusItem = statusMap[status];
-  return statusItem || `${url} - 未知状态码！`;
+  return statusItem || `${url} - 未知状态！`;
 };
 
 export const isTips = res => {
@@ -79,10 +79,17 @@ export const isTips = res => {
   //   tips(codeMap[code], 2);
   //   return;
   // }
-  if (code !== NORMAL_CODE) {
+  if (code && code !== NORMAL_CODE) {
     // if (false) {
     const codeMsg = getCodeMsg(code);
-    console.log(' 提示 对吗  !codeMsg ', !codeMsg, codeMsg);
+    console.log(
+      ' 提示 对吗  !codeMsg ',
+      res,
+      msg_show,
+      code,
+      !codeMsg,
+      codeMsg,
+    );
     tips(msg_show || codeMsg, 2);
     // if (!codeMsg) {
     //   tips(codeMsg, 2);
@@ -136,10 +143,12 @@ export class Request {
         //     : config.data,
         // );
         config.customInfo = formatParams;
-        if (config.params) {
-          const { noTips, ...rest } = config.params;
-          config.params = rest;
-        }
+        const { noTips, ...rest } = formatParams;
+        // if (config.params) {
+        //   const { noTips, ...rest } = config.params;
+        //   config.data = config.params = rest;
+        // }
+        config.data = config.params = rest; // 支持 delete 传递 body 参数
         console.log(' 发送请求   ： ', config, formatParams); //
         return config;
       },

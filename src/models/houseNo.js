@@ -1,13 +1,12 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/houseNo';
 import * as clientServices from '@/services/client';
-import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'houseNo';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientAsync', 'getHouseNoAsync', 'exportDataAsync'];
+const otherActions = ['getClientAsync', 'exportDataAsync'];
 
 const batchTurnActions = [];
 
@@ -32,7 +31,6 @@ export default {
     searchInfo: {},
 
     clientList: [],
-    houseNoList: [],
   },
 
   reducers: {
@@ -114,13 +112,6 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
-    // getClient(state, { payload, type }) {
-    //   // console.log(' getClient 修改  ： ', state, payload, type,     )//
-    //   return {
-    //     ...state,
-    //     houseNoList: formatSelectList(payload.list, 'name'),
-    //   };
-    // },
   },
 
   effects: {
@@ -179,9 +170,5 @@ export default {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
-    // *getHouseNoAsync({ payload, action, type }, { call, put }) {
-    // const res = yield call(houseNoServices.getList, { keyword: payload });
-    //   yield put(action({ ...res, payload }));
-    // },
   },
 };

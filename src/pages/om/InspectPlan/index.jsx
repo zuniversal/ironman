@@ -10,7 +10,7 @@ import {
   Upload,
   Result,
   Typography,
-  Divider,
+  Spin,
 } from 'antd';
 
 import SmartModal from '@/common/SmartModal'; //
@@ -86,11 +86,11 @@ class InspectPlan extends PureComponent {
           // month: res.month.format('YYYY-MM'),
         });
       } else {
-        tips('请先选择班组及月份！', 2);
+        tips('请先选择客户代表及月份！', 2);
       }
     } catch (error) {
       console.log(' error ： ', error); //
-      tips('请先选择班组及月份！', 2);
+      tips('请先选择客户代表及月份！', 2);
     }
   };
   renderFormBtn = params => {
@@ -101,7 +101,12 @@ class InspectPlan extends PureComponent {
         </Button>
         <Button
           type="primary"
-          onClick={() => this.props.getListAsync(this.props.searchInfo)}
+          onClick={() =>
+            this.props.getListAsync({
+              ...this.props.searchInfo,
+              isReset: true,
+            })
+          }
         >
           {/* <Button type="primary" onClick={() => this.props.reset()}> */}
           重置
@@ -228,11 +233,20 @@ class InspectPlan extends PureComponent {
       this.props,
     ); //
 
+    const { loading } = this.props; //
+
     return (
       <div className="InspectPlan">
         {this.renderSearchForm()}
 
-        {this.renderInspectPlanCalendar()}
+        <Spin
+          className={'loadingWrapper'}
+          spinning={!!loading}
+          tip="请求发送中，请稍等！"
+          size="large"
+        >
+          {this.renderInspectPlanCalendar()}
+        </Spin>
 
         {this.renderSmartFormModal()}
       </div>

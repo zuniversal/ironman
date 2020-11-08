@@ -39,8 +39,8 @@ const HouseNoSearchForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getHouseNoAsync,
-      selectData: props.houseNoList,
+      selectSearch: props.getListAsync,
+      selectData: props.dataList,
       itemProps: {
         label: '户号',
         name: 'code',

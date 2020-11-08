@@ -53,10 +53,6 @@ class ShiftsManage extends PureComponent {
     };
   }
 
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
-  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -86,7 +82,7 @@ class ShiftsManage extends PureComponent {
           导出{TITLE}数据
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
-        <Button type="primary" onClick={() => this.onBatchRemove()}>
+        <Button type="primary" onClick={this.onBatchRemove}>
           删除
         </Button>
       </div>
@@ -99,6 +95,10 @@ class ShiftsManage extends PureComponent {
         onFieldChange={this.onFieldChange}
       ></ShiftsManageSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   showFormModal = params => {
@@ -117,21 +117,23 @@ class ShiftsManage extends PureComponent {
   };
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemsAsync({ id: `${params.record.id}` });
+    // this.props.removeItemsAsync({ id: `${params.record.id}` });
+    this.props.onRemove({
+      id: `${params.record.id}`,
+    });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    console.log(
-      '  对吗  this.props.selectedRowKeys.length ',
-      this.props.selectedRowKeys.length,
-    );
-    if (this.props.selectedRowKeys.length > 0) {
-      this.props.removeItemsAsync({
-        id: `${this.props.selectedRowKeys.join(',')}`,
-      });
-    } else {
-      tips('请您选中数据！', 2);
-    }
+    // if (this.props.selectedRowKeys.length > 0) {
+    //   this.props.removeItemsAsync({
+    //     id: `${this.props.selectedRowKeys.join(',')}`,
+    //   });
+    // } else {
+    //   tips('请您选中数据！', 2);
+    // }
+    this.props.onBatchRemove({
+      id: `${this.props.selectedRowKeys.join(',')}`,
+    });
   };
 
   goPage = params => {
@@ -223,7 +225,8 @@ class ShiftsManage extends PureComponent {
       this.props,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    this.props.getUserAsync({ page: 1, page_size: 50 }); //
+    this.props.getUserAsync({}); //
+    // this.props.getUserAsync({ page: 1, page_size: 50 }); //
   }
 
   render() {

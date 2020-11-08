@@ -259,10 +259,11 @@ class SmartTable extends PureComponent {
 
     const textLength = `${text}`.length;
     // const txt = foramtText(`${text}`)
-    let txt = foramtText(text);
+    let mapText = text;
     if (dataMap) {
-      txt = getDataMap(txt, dataMap);
+      mapText = getDataMap(mapText, dataMap);
     }
+    let txt = foramtText(mapText);
 
     // const txt = textLength > lengthLimit ? `${text}`.slice(0, lengthLimit) + '...' : text
 

@@ -1,15 +1,29 @@
 import React from 'react';
 import './style.less';
-// import { Button } from 'antd';
+// import ExportHeader from './ExportHeader';
+import ReactDOM from 'react-dom';
+import { Button } from 'antd';
 
 const ExportPdf = props => {
-  console.log(' ExportPdf ： ', props); //
-
-  return (
+  console.log(' ExportPdfExportPdf ： ', props); //
+  const { goBack, onClose } = props; //
+  // const print = () => {
+  //   console.log(' printprint   ,   ： ',   )
+  //   props.print()
+  //   window.print();
+  // }
+  window.onafterprint = e => {
+    console.log('    closecloseclose ： ', e);
+    onClose();
+  };
+  return ReactDOM.createPortal(
     <div className={'exportPdfWrapper  '}>
-      <div className="exportPdf dfc ">PDF客户月度告</div>
-      <div className="pdfContent">{props.children}</div>
-    </div>
+      <div className={'exportPdf  '}>
+        <div className="pdfContent">{props.children}</div>
+        {/* <div className="pdfContent">{props.children}</div> */}
+      </div>
+    </div>,
+    document.getElementById('root'),
   );
 };
 
