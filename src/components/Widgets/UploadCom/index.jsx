@@ -18,8 +18,8 @@ import {
   Upload,
   Result,
 } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import { confirms } from '@/utils';
+import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
+import { tips } from '@/utils';
 
 const UploadCom = props => {
   console.log(' UploadCom   props, ,   ： ', props);
@@ -40,34 +40,39 @@ const UploadCom = props => {
   const onChange = e => {
     console.log(' onChange   e,   ： ', e);
     const { onUploadChange, noTips, uploadSucc } = props; //
-    if (!noTips) {
-      const item = e.fileList[e.fileList.length - 1];
-      console.log('  item ：', item, item.response); //
-      if (item.response) {
-        const { failedMsg, successExpense, message } = item.response;
-        console.log(' failedMsg ： ', failedMsg, message); //
-        if (message) {
-          confirms(message, 2);
-        }
-        // if (failedMsg && failedMsg.length > 0) {
-        //   console.log(' itemitem failedMsg 22222 ： ', failedMsg,  )//
-        //   notification.error({
-        //     duration: null,
-        //     placement: 'topLeft',
-        //     message: intl.get('UPLOAD_ERROR'),
-        //     description: <div>
-        //       {failedMsg.map((v, i) => <div key={i} >{i + 1} - {v}</div>)}
-        //     </div>,
-        //     // icon: <Icon type="error" style={{ color: '#108ee9' }} />,
-        //   });
-        // }
-        if (successExpense && successExpense.length > 0) {
-          console.log(' itemitem successExpense 22222 ： ', successExpense); //
-          confirms('文件上传成功！');
-          // uploadSucc(successExpense)
-        }
-      }
+    if (e.file.status === 'done') {
+      tips(`${e.file.name} 上传成功！`, 1);
+    } else if (e.file.status === 'error') {
+      tips(`${e.file.name} 上传失败！`, 0);
     }
+    // if (!noTips) {
+    //   const item = e.fileList[e.fileList.length - 1];
+    //   console.log('  item ：', item, item.response); //
+    //   if (item.response) {
+    //     const { failedMsg, successExpense, message } = item.response;
+    //     console.log(' failedMsg ： ', failedMsg, message); //
+    //     if (message) {
+    //       confirms(message, 2);
+    //     }
+    //     // if (failedMsg && failedMsg.length > 0) {
+    //     //   console.log(' itemitem failedMsg 22222 ： ', failedMsg,  )//
+    //     //   notification.error({
+    //     //     duration: null,
+    //     //     placement: 'topLeft',
+    //     //     message: intl.get('UPLOAD_ERROR'),
+    //     //     description: <div>
+    //     //       {failedMsg.map((v, i) => <div key={i} >{i + 1} - {v}</div>)}
+    //     //     </div>,
+    //     //     // icon: <Icon type="error" style={{ color: '#108ee9' }} />,
+    //     //   });
+    //     // }
+    //     if (successExpense && successExpense.length > 0) {
+    //       console.log(' itemitem successExpense 22222 ： ', successExpense); //
+    //       confirms('文件上传成功！');
+    //       // uploadSucc(successExpense)
+    //     }
+    //   }
+    // }
   };
   return (
     <Form.Item
@@ -82,6 +87,24 @@ const UploadCom = props => {
       className={`uploadFormItem ${isInputUpload ? '' : 'uploadBox'}`}
     >
       <Upload
+        progress={{
+          strokeColor: {
+            '0%': '#108ee9',
+            '100%': '#87d068',
+          },
+          strokeWidth: 3,
+          format: percent => `${parseFloat(percent.toFixed(2))}%`,
+        }}
+        showUploadList={{
+          showDownloadIcon: true,
+          downloadIcon: 'download ',
+          showRemoveIcon: true,
+          removeIcon: (
+            <StarOutlined
+              onClick={e => console.log(e, 'custom removeIcon event')}
+            />
+          ),
+        }}
         {...uploadProps}
         action={action}
         // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?

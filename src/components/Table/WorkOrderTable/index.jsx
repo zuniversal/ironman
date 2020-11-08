@@ -67,6 +67,7 @@ const WorkOrderTable = props => {
     {
       title: '任务状态',
       dataIndex: ['task', 'status'],
+      dataMap: workOrderStatusMap,
     },
     {
       title: '创建时间',

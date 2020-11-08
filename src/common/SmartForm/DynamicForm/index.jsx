@@ -449,20 +449,19 @@ const DynamicForm = props => {
                   {formItemCom}
                   {/* {extra} */}
                 </Form.Item>
-                {!rowExtra &&
-                  i === 0 && (
-                    <ActionBtn
-                      fields={fields}
-                      field={field}
-                      add={add}
-                      // remove={remove}
-                      remove={() => remove(field.name)}
-                      addText={addText}
-                      subText={subText}
-                      limit={limit}
-                      keys={field.key}
-                    ></ActionBtn>
-                  )}
+                {!rowExtra && i === 0 && (
+                  <ActionBtn
+                    fields={fields}
+                    field={field}
+                    add={add}
+                    // remove={remove}
+                    remove={() => remove(field.name)}
+                    addText={addText}
+                    subText={subText}
+                    limit={limit}
+                    keys={field.key}
+                  ></ActionBtn>
+                )}
               </Form.Item>
             );
           });
@@ -470,7 +469,12 @@ const DynamicForm = props => {
           return (
             <>
               {index === 0 && (
-                <Form.Item label={' '} colon={false} {...propsLayout}>
+                <Form.Item
+                  label={' '}
+                  colon={false}
+                  {...propsLayout}
+                  className={'rowExtraFormItem'}
+                >
                   <div className="w-315 rowExtraWrapper">
                     <Button
                       type="dashed"
