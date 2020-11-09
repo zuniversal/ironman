@@ -41,6 +41,7 @@ import debounce from 'lodash/debounce';
 
 const { bounceIn, slideInDown } = ANIMATE;
 
+const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -117,6 +118,7 @@ export const getLabel = (label, key) => {
     Radio: SELECT_TXT + label,
     DatePicker: SELECT_TXT + label,
     MonthPicker: SELECT_TXT + label,
+    // RangePicker: SELECT_TXT + label,
   };
 
   return labelMap[key];
@@ -342,6 +344,10 @@ const SmartForm = (props, state) => {
       colon: false,
       ...itemProps,
     };
+
+    if (noLabel) {
+      formItemCommonProps.label = '';
+    }
     // if (
     //   formType === 'Radio' ||
     //   formType === 'Switch' ||
@@ -383,9 +389,9 @@ const SmartForm = (props, state) => {
     }
     if (noLabel) {
       console.log(' noLabel ： '); //
-      comProps.wrapperCol = {
-        sm: { span: 10 },
-      };
+      // comProps.wrapperCol = {
+      //   sm: { span: 10 },
+      // };
     }
 
     const realComProps = {
@@ -481,6 +487,7 @@ const SmartForm = (props, state) => {
       Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
       DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
+      RangePicker: <RangePicker format={'YYYY/MM/DD'} {...realComProps} />,
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
       DynamicItem: <DynamicItem {...dynamicComProps}></DynamicItem>,

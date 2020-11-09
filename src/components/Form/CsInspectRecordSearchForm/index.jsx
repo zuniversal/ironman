@@ -11,6 +11,7 @@ const CsInspectRecordSearchForm = props => {
   const config = [
     {
       // formType: 'Select',
+      noLabel: true,
       itemProps: {
         label: '关键字',
         name: 'keyword',
@@ -21,11 +22,12 @@ const CsInspectRecordSearchForm = props => {
       searchSuffix: true,
     },
     {
-      formType: 'DatePicker',
+      formType: 'RangePicker',
       itemProps: {
         label: '日期',
         name: '',
       },
+      comProps: {},
     },
   ];
 
