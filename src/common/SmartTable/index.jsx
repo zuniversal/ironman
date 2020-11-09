@@ -539,6 +539,7 @@ class SmartTable extends PureComponent {
       actionConfig,
       noActionCol,
       count,
+      animation,
     } = this.props;
 
     const col = columns.map((v, i) => ({
@@ -568,6 +569,7 @@ class SmartTable extends PureComponent {
       this.props,
       history,
       this.isShowLoading,
+      this.props.animation,
     ); //
 
     const realData = this.dataFilter();
@@ -600,7 +602,7 @@ class SmartTable extends PureComponent {
           // dataSource={() => filters(dataSource, searchText, searchKey, )()}
           // dataSource={this.filters(dataSource, searchText, searchKey, )}
           columns={cols}
-          className={`smartTable ${className} ${slideInUp} `}
+          className={`smartTable ${className} ${animation || slideInUp} `}
         />
 
         {this.renderRemoveModal()}
@@ -631,6 +633,7 @@ SmartTable.defaultProps = {
   noDefault: false, // 是否禁用默认的操作列
   isQRCode: false, // 是否显示默认的二维码按钮
   count: 0,
+  animation: '',
 };
 
 SmartTable.propTypes = {
@@ -647,6 +650,7 @@ SmartTable.propTypes = {
   noDefault: PropTypes.bool,
   isQRCode: PropTypes.bool,
   count: PropTypes.number,
+  animation: PropTypes.string,
 };
 
 export default SmartTable; //

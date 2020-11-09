@@ -75,8 +75,14 @@ class Role extends PureComponent {
       <SearchKwForm
         formBtn={this.renderFormBtn}
         className={'fje'}
+        onFieldChange={this.onFieldChange}
+        keyword={'name'}
       ></SearchKwForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -94,6 +100,11 @@ class Role extends PureComponent {
     return <RoleTable {...tableProps}></RoleTable>;
   };
 
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemAsync({ d_id: `${params.record.id}` });
+  };
+
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -104,6 +115,12 @@ class Role extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {

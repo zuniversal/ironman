@@ -17,13 +17,13 @@ const MissionsManageSearchForm = props => {
         name: 'status',
       },
     },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    //   comProps: {},
+    // },
 
     {
       // formType: 'Select',

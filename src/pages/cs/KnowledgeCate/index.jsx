@@ -5,12 +5,6 @@ class KnowledgeCate extends Component {
     super(props);
   }
   render() {
-    console.log(
-      ' %c KnowledgeCate 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
     return <div className={`KnowledgeCate`}>KnowledgeCate</div>;
   }
 }

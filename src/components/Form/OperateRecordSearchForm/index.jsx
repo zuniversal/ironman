@@ -29,10 +29,11 @@ const OperateRecordSearchForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        // {...rest}
+        {...props}
       ></SearchForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

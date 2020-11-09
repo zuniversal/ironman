@@ -85,13 +85,6 @@ class CsUserCenter extends PureComponent {
   }
 
   render() {
-    console.log(
-      ' %c CsUserCenter 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-
     return (
       <div className="UserCenter">
         <UserCenterForm handleOk={this.handleOk}></UserCenterForm>

@@ -46,7 +46,7 @@ const menuConfig = [
   },
 ];
 
-export const TITLE = '资产';
+export const TITLE = '设备';
 export const DEVICE = '设备';
 
 const titleMap = {
@@ -54,7 +54,7 @@ const titleMap = {
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   newRelated: `关联新增`,
-  uploadFile: `文件上传`,
+  uploadFile: `资产列表`,
   down: `文件下载`,
 };
 

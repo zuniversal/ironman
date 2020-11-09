@@ -6,18 +6,14 @@ import { Form, Input } from 'antd';
 
 const PageTitle = props => {
   // console.log(' PageTitle ： ', props, props.title); //
-  return (
-    props.title && (
-      <div
-        className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper`}
-      >
-        <div className="pageTitle">{props.title}</div>
-      </div>
-    )
-    // props.isWrapper ? <div className="pageTitle">{props.title}</div> : <div className={props.className}>
-    //   <div className="pageTitle">{props.title}</div>
-    // </div>
-  );
+  return props.title ? (
+    <div className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper`}>
+      <div className="pageTitle">{props.title}</div>
+    </div>
+  ) : null;
+  // props.isWrapper &&<div className="pageTitle">{props.title}</div> <div className={props.className}>
+  //   <div className="pageTitle">{props.title}</div>
+  // </div>
 };
 
 PageTitle.defaultProps = {

@@ -22,7 +22,7 @@ const DictTable = props => {
     },
     {
       title: '模块',
-      dataIndex: 'content',
+      dataIndex: 'model',
     },
     {
       title: '名称',
@@ -34,11 +34,11 @@ const DictTable = props => {
     },
     {
       title: '关联设备',
-      dataIndex: ['equipment', 'id'],
+      dataIndex: ['equipment', 'name'],
     },
     {
       title: '备注',
-      dataIndex: 'remark',
+      dataIndex: 'remarks',
     },
   ];
 

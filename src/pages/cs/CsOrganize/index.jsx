@@ -111,13 +111,6 @@ class CsOrganize extends PureComponent {
   };
 
   render() {
-    console.log(
-      ' %c CsOrganize 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
-
     return (
       <div className="csOrganize">
         {this.renderSearchForm()}

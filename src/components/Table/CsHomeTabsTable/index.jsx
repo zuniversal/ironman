@@ -11,6 +11,7 @@ import './style.less';
 import { Tabs } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
+import { ANIMATE } from '@/constants';
 
 const CsHomeTabsTable = props => {
   console.log(' CsHomeTabsTable  ：', props); //
@@ -97,6 +98,7 @@ const CsHomeTabsTable = props => {
       pagination={false}
       extra={extra}
       noDefault
+      animation={ANIMATE.bounceInLeft}
       {...props}
     ></SmartTable>
   );
@@ -153,6 +155,7 @@ const CsHomeAssetsTable = props => {
       pagination={false}
       extra={extra}
       noDefault
+      animation={ANIMATE.bounceInRight}
       {...props}
     ></SmartTable>
   );

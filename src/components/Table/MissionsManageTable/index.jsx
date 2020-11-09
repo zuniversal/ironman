@@ -104,7 +104,7 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {!record.finished_tag && (
+      {record.finished_tag && (
         <a
           onClick={() =>
             props.showFormModal({
@@ -139,7 +139,7 @@ const MissionsManageTable = props => {
       {(record.type === 'power_construction' ||
         record.type === 'electrical_testing') &&
         record.status !== 'waiting_plan' &&
-          record.status !== 'waiting_confirm' && (
+        record.status !== 'waiting_confirm' && (
           <a disabled className={`disabled `}>
             已确认排期
           </a>

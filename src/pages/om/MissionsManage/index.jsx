@@ -245,12 +245,6 @@ class MissionsManage extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log(
-      ' %c MissionsManage componentDidMount 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
     // this.props.getEnumListAsync({
     //   model: '任务管理',
     //   name: '任务类型',
@@ -267,13 +261,6 @@ class MissionsManage extends PureComponent {
   }
 
   render() {
-    console.log(
-      ' %c MissionsManage 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
-
     return (
       <div className="MissionsManage">
         {this.renderSearchForm()}

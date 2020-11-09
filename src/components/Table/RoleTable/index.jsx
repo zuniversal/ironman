@@ -24,6 +24,10 @@ const RoleTable = props => {
       title: '角色',
       dataIndex: 'name',
     },
+    {
+      title: '描述',
+      dataIndex: 'comments',
+    },
   ];
 
   return (
@@ -32,7 +36,6 @@ const RoleTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
 
-      rowKey={'kind_id'}
       {...props}
     ></SmartTable>
   );

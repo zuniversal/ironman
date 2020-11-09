@@ -50,9 +50,9 @@ class UserManage extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+        {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}>
           删除
-        </Button>
+        </Button> */}
       </div>
     );
   };

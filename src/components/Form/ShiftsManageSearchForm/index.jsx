@@ -23,18 +23,18 @@ const ShiftsManageSearchForm = props => {
         name: 'type',
       },
     },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    //   comProps: {},
+    // },
 
     {
       // formType: 'Select',
       itemProps: {
-        label: '',
+        label: '班组名称',
         name: 'keyword',
       },
       comProps: {

@@ -30,8 +30,7 @@ const InspectMissionDetailForm = props => {
     {
       itemProps: {
         label: '电站',
-        name: 'station.name',
-        name: ['plan', 'customer'],
+        name: ['plan', 'station', 'name'],
       },
     },
     {
@@ -43,19 +42,19 @@ const InspectMissionDetailForm = props => {
     {
       itemProps: {
         label: '创建日期',
-        name: 'create_time',
+        name: 'created_time',
       },
     },
     {
       itemProps: {
         label: '客户名称',
-        name: 'customer',
+        name: ['customer', 'name'],
       },
     },
     {
       itemProps: {
         label: '领取人',
-        // name: '',
+        name: ['team', 'name'],
       },
     },
     {
@@ -67,13 +66,13 @@ const InspectMissionDetailForm = props => {
     {
       itemProps: {
         label: '开始时间',
-        // name: '',
+        name: 'start_time',
       },
     },
     {
       itemProps: {
         label: '完成时间',
-        name: 'work_date',
+        name: 'end_time',
       },
     },
     {

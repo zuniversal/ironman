@@ -5,12 +5,6 @@ class VisitManage extends Component {
     super(props);
   }
   render() {
-    console.log(
-      ' %c VisitManage 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
     return <div className={`VisitManage`}>VisitManage</div>;
   }
 }

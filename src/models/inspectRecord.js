@@ -64,13 +64,23 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
+      const {
+        created_time = '',
+        start_time = '',
+        end_time = '',
+      } = payload.bean;
       console.log(' getItemgetItem ： ', payload); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          created_time: created_time ? created_time.split('T')[0] : '',
+          start_time: start_time ? start_time.split('T')[0] : '',
+          end_time: end_time ? end_time.split('T')[0] : '',
+        },
       };
     },
     addItem(state, { payload, type }) {

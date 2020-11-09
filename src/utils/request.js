@@ -148,7 +148,11 @@ export class Request {
         //   const { noTips, ...rest } = config.params;
         //   config.data = config.params = rest;
         // }
-        config.data = config.params = rest; // 支持 delete 传递 body 参数
+        if (config.method === 'post') {
+          config.data = rest; // 支持 delete 传递 body 参数
+        } else {
+          config.data = config.params = rest;
+        }
         console.log(' 发送请求   ： ', config, formatParams); //
         return config;
       },

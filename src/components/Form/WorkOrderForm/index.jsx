@@ -29,16 +29,16 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectData: props.userList,
+      // formType: 'Search',
+      // // selectData: props.userList,
       itemProps: {
         label: '类型',
         name: 'type',
       },
     },
     {
-      formType: 'Search',
-      selectData: workOrderStatusConfig,
+      // formType: 'Search',
+      // selectData: workOrderStatusConfig,
       itemProps: {
         label: '状态',
         name: 'status',
@@ -51,21 +51,21 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      // formType: 'Search',
+      // // selectSearch: props.getUserAsync,
+      // selectData: props.userList,
       itemProps: {
         label: '客户',
-        name: 'customer.name',
+        name: ['task', 'customer', 'id'],
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getPowerAsync,
-      selectData: props.powerList,
+      // formType: 'Search',
+      // // selectSearch: props.getPowerAsync,
+      // selectData: props.powerList,
       itemProps: {
         label: '设备id',
-        name: 'task.id',
+        name: ['task', 'equipments', 'name'],
       },
     },
     {
@@ -78,7 +78,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '反馈人',
-        name: 'account.name',
+        name: ['team', 'name'],
       },
     },
     {
@@ -104,7 +104,7 @@ const WorkOrderTicketForm = props => {
       ),
       itemProps: {
         label: '反馈图片',
-        name: 'task.file',
+        name: ['task', 'file'],
       },
     },
     {
@@ -114,13 +114,12 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getTeamAsync,
-      selectData: props.teamList,
+      // formType: 'Search',
+      // selectSearch: props.getTeamAsync,
+      // selectData: props.teamList,
       itemProps: {
         label: '处理人',
-        // name: 'recipient.name',
-        name: ['recipient', 'nickname'],
+        name: ['recipient', 'name'],
       },
     },
     {
@@ -158,13 +157,13 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '评价等级',
-        name: 'evaluate.level',
+        name: ['evaluate', 'level'],
       },
     },
     {
       itemProps: {
         label: '评价内容',
-        name: 'evaluate.content',
+        name: ['evaluate', 'content'],
       },
     },
   ];

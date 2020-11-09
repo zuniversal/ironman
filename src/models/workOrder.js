@@ -162,7 +162,7 @@ export default {
       const { searchInfo } = yield select(state => state[namespace]);
       const params = {
         ...searchInfo,
-        ...formatSearch(payload),
+        // ...formatSearch(payload),
         ...payload,
       };
       console.log(

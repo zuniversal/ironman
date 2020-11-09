@@ -6,24 +6,24 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
-export const config = [
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '',
-      name: 'keyword',
-    },
-    searchSuffix: true,
-  },
-];
-
 const SearchKwForm = props => {
   console.log(' SearchKwForm ： ', props); //
-  const { formBtn, className, ...rest } = props; //
+  const { formBtn, className, keyword, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline'
   };
+
+  const config = [
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: keyword,
+      },
+      searchSuffix: true,
+    },
+  ];
 
   return (
     <div className={`fsb searchKwForm ${className}`}>
@@ -46,10 +46,12 @@ const SearchKwForm = props => {
 
 SearchKwForm.defaultProps = {
   className: '',
+  keyword: 'keyword',
 };
 
 SearchKwForm.propTypes = {
   className: PropTypes.string,
+  keyword: PropTypes.string,
 };
 
 export default SearchKwForm;

@@ -42,7 +42,7 @@ const ShiftsManageTable = props => {
       dataIndex: 'car_number',
     },
     {
-      title: 'leader',
+      title: '区块链经理',
       dataIndex: 'leader',
     },
   ];

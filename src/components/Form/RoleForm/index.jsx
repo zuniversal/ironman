@@ -113,6 +113,14 @@ export const config = [
       name: 'name',
     },
   },
+  {
+    noRule: true,
+    formType: 'TextArea',
+    itemProps: {
+      label: '描述',
+      name: 'comments',
+    },
+  },
 ];
 
 const RoleForm = props => {
@@ -135,7 +143,7 @@ const RoleForm = props => {
         {...rest}
       ></SmartForm>
 
-      <RoleTab></RoleTab>
+      {/* <RoleTab></RoleTab> */}
     </div>
   );
 };

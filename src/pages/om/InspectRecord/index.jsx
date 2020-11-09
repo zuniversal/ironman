@@ -35,10 +35,10 @@ const TITLE = '巡检';
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `任务详情`,
-  upload: `文件上传`,
+  inspectMission: `任务详情`,
+  upload: `文件上传inspectReport`,
   down: `文件下载`,
-  inspectReport: `${TITLE}报告`,
+  detail: `${TITLE}报告`,
 };
 
 // const mapStateToProps = ({ inspectRecord, }) => inspectRecord;

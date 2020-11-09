@@ -43,14 +43,14 @@ const PowerStationTable = props => {
       className: 'textCenter',
       d_item: 'id',
     },
-    {
-      title: '一次电气图',
-      dataIndex: 'file',
-      render: (text, record, index) => {
-        // console.log(' text, record ： ', text, record,  )//
-        return text ? <img src={text} className={`thumbImg`} /> : null;
-      },
-    },
+    // {
+    //   title: '一次电气图',
+    //   dataIndex: 'file',
+    //   render: (text, record, index) => {
+    //     // console.log(' text, record ： ', text, record,  )//
+    //     return text ? <img src={text} className={`thumbImg`} /> : null;
+    //   },
+    // },
   ];
 
   return (

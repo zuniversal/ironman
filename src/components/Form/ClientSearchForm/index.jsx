@@ -35,13 +35,6 @@ const ClientSearchForm = props => {
   const configs = [
     ...config(props),
     {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
-    {
       // formType: 'Select',
       itemProps: {
         label: '',
@@ -49,9 +42,16 @@ const ClientSearchForm = props => {
         className: 'w50',
       },
       comProps: {
-        suffix: <SearchOutlined className="searchIcon" />,
+        // suffix: <SearchOutlined className="searchIcon" />,
         // suffixIcon: <SearchOutlined className="searchIcon" />,
       },
+    },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+      comProps: {},
     },
   ];
 

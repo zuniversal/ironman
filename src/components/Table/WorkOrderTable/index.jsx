@@ -38,10 +38,10 @@ const WorkOrderTable = props => {
       dataIndex: 'name',
       d_item: 'id',
     },
-    {
-      title: '工单编号',
-      // dataIndex: '',
-    },
+    // {
+    //   title: '工单编号',
+    //   // dataIndex: '',
+    // },
     {
       title: '客户名称',
       dataIndex: 'name',

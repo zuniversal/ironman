@@ -18,7 +18,7 @@ const UserManageTable = props => {
   const columns = [
     {
       title: 'id',
-      dataIndex: 'user_id',
+      dataIndex: 'id',
     },
     {
       title: '姓名',

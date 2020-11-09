@@ -60,12 +60,6 @@ class ShiftsArrangeDetail extends PureComponent {
       { title: '班组一', start: '2020-10-10' },
       { title: '班组一', start: '2020-10-11' },
     ];
-    console.log(
-      ' %c ShiftsArrangeDetail 组件 初始化 ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
     this.state = {
       titleMap,
       isQuickArrange: false,

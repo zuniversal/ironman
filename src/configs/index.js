@@ -131,7 +131,7 @@ export const missionsStatusConfig = [
     value: 'waiting_confirm',
   },
   {
-    label: '待派单',
+    label: '待派发',
     value: 'waiting_dispatch',
   },
   {
@@ -145,6 +145,15 @@ export const missionsStatusConfig = [
   {
     label: '挂起',
     value: 'hang-up',
+  },
+
+  {
+    label: '进行中',
+    value: 'in_progress',
+  },
+  {
+    label: '待处理',
+    value: 'pending',
   },
 ];
 

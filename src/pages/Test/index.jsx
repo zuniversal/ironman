@@ -151,7 +151,7 @@ class Test extends PureComponent {
         {/* <ProvinceForm></ProvinceForm> */}
         {/* <Dnd></Dnd> */}
         {/* <CalendarCom></CalendarCom> */}
-        <FormModal {...this.props}></FormModal>
+        {/* <FormModal {...this.props}></FormModal> */}
         {/* <DashMap></DashMap> */}
         {/* <CURD></CURD> */}
       </div>

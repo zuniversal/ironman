@@ -27,13 +27,13 @@ const WorkOrderSearchForm = props => {
       },
     },
 
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    //   comProps: {},
+    // },
 
     {
       // formType: 'Select',

@@ -23,13 +23,13 @@ const WeakSearchForm = props => {
     //     label: '审批状态',
     //   },
     // },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    //   comProps: {},
+    // },
 
     {
       // formType: 'Select',

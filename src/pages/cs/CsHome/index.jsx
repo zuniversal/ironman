@@ -81,7 +81,11 @@ class CsHome extends PureComponent {
       this.props,
     );
 
-    return <CsHomeStationTable></CsHomeStationTable>;
+    return (
+      <CsHomeStationTable
+        showFormModal={this.props.showFormModal}
+      ></CsHomeStationTable>
+    );
   };
   renderSelectForm = params => {
     console.log(' renderSelectForm ： ', params, this.state, this.props);
@@ -112,6 +116,10 @@ class CsHome extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'weakDetail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -153,13 +161,6 @@ class CsHome extends PureComponent {
   };
 
   render() {
-    console.log(
-      ' %c CsHome 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-
     return (
       <div className="csHome">
         {this.renderCsHomeStatBox()}

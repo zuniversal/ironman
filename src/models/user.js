@@ -8,7 +8,7 @@ import { HOME } from '@/constants';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
-const otherActions = ['loginAsync'];
+const otherActions = ['loginAsync', 'getUserInfo'];
 
 const batchTurnActions = [];
 
@@ -32,6 +32,7 @@ export default {
     count: 0,
     itemDetail: {},
     userInfo,
+    accountType: 'customer',
   },
 
   reducers: {
@@ -99,7 +100,8 @@ export default {
       console.log(' login ： ', state, payload); //
       return {
         ...state,
-        userInfo: payload.bean,
+        userInfo: payload.userInfo,
+        accountType: payload.userInfo.account.account_type,
       };
     },
   },
@@ -110,13 +112,22 @@ export default {
       console.log(' loginAsync ： ', res, payload, action); //
       setItem('token', res.rest.token, true);
       setItem('tokens', res.rest.token);
-      const userInfo = yield call(userCenterServices.getItem, payload);
-      console.log(' userInfo ： ', userInfo); //
+      // const userInfo = yield call(userCenterServices.getItem, payload);
+
+      const resData = yield call(services.getUserInfo, payload);
+      const accountType = resData.bean.user.account.account_type;
+      // console.log(' resData ： ', resData, accountType,  )//
+      const userInfo = {
+        ...resData.bean.user,
+        ...resData.bean,
+        accountType: accountType,
+      };
+      // console.log(' userInfo2 ： ', userInfo); //
       yield put({
         type: 'login',
         payload: userInfo,
       });
-      setItem('userInfo', userInfo.bean);
+      setItem('userInfo', userInfo);
       history.push(HOME);
     },
     *getListAsync({ payload, action, type }, { call, put }) {

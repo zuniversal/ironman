@@ -40,6 +40,7 @@ const titleMap = {
   down: `文件下载`,
 };
 
+// const mapStateToProps = ({ userCenter, user }) => ({userCenter, ...user, });
 const mapStateToProps = ({ userCenter }) => userCenter;
 
 @connect(mapStateToProps)
@@ -61,6 +62,7 @@ class UserCenter extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
+      // init: this.props.userInfo.user,
       init: this.props.itemDetail,
     };
     console.log(' formComProps ： ', formComProps); //
@@ -101,8 +103,7 @@ class UserCenter extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    );
-
+    ); //
     return <div className="UserCenter">{this.renderForm()}</div>;
   }
 }

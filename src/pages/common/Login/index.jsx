@@ -82,7 +82,7 @@ const Login = props => {
                 placeholder="请输入密码"
               />
             </Form.Item>
-            <Form.Item>
+            <Form.Item className={`btnFormItem`}>
               <Button type="primary" htmlType="submit" className="loginBtn">
                 登录
               </Button>
