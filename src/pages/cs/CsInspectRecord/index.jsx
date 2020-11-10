@@ -160,12 +160,17 @@ class CsInspectRecord extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        hideCancel={this.isHideCancel}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
   };
 
+  get isHideCancel() {
+    // console.log(' get 取属 isHideCancel ： ', this.state, this.props);
+    return ['detail'].some(v => v === this.props.action);
+  }
   get renderCsInspectRecordForm() {
     return (
       <div className={`pdfDetail`}>

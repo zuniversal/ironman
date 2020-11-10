@@ -22,7 +22,7 @@ import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
+import UploadCom from '@/components/Widgets/UploadCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 
 import { actions, mapStateToProps } from '@/models/assets'; //
@@ -53,7 +53,6 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  newRelated: `关联新增`,
   uploadFile: `资产列表`,
   down: `文件下载`,
 };
@@ -249,10 +248,16 @@ class Assets extends PureComponent {
     }
     if (action === 'uploadFile') {
       return (
-        <UploadFileCom
-          onChange={this.onUploadChange}
+        <UploadCom
           label={this.state.titleMap[action]}
-        ></UploadFileCom>
+          action={'file'}
+          isInputUpload
+          contentClass={'dfc'}
+          formItemCls={'assetsUpload'}
+          action={'/api/v1/upload'}
+          name={'file'}
+          extra={'支持扩展名:xls、xlsx、csv'}
+        ></UploadCom>
       );
     }
     if (action !== 'add') {
@@ -321,7 +326,7 @@ class Assets extends PureComponent {
     );
 
     return (
-      <div className="Assets">
+      <div className="assets">
         {this.renderSearchForm()}
 
         {this.renderTable()}

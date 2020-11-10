@@ -14,7 +14,6 @@ import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
 
 const CsClientReportTable = props => {
-  console.log(' CsClientReportTable ： ', props); //
   const { tdClick, add, edit, showDetail } = props; //
 
   const columns = [

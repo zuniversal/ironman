@@ -108,6 +108,7 @@ const transferRadios = transferDetailConfig.map((v, i) => ({
     ...layout,
     className: 'customWidthForm',
     // key: v.name,
+    labelAlign: 'left',
     key: i,
   },
   comProps: {

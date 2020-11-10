@@ -17,10 +17,13 @@ const ShiftsManageSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectData: onDutyTypeConfig,
+      selectData: onDutyTypeConfig, //
       itemProps: {
         label: '类型',
         name: 'type',
+      },
+      comProps: {
+        notFoundContent: '请先创建班组',
       },
     },
     // {
@@ -28,7 +31,7 @@ const ShiftsManageSearchForm = props => {
     //   itemProps: {
     //     label: '',
     //   },
-    //   comProps: {},
+    //
     // },
 
     {

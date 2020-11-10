@@ -20,6 +20,7 @@ import {
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import { INPUT_TXT } from '@/utils';
 
 const formLayouts = {
@@ -31,8 +32,8 @@ const formLayouts = {
   },
 };
 
-const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props); //
+const CsUserCenterForm = props => {
+  console.log(' CsUserCenterForm ： ', props); //
   const [form] = Form.useForm();
   const [noRule, setNoRule] = useState(false);
 
@@ -41,81 +42,58 @@ const UserCenterForm = props => {
 
   const config = [
     {
-      noRule: true,
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {[1].map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))}
+        </>
+      ),
+      itemProps: {
+        label: '头像',
+      },
+    },
+    {
       itemProps: {
         label: '姓名',
         name: 'name',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '角色',
-        name: 'custom_id',
-      },
-      comProps: {
-        disabled: true,
+        label: '姓名',
+        name: 'name',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '手机',
+        label: '公司',
+        name: 'custom_id',
+      },
+    },
+    {
+      itemProps: {
+        label: '户号',
         name: 'phone',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '邮箱',
+        label: '电话',
         name: 'email',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '业务部门',
-        name: 'organization',
-      },
-      comProps: {
-        disabled: true,
+        label: '地址',
+        name: 'email',
       },
     },
     {
-      formType: 'Password',
-      noRule: !noRule, //
       itemProps: {
-        label: '重置密码',
-        name: 'password',
-      },
-      comProps: {
-        onChange: e => {
-          console.log('  resresres onChange ：', e, e.target.value); //
-          setNoRule(e.target.value);
-        },
-      },
-    },
-    {
-      formType: 'Password',
-      // noRule: noRule,//
-      itemProps: {
-        label: '再次输入密码',
-        name: 'rePwd',
-        dependencies: ['password'],
-        rules: [
-          {
-            required: noRule,
-            message: '请再次输入密码',
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(`2次输入密码不一致！`);
-            },
-          }),
-        ],
+        label: '告警频率',
+        name: 'email',
       },
     },
   ];
@@ -135,8 +113,9 @@ const UserCenterForm = props => {
       propsForm={form}
       action={'edit'}
       noPh
+      isDisabledAll
       formLayouts={formLayouts}
-      className={'userCenterForm'}
+      className={'csUserCenterForm'}
       {...props}
     >
       <Form.Item label={' '} colon={false}>
@@ -144,9 +123,9 @@ const UserCenterForm = props => {
           <Button
             className={`editBtn`}
             type="primary"
-            onClick={() => props.handleOk({ form, action: 'edit' })}
+            onClick={() => props.startEdit({ form, action: 'edit' })}
           >
-            确认修改
+            开始修改
           </Button>
         </Form.Item>
       </Form.Item>
@@ -154,6 +133,6 @@ const UserCenterForm = props => {
   );
 };
 
-UserCenterForm.defaultProps = {};
+CsUserCenterForm.defaultProps = {};
 
-export default UserCenterForm;
+export default CsUserCenterForm;

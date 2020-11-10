@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const HouseNoTable = props => {
-  console.log(' HouseNoTable  ： ', props); //
   const { tdClick } = props; //
 
   const columns = [

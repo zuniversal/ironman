@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 export const DeviceInfoTable = props => {
-  console.log(' DeviceInfoTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
@@ -53,7 +52,6 @@ export const DeviceInfoTable = props => {
 };
 
 export const WatchInfoTable = props => {
-  console.log(' WatchInfoTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

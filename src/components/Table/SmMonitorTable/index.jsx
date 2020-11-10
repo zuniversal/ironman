@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const SmMonitorTable = props => {
-  console.log(' SmMonitorTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

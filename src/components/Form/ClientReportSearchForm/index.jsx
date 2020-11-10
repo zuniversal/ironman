@@ -16,35 +16,35 @@ const ClientReportSearchForm = props => {
       itemProps: {
         label: '选择月份',
       },
-      // comProps: {},
+      //
     },
     {
       formType: 'Select',
       itemProps: {
         label: '是否加急',
       },
-      // comProps: {},
+      //
     },
     {
       formType: 'Select',
       itemProps: {
         label: '客户',
       },
-      // comProps: {},
+      //
     },
     {
       formType: 'Select',
       itemProps: {
         label: ' 户号',
       },
-      // comProps: {},
+      //
     },
     {
       formType: 'Select',
       itemProps: {
         label: '巡检组长',
       },
-      // comProps: {},
+      //
     },
   ];
 

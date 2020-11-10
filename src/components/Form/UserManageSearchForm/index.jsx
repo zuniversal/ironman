@@ -9,14 +9,12 @@ export const config = [
     itemProps: {
       label: '业务部门',
     },
-    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '角色',
     },
-    comProps: {},
   },
 
   {

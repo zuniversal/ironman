@@ -79,8 +79,8 @@ const Layouts = props => {
   const getRoutes = path => {
     console.log(' getRoutes   userInfo,   ： ', userInfo, userInfo.accountType);
     const routesMap = {
-      // manager: managerRoutes,
-      manager: [...managerRoutes, ...customerRoutes],
+      manager: managerRoutes,
+      // manager: [...managerRoutes, ...customerRoutes],
       customer: customerRoutes,
     };
     const getRoutesMap = (text, dataMap) => {

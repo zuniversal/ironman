@@ -22,7 +22,7 @@ const MissionsManageSearchForm = props => {
     //   itemProps: {
     //     label: '',
     //   },
-    //   comProps: {},
+    //
     // },
 
     {

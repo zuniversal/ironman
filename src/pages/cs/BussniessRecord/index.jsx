@@ -5,19 +5,21 @@ import { Button, Tag } from 'antd';
 
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import BussniessRecordSearchForm from '@/components/Form/BussniessRecordSearchForm'; //
 import BussniessRecordForm from '@/components/Form/BussniessRecordForm'; //
+import BussniessRecordPowerForm from '@/components/Form/BussniessRecordPowerForm'; //
 import BussniessRecordTable from '@/components/Table/BussniessRecordTable'; //
 import { actions, mapStateToProps } from '@/models/bussniessRecord'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { PRIMARY } from '@/constants';
 
-const TITLE = '账户';
+const TITLE = '业务记录';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `${TITLE}详情`,
+  detail: `抢修详情`,
+  powerDetail: `电力施工详情（同电气试验详情）`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -38,26 +40,23 @@ class BussniessRecord extends PureComponent {
     };
   }
 
-  renderSearchForm = params => {
+  renderFormBtn = params => {
     return (
-      <div className={'fsb '}>
-        <div>
-          <Tag color={PRIMARY}>
-            最多支持创建3个账户，每个账户可在小程序接受通知
-          </Tag>
-        </div>
-        <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-        </div>
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.search(params)}>
+          搜索
+        </Button>
       </div>
     );
   };
-
+  renderSearchForm = params => {
+    return (
+      <BussniessRecordSearchForm
+        formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
+      ></BussniessRecordSearchForm>
+    );
+  };
   renderTable = params => {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
@@ -76,13 +75,15 @@ class BussniessRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
       if (action === 'setting') {
-        // this.props.homeSetting({
-        //   ...res,
-        // });
+        return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
       }
     } catch (error) {
       console.log(' error ： ', error); //
@@ -94,6 +95,13 @@ class BussniessRecord extends PureComponent {
     const formComProps = {
       action,
     };
+
+    if (action === 'detail' || action === 'powerDetail') {
+      return (
+        <BussniessRecordPowerForm {...formComProps}></BussniessRecordPowerForm>
+      );
+    }
+
     return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
   };
   renderSmartFormModal = params => {
@@ -104,6 +112,7 @@ class BussniessRecord extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        hideCancel
       >
         {this.renderModalContent()}
       </SmartFormModal>

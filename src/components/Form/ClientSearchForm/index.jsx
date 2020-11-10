@@ -51,7 +51,6 @@ const ClientSearchForm = props => {
       itemProps: {
         label: '',
       },
-      comProps: {},
     },
   ];
 

@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const InspectRecordTable = props => {
-  console.log(' InspectRecordTable  ： ', props); //
   const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
 
   const columns = [

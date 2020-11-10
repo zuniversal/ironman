@@ -12,31 +12,25 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const InspectRecordTable = props => {
-  console.log(' InspectRecordTable  ： ', props); //
   const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
 
   const columns = [
     {
-      title: '消息摘要',
+      title: '内容',
       dataIndex: 'status',
-      d_item: 'id',
+    },
+    {
+      title: '电站',
+      dataIndex: '',
     },
 
     {
-      title: '类型',
+      title: '当前类型',
       dataIndex: 'status',
     },
     {
-      title: '处理状态',
-      dataIndex: 'status',
-    },
-    {
-      title: '消息时间',
+      title: '巡检日期',
       dataIndex: 'work_date',
-    },
-    {
-      title: '是否需要处理',
-      dataIndex: 'assign_date',
     },
   ];
 

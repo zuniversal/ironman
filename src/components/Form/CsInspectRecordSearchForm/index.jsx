@@ -27,7 +27,6 @@ const CsInspectRecordSearchForm = props => {
         label: '日期',
         name: '',
       },
-      comProps: {},
     },
   ];
 

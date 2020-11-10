@@ -13,7 +13,6 @@ import { Tabs } from 'antd';
 import SmartTable from '@/common/SmartTable'; //
 
 const CsHomeStationTable = props => {
-  console.log(' CsHomeStationTable  ：', props); //
   const { showModal, edit, remove, tdClick, complete } = props; //
 
   const columns = [

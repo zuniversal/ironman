@@ -161,7 +161,7 @@ export const clientConfig = [
   //           label: '密码',
   //           name: 'password',
   //         },
-  //         comProps: {},
+  //
   //         // noRule: true,
   //       },
   //       {
@@ -169,7 +169,7 @@ export const clientConfig = [
   //           label: '手机号',
   //           name: 'phone',
   //         },
-  //         comProps: {},
+  //
   //         // noRule: true,
   //       },
   //     ],

@@ -13,7 +13,7 @@ import {
   Divider,
 } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
-import UserCenterForm from '@/components/Form/UserCenterForm'; //
+import CsUserCenterForm from '@/components/Form/CsUserCenterForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
@@ -35,7 +35,6 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -53,9 +52,16 @@ class CsUserCenter extends PureComponent {
     super(props);
     this.state = {
       titleMap,
+      isStartEdit: false,
     };
   }
 
+  startEdit = params => {
+    console.log(' startEdit,  , ： ', params);
+    this.setState({
+      isStartEdit: !this.state.isStartEdit,
+    });
+  };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
     const { action } = this.props; //
@@ -87,7 +93,11 @@ class CsUserCenter extends PureComponent {
   render() {
     return (
       <div className="UserCenter">
-        <UserCenterForm handleOk={this.handleOk}></UserCenterForm>
+        {this.state.isStartEdit ? (
+          <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
+        ) : (
+          <CsUserCenterForm startEdit={this.startEdit}></CsUserCenterForm>
+        )}
       </div>
     );
   }

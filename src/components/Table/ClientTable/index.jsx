@@ -14,7 +14,6 @@ import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
 
 const ClientTable = props => {
-  console.log(' ClientTable ： ', props); //
   const { tdClick, showDetail } = props; //
 
   const columns = [

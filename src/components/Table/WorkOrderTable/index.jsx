@@ -13,7 +13,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { workOrderStatusMap, missionsTypeMap } from '@/configs';
 
 const WorkOrderTable = props => {
-  console.log(' WorkOrderTable  ： ', props); //
   const {
     showModal,
     edit,

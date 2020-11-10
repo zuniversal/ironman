@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  use,
 } from 'react';
 import './style.less';
 
@@ -14,7 +15,6 @@ import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
 
 const ClientReportTable = props => {
-  console.log(' ClientReportTable ： ', props); //
   const { tdClick, add, edit, showDetail } = props; //
 
   const columns = [

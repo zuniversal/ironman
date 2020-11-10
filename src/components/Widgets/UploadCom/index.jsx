@@ -84,7 +84,9 @@ const UploadCom = props => {
       // extra="支持扩展名：.pdf"
       extra={extra}
       {...formItemProps}
-      className={`uploadFormItem ${isInputUpload ? '' : 'uploadBox'}`}
+      className={`uploadFormItem ${
+        isInputUpload ? '' : 'uploadBox'
+      } ${formItemCls} `}
     >
       <Upload
         progress={{
@@ -108,7 +110,7 @@ const UploadCom = props => {
         {...uploadProps}
         action={action}
         // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?
-        fileList={[]}
+        // fileList={[]}
         listType="picture-card"
         className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
         multiple={false}

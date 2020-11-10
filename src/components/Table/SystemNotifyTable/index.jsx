@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const WeakTable = props => {
-  console.log(' WeakTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

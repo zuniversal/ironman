@@ -4,8 +4,8 @@ import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 
-const ShiftsTransferSearchForm = props => {
-  console.log(' ShiftsTransferSearchForm ： ', props); //
+const BussniessRecordSearchForm = props => {
+  console.log(' BussniessRecordSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
@@ -14,49 +14,24 @@ const ShiftsTransferSearchForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getUser,
-      selectData: props.userList,
+      noLabel: true,
       itemProps: {
-        label: '交班人',
-        name: 'transfer_team',
+        label: 'id或关键字',
+        name: 'keyword',
       },
-    },
-    // {
-    //   formType: 'Search',
-    //   selectSearch: props.getPower,
-    //   selectData: props.powerList,
-    //   itemProps: {
-    //     label: '值班站',
-    //     name: 'type',
-    //   },
-    // },
-    {
-      formType: 'Search',
-      selectSearch: props.getUser,
-      selectData: props.userList,
-      itemProps: {
-        label: '接班人',
-        name: 'receive_team',
-      },
+      searchSuffix: true,
     },
     {
-      formType: 'MonthPicker',
+      formType: 'RangePicker',
       itemProps: {
-        label: '选择日期',
+        label: '日期',
         name: 'data',
       },
     },
-    // {
-    //   formType: 'Select',
-    //   itemProps: {
-    //     label: '电站',
-    //   },
-    // },
   ];
 
   return (
-    <div className={'ShiftsTransferSearchForm '}>
+    <div className={'BussniessRecordSearchForm '}>
       <SearchForm
         // flexRow={4}
         // flexRow={6}
@@ -75,14 +50,8 @@ const ShiftsTransferSearchForm = props => {
   );
 };
 
-ShiftsTransferSearchForm.defaultProps = {
-  powerList: [],
-  userList: [],
-};
+BussniessRecordSearchForm.defaultProps = {};
 
-ShiftsTransferSearchForm.propTypes = {
-  powerList: PropTypes.array,
-  userList: PropTypes.array,
-};
+BussniessRecordSearchForm.propTypes = {};
 
-export default ShiftsTransferSearchForm;
+export default BussniessRecordSearchForm;

@@ -13,7 +13,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { ImgBlock } from '@/components/Temp';
 
 const AssetsDetailTable = props => {
-  console.log(' AssetsDetailTable  ： ', props); //
   const { showModal, edit, remove, tdClick, data } = props; //
 
   const columns1 = [

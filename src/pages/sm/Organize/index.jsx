@@ -32,7 +32,6 @@ const titleMap = {
   add: `新增${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
 };

@@ -13,7 +13,7 @@ import {
   AutoComplete,
   Radio,
   Space,
-  InputNumber,
+  Tag,
   Tabs,
 } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
@@ -143,10 +143,12 @@ const CsInspectRecordForm = props => {
       },
     },
     {
+      // flexRow: 1,
       formType: 'TextArea',
       itemProps: {
         label: '备注',
         name: '',
+        className: 'w100',
       },
     },
 
@@ -503,23 +505,15 @@ const CsInspectRecordForm = props => {
     // },
 
     {
-      formType: 'plainText',
-      plainText: '',
-      itemProps: {
-        label: ' ',
-        name: '',
-      },
-    },
-    {
       flexRow: 4,
       noRule: true,
       formType: 'plainText',
       itemProps: {
-        label: '显示器',
+        label: ' ',
         ...electricLabelFormLayouts,
       },
       comProps: {
-        className: 'w-78',
+        className: 'w-100',
       },
     },
     {
@@ -566,6 +560,7 @@ const CsInspectRecordForm = props => {
         className: 'w100',
       },
     },
+
     {
       flexRow: 4,
       noRule: true,
@@ -616,6 +611,18 @@ const CsInspectRecordForm = props => {
     },
 
     {
+      flexRow: 4,
+      noRule: true,
+      formType: 'plainText',
+      itemProps: {
+        label: ' ',
+        ...electricLabelFormLayouts,
+      },
+      comProps: {
+        className: 'w-100',
+      },
+    },
+    {
       noRule: true,
       flexRow: 4,
       itemProps: {
@@ -657,11 +664,11 @@ const CsInspectRecordForm = props => {
       noRule: true,
       formType: 'plainText',
       itemProps: {
-        label: '0.4KV总开关1',
+        label: '变压器1',
         ...electricLabelFormLayouts,
       },
       comProps: {
-        className: 'w-78',
+        className: 'w-100',
       },
     },
     {
@@ -702,6 +709,18 @@ const CsInspectRecordForm = props => {
     },
 
     {
+      flexRow: 4,
+      noRule: true,
+      formType: 'plainText',
+      itemProps: {
+        label: ' ',
+        ...electricLabelFormLayouts,
+      },
+      comProps: {
+        className: 'w-100',
+      },
+    },
+    {
       noRule: true,
       flexRow: 4,
       itemProps: {
@@ -729,7 +748,130 @@ const CsInspectRecordForm = props => {
       noRule: true,
       flexRow: 4,
       itemProps: {
-        label: '业务异常',
+        label: '有无异常',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+
+    {
+      flexRow: 4,
+      noRule: true,
+      formType: 'plainText',
+      itemProps: {
+        label: '0.4KV总开关1',
+        ...electricLabelFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电压表AB',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电压表BC',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电压表CA',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+
+    {
+      flexRow: 4,
+      noRule: true,
+      formType: 'plainText',
+      itemProps: {
+        label: '',
+        ...electricLabelFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电流表A',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电流表B',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电流表C',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+
+    {
+      flexRow: 4,
+      noRule: true,
+      formType: 'plainText',
+      itemProps: {
+        label: '电容柜1',
+        ...electricLabelFormLayouts,
+      },
+      comProps: {
+        className: 'w-78',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 4,
+      itemProps: {
+        label: '电容柜1',
         name: '',
         ...electricFormLayouts,
       },
@@ -761,10 +903,15 @@ const CsInspectRecordForm = props => {
         formLayouts={formLayouts}
         noRuleAll
         isDisabledAll
-        {...rest}
+        {...props}
       ></SmartForm>
 
-      {formBtn}
+      <div className="dfc">
+        <Tag color="#e5f8ee" className={`tipTags`}>
+          处理已完成，请确认电工完成该工作
+        </Tag>
+      </div>
+      {/* {formBtn} */}
     </div>
   );
 };

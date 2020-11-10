@@ -43,56 +43,48 @@ export const config = [
     itemProps: {
       label: '客户名称',
     },
-    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '客户类型',
     },
-    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '所属行业',
     },
-    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '企业规模',
     },
-    comProps: {},
   },
   {
     formType: 'Select',
     itemProps: {
       label: '资产规模',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '总面积',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '占地面积',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '企业LOGO',
     },
-    comProps: {},
   },
 
   {
@@ -118,21 +110,18 @@ export const config = [
     itemProps: {
       label: '详细地址',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '经度',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '纬度',
     },
-    comProps: {},
   },
 
   {
@@ -157,7 +146,6 @@ export const config = [
       itemProps: {
         label: '用户名',
       },
-      comProps: {},
     },
   },
   {
@@ -165,14 +153,12 @@ export const config = [
     itemProps: {
       label: '密码',
     },
-    comProps: {},
   },
   {
     // formType: 'Select',
     itemProps: {
       label: '手机号',
     },
-    comProps: {},
   },
 
   {
@@ -190,7 +176,7 @@ export const config = [
   //   itemProps: {
   //     label: '下属户号',
   //   },
-  //   comProps: {},
+  //
   // },
 
   <Form.Item label="下属户号" key={'captcha'} className={'noMBottom'}>
@@ -222,7 +208,6 @@ export const config = [
     itemProps: {
       label: '附件',
     },
-    comProps: {},
   },
 ];
 
@@ -253,9 +238,9 @@ class ContractFormModal extends Component {
     const { show, onOk, onCancel } = this.props; //
 
     return (
-      <SmartModal 
+      <SmartModal
         // show={show} onOk={onOk} onCancel={onCancel}
-        {...this.props} 
+        {...this.props}
       >
         <ContractStepForm></ContractStepForm>
       </SmartModal>

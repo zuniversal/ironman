@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const GoodsTable = props => {
-  console.log(' GoodsTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

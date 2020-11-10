@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const CsOrganizeTable = props => {
-  console.log(' CsOrganizeTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

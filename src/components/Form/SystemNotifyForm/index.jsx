@@ -9,22 +9,7 @@ const SystemNotifyForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectData: props.userList,
-      itemProps: {
-        label: '状态',
-      },
-    },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
-
-    {
-      // formType: 'Select',
+      // formType: 'DatePicker',
       itemProps: {
         label: '',
         name: 'keyword',

@@ -11,41 +11,36 @@ import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
 
-const MsgTable = props => {
-  console.log(' MsgTable  ： ', props); //
+const BussniessRecordTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
     {
-      title: 'id',
+      title: '订单ID',
       dataIndex: 'id',
     },
-
     {
-      title: '消息',
+      title: '类型',
       dataIndex: 'content',
     },
-
     {
-      title: '通知人员',
+      title: '处理状态',
       dataIndex: '',
     },
-
     {
-      title: '通知方法',
+      title: '申请时间',
       dataIndex: '',
-    },
-
-    {
-      title: '创建人',
-      dataIndex: 'create_by',
-    },
-
-    {
-      title: '创建时间',
-      dataIndex: 'created_time',
     },
   ];
+
+  const extra = (text, record, index, props) => (
+    <>
+      <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a>
+      <a onClick={() => props.showFormModal({ action: 'powerDetail' })}>
+        xx详情
+      </a>
+    </>
+  );
 
   return (
     <SmartTable
@@ -53,13 +48,15 @@ const MsgTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
 
+      extra={extra}
+      noDefault
       {...props}
     ></SmartTable>
   );
 };
 
-MsgTable.defaultProps = {
+BussniessRecordTable.defaultProps = {
   tdClick: () => {},
 };
 
-export default MsgTable;
+export default BussniessRecordTable;

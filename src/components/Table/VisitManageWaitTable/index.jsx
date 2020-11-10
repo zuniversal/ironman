@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const VisitManageWaitTable = props => {
-  console.log(' VisitManageWaitTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

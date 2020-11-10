@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const UserManageTable = props => {
-  console.log(' UserManageTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [
@@ -22,7 +21,7 @@ const UserManageTable = props => {
     },
     {
       title: '姓名',
-      dataIndex: 'name',
+      dataIndex: 'nickname',
     },
     {
       title: '手机',
@@ -38,7 +37,7 @@ const UserManageTable = props => {
     },
     {
       title: '角色',
-      // dataIndex: '',
+      dataIndex: 'role',
     },
   ];
 

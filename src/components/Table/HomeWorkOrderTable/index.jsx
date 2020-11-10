@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const HomeWorkOrderTable = props => {
-  console.log(' HomeWorkOrderTable  ： ', props); //
   const {
     showModal,
     edit,

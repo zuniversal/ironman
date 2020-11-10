@@ -277,7 +277,7 @@ const DynamicForm = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          console.log(' selectSearch ： ', props.selectSearch); //
+          // console.log(' selectSearch ： ', props.selectSearch); //
           selectProps.showArrow = false;
           selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {

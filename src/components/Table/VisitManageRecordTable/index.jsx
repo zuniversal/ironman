@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const VisitManageRecordTable = props => {
-  console.log(' VisitManageRecordTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

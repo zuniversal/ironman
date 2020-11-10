@@ -74,7 +74,8 @@ class SmartModal extends PureComponent {
       title,
       width,
       className,
-      isHideOk,
+      hideOk,
+      hideCancel,
       okTxt,
       extra,
       cancelTxt,
@@ -97,10 +98,12 @@ class SmartModal extends PureComponent {
         // onCancel={this.onCancel}
         maskClosable={maskClosable}
         footer={[
-          <Button key="cancel" onClick={this.onCancel}>
-            {cancelTxt}
-          </Button>,
-          !isHideOk ? (
+          !hideCancel ? (
+            <Button key="cancel" onClick={this.onCancel}>
+              {cancelTxt}
+            </Button>
+          ) : null,
+          !hideOk ? (
             <Button
               key="sure"
               onClick={this.onOk}
@@ -131,7 +134,8 @@ SmartModal.defaultProps = {
   width: '800px',
   customShow: false,
   show: false,
-  isHideOk: false,
+  hideCancel: false,
+  hideOk: false,
   titleMap: {}, // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
   size: 'default',
 };
@@ -144,7 +148,8 @@ SmartModal.propTypes = {
   width: PropTypes.string,
   customShow: PropTypes.bool,
   show: PropTypes.bool,
-  isHideOk: PropTypes.bool,
+  hideCancel: PropTypes.bool,
+  hideOk: PropTypes.bool,
   titleMap: PropTypes.object,
   size: PropTypes.string,
 };

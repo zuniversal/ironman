@@ -13,7 +13,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const MissionsManageTable = props => {
-  console.log(' MissionsManageTable  ： ', props); //
   const {
     showModal,
     edit,
@@ -139,7 +138,7 @@ const MissionsManageTable = props => {
       {(record.type === 'power_construction' ||
         record.type === 'electrical_testing') &&
         record.status !== 'waiting_plan' &&
-        record.status !== 'waiting_confirm' && (
+          record.status !== 'waiting_confirm' && (
           <a disabled className={`disabled `}>
             已确认排期
           </a>

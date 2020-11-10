@@ -14,7 +14,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { Link } from 'umi'; //
 
 const ShiftsManageTable = props => {
-  console.log(' ShiftsManageTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

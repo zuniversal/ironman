@@ -96,7 +96,7 @@ export const AdminForm = props => {
               label: '密码',
               name: 'password',
             },
-            comProps: {},
+
             // noRule: true,
           },
           {
@@ -104,7 +104,7 @@ export const AdminForm = props => {
               label: '手机号',
               name: 'phone',
             },
-            comProps: {},
+
             // noRule: true,
           },
         ],
@@ -215,7 +215,7 @@ const ClientForm = props => {
             label: '密码',
             name: 'password',
           },
-          comProps: {},
+
           // noRule: true,
         },
         {
@@ -223,7 +223,7 @@ const ClientForm = props => {
             label: '手机号',
             name: 'phone',
           },
-          comProps: {},
+
           // noRule: true,
         },
       ],
@@ -286,7 +286,6 @@ const ClientForm = props => {
         label: '客户名称',
         name: 'name',
       },
-      comProps: {},
     },
     {
       formType: 'Search',
@@ -295,7 +294,6 @@ const ClientForm = props => {
         label: '客户类型',
         name: 'type',
       },
-      comProps: {},
     },
     {
       formType: 'Search',
@@ -305,7 +303,6 @@ const ClientForm = props => {
         label: '客户代表',
         name: 'service_staff',
       },
-      comProps: {},
     },
     {
       formType: 'Search',
@@ -315,7 +312,6 @@ const ClientForm = props => {
         label: '客户代表2',
         name: 'last_service_staff',
       },
-      comProps: {},
     },
     {
       // formType: 'Select',
@@ -323,7 +319,6 @@ const ClientForm = props => {
         label: '客户编码',
         name: 'code',
       },
-      comProps: {},
     },
 
     {
@@ -332,7 +327,6 @@ const ClientForm = props => {
         label: '客户等级',
         name: 'level',
       },
-      comProps: {},
     },
 
     {
@@ -341,7 +335,6 @@ const ClientForm = props => {
         label: '所属行业',
         name: 'industry',
       },
-      comProps: {},
     },
     {
       // formType: 'Select',
@@ -349,7 +342,6 @@ const ClientForm = props => {
         label: '企业规模',
         name: 'scale',
       },
-      comProps: {},
     },
     {
       // formType: 'Select',
@@ -357,7 +349,6 @@ const ClientForm = props => {
         label: '资产规模',
         name: 'asset',
       },
-      comProps: {},
     },
     // {
     //   // formType: 'Select',
@@ -365,7 +356,7 @@ const ClientForm = props => {
     //     label: '总面积',
     //     name: 'total_area',
     //   },
-    //   comProps: {},
+    //
     // },
     {
       // formType: 'Select',
@@ -373,14 +364,13 @@ const ClientForm = props => {
         label: '占地面积',
         name: 'covered_area',
       },
-      comProps: {},
     },
     // {
     //   itemProps: {
     //     label: '企业Logo',
     //     name: 'logo',
     //   },
-    //   comProps: {},
+    //
     // },
     <UploadCom
       label={'企业Logo'}
@@ -404,7 +394,6 @@ const ClientForm = props => {
         label: '详细地址',
         name: 'address',
       },
-      comProps: {},
     },
     ...(action !== 'add' ? areaConfig : []),
     // adminItem,
@@ -443,7 +432,7 @@ const ClientForm = props => {
     //     label: '密码',
     //     name: 'password',
     //   },
-    //   comProps: {},
+    //
     //   noRule: true,
     // },
     // {
@@ -452,7 +441,7 @@ const ClientForm = props => {
     //     label: '手机号',
     //     name: 'phone',
     //   },
-    //   comProps: {},
+    //
     //   noRule: true,
     // },
 

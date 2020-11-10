@@ -314,8 +314,12 @@ class SmartTable extends PureComponent {
     }
     // console.log(' texttext ： ', text, record, index, config, content )//
     // return typeof text !== 'object' && text
+
+    const tooltipText = dataMap ? txt : text;
     return text != undefined ? (
-      <Tooltip title={typeof text !== 'object' ? text : `${text}`}>
+      <Tooltip
+        title={typeof tooltipText !== 'object' ? tooltipText : `${tooltipText}`}
+      >
         {content}
       </Tooltip>
     ) : (

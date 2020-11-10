@@ -1,121 +1,121 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-  Upload,
-  Result,
-} from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import { INPUT_TXT } from '@/utils';
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
+import { formatConfig } from '@/utils'; //
 
-const formLayouts = {
-  labelCol: {
-    sm: { span: 9 }, //
-  },
-  wrapperCol: {
-    sm: { span: 15 }, //
-  },
-};
-
-const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props); //
-  const [form] = Form.useForm();
-  const [noRule, setNoRule] = useState(false);
-
-  const res = form.getFieldValue('password'); //
-  console.log('  resresres ：', res, noRule); //
+const BussniessRecordForm = props => {
+  console.log(' BussniessRecordForm ： ', props); //
+  const { formBtn, ...rest } = props; //
 
   const config = [
     {
-      noRule: true,
       itemProps: {
-        label: '姓名',
-        name: 'name',
+        label: '单号',
+        name: '',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '角色',
-        name: 'custom_id',
-      },
-      comProps: {
-        disabled: true,
+        label: '状态',
+        name: '',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '手机',
-        name: 'phone',
+        label: '类型',
+        name: '',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '邮箱',
-        name: 'email',
+        label: '户号',
+        name: '',
       },
     },
     {
-      noRule: true,
       itemProps: {
-        label: '业务部门',
-        name: 'organization',
-      },
-      comProps: {
-        disabled: true,
+        label: '户名',
+        name: '',
       },
     },
     {
-      formType: 'Password',
-      noRule: !noRule, //
       itemProps: {
-        label: '重置密码',
-        name: 'password',
-      },
-      comProps: {
-        onChange: e => {
-          console.log('  resresres onChange ：', e, e.target.value); //
-          setNoRule(e.target.value);
-        },
+        label: '地址',
+        name: '',
       },
     },
     {
-      formType: 'Password',
-      // noRule: noRule,//
       itemProps: {
-        label: '再次输入密码',
-        name: 'rePwd',
-        dependencies: ['password'],
-        rules: [
-          {
-            required: noRule,
-            message: '请再次输入密码',
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(`2次输入密码不一致！`);
-            },
-          }),
-        ],
+        label: '是否托管',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '供电电压',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '装接容量',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '用户现场负责人',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '联系电话',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '天气情况',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '施工日期',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '现场抢修负责人',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '现场故障照片',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故经过及原因分析',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故处理',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故反措及建议',
+        name: '',
       },
     },
   ];
@@ -126,34 +126,21 @@ const UserCenterForm = props => {
   };
 
   return (
-    <SmartForm
-      config={config}
-      // config={configs}
-      formProps={formProps}
-      // init={init}
-      // init={{}}
-      propsForm={form}
-      action={'edit'}
-      noPh
-      formLayouts={formLayouts}
-      className={'userCenterForm'}
-      {...props}
-    >
-      <Form.Item label={' '} colon={false}>
-        <Form.Item>
-          <Button
-            className={`editBtn`}
-            type="primary"
-            onClick={() => props.handleOk({ form, action: 'edit' })}
-          >
-            确认修改
-          </Button>
-        </Form.Item>
-      </Form.Item>
-    </SmartForm>
+    <div className={' BussniessRecordForm '}>
+      <SmartForm
+        config={config}
+        // config={configs}
+        formProps={formProps}
+        // init={init}
+        // init={{}}
+
+        isDisabledAll
+        {...props}
+      ></SmartForm>
+    </div>
   );
 };
 
-UserCenterForm.defaultProps = {};
+BussniessRecordForm.defaultProps = {};
 
-export default UserCenterForm;
+export default BussniessRecordForm;

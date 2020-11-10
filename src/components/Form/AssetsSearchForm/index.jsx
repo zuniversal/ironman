@@ -20,7 +20,7 @@ const AssetsSearchForm = props => {
     //     label: '客户',
     //     name: 'customer',
     //   },
-    //   comProps: {},
+    //
     // },
     {
       formType: 'Search',
@@ -30,7 +30,6 @@ const AssetsSearchForm = props => {
         label: '电站',
         name: 'station',
       },
-      comProps: {},
     },
 
     {
@@ -38,7 +37,6 @@ const AssetsSearchForm = props => {
       itemProps: {
         label: '',
       },
-      comProps: {},
     },
     // {
     //   // formType: 'Select',

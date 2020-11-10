@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const AlarmTemplateTable = props => {
-  console.log(' AlarmTemplateTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

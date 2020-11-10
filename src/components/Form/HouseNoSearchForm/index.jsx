@@ -74,7 +74,6 @@ const HouseNoSearchForm = props => {
       itemProps: {
         label: '',
       },
-      comProps: {},
     },
   ];
 

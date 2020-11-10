@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const RoleTable = props => {
-  console.log(' RoleTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

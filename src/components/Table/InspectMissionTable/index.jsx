@@ -13,7 +13,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { missionsStatusMap } from '@/configs';
 
 const InspectMissionTable = props => {
-  console.log(' InspectMissionTable  ： ', props); //
   const { showModal, edit, remove, tdClick, assignMission, editDate } = props; //
 
   const columns = [

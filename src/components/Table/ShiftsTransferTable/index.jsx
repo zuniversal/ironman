@@ -13,7 +13,6 @@ import { onDutyTypeMap } from '@/configs'; //
 import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsTransferTable = props => {
-  console.log(' ShiftsTransferTable  ： ', props); //
   const {
     showModal,
     edit,

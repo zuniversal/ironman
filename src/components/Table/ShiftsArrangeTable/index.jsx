@@ -12,7 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 
 const ShiftsArrangeTable = props => {
-  console.log(' ShiftsArrangeTable  ： ', props); //
   const { showModal, edit, remove, tdClick } = props; //
 
   const columns = [

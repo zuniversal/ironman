@@ -9,21 +9,6 @@ const AlarmNotifyForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectData: props.userList,
-      itemProps: {
-        label: '状态',
-      },
-    },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-      comProps: {},
-    },
-
-    {
       // formType: 'Select',
       itemProps: {
         label: '',

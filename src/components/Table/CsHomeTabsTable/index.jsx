@@ -14,7 +14,6 @@ import SmartTable from '@/common/SmartTable'; //
 import { ANIMATE } from '@/constants';
 
 const CsHomeTabsTable = props => {
-  console.log(' CsHomeTabsTable  ：', props); //
   const { showModal, edit, remove, tdClick, complete } = props; //
 
   const columns = [
@@ -105,7 +104,6 @@ const CsHomeTabsTable = props => {
 };
 
 const CsHomeAssetsTable = props => {
-  console.log(' CsHomeAssetsTable  ：', props); //
   const { showModal, edit, remove, tdClick, complete } = props; //
 
   const columns = [
