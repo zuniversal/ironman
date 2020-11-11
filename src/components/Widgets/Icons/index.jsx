@@ -26,6 +26,7 @@ import search from '@/static/img/search.png'; //
 import ok from '@/static/img/ok.png'; //
 import close from '@/static/img/close.png'; //
 import warning from '@/static/img/warning.png'; //
+import bigScreen from '@/static/img/bigScreen.png'; //
 
 // import * as Imgs from '@/static/img'//
 
@@ -60,6 +61,7 @@ const iconMap = {
   ok,
   close,
   warning,
+  bigScreen,
 
   home,
   csOrganize,

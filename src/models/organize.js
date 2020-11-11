@@ -17,6 +17,18 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const recursiveHandle = data => {
+  console.log(' recursiveHandle   ,   ： ', data);
+  return data.map(v => ({
+    ...v,
+    value: v.id,
+    title: v.name,
+    label: v.name,
+    children: recursiveHandle(v.childrens),
+  }));
+  // return data.map(({childrens, ...v}) => ({...v, value: v.id, title: v.name, children: recursiveHandle(childrens)}))
+};
+
 export default {
   namespace,
 
@@ -26,6 +38,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    organizeList: [],
   },
 
   reducers: {
@@ -46,9 +60,12 @@ export default {
       };
     },
     getList(state, { payload, type }) {
+      const organizeList = recursiveHandle(payload.list);
+      console.log('  organizeList ：', organizeList); //
       return {
         ...state,
         dataList: payload.list,
+        organizeList: organizeList,
         count: payload.rest.count,
         isShowModal: false,
       };

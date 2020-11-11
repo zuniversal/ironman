@@ -97,16 +97,16 @@ const UploadCom = props => {
           strokeWidth: 3,
           format: percent => `${parseFloat(percent.toFixed(2))}%`,
         }}
-        showUploadList={{
-          showDownloadIcon: true,
-          downloadIcon: 'download ',
-          showRemoveIcon: true,
-          removeIcon: (
-            <StarOutlined
-              onClick={e => console.log(e, 'custom removeIcon event')}
-            />
-          ),
-        }}
+        // showUploadList={{
+        //   showDownloadIcon: true,
+        //   downloadIcon: 'download ',
+        //   showRemoveIcon: true,
+        //   removeIcon: (
+        //     <StarOutlined
+        //       onClick={e => console.log(e, 'custom removeIcon event')}
+        //     />
+        //   ),
+        // }}
         {...uploadProps}
         action={action}
         // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?

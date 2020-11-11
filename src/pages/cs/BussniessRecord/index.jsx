@@ -96,13 +96,15 @@ class BussniessRecord extends PureComponent {
       action,
     };
 
-    if (action === 'detail' || action === 'powerDetail') {
+    if (action === 'powerDetail') {
       return (
         <BussniessRecordPowerForm {...formComProps}></BussniessRecordPowerForm>
       );
     }
 
-    return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
+    if (action === 'detail' || action === 'powerDetail') {
+      return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
+    }
   };
   renderSmartFormModal = params => {
     return (

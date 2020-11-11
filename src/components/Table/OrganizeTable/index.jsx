@@ -17,7 +17,7 @@ const OrganizeTable = props => {
   const columns = [
     {
       title: '部门',
-      dataIndex: 'name_level1',
+      dataIndex: 'name',
     },
   ];
 
@@ -27,6 +27,7 @@ const OrganizeTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
 
+      childrenColumnName="childrens"
       haveChildren
       // expandable={{
       //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.field0}</p>,

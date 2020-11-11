@@ -77,7 +77,7 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          created_time: v.created_time.split('T')[0],
+          created_time: v.created_time ? v.created_time : ''.split('T')[0],
         })),
         count: payload.rest.count,
         isShowModal: false,

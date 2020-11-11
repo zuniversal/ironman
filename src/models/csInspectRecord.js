@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'csInspectRecord';
 const { createActions } = init(namespace);
 
-const otherActions = ['getMissionItemAsync'];
+const otherActions = ['getMissionItemAsync', 'confirmInspectAsync'];
 
 const batchTurnActions = [];
 
@@ -133,6 +133,10 @@ export default {
 
     *getMissionItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getMissionItem, payload);
+      yield put({ type: 'getItem', payload: { ...res, payload } });
+    },
+    *confirmInspectAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.confirmInspect, payload);
       yield put({ type: 'getItem', payload: { ...res, payload } });
     },
   },

@@ -119,11 +119,10 @@ class CsInspectRecord extends PureComponent {
           ...res,
         });
       }
-      if (action === 'inspectReport') {
-        // this.props.inspectReportAsync({
-        //   ...itemDetail,
-        //   ...res,
-        // });
+      if (action === 'confirmInspectAsync   ') {
+        this.props.confirmInspectAsync({
+          ...res,
+        });
       }
     } catch (error) {
       console.log(' error ： ', error); //

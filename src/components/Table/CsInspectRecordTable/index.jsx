@@ -23,9 +23,12 @@ const InspectRecordTable = props => {
       title: '电站',
       dataIndex: '',
     },
-
     {
-      title: '当前类型',
+      title: 'id',
+      dataIndex: 'id',
+    },
+    {
+      title: '当前状态',
       dataIndex: 'status',
     },
     {
@@ -37,7 +40,7 @@ const InspectRecordTable = props => {
   const extra = (text, record, index, props) => (
     <>
       <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a>
-      <a onClick={() => props.showFormModal({ action: 'showMore' })}>更多</a>
+      <a onClick={() => props.exportData({ action: 'export' })}>导出报告</a>
     </>
   );
 

@@ -13,6 +13,9 @@ const HeaderWidget = props => {
     <div className="headerWidget dfc ">
       {/* <Icon icon={'search'} className={'actionItem '} /> */}
       <Icon icon={'bell'} className={'actionItem '} />
+      <span className="yAxis actionItem">|</span>
+      <Icon icon={'bigScreen'} />
+      <span className="bigScreen actionItem">大屏展示</span>
       <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
       <span
         className={'actionItem userName '}

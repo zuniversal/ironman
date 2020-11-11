@@ -9,8 +9,10 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet('organizations', p);
-export const getItem = p => noTipsGet(`organizations/${p.d_id}`, p);
-export const addItem = p => post('organizations/', p);
-export const editItem = p => post(`organizations/${p.d_id}`, p);
-export const removeItem = p => remove(`organizations/${p.d_id}`, p);
+export const getList = p => noTipsGet('console/organizations/info', p);
+export const getItem = p =>
+  noTipsGet(`console/organizations/info/${p.d_id}`, p);
+export const addItem = p => post('console/organizations/info/', p);
+export const editItem = p => put(`console/organizations/info/${p.d_id}`, p);
+export const removeItem = p =>
+  remove(`console/organizations/info/${p.d_id}`, p);

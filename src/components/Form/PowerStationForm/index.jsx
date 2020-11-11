@@ -160,6 +160,12 @@ const PowerStationForm = props => {
         name: 'name',
       },
     },
+    {
+      itemProps: {
+        label: '业务主体',
+        name: 'person',
+      },
+    },
 
     {
       itemProps: {
@@ -171,12 +177,6 @@ const PowerStationForm = props => {
       itemProps: {
         label: '电话',
         name: 'phone',
-      },
-    },
-    {
-      itemProps: {
-        label: '业务主体',
-        name: 'person',
       },
     },
     // {

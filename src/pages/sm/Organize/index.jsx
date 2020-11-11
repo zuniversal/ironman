@@ -29,7 +29,7 @@ import { PRIMARY } from '@/constants';
 const TITLE = '部门';
 
 const titleMap = {
-  add: `新增${TITLE}`,
+  add: `新增${TITLE}架构/业务架构`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,
@@ -61,7 +61,7 @@ class Organize extends PureComponent {
             type="primary"
             onClick={() => this.props.showFormModal({ action: 'add' })}
           >
-            新增账户
+            新增{TITLE}
           </Button>
         </div>
       </div>
@@ -108,6 +108,7 @@ class Organize extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      organizeList: this.props.organizeList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

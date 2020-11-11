@@ -228,15 +228,15 @@ export default {
       yield put({ type: 'getListAsync' });
     },
 
-    *syncOAAsync({ payload, action, type }, { call, put }) {
-      // console.log(' syncOAAsync ： ', payload, type,     )//
-      const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res); //
-      yield put({
-        type: 'getList',
-        payload: res,
-      });
-    },
+    // *syncOAAsync({ payload, action, type }, { call, put }) {
+    //   // console.log(' syncOAAsync ： ', payload, type,     )//
+    //   const res = yield call(services.syncOA, payload);
+    //   console.log('  syncOA res ：', res); //
+    //   yield put({
+    //     type: 'getList',
+    //     payload: res,
+    //   });
+    // },
 
     *uploadFile({ payload, action, type }, { call, put }) {
       // console.log(' uploadFile ： ', payload, type,     )//

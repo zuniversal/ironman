@@ -3,7 +3,8 @@ import * as services from '@/services/user';
 import * as userCenterServices from '@/services/userCenter';
 import { formatSelectList, nowYearMonth, setItem, getItem } from '@/utils';
 import { history } from 'umi';
-import { HOME } from '@/constants';
+import { HOME, CS_HOME, isDev, homeMap } from '@/constants';
+import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 
 const namespace = 'user';
 const { createActions } = init(namespace);
@@ -21,6 +22,34 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
+console.log(' userInfo ： ', userInfo); //
+
+const getRoutes = path => {
+  console.log(' getRoutes   userInfo,   ： ', userInfo, userInfo.accountType);
+  const routesMap = {
+    manager: managerRoutes,
+    // manager: [...managerRoutes, ...customerRoutes],
+    customer: customerRoutes,
+  };
+  const getRoutesMap = (text, dataMap) => {
+    const val = dataMap[text];
+    return val ? val : [];
+  };
+  const routes = isDev
+    ? [...managerRoutes, ...customerRoutes]
+    : getRoutesMap(userInfo.accountType, routesMap);
+  // const routes = getRoutesMap(userInfo.accountType, routesMap);
+  const routesData = {
+    route: {
+      path: '/',
+      routes: routes,
+    },
+    location: {
+      pathname: '/',
+    },
+  };
+  return routesData;
+};
 
 export default {
   namespace,
@@ -33,6 +62,7 @@ export default {
     itemDetail: {},
     userInfo,
     accountType: 'customer',
+    getRoutes: getRoutes(),
   },
 
   reducers: {
@@ -128,7 +158,9 @@ export default {
         payload: userInfo,
       });
       setItem('userInfo', userInfo);
-      history.push(HOME);
+      const path = homeMap[accountType] ? homeMap[accountType] : '/';
+      console.log(' path ： ', path, accountType); //
+      history.push(path);
     },
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsync ： ', payload, action, type); //

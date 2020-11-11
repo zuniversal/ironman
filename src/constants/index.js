@@ -31,6 +31,11 @@ export const UN_CHECK_TXT = 'OFF';
 export const TIME_ZERO = ' 00:00:00';
 
 export const HOME = '/om/home';
+export const CS_HOME = '/cs/csHome';
+export const homeMap = {
+  manager: HOME,
+  customer: CS_HOME,
+};
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 

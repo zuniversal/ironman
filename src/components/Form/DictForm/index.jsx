@@ -6,7 +6,7 @@ import { formatConfig } from '@/utils'; //
 
 export const config = [
   {
-    formType: 'Select',
+    // formType: 'Select',
     noRule: true,
     itemProps: {
       label: '模块',

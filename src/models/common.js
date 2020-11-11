@@ -102,82 +102,32 @@ export default {
         ),
       };
     },
-
-    getClient(state, { payload, type }) {
-      // console.log(' getClient 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        clientList: formatSelectList(payload.list, 'name'),
-      };
-    },
-    changeStationPlan(state, { payload, type }) {
-      const { dataList } = state;
-      const dragList = payload.map(v => ({
-        start: v.startStr,
-        plan_date: v.startStr,
-        id: v.id,
-      }));
-      const latestDrag = dragList[dragList.length - 1];
-      const dataListFilter = dataList.map(v => {
-        return v.id != latestDrag.id
-          ? v
-          : {
-              ...v,
-              surplus_plan_num: v.surplus_plan_num - 1,
-            };
-      });
-      console.log(
-        ' res  dragList.map v ： ',
-        dragList,
-        dataList,
-        dataListFilter,
-        latestDrag,
-      );
-      return {
-        ...state,
-        dragList: dragList,
-        dataList: dataListFilter,
-      };
-    },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, {
-        ...payload,
-        // month: payload.month.format('YYYY-MM'),
-      });
-      yield put(action({ ...res, payload }));
-    },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *changePlanAsync({ payload, action, type }, { call, put, select }) {
-      const { dragList } = yield select(state => state[namespace]);
-      console.log(' dragList ： ', dragList); //
-      const res = yield call(services.changePlan, {
-        data: dragList,
-      });
-      yield put(action({ ...res, payload }));
-    },
-
-    *getEnumListAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getEnumList, payload);
-      yield put(action({ ...res, payload }));
-    },
+    // *getListAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getListAsync ： ', payload, action, type); //
+    //   const res = yield call(services.getList, {
+    //     ...payload,
+    //     // month: payload.month.format('YYYY-MM'),
+    //   });
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *getItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.getItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *addItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.addItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *editItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.editItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *removeItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.removeItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
   },
 };

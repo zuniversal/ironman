@@ -12,7 +12,7 @@ import ProLayout, {
   SettingDrawer,
   ProSettings,
 } from '@ant-design/pro-layout';
-import defaultProps, { managerRoutes, customerRoutes } from './defaultProps';
+import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 import { history, connect } from 'umi';
 import './index.less';
 import './style.less';
@@ -48,7 +48,14 @@ const Layouts = props => {
   const [title, setTitle] = useState('');
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
-  const { children, location, loading, userInfo, accountType } = props; //
+  const {
+    children,
+    location,
+    loading,
+    userInfo,
+    accountType,
+    getRoutes,
+  } = props; //
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
@@ -76,34 +83,34 @@ const Layouts = props => {
   // };
   // const isShowTitle = getShowTitle(props);
 
-  const getRoutes = path => {
-    console.log(' getRoutes   userInfo,   ： ', userInfo, userInfo.accountType);
-    const routesMap = {
-      manager: managerRoutes,
-      // manager: [...managerRoutes, ...customerRoutes],
-      customer: customerRoutes,
-    };
-    const getRoutesMap = (text, dataMap) => {
-      const val = dataMap[text];
-      return val ? val : [];
-    };
-    const routes = getRoutesMap(userInfo.accountType, routesMap);
-    const routesData = {
-      route: {
-        path: '/',
-        routes: routes,
-      },
-      location: {
-        pathname: '/',
-      },
-    };
-    return routesData;
-  };
+  // const getRoutes = path => {
+  //   console.log(' getRoutes   userInfo,   ： ', userInfo, userInfo.accountType);
+  //   const routesMap = {
+  //     manager: managerRoutes,
+  //     // manager: [...managerRoutes, ...customerRoutes],
+  //     customer: customerRoutes,
+  //   };
+  //   const getRoutesMap = (text, dataMap) => {
+  //     const val = dataMap[text];
+  //     return val ? val : [];
+  //   };
+  //   const routes = getRoutesMap(userInfo.accountType, routesMap);
+  //   const routesData = {
+  //     route: {
+  //       path: '/',
+  //       routes: routes,
+  //     },
+  //     location: {
+  //       pathname: '/',
+  //     },
+  //   };
+  //   return routesData;
+  // };
 
   return (
     <div id="test-pro-layout" className={'layoutContainer'}>
       <ProLayout
-        {...getRoutes()}
+        {...getRoutes}
         location={{
           pathname: path,
         }}
@@ -250,6 +257,7 @@ const mapStateToProps = ({ loading, user }) => ({
   loading: loading.global,
   userInfo: user.userInfo,
   accountType: user.accountType,
+  getRoutes: user.getRoutes,
 });
 
 export default connect(mapStateToProps)(Layouts);

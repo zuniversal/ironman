@@ -211,6 +211,10 @@ class Assets extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (['uploadFile'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //

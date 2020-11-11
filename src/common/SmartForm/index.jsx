@@ -17,6 +17,7 @@ import {
   InputNumber,
   DatePicker,
   Divider,
+  TreeSelect,
 } from 'antd';
 import moment from 'moment';
 
@@ -488,6 +489,9 @@ const SmartForm = (props, state) => {
       DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
       RangePicker: <RangePicker format={'YYYY/MM/DD'} {...realComProps} />,
+      TreeSelect: (
+        <TreeSelect treeDefaultExpandAll {...realComProps}></TreeSelect>
+      ),
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
       DynamicItem: <DynamicItem {...dynamicComProps}></DynamicItem>,

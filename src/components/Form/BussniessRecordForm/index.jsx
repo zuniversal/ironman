@@ -95,9 +95,13 @@ const BussniessRecordForm = props => {
       },
     },
     {
+      formType: 'CustomCom',
+      CustomCom:
+        // props.init.files.map((v, i) => <img src={v} className="faultImg" key={i}  />)
+        [1, 2].map((v, i) => <img src={v} className="faultImg" key={i} />),
       itemProps: {
         label: '现场故障照片',
-        name: '',
+        name: 'task_log',
       },
     },
     {
@@ -126,7 +130,7 @@ const BussniessRecordForm = props => {
   };
 
   return (
-    <div className={' BussniessRecordForm '}>
+    <div className={' bussniessRecordForm '}>
       <SmartForm
         config={config}
         // config={configs}
@@ -134,6 +138,7 @@ const BussniessRecordForm = props => {
         // init={init}
         // init={{}}
 
+        noRuleAll
         isDisabledAll
         {...props}
       ></SmartForm>
@@ -141,6 +146,8 @@ const BussniessRecordForm = props => {
   );
 };
 
-BussniessRecordForm.defaultProps = {};
+BussniessRecordForm.defaultProps = {
+  files: [],
+};
 
 export default BussniessRecordForm;

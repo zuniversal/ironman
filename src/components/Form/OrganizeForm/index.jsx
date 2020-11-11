@@ -10,7 +10,21 @@ const selectData = [
     label: '部门1',
     value: 'app1',
     children: [
-      { label: '子部门1', value: 'msg1' },
+      {
+        label: '子部门1',
+        value: 'msg1',
+        children: [
+          {
+            label: '子部门111',
+            value: 'msg12',
+            children: [
+              { label: '子部门1222', value: 'msg132' },
+              { label: '子部门2333', value: 'email1342' },
+            ],
+          },
+          { label: '子部门2', value: 'email12' },
+        ],
+      },
       { label: '子部门2', value: 'email1' },
     ],
   },
@@ -24,24 +38,6 @@ const selectData = [
   },
 ];
 
-export const config = [
-  {
-    itemProps: {
-      label: '部门名称',
-      name: 'name',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '上级部门',
-      name: 'parent_id',
-    },
-    opType: 'group',
-    selectData: selectData,
-  },
-];
-
 const OrganizeForm = props => {
   console.log(' OrganizeForm ： ', props); //
   const { formBtn, ...rest } = props; //
@@ -49,6 +45,38 @@ const OrganizeForm = props => {
     // layout: 'vertical',
     // layout: 'inline',
   };
+
+  const config = [
+    {
+      itemProps: {
+        label: '部门名称',
+        name: 'name',
+      },
+    },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '上级部门',
+    //     name: 'parent_id',
+    //   },
+    //   opType: 'group',
+    //   selectData: selectData,
+    //   // selectData: props.organizeList,
+    // },
+    {
+      formType: 'TreeSelect',
+      itemProps: {
+        label: '上级部门',
+        name: 'parent_id',
+      },
+      comProps: {
+        treeData: props.organizeList,
+      },
+      // opType: 'group',
+      selectData: selectData,
+      // selectData: props.organizeList,
+    },
+  ];
 
   return (
     <div className={' OrganizeForm '}>

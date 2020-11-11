@@ -13,9 +13,9 @@ export default defineConfig({
     type: 'hash',
   },
   publicPath: './',
-
+  links: [{ rel: 'icon', href: 'favicon.ico' }],
   // 启用 语言本地化 需要在 src 下创建一个 locales 目录
-  // Warning: The current popular language does not exist, please check the locales folder!
+  // Warning: The current popular language does not exist please check the locales folder!
   locale: {
     antd: true,
     default: 'zh-CN', //
