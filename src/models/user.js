@@ -63,9 +63,17 @@ export default {
     userInfo,
     accountType: 'customer',
     getRoutes: getRoutes(),
+    system: 'OM',
   },
 
   reducers: {
+    toggle(state, { payload, type }) {
+      console.log(' toggle 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        system: state.system == 'CS' ? 'OM' : 'CS',
+      };
+    },
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type); //
       return {

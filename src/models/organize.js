@@ -38,8 +38,9 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    d_id: '',
 
-    organizeList: [],
+    searchInfo: {},
   },
 
   reducers: {
@@ -68,6 +69,7 @@ export default {
         organizeList: organizeList,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -109,10 +111,21 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
@@ -120,15 +133,15 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
   },
 };

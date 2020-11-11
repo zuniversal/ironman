@@ -43,6 +43,16 @@ import { actions } from '@/models/layout'; //
 
 const { Header, Sider, Content } = Layout;
 
+const csRoutes = {
+  route: {
+    path: '/',
+    routes: customerRoutes,
+  },
+  location: {
+    pathname: '/',
+  },
+};
+
 const Layouts = props => {
   const [settings, setSetting] = useState(undefined);
   const [title, setTitle] = useState('');
@@ -53,6 +63,7 @@ const Layouts = props => {
     location,
     loading,
     userInfo,
+    system,
     accountType,
     getRoutes,
   } = props; //
@@ -61,6 +72,8 @@ const Layouts = props => {
   const [pathname, setPathname] = useState(path);
   console.log(
     ' settings, pathname ： ',
+    location.query.type,
+    '1111',
     settings,
     pathname,
     props,
@@ -71,6 +84,19 @@ const Layouts = props => {
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);
+  };
+
+  const logout = path => {
+    console.log(' logout   path,   ： ', path);
+    props.dispatch({
+      type: 'user/logout',
+    });
+  };
+  const toggle = path => {
+    console.log(' toggle   path,   ： ', path);
+    props.dispatch({
+      type: 'user/toggle',
+    });
   };
 
   // const getShowTitle = props => {
@@ -110,7 +136,7 @@ const Layouts = props => {
   return (
     <div id="test-pro-layout" className={'layoutContainer'}>
       <ProLayout
-        {...getRoutes}
+        {...(system == 'CS' ? csRoutes : getRoutes)}
         location={{
           pathname: path,
         }}
@@ -203,7 +229,12 @@ const Layouts = props => {
         //   </div>
         // )}
         rightContentRender={() => (
-          <HeaderWidget userInfo={userInfo}></HeaderWidget>
+          <HeaderWidget
+            userInfo={userInfo}
+            system={system}
+            logout={logout}
+            toggle={toggle}
+          ></HeaderWidget>
         )}
         // title={'POWERKEEPER'}
         title={''}
@@ -256,6 +287,7 @@ const Layouts = props => {
 const mapStateToProps = ({ loading, user }) => ({
   loading: loading.global,
   userInfo: user.userInfo,
+  system: user.system,
   accountType: user.accountType,
   getRoutes: user.getRoutes,
 });

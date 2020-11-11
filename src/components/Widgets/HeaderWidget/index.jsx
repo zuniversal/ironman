@@ -17,12 +17,27 @@ const HeaderWidget = props => {
       <Icon icon={'bigScreen'} />
       <span className="bigScreen actionItem">大屏展示</span>
       <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
+      {/* <span className="avatars" onClick={logout}></span> */}
       <span
         className={'actionItem userName '}
         onClick={() => goPage('/om/userCenter')}
       >
         {/* {props.userInfo.name} */}
         {props.userInfo.nickname}
+      </span>
+      {/* <span className="cs " onClick={() => goPage('/cs/csHome?type=test')}>CS</span> */}
+      <span
+        className="cs "
+        onClick={() => {
+          props.toggle();
+          if (props.system == 'OM') {
+            goPage('/cs/csHome');
+          } else {
+            goPage('/om/home');
+          }
+        }}
+      >
+        {props.system === 'OM' ? 'CS' : 'OM'}
       </span>
     </div>
   );

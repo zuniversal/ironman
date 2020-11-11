@@ -82,6 +82,10 @@ class Organize extends PureComponent {
 
     return <OrganizeTable {...tableProps}></OrganizeTable>;
   };
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemAsync({ d_id: `${params.record.id}` });
+  };
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
