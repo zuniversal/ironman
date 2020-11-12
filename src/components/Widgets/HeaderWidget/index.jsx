@@ -5,6 +5,10 @@ import { history, connect } from 'umi';
 
 const HeaderWidget = props => {
   console.log(' HeaderWidget   props, ,   ： ', props);
+  const goBigScreen = path => {
+    console.log(' goBigScreen   path,   ： ', path);
+    window.open('http://188.131.235.243:31004/screen');
+  };
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);
@@ -14,8 +18,10 @@ const HeaderWidget = props => {
       {/* <Icon icon={'search'} className={'actionItem '} /> */}
       <Icon icon={'bell'} className={'actionItem '} />
       <span className="yAxis actionItem">|</span>
-      <Icon icon={'bigScreen'} />
-      <span className="bigScreen actionItem">大屏展示</span>
+      <span className="bigScreen actionItem" onClick={goBigScreen}>
+        <Icon icon={'bigScreen'} />
+        <span>大屏展示</span>
+      </span>
       <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
       {/* <span className="avatars" onClick={logout}></span> */}
       <span
