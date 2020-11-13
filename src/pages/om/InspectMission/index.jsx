@@ -196,7 +196,7 @@ class InspectMission extends PureComponent {
   componentDidMount() {
     this.props.getUserAsync();
     this.props.getTeamAsync();
-    this.props.getListAsync();
+    // this.props.getListAsync();
   }
 
   render() {

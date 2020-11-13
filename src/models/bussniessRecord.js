@@ -1,11 +1,12 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/bussniessRecord';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const namespace = 'bussniessRecord';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['confirmAsync'];
 
 export const actions = {
   ...createActions(otherActions),
@@ -50,7 +51,7 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          created_time: v.created_time.split('T')[0],
+          created_time: v.created_time && v.created_time.split('T')[0],
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -59,12 +60,17 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const { type: types, status, created_time } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          created_time: created_time ? created_time.split('T')[0] : '',
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -131,6 +137,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
+    },
+
+    *confirmAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.confirm, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

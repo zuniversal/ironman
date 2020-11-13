@@ -231,8 +231,9 @@ export const managerRoutes = [
       {
         path: '/om/monitorManage',
         name: '监测设备管理',
-        icon: <ScheduleFilled />,
-        icon: <Icon icon={'monitorManage'} />,
+        // icon: <ScheduleFilled />,
+        // icon: <Icon icon={'monitorManage'} />,
+        icon: placeIcon,
         component: '../pages/om/MonitorManage',
       },
       {

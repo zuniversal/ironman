@@ -3,36 +3,41 @@ import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 
-export const config = [
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '业务部门',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '角色',
-    },
-  },
-
-  {
-    // formType: 'Select',
-    itemProps: {
-      label: '',
-      name: 'keyword',
-    },
-    comProps: {
-      className: 'lastFormItem',
-    },
-    searchSuffix: true,
-  },
-];
-
 const UserManageSearchForm = props => {
   console.log(' UserManageSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      formType: 'Search',
+      selectSearch: props.getOrganizeAsync,
+      selectData: props.organizeList,
+      itemProps: {
+        label: '业务部门',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getRoleAsync,
+      selectData: props.roleList,
+      itemProps: {
+        label: '角色',
+      },
+    },
+
+    {
+      // formType: 'Select',
+      itemProps: {
+        label: '',
+        name: 'keyword',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
+    },
+  ];
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',

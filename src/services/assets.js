@@ -26,3 +26,5 @@ export const exportData = p => noTipsGet('console/OMS/equipment/file', p);
 export const getTemplate = p =>
   noTipsGet('console/OMS/equipment/getTemplate', p);
 export const uploadFile = parseUrl('console/OMS/equipment/upload');
+
+export const syncOA = p => noTipsGet(`console/OMS/equipment/OA`, p);

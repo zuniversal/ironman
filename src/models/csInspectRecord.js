@@ -118,18 +118,18 @@ export default {
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
-    },
+    // *addItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.addItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *editItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.editItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *removeItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.removeItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
 
     *getMissionItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getMissionItem, payload);

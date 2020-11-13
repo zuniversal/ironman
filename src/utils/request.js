@@ -150,7 +150,7 @@ export class Request {
         // }
         if (config.method === 'post') {
           config.data = rest; // 支持 delete 传递 body 参数
-        } else {
+        } else if (config.method !== 'put') {
           config.data = config.params = rest;
         }
         console.log(' 发送请求   ： ', config, formatParams); //

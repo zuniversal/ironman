@@ -89,7 +89,7 @@ const Layouts = props => {
   const logout = path => {
     console.log(' logout   path,   ： ', path);
     props.dispatch({
-      type: 'user/logout',
+      type: 'user/logoutAsync',
     });
   };
   const toggle = path => {
@@ -140,6 +140,7 @@ const Layouts = props => {
         location={{
           pathname: path,
         }}
+        menu={{ defaultOpenAll: true }}
         // onPageChange={e => {
         //   console.log(' onPageChange 切换页面 ： ', e); //
 

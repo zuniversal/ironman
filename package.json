@@ -44,6 +44,8 @@
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",
     "umi": "^3.2.19",
+    "video.js": "^7.10.2",
+    "videojs-contrib-hls": "^5.15.0",
     "yorkie": "^2.0.0"
   },
   "devDependencies": {

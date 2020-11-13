@@ -12,6 +12,7 @@ import BussniessRecordTable from '@/components/Table/BussniessRecordTable'; //
 import { actions, mapStateToProps } from '@/models/bussniessRecord'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const TITLE = '业务记录';
 
@@ -57,6 +58,10 @@ class BussniessRecord extends PureComponent {
       ></BussniessRecordSearchForm>
     );
   };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
+  };
   renderTable = params => {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
@@ -75,7 +80,21 @@ class BussniessRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (action === 'detail') {
+    console.log(
+      ' itemDetail, itemDetail.confirm ： ',
+      itemDetail,
+      itemDetail.confirm,
+    ); //
+    if (
+      (action === 'detail' || action === 'powerDetail') &&
+      !itemDetail.confirm
+    ) {
+      this.props.confirmAsync({
+        d_id: itemDetail.id,
+      });
+      return;
+    }
+    if (action === 'detail' || action === 'powerDetail') {
       this.props.onCancel({});
       return;
     }
@@ -90,11 +109,26 @@ class BussniessRecord extends PureComponent {
     }
   };
 
+  // 任务状态已完成 - completed 确认按钮
+  get hideOk() {
+    console.log(' get 取属 hideOk ： ', this.state, this.props);
+    const { status } = this.props.itemDetail;
+    console.log(' statusstatus ： ', status, this.props.itemDetail); //
+    return status && status === 'completed';
+  }
+
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
       action,
     };
+    if (action !== 'add') {
+      formComProps.init = {
+        ...this.props.itemDetail,
+        type: missionsTypeMap[this.props.itemDetail.type],
+        status: missionsStatusMap[this.props.itemDetail.status],
+      };
+    }
 
     if (action === 'powerDetail') {
       return (
@@ -102,7 +136,7 @@ class BussniessRecord extends PureComponent {
       );
     }
 
-    if (action === 'detail' || action === 'powerDetail') {
+    if (action === 'detail') {
       return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
     }
   };
@@ -114,7 +148,8 @@ class BussniessRecord extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
-        hideCancel
+        // hideCancel
+        hideOk={this.hideOk}
       >
         {this.renderModalContent()}
       </SmartFormModal>

@@ -77,6 +77,67 @@ const MissionsManageTable = props => {
       >
         发起工单
       </a>
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'schedule',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        排期
+      </a>
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'confirmSchedule',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        确认排期
+      </a>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'closeMission',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        关闭任务
+      </a>
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'linkContract',
+            d_id: record.id,
+            itemDetail: record,
+          })
+        }
+      >
+        关联合同
+      </a>
+      {/* <a disabled className={`disabled `}>
+        已排期
+      </a>
+      <a disabled className={`disabled `}>
+        已确认排期
+      </a>
+      <a disabled className={`disabled `}>
+        已关闭
+      </a> */}
+
+      {/* <a
+        onClick={() =>
+          props.edit({ action: 'startWorkOrder', d_id: record.id })
+        }
+      >
+        发起工单
+      </a>
       {record.status === 'waiting_plan' && (
         <a
           onClick={() =>
@@ -147,7 +208,7 @@ const MissionsManageTable = props => {
         <a disabled className={`disabled `}>
           已关闭
         </a>
-      )}
+      )} */}
     </>
   );
 

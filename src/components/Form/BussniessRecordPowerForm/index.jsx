@@ -13,97 +13,103 @@ const BussniessRecordPowerForm = props => {
     {
       itemProps: {
         label: '单号',
-        name: '',
+        name: 'number',
       },
     },
     {
       itemProps: {
         label: '状态',
-        name: '',
+        name: 'status',
       },
     },
     {
       itemProps: {
         label: '类型',
-        name: '',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '申请时间',
-        name: '',
+        name: 'created_time',
       },
     },
     {
       itemProps: {
         label: '设备名称',
-        name: '',
+        name: ['equipments', 'name'],
       },
     },
     {
       itemProps: {
         label: '设备厂名',
-        name: '',
+        name: ['equipments', 'factory'],
       },
     },
+    // {
+    //   itemProps: {
+    //     label: '设备厂号',
+    //     name: '',
+    //   },
+    // },
     {
       itemProps: {
-        label: '设备厂号',
-        name: '',
+        label: '出厂编号',
+        name: ['equipments', 'production_code'],
       },
     },
     {
       itemProps: {
         label: '设备容量',
-        name: '',
+        name: ['equipments', 'transformer_capacity'],
       },
     },
     {
       itemProps: {
         label: '设备电压',
-        name: '',
+        name: ['equipments', 'voltage'],
       },
     },
     {
       itemProps: {
         label: '设备电流',
-        name: '',
+        name: ['equipments', 'electricity'],
       },
     },
     {
       itemProps: {
         label: '设备阻抗',
-        name: '',
+        name: ['equipments', 'impedance'],
       },
     },
     {
       itemProps: {
         label: '结线方式',
-        name: '',
+        name: ['equipments', 'line_type'],
       },
     },
     {
       itemProps: {
         label: '分接开关位置',
-        name: '',
+        name: ['equipments', 'switch_position'],
       },
     },
     {
       itemProps: {
         label: '出厂年份',
-        name: '',
+        name: ['equipments', 'production_date'],
       },
     },
     {
       itemProps: {
         label: '试验理由',
-        name: '',
+        name: ['equipments', 'test_reason'],
       },
     },
     {
       itemProps: {
         label: '工作内容',
-        name: '',
+        name: 'describe',
       },
     },
   ];

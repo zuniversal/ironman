@@ -10,6 +10,7 @@ import {
 } from '@/utils/request';
 
 export const login = p => noTipsPost('login', p);
+export const logout = p => noTipsPost('logout', p);
 export const getEnumList = p => noTipsGet('console/OMS/dictionary/info', p);
 export const getList = p => noTipsGet('console/users', p);
 export const getItem = p => noTipsGet(`console/users/${p.d_id}`, p);

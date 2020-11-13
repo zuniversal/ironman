@@ -17,14 +17,15 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-const recursiveHandle = data => {
-  console.log(' recursiveHandle   ,   ： ', data);
+export const recursiveHandle = (data, parent_id) => {
+  console.log(' recursiveHandle   ,   ： ', data, parent_id);
   return data.map(v => ({
     ...v,
     value: v.id,
     title: v.name,
     label: v.name,
-    children: recursiveHandle(v.childrens),
+    parent_id: parent_id,
+    children: recursiveHandle(v.childrens, v.id),
   }));
   // return data.map(({childrens, ...v}) => ({...v, value: v.id, title: v.name, children: recursiveHandle(childrens)}))
 };
@@ -65,7 +66,8 @@ export default {
       console.log('  organizeList ：', organizeList); //
       return {
         ...state,
-        dataList: payload.list,
+        // dataList: payload.list,
+        dataList: organizeList,
         organizeList: organizeList,
         count: payload.rest.count,
         isShowModal: false,
@@ -79,7 +81,12 @@ export default {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        // itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.payload,
+          // parent_id: payload.payload.id,
+          // parent_id: payload.payload.parent_id,
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -93,9 +100,6 @@ export default {
     editItem(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
         isShowModal: false,
       };
     },
@@ -128,8 +132,9 @@ export default {
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
+      // const res = yield call(services.getItem, payload);
+      console.log(' getItemAsync ： ', payload); //
+      yield put(action({ payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);

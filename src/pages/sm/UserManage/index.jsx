@@ -56,8 +56,19 @@ class UserManage extends PureComponent {
     );
   };
   renderSearchForm = params => {
+    const formProps = {
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
+      organizeList: this.props.organizeList,
+      getRoleAsync: params => this.props.getRoleAsync({ keyword: params }),
+      roleList: this.props.roleList,
+    };
+
     return (
-      <UserManageSearchForm formBtn={this.renderFormBtn}></UserManageSearchForm>
+      <UserManageSearchForm
+        formBtn={this.renderFormBtn}
+        {...formProps}
+      ></UserManageSearchForm>
     );
   };
   renderTable = params => {
@@ -100,6 +111,13 @@ class UserManage extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
+      organizeList: this.props.organizeList,
+      getRoleAsync: params => this.props.getRoleAsync({ keyword: params }),
+      roleList: this.props.roleList,
+      getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),
+      tagsList: this.props.tagsList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -120,6 +138,11 @@ class UserManage extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getOrganizeAsync(); //
+    this.props.getRoleAsync(); //
+    this.props.getTagsAsync(); //
+  }
 
   render() {
     return (

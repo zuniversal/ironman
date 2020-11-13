@@ -190,6 +190,7 @@ class WorkOrder extends PureComponent {
   }
 
   render() {
+    return <WorkOrderTicketForm></WorkOrderTicketForm>;
     return (
       <div className="WorkOrder">
         {this.renderSearchForm()}

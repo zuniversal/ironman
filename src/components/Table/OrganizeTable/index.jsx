@@ -19,6 +19,10 @@ const OrganizeTable = props => {
       title: '部门',
       dataIndex: 'name',
     },
+    {
+      title: '部门',
+      dataIndex: 'parent_id',
+    },
   ];
 
   return (
@@ -27,6 +31,7 @@ const OrganizeTable = props => {
       // dataSource={noCalculateList}
       // rowKey={'source_no'}
 
+      defaultExpandAllRows
       childrenColumnName="childrens"
       haveChildren
       // expandable={{

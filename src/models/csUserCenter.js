@@ -92,23 +92,23 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
-    },
+    // *getListAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getListAsync ： ', payload, action, type); //
+    //   const res = yield call(services.getList, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
-    },
+    // *addItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.addItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *editItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.editItem, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));

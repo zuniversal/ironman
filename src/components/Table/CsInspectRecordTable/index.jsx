@@ -10,18 +10,19 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsStatusMap } from '@/configs';
 
 const InspectRecordTable = props => {
   const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
 
   const columns = [
     {
-      title: '内容',
-      dataIndex: 'status',
+      title: '名称',
+      dataIndex: 'name',
     },
     {
       title: '电站',
-      dataIndex: '',
+      dataIndex: ['station', 'name'],
     },
     {
       title: 'id',
@@ -30,17 +31,20 @@ const InspectRecordTable = props => {
     {
       title: '当前状态',
       dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
     {
       title: '巡检日期',
-      dataIndex: 'work_date',
+      dataIndex: 'created_time',
     },
   ];
 
   const extra = (text, record, index, props) => (
     <>
       <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a>
-      <a onClick={() => props.exportData({ action: 'export' })}>导出报告</a>
+      <a onClick={() => props.showExportPdf({ action: 'showExportPdf' })}>
+        导出报告
+      </a>
     </>
   );
 

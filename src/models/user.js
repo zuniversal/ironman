@@ -9,7 +9,7 @@ import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
-const otherActions = ['loginAsync', 'getUserInfo'];
+const otherActions = ['loginAsync', 'logoutAsync', 'getUserInfo'];
 
 const batchTurnActions = [];
 
@@ -169,6 +169,11 @@ export default {
       const path = homeMap[accountType] ? homeMap[accountType] : '/';
       console.log(' path ： ', path, accountType); //
       history.push(path);
+    },
+    *logoutAsync({ payload, action, type }, { call, put }) {
+      // const res = yield call(services.logout, payload);
+      history.push('/login');
+      // yield put(action({ ...res, payload }));
     },
     *getListAsync({ payload, action, type }, { call, put }) {
       console.log(' getListAsync ： ', payload, action, type); //

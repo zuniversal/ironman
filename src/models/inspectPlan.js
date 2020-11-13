@@ -261,14 +261,14 @@ export default {
       //   console.log(' error ： ', error); //
       // }
     },
-    *getScheduledListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getScheduledListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, {
-        ...payload,
-        month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
-      });
-      yield put(action({ ...res, payload }));
-    },
+    // *getScheduledListAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getScheduledListAsync ： ', payload, action, type); //
+    //   const res = yield call(services.getList, {
+    //     ...payload,
+    //     month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
+    //   });
+    //   yield put(action({ ...res, payload }));
+    // },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));

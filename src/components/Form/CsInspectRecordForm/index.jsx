@@ -97,7 +97,9 @@ const formRef = React.createRef();
 
 const inputBefore = (
   <Select defaultValue="正常" className="select-before">
-    <Option value="正常">正常</Option>
+    <Select.OptGroup label="Manager">
+      <Option value="正常">正常</Option>
+    </Select.OptGroup>
   </Select>
 );
 
@@ -907,7 +909,7 @@ const CsInspectRecordForm = props => {
       ></SmartForm>
 
       <div className="dfc">
-        <Tag color="#e5f8ee" className={`tipTags`}>
+        <Tag color="#e5f8ee" className={`tipTags noPrint`}>
           处理已完成，请确认电工完成该工作
         </Tag>
       </div>
