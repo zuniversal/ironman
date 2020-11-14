@@ -19,46 +19,48 @@ import {
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
+import ProvinceForm, { config } from '@/components/Form/ProvinceForm'; //
 
 const HouseNoSearchForm = props => {
   console.log(' HouseNoSearchForm ： ', props); //
   const [form] = Form.useForm();
 
-  const config = [
+  const configs = [
     {
       formType: 'Search',
       selectSearch: props.getClientAsync,
       selectData: props.clientList,
       itemProps: {
-        label: '客户',
+        label: '所属客户',
         name: 'customer',
       },
       comProps: {
         className: 'w-160',
       },
     },
-    {
-      formType: 'Search',
-      selectSearch: props.getListAsync,
-      selectData: props.dataList,
-      itemProps: {
-        label: '户号',
-        name: 'code',
-      },
-      comProps: {
-        className: 'w-160',
-      },
-    },
-    {
-      // formType: 'Cascader',
-      itemProps: {
-        label: '区域',
-        name: 'region',
-      },
-      comProps: {
-        className: 'w-160',
-      },
-    },
+    ...config(props),
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getListAsync,
+    //   selectData: props.dataList,
+    //   itemProps: {
+    //     label: '户号',
+    //     name: 'code',
+    //   },
+    //   comProps: {
+    //     className: 'w-160',
+    //   },
+    // },
+    // {
+    //   // formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'region',
+    //   },
+    //   comProps: {
+    //     className: 'w-160',
+    //   },
+    // },
     {
       // formType: 'Input',
       itemProps: {
@@ -88,7 +90,7 @@ const HouseNoSearchForm = props => {
       <SearchForm
         // flexRow={4}
         // flexRow={6}
-        config={config}
+        config={configs}
         formProps={formProps}
         // init={init}
         // init={{}}

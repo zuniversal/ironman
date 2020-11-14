@@ -109,12 +109,18 @@ class HouseNo extends PureComponent {
         <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button>
-        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
+        {/* <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
-        </DropDownBtn>
+        </DropDownBtn> */}
         {/* <Button type="primary" onClick={this.props.syncOAAsync}>
           同步OA
         </Button> */}
+        <Button
+          type="primary"
+          onClick={() => this.props.showUploadModal({ action: 'uploadFile' })}
+        >
+          Excel导入
+        </Button>
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -122,7 +128,7 @@ class HouseNo extends PureComponent {
           新增{TITLE}
         </Button>
         <Button type="primary" onClick={() => this.props.exportData()}>
-          导出{TITLE}数据
+          导出Excel
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
         <Button type="primary" onClick={this.onBatchRemove}>

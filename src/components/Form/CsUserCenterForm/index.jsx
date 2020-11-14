@@ -43,13 +43,7 @@ const CsUserCenterForm = props => {
   const config = [
     {
       formType: 'CustomCom',
-      CustomCom: (
-        <>
-          {[1].map((v, i) => (
-            <WeakDetailImg key={i}></WeakDetailImg>
-          ))}
-        </>
-      ),
+      CustomCom: <WeakDetailImg className={`avatar`}></WeakDetailImg>,
       itemProps: {
         label: '头像',
       },

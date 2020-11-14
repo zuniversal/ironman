@@ -7,7 +7,7 @@ export const config = [
   {
     // formType: 'Select',
     itemProps: {
-      label: '',
+      label: '电站名称',
       name: 'keyword',
       className: 'w50',
     },

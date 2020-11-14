@@ -46,7 +46,7 @@ const menuConfig = [
   },
 ];
 
-export const TITLE = '设备';
+export const TITLE = '资产';
 export const DEVICE = '设备';
 
 const titleMap = {

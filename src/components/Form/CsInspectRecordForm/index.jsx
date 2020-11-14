@@ -111,7 +111,7 @@ const CsInspectRecordForm = props => {
     {
       itemProps: {
         label: '公司名称',
-        name: '',
+        name: ['customer', 'name'],
       },
     },
     {
@@ -464,7 +464,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'AB',
-        name: '',
+        name: ['spect_in', 'v_ab'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -476,7 +476,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'BC',
-        name: '',
+        name: ['spect_in', 'v_bc'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -488,7 +488,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'CA',
-        name: '',
+        name: ['spect_in', 'v_ca'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -523,7 +523,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'A',
-        name: '',
+        name: ['spect_out', 'monitor_a'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -535,7 +535,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'B',
-        name: '',
+        name: ['spect_out', 'monitor_b'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -547,7 +547,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'C',
-        name: '',
+        name: ['spect_out', 'monitor_c'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -629,7 +629,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '显示器A',
-        name: '',
+        name: 'monitor_a',
         ...electricFormLayouts,
       },
       comProps: {
@@ -641,7 +641,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '显示器B',
-        name: '',
+        name: 'monitor_b',
         ...electricFormLayouts,
       },
       comProps: {
@@ -653,7 +653,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '显示器C',
-        name: '',
+        name: 'monitor_c',
         ...electricFormLayouts,
       },
       comProps: {
@@ -678,7 +678,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '运行声音',
-        name: '',
+        name: 'voice',
         ...electricFormLayouts,
       },
       comProps: {
@@ -690,7 +690,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '风扇运行',
-        name: '',
+        name: 'fan',
         ...electricFormLayouts,
       },
       comProps: {
@@ -702,7 +702,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '温度',
-        name: '',
+        name: 'temperature',
         ...electricFormLayouts,
       },
       comProps: {
@@ -727,7 +727,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '油位及渗漏油',
-        name: '',
+        name: 'oil_leak',
         ...electricFormLayouts,
       },
       comProps: {
@@ -751,7 +751,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '有无异常',
-        name: '',
+        name: 'abnormal',
         ...electricFormLayouts,
       },
       comProps: {
@@ -825,7 +825,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '电流表A',
-        name: '',
+        name: 'switch_ia',
         ...electricFormLayouts,
       },
       comProps: {
@@ -837,7 +837,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '电流表B',
-        name: '',
+        name: 'switch_ib',
         ...electricFormLayouts,
       },
       comProps: {
@@ -849,7 +849,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '电流表C',
-        name: '',
+        name: 'switch_ic',
         ...electricFormLayouts,
       },
       comProps: {
@@ -874,7 +874,7 @@ const CsInspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '电容柜1',
-        name: '',
+        name: 'GGJ',
         ...electricFormLayouts,
       },
       comProps: {

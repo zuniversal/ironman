@@ -67,9 +67,14 @@ class UserManage extends PureComponent {
     return (
       <UserManageSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
         {...formProps}
       ></UserManageSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
   renderTable = params => {
     const tableProps = {
@@ -86,6 +91,11 @@ class UserManage extends PureComponent {
     return <UserManageTable {...tableProps}></UserManageTable>;
   };
 
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemAsync({ d_id: `${params.record.id}` });
+  };
+
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -96,6 +106,12 @@ class UserManage extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {
@@ -139,6 +155,7 @@ class UserManage extends PureComponent {
     );
   };
   componentDidMount() {
+    this.props.getAllAsync(); //
     this.props.getOrganizeAsync(); //
     this.props.getRoleAsync(); //
     this.props.getTagsAsync(); //

@@ -9,7 +9,12 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'userManage';
 const { createActions } = init(namespace);
 
-const otherActions = ['getOrganizeAsync', 'getRoleAsync', 'getTagsAsync'];
+const otherActions = [
+  'getAllAsync',
+  'getOrganizeAsync',
+  'getRoleAsync',
+  'getTagsAsync',
+];
 
 const batchTurnActions = [];
 
@@ -58,7 +63,12 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          role: v.roles.map(v => v.name),
+          tag: v.tags.map(v => v.name),
+          organization: v.organizations.map(v => v.name),
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -71,7 +81,14 @@ export default {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          role_ids: payload.bean.roles.map(v => `${v.role_id}`),
+          tag_ids: payload.bean.tags.map(v => `${v.tag_id}`),
+          organization_ids: payload.bean.organizations.map(
+            v => v.organization_id,
+          ),
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -103,7 +120,6 @@ export default {
 
     getOrganize(state, { payload, type }) {
       const organizeList = recursiveHandle(payload.list);
-      console.log('  organizeList ：', organizeList); //
       return {
         ...state,
         organizeList,
@@ -142,7 +158,11 @@ export default {
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getItemAsync ： ', payload); //
       const res = yield call(services.getItem, payload);
+      // const res = yield call(services.getItem, {
+      //   user_id: payload.d_id,
+      // });
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
@@ -171,12 +191,28 @@ export default {
       yield put({ type: 'getListAsync' });
     },
 
+    *getAllAsync({ payload, action, type }, all) {
+      // const { searchInfo } = yield select(state => state[namespace]);
+      // const params = {
+      //   ...searchInfo,
+      //   ...payload,
+      // };
+      console.log(
+        ' getAllAsync  payload ： ',
+        // payload,
+        // searchInfo,
+        // action,
+        // params,
+        all,
+      ); //
+      // const res = yield call(services.getList, params);
+      // yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
+    },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
       console.log(' getOrganizeAsync ： ', payload); //
       const res = yield call(organizeServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
     },
-
     *getRoleAsync({ payload, action, type }, { call, put }) {
       console.log(' getRoleAsync ： ', payload); //
       const res = yield call(roleServices.getList, { keyword: payload });

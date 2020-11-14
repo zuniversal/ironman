@@ -27,13 +27,21 @@ const HouseNoTable = props => {
       dataIndex: 'number',
       detailFn: (text, record, index) => showDetail(record.id),
     },
-    {
-      title: '签约公司',
-      dataIndex: 'signing_company',
-    },
+    // {
+    //   title: '签约公司',
+    //   dataIndex: 'signing_company',
+    // },
     {
       title: '客户代表',
       dataIndex: 'service_staff',
+    },
+    {
+      title: '用电地址',
+      dataIndex: 'addr',
+    },
+    {
+      title: '用电类型',
+      dataIndex: 'type',
     },
     {
       title: '托管电站数',
@@ -46,14 +54,7 @@ const HouseNoTable = props => {
     },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
 HouseNoTable.defaultProps = {

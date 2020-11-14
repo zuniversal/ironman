@@ -23,9 +23,6 @@ const SmOrganizeTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       haveChildren
       // expandable={{
       //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.field0}</p>,

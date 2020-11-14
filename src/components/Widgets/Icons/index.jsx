@@ -20,6 +20,7 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
+import dog from '@/static/img/dog.jpg'; //
 import logo from '@/static/img/logo.png'; //
 import bell from '@/static/img/bell.png'; //
 import search from '@/static/img/search.png'; //
@@ -27,6 +28,7 @@ import ok from '@/static/img/ok.png'; //
 import close from '@/static/img/close.png'; //
 import warning from '@/static/img/warning.png'; //
 import bigScreen from '@/static/img/bigScreen.png'; //
+import miniPower from '@/static/img/miniPower.png'; //
 
 // import * as Imgs from '@/static/img'//
 
@@ -55,6 +57,7 @@ import operateRecord from '@/static/sideBarIcon/operateRecord.png';
 import kpi from '@/static/sideBarIcon/kpi.png';
 
 const iconMap = {
+  dog,
   logo,
   bell,
   search,
@@ -62,6 +65,7 @@ const iconMap = {
   close,
   warning,
   bigScreen,
+  miniPower,
 
   home,
   csOrganize,

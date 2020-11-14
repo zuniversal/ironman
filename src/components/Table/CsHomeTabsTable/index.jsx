@@ -89,9 +89,6 @@ const CsHomeTabsTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       scroll={{ x: 800 }}
       rowLength={3}
       pagination={false}
@@ -146,9 +143,6 @@ const CsHomeAssetsTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       rowLength={3}
       pagination={false}
       extra={extra}

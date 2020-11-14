@@ -32,6 +32,20 @@ const HouseNoForm = props => {
     // layout: 'inline',
   };
 
+  const capacityConfig = [
+    {
+      itemProps: {
+        label: '变压器容量',
+        name: 'transformer_capacity',
+      },
+    },
+    {
+      itemProps: {
+        label: '实际容量',
+        name: 'real_capacity',
+      },
+    },
+  ];
   // const formConfig = formatConfig(config);
   const areaConfig = [
     // {
@@ -98,29 +112,29 @@ const HouseNoForm = props => {
     },
     {
       itemProps: {
-        label: '户主',
-        name: 'householder',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '签约公司',
-        name: 'signing_company',
-      },
-    },
-    {
-      itemProps: {
         label: '客户代表',
         name: 'customer_representative',
       },
     },
-    {
-      itemProps: {
-        label: '手机',
-        name: 'phone',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '户主',
+    //     name: 'householder',
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '签约公司',
+    //     name: 'signing_company',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '手机',
+    //     name: 'phone',
+    //   },
+    // },
 
     {
       formType: 'rowText',
@@ -129,13 +143,27 @@ const HouseNoForm = props => {
       },
     },
     {
+      formType: 'Cascader',
+      itemProps: {
+        label: '区域',
+        name: 'area_code',
+      },
+    },
+    {
       itemProps: {
         label: '详细用电地址',
         name: 'addr',
       },
     },
+    {
+      itemProps: {
+        label: '邮编',
+        name: 'email',
+      },
+    },
 
-    ...(action !== 'add' ? areaConfig : []),
+    // ...(action !== 'add' ? areaConfig : []),
+    ...(action === 'detail' ? areaConfig : []),
 
     {
       formType: 'rowText',
@@ -143,18 +171,7 @@ const HouseNoForm = props => {
         label: '电气信息',
       },
     },
-    {
-      itemProps: {
-        label: '变压器容量',
-        name: 'transformer_capacity',
-      },
-    },
-    {
-      itemProps: {
-        label: '实际容量',
-        name: 'real_capacity',
-      },
-    },
+    ...(action === 'detail' ? capacityConfig : []),
 
     {
       // formType: 'Select',
@@ -176,6 +193,17 @@ const HouseNoForm = props => {
       itemProps: {
         label: '托管电站数',
         name: 'trusteeship_num',
+      },
+    },
+
+    {
+      itemProps: {
+        label: '电功率考核因数',
+      },
+    },
+    {
+      itemProps: {
+        label: '计费方式',
       },
     },
   ];

@@ -16,7 +16,12 @@ const PowerStationTable = props => {
 
   const columns = [
     {
-      title: '户号',
+      title: '所属客户',
+      dataIndex: 'electricity_user',
+      d_item: 'id',
+    },
+    {
+      title: '所属户号',
       dataIndex: 'electricity_user',
       d_item: 'id',
     },
@@ -24,6 +29,10 @@ const PowerStationTable = props => {
       title: '电站名称',
       dataIndex: 'name',
       d_item: 'id',
+    },
+    {
+      title: '电站地址',
+      dataIndex: 'addr',
     },
     {
       title: '业务主体',
@@ -37,7 +46,7 @@ const PowerStationTable = props => {
       d_item: 'id',
     },
     {
-      title: '监控点数',
+      title: '监控次数',
       // dataIndex: '',
       className: 'textCenter',
       d_item: 'id',
@@ -52,15 +61,7 @@ const PowerStationTable = props => {
     // },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-      isQRCode
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} isQRCode {...props}></SmartTable>;
 };
 
 PowerStationTable.defaultProps = {

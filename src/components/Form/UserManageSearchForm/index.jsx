@@ -14,6 +14,7 @@ const UserManageSearchForm = props => {
       selectData: props.organizeList,
       itemProps: {
         label: '业务部门',
+        name: 'organization_id',
       },
     },
     {
@@ -22,6 +23,7 @@ const UserManageSearchForm = props => {
       selectData: props.roleList,
       itemProps: {
         label: '角色',
+        name: 'role_id',
       },
     },
 
@@ -29,7 +31,7 @@ const UserManageSearchForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '',
-        name: 'keyword',
+        name: 'value',
       },
       comProps: {
         className: 'lastFormItem',

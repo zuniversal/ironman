@@ -59,7 +59,7 @@ class PowerStation extends PureComponent {
           同步OA
         </Button> */}
         <Button type="primary" onClick={() => this.props.exportData()}>
-          导出{TITLE}数据
+          导出Excel
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
         <Button type="primary" onClick={this.onBatchRemove}>

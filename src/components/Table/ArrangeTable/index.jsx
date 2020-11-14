@@ -35,15 +35,7 @@ const ArrangeTable = props => {
     },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
 ArrangeTable.defaultProps = {

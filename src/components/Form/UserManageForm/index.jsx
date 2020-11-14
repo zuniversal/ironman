@@ -13,7 +13,7 @@ const UserManageForm = props => {
     {
       itemProps: {
         label: '姓名',
-        name: 'name',
+        name: 'nickname',
       },
     },
     {
@@ -22,19 +22,21 @@ const UserManageForm = props => {
         name: 'phone',
       },
     },
+    // {
+    //   itemProps: {
+    //     label: '微信',
+    //     name: 'wechat',
+    //   },
+    // },
     {
-      itemProps: {
-        label: '微信',
-        name: 'wechat',
-      },
-    },
-    {
+      noRule: true,
       itemProps: {
         label: '邮箱',
         name: 'email',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '密码',
         name: 'password',

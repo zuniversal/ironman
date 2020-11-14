@@ -21,6 +21,7 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
+import InputCom from '@/components/Widgets/InputCom'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import { INPUT_TXT } from '@/utils';
 
@@ -57,9 +58,16 @@ const CsUserCenterEditForm = props => {
       },
     },
     {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div className={`rowWrapper`}>
+          <InputCom name={'province'} className={`rowItem`}></InputCom>
+          <InputCom name={'city'} className={`rowItem`}></InputCom>
+        </div>
+      ),
       itemProps: {
         label: '所在省市',
-        name: 'name',
+        className: 'w100',
       },
     },
     {
@@ -72,6 +80,19 @@ const CsUserCenterEditForm = props => {
       itemProps: {
         label: '联系电话',
         name: 'phone',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div className={`rowWrapper`}>
+          <InputCom name={'prefix'} className={`rowItem`}></InputCom>
+          <InputCom name={'phone'} className={`rowItem`}></InputCom>
+        </div>
+      ),
+      itemProps: {
+        label: '联系电话',
+        className: 'w100',
       },
     },
   ];
@@ -91,9 +112,8 @@ const CsUserCenterEditForm = props => {
       propsForm={form}
       action={'edit'}
       noPh
-      isDisabledAll
       formLayouts={formLayouts}
-      className={'CsUserCenterEditForm'}
+      className={'csUserCenterEditForm'}
       {...props}
     >
       <Form.Item label={' '} colon={false}>

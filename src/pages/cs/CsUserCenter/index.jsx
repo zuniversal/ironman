@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
 import CsUserCenterForm from '@/components/Form/CsUserCenterForm'; //
+import CsUserCenterEditForm from '@/components/Form/CsUserCenterEditForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
@@ -91,6 +92,9 @@ class CsUserCenter extends PureComponent {
   }
 
   render() {
+    return (
+      <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
+    );
     return (
       <div className="UserCenter">
         {this.state.isStartEdit ? (

@@ -57,9 +57,6 @@ const CsHomeStationTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       scroll={{ x: 800 }}
       rowLength={3}
       pagination={false}

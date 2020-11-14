@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
 
+import SmartVideo from '@/common/SmartVideo'; //
 import InputCom from '@/components/Widgets/InputCom'; //
 
 const CsHomeMonitorVideo = props => {
@@ -15,7 +16,9 @@ const CsHomeMonitorVideo = props => {
       </div>
       {/* {props.config.map((v, i) => ( */}
       {[0, 1].map((v, i) => (
-        <div className={`monitorVideo ${i === 0 ? 'first' : ''}`} key={i}></div>
+        <div className={`monitorVideo ${i === 0 ? 'first' : ''}`} key={i}>
+          {/* <SmartVideo ></SmartVideo> */}
+        </div>
       ))}
     </div>
   );

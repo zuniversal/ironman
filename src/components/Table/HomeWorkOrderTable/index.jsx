@@ -61,9 +61,6 @@ const HomeWorkOrderTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       rowLength={3}
       pagination={false}
       extra={extra}

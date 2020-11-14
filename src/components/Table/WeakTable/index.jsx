@@ -77,15 +77,16 @@ const WeakTable = props => {
         处理
       </a>
       {/* <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a> */}
-      <a onClick={() => props.exportDataAsync({ action: 'showList' })}>导出</a>
+      {/* <a onClick={() => props.exportDataAsync({ action: 'showList' })}>导出</a> */}
+      <a onClick={() => props.showExportPdf({ action: 'showExportPdf' })}>
+        导出
+      </a>
     </>
   );
 
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
       extra={extra}
       noDefault
       {...props}

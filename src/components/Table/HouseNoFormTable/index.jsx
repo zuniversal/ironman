@@ -38,15 +38,7 @@ const HouseNoFormTable = props => {
     },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-      rowLength={2}
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} rowLength={2} {...props}></SmartTable>;
 };
 
 HouseNoFormTable.defaultProps = {

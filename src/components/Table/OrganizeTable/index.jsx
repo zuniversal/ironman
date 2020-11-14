@@ -19,20 +19,17 @@ const OrganizeTable = props => {
       title: '部门',
       dataIndex: 'name',
     },
-    {
-      title: '部门',
-      dataIndex: 'parent_id',
-    },
+    // {
+    //   title: '部门',
+    //   dataIndex: 'parent_id',
+    // },
   ];
 
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       defaultExpandAllRows
-      childrenColumnName="childrens"
+      // childrenColumnName="childrens"
       haveChildren
       // expandable={{
       //   expandedRowRender: record => <p style={{ margin: 0 }}>{record.field0}</p>,

@@ -128,6 +128,11 @@ export default {
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
+    *getItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getItemAsync ： ', payload); //
+      const res = yield call(services.getItem, payload);
+      yield put(action({ ...res, payload }));
+    },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
       yield put(action({ ...res, payload }));

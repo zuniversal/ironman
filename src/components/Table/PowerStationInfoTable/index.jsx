@@ -16,7 +16,7 @@ export const DeviceInfoTable = props => {
 
   const columns = [
     {
-      title: '设备编号 ',
+      title: '设备编号',
       dataIndex: '',
     },
     {
@@ -42,9 +42,6 @@ export const DeviceInfoTable = props => {
     <SmartTable
       noActionCol
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       rowLength={1}
       {...props}
     ></SmartTable>
@@ -83,11 +80,45 @@ export const WatchInfoTable = props => {
     <SmartTable
       noActionCol
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
       rowLength={1}
       {...props}
     ></SmartTable>
   );
+};
+
+export const PowerStationDetailTable = props => {
+  const { showModal, edit, remove, tdClick } = props; //
+
+  const columns = [
+    {
+      title: '电源编号',
+      dataIndex: '',
+    },
+    {
+      title: '电表号',
+      dataIndex: '',
+    },
+    {
+      title: '进线名称',
+      dataIndex: '',
+    },
+    {
+      title: '倍率',
+      dataIndex: '',
+    },
+    {
+      title: '装接容量',
+      dataIndex: '',
+    },
+    {
+      title: '实际容量',
+      dataIndex: '',
+    },
+    {
+      title: '出线侧设备数',
+      dataIndex: '',
+    },
+  ];
+
+  return <SmartTable columns={columns} noActionCol {...props}></SmartTable>;
 };

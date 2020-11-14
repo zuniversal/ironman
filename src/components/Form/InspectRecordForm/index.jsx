@@ -21,13 +21,9 @@ import InputCom from '@/components/Widgets/InputCom'; //
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
-
-const TabPanes = () => (
+const TabPanes = props => (
   <div className="w100">
-    <Tabs defaultActiveKey="1" onChange={callback}>
+    <Tabs defaultActiveKey="1" onChange={props.onChange}>
       <TabPane tab={'电源编号1'} key="1">
         {/* 电源编号 121 */}
       </TabPane>
@@ -96,7 +92,7 @@ const electricFormLayouts = {
 const formRef = React.createRef();
 
 const inputBefore = (
-  <Select defaultValue="正常" className="select-before">
+  <Select defaultValue="正常" className="select-before" disabled>
     <Option value="正常">正常</Option>
   </Select>
 );
@@ -108,18 +104,22 @@ const InspectRecordForm = props => {
   const counterRef = React.useRef();
   const htmlRef = React.useRef();
 
+  const onChange = params => {
+    console.log(' onChange   params,   ： ', params);
+  };
+
   const config = [
     {
-      formType: 'plainText',
-      plainText: props.init[name],
+      // formType: 'plainText',
+      // plainText: props.init[name],
       itemProps: {
         label: '客户名称：',
-        name: '',
+        name: ['customer', 'name'],
       },
     },
     {
-      formType: 'plainText',
-      plainText: props.init[name],
+      // formType: 'plainText',
+      // plainText: props.init[name],
       itemProps: {
         label: '户号：',
         name: '',
@@ -156,27 +156,27 @@ const InspectRecordForm = props => {
     //   },
     // },
     {
-      formType: 'plainText',
-      plainText: props.init[name],
+      // formType: 'plainText',
+      // plainText: props.init[name],
       itemProps: {
         label: '巡检人员：',
-        name: '',
+        name: ['team', 'member'],
       },
     },
     {
-      formType: 'plainText',
-      plainText: props.init[name],
+      // formType: 'plainText',
+      // plainText: props.init[name],
       itemProps: {
         label: '巡检时间：',
-        name: '',
+        name: ['team', 'member'],
       },
     },
     {
-      formType: 'plainText',
-      plainText: props.init[name],
+      // formType: 'plainText',
+      // plainText: props.init[name],
       itemProps: {
         label: '备注：',
-        name: '',
+        name: 'remarks',
       },
     },
     {
@@ -282,67 +282,73 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '高压试电笔(1年)',
-        name: ['safety_equirpment', 'electroprobe_status'],
+        // name: ['safety_equirpment', 'electroprobe_status'],
+        name: ['safety_equirpment', 'es_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.electroprobe_status,
         className: 'w-130',
       },
     },
     {
       itemProps: {
         label: '接地线(4年)',
-        name: ['safety_equirpment', 'ground_wire'],
+        // name: ['safety_equirpment', 'ground_wire'],
+        name: ['safety_equirpment', 'gw_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.ground_wire,
         className: 'w-130',
       },
     },
     {
       itemProps: {
         label: '绝缘毯(4年)',
-        name: ['safety_equirpment', 'insulating_mat'],
+        // name: ['safety_equirpment', 'insulating_mat'],
+        name: ['safety_equirpment', 'im_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.insulating_mat,
         className: 'w-130',
       },
     },
     {
       itemProps: {
         label: '绝缘手套(半年)',
-        name: ['safety_equirpment', 'insulating_gloves'],
+        // name: ['safety_equirpment', 'insulating_gloves'],
+        name: ['safety_equirpment', 'ig_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.insulating_gloves,
         className: 'w-130',
       },
     },
     {
       itemProps: {
         label: '绝缘鞋(半年)',
-        name: ['safety_equirpment', 'insulating_shoes'],
+        // name: ['safety_equirpment', 'insulating_shoes'],
+        name: ['safety_equirpment', 'is_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.insulating_shoes,
         className: 'w-130',
       },
     },
     {
       itemProps: {
         label: '灭火器压力(半年)',
-        name: ['safety_equirpment', 'extinguisher'],
+        // name: ['safety_equirpment', 'extinguisher'],
+        name: ['safety_equirpment', 'ex_check_date'],
       },
       comProps: {
-        addonBefore: inputBefore,
+        addonBefore: props.init.extinguisher,
         className: 'w-130',
       },
     },
 
     {
       formType: 'CustomCom',
-      CustomCom: <TabPanes></TabPanes>,
+      CustomCom: <TabPanes onChange={onChange}></TabPanes>,
       itemProps: {
         label: '',
         className: 'w100',
@@ -353,21 +359,21 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '电压等级',
-        name: '',
+        name: ['power_data', 'voltage_level'],
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '总容量',
-        name: '',
+        name: ['power_data', 'total_capacity'],
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '实际总容量',
-        name: '',
+        name: ['power_data', 'real_capacity'],
       },
     },
 
@@ -383,28 +389,28 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '表号',
-        name: '',
+        name: ['power_data', 'meter_number'],
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '倍率',
-        name: '',
+        name: 'multiplying_power',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '考核功率因数',
-        name: '',
+        name: 'power_factor',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '总有功(02)',
-        name: '',
+        name: 'total_active_power',
       },
     },
     {
@@ -481,21 +487,21 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '无功1 (07)',
-        name: '',
+        name: 'reactive_power_1',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '无功2 (08)',
-        name: '',
+        name: 'reactive_power_2',
       },
     },
     {
       noRule: true,
       itemProps: {
         label: '实际功率因数',
-        name: '',
+        name: 'real_power_factor',
       },
     },
 
@@ -538,7 +544,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'AB',
-        name: '',
+        name: ['spect_in', 'v_ab'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -550,7 +556,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'BC',
-        name: '',
+        name: ['spect_in', 'v_bc'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -562,7 +568,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'CA',
-        name: '',
+        name: ['spect_in', 'v_ca'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -596,7 +602,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'A',
-        name: '',
+        name: ['spect_out', 'monitor_a'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -608,7 +614,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'B',
-        name: '',
+        name: ['spect_out', 'monitor_b'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -620,7 +626,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'C',
-        name: '',
+        name: ['spect_out', 'monitor_c'],
         ...electricFormLayouts,
       },
       comProps: {

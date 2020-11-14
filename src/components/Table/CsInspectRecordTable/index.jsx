@@ -51,8 +51,6 @@ const InspectRecordTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
       extra={extra}
       noDefault
       {...props}

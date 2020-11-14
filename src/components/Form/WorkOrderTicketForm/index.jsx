@@ -2,12 +2,50 @@ import React from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
+import InputCom from '@/components/Widgets/InputCom'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 
 const choiceRadios = [
   { label: '种类1', value: 'yes', key: 'yes' },
   { label: '种类2', value: 'no', key: 'no' },
 ];
+
+const layout12 = {
+  labelCol: {
+    sm: { span: 4 }, //
+    sm: { span: 6 }, //
+    sm: { span: 10 }, //
+  },
+  wrapperCol: {
+    sm: { span: 20 }, //
+    sm: { span: 18 }, //
+    sm: { span: 14 }, //
+  },
+};
+
+const layout15 = {
+  labelCol: {
+    sm: { span: 4 }, //
+    sm: { span: 6 }, //
+    sm: { span: 5 }, //
+  },
+  wrapperCol: {
+    sm: { span: 20 }, //
+    sm: { span: 18 }, //
+    sm: { span: 19 }, //
+  },
+};
+
+const formLayouts = {
+  labelCol: {
+    sm: { span: 8 }, //
+    sm: { span: 10 }, //
+  },
+  wrapperCol: {
+    sm: { span: 16 }, //
+    sm: { span: 14 }, //
+  },
+};
 
 const layoutObj = {
   // labelCol: { span: 8 },
@@ -26,6 +64,15 @@ const twoFormLayouts = {
   },
   wrapperCol: {
     sm: { span: 12 }, //
+  },
+};
+
+const fullFormLayouts = {
+  labelCol: {
+    sm: { span: 0 }, //
+  },
+  wrapperCol: {
+    sm: { span: 24 }, //
   },
 };
 
@@ -150,7 +197,7 @@ const WorkOrderTicketForm = props => {
   const workTimeConfig = [
     {
       itemProps: {
-        label: '收工时间!',
+        label: '收工时间',
         name: '',
         className: 'w50',
       },
@@ -201,7 +248,7 @@ const WorkOrderTicketForm = props => {
     },
     {
       itemProps: {
-        label: '汇报结束时间',
+        label: '班组',
         name: '',
         className: 'w50',
       },
@@ -271,7 +318,7 @@ const WorkOrderTicketForm = props => {
       itemProps: {
         label: '2.工作内容',
         name: '',
-        className: 'w50',
+        // className: 'w100',
       },
     },
     {
@@ -281,12 +328,29 @@ const WorkOrderTicketForm = props => {
         className: 'w50',
       },
     },
+    // {
+    //   formType: 'TextArea',
+    //   itemProps: {
+    //     label: '工作内容',
+    //     name: 'job_content',
+    //   },
+    //   comProps: {
+    //   },
+    // },
     {
       formType: 'TextArea',
       itemProps: {
         label: '工作内容',
         name: 'job_content',
-        // className: 'w50',
+        className: 'w50',
+        // className: 'w100 aa',
+        // ...layout12,
+      },
+      comProps: {
+        // className: 'textAreaCls',
+        autoSize: {
+          minRows: 3,
+        },
       },
     },
     {
@@ -353,6 +417,12 @@ const WorkOrderTicketForm = props => {
         name: 'supplement',
         className: 'w50',
       },
+      comProps: {
+        // className: 'textAreaCls',
+        autoSize: {
+          minRows: 3,
+        },
+      },
     },
     {
       formType: 'rowText',
@@ -362,7 +432,7 @@ const WorkOrderTicketForm = props => {
       },
     },
     <UploadCom
-      label={''}
+      label={'一次线路图'}
       key={'logo'}
       action={'logo'}
       action={'/api/v1/upload'}
@@ -399,6 +469,7 @@ const WorkOrderTicketForm = props => {
         name: 'wt_contact',
       },
     },
+    ...stationContractConfig,
     {
       formType: 'rowText',
       itemProps: {
@@ -449,7 +520,6 @@ const WorkOrderTicketForm = props => {
         label:
           '10.工作总负责人对分票工作负责人许可、汇报记录（非工作总负责人不必填写）',
         name: '',
-        className: 'w50',
       },
     },
     ...reportConfig,
@@ -476,9 +546,50 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div className={`infoRow`}>
+          接地线<InputCom></InputCom>号共<InputCom></InputCom>组
+        </div>
+      ),
+      itemProps: {
+        label: '',
+        className: 'w50',
+        ...fullFormLayouts,
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div className={`infoRow`}>
+          接地闸刀<InputCom></InputCom>等共<InputCom></InputCom>副
+        </div>
+      ),
+      itemProps: {
+        label: '',
+        className: 'w50',
+        ...fullFormLayouts,
+      },
+    },
+    {
       formType: 'rowText',
       itemProps: {
         label: '13.备注',
+        name: 'remarks',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label:
+          '在工作过程中需操作设备时，应核对设备铭牌严格执行监护制度！（在有人值班变电站控制屏上操 作时，应得到值班人员的同意。）',
+        name: 'remarks',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '由工作负责人指定：',
         name: 'remarks',
       },
     },
@@ -497,30 +608,16 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'rowText',
       itemProps: {
-        label:
-          '（1）在工作过程中需操作设备时，应核对设备铭牌严格执行监护制度！（在有人值班变电站控制屏上操 作时，应得到值班人员的同意。）',
+        label: '（2）由工作负责人指定',
         name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
-        label: '操作人',
-        name: '',
-        className: 'w50',
-      },
-    },
-    {
-      itemProps: {
-        label: '监护人',
-        name: '',
-        className: 'w50',
-      },
-    },
-    {
-      itemProps: {
-        label: '（2）由工作负责人指定专责监护人',
+        label: '专责监护人',
         name: '',
         className: 'w50',
       },
@@ -537,7 +634,13 @@ const WorkOrderTicketForm = props => {
       itemProps: {
         label: '（3）其他补充安全措施',
         name: '',
-        className: 'w50',
+        className: 'w100',
+        ...layout15,
+      },
+      comProps: {
+        autoSize: {
+          minRows: 3,
+        },
       },
     },
     {
@@ -545,7 +648,13 @@ const WorkOrderTicketForm = props => {
       itemProps: {
         label: '（4）其他事项',
         name: '',
-        className: 'w50',
+        className: 'w100',
+        ...layout15,
+      },
+      comProps: {
+        autoSize: {
+          minRows: 3,
+        },
       },
     },
     {
@@ -553,7 +662,35 @@ const WorkOrderTicketForm = props => {
       itemProps: {
         label: '（5）交任务、交安全确认',
         name: '',
+        className: 'w100',
+        ...layout15,
+      },
+      comProps: {
+        autoSize: {
+          minRows: 3,
+        },
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label:
+          '我对工作负责人布置的本施工项目安全措施已明白无误，所有安全措施已能确保我的工作安全。',
+        name: 'remarks',
+      },
+    },
+    {
+      formType: 'TextArea',
+      itemProps: {
+        label: '工作人员',
+        name: '',
         className: 'w50',
+      },
+      comProps: {
+        // className: 'textAreaCls',
+        autoSize: {
+          minRows: 3,
+        },
       },
     },
     {
@@ -564,21 +701,14 @@ const WorkOrderTicketForm = props => {
       },
     },
     <UploadCom
-      label={'工作部位电系绘图说'}
+      label={'文件'}
       key={'logo'}
       action={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
-      extra={'支持扩展名:pdf、jpg、jpeg、png'}
+      extra={'支持扩展名:pdf、jpg、png'}
       formItemCls={'w50'}
     ></UploadCom>,
-    {
-      itemProps: {
-        label: '检查，执行符合要求/存在问题已向 ',
-        name: '',
-        className: 'w50',
-      },
-    },
     {
       formType: 'rowText',
       itemProps: {
@@ -586,18 +716,32 @@ const WorkOrderTicketForm = props => {
         name: '',
       },
     },
+    // {
+    //   itemProps: {
+    //     label: '本工作票已于',
+    //     name: '',
+    //     className: 'w50',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '检查，执行符合要求/存在问题已向-指出',
+    //     name: '',
+    //     className: 'w50',
+    //   },
+    // },
     {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div className={`infoRow`}>
+          本工作票已于<InputCom></InputCom>检查，执行符合要求/存在问题已向
+          <InputCom></InputCom>指出
+        </div>
+      ),
       itemProps: {
-        label: '本工作票已于',
-        name: '',
-        className: 'w50',
-      },
-    },
-    {
-      itemProps: {
-        label: '检查，执行符合要求/存在问题已向-指出',
-        name: '',
-        className: 'w50',
+        label: '',
+        className: 'w100',
+        ...fullFormLayouts,
       },
     },
     {
@@ -608,9 +752,9 @@ const WorkOrderTicketForm = props => {
       },
     },
   ].map(v => ({
+    className: 'w50',
     ...v,
     comProps: { className: 'w-200', ...v.comProps },
-    className: 'w50',
   }));
 
   const formProps = {
@@ -619,7 +763,7 @@ const WorkOrderTicketForm = props => {
   };
 
   return (
-    <div className={' WorkOrderTicketForm '}>
+    <div className={' workOrderTicketForm '}>
       <SmartForm
         // flexRow={2}
         // flexRow={6}
@@ -627,7 +771,7 @@ const WorkOrderTicketForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-
+        formLayouts={formLayouts}
         {...rest}
       ></SmartForm>
 

@@ -44,15 +44,7 @@ const InspectPlanTable = props => {
     },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-      noDefault
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} noDefault {...props}></SmartTable>;
 };
 
 InspectPlanTable.defaultProps = {

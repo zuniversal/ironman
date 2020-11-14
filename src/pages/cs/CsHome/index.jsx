@@ -24,11 +24,14 @@ import CsHomeVideo from '@/components/Widgets/CsHomeVideo';
 import CsHomeStatBox from '@/components/Widgets/CsHomeStatBox';
 import CsHomeMonitorVideo from '@/components/Widgets/CsHomeMonitorVideo';
 import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
+import HomeTitleRow from '@/components/Widgets/HomeTitleRow';
+import SmartVideo from '@/common/SmartVideo'; //
 
 import { actions, mapStateToProps } from '@/models/csHome'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { ANIMATE } from '@/constants'; //
+import Icon from '@/components/Widgets/Icons'; //
 
 export const TITLE = '排班';
 
@@ -56,15 +59,14 @@ class CsHome extends PureComponent {
   }
 
   renderCsHomeMonitor = params => {
-    console.log(' renderCsHomeMonitor ： ', params, this.state, this.props);
-
     return (
       <div className="monitorWrapper df">
         <div className={`left ${ANIMATE.bounceInLeft} `}>
           <CsHomeMonitor></CsHomeMonitor>
         </div>
         <div className={`center ${ANIMATE.zoomIn} `}>
-          <CsHomeVideo></CsHomeVideo>
+          {/* <CsHomeVideo></CsHomeVideo> */}
+          <div className="csHomeVideo ">{/* <SmartVideo ></SmartVideo> */}</div>
         </div>
         <div className={`right ${ANIMATE.bounceInRight} `}>
           <CsHomeMonitorVideo></CsHomeMonitorVideo>
@@ -73,13 +75,6 @@ class CsHome extends PureComponent {
     );
   };
   renderCsHomeStationTable = params => {
-    console.log(
-      ' renderCsHomeStationTable ： ',
-      params,
-      this.state,
-      this.props,
-    );
-
     return (
       <CsHomeStationTable
         showFormModal={this.props.showFormModal}
@@ -87,8 +82,6 @@ class CsHome extends PureComponent {
     );
   };
   renderSelectForm = params => {
-    console.log(' renderSelectForm ： ', params, this.state, this.props);
-
     return (
       <div className="selectWrapper">
         <div className="label">站点</div>
@@ -96,19 +89,22 @@ class CsHome extends PureComponent {
       </div>
     );
   };
+  renderPageTitle = params => {
+    return (
+      <HomeTitleRow
+        {...this.props}
+        title={this.props.route.title}
+        right={<Icon icon={'miniPower'} className={'miniPower'}></Icon>}
+      ></HomeTitleRow>
+    );
+  };
   renderCsHomeStatBox = params => {
-    console.log(' renderCsHomeStatBox ： ', params, this.state, this.props);
-
     return <CsHomeStatBox></CsHomeStatBox>;
   };
   renderCsHomeStatEcharts = params => {
-    console.log(' renderCsHomeStatEcharts ： ', params, this.state, this.props);
-
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
   };
   renderCsHomeTabsTable = params => {
-    console.log(' renderCsHomeTabsTable ： ', params, this.state, this.props);
-
     return <CsHomeTabsTable></CsHomeTabsTable>;
   };
   onOk = async props => {
@@ -162,6 +158,7 @@ class CsHome extends PureComponent {
   render() {
     return (
       <div className="csHome">
+        {this.renderPageTitle()}
         {this.renderCsHomeStatBox()}
         {this.renderSelectForm()}
         {this.renderCsHomeMonitor()}

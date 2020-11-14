@@ -18,6 +18,7 @@ const UserManageTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      className: 'textCenter',
     },
     {
       title: '姓名',
@@ -32,8 +33,12 @@ const UserManageTable = props => {
       dataIndex: 'email',
     },
     {
+      title: '职位',
+      dataIndex: 'tag',
+    },
+    {
       title: '业务部门',
-      // dataIndex: '',
+      dataIndex: 'organization',
     },
     {
       title: '角色',
@@ -41,15 +46,7 @@ const UserManageTable = props => {
     },
   ];
 
-  return (
-    <SmartTable
-      columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
-
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
 UserManageTable.defaultProps = {

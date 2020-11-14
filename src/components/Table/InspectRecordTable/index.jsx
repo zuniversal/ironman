@@ -76,7 +76,9 @@ const InspectRecordTable = props => {
       {/* <a onClick={() => showDetail({ action: 'detail', d_id: record.id })}>
         巡检报告
       </a> */}
-      <a onClick={() => props.showFormModal({ action: 'detail' })}>巡检报告</a>
+      <a onClick={() => props.edit({ action: 'detail', d_id: record.id })}>
+        巡检报告
+      </a>
       <a
         onClick={() => {
           // props.showFormModal({ action: 'inspectReport' })
@@ -94,8 +96,6 @@ const InspectRecordTable = props => {
   return (
     <SmartTable
       columns={columns}
-      // dataSource={noCalculateList}
-      // rowKey={'source_no'}
       extra={extra}
       noDefault
       {...props}

@@ -29,6 +29,7 @@ import HomeTitleRow, {
 import { actions, mapStateToProps } from '@/models/home'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { SettingOutlined } from '@ant-design/icons';
 
 export const TITLE = '首页';
 
@@ -63,24 +64,30 @@ class Home extends PureComponent {
     history.push(page);
   };
 
+  renderPageTitle = params => {
+    return (
+      <HomeTitleRow
+        {...this.props}
+        title={this.pageTitle}
+        showSetting={this.showSetting}
+        right={
+          <div className="settingWrapper dfc" onClick={this.showSetting}>
+            {/* <Icon icon={'setting'} ></Icon> */}
+            {/* <Icon icon={'home'} className={'setting'}></Icon> */}
+            <SettingOutlined className={'setting'} />
+            <div className="settingText">首页设置</div>
+          </div>
+        }
+      ></HomeTitleRow>
+    );
+  };
   renderHomeStatBox = params => {
-    console.log(' renderHomeStatBox ： ', params, this.state, this.props);
-
     return <HomeStatBox></HomeStatBox>;
   };
   renderHomeStatEcharts = params => {
-    console.log(' renderHomeStatEcharts ： ', params, this.state, this.props);
-
     return <HomeStatEcharts></HomeStatEcharts>;
   };
   renderHomeInspectMissionTable = params => {
-    console.log(
-      ' renderHomeInspectMissionTable ： ',
-      params,
-      this.state,
-      this.props,
-    );
-
     return (
       <div className="">
         <div className="homeTitle">待巡检任务</div>
@@ -89,13 +96,6 @@ class Home extends PureComponent {
     );
   };
   renderHomeWorkOrderTable = params => {
-    console.log(
-      ' renderHomeWorkOrderTable ： ',
-      params,
-      this.state,
-      this.props,
-    );
-
     return (
       <div className="">
         <div className="homeTitle">待处理工单</div>
@@ -163,13 +163,7 @@ class Home extends PureComponent {
 
     return (
       <div className="omHome">
-        <HomeTitleRow
-          {...this.props}
-          title={this.pageTitle}
-          showSetting={this.showSetting}
-          // right={<HomeSettingBtn showSetting={this.showSetting} ></HomeSettingBtn>}
-        ></HomeTitleRow>
-
+        {this.renderPageTitle()}
         {this.renderHomeStatBox()}
         {this.renderHomeStatEcharts()}
         {this.renderHomeInspectMissionTable()}

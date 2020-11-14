@@ -211,6 +211,7 @@ export const city = province;
 
 export const noShowTitlePath = [
   '/om/home',
+  '/cs/csHome',
   // '/om/shiftsArrangeDetail'
 ];
 

@@ -23,10 +23,12 @@ import SmartForm from '@/common/SmartForm'; //
 import {
   DeviceInfoTable,
   WatchInfoTable,
+  PowerStationDetailTable,
 } from '@/components/Table/PowerStationInfoTable'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
+import { ImgBlock } from '@/components/Temp';
 
 const PowerStationForm = props => {
   console.log(' PowerStationForm ： ', props, config); //
@@ -126,13 +128,19 @@ const PowerStationForm = props => {
     typeCols = editCol;
   }
 
-  const config = [
+  const actionConfig = [
+    // {
+    //   formType: 'rowText',
+    //   // rowText: '基本信息',
+    //   // noRule: true,
+    //   itemProps: {
+    //     label: '基本信息',
+    //   },
+    // },
     {
-      formType: 'rowText',
-      // rowText: '基本信息',
-      // noRule: true,
       itemProps: {
-        label: '基本信息',
+        label: '电站名称',
+        name: 'name',
       },
     },
     {
@@ -144,29 +152,29 @@ const PowerStationForm = props => {
         name: 'customer',
       },
     },
-    {
-      formType: 'Search',
-      selectSearch: props.getHouseNoAsync,
-      selectData: props.houseNoList,
-      itemProps: {
-        label: '户号',
-        name: 'electricity_user',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getHouseNoAsync,
+    //   selectData: props.houseNoList,
+    //   itemProps: {
+    //     label: '户号',
+    //     name: 'electricity_user',
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '业务主体',
+    //     name: 'person',
+    //   },
+    // },
 
     {
       itemProps: {
-        label: '电站名称',
-        name: 'name',
+        label: '运行状态',
+        name: 'operation_level',
       },
     },
-    {
-      itemProps: {
-        label: '业务主体',
-        name: 'person',
-      },
-    },
-
     {
       itemProps: {
         label: '运行等级',
@@ -175,10 +183,22 @@ const PowerStationForm = props => {
     },
     {
       itemProps: {
-        label: '电话',
-        name: 'phone',
+        label: '巡检次数',
+        // name: '',
       },
     },
+    {
+      itemProps: {
+        label: '区域',
+        // name: '',
+      },
+    },
+    // {
+    //   itemProps: {
+    //     label: '电话',
+    //     name: 'phone',
+    //   },
+    // },
     // {
     //   itemProps: {
     //     label: '电气图',
@@ -260,27 +280,33 @@ const PowerStationForm = props => {
     //   },
     // },
 
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '位置信息',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '详细用电地址',
+    //     name: 'addr',
+    //   },
+    // },
     {
-      formType: 'rowText',
       itemProps: {
-        label: '位置信息',
-      },
-    },
-    {
-      itemProps: {
-        label: '详细用电地址',
+        label: '电站地址',
         name: 'addr',
       },
     },
 
-    ...typeCols,
+    // ...typeCols,
 
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '一次电气图',
-      },
-    },
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '一次电气图',
+    //   },
+    // },
 
     <UploadCom
       label={'上传电气图'}
@@ -313,9 +339,82 @@ const PowerStationForm = props => {
     //   </Upload>
     // </Form.Item>,
   ];
+  const detailConfig = [
+    {
+      itemProps: {
+        label: '所属客户',
+        name: 'customer',
+      },
+    },
+    {
+      itemProps: {
+        label: '户号',
+        name: 'electricity_user',
+      },
+    },
+    {
+      itemProps: {
+        label: '电站名称',
+        name: 'name',
+      },
+    },
+    {
+      itemProps: {
+        label: '业务主体',
+        name: 'person',
+      },
+    },
+    {
+      itemProps: {
+        label: '运行状态',
+        name: 'operation_level',
+      },
+    },
+    {
+      itemProps: {
+        label: '运行等级',
+        name: 'operation_level',
+      },
+    },
+    {
+      itemProps: {
+        label: '巡检次数',
+        // name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '区域',
+        // name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '电站地址',
+        name: 'addr',
+      },
+    },
+    ...typeCols,
+    {
+      formType: 'CustomCom',
+      CustomCom: <ImgBlock>电气图</ImgBlock>,
+      itemProps: {
+        label: '一次电气图',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电源信息',
+      },
+    },
+  ];
+
+  const config = action !== 'detail' ? actionConfig : detailConfig; //
+  console.log('  config ：', config); //
 
   return (
-    <div className={''}>
+    <>
       <SmartForm
         config={config}
         // config={configs}
@@ -326,7 +425,9 @@ const PowerStationForm = props => {
         isDisabledAll={action === 'detail'}
         {...props}
       ></SmartForm>
-    </div>
+
+      <PowerStationDetailTable>电气图</PowerStationDetailTable>
+    </>
   );
 };
 

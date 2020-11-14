@@ -21,6 +21,7 @@ import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
 import WeakDetailForm from '@/components/Form/WeakDetailForm'; //
 import WeakTable from '@/components/Table/WeakTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
+import ExportPdf from '@/components/Pdf/ExportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -49,6 +50,7 @@ class Weak extends PureComponent {
     super(props);
     this.state = {
       titleMap,
+      isShowExportPdf: false,
     };
   }
 
@@ -90,10 +92,33 @@ class Weak extends PureComponent {
       showFormModal: this.props.showFormModal,
       handleWeakAsync: this.props.handleWeakAsync,
       exportDataAsync: this.props.exportDataAsync,
+      showExportPdf: this.showExportPdf,
     };
 
     return <WeakTable {...tableProps}></WeakTable>;
   };
+  showExportPdf = e => {
+    console.log('    showExportPdf ： ', e);
+    this.setState(
+      {
+        isShowExportPdf: !this.state.isShowExportPdf,
+      },
+      () => window.print(),
+    );
+  };
+  onClose = e => {
+    console.log('    onClose ： ', e, this.state, this.props);
+    this.setState({
+      isShowExportPdf: false,
+    });
+  };
+  get renderWeakForm() {
+    return (
+      <div className={`pdfDetail`}>
+        <WeakForm init={this.props.itemDetail}></WeakForm>
+      </div>
+    );
+  }
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
@@ -149,6 +174,14 @@ class Weak extends PureComponent {
   };
 
   render() {
+    if (this.state.isShowExportPdf) {
+      console.log(' 111111111 ： '); //
+      return (
+        <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+          {this.renderWeakForm}
+        </ExportPdf>
+      );
+    }
     return (
       <div className="Weak">
         {this.renderSearchForm()}

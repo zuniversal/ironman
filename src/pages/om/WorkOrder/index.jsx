@@ -22,6 +22,7 @@ import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm'; //
 import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm'; //
 import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
+import ExportPdf from '@/components/Pdf/ExportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/workOrder'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -162,6 +163,7 @@ class WorkOrder extends PureComponent {
       );
     }
     if (action === 'addTicket') {
+      return <WorkOrderTicketForm></WorkOrderTicketForm>;
       return <WorkOrderTicketForm {...formComProps}></WorkOrderTicketForm>;
     }
 
@@ -191,6 +193,11 @@ class WorkOrder extends PureComponent {
 
   render() {
     return <WorkOrderTicketForm></WorkOrderTicketForm>;
+    return (
+      <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+        <WorkOrderTicketForm></WorkOrderTicketForm>
+      </ExportPdf>
+    );
     return (
       <div className="WorkOrder">
         {this.renderSearchForm()}

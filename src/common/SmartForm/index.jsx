@@ -540,7 +540,11 @@ const SmartForm = (props, state) => {
     // 注意 自定义的不带 name 的展示型 Form.Item 项不要带 name 属性 不然报错
     if (flexRows && formType !== 'rowText' && formType !== 'CustomCom') {
       const colForm = (
-        <Col span={24 / Number(flexRows)} key={itemProps.key}>
+        <Col
+          span={24 / Number(flexRows)}
+          className={`flexRowsCls`}
+          key={itemProps.key}
+        >
           <Form.Item
             // name={key}
             // label={label}

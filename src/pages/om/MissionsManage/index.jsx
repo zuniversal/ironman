@@ -180,9 +180,6 @@ class MissionsManage extends PureComponent {
       contractList: this.props.contractList,
       clientData: this.props.clientData,
     };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
     if (action === 'startWorkOrder') {
       return (
         <MissionsManageWorkOrderForm
@@ -213,6 +210,9 @@ class MissionsManage extends PureComponent {
           {...formComProps}
         ></MissionsManageConfirmScheduleForm>
       );
+    }
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
     return <MissionsManageForm {...formComProps}></MissionsManageForm>;
