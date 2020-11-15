@@ -25,6 +25,8 @@ import {
   MissionsManageConfirmScheduleForm,
 } from '@/components/Form/MissionsManageActionForm'; //
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
+import ClientForm from '@/components/Form/ClientForm';
+import ContractForm from '@/components/Form/ContractForm';
 import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/missionsManage'; //
@@ -44,6 +46,8 @@ const titleMap = {
   schedule: '排期',
   confirmSchedule: '确认排期',
   closeMission: `关闭${TITLE}`,
+  clientDetail: '客户详情',
+  contractDetail: '合同详情',
 };
 
 // const mapStateToProps = ({ missionsManage, }) => missionsManage;
@@ -101,6 +105,8 @@ class MissionsManage extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       closeMissionAsync: this.props.closeMissionAsync,
+      showClientAsync: this.props.showClientAsync,
+      showContractAsync: this.props.showContractAsync,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
@@ -110,7 +116,8 @@ class MissionsManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
-    if (action === 'closeMission') {
+    // if (action === 'closeMission') {
+    if (['closeMission', 'clientDetail', 'contractDetail'].includes(action)) {
       this.props.closeMissionAsync({
         d_id,
         id: d_id,
@@ -180,6 +187,14 @@ class MissionsManage extends PureComponent {
       contractList: this.props.contractList,
       clientData: this.props.clientData,
     };
+    if (action === 'clientDetail') {
+      formComProps.init = this.props.clientDetail;
+      return <ClientForm isDisabledAll {...formComProps}></ClientForm>;
+    }
+    if (action === 'contractDetail') {
+      formComProps.init = this.props.contractDetail;
+      return <ContractForm isDisabledAll {...formComProps}></ContractForm>;
+    }
     if (action === 'closeMission') {
       return <div className="dfc">确认关闭任务？</div>;
     }
@@ -213,6 +228,9 @@ class MissionsManage extends PureComponent {
           {...formComProps}
         ></MissionsManageWorkOrderForm>
       );
+    }
+    if (action === 'detail') {
+      formComProps.isDisabledAll = true;
     }
     console.log(' formComProps ： ', formComProps); //
     return <MissionsManageForm {...formComProps}></MissionsManageForm>;

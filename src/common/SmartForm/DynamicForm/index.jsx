@@ -149,6 +149,7 @@ const ActionBtn = ({
   subText,
   limit,
   keys,
+  isDisabledAll,
 }) => (
   <Form.Item
     // label={'zyb'}
@@ -159,6 +160,7 @@ const ActionBtn = ({
     <Button
       type="dashed"
       className={'actionBtn addBtn'}
+      disabled={isDisabledAll}
       onClick={() => {
         console.log('  对吗  limit.length ', fields, limit);
         if (fields.length < limit) {
@@ -179,6 +181,7 @@ const ActionBtn = ({
         // onClick={() => {
         //   remove(field.name);
         // }}
+        disabled={isDisabledAll}
         onClick={remove}
         // style={{ width: '60%', marginTop: '20px' }}
       >
@@ -460,6 +463,7 @@ const DynamicForm = props => {
                     subText={subText}
                     limit={limit}
                     keys={field.key}
+                    isDisabledAll
                   ></ActionBtn>
                 )}
               </Form.Item>
@@ -479,6 +483,7 @@ const DynamicForm = props => {
                     <Button
                       type="dashed"
                       className={'actionBtn addBtn'}
+                      disabled={isDisabledAll}
                       onClick={() => {
                         console.log('  对吗  limit.length ', fields, limit);
                         if (fields.length < limit) {
@@ -493,6 +498,7 @@ const DynamicForm = props => {
                     <Button
                       type="dashed"
                       className={'actionBtn subBtn'}
+                      disabled={isDisabledAll}
                       onClick={() => {
                         remove(fields[fields.length - 1].name);
                       }}

@@ -73,7 +73,8 @@ export const AdminForm = props => {
               // }
             }}
             disabled={
-              form.getFieldsError().filter(({ errors }) => errors.length).length
+              form.getFieldsError().filter(({ errors }) => errors.length)
+                .length || props.isDisabledAll
             }
           >
             保存

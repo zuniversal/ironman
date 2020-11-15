@@ -51,7 +51,7 @@ const UserCenterForm = props => {
       noRule: true,
       itemProps: {
         label: '角色',
-        name: 'custom_id',
+        name: 'role',
       },
       comProps: {
         disabled: true,

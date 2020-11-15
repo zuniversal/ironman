@@ -25,6 +25,8 @@ const otherActions = [
   'scheduleAsync',
   'confirmScheduleAsync',
   'getEnumListAsync',
+  'showClientAsync',
+  'showContractAsync',
 ];
 
 export const actions = {
@@ -52,6 +54,8 @@ export default {
     clientData: [],
     enumList: [],
     teamList: [],
+    clientDetail: {},
+    contractDetail: {},
   },
 
   reducers: {
@@ -213,6 +217,30 @@ export default {
         isShowModal: false,
       };
     },
+
+    showClient(state, { payload, type }) {
+      console.log(' showClient ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        clientDetail: {
+          ...payload.bean,
+        },
+      };
+    },
+    showContract(state, { payload, type }) {
+      console.log(' showContract ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        contractDetail: {
+          // ...payload.list[0],
+          ...payload.bean,
+        },
+      };
+    },
   },
 
   effects: {
@@ -322,6 +350,15 @@ export default {
       const res = yield call(commonServices.getEnumList, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
+    },
+
+    *showClientAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *showContractAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(contractServices.getItem, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

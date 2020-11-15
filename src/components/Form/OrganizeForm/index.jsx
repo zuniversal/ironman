@@ -64,6 +64,7 @@ const OrganizeForm = props => {
     //   // selectData: props.organizeList,
     // },
     {
+      noRule: true,
       formType: 'TreeSelect',
       itemProps: {
         label: '上级部门',

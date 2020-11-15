@@ -191,7 +191,7 @@ class WorkOrder extends PureComponent {
   }
 
   render() {
-    // return <WorkOrderTicketForm></WorkOrderTicketForm>;
+    return <WorkOrderTicketForm></WorkOrderTicketForm>;
     // return (
     //   <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
     //     <WorkOrderTicketForm></WorkOrderTicketForm>

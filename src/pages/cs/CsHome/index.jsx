@@ -30,7 +30,7 @@ import SmartVideo from '@/common/SmartVideo'; //
 import { actions, mapStateToProps } from '@/models/csHome'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { ANIMATE } from '@/constants'; //
+import { ANIMATE, MINI_POWER } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
 
 export const TITLE = '排班';
@@ -96,7 +96,13 @@ class CsHome extends PureComponent {
       <HomeTitleRow
         {...this.props}
         title={this.props.route.title}
-        right={<Icon icon={'miniPower'} className={'miniPower'}></Icon>}
+        right={
+          <Icon
+            icon={'miniPower'}
+            className={'miniPower'}
+            onClick={() => window.open(MINI_POWER)}
+          ></Icon>
+        }
       ></HomeTitleRow>
     );
   };

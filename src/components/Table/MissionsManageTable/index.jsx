@@ -38,16 +38,29 @@ const MissionsManageTable = props => {
       title: '客户',
       // dataIndex: 'customer',
       dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showClientAsync({
+          action: 'clientDetail',
+          d_id: record.customer.id,
+        }),
     },
     {
       title: '任务类型',
       dataIndex: 'type',
       dataMap: missionsTypeMap,
+      detailFn: record =>
+        props.showDetail({ action: 'detail', d_id: record.id }),
     },
     {
       title: '关联合同',
-      dataIndex: 'contacts',
-      // dataIndex: ['contract', 'code'],
+      // dataIndex: 'contracts',
+      dataIndex: ['contract', 'code'],
+      detailFn: record =>
+        props.showContractAsync({
+          action: 'contractDetail',
+          d_id: record.contract.id,
+          id: record.contract.id,
+        }),
     },
     {
       title: '当前状态',

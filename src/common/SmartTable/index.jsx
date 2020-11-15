@@ -251,6 +251,7 @@ class SmartTable extends PureComponent {
       render,
       dataMap,
       isMoment,
+      detailFn,
     } = config;
 
     const { showDetail, rowKey } = this.props;
@@ -309,6 +310,10 @@ class SmartTable extends PureComponent {
       //   );
     } else if (render) {
       content = render(text, record, index);
+    } else if (detailFn) {
+      content = (
+        <a onClick={() => detailFn(record, text, index, config)}>{txt}</a>
+      );
     } else {
       content = <span className={``}>{txt}</span>;
     }

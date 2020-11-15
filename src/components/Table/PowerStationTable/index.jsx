@@ -40,17 +40,23 @@ const PowerStationTable = props => {
       d_item: 'id',
     },
     {
-      title: '设备数',
-      dataIndex: 'equipment_num',
-      className: 'textCenter',
-      d_item: 'id',
-    },
-    {
-      title: '监控次数',
+      title: '巡检次数',
       // dataIndex: '',
       className: 'textCenter',
       d_item: 'id',
     },
+    // {
+    //   title: '设备数',
+    //   dataIndex: 'equipment_num',
+    //   className: 'textCenter',
+    //   d_item: 'id',
+    // },
+    // {
+    //   title: '监控次数',
+    //   // dataIndex: '',
+    //   className: 'textCenter',
+    //   d_item: 'id',
+    // },
     // {
     //   title: '一次电气图',
     //   dataIndex: 'file',
