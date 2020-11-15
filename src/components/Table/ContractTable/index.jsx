@@ -33,7 +33,7 @@ const ContractTable = props => {
     },
     {
       title: '业务主体',
-      dataIndex: ['business_entity', 'name'],
+      dataIndex: 'business_entity',
       d_item: 'id',
       link: true,
     },
@@ -47,7 +47,7 @@ const ContractTable = props => {
     },
     {
       title: '生效日期',
-      dataIndex: '录入日期',
+      dataIndex: 'entry_date',
     },
     {
       title: '生效日期',
@@ -84,7 +84,7 @@ const ContractTable = props => {
     // },
   ];
 
-  return <SmartTable columns={columns} noDefault {...props}></SmartTable>;
+  return <SmartTable columns={columns} noActionCol {...props}></SmartTable>;
 };
 
 ContractTable.defaultProps = {

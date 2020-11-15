@@ -74,7 +74,11 @@ class UserManage extends PureComponent {
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    if (!`${params.value.value}`.trim() && !`${params.formData.value}`.trim()) {
+      console.log(' onFieldChange,22  , ： ', params);
+      return;
+    }
+    this.props.getSearchListAsync(params.formData);
   };
   renderTable = params => {
     const tableProps = {

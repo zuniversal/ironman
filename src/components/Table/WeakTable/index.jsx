@@ -78,7 +78,16 @@ const WeakTable = props => {
       </a>
       {/* <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a> */}
       {/* <a onClick={() => props.exportDataAsync({ action: 'showList' })}>导出</a> */}
-      <a onClick={() => props.showExportPdf({ action: 'showExportPdf' })}>
+      {/* <a onClick={() => props.showExportPdf({ action: 'detail', extraAction: 'showExportPdf', d_id: record.id })} > */}
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'detail',
+            extraAction: 'showExportPdf',
+            d_id: record.id,
+          })
+        }
+      >
         导出
       </a>
     </>

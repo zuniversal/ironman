@@ -5,11 +5,6 @@ import SmartForm from '@/common/SmartForm'; //
 import InputCom from '@/components/Widgets/InputCom'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 
-const choiceRadios = [
-  { label: '种类1', value: 'yes', key: 'yes' },
-  { label: '种类2', value: 'no', key: 'no' },
-];
-
 const layout12 = {
   labelCol: {
     sm: { span: 4 }, //
@@ -75,6 +70,11 @@ const fullFormLayouts = {
     sm: { span: 24 }, //
   },
 };
+
+const radioData = [
+  { label: '带电工作票', value: 0, key: 'yes' },
+  { label: '不带电工作票', value: 1, key: 'no' },
+];
 
 const WorkOrderTicketForm = props => {
   console.log(' WorkOrderTicketForm ： ', props); //
@@ -277,6 +277,14 @@ const WorkOrderTicketForm = props => {
   ];
 
   const config = [
+    {
+      formType: 'Radio',
+      radioData: radioData,
+      itemProps: {
+        label: '类型',
+        name: 'type',
+      },
+    },
     {
       itemProps: {
         label: '编号',

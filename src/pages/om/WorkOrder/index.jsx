@@ -107,6 +107,10 @@ class WorkOrder extends PureComponent {
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
     // return
+    if (action === 'detail') {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -118,11 +122,6 @@ class WorkOrder extends PureComponent {
       if (action === 'edit') {
         this.props.editItemAsync({
           ...itemDetail,
-          ...res,
-        });
-      }
-      if (action === 'detail') {
-        this.props.detailAsync({
           ...res,
         });
       }
@@ -192,12 +191,12 @@ class WorkOrder extends PureComponent {
   }
 
   render() {
-    return <WorkOrderTicketForm></WorkOrderTicketForm>;
-    return (
-      <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
-        <WorkOrderTicketForm></WorkOrderTicketForm>
-      </ExportPdf>
-    );
+    // return <WorkOrderTicketForm></WorkOrderTicketForm>;
+    // return (
+    //   <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+    //     <WorkOrderTicketForm></WorkOrderTicketForm>
+    //   </ExportPdf>
+    // );
     return (
       <div className="WorkOrder">
         {this.renderSearchForm()}

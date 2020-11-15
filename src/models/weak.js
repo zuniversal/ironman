@@ -7,7 +7,7 @@ const { createActions } = init(namespace);
 
 const otherActions = ['handleWeakAsync', 'exportDataAsync'];
 
-const batchTurnActions = [];
+const batchTurnActions = ['closePdf'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -26,6 +26,10 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    d_id: '',
+    searchInfo: {},
+    isShowExportPdf: false,
   },
 
   reducers: {
@@ -56,10 +60,12 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const isExportPdf = payload.payload.extraAction === 'showExportPdf';
       return {
         ...state,
         action: payload.payload.action,
-        isShowModal: true,
+        isShowExportPdf: isExportPdf,
+        isShowModal: isExportPdf ? false : true,
         d_id: payload.payload.d_id,
         itemDetail: payload.bean,
       };
@@ -88,6 +94,13 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    closePdf(state, { payload, type }) {
+      return {
+        ...state,
+        isShowExportPdf: false,
       };
     },
   },

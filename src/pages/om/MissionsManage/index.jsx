@@ -180,13 +180,6 @@ class MissionsManage extends PureComponent {
       contractList: this.props.contractList,
       clientData: this.props.clientData,
     };
-    if (action === 'startWorkOrder') {
-      return (
-        <MissionsManageWorkOrderForm
-          {...formComProps}
-        ></MissionsManageWorkOrderForm>
-      );
-    }
     if (action === 'closeMission') {
       return <div className="dfc">确认关闭任务？</div>;
     }
@@ -213,6 +206,13 @@ class MissionsManage extends PureComponent {
     }
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'startWorkOrder') {
+      return (
+        <MissionsManageWorkOrderForm
+          {...formComProps}
+        ></MissionsManageWorkOrderForm>
+      );
     }
     console.log(' formComProps ： ', formComProps); //
     return <MissionsManageForm {...formComProps}></MissionsManageForm>;

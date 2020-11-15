@@ -56,7 +56,7 @@ const MissionsManageTable = props => {
     },
     {
       title: '发起工单数',
-      dataIndex: '',
+      dataIndex: 'order_num',
     },
     {
       title: '创建时间',

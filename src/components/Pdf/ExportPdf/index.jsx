@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.less';
 // import ExportHeader from './ExportHeader';
 import ReactDOM from 'react-dom';
@@ -12,6 +12,11 @@ const ExportPdf = props => {
   //   props.print()
   //   window.print();
   // }
+
+  useEffect(() => {
+    window.print();
+  }, []);
+
   window.onafterprint = e => {
     console.log('    closecloseclose ： ', e);
     onClose();

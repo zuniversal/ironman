@@ -1,0 +1,74 @@
+.exportPdfWrapper {
+  height: 100%;
+  position: absolute;
+  // position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  // background: red;
+  // background: red;
+  // z-index: 10002;
+  z-index: 99;
+  color: black;
+  page-break-inside: avoid;
+  // overflow-y: scroll;
+  clear: both;
+  .exportPdf {
+    // position: absolute;
+  }
+
+  .header {
+    margin: 10px;
+  }
+
+  // zoom: .5;
+  .pdfContent {
+    // transform: scale(.5);
+    padding: 25px;
+    page-break-inside: avoid;
+  }
+}
+.pdfDetail {
+  margin: 10px -10px;
+}
+
+// .smartModal{
+//   width: 100%;
+//   .ant-modal{
+//     width: 100%!important;
+
+//   }
+
+// }
+
+@media print {
+  .ant-pro-setting-drawer-handle {
+    display: none;
+  }
+  // .smartModal{
+  //   width: 100%;
+  //   .ant-modal{
+  //     width: 100%!important;
+
+  //   }
+
+  // }
+  .ant-modal-close,
+  .ant-modal-footer {
+    display: none;
+  }
+  .ant-modal-content {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@page {
+  // size: A3;
+  margin: 1mm 2mm;
+}

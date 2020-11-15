@@ -57,13 +57,14 @@ const ClientTable = props => {
     {
       title: '管理员',
       // dataIndex: 'customer_admin',
-      dataIndex: ['customer_admin', 'nickname'],
+      // dataIndex: ['customer_admin', 'nickname'],
+      dataIndex: 'admin',
       // detail: true,
       // detailFn: (text, record, index) => showDetail(record.id),
     },
     {
       title: '户号',
-      dataIndex: 'code',
+      dataIndex: 'electricityuser_num',
       // linkUrl: '/om/houseNo',
       // linkUrlFn: (text, record, index) => {
       //   let linkUrl = HOUSENO

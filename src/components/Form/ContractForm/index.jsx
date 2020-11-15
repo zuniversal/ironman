@@ -74,7 +74,7 @@ export const config = [
   {
     itemProps: {
       label: '业务主体',
-      name: ['business_entity', 'name'],
+      name: 'business_entity',
     },
   },
   {
@@ -90,15 +90,15 @@ export const config = [
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '录入日期',
-      name: '录入日期',
+      name: 'entry_date',
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '生效日期',
@@ -106,7 +106,7 @@ export const config = [
     },
   },
   {
-    formType: 'DatePicker',
+    // formType: 'DatePicker',
     noRule: true,
     itemProps: {
       label: '结束日期',
@@ -197,6 +197,7 @@ const ContractForm = props => {
         // init={mockFormData(formatConfig(config), )}
         // init={{}}
 
+        isDisabledAll
         {...props}
       ></SmartForm>
     </div>

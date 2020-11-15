@@ -17,6 +17,7 @@ const CsHomeMonitorVideo = props => {
       {/* {props.config.map((v, i) => ( */}
       {[0, 1].map((v, i) => (
         <div className={`monitorVideo ${i === 0 ? 'first' : ''}`} key={i}>
+          {i === 0 && <SmartVideo></SmartVideo>}
           {/* <SmartVideo ></SmartVideo> */}
         </div>
       ))}

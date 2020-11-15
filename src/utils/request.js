@@ -100,6 +100,11 @@ export const isTips = res => {
     if (!noTips || status != 200) {
       tips(msg_show, status != 200 ? 2 : 1);
     }
+    // const isNormal = `${status}`.startsWith('2')
+    // console.log(' 提示 对吗  !noTips ', !noTips, noTips, status, isNormal);
+    // if (!noTips || isNormal) {
+    //   tips(msg_show, isNormal ? 2 : 1);
+    // }
   }
 };
 

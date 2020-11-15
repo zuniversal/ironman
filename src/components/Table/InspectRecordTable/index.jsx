@@ -82,7 +82,12 @@ const InspectRecordTable = props => {
       <a
         onClick={() => {
           // props.showFormModal({ action: 'inspectReport' })
-          props.showExportPdf({ action: 'showExportPdf' });
+          // props.showExportPdf({ action: 'showExportPdf', d_id: record.id });
+          props.showExportPdf({
+            action: 'detail',
+            extraAction: 'showExportPdf',
+            d_id: record.id,
+          });
           // setTimeout(() => {
           //   window.print()
           // }, 3000)

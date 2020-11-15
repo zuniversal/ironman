@@ -72,7 +72,10 @@ export default {
       console.log(' getList 修改  ： ', state, payload, type); //
       return {
         ...state,
-        dataList: [...payload.list],
+        dataList: payload.list.map(v => ({
+          ...v,
+          admin: v.customer_admin.map(v => v.nickname),
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,

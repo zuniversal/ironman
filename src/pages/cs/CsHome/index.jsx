@@ -66,7 +66,9 @@ class CsHome extends PureComponent {
         </div>
         <div className={`center ${ANIMATE.zoomIn} `}>
           {/* <CsHomeVideo></CsHomeVideo> */}
-          <div className="csHomeVideo ">{/* <SmartVideo ></SmartVideo> */}</div>
+          <div className="csHomeVideo ">
+            <SmartVideo></SmartVideo>
+          </div>
         </div>
         <div className={`right ${ANIMATE.bounceInRight} `}>
           <CsHomeMonitorVideo></CsHomeMonitorVideo>

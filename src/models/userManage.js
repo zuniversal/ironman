@@ -14,6 +14,7 @@ const otherActions = [
   'getOrganizeAsync',
   'getRoleAsync',
   'getTagsAsync',
+  'getSearchListAsync',
 ];
 
 const batchTurnActions = [];
@@ -207,6 +208,22 @@ export default {
       ); //
       // const res = yield call(services.getList, params);
       // yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
+    },
+    *getSearchListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getSearchListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getSearchList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
       console.log(' getOrganizeAsync ： ', payload); //

@@ -7,7 +7,7 @@ const { createActions } = init(namespace);
 
 const otherActions = ['getMissionItemAsync'];
 
-const batchTurnActions = [];
+const batchTurnActions = ['closePdf'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -28,6 +28,8 @@ export default {
     itemDetail: {},
     d_id: '',
     searchInfo: {},
+    isShowPdfDetail: false,
+    missionItemDetail: {},
   },
 
   reducers: {
@@ -70,16 +72,19 @@ export default {
         end_time = '',
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload); //
+      const isExportPdf = payload.payload.extraAction === 'showExportPdf';
       return {
         ...state,
         action: payload.payload.action,
-        isShowModal: true,
+        isShowPdfDetail: isExportPdf,
+        isShowModal: isExportPdf ? false : true,
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          created_time: created_time ? created_time.split('T')[0] : '',
-          start_time: start_time ? start_time.split('T')[0] : '',
-          end_time: end_time ? end_time.split('T')[0] : '',
+          // created_time: created_time ? created_time.split('T')[0] : '',
+          // start_time: start_time ? start_time.split('T')[0] : '',
+          // end_time: end_time ? end_time.split('T')[0] : '',
+          powerData: payload.bean.power_data && payload.bean.power_data[0],
         },
       };
     },
@@ -107,6 +112,33 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    closePdf(state, { payload, type }) {
+      return {
+        ...state,
+        isShowPdfDetail: false,
+      };
+    },
+    getMissionItem(state, { payload, type }) {
+      const {
+        created_time = '',
+        start_time = '',
+        end_time = '',
+      } = payload.bean;
+      console.log(' getMissionItem ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        missionItemDetail: {
+          ...payload.bean,
+          created_time: created_time ? created_time.split('T')[0] : '',
+          start_time: start_time ? start_time.split('T')[0] : '',
+          end_time: end_time ? end_time.split('T')[0] : '',
+        },
       };
     },
   },
@@ -148,7 +180,8 @@ export default {
 
     *getMissionItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getMissionItem, payload);
-      yield put({ type: 'getItem', payload: { ...res, payload } });
+      yield put(action({ ...res, payload }));
+      // yield put({ type: 'getItem', payload: { ...res, payload } });
     },
   },
 };

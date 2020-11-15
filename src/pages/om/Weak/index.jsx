@@ -97,14 +97,16 @@ class Weak extends PureComponent {
 
     return <WeakTable {...tableProps}></WeakTable>;
   };
-  showExportPdf = e => {
-    console.log('    showExportPdf ： ', e);
-    this.setState(
-      {
-        isShowExportPdf: !this.state.isShowExportPdf,
-      },
-      () => window.print(),
-    );
+  showExportPdf = params => {
+    console.log('    showExportPdf ： ', params);
+    this.props.getItemAsync(params);
+    // window.print()
+    // this.setState(
+    //   {
+    //     isShowExportPdf: !this.state.isShowExportPdf,
+    //   },
+    //   // () => window.print(),
+    // );
   };
   onClose = e => {
     console.log('    onClose ： ', e, this.state, this.props);
@@ -118,6 +120,11 @@ class Weak extends PureComponent {
         <WeakForm init={this.props.itemDetail}></WeakForm>
       </div>
     );
+    return this.props.itemDetail ? (
+      <div className={`pdfDetail`}>
+        <WeakForm init={this.props.itemDetail}></WeakForm>
+      </div>
+    ) : null;
   }
 
   onOk = async props => {
@@ -174,12 +181,20 @@ class Weak extends PureComponent {
   };
 
   render() {
-    if (this.state.isShowExportPdf) {
-      console.log(' 111111111 ： '); //
+    if (this.props.isShowExportPdf) {
+      // if (this.state.isShowExportPdf) {
+      console.log(' 111111111 ： ', this.props.itemDetail); //
       return (
-        <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+        <ExportPdf onClose={this.props.closePdf}>
           {this.renderWeakForm}
         </ExportPdf>
+      );
+      return (
+        Object.keys(this.props.itemDetail).length > 0 && (
+          <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+            {this.renderWeakForm}
+          </ExportPdf>
+        )
       );
     }
     return (

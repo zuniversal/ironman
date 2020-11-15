@@ -145,6 +145,10 @@ class InspectRecord extends PureComponent {
       };
     }
     if (action === 'inspectMission') {
+      formComProps.init = {
+        ...this.props.missionItemDetail,
+        // status: inspectMissionStatusMap[this.props.itemDetail.status],
+      };
       return (
         <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
       );
@@ -173,11 +177,13 @@ class InspectRecord extends PureComponent {
   };
 
   get renderInspectRecordForm() {
+    console.log(' renderInspectRecordForm ： ', this.props.itemDetail); //
     return (
       <div className={`pdfDetail`}>
         {!this.state.isShowExportPdf && (
           <ExportHeader
-            goBack={this.showExportPdf}
+            // goBack={this.showExportPdf}
+            goBack={this.closeExportPdf}
             print={this.exportPdf}
           ></ExportHeader>
         )}
@@ -186,11 +192,20 @@ class InspectRecord extends PureComponent {
     );
   }
 
-  showExportPdf = e => {
-    console.log('    showExportPdf ： ', e);
+  showExportPdf = params => {
+    console.log('    showExportPdf ： ', params);
     this.props.toggleShowTitle();
+    this.props.getItemAsync(params);
+    // this.setState({
+    //   isShowPdfDetail: !this.state.isShowPdfDetail,
+    // });
+  };
+  closeExportPdf = params => {
+    console.log('    closeExportPdf ： ', params);
+    this.props.toggleShowTitle();
+    this.props.closePdf();
     this.setState({
-      isShowPdfDetail: !this.state.isShowPdfDetail,
+      isShowExportPdf: false,
     });
   };
   onClose = e => {
@@ -272,12 +287,12 @@ class InspectRecord extends PureComponent {
     if (this.state.isShowExportPdf) {
       console.log(' 111111111 ： '); //
       return (
-        <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+        <ExportPdf onClose={this.closeExportPdf}>
           {this.renderInspectRecordForm}
         </ExportPdf>
       );
     }
-    if (this.state.isShowPdfDetail) {
+    if (this.props.isShowPdfDetail) {
       return this.renderInspectRecordForm;
     }
 
