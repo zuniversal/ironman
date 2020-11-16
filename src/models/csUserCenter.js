@@ -45,14 +45,6 @@ export default {
         itemDetail: {},
       };
     },
-    getList(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: payload.list,
-        count: payload.rest.count,
-        isShowModal: false,
-      };
-    },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
       return {
@@ -61,14 +53,6 @@ export default {
         isShowModal: true,
         d_id: payload.payload.d_id,
         itemDetail: payload.bean,
-      };
-    },
-    addItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
       };
     },
     editItem(state, { payload, type }) {
@@ -80,37 +64,15 @@ export default {
         isShowModal: false,
       };
     },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
-      return {
-        ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
-      };
-    },
   },
 
   effects: {
-    // *getListAsync({ payload, action, type }, { call, put }) {
-    //   console.log(' getListAsync ： ', payload, action, type); //
-    //   const res = yield call(services.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    // *addItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.addItem, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *editItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.editItem, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
+    *editItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },
   },

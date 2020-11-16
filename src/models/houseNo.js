@@ -1,12 +1,13 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/houseNo';
 import * as clientServices from '@/services/client';
+import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'houseNo';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientAsync', 'exportDataAsync'];
+const otherActions = ['getClientAsync', 'getUserAsync', 'exportDataAsync'];
 
 const batchTurnActions = [];
 
@@ -31,6 +32,7 @@ export default {
     searchInfo: {},
 
     clientList: [],
+    userList: [],
   },
 
   reducers: {
@@ -61,12 +63,26 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const { customer } = payload.bean; //
+      const { clientList } = state;
+      const customerItem = {
+        ...customer,
+        value: `${customer.id}`,
+        label: customer.name,
+      };
+      console.log(' customer ： ', customer, customerItem); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
         itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          d_id: payload.payload.d_id,
+          customer: `${customer.id}`,
+        },
+        clientList: [customerItem, ...clientList],
       };
     },
     addItem(state, { payload, type }) {
@@ -110,6 +126,12 @@ export default {
       return {
         ...state,
         clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        userList: formatSelectList(payload.list, 'nickname'),
       };
     },
   },
@@ -168,6 +190,10 @@ export default {
 
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

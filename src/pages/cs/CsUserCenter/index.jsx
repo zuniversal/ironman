@@ -23,10 +23,7 @@ import ErrorInfo from '@/components/Widgets/ErrorInfo';
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import SuccResult from '@/components/Widgets/SuccResult'; //
 
-import {
-  actions,
-  // mapStateToProps,
-} from '@/models/csUserCenter'; //
+import { actions, mapStateToProps } from '@/models/csUserCenter'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -40,7 +37,7 @@ const titleMap = {
   down: `文件下载`,
 };
 
-const mapStateToProps = ({ userCenter }) => userCenter;
+// const mapStateToProps = ({ userCenter }) => userCenter;
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -57,6 +54,24 @@ class CsUserCenter extends PureComponent {
     };
   }
 
+  renderForm = params => {
+    console.log(' renderForm ： ', params, this.state, this.props);
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      // init: this.props.userInfo.user,
+      init: this.props.itemDetail,
+    };
+    console.log(' formComProps ： ', formComProps); //
+    return this.state.isStartEdit ? (
+      <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
+    ) : (
+      <CsUserCenterForm
+        startEdit={this.startEdit}
+        {...formComProps}
+      ></CsUserCenterForm>
+    );
+  };
   startEdit = params => {
     console.log(' startEdit,  , ： ', params);
     this.setState({
@@ -65,15 +80,14 @@ class CsUserCenter extends PureComponent {
   };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
-    const { action } = this.props; //
-    const { form } = props; //
+    const { form, action } = props; //
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      if (action === 'setting') {
-        // this.props.editItemAsync({
-        //   ...res,
-        // });
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+        });
       }
     } catch (error) {
       console.log(' error ： ', error); //
@@ -86,24 +100,14 @@ class CsUserCenter extends PureComponent {
       this.state,
       this.props,
     ); //
-    this.props.getItemAsync({
-      d_id: '1',
-    });
+    this.props.getItemAsync({});
   }
 
   render() {
     return (
       <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
     );
-    return (
-      <div className="UserCenter">
-        {this.state.isStartEdit ? (
-          <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
-        ) : (
-          <CsUserCenterForm startEdit={this.startEdit}></CsUserCenterForm>
-        )}
-      </div>
-    );
+    return <div className="csUserCenter">{this.renderForm()}</div>;
   }
 }
 

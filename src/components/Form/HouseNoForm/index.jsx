@@ -55,13 +55,7 @@ const HouseNoForm = props => {
     //     label: '区域',
     //     name: 'area_code',
     //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '邮编',
-    //     name: 'postcode',
-    //   },
-    // },
+    // },,
     {
       noRule: true,
       itemProps: {
@@ -92,9 +86,9 @@ const HouseNoForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getClientAsync,
-      // selectData: props.clientList,
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
         label: '客户',
         name: 'customer',
@@ -102,26 +96,26 @@ const HouseNoForm = props => {
     },
     {
       // 户号名称 唯一 直接输入
-      // formType: 'Search',
-      // selectSearch: props.getListAsync,
-      // selectData: props.dataList,
       itemProps: {
         label: '户号',
         name: 'number',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户代表',
         name: 'customer_representative',
       },
     },
-    // {
-    //   itemProps: {
-    //     label: '户主',
-    //     name: 'householder',
-    //   },
-    // },
+    {
+      itemProps: {
+        label: '户主',
+        name: 'householder',
+      },
+    },
 
     // {
     //   itemProps: {
@@ -129,12 +123,12 @@ const HouseNoForm = props => {
     //     name: 'signing_company',
     //   },
     // },
-    // {
-    //   itemProps: {
-    //     label: '手机',
-    //     name: 'phone',
-    //   },
-    // },
+    {
+      itemProps: {
+        label: '电话',
+        name: 'phone',
+      },
+    },
 
     {
       formType: 'rowText',
@@ -142,13 +136,13 @@ const HouseNoForm = props => {
         label: '位置信息',
       },
     },
-    {
-      formType: 'Cascader',
-      itemProps: {
-        label: '区域',
-        name: 'area_code',
-      },
-    },
+    // {
+    //   // formType: 'Cascader',
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'area_code',
+    //   },
+    // },
     {
       itemProps: {
         label: '详细用电地址',
@@ -158,7 +152,7 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '邮编',
-        name: 'email',
+        name: 'postcode',
       },
     },
 
@@ -199,18 +193,20 @@ const HouseNoForm = props => {
     {
       itemProps: {
         label: '电功率考核因数',
+        name: 'ep_factor',
       },
     },
     {
       itemProps: {
         label: '计费方式',
+        name: 'billing_method',
       },
     },
   ];
 
-  if (action === 'detail') {
-    config.push(<HouseNoFormTable key={'table'}></HouseNoFormTable>);
-  }
+  // if (action === 'detail') {
+  //   config.push(<HouseNoFormTable key={'table'}></HouseNoFormTable>);
+  // }
 
   return (
     <div className={''}>
@@ -221,6 +217,7 @@ const HouseNoForm = props => {
         // init={init}
         // init={{}}
 
+        isDisabledAll={action === 'detail'}
         {...props}
       ></SmartForm>
     </div>

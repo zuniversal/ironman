@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
+import { Input, Button } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 
@@ -88,37 +89,101 @@ export const WatchInfoTable = props => {
 
 export const PowerStationDetailTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
+  const [powerData, setPowerData] = useState([{ key: Math.random() }]);
+
+  const dataSource = powerData;
+  const add = () => {
+    console.log(' add   ,   ： ', powerData);
+    setPowerData(powerData => [...powerData, { key: Math.random() }]);
+  };
+  const onChange = (e, params) => {
+    const { index, key } = params;
+    const { value } = e.target;
+    console.log(
+      ' onChange   e,   ： ',
+      index,
+      key,
+      e,
+      params,
+      value,
+      powerData,
+    );
+    setPowerData(powerData =>
+      powerData.map((v, i) => ({
+        ...(i === index
+          ? {
+              ...v,
+              [key]: value,
+            }
+          : v),
+      })),
+    );
+  };
+  console.log(' powerData   e,   ： ', powerData);
+  const inputRender = (text, record, index, config) => (
+    <Input
+      onChange={e => onChange(e, { text, record, index, key: 'power_number' })}
+    ></Input>
+  );
 
   const columns = [
     {
       title: '电源编号',
-      dataIndex: '',
+      dataIndex: 'power_number',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'power_number' })
+          }
+        ></Input>
+      ),
     },
     {
       title: '电表号',
-      dataIndex: '',
+      dataIndex: 'meter_number',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e => onChange(e, { text, record, index, key: 'biao' })}
+        ></Input>
+      ),
     },
     {
       title: '进线名称',
-      dataIndex: '',
+      dataIndex: 'incoming_line_name',
     },
     {
       title: '倍率',
-      dataIndex: '',
+      dataIndex: 'magnification',
     },
     {
       title: '装接容量',
-      dataIndex: '',
+      dataIndex: 'transformer_capacity',
     },
     {
       title: '实际容量',
-      dataIndex: '',
+      dataIndex: 'real_capacity',
     },
     {
       title: '出线侧设备数',
-      dataIndex: '',
+      dataIndex: 'outline_number',
     },
   ];
 
-  return <SmartTable columns={columns} noActionCol {...props}></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      noActionCol
+      {...props}
+      dataSource={dataSource}
+      rowKey={'key'}
+      // rowLength={3}
+      title={() => (
+        <div className={`fje`}>
+          <Button type="primary" onClick={add}>
+            新增电源
+          </Button>
+        </div>
+      )}
+    ></SmartTable>
+  );
 };

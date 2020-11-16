@@ -1,13 +1,13 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectPlan';
-import * as clientServices from '@/services/client';
+import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'inspectPlan';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientAsync', 'getScheduledListAsync'];
+const otherActions = ['getUserAsync', 'getScheduledListAsync'];
 
 const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
 
@@ -32,7 +32,7 @@ export default {
       month: moment(),
     },
 
-    clientList: [],
+    userList: [],
     dragList: [],
     initList: [],
     unScheduleList: [],
@@ -68,7 +68,7 @@ export default {
     },
     getList(state, { payload, type }) {
       console.log(' getList ： ', state, payload, payload.searchInfo); //
-      // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, client: `客户`, start: v.plan_date,   }))
+      // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, User: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
       const unScheduleListData = payload.unScheduleList.map((v, i) => {
         // console.log(' unScheduleListData v ： ', v,  )//
@@ -86,7 +86,7 @@ export default {
         return {
           ...v,
           title: `电站-${v.station.name} id:${v.station.id}`,
-          client: `客户`,
+          User: `客户`,
           start: v.plan_date,
           // isdraged: true,
           // station_id: v.station.station_id,
@@ -152,11 +152,11 @@ export default {
       };
     },
 
-    getClient(state, { payload, type }) {
-      // console.log(' getClient 修改  ： ', state, payload, type,     )//
+    getUser(state, { payload, type }) {
+      // console.log(' getUser 修改  ： ', state, payload, type,     )//
       return {
         ...state,
-        clientList: formatSelectList(payload.list, 'name'),
+        userList: formatSelectList(payload.list, 'nickname'),
       };
     },
     changeStationPlan(state, { payload = [], type }) {
@@ -311,8 +311,8 @@ export default {
       // yield put(action({ ...res, payload }));
     },
 
-    *getClientAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(clientServices.getList, payload);
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

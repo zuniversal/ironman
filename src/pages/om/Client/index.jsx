@@ -90,12 +90,9 @@ class Client extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
-        {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-        {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
-        <Button type="primary" onClick={() => this.props.search(params)}>
+        {/* <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
-        </Button>
+        </Button> */}
         {/* <Button
           type="primary"
           htmlType="submit"
@@ -172,6 +169,12 @@ class Client extends PureComponent {
     // if (action === 'edit') {
     //   actionFn = actions.editItemAsync;
     // }
+
+    if (['detail'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
+
     let actionFn = addItemAsync;
     if (action === 'edit') {
       actionFn = editItemAsync;

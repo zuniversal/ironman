@@ -33,6 +33,8 @@ const MissionsManageTable = props => {
     {
       title: '名称',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showDetail({ action: 'detail', d_id: record.id }),
     },
     {
       title: '客户',
@@ -48,8 +50,6 @@ const MissionsManageTable = props => {
       title: '任务类型',
       dataIndex: 'type',
       dataMap: missionsTypeMap,
-      detailFn: record =>
-        props.showDetail({ action: 'detail', d_id: record.id }),
     },
     {
       title: '关联合同',
@@ -83,24 +83,27 @@ const MissionsManageTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a
+      {/* <a
         onClick={() =>
           props.edit({ action: 'startWorkOrder', d_id: record.id })
         }
       >
         发起工单
       </a>
-      <a
-        onClick={() =>
-          props.edit({
-            action: 'schedule',
-            d_id: record.id,
-            itemDetail: record,
-          })
-        }
-      >
-        排期
-      </a>
+      {
+        record.status !== 'rush_to_repair' && <a
+          onClick={() =>
+            props.edit({
+              action: 'schedule',
+              d_id: record.id,
+              itemDetail: record,
+            })
+          }
+        >
+          排期
+        </a>
+      }
+      
       <a
         onClick={() =>
           props.edit({
@@ -133,7 +136,8 @@ const MissionsManageTable = props => {
         }
       >
         关联合同
-      </a>
+      </a> */}
+
       {/* <a disabled className={`disabled `}>
         已排期
       </a>
@@ -144,7 +148,7 @@ const MissionsManageTable = props => {
         已关闭
       </a> */}
 
-      {/* <a
+      <a
         onClick={() =>
           props.edit({ action: 'startWorkOrder', d_id: record.id })
         }
@@ -212,7 +216,7 @@ const MissionsManageTable = props => {
       {(record.type === 'power_construction' ||
         record.type === 'electrical_testing') &&
         record.status !== 'waiting_plan' &&
-          record.status !== 'waiting_confirm' && (
+        record.status !== 'waiting_confirm' && (
           <a disabled className={`disabled `}>
             已确认排期
           </a>
@@ -221,7 +225,7 @@ const MissionsManageTable = props => {
         <a disabled className={`disabled `}>
           已关闭
         </a>
-      )} */}
+      )}
     </>
   );
 

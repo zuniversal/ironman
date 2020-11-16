@@ -74,7 +74,9 @@ export const AdminForm = props => {
             }}
             disabled={
               form.getFieldsError().filter(({ errors }) => errors.length)
-                .length || props.isDisabledAll
+                .length ||
+              props.isDisabledAll ||
+              action === 'detail'
             }
           >
             保存
@@ -170,6 +172,7 @@ export const AdminForm = props => {
       noRuleAll
       formLayouts={rowLayout}
       noLabelLayout
+      isDisabledAll={action === 'detail'}
       {...props}
     ></SmartForm>
   );
@@ -249,6 +252,16 @@ const ClientForm = props => {
     //     options: regoins,
     //   },
     // },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '区域',
+    //     name: 'areas',
+    //   },
+    //   comProps: {
+    //     disabled: true,
+    //   },
+    // },
     {
       noRule: true,
       itemProps: {
@@ -280,9 +293,6 @@ const ClientForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getXXXX,
-      // selectData: props.XXXXList,
       itemProps: {
         label: '客户名称',
         name: 'name',
@@ -305,12 +315,13 @@ const ClientForm = props => {
         name: 'service_staff',
       },
     },
+
     {
       formType: 'Search',
       selectSearch: props.getUserAsync,
       selectData: props.userList,
       itemProps: {
-        label: '客户代表2',
+        label: '上一任客户代表',
         name: 'last_service_staff',
       },
     },
@@ -380,6 +391,9 @@ const ClientForm = props => {
       action={'/api/v1/upload'}
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、png'}
+      uploadProps={{
+        disabled: props.isDisabledAll || action === 'detail',
+      }}
     ></UploadCom>,
 
     {
@@ -500,30 +514,30 @@ const ClientForm = props => {
   ];
 
   const userCaptureInfo = [
-    {
-      itemProps: {
-        label: '下属户号',
-        name: 'owner',
-        colon: false,
-      },
-      extra: (
-        <Button
-          onClick={() => {
-            console.log(' getCapture ： ', getCapture); //
-            return getCapture({ action: 'userCapture' });
-          }}
-          className="m-l-5"
-        >
-          用户画像
-        </Button>
-      ),
-    },
-    {
-      itemProps: {
-        label: '附件',
-        name: 'attach',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '下属户号',
+    //     name: 'owner',
+    //     colon: false,
+    //   },
+    //   extra: (
+    //     <Button
+    //       onClick={() => {
+    //         console.log(' getCapture ： ', getCapture); //
+    //         return getCapture({ action: 'userCapture' });
+    //       }}
+    //       className="m-l-5"
+    //     >
+    //       用户画像
+    //     </Button>
+    //   ),
+    // },
+    // {
+    //   itemProps: {
+    //     label: '附件',
+    //     name: 'attach',
+    //   },
+    // },
   ];
 
   if (action === 'add') {

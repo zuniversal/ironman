@@ -45,16 +45,17 @@ const CsUserCenterEditForm = props => {
   const config = [
     <UploadCom
       label={'更换头像'}
+      text={'上传照片'}
       key={'logo'}
       action={'logo'}
-      action={'/api/v1/upload'}
+      action={'/api/v1/console/custom_info/miniapp/me/pic'}
       name={'logo'}
       extra={'仅支持JPG、PNG格式，文件小于1M(方形图)'}
     ></UploadCom>,
     {
       itemProps: {
         label: '国家地区',
-        name: 'name',
+        name: 'country',
       },
     },
     {
@@ -73,20 +74,14 @@ const CsUserCenterEditForm = props => {
     {
       itemProps: {
         label: '街道地址',
-        name: 'custom_id',
-      },
-    },
-    {
-      itemProps: {
-        label: '联系电话',
-        name: 'phone',
+        name: 'addr',
       },
     },
     {
       formType: 'CustomCom',
       CustomCom: (
         <div className={`rowWrapper`}>
-          <InputCom name={'prefix'} className={`rowItem`}></InputCom>
+          <InputCom name={'code'} className={`rowItem`}></InputCom>
           <InputCom name={'phone'} className={`rowItem`}></InputCom>
         </div>
       ),
@@ -121,7 +116,7 @@ const CsUserCenterEditForm = props => {
           <Button
             className={`editBtn`}
             type="primary"
-            onClick={() => props.startEdit({ form, action: 'edit' })}
+            onClick={() => props.handleOk({ form, action: 'edit' })}
           >
             开始修改
           </Button>

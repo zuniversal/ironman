@@ -42,9 +42,6 @@ class PowerStation extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          搜索
-        </Button>
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -114,6 +111,10 @@ class PowerStation extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
+    if (['detail'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     if (action === 'removeAsync') {
       this.props.removeAsync({});
       return;

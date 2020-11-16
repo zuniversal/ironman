@@ -316,6 +316,12 @@ const PowerStationForm = props => {
       key={'file'}
       // extra={'支持扩展名:pdf、jpg、png'}
     ></UploadCom>,
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电源信息',
+      },
+    },
     // <UploadCom
     //   label={'上传一次电气图'}
     //   text={'上传文件'}
@@ -367,7 +373,7 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '运行状态',
-        name: 'operation_level',
+        name: 'status',
       },
     },
     {
@@ -379,15 +385,15 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '巡检次数',
-        // name: '',
+        name: 'inspections_number',
       },
     },
-    {
-      itemProps: {
-        label: '区域',
-        // name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '区域',
+    //     // name: '',
+    //   },
+    // },
     {
       itemProps: {
         label: '电站地址',
@@ -426,7 +432,7 @@ const PowerStationForm = props => {
         {...props}
       ></SmartForm>
 
-      <PowerStationDetailTable>电气图</PowerStationDetailTable>
+      <PowerStationDetailTable></PowerStationDetailTable>
     </>
   );
 };

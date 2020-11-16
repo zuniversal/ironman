@@ -66,6 +66,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        customer_admin: [],
       };
     },
     getList(state, { payload, type }) {
@@ -83,7 +84,27 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItem 修改  ： ', state, payload, type); //
-      const { customer_admin } = payload.bean; //
+      const {
+        customer_admin,
+        service_staff,
+        last_service_staff,
+      } = payload.bean; //
+      const { userList } = state;
+      const serviceStaff = {
+        ...service_staff,
+        value: `${service_staff.id}`,
+        label: service_staff.nickname,
+      };
+      const lastServiceStaff = {
+        ...last_service_staff,
+        value: `${last_service_staff.id}`,
+        label: last_service_staff.nickname,
+      };
+      console.log(
+        ' serviceStaff, lastServiceStaff ： ',
+        serviceStaff,
+        lastServiceStaff,
+      ); //
       return {
         ...state,
         action: payload.payload.action,
@@ -94,10 +115,13 @@ export default {
           customer_admin:
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           d_id: payload.payload.d_id,
+          service_staff: `${service_staff.id}`,
+          last_service_staff: `${last_service_staff.id}`,
           // service_staff: 'zybxxx',
         },
         // adminList: [payload.bean.customer_admin],
         adminList: payload.bean.customer_admin,
+        userList: [serviceStaff, lastServiceStaff, ...userList],
       };
     },
     addItem(state, { payload, type }) {

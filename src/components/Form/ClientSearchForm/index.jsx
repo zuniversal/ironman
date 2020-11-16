@@ -35,23 +35,29 @@ const ClientSearchForm = props => {
   const configs = [
     ...config(props),
     {
-      // formType: 'Select',
       itemProps: {
-        label: '',
-        name: 'keyword',
-        className: 'w50',
-      },
-      comProps: {
-        // suffix: <SearchOutlined className="searchIcon" />,
-        // suffixIcon: <SearchOutlined className="searchIcon" />,
+        label: '客户名称',
+        name: 'name',
       },
     },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-    },
+    // {
+    //   // formType: 'Select',
+    //   itemProps: {
+    //     label: '',
+    //     name: 'keyword',
+    //     className: 'w50',
+    //   },
+    //   comProps: {
+    //     // suffix: <SearchOutlined className="searchIcon" />,
+    //     // suffixIcon: <SearchOutlined className="searchIcon" />,
+    //   },
+    // },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    // },
   ];
 
   const formProps = {

@@ -17,8 +17,8 @@ const InspectPlanSearchForm = props => {
     // },
     {
       formType: 'Search',
-      selectSearch: props.getClientAsync,
-      selectData: props.clientList,
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '客户代表',
         name: 'leader',
@@ -39,7 +39,7 @@ const InspectPlanSearchForm = props => {
   };
 
   return (
-    <div className={' InspectPlanSearchForm '}>
+    <div className={' inspectPlanSearchForm '}>
       <SearchForm
         // flexRow={6}
         config={config}

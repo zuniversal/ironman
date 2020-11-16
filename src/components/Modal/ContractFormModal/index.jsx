@@ -97,12 +97,12 @@ export const config = [
     },
   },
   {
-    formType: 'Cascader',
+    // formType: 'Cascader',
     itemProps: {
       label: '区域',
     },
     comProps: {
-      options: regoins,
+      // options: regoins,
     },
   },
   {

@@ -150,6 +150,7 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'DatePicker',
       itemProps: {
         label: '时间',
         name: 'time',
@@ -196,6 +197,7 @@ const WorkOrderTicketForm = props => {
   ];
   const workTimeConfig = [
     {
+      formType: 'DatePicker',
       itemProps: {
         label: '收工时间',
         name: 'finish_time',
@@ -217,6 +219,7 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'DatePicker',
       itemProps: {
         label: '开工时间',
         name: 'start_time',
@@ -295,7 +298,6 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '电站名称',
-        // name: ['station', 'name'],
         name: 'station_id',
         className: 'w50',
       },
@@ -335,15 +337,7 @@ const WorkOrderTicketForm = props => {
         className: 'w50',
       },
     },
-    // {
-    //   formType: 'TextArea',
-    //   itemProps: {
-    //     label: '工作内容',
-    //     name: 'job_content',
-    //   },
-    //   comProps: {
-    //   },
-    // },
+    ,
     {
       formType: 'TextArea',
       itemProps: {

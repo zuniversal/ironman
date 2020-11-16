@@ -27,7 +27,7 @@ export const config = [
   {
     itemProps: {
       label: '登录名',
-      name: '',
+      name: 'username',
     },
   },
   {
@@ -40,20 +40,20 @@ export const config = [
   {
     itemProps: {
       label: '用户名',
-      name: 'username',
+      name: 'nickname',
     },
   },
   {
     itemProps: {
       label: '手机号',
-      name: '',
+      name: 'phone',
     },
   },
   {
     formType: 'Checkbox',
     itemProps: {
       label: '关联户号',
-      name: '',
+      name: 'customer',
     },
   },
 ];

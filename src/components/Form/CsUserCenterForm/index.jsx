@@ -43,7 +43,8 @@ const CsUserCenterForm = props => {
   const config = [
     {
       formType: 'CustomCom',
-      CustomCom: <WeakDetailImg className={`avatar`}></WeakDetailImg>,
+      // CustomCom: <WeakDetailImg className={`logo`}></WeakDetailImg>,
+      CustomCom: <img className={`logo`} src={props.init.logo} />,
       itemProps: {
         label: '头像',
       },
@@ -56,40 +57,35 @@ const CsUserCenterForm = props => {
     },
     {
       itemProps: {
-        label: '姓名',
-        name: 'name',
-      },
-    },
-    {
-      itemProps: {
         label: '公司',
-        name: 'custom_id',
+        name: 'enterprise_name',
       },
     },
     {
       itemProps: {
         label: '户号',
-        name: 'phone',
+        name: 'elecno',
       },
     },
     {
       itemProps: {
         label: '电话',
-        name: 'email',
+        name: 'phone',
       },
     },
     {
       itemProps: {
         label: '地址',
-        name: 'email',
+        name: 'addr',
+        name: 'adrr',
       },
     },
-    {
-      itemProps: {
-        label: '告警频率',
-        name: 'email',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '告警频率',
+    //     name: '',
+    //   },
+    // },
   ];
 
   const formProps = {

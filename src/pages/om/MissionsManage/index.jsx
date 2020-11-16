@@ -74,9 +74,6 @@ class MissionsManage extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          搜索
-        </Button>
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -116,8 +113,11 @@ class MissionsManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
-    // if (action === 'closeMission') {
-    if (['closeMission', 'clientDetail', 'contractDetail'].includes(action)) {
+    if (['detail', 'clientDetail', 'contractDetail'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
+    if (action === 'closeMission') {
       this.props.closeMissionAsync({
         d_id,
         id: d_id,
@@ -198,13 +198,6 @@ class MissionsManage extends PureComponent {
     if (action === 'closeMission') {
       return <div className="dfc">确认关闭任务？</div>;
     }
-    if (action === 'linkContract') {
-      return (
-        <MissionsManageContractForm
-          {...formComProps}
-        ></MissionsManageContractForm>
-      );
-    }
     if (action === 'schedule') {
       return (
         <MissionsManageScheduleForm
@@ -221,6 +214,13 @@ class MissionsManage extends PureComponent {
     }
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'linkContract') {
+      return (
+        <MissionsManageContractForm
+          {...formComProps}
+        ></MissionsManageContractForm>
+      );
     }
     if (action === 'startWorkOrder') {
       return (

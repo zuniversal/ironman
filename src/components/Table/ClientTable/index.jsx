@@ -30,6 +30,8 @@ const ClientTable = props => {
       dataIndex: 'name',
       noFilter: true,
       d_item: 'id',
+      detailFn: record =>
+        props.showDetail({ action: 'detail', d_id: record.id }),
       // detailFn: (text, record, index) => {
       //   console.log(' text, record, index ： ', text, record, index,  )//
       //   showDetail(record.id)
@@ -63,7 +65,7 @@ const ClientTable = props => {
       // detailFn: (text, record, index) => showDetail(record.id),
     },
     {
-      title: '户号',
+      title: '户号数',
       dataIndex: 'electricityuser_num',
       // linkUrl: '/om/houseNo',
       // linkUrlFn: (text, record, index) => {

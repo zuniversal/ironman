@@ -90,6 +90,7 @@ export default {
         dataList: payload.list.map(v => ({
           ...v,
           confirm: v.confirm ? '已确认' : '未确认',
+          created_time: v.created_time.split('T')[0],
         })),
         count: payload.rest.count,
         isShowModal: false,

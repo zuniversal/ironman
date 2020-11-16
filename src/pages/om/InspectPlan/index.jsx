@@ -96,9 +96,6 @@ class InspectPlan extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.onSearch(params)}>
-          搜索
-        </Button>
         <Button
           type="primary"
           onClick={() =>
@@ -122,10 +119,8 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanSearchForm
         formBtn={this.renderFormBtn}
-        getClientAsync={params =>
-          this.props.getClientAsync({ keyword: params })
-        }
-        clientList={this.props.clientList}
+        getUserAsync={params => this.props.getUserAsync({ keyword: params })}
+        userList={this.props.userList}
         onFieldChange={this.onFieldChange}
         init={this.props.searchInfo}
       ></InspectPlanSearchForm>
@@ -218,7 +213,7 @@ class InspectPlan extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    this.props.getClientAsync();
+    this.props.getUserAsync();
     // this.props.getListAsync({
     //   leader: 1,
     //   // month: '2020-10',

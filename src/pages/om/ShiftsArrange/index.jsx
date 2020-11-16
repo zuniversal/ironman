@@ -104,10 +104,6 @@ class ShiftsArrange extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          {/* <Button type="primary" onClick={() => this.search(params)}> */}
-          搜索
-        </Button>
         <Button
           type="primary"
           onClick={() => this.goPage('/om/shiftsArrangeDetail')}

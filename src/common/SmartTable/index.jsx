@@ -309,7 +309,7 @@ class SmartTable extends PureComponent {
       //     <a onClick={detailFn}>{txt}</a>
       //   );
     } else if (render) {
-      content = render(text, record, index);
+      content = render(text, record, index, config);
     } else if (detailFn) {
       content = (
         <a onClick={() => detailFn(record, text, index, config)}>{txt}</a>

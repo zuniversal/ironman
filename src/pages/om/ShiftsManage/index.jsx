@@ -55,9 +55,6 @@ class ShiftsManage extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          搜索
-        </Button>
         <Button
           type="primary"
           // onClick={() =>

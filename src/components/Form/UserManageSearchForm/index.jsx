@@ -9,12 +9,14 @@ const UserManageSearchForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getOrganizeAsync,
-      selectData: props.organizeList,
+      noRule: true,
+      formType: 'TreeSelect',
       itemProps: {
         label: '业务部门',
         name: 'organization_id',
+      },
+      comProps: {
+        treeData: props.organizeList,
       },
     },
     {

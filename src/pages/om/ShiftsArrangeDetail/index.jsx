@@ -126,14 +126,6 @@ class ShiftsArrangeDetail extends PureComponent {
     console.log(' renderFormBtn ： ', params, actions); //
     return (
       <div className={'btnWrapper'}>
-        {/* <Button type="primary" htmlType="submit"   >保存</Button> */}
-        {/* <Button type="primary" onClick={this.showModal}>show</Button> */}
-        {/* <Button type="primary" onClick={() => this.search(params)}>搜索</Button> */}
-        {/* <Button type="primary" onClick={() => this.props.dispatch(actions.getItemAsync(params))}> */}
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          {/* <Button type="primary" onClick={() => this.search(params)}> */}
-          搜索
-        </Button>
         <Button onClick={() => this.handleCancel()}>取消</Button>
         {/* <Button type="primary" onClick={() => this.handleArrangeOk()}> */}
         <Button

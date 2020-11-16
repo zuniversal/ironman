@@ -106,9 +106,6 @@ class HouseNo extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          搜索
-        </Button>
         {/* <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn> */}
@@ -186,6 +183,10 @@ class HouseNo extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, d_id } = props; //
+    if (['detail'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     if (action === 'removeAsync') {
       this.props.removeAsync({});
       return;
@@ -250,6 +251,7 @@ class HouseNo extends PureComponent {
     );
   };
   componentDidMount() {
+    this.props.getUserAsync();
     this.props.getClientAsync();
     this.props.getListAsync();
   }

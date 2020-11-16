@@ -126,13 +126,13 @@ class Assets extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button
+        {/* <Button
           type="primary"
           // onClick={() => this.props.search({ keyword: params })}
           onClick={() => this.props.search(params)}
         >
           搜索
-        </Button>
+        </Button> */}
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn>

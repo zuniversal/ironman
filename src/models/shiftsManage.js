@@ -72,12 +72,44 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItem ： ', payload); //
+      const { team_headman, leader, member } = payload.list; //
+      const { userList } = state;
+      const teamHeadmanItem = {
+        ...team_headman,
+        value: `${team_headman.id}`,
+        label: team_headman.nickname,
+      };
+      const leaderItem = {
+        ...leader,
+        value: `${leader.id}`,
+        label: leader.nickname,
+      };
+      const memberList = member.map(v => ({
+        ...v,
+        value: `${v.id}`,
+        label: v.nickname,
+      }));
+      const memberIdList = member.map(v => `${v.id}`);
+      console.log(
+        ' member  member.map v ： ',
+        member,
+        teamHeadmanItem,
+        leader,
+        memberIdList,
+      ); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: { ...payload.list, d_id: payload.payload.d_id },
+        itemDetail: {
+          ...payload.list,
+          d_id: payload.payload.d_id,
+          team_headman: `${team_headman.id}`,
+          leader: `${leader.id}`,
+          member: memberIdList.length > 0 ? memberIdList : [''],
+        },
+        userList: [teamHeadmanItem, leaderItem, ...memberList, ...userList],
       };
     },
     addItem(state, { payload, type }) {

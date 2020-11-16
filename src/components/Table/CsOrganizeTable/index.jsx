@@ -17,11 +17,11 @@ const CsOrganizeTable = props => {
   const columns = [
     {
       title: '账号(登录名)',
-      dataIndex: 'custom_id',
+      dataIndex: 'username',
     },
     {
       title: '用户名',
-      dataIndex: 'username',
+      dataIndex: 'nickname',
     },
     {
       title: '手机号',
@@ -29,7 +29,7 @@ const CsOrganizeTable = props => {
     },
     {
       title: '关联账户',
-      dataIndex: 'customer',
+      dataIndex: 'customers',
     },
   ];
 
