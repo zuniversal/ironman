@@ -101,15 +101,15 @@ const HouseNoForm = props => {
         name: 'number',
       },
     },
-    {
-      formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
-      itemProps: {
-        label: '客户代表',
-        name: 'customer_representative',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getUserAsync,
+    //   selectData: props.userList,
+    //   itemProps: {
+    //     label: '客户代表',
+    //     name: 'customer_representative',
+    //   },
+    // },
     {
       itemProps: {
         label: '户主',

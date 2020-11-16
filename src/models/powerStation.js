@@ -1,14 +1,15 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
+import * as clientServices from '@/services/client';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
 
-const otherActions = ['exportDataAsync', 'getHouseNoAsync'];
+const otherActions = ['exportDataAsync', 'getHouseNoAsync', 'getClientAsync'];
 
-const batchTurnActions = [];
+const batchTurnActions = ['editPowerInfo'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -32,6 +33,7 @@ export default {
 
     clientList: [],
     houseNoList: [],
+    powerInfoData: [],
   },
 
   reducers: {
@@ -109,6 +111,14 @@ export default {
       };
     },
 
+    editPowerInfo(state, { payload, type }) {
+      const datas = state.powerInfoData;
+      console.log(' editPowerInfo 修改  ： ', state, payload, type, datas); //
+      return {
+        ...state,
+        powerInfoData: datas,
+      };
+    },
     getClient(state, { payload, type }) {
       // console.log(' getClient 修改  ： ', state, payload, type,     )//
       return {

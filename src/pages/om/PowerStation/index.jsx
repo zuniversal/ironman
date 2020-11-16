@@ -159,6 +159,7 @@ class PowerStation extends PureComponent {
       getHouseNoAsync: params =>
         this.props.getHouseNoAsync({ keyword: params }),
       houseNoList: this.props.houseNoList,
+      editPowerInfo: this.props.editPowerInfo,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -190,6 +191,7 @@ class PowerStation extends PureComponent {
     );
   };
   componentDidMount() {
+    this.props.getClientAsync();
     this.props.getHouseNoAsync();
   }
 

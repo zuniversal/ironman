@@ -144,9 +144,19 @@ const PowerStationForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectSearch: props.getClientAsync,
-      // selectData: props.clientList,
+      // noRule: true,
+      formType: 'Search',
+      selectSearch: props.getHouseNoAsync,
+      selectData: props.houseNoList,
+      itemProps: {
+        label: '户号',
+        name: 'electricity_user',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
         label: '所属客户',
         name: 'customer',
@@ -162,17 +172,17 @@ const PowerStationForm = props => {
     //   },
     // },
 
-    // {
-    //   itemProps: {
-    //     label: '业务主体',
-    //     name: 'person',
-    //   },
-    // },
+    {
+      itemProps: {
+        label: '业务主体',
+        name: 'person',
+      },
+    },
 
     {
       itemProps: {
         label: '运行状态',
-        name: 'operation_level',
+        name: 'status',
       },
     },
     {
@@ -184,21 +194,21 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '巡检次数',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '区域',
-        // name: '',
+        name: 'inspections_number',
       },
     },
     // {
     //   itemProps: {
-    //     label: '电话',
-    //     name: 'phone',
+    //     label: '区域',
+    //     name: 'addr',
     //   },
     // },
+    {
+      itemProps: {
+        label: '电话',
+        name: 'phone',
+      },
+    },
     // {
     //   itemProps: {
     //     label: '电气图',
@@ -347,12 +357,20 @@ const PowerStationForm = props => {
   ];
   const detailConfig = [
     {
+      noRule: true,
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
         label: '所属客户',
         name: 'customer',
       },
     },
     {
+      // noRule: true,
+      formType: 'Search',
+      selectSearch: props.getHouseNoAsync,
+      selectData: props.houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user',
@@ -386,6 +404,12 @@ const PowerStationForm = props => {
       itemProps: {
         label: '巡检次数',
         name: 'inspections_number',
+      },
+    },
+    {
+      itemProps: {
+        label: '电话',
+        name: 'phone',
       },
     },
     // {
@@ -432,7 +456,10 @@ const PowerStationForm = props => {
         {...props}
       ></SmartForm>
 
-      <PowerStationDetailTable></PowerStationDetailTable>
+      <PowerStationDetailTable
+        editPowerInfo={props.editPowerInfo}
+        powerInfoData={props.powerInfoData}
+      ></PowerStationDetailTable>
     </>
   );
 };

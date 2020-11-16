@@ -150,22 +150,79 @@ export const PowerStationDetailTable = props => {
     {
       title: '进线名称',
       dataIndex: 'incoming_line_name',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'incoming_line_name' })
+          }
+        ></Input>
+      ),
     },
     {
       title: '倍率',
       dataIndex: 'magnification',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'magnification' })
+          }
+        ></Input>
+      ),
     },
     {
       title: '装接容量',
       dataIndex: 'transformer_capacity',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'transformer_capacity' })
+          }
+        ></Input>
+      ),
     },
     {
       title: '实际容量',
       dataIndex: 'real_capacity',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'real_capacity' })
+          }
+        ></Input>
+      ),
     },
     {
       title: '出线侧设备数',
       dataIndex: 'outline_number',
+      render: (text, record, index, config) => (
+        <Input
+          onChange={e =>
+            onChange(e, { text, record, index, key: 'outline_number' })
+          }
+        ></Input>
+      ),
+    },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      render: (text, record, index, config) => (
+        <>
+          <a
+            onClick={() => {
+              console.log(' record ： ', props, record, edit); //
+              props.editPowerInfo({
+                action: 'add',
+                ...record,
+              });
+            }}
+          >
+            编辑
+          </a>
+          <a onClick={() => editPowerInfo({ action: 'remove', ...record })}>
+            删除
+          </a>
+        </>
+      ),
     },
   ];
 
@@ -176,11 +233,15 @@ export const PowerStationDetailTable = props => {
       {...props}
       dataSource={dataSource}
       rowKey={'key'}
+      className={'powerStationDetailTable'}
       // rowLength={3}
       title={() => (
         <div className={`fje`}>
-          <Button type="primary" onClick={add}>
+          <Button type="primary" onClick={add} className={'add'}>
             新增电源
+          </Button>
+          <Button type="primary" onClick={() => props.save(dataSource)}>
+            保存
           </Button>
         </div>
       )}
