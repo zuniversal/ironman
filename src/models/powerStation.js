@@ -2,12 +2,17 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
 
-const otherActions = ['exportDataAsync', 'getHouseNoAsync', 'getClientAsync'];
+const otherActions = [
+  'exportDataAsync',
+  'getHouseNoAsync',
+  'getClientAsync',
+  'addPowerInfo',
+];
 
 const batchTurnActions = ['editPowerInfo'];
 
@@ -18,6 +23,18 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 
 export const mapStateToProps = state => state[namespace];
+
+const initItem = {
+  key: Math.random(),
+  power_number: '',
+  meter_number: '',
+  incoming_line_name: '',
+  magnification: '',
+  transformer_capacity: '',
+  real_capacity: '',
+  outline_number: '',
+  action: '',
+};
 
 export default {
   namespace,
@@ -33,7 +50,7 @@ export default {
 
     clientList: [],
     houseNoList: [],
-    powerInfoData: [],
+    powerInfoData: [initItem],
   },
 
   reducers: {
@@ -112,11 +129,35 @@ export default {
     },
 
     editPowerInfo(state, { payload, type }) {
-      const datas = state.powerInfoData;
-      console.log(' editPowerInfo 修改  ： ', state, payload, type, datas); //
+      console.log(' editPowerInfo ： ', state, payload); //
+      const { powerInfoData } = state;
+      const { action, keys, key, index, value } = payload;
+      let newData = [];
+      if (action === 'add') {
+        newData = [
+          {
+            ...initItem,
+            key: Math.random(),
+          },
+          ...powerInfoData,
+        ];
+      } else if (action === 'edit') {
+        newData = powerInfoData.map((v, i) => ({
+          ...(i === index
+            ? {
+                ...v,
+                [keys]: value,
+              }
+            : v),
+        }));
+      } else if (action === 'remove') {
+        newData = powerInfoData.filter((v, i) => v.key !== key);
+      }
+
+      console.log(' editPowerInfo 修改  ： ', state, payload, type, newData); //
       return {
         ...state,
-        powerInfoData: datas,
+        powerInfoData: newData,
       };
     },
     getClient(state, { payload, type }) {
@@ -156,9 +197,68 @@ export default {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
+    *addItemAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' addItemAsync ： ', payload); //
+      const { powerInfoData } = yield select(state => state[namespace]);
+      // if (payload.file && payload.file.fileList) {
+      //   const fileList = payload.file.fileList;
+      //   payload.file = fileList[fileList.length - 1].response.url;
+      // } else {
+      //   tips('文件不能为空！', 2)
+      //   return
+      // }
+      const datas = [
+        {
+          id: 1,
+          power_number: '',
+          meter_number: '',
+          incoming_line_name: '',
+          magnification: '',
+          transformer_capacity: '',
+          real_capacity: '',
+          outline_number: '',
+        },
+      ];
+      let isRight = true;
+      // powerInfoData.forEach((item) => {
+      datas.forEach((item, i) => {
+        console.log(' powerInfoData v ： ', item);
+        Object.keys(item).forEach(key => {
+          if (!item[key]) {
+            isRight = {
+              i,
+              key,
+            };
+          }
+        });
+      });
+      console.log(' isRight ： ', isRight); //
+      if (isRight !== true) {
+        tips(
+          `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
+          2,
+        );
+        return;
+      }
+      return;
+
+      const res = yield call(services.addItem, {
+        ...payload,
+        elecrical_info_list: [
+          {
+            id: 1,
+            power_number: '',
+            meter_number: '',
+            incoming_line_name: '',
+            magnification: '',
+            transformer_capacity: '',
+            real_capacity: '',
+            outline_number: '',
+          },
+        ],
+      });
+      // const res = yield call(services.addItem, {payload});
+      // yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const { latitude, longitude, ...rest } = payload;
@@ -179,6 +279,24 @@ export default {
       return res;
     },
 
+    *addPowerInfo({ payload, action, type }, { call, put }) {
+      console.log(' addPowerInfo ： ', payload); //
+      const res = yield call(services.addPowerInfo, {
+        // ...payload,
+        // elecrical_info_list:
+        // {
+        power_number: '1',
+        meter_number: '2',
+        incoming_line_name: '3',
+        magnification: '4',
+        transformer_capacity: '5',
+        real_capacity: '6',
+        outline_number: '7',
+        // },
+      });
+      // const res = yield call(services.addItem, {payload});
+      // yield put(action({ ...res, payload }));
+    },
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));

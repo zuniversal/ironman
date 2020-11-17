@@ -43,7 +43,7 @@ const WorkOrderTable = props => {
     // },
     {
       title: '客户名称',
-      dataIndex: 'name',
+      dataIndex: ['task', 'customer', 'name'],
     },
     {
       title: '工单类型',

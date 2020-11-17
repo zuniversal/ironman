@@ -104,9 +104,9 @@ class CsUserCenter extends PureComponent {
   }
 
   render() {
-    return (
-      <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
-    );
+    // return (
+    //   <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
+    // );
     return <div className="csUserCenter">{this.renderForm()}</div>;
   }
 }

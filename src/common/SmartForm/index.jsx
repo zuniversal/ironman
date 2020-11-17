@@ -109,6 +109,7 @@ export const getLabel = (label, key) => {
   const labelMap = {
     rowText: '',
     Input: INPUT_TXT + label,
+    InputNumber: INPUT_TXT + label,
     TextArea: INPUT_TXT + label,
     Select: SELECT_TXT + label,
     Search: SELECT_TXT + label,
@@ -162,7 +163,7 @@ const SmartForm = (props, state) => {
   } = props; //
 
   const configs = isFormat
-    ? formatConfig(config, { isSearchForm, isDisabledAll })
+    ? formatConfig(config, { isSearchForm, isDisabledAll, action })
     : config; //
 
   const [initData, setInitData] = useState(() => {
@@ -465,6 +466,7 @@ const SmartForm = (props, state) => {
       plainText: <span className={`plainText`}>{plainText}</span>,
       Divider: <Divider />,
       Input: <Input allowClear maxLength={32} {...realComProps} />,
+      InputNumber: <InputNumber allowClear maxLength={32} {...realComProps} />,
       // InputCompact: <Input allowClear maxLength={32} {...realComProps} />,
       TextArea: (
         <TextArea

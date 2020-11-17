@@ -138,6 +138,7 @@ export default {
       console.log(' login ： ', state, payload); //
       return {
         ...state,
+        getRoutes: { ...getRoutes() },
         userInfo: payload.userInfo,
         accountType: payload.userInfo.account.account_type,
       };

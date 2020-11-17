@@ -197,11 +197,11 @@ class Client extends PureComponent {
         ...res,
         customer_admin: adminList,
       };
-      if (res.file && res.file.fileLis) {
+      if (res.file && res.file.fileList) {
         const fileList = res.file.fileList;
         params.file = fileList[fileList.length - 1].response.url;
       }
-      if (res.logo && res.logo.fileLis) {
+      if (res.logo && res.logo.fileList) {
         const logoFileList = res.logo.fileList;
         params.logo = fileList[fileList.length - 1].response.url;
       }

@@ -68,7 +68,7 @@ class SmartTable extends PureComponent {
         columns,
         haveChildren: props.haveChildren,
       }),
-      // mockTbData: [],
+      mockTbData: [],
 
       selectionType: 'checkbox',
 
@@ -169,7 +169,7 @@ class SmartTable extends PureComponent {
     // const data = mixinData ? [...realData, ...this.state.mockTbData, ] : realData
 
     const data = (dataSource.length > 0 ? dataSource : this.state.mockTbData)
-      .map((v, i) => ({ ...v, key: i }))
+      .map((v, i) => ({ ...v, key: v.key ? v.key : i }))
       .map((v, i) => ({
         ...v,
         // d_id: v.d_id

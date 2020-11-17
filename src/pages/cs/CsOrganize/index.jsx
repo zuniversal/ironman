@@ -72,6 +72,16 @@ class CsOrganize extends PureComponent {
 
     return <CsOrganizeTable {...tableProps}></CsOrganizeTable>;
   };
+
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.removeItemAsync({
+      custom_id: `${params.record.customer_id}`,
+      user_id: `${params.record.user_id}`,
+      account_id: `${params.record.account_id}`,
+    });
+  };
+
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //

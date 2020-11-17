@@ -221,12 +221,22 @@ export default {
 
     showClient(state, { payload, type }) {
       console.log(' showClient ： ', payload); //
+      const {
+        customer_admin,
+        service_staff,
+        last_service_staff,
+      } = payload.bean; //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         clientDetail: {
           ...payload.bean,
+          customer_admin:
+            customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
+          d_id: payload.payload.d_id,
+          service_staff: `${service_staff.id}`,
+          last_service_staff: `${last_service_staff.id}`,
         },
       };
     },

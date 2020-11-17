@@ -33,7 +33,9 @@ const CsOrganizeTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  return (
+    <SmartTable columns={columns} {...props} rowKey={'user_id'}></SmartTable>
+  );
 };
 
 CsOrganizeTable.defaultProps = {

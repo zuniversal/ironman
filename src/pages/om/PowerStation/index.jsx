@@ -126,10 +126,6 @@ class PowerStation extends PureComponent {
         ...init,
         ...res,
       };
-      if (res.file && res.file.fileLis) {
-        const fileList = res.file.fileList;
-        params.file = fileList[fileList.length - 1].response.url;
-      }
       if (action === 'add') {
         this.props.addItemAsync({
           ...params,
@@ -193,9 +189,40 @@ class PowerStation extends PureComponent {
   componentDidMount() {
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
+    // this.props.addPowerInfo();
+    this.props.addItemAsync({
+      electricity_user: '1',
+      // customer: "5774",
+      name: '1',
+      person: '13',
+      status: true,
+      operation_level: '1',
+      inspections_number: 1,
+      phone: '11',
+      addr: '清华大学',
+      file: 'http://localhost:8000/#/om/powerStation',
+    });
   }
 
   render() {
+    const formComProps = {
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      clientList: this.props.clientList,
+      getHouseNoAsync: params =>
+        this.props.getHouseNoAsync({ keyword: params }),
+      houseNoList: this.props.houseNoList,
+      editPowerInfo: this.props.editPowerInfo,
+    };
+    return (
+      <PowerStationForm
+        addPowerInfo={this.props.addPowerInfo}
+        editPowerInfo={this.props.editPowerInfo}
+        {...formComProps}
+        dataSource={this.props.powerInfoData}
+      ></PowerStationForm>
+    );
     return (
       <div className="PowerStation">
         {this.renderSearchForm()}

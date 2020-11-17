@@ -43,6 +43,7 @@ const titleMap = {
 const mapStateToProps = ({ inspectPlan, loading }) => ({
   ...inspectPlan,
   loading: loading.effects['inspectPlan/getListAsync'],
+  // loading: loading.effects,
 });
 
 @connect(mapStateToProps)
@@ -119,6 +120,8 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanSearchForm
         formBtn={this.renderFormBtn}
+        getTagsAsync={params => this.props.getTagsAsync({ keyword: params })}
+        tagList={this.props.tagList}
         getUserAsync={params => this.props.getUserAsync({ keyword: params })}
         userList={this.props.userList}
         onFieldChange={this.onFieldChange}
@@ -136,13 +139,18 @@ class InspectPlan extends PureComponent {
   };
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )
+    const { loading } = this.props; //
+    // const isLoading = loading['inspectPlan/getTagsAsync']
     return (
-      <InspectPlanCalendar
-        eventsSet={this.props.changeStationPlan}
-        // scheduleList={this.props.scheduleList}
-        scheduleList={this.props.scheduleList}
-        unScheduleList={this.props.unScheduleList}
-      ></InspectPlanCalendar>
+      // !loading && <InspectPlanCalendar
+      !loading && (
+        <InspectPlanCalendar
+          eventsSet={this.props.changeStationPlan}
+          // scheduleList={this.props.scheduleList}
+          scheduleList={this.props.scheduleList}
+          unScheduleList={this.props.unScheduleList}
+        ></InspectPlanCalendar>
+      )
     );
   };
 
@@ -177,8 +185,8 @@ class InspectPlan extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      // getUser: params => this.props.getUserAsync({ keyword: params }),
-      // userList: this.props.userList,
+      // getUser: params => this.props.getTagsAsync({ keyword: params }),
+      // tagList: this.props.tagList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -213,9 +221,11 @@ class InspectPlan extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getTagsAsync();
     this.props.getUserAsync();
     // this.props.getListAsync({
     //   leader: 1,
+    //   // leader: 2,
     //   // month: '2020-10',
     // });
   }
@@ -226,12 +236,13 @@ class InspectPlan extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
+      this.props.loading,
     ); //
 
     const { loading } = this.props; //
 
     return (
-      <div className="InspectPlan">
+      <div className="inspectPlan">
         {this.renderSearchForm()}
 
         <Spin

@@ -1,5 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectPlan';
+import * as tagsServices from '@/services/user';
 import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
@@ -7,7 +8,7 @@ import moment from 'moment'; //
 const namespace = 'inspectPlan';
 const { createActions } = init(namespace);
 
-const otherActions = ['getUserAsync', 'getScheduledListAsync'];
+const otherActions = ['getTagsAsync', 'getUserAsync', 'getScheduledListAsync'];
 
 const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
 
@@ -32,6 +33,7 @@ export default {
       month: moment(),
     },
 
+    tagList: [],
     userList: [],
     dragList: [],
     initList: [],
@@ -68,7 +70,7 @@ export default {
     },
     getList(state, { payload, type }) {
       console.log(' getList ： ', state, payload, payload.searchInfo); //
-      // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, User: `客户`, start: v.plan_date,   }))
+      // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, Tags: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
       const unScheduleListData = payload.unScheduleList.map((v, i) => {
         // console.log(' unScheduleListData v ： ', v,  )//
@@ -86,7 +88,7 @@ export default {
         return {
           ...v,
           title: `电站-${v.station.name} id:${v.station.id}`,
-          User: `客户`,
+          tags: `客户`,
           start: v.plan_date,
           // isdraged: true,
           // station_id: v.station.station_id,
@@ -152,6 +154,13 @@ export default {
       };
     },
 
+    getTags(state, { payload, type }) {
+      // console.log(' getTags 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        tagList: formatSelectList(payload.list, 'name'),
+      };
+    },
     getUser(state, { payload, type }) {
       // console.log(' getUser 修改  ： ', state, payload, type,     )//
       return {
@@ -178,7 +187,9 @@ export default {
           : {
               ...v,
               surplus_plan_num:
-                v.surplus_plan_num > 0 && latestDrag.url == v.surplus_plan_num
+                v.surplus_plan_num > 0 &&
+                latestDrag &&
+                latestDrag.url == v.surplus_plan_num
                   ? v.surplus_plan_num - 1
                   : v.surplus_plan_num,
               // isdraged: true,
@@ -288,7 +299,8 @@ export default {
       const res = yield call(services.addItem, {
         data: planData,
       });
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
@@ -296,7 +308,8 @@ export default {
       const res = yield call(services.changePlan, {
         data: dragList,
       });
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
@@ -311,6 +324,10 @@ export default {
       // yield put(action({ ...res, payload }));
     },
 
+    *getTagsAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(tagsServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, payload);
       yield put(action({ ...res, payload }));

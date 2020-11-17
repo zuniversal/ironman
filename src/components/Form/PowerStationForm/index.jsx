@@ -30,6 +30,11 @@ import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 import { ImgBlock } from '@/components/Temp';
 
+const selectData = [
+  { label: '正常', value: true, key: 'yes' },
+  { label: '不正常', value: false, key: 'no' },
+];
+
 const PowerStationForm = props => {
   console.log(' PowerStationForm ： ', props, config); //
   const { action } = props; //
@@ -40,7 +45,6 @@ const PowerStationForm = props => {
   };
 
   // const formConfig = formatConfig(config);
-
   const deciveRow = {
     formType: 'rowText',
     itemProps: {
@@ -153,15 +157,15 @@ const PowerStationForm = props => {
         name: 'electricity_user',
       },
     },
-    {
-      formType: 'Search',
-      selectSearch: props.getClientAsync,
-      selectData: props.clientList,
-      itemProps: {
-        label: '所属客户',
-        name: 'customer',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getClientAsync,
+    //   selectData: props.clientList,
+    //   itemProps: {
+    //     label: '所属客户',
+    //     name: 'customer',
+    //   },
+    // },
     // {
     //   formType: 'Search',
     //   selectSearch: props.getHouseNoAsync,
@@ -180,6 +184,8 @@ const PowerStationForm = props => {
     },
 
     {
+      formType: 'Search',
+      selectData: selectData,
       itemProps: {
         label: '运行状态',
         name: 'status',
@@ -192,6 +198,7 @@ const PowerStationForm = props => {
       },
     },
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '巡检次数',
         name: 'inspections_number',
@@ -457,8 +464,9 @@ const PowerStationForm = props => {
       ></SmartForm>
 
       <PowerStationDetailTable
+        addPowerInfo={props.addPowerInfo}
         editPowerInfo={props.editPowerInfo}
-        powerInfoData={props.powerInfoData}
+        dataSource={props.dataSource}
       ></PowerStationDetailTable>
     </>
   );

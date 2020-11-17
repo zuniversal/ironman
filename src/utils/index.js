@@ -211,9 +211,12 @@ export const mockFormData = (config, init) => {
 export const w320 = 'w-320'; //
 export const w240 = 'w-240'; //
 
-export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
+export const formatConfig = (
+  config,
+  { isSearchForm, isDisabledAll, action } = {},
+) => {
   const configs = config.map((v, i) => {
-    // console.log(' formatConfig ： ', v, v.itemProps, v.itemProps?.name, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
+    // console.log(' formatConfig ：v.itemProps?.name  ', v, v.itemProps, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
     const items = {
       ...v,
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
@@ -257,10 +260,16 @@ export const formatConfig = (config, { isSearchForm, isDisabledAll } = {}) => {
     if (isSearchForm || v.formType === 'Dynamic') {
       items.noRule = true;
     }
+    if (action === 'detail') {
+      if (['DatePicker', 'MonthPicker', 'RangePicker'].includes(v.formType)) {
+        items.formType = 'Input';
+      }
+    }
+
     return items;
   });
 
-  if (isDisabledAll) {
+  if (isDisabledAll || action === 'detail') {
     configs.forEach((v, i) => {
       // console.log(' configs v ： ', v, i);
       v.comProps.disabled = true;

@@ -115,7 +115,7 @@ const ShiftsArrangeList = props => {
                     data-datas={event}
                     test={'zyb'}
                   >
-                    电站-{event.name}
+                    {event.name}
                   </div>
                 )}
                 <div>客户-{event.customer}</div>

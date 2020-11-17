@@ -70,11 +70,11 @@ export const teamTypeMap = {
 
 export const onDutyTypeConfig = [
   {
-    value: 0,
+    value: '0',
     label: '调度',
   },
   {
-    value: 1,
+    value: '2',
     label: '值班',
   },
 ];

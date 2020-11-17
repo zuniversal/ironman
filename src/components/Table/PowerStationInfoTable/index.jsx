@@ -89,42 +89,37 @@ export const WatchInfoTable = props => {
 
 export const PowerStationDetailTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
-  const [powerData, setPowerData] = useState([{ key: Math.random() }]);
+  // const [powerData, setPowerData] = useState([{ key: Math.random() }]);
 
-  const dataSource = powerData;
-  const add = () => {
-    console.log(' add   ,   ： ', powerData);
-    setPowerData(powerData => [...powerData, { key: Math.random() }]);
-  };
-  const onChange = (e, params) => {
-    const { index, key } = params;
-    const { value } = e.target;
-    console.log(
-      ' onChange   e,   ： ',
-      index,
-      key,
-      e,
-      params,
-      value,
-      powerData,
-    );
-    setPowerData(powerData =>
-      powerData.map((v, i) => ({
-        ...(i === index
-          ? {
-              ...v,
-              [key]: value,
-            }
-          : v),
-      })),
-    );
-  };
-  console.log(' powerData   e,   ： ', powerData);
-  const inputRender = (text, record, index, config) => (
-    <Input
-      onChange={e => onChange(e, { text, record, index, key: 'power_number' })}
-    ></Input>
-  );
+  // const dataSource = powerData;
+  // const add = () => {
+  //   console.log(' add   ,   ： ', powerData);
+  //   setPowerData(powerData => [...powerData, { key: Math.random() }]);
+  // };
+  // const onChange = (e, params) => {
+  //   const { index, key } = params;
+  //   const { value } = e.target;
+  //   console.log(
+  //     ' onChange   e,   ： ',
+  //     index,
+  //     key,
+  //     e,
+  //     params,
+  //     value,
+  //     powerData,
+  //   );
+  //   setPowerData(powerData =>
+  //     powerData.map((v, i) => ({
+  //       ...(i === index
+  //         ? {
+  //             ...v,
+  //             [key]: value,
+  //           }
+  //         : v),
+  //     })),
+  //   );
+  // };
+  // console.log(' powerData   e,   ： ', powerData);
 
   const columns = [
     {
@@ -133,7 +128,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'power_number' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'power_number',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -143,7 +145,16 @@ export const PowerStationDetailTable = props => {
       dataIndex: 'meter_number',
       render: (text, record, index, config) => (
         <Input
-          onChange={e => onChange(e, { text, record, index, key: 'biao' })}
+          onChange={e =>
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'biao',
+              text,
+              record,
+              index,
+            })
+          }
         ></Input>
       ),
     },
@@ -153,7 +164,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'incoming_line_name' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'incoming_line_name',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -164,7 +182,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'magnification' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'magnification',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -175,7 +200,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'transformer_capacity' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'transformer_capacity',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -186,7 +218,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'real_capacity' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'real_capacity',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -197,7 +236,14 @@ export const PowerStationDetailTable = props => {
       render: (text, record, index, config) => (
         <Input
           onChange={e =>
-            onChange(e, { text, record, index, key: 'outline_number' })
+            props.editPowerInfo({
+              action: 'edit',
+              value: e.target.value,
+              keys: 'outline_number',
+              text,
+              record,
+              index,
+            })
           }
         ></Input>
       ),
@@ -205,20 +251,31 @@ export const PowerStationDetailTable = props => {
     {
       title: '操作',
       dataIndex: 'action',
+      className: 'actionCol',
       render: (text, record, index, config) => (
         <>
           <a
             onClick={() => {
               console.log(' record ： ', props, record, edit); //
               props.editPowerInfo({
-                action: 'add',
                 ...record,
+                index,
+                action: 'edit',
               });
             }}
           >
             编辑
           </a>
-          <a onClick={() => editPowerInfo({ action: 'remove', ...record })}>
+          <a
+            onClick={() => {
+              console.log(' remove record ： ', props, record, index); //
+              props.editPowerInfo({
+                ...record,
+                index,
+                action: 'remove',
+              });
+            }}
+          >
             删除
           </a>
         </>
@@ -231,16 +288,21 @@ export const PowerStationDetailTable = props => {
       columns={columns}
       noActionCol
       {...props}
-      dataSource={dataSource}
+      // dataSource={dataSource}
       rowKey={'key'}
       className={'powerStationDetailTable'}
       // rowLength={3}
       title={() => (
         <div className={`fje`}>
-          <Button type="primary" onClick={add} className={'add'}>
+          <Button
+            type="primary"
+            onClick={() => props.editPowerInfo({ action: 'add' })}
+            className={'add'}
+          >
             新增电源
           </Button>
-          <Button type="primary" onClick={() => props.save(dataSource)}>
+          {/* <Button type="primary" onClick={() => props.savePowerInfoAsync(dataSource)}> */}
+          <Button type="primary" onClick={props.addPowerInfo}>
             保存
           </Button>
         </div>

@@ -176,7 +176,7 @@ const HouseNoForm = props => {
     },
 
     {
-      // formType: 'Select',
+      formType: 'InputNumber',
       itemProps: {
         label: '电价类型',
         name: 'type',
@@ -184,6 +184,7 @@ const HouseNoForm = props => {
     },
 
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '托管电站数',
         name: 'trusteeship_num',
