@@ -4,6 +4,7 @@ import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { workOrderStatusMap, missionsTypeMap } from '@/configs';
 
 const namespace = 'workOrder';
 const { createActions } = init(namespace);
@@ -77,21 +78,28 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          created_time: v.created_time ? v.created_time : ''.split('T')[0],
+          created_time: v.created_time ? v.created_time.split('T')[0] : '',
         })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
       };
     },
-    getItem(state, { payload, type }) {
+    getItem(state, { payload }) {
       console.log(' getItemgetItem ： ', payload); //
+      const { created_time, type, status } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          created_time: created_time ? created_time.split('T')[0] : '',
+          type: missionsTypeMap[type],
+          status: workOrderStatusMap[status],
+        },
       };
     },
     addItem(state, { payload, type }) {

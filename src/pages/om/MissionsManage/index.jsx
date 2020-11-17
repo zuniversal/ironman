@@ -216,6 +216,12 @@ class MissionsManage extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     if (action === 'linkContract') {
+      const { contract } = this.props.itemDetail;
+
+      formComProps.init = {
+        contract_id: `${contract && contract.id ? contract.id : ''}`,
+      };
+
       return (
         <MissionsManageContractForm
           {...formComProps}

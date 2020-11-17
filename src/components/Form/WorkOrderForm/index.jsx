@@ -15,6 +15,27 @@ const WorkOrderTicketForm = props => {
   console.log(' WorkOrderTicketForm ： ', props); //
   const { formBtn, ...rest } = props; //
 
+  const clientConfig = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户评价',
+      },
+    },
+    {
+      itemProps: {
+        label: '评价等级',
+        name: ['evaluate', 'level'],
+      },
+    },
+    {
+      itemProps: {
+        label: '评价内容',
+        name: ['evaluate', 'content'],
+      },
+    },
+  ];
+
   const config = [
     {
       formType: 'rowText',
@@ -148,24 +169,8 @@ const WorkOrderTicketForm = props => {
         name: 'file',
       },
     },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '客户评价',
-      },
-    },
-    {
-      itemProps: {
-        label: '评价等级',
-        name: ['evaluate', 'level'],
-      },
-    },
-    {
-      itemProps: {
-        label: '评价内容',
-        name: ['evaluate', 'content'],
-      },
-    },
+    // ...  ? clientConfig : [],
+    ...clientConfig,
   ];
 
   const formProps = {

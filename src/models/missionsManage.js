@@ -118,6 +118,7 @@ export default {
           ...payload.bean,
           // client: 2,
           client: payload.bean.customer.name,
+          person: payload.bean.person.nickname,
           // client: {
           //   label: 'label-999',
           //   value: payload.bean.customer.name,

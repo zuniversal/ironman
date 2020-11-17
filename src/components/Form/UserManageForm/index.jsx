@@ -51,7 +51,7 @@ const UserManageForm = props => {
         name: 'tag_ids',
       },
       comProps: {
-        mode: 'multiple',
+        // mode: 'multiple',
       },
     },
     {
@@ -63,7 +63,7 @@ const UserManageForm = props => {
         name: 'role_ids',
       },
       comProps: {
-        mode: 'multiple',
+        // mode: 'multiple',
       },
     },
     {

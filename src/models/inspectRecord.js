@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectRecord';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { missionsStatusMap } from '@/configs';
 
 const namespace = 'inspectRecord';
 const { createActions } = init(namespace);
@@ -126,6 +127,7 @@ export default {
         created_time = '',
         start_time = '',
         end_time = '',
+        status,
       } = payload.bean;
       console.log(' getMissionItem ： ', payload); //
       return {
@@ -138,6 +140,7 @@ export default {
           created_time: created_time ? created_time.split('T')[0] : '',
           start_time: start_time ? start_time.split('T')[0] : '',
           end_time: end_time ? end_time.split('T')[0] : '',
+          status: missionsStatusMap[status],
         },
       };
     },
