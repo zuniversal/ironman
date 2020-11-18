@@ -189,8 +189,7 @@ class PowerStation extends PureComponent {
   componentDidMount() {
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
-    // this.props.addPowerInfo();
-    this.props.addItemAsync({
+    const datas = {
       electricity_user: '1',
       // customer: "5774",
       name: '1',
@@ -201,7 +200,21 @@ class PowerStation extends PureComponent {
       phone: '11',
       addr: '清华大学',
       file: 'http://localhost:8000/#/om/powerStation',
-    });
+      electrical_info_list: [
+        {
+          id: 8,
+          // power_number: '',
+          // meter_number: '',
+          // incoming_line_name: '',
+          // magnification: '',
+          // transformer_capacity: '',
+          // real_capacity: '',
+          // outline_number: '',
+        },
+      ],
+    };
+    this.props.addPowerInfo();
+    this.props.addItemAsync(datas);
   }
 
   render() {
@@ -215,14 +228,14 @@ class PowerStation extends PureComponent {
       houseNoList: this.props.houseNoList,
       editPowerInfo: this.props.editPowerInfo,
     };
-    return (
-      <PowerStationForm
-        addPowerInfo={this.props.addPowerInfo}
-        editPowerInfo={this.props.editPowerInfo}
-        {...formComProps}
-        dataSource={this.props.powerInfoData}
-      ></PowerStationForm>
-    );
+    // return (
+    //   <PowerStationForm
+    //     addPowerInfo={this.props.addPowerInfo}
+    //     editPowerInfo={this.props.editPowerInfo}
+    //     {...formComProps}
+    //     dataSource={this.props.powerInfoData}
+    //   ></PowerStationForm>
+    // );
     return (
       <div className="PowerStation">
         {this.renderSearchForm()}

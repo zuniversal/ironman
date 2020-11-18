@@ -179,6 +179,7 @@ export const MissionsManageConfirmScheduleForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'TextArea',
       itemProps: {
         label: '理由',

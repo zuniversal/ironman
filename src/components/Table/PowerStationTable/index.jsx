@@ -34,14 +34,14 @@ const PowerStationTable = props => {
       title: '电站地址',
       dataIndex: 'addr',
     },
-    {
-      title: '业务主体',
-      dataIndex: 'business_entity',
-      d_item: 'id',
-    },
+    // {
+    //   title: '业务主体',
+    //   dataIndex: 'service_staff',
+    //   d_item: 'id',
+    // },
     {
       title: '巡检次数',
-      // dataIndex: '',
+      dataIndex: 'inspections_number',
       className: 'textCenter',
       d_item: 'id',
     },

@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectPlan';
-import * as tagsServices from '@/services/user';
+import * as tagsServices from '@/services/tags';
 import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
@@ -8,7 +8,11 @@ import moment from 'moment'; //
 const namespace = 'inspectPlan';
 const { createActions } = init(namespace);
 
-const otherActions = ['getTagsAsync', 'getUserAsync', 'getScheduledListAsync'];
+const otherActions = [
+  'getTagUserAsync',
+  'getUserAsync',
+  'getScheduledListAsync',
+];
 
 const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
 
@@ -35,6 +39,7 @@ export default {
 
     tagList: [],
     userList: [],
+    tagUserList: [],
     dragList: [],
     initList: [],
     unScheduleList: [],
@@ -154,11 +159,24 @@ export default {
       };
     },
 
-    getTags(state, { payload, type }) {
-      // console.log(' getTags 修改  ： ', state, payload, type,     )//
+    getTagUser(state, { payload, type }) {
+      console.log(
+        ' getTagUser 修改  ： ',
+        state,
+        payload,
+        type,
+        payload.rest.users,
+      ); //
       return {
         ...state,
-        tagList: formatSelectList(payload.list, 'name'),
+        tagUserList: formatSelectList(payload.rest.users, 'nickname'),
+        tagUserList: [
+          {
+            value: '1',
+            label: '12312',
+          },
+        ],
+        tagList: formatSelectList(payload.rest.users, 'name'),
       };
     },
     getUser(state, { payload, type }) {
@@ -324,8 +342,8 @@ export default {
       // yield put(action({ ...res, payload }));
     },
 
-    *getTagsAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(tagsServices.getList, payload);
+    *getTagUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(tagsServices.getTagUser, payload);
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {

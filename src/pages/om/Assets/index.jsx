@@ -28,6 +28,7 @@ import SuccResult from '@/components/Widgets/SuccResult'; //
 import { actions, mapStateToProps } from '@/models/assets'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const menuConfig = [
   {
@@ -218,6 +219,13 @@ class Assets extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      if (res.file && res.file.fileList) {
+        const fileList = res.file.fileList;
+        res.file = fileList[fileList.length - 1].response.url;
+      } else {
+        tips('文件不能为空！', 2);
+        return;
+      }
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

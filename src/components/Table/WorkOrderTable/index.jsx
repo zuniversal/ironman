@@ -10,7 +10,11 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { workOrderStatusMap, missionsTypeMap } from '@/configs';
+import {
+  workOrderStatusMap,
+  missionsTypeMap,
+  missionsStatusMap,
+} from '@/configs';
 
 const WorkOrderTable = props => {
   const {
@@ -57,7 +61,7 @@ const WorkOrderTable = props => {
     },
     {
       title: '处理人',
-      dataIndex: ['recipient', 'nickname'],
+      dataIndex: ['team', 'team_headman'],
     },
     {
       title: '关联任务',
@@ -66,7 +70,7 @@ const WorkOrderTable = props => {
     {
       title: '任务状态',
       dataIndex: ['task', 'status'],
-      dataMap: workOrderStatusMap,
+      dataMap: missionsStatusMap,
     },
     {
       title: '创建时间',

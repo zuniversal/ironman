@@ -20,6 +20,7 @@ import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
 import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
 import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi'; //
+import noData from '@/static/assets/noData.png'; //
 
 const { slideInUp } = ANIMATE;
 
@@ -593,6 +594,14 @@ class SmartTable extends PureComponent {
           // scroll={{ x: 800,  }}
           // rowKey={rowKey}
           loading={this.isShowLoading}
+          locale={{
+            emptyText: (
+              <div className={`noData`}>
+                <img src={noData} className={`noDataImg`} />
+                <div className={`text`}>暂无数据~</div>
+              </div>
+            ),
+          }}
           size={'small'}
           rowSelection={{
             type: selectionType,

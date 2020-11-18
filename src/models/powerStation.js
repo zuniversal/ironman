@@ -238,22 +238,22 @@ export default {
           `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
           2,
         );
-        return;
+        // return;
       }
-      return;
+      // return;
 
       const res = yield call(services.addItem, {
         ...payload,
-        elecrical_info_list: [
+        electrical_info_list: [
           {
-            id: 1,
-            power_number: '',
-            meter_number: '',
-            incoming_line_name: '',
-            magnification: '',
-            transformer_capacity: '',
-            real_capacity: '',
-            outline_number: '',
+            id: 8,
+            // power_number: '',
+            // meter_number: '',
+            // incoming_line_name: '',
+            // magnification: '',
+            // transformer_capacity: '',
+            // real_capacity: '',
+            // outline_number: '',
           },
         ],
       });
@@ -281,19 +281,23 @@ export default {
 
     *addPowerInfo({ payload, action, type }, { call, put }) {
       console.log(' addPowerInfo ： ', payload); //
-      const res = yield call(services.addPowerInfo, {
+      const res = yield call(
+        services.addPowerInfo,
         // ...payload,
-        // elecrical_info_list:
-        // {
-        power_number: '1',
-        meter_number: '2',
-        incoming_line_name: '3',
-        magnification: '4',
-        transformer_capacity: '5',
-        real_capacity: '6',
-        outline_number: '7',
-        // },
-      });
+        {
+          electrical_info_list: [
+            {
+              power_number: '1',
+              meter_number: '2',
+              incoming_line_name: '3',
+              magnification: '4',
+              transformer_capacity: '5',
+              real_capacity: '6',
+              outline_number: '7',
+            },
+          ],
+        },
+      );
       // const res = yield call(services.addItem, {payload});
       // yield put(action({ ...res, payload }));
     },

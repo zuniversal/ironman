@@ -72,7 +72,7 @@ export default {
     },
     getItem(state, { payload }) {
       console.log(' getItem ： ', payload); //
-      const { team_headman, leader, type, member } = payload.list; //
+      const { team_headman, leader, type, member } = payload.bean; //
       const { userList } = state;
       const teamHeadmanItem = {
         ...team_headman,
@@ -107,7 +107,7 @@ export default {
         isShowModal: true,
         d_id: payload.payload.d_id,
         itemDetail: {
-          ...payload.list,
+          ...payload.bean,
           d_id: payload.payload.d_id,
           team_headman: `${team_headman.id}`,
           leader: `${leader.id}`,

@@ -28,7 +28,8 @@ const AssetsSearchForm = props => {
       selectData: props.powerList,
       itemProps: {
         label: '电站',
-        name: 'station',
+        // name: 'station',
+        name: 'powerStation',
       },
     },
 

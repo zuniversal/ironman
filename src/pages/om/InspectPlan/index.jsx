@@ -120,10 +120,13 @@ class InspectPlan extends PureComponent {
     return (
       <InspectPlanSearchForm
         formBtn={this.renderFormBtn}
-        getTagsAsync={params => this.props.getTagsAsync({ keyword: params })}
+        getTagUserAsync={params =>
+          this.props.getTagUserAsync({ keyword: params })
+        }
         tagList={this.props.tagList}
         getUserAsync={params => this.props.getUserAsync({ keyword: params })}
         userList={this.props.userList}
+        tagUserList={this.props.tagUserList}
         onFieldChange={this.onFieldChange}
         init={this.props.searchInfo}
       ></InspectPlanSearchForm>
@@ -140,7 +143,7 @@ class InspectPlan extends PureComponent {
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )
     const { loading } = this.props; //
-    // const isLoading = loading['inspectPlan/getTagsAsync']
+    // const isLoading = loading['inspectPlan/getTagUserAsync']
     return (
       // !loading && <InspectPlanCalendar
       !loading && (
@@ -185,7 +188,7 @@ class InspectPlan extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      // getUser: params => this.props.getTagsAsync({ keyword: params }),
+      // getUser: params => this.props.getTagUserAsync({ keyword: params }),
       // tagList: this.props.tagList,
     };
     if (action !== 'add') {
@@ -221,8 +224,14 @@ class InspectPlan extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    this.props.getTagsAsync();
-    this.props.getUserAsync();
+    // this.props.getTagUserAsync();
+    // this.props.getUserAsync();
+
+    // 目前区块链经理ID为2去获取用户
+    // 根据职位获取到所有的客户代表，然后选中客户代表之后把客户代表的ID传递获取待排计划的电站
+    this.props.getTagUserAsync({
+      d_id: 2,
+    });
     // this.props.getListAsync({
     //   leader: 1,
     //   // leader: 2,

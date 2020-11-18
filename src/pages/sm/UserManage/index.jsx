@@ -11,6 +11,7 @@ import UserManageTable from '@/components/Table/UserManageTable'; //
 import { actions, mapStateToProps } from '@/models/userManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '用户';
 
@@ -71,10 +72,18 @@ class UserManage extends PureComponent {
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    if (!`${params.value.value}`.trim() && !`${params.formData.value}`.trim()) {
-      console.log(' onFieldChange,22  , ： ', params);
+    const { value } = params;
+    if (value.role_id != undefined || value.organization_id != undefined) {
+      console.log(' 列表搜索 ： ', !value.role_id, !value.organization_id); //
+      this.props.getListAsync();
       return;
     }
+    if (!`${value.value}`.trim() && !`${formData.value}`.trim()) {
+      console.log(' onFieldChange,22  , ： ', params);
+      tips('搜索参数不能为空！', 2);
+      return;
+    }
+    console.log(' 搜索 ： '); //
     this.props.getSearchListAsync(params.formData);
   };
   renderTable = params => {

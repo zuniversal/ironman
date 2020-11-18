@@ -109,21 +109,32 @@ export default {
         //   label: 'label-2',
         // },
       ];
+      const { customer, person, contacts_phone } = payload.bean;
+
+      const itemDetail = {
+        ...payload.bean,
+        // client: 2,
+        // client: {
+        //   label: 'label-999',
+        //   value: payload.bean.customer.name,
+        // },
+      };
+      if (payload.payload.action === 'detail') {
+        itemDetail.customer_id = customer.name;
+        // itemDetail.client = customer ? customer.name : customer
+        itemDetail.person = person ? person.nickname : person;
+        itemDetail.phone = contacts_phone;
+      }
+      if (payload.payload.action === 'startWorkOrder') {
+        itemDetail.client = customer ? customer.name : customer;
+      }
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: {
-          ...payload.bean,
-          // client: 2,
-          client: payload.bean.customer.name,
-          person: payload.bean.person.nickname,
-          // client: {
-          //   label: 'label-999',
-          //   value: payload.bean.customer.name,
-          // },
-        },
+        itemDetail: itemDetail,
         clientData,
       };
     },

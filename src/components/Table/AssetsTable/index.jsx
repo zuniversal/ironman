@@ -33,7 +33,7 @@ const AssetsTable = props => {
     },
     {
       title: '电站',
-      dataIndex: ['station', 'id'],
+      dataIndex: ['station', 'name'],
       d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
