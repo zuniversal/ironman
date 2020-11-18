@@ -17,7 +17,7 @@ const PowerStationTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'electricity_user',
+      dataIndex: 'customer',
       d_item: 'id',
     },
     {

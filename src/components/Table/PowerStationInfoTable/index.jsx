@@ -89,6 +89,11 @@ export const WatchInfoTable = props => {
 
 export const PowerStationDetailTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
+  console.log(
+    ' %c PowerStationDetailTable 组件 ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  ); //
   // const [powerData, setPowerData] = useState([{ key: Math.random() }]);
 
   // const dataSource = powerData;
@@ -290,7 +295,7 @@ export const PowerStationDetailTable = props => {
       {...props}
       // dataSource={dataSource}
       rowKey={'key'}
-      className={'powerStationDetailTable'}
+      className={'powerStationDetailTable modalTable'}
       // rowLength={3}
       title={() => (
         <div className={`fje`}>

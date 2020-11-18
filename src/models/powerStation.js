@@ -244,6 +244,11 @@ export default {
 
       const res = yield call(services.addItem, {
         ...payload,
+        electricical_info_set: [
+          {
+            id: 8,
+          },
+        ],
         electrical_info_list: [
           {
             id: 8,

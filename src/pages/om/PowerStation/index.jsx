@@ -156,6 +156,9 @@ class PowerStation extends PureComponent {
         this.props.getHouseNoAsync({ keyword: params }),
       houseNoList: this.props.houseNoList,
       editPowerInfo: this.props.editPowerInfo,
+      addPowerInfo: this.props.addPowerInfo,
+      editPowerInfo: this.props.editPowerInfo,
+      dataSource: this.props.powerInfoData,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -200,6 +203,11 @@ class PowerStation extends PureComponent {
       phone: '11',
       addr: '清华大学',
       file: 'http://localhost:8000/#/om/powerStation',
+      elecrical_info_list: [
+        {
+          id: 8,
+        },
+      ],
       elecrical_info_list: [
         {
           id: 8,
