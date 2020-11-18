@@ -200,7 +200,7 @@ class PowerStation extends PureComponent {
       phone: '11',
       addr: '清华大学',
       file: 'http://localhost:8000/#/om/powerStation',
-      electrical_info_list: [
+      elecrical_info_list: [
         {
           id: 8,
           // power_number: '',
