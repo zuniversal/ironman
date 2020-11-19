@@ -144,6 +144,8 @@ class WorkOrder extends PureComponent {
       action,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
+      getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
+      teamList: this.props.teamList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -185,6 +187,7 @@ class WorkOrder extends PureComponent {
   };
   componentDidMount() {
     this.props.getUserAsync();
+    this.props.getTeamAsync();
   }
 
   render() {

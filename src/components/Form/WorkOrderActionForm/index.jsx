@@ -15,8 +15,8 @@ export const WorkOrderDispatchOrderForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '分配给',
         name: 'team_id',

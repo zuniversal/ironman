@@ -52,6 +52,7 @@ export default {
         dataList: payload.list.map(v => ({
           ...v,
           created_time: v.created_time && v.created_time.split('T')[0],
+          confirm: v.confirm ? '已确认' : '未确认',
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -109,6 +110,7 @@ export default {
       const params = {
         ...searchInfo,
         // ...formatSearch(payload),
+        // data: payload.data ? payload.data.format('YYYY-MM') : nowYearMonth,
         ...payload,
       };
       console.log(

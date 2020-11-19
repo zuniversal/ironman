@@ -16,6 +16,6 @@ export const addItem = p => post(`console/OMS/order`, p);
 export const editItem = p => put(`console/OMS/order/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/order/${p.d_id}`, p);
 export const dispatchOrder = p =>
-  patch(`console/OMS/order/${p.d_id}/assignment`, p);
+  put(`console/OMS/order/${p.d_id}/assignment`, p);
 export const addTicket = p =>
   post(`console/OMS/order/${p.d_id}/work_ticket`, p);

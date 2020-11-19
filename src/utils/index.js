@@ -15,6 +15,43 @@ import {
 import moment from 'moment';
 import business from 'moment-business';
 
+export const filterObjSame = (data, key = 'id') => {
+  const temp = [];
+  // const deWeightTwo = () => {
+  //   console.log(' deWeightTwo   ,   ： ',   )
+  data.forEach(a => {
+    let check = temp.every(b => a[key] != b[key]);
+    check ? temp.push(a) : '';
+  });
+  // return data;
+  return temp;
+  // }
+};
+
+var arr4 = [
+  { name: 'a', id: 1 },
+  { name: 'a', id: 2 },
+  { name: 'b', id: 3 },
+  { name: 'c', id: 4 },
+  { name: 'c', id: 6 },
+  { name: 'b', id: 6 },
+  { name: 'd', id: 7 },
+];
+var obj = {};
+var temp = [];
+function deWeightTwo() {
+  arr4.forEach(function(a) {
+    var check = temp.every(function(b) {
+      return a.name !== b.name;
+    });
+    check ? temp.push(a) : '';
+  });
+  return temp;
+}
+var newArr2 = deWeightTwo();
+var newArr4 = deWeightTwo();
+console.log('xxxxx', arr4, newArr4);
+
 export const getDataMap = (text, dataMap) => {
   const val = dataMap[text];
   return val ? val : text;
@@ -25,6 +62,7 @@ export const formatSelectList = (data, labelKey = 'label', idKey = 'id') => {
     ...v,
     label: v[labelKey],
     value: `${v[idKey]}`,
+    // title: v[labelKey] + '2222222222',
   }));
   console.log(' formatSelectList res ： ', res); //
   return res;

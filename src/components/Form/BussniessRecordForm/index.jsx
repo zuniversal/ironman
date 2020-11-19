@@ -11,6 +11,8 @@ const BussniessRecordForm = props => {
 
   const { file = [] } = props.init;
 
+  const isCompleted = props.init.status === 'completed';
+
   const completedConfig = [
     // 任务状态已完成 - completed 确认按钮
     // 详细说明看 BussniessRecordTable
@@ -136,7 +138,7 @@ const BussniessRecordForm = props => {
         // name: '',
       },
     },
-    ...(props.init.type === 'completed' ? completedConfig : []),
+    ...(isCompleted ? completedConfig : []),
   ];
 
   const formProps = {
@@ -157,6 +159,12 @@ const BussniessRecordForm = props => {
         isDisabledAll
         {...props}
       ></SmartForm>
+
+      {isCompleted && (
+        <Button type="primary" onClick={this.onBatchRemove}>
+          删除
+        </Button>
+      )}
     </div>
   );
 };

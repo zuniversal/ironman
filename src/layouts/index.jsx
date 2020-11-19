@@ -78,6 +78,7 @@ const Layouts = props => {
     pathname,
     props,
     defaultProps,
+    getRoutes,
   ); //
   // return <div >{ props.children }</div>
 

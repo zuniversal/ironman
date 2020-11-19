@@ -464,7 +464,8 @@ const PowerStationForm = props => {
       ></SmartForm>
 
       <PowerStationDetailTable
-        addPowerInfo={props.addPowerInfo}
+        addPowerInfoAsync={props.addPowerInfoAsync}
+        removePowerInfoAsync={props.removePowerInfoAsync}
         editPowerInfo={props.editPowerInfo}
         dataSource={props.dataSource}
       ></PowerStationDetailTable>

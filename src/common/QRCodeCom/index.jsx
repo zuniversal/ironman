@@ -22,7 +22,7 @@ const QRCodeCom = props => {
   }
   console.log(' str ： ', str); //
   return (
-    <div className={'qrCodeWrapper'}>
+    <div className={'qrCode'}>
       <QRCode
         width={width}
         height={height}

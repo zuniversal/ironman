@@ -17,4 +17,4 @@ export const editItem = p => put(`console/OMS/task/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/task/${p.d_id}`, p);
 
 // export const confirm = p => patch(`console/CMP/inspection/${p.d_id}`, p);
-export const confirm = p => patch(`console/OMS/task/${p.d_id}/confirm`, p);
+export const confirm = p => put(`console/OMS/task/${p.d_id}/confirm`, p);

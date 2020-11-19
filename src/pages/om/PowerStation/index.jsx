@@ -12,6 +12,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import { actions, mapStateToProps } from '@/models/powerStation'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '电站';
 
@@ -111,6 +112,10 @@ class PowerStation extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
+    // if (action === 'add') {
+    //   this.props.addItemAsync({
+    //   });
+    // }
     if (['detail'].includes(action)) {
       this.props.onCancel({});
       return;
@@ -122,19 +127,26 @@ class PowerStation extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      if (res.file && res.file.fileList) {
+        const fileList = res.file.fileList;
+        res.file = fileList[fileList.length - 1].response.url;
+      } else {
+        tips('文件不能为空！', 2);
+        return;
+      }
       const params = {
         ...init,
         ...res,
       };
       if (action === 'add') {
         this.props.addItemAsync({
-          ...params,
+          ...res,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           // ...itemDetail,
-          ...params,
+          ...res,
           id: d_id,
           d_id,
         });
@@ -156,9 +168,10 @@ class PowerStation extends PureComponent {
         this.props.getHouseNoAsync({ keyword: params }),
       houseNoList: this.props.houseNoList,
       editPowerInfo: this.props.editPowerInfo,
-      addPowerInfo: this.props.addPowerInfo,
+      addPowerInfoAsync: this.props.addPowerInfoAsync,
       editPowerInfo: this.props.editPowerInfo,
       dataSource: this.props.powerInfoData,
+      removePowerInfoAsync: this.props.removePowerInfoAsync,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -190,39 +203,58 @@ class PowerStation extends PureComponent {
     );
   };
   componentDidMount() {
+    this.props.getBelongHouseNoAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
     const datas = {
-      electricity_user: '1',
-      // customer: "5774",
-      name: '1',
-      person: '13',
-      status: true,
-      operation_level: '1',
-      inspections_number: 1,
-      phone: '11',
-      addr: '清华大学',
-      file: 'http://localhost:8000/#/om/powerStation',
+      // "name": "电站1",
+      // "addr": "上海普天科创电子有限公司",
+      // "customer": 1,
+      // "electricity_user":1,
+      // "operation_level": "2354",
+      // "person": "234",
+      // "phone": "2343546",
+      // "file": "qwsdfgh",
+      // "status": true,
+      // "inspections_number": 3,
+      // "total_capacity": 123.0,
+      // "real_capacity": 123.0,
+
+      // electricity_user: '1',
+      // // customer: "5774",
+      // name: '1',
+      // person: '13',
+      // status: true,
+      // operation_level: '1',
+      // inspections_number: 1,
+      // phone: '11',
+      // addr: '清华大学',
+      // file: 'http://localhost:8000/#/om/powerStation',
       elecrical_info_list: [
-        {
-          id: 8,
-        },
+        // {
+        //   id: 1,
+        // },
+        1,
       ],
-      elecrical_info_list: [
-        {
-          id: 8,
-          // power_number: '',
-          // meter_number: '',
-          // incoming_line_name: '',
-          // magnification: '',
-          // transformer_capacity: '',
-          // real_capacity: '',
-          // outline_number: '',
-        },
-      ],
+      // elecrical_info_list: [
+      //   {
+      //     id: 8,
+      //     // power_number: '',
+      //     // meter_number: '',
+      //     // incoming_line_name: '',
+      //     // magnification: '',
+      //     // transformer_capacity: '',
+      //     // real_capacity: '',
+      //     // outline_number: '',
+      //   },
+      // ],
     };
-    this.props.addPowerInfo();
-    this.props.addItemAsync(datas);
+    // this.props.showFormModal({
+    //   action: 'add',
+    // })
+    // this.props.addPowerInfoAsync();
+    // this.props.addItemAsync(datas);
+    // this.props.addItemAsync({});
   }
 
   render() {
@@ -238,7 +270,7 @@ class PowerStation extends PureComponent {
     };
     // return (
     //   <PowerStationForm
-    //     addPowerInfo={this.props.addPowerInfo}
+    //     addPowerInfoAsync={this.props.addPowerInfoAsync}
     //     editPowerInfo={this.props.editPowerInfo}
     //     {...formComProps}
     //     dataSource={this.props.powerInfoData}

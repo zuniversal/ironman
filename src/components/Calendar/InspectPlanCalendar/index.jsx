@@ -2,8 +2,12 @@ import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
-import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
+import SmartCalendar, {
+  CalendarDraggable,
+  dayCellContent,
+} from '@/common/SmartCalendar'; //
 import { ANIMATE } from '@/constants'; //
+import { CloseOutlined } from '@ant-design/icons';
 
 let matchList = [
   {
@@ -184,6 +188,7 @@ const InspectPlanCalendar = props => {
         // className={`${ANIMATE.slideInLeft} `}
         calendarRef={calendarRef}
         validRange={nowDate => {
+          <CloseOutlined />;
           return {
             start: nowDate,
           };
@@ -196,6 +201,7 @@ const InspectPlanCalendar = props => {
         eventAdd={eventAdd}
         // eventRemove={eventRemove}
         eventChange={eventChange}
+        // dayCellContent={}
       />
 
       <ShiftsArrangeList

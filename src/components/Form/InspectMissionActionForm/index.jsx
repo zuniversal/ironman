@@ -2,7 +2,10 @@ import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
 
-const renderCheckboxOp = [{ label: '短信通知客户', value: 'yes', key: 'yes' }];
+const renderCheckboxOp = [
+  { label: '待处理工单', value: 'yes2', key: 'yes2' },
+  { label: '短信通知客户', value: 'yes', key: 'yes' },
+];
 
 export const InspectMissionAssignForm = props => {
   console.log(' InspectMissionAssignForm ： ', props); //

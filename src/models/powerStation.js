@@ -11,7 +11,9 @@ const otherActions = [
   'exportDataAsync',
   'getHouseNoAsync',
   'getClientAsync',
-  'addPowerInfo',
+  'addPowerInfoAsync',
+  'getBelongHouseNoAsync',
+  'removePowerInfoAsync',
 ];
 
 const batchTurnActions = ['editPowerInfo'];
@@ -24,16 +26,47 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const validateConfig = [
+  'power_number',
+  'meter_number',
+  'incoming_line_name',
+  'magnification',
+  'transformer_capacity',
+  'real_capacity',
+  'outline_number',
+];
+
+export const getIsRight = (
+  data,
+  // validateConfig = validateConfig,
+) => {
+  console.log(' getIsRight data ： ', data); //
+  let isRight = true;
+  // powerInfoData.forEach((item) => {
+  data.forEach((item, i) => {
+    console.log(' powerInfoData v ： ', item);
+    validateConfig.forEach(key => {
+      if (!item[key]) {
+        isRight = {
+          i,
+          key,
+        };
+      }
+    });
+  });
+  return isRight;
+}; //
+
 const initItem = {
   key: Math.random(),
-  power_number: '',
-  meter_number: '',
-  incoming_line_name: '',
-  magnification: '',
-  transformer_capacity: '',
-  real_capacity: '',
-  outline_number: '',
-  action: '',
+  power_number: '11',
+  meter_number: '22',
+  incoming_line_name: '33',
+  magnification: '44',
+  transformer_capacity: '55',
+  real_capacity: '66',
+  outline_number: '77',
+  // action: '',
 };
 
 export default {
@@ -51,6 +84,7 @@ export default {
     clientList: [],
     houseNoList: [],
     powerInfoData: [initItem],
+    powerInfoData: [],
   },
 
   reducers: {
@@ -80,14 +114,22 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      const datas = payload.bean.electricalinfromation_set.map(v => ({
+        ...v,
+        key: Math.random(),
+      }));
+      console.log(' getItemgetItem ： ', payload, datas); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
         // itemDetail: payload.bean,
-        itemDetail: payload.list,
+        itemDetail: {
+          ...payload.bean,
+          electricity_user: `${payload.bean.electricity_user.id}`,
+        },
+        powerInfoData: datas,
       };
     },
     addItem(state, { payload, type }) {
@@ -128,6 +170,29 @@ export default {
       };
     },
 
+    addPowerInfo(state, { payload, type }) {
+      console.log(' addPowerInfo ： ', state, payload); //
+      return {
+        ...state,
+        powerInfoData: payload.list.map(v => ({ ...v, key: Math.random() })),
+      };
+    },
+    removePowerInfo(state, { payload, type }) {
+      console.log(' removePowerInfo ： ', state, payload); //
+      const { powerInfoData } = state;
+      const { action, keys, key, index, value } = payload;
+      let newData = [];
+      if (action === 'localRemove') {
+        newData = payload.list.filter((v, i) => v.key != key);
+      } else {
+        newData = powerInfoData.filter(v => v.id != payload.payload.id);
+      }
+      console.log(' newData ： ', newData); //
+      return {
+        ...state,
+        powerInfoData: newData,
+      };
+    },
     editPowerInfo(state, { payload, type }) {
       console.log(' editPowerInfo ： ', state, payload); //
       const { powerInfoData } = state;
@@ -151,7 +216,7 @@ export default {
             : v),
         }));
       } else if (action === 'remove') {
-        newData = powerInfoData.filter((v, i) => v.key !== key);
+        newData = powerInfoData.filter((v, i) => v.key != key);
       }
 
       console.log(' editPowerInfo 修改  ： ', state, payload, type, newData); //
@@ -198,15 +263,12 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put, select }) {
-      console.log(' addItemAsync ： ', payload); //
       const { powerInfoData } = yield select(state => state[namespace]);
-      // if (payload.file && payload.file.fileList) {
-      //   const fileList = payload.file.fileList;
-      //   payload.file = fileList[fileList.length - 1].response.url;
-      // } else {
-      //   tips('文件不能为空！', 2)
-      //   return
-      // }
+      console.log(' addItemAsync ： ', powerInfoData, payload); //
+      if (powerInfoData.length < 1) {
+        tips('电源列表不能为空！', 2);
+        return;
+      }
       const datas = [
         {
           id: 1,
@@ -219,99 +281,132 @@ export default {
           outline_number: '',
         },
       ];
-      let isRight = true;
-      // powerInfoData.forEach((item) => {
-      datas.forEach((item, i) => {
-        console.log(' powerInfoData v ： ', item);
-        Object.keys(item).forEach(key => {
-          if (!item[key]) {
-            isRight = {
-              i,
-              key,
-            };
-          }
-        });
-      });
+      const elecrical_info_list = powerInfoData.map(v => v.id);
+      const isHaveId = elecrical_info_list.every(v => v);
+      console.log(' isHaveId some  ： ', elecrical_info_list, isHaveId);
+      if (!isHaveId) {
+        tips(`请先保存电源列表！`, 2);
+        return;
+      }
+      const isRight = getIsRight(powerInfoData);
       console.log(' isRight ： ', isRight); //
       if (isRight !== true) {
         tips(
           `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
           2,
         );
-        // return;
+        return;
       }
       // return;
 
       const res = yield call(services.addItem, {
         ...payload,
-        electricical_info_set: [
-          {
-            id: 8,
-          },
-        ],
-        electrical_info_list: [
-          {
-            id: 8,
-            // power_number: '',
-            // meter_number: '',
-            // incoming_line_name: '',
-            // magnification: '',
-            // transformer_capacity: '',
-            // real_capacity: '',
-            // outline_number: '',
-          },
-        ],
+        elecrical_info_list: elecrical_info_list,
       });
       // const res = yield call(services.addItem, {payload});
       // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const { latitude, longitude, ...rest } = payload;
-      const res = yield call(services.editItem, rest);
-      yield put(action({ ...res, payload }));
+    *editItemAsync({ payload, action, type }, { call, put, select }) {
+      // const { latitude, longitude, ...rest } = payload;
+      const { powerInfoData } = yield select(state => state[namespace]);
+      console.log(' addItemAsync ： ', powerInfoData, payload); //
+      if (powerInfoData.length < 1) {
+        tips('电源列表不能为空！', 2);
+        return;
+      }
+      const elecrical_info_list = powerInfoData.map(v => v.id);
+      const isHaveId = elecrical_info_list.every(v => v);
+      console.log(' isHaveId some  ： ', elecrical_info_list, isHaveId);
+      if (!isHaveId) {
+        tips(`请先保存电源列表！`, 2);
+        return;
+      }
+      const isRight = getIsRight(powerInfoData);
+      console.log(' isRight ： ', isRight); //
+      if (isRight !== true) {
+        tips(
+          `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
+          2,
+        );
+        return;
+      }
+      // return;
+
+      const res = yield call(services.editItem, {
+        ...payload,
+        elecrical_info_list: elecrical_info_list,
+      });
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemsAsync ： ', payload, type); //
       const res = yield call(services.removeItems, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
       return res;
     },
 
-    *addPowerInfo({ payload, action, type }, { call, put }) {
-      console.log(' addPowerInfo ： ', payload); //
+    *addPowerInfoAsync({ payload, action, type }, { call, put, select }) {
+      const { powerInfoData } = yield select(state => state[namespace]);
+      const isRight = getIsRight(powerInfoData);
+      console.log(' addPowerInfoAsync ： ', payload, powerInfoData);
+      console.log(' isRight ： ', isRight); //
+      if (isRight !== true) {
+        tips(
+          `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
+          2,
+        );
+        return;
+      }
       const res = yield call(
         services.addPowerInfo,
         // ...payload,
         {
-          electrical_info_list: [
-            {
-              power_number: '1',
-              meter_number: '2',
-              incoming_line_name: '3',
-              magnification: '4',
-              transformer_capacity: '5',
-              real_capacity: '6',
-              outline_number: '7',
-            },
-          ],
+          electrical_info_list: powerInfoData,
         },
+        // {
+        //   electrical_info_list: [
+        //     {
+        //       power_number: '1',
+        //       meter_number: '2',
+        //       incoming_line_name: '3',
+        //       magnification: '4',
+        //       transformer_capacity: '5',
+        //       real_capacity: '6',
+        //       outline_number: '7',
+        //     },
+        //   ],
+        // },
       );
       // const res = yield call(services.addItem, {payload});
-      // yield put(action({ ...res, payload }));
+      yield put(action({ ...res, payload }));
+      // yield put({ type: 'getListAsync' };
     },
+    *removePowerInfoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.removePowerInfo, payload);
+      yield put(action({ ...res, payload }));
+    },
+
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {
       const res = yield call(houseNoServices.getList, { keyword: payload });
+      yield put(action({ ...res, payload }));
+    },
+    *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(houseNoServices.getList, { customer: 1 });
       yield put(action({ ...res, payload }));
     },
   },

@@ -36,7 +36,7 @@ const BussniessRecordTable = props => {
       dataIndex: 'created_time',
     },
     {
-      title: 'confirm',
+      title: '确认',
       dataIndex: 'confirm',
       render: (text, record, index) => `${text}`,
     },

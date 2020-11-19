@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
-import { formatSelectList } from '@/utils';
+import { formatSelectList, filterObjSame } from '@/utils';
 
 const namespace = 'shiftsManage';
 const { createActions } = init(namespace);
@@ -116,7 +116,12 @@ export default {
           type: `${type.id}`,
           member: memberIdList.length > 0 ? memberIdList : [''],
         },
-        userList: [teamHeadmanItem, leaderItem, ...memberList, ...userList],
+        userList: filterObjSame([
+          ...userList,
+          teamHeadmanItem,
+          leaderItem,
+          ...memberList,
+        ]),
       };
     },
     addItem(state, { payload, type }) {

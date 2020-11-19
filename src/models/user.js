@@ -25,7 +25,8 @@ const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 console.log(' userInfo ： ', userInfo); //
 
 const getRoutes = path => {
-  console.log(' getRoutes   userInfo,   ： ', userInfo, userInfo.accountType);
+  const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
+
   const routesMap = {
     manager: managerRoutes,
     // manager: [...managerRoutes, ...customerRoutes],
@@ -38,7 +39,12 @@ const getRoutes = path => {
   const routes = isDev
     ? [...managerRoutes, ...customerRoutes]
     : getRoutesMap(userInfo.accountType, routesMap);
-  // const routes = getRoutesMap(userInfo.accountType, routesMap);
+  console.log(
+    ' getRoutes   userInfo,   ： ',
+    userInfo,
+    userInfo.accountType,
+    routes,
+  );
   const routesData = {
     route: {
       path: '/',
@@ -135,12 +141,12 @@ export default {
       };
     },
     login(state, { payload, type }) {
-      console.log(' login ： ', state, payload); //
+      console.log(' login .userInfo.userInfo：state ', getRoutes(), payload); //
       return {
         ...state,
         getRoutes: { ...getRoutes() },
-        userInfo: payload.userInfo,
-        accountType: payload.userInfo.account.account_type,
+        userInfo: { ...payload },
+        accountType: payload.account.account_type,
       };
     },
   },
