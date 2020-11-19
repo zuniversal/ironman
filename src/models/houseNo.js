@@ -7,7 +7,12 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'houseNo';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientAsync', 'getUserAsync', 'exportDataAsync'];
+const otherActions = [
+  'getClientAsync',
+  'getUserAsync',
+  'exportDataAsync',
+  'getDistrictAsync',
+];
 
 const batchTurnActions = [];
 
@@ -33,6 +38,9 @@ export default {
 
     clientList: [],
     userList: [],
+    provinceList: [],
+    citytList: [],
+    countryList: [],
   },
 
   reducers: {
@@ -121,6 +129,34 @@ export default {
       };
     },
 
+    getDistrict(state, { payload, type }) {
+      let datas = [];
+      const data = payload.list.map(v => ({
+        label: v,
+        value: v,
+      }));
+      if (Object.keys(payload.payload).length === 0) {
+        datas = {
+          provinceList: data,
+        };
+      }
+      if (payload.payload.province) {
+        datas = {
+          citytList: data,
+        };
+      }
+      if (payload.payload.city) {
+        datas = {
+          countryList: data,
+        };
+      }
+      console.log(' getDistrict ： ', state, payload, datas); //
+
+      return {
+        ...state,
+        ...datas,
+      };
+    },
     getClient(state, { payload, type }) {
       // console.log(' getClient 修改  ： ', state, payload, type,     )//
       return {
@@ -188,6 +224,13 @@ export default {
       return res;
     },
 
+    *getDistrictAsync({ payload, action, type }, { call, put }) {
+      console.log(' getDistrictAsync ： ', payload, type); //
+      const res = yield call(clientServices.getDistrict, payload);
+      console.log('  getDistrictAsync res ：', res); //
+      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
+    },
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));

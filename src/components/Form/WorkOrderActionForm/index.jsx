@@ -19,7 +19,7 @@ export const WorkOrderDispatchOrderForm = props => {
       selectData: props.userList,
       itemProps: {
         label: '分配给',
-        name: 'handler',
+        name: 'team_id',
       },
       comProps: {
         // mode: 'multiple',

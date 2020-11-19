@@ -78,14 +78,19 @@ const WorkOrderTable = props => {
     },
   ];
 
+  // team返回有数据，派单按钮隐藏不显示
   const extra = (text, record, index, props) => (
     <>
       {/* <a onClick={() => showDetail({ action: 'detail' })}>xx详情</a> */}
-      <a
-        onClick={() => props.edit({ action: 'dispatchOrder', d_id: record.id })}
-      >
-        派单
-      </a>
+      {!record.team.id && (
+        <a
+          onClick={() =>
+            props.edit({ action: 'dispatchOrder', d_id: record.id })
+          }
+        >
+          派单
+        </a>
+      )}
       <a
         onClick={() =>
           props.exportData({ action: 'exportData', d_id: record.id })

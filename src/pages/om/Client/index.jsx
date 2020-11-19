@@ -48,7 +48,14 @@ class Client extends PureComponent {
     };
   }
   onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
+    console.log(' onFieldChange,  , ： ', params, this.props);
+    const { form } = params;
+    // if (params.value.city) {
+    //   form.setFieldsValue({
+    //     test: '',
+    //   });
+    //   // return
+    // }
     if (params.value.city) {
       this.props.getDistrictAsync(params.formData);
     } else {

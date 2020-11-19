@@ -101,6 +101,8 @@ export default {
         teamHeadmanItem,
         type,
       ); //
+      const res = userList.some(v => v.id == memberList.value);
+      console.log('  resresres ：', res, userList, memberList); //
       return {
         ...state,
         action: payload.payload.action,

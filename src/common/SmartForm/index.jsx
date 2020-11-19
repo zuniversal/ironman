@@ -277,7 +277,7 @@ const SmartForm = (props, state) => {
     console.log(' onFormLayoutChange value, formData,  ： ', value, formData); //
     const { layout, size } = value;
 
-    onFieldChange && onFieldChange({ value, formData });
+    onFieldChange && onFieldChange({ value, formData, form: formControl });
 
     // setFormLayout(layout);
     // setComponentSize(size);
