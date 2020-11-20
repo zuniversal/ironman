@@ -1,13 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
 import { Button } from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import SmOrganizeForm from '@/components/Form/SmOrganizeForm'; //
-import SmOrganizeTable from '@/components/Table/SmOrganizeTable'; //
 
 import { actions, mapStateToProps } from '@/models/smOrganize'; //
 import SmartHOC from '@/common/SmartHOC';

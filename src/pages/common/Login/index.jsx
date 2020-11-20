@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { getItem, setItem, setItems, tips } from '@/utils';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { history, connect } from 'umi';
 import loginAvatar from '@/static/assets/loginAvatar.png';

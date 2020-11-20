@@ -1,27 +1,11 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import CsInspectRecordForm from '@/components/Form/CsInspectRecordForm'; //
 import CsInspectRecordSearchForm from '@/components/Form/CsInspectRecordSearchForm'; //
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
 import CsInspectRecordTable from '@/components/Table/CsInspectRecordTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 import ExportPdf from '@/components/Pdf/ExportPdf'; //
 import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader'; //
 
@@ -29,7 +13,6 @@ import { actions, mapStateToProps } from '@/models/csInspectRecord'; //
 import ReactDOM from 'react-dom';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { inspectMissionStatusMap } from '@/configs';
 
 const TITLE = '巡检';
 

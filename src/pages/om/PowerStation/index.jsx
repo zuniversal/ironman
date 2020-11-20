@@ -1,12 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import PowerStationTable from '@/components/Table/PowerStationTable'; //
 import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
 import { actions, mapStateToProps } from '@/models/powerStation'; //

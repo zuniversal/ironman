@@ -1,19 +1,6 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
+import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import MissionsManageForm from '@/components/Form/MissionsManageForm'; //
@@ -27,7 +14,6 @@ import {
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
 import ClientForm from '@/components/Form/ClientForm';
 import ContractForm from '@/components/Form/ContractForm';
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/missionsManage'; //
 import SmartHOC from '@/common/SmartHOC';

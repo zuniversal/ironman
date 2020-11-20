@@ -1,24 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
+import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
 import ContractTable from '@/components/Table/ContractTable'; //
 import ContractForm from '@/components/Form/ContractForm'; //
-import ContractSearchForm from '@/components/Form/ContractSearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
 import ErrorInfo from '@/components/Widgets/ErrorInfo';

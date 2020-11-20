@@ -1,13 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import HouseNoTable from '@/components/Table/HouseNoTable'; //
 import HouseNoForm from '@/components/Form/HouseNoForm'; //
 import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
 import UploadFileCom from '@/components/Widgets/UploadFileCom'; //

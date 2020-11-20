@@ -1,13 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import { Form, Input, Button, Checkbox } from 'antd';
-
-import SmartTable from '@/common/SmartTable'; //
+import { Button } from 'antd';
 import ClientForm from '@/components/Form/ClientForm'; //
 import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
 import ClientTable from '@/components/Table/ClientTable'; //
-import ClientFormModal from '@/components/Modal/ClientFormModal'; //
 import ClientRadar from '@/components/Echarts/ClientRadar'; //
 import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //

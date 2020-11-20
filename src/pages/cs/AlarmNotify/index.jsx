@@ -1,26 +1,11 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
+import { Button } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
-import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm'; //
 import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm'; //
 import AlarmNotifyTable from '@/components/Table/AlarmNotifyTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
-
 import { actions, mapStateToProps } from '@/models/alarmNotify'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';

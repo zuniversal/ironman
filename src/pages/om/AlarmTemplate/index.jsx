@@ -1,32 +1,10 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
+import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm'; //
 import AlarmTemplateTable from '@/components/Table/AlarmTemplateTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/alarmTemplate'; //
 import SmartHOC from '@/common/SmartHOC';

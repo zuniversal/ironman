@@ -1,30 +1,13 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-  Tag,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
 import OrganizeForm from '@/components/Form/OrganizeForm'; //
 import OrganizeTable from '@/components/Table/OrganizeTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/organize'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { PRIMARY } from '@/constants';
 
 const TITLE = '部门';
 

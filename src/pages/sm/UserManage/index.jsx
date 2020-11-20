@@ -1,8 +1,6 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
 import { Button } from 'antd';
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import UserManageForm from '@/components/Form/UserManageForm'; //
 import UserManageSearchForm from '@/components/Form/UserManageSearchForm'; //

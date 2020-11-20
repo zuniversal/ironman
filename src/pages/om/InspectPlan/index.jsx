@@ -1,26 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Spin,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
-import SearchForm from '@/common/SearchForm'; //
+import { Button, Spin } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectPlanForm from '@/components/Form/InspectPlanForm'; //
 import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm'; //
-import InspectPlanTable from '@/components/Table/InspectPlanTable'; //
 import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import {
   actions,

@@ -1,29 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm'; //
-import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
 import ShiftsArrangeDetailCalendar from '@/components/Calendar/ShiftsArrangeDetailCalendar';
 import ChoiceRadio from '@/components/Widgets/ChoiceRadio'; //
-import PageTitle from '@/components/Widgets/PageTitle'; //
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';

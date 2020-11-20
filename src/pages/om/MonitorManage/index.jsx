@@ -1,24 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-
-import SmartModal from '@/common/SmartModal'; //
+import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import MonitorManageForm from '@/components/Form/MonitorManageForm'; //
 import MonitorManageTable from '@/components/Table/MonitorManageTable'; //
-import ResultModal, { ErrorInfo } from '@/components/Modal/ResultModal'; //
 
 import { actions, mapStateToProps } from '@/models/monitorManage'; //
 import SmartHOC from '@/common/SmartHOC';

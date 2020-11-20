@@ -1,23 +1,15 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import ShiftsManageTable from '@/components/Table/ShiftsManageTable'; //
 import ShiftsManageForm from '@/components/Form/ShiftsManageForm'; //
 import ShiftsManageSearchForm from '@/components/Form/ShiftsManageSearchForm'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
 
 import {
   actions,
   // mapStateToProps
 } from '@/models/shiftsManage'; //
-import { arrangeActions } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
 import { history, connect } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';

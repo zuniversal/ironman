@@ -1,24 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
+import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
-import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import CsHomeStationTable from '@/components/Table/CsHomeStationTable';
 import CsHomeTabsTable from '@/components/Table/CsHomeTabsTable';
-import DropDownBtn from '@/common/DropDownBtn'; //
 import CsHomeMonitor from '@/components/Widgets/CsHomeMonitor';
 import CsHomeVideo from '@/components/Widgets/CsHomeVideo';
 import CsHomeStatBox from '@/components/Widgets/CsHomeStatBox';

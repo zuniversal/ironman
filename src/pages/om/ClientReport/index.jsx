@@ -1,16 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import './style.less';
-
-import { Form, Input, Button, Checkbox, Menu, Upload, Result } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SearchForm from '@/common/SearchForm'; //
+import { Button } from 'antd';
 import ClientReportTable from '@/components/Table/ClientReportTable'; //
 import ClientReportForm from '@/components/Form/ClientReportForm'; //
 import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm'; //
-import SmartModal from '@/common/SmartModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/clientReport'; //
