@@ -13,8 +13,8 @@ export const getList = p => noTipsGet('console/OMS/customer', p);
 export const getItem = p => noTipsGet(`console/OMS/customer/${p.d_id}`, p);
 export const addItem = p => post('console/OMS/customer/', p);
 export const editItem = p => put(`console/OMS/customer/${p.d_id}`, p);
-// export const removeItem = p => remove(`console/OMS/customer/${p.d_id}`, p);
-export const removeItem = p => remove(`console/OMS/customer/${p}`, p);
+export const removeItem = p => remove(`console/OMS/customer/${p.d_id}`, p);
+// export const removeItem = p => remove(`console/OMS/customer/${p}`, p);
 export const removeItems = p => remove(`console/OMS/customer/`, p);
 
 export const getDistrict = p => noTipsGet('console/OMS/customer/district', p);

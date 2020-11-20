@@ -142,7 +142,7 @@ class InspectPlan extends PureComponent {
   };
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )
-    const { loading } = this.props; //
+    const { loading, searchInfo } = this.props; //
     // const isLoading = loading['inspectPlan/getTagUserAsync']
     return (
       // !loading && <InspectPlanCalendar
@@ -152,6 +152,7 @@ class InspectPlan extends PureComponent {
           // scheduleList={this.props.scheduleList}
           scheduleList={this.props.scheduleList}
           unScheduleList={this.props.unScheduleList}
+          initialDate={searchInfo.month.format('YYYY-MM-DD')}
         ></InspectPlanCalendar>
       )
     );

@@ -110,6 +110,7 @@ const ShiftsArrangeList = props => {
           return (
             <div key={event.id} className="fsb rowItem ">
               <div className={'left'}>
+                {/* {true && ( */}
                 {event.surplus_plan_num > 0 && (
                   <div
                     className="dragItem "
@@ -188,7 +189,7 @@ const InspectPlanCalendar = props => {
         // className={`${ANIMATE.slideInLeft} `}
         calendarRef={calendarRef}
         validRange={nowDate => {
-          <CloseOutlined />;
+          // <CloseOutlined />;
           return {
             start: nowDate,
           };
@@ -201,6 +202,7 @@ const InspectPlanCalendar = props => {
         eventAdd={eventAdd}
         // eventRemove={eventRemove}
         eventChange={eventChange}
+        initialDate={props.initialDate}
         // dayCellContent={}
       />
 

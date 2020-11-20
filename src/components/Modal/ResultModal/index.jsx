@@ -93,8 +93,8 @@ export const RemoveModal = props => {
       resProps={{
         icon: <ExclamationOutlined className={'warnings '} />,
         status: 'warning',
-        title: '您是否确认删除？',
-        subTitle: '删除电站会删除电站下所有资产。监测点，请慎重!',
+        title: '您是否确认进行删除？',
+        // subTitle: '删除电站会删除电站下所有资产。监测点，请慎重!',
         okText: '确认',
         cancelText: '取消',
         ...resProps,
@@ -167,7 +167,7 @@ const ResultModal = props => {
     >
       <Result
         // status={statusMap}
-        subTitle="subTitle"
+        // subTitle="subTitle"
         {...resProps}
       >
         {children}

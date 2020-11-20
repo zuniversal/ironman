@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'csOrganize';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getUserHouseNoAsync'];
 
 const batchTurnActions = [];
 
@@ -26,6 +26,10 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    d_id: '',
+
+    searchInfo: {},
+    userHouseNoList: [],
   },
 
   reducers: {
@@ -89,6 +93,14 @@ export default {
         ),
       };
     },
+
+    getUserHouseNo(state, { payload, type }) {
+      // console.log(' getUserHouseNo 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        userHouseNoList: formatSelectList(payload.list, 'name'),
+      };
+    },
   },
 
   effects: {
@@ -111,6 +123,11 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+
+    *getUserHouseNoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getUserHouseNo, payload);
       yield put(action({ ...res, payload }));
     },
   },

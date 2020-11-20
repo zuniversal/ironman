@@ -115,6 +115,7 @@ class ShiftsManage extends PureComponent {
     console.log(' onRemove    ： ', params);
     // this.props.removeItemsAsync({ id: `${params.record.id}` });
     this.props.onRemove({
+      d_id: `${params.record.id}`,
       id: `${params.record.id}`,
     });
   };

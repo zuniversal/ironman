@@ -13,6 +13,7 @@ import { actions, mapStateToProps } from '@/models/powerStation'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
+import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 
 const TITLE = '电站';
 
@@ -83,9 +84,12 @@ class PowerStation extends PureComponent {
     this.props.getListAsync(params.formData);
   };
 
-  onRemove = paramssss => {
-    console.log(' onRemove    ： ', paramssss);
-    this.props.onRemove({ id: `${paramssss.record.id}` });
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.onRemove({
+      id: `${params.record.id}`,
+      d_id: `${params.record.id}`,
+    });
   };
   onBatchRemove = params => {
     console.log(' onBatchRemove    ： ', params, this.state, this.props);
@@ -167,17 +171,29 @@ class PowerStation extends PureComponent {
       getHouseNoAsync: params =>
         this.props.getHouseNoAsync({ keyword: params }),
       houseNoList: this.props.houseNoList,
-      editPowerInfo: this.props.editPowerInfo,
-      addPowerInfoAsync: this.props.addPowerInfoAsync,
-      editPowerInfo: this.props.editPowerInfo,
-      dataSource: this.props.powerInfoData,
-      removePowerInfoAsync: this.props.removePowerInfoAsync,
+      // editPowerInfo: this.props.editPowerInfo,
+      // addPowerInfoAsync: this.props.addPowerInfoAsync,
+      // editPowerInfo: this.props.editPowerInfo,
+      // dataSource: this.props.powerInfoData,
+      // removePowerInfoAsync: this.props.removePowerInfoAsync,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
-    return <PowerStationForm {...formComProps}></PowerStationForm>;
+    const powerTable = (
+      <PowerStationDetailTable
+        addPowerInfoAsync={this.props.addPowerInfoAsync}
+        editPowerInfoAsync={this.props.editPowerInfoAsync}
+        removePowerInfoAsync={this.props.removePowerInfoAsync}
+        modifyPowerInfo={this.props.modifyPowerInfo}
+        dataSource={this.props.powerInfoData}
+        init={this.props.itemDetail}
+      ></PowerStationDetailTable>
+    );
+    return (
+      <PowerStationForm {...formComProps} extra={powerTable}></PowerStationForm>
+    );
   };
   get size() {
     return ['removeStation'].some(v => v === this.props.action)
@@ -206,49 +222,6 @@ class PowerStation extends PureComponent {
     this.props.getBelongHouseNoAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
-    const datas = {
-      // "name": "电站1",
-      // "addr": "上海普天科创电子有限公司",
-      // "customer": 1,
-      // "electricity_user":1,
-      // "operation_level": "2354",
-      // "person": "234",
-      // "phone": "2343546",
-      // "file": "qwsdfgh",
-      // "status": true,
-      // "inspections_number": 3,
-      // "total_capacity": 123.0,
-      // "real_capacity": 123.0,
-
-      // electricity_user: '1',
-      // // customer: "5774",
-      // name: '1',
-      // person: '13',
-      // status: true,
-      // operation_level: '1',
-      // inspections_number: 1,
-      // phone: '11',
-      // addr: '清华大学',
-      // file: 'http://localhost:8000/#/om/powerStation',
-      elecrical_info_list: [
-        // {
-        //   id: 1,
-        // },
-        1,
-      ],
-      // elecrical_info_list: [
-      //   {
-      //     id: 8,
-      //     // power_number: '',
-      //     // meter_number: '',
-      //     // incoming_line_name: '',
-      //     // magnification: '',
-      //     // transformer_capacity: '',
-      //     // real_capacity: '',
-      //     // outline_number: '',
-      //   },
-      // ],
-    };
     // this.props.showFormModal({
     //   action: 'add',
     // })
@@ -258,24 +231,13 @@ class PowerStation extends PureComponent {
   }
 
   render() {
-    const formComProps = {
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
-      clientList: this.props.clientList,
-      getHouseNoAsync: params =>
-        this.props.getHouseNoAsync({ keyword: params }),
-      houseNoList: this.props.houseNoList,
-      editPowerInfo: this.props.editPowerInfo,
-    };
-    // return (
-    //   <PowerStationForm
-    //     addPowerInfoAsync={this.props.addPowerInfoAsync}
-    //     editPowerInfo={this.props.editPowerInfo}
-    //     {...formComProps}
-    //     dataSource={this.props.powerInfoData}
-    //   ></PowerStationForm>
-    // );
+    // return <PowerStationDetailTable
+    //   addPowerInfoAsync={this.props.addPowerInfoAsync}
+    //   editPowerInfoAsync={this.props.editPowerInfoAsync}
+    //   removePowerInfoAsync={this.props.removePowerInfoAsync}
+    //   modifyPowerInfo={this.props.modifyPowerInfo}
+    //   dataSource={this.props.powerInfoData}
+    // ></PowerStationDetailTable>
     return (
       <div className="PowerStation">
         {this.renderSearchForm()}

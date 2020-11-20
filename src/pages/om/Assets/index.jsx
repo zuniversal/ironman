@@ -180,8 +180,11 @@ class Assets extends PureComponent {
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemAsync({
-      // id: `${params.record.id}`,
+    // this.props.removeItemAsync({
+    //   // id: `${params.record.id}`,
+    //   d_id: `${params.record.id}`,
+    // });
+    this.props.onRemove({
       d_id: `${params.record.id}`,
     });
   };
@@ -222,9 +225,9 @@ class Assets extends PureComponent {
       if (res.file && res.file.fileList) {
         const fileList = res.file.fileList;
         res.file = fileList[fileList.length - 1].response.url;
-      } else {
-        tips('文件不能为空！', 2);
-        return;
+        // } else {
+        //   tips('文件不能为空！', 2);
+        //   return;
       }
       if (action === 'add') {
         this.props.addItemAsync({

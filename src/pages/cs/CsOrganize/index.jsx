@@ -75,7 +75,12 @@ class CsOrganize extends PureComponent {
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemAsync({
+    // this.props.removeItemAsync({
+    //   custom_id: `${params.record.customer_id}`,
+    //   user_id: `${params.record.user_id}`,
+    //   account_id: `${params.record.account_id}`,
+    // });
+    this.props.onRemove({
       custom_id: `${params.record.customer_id}`,
       user_id: `${params.record.user_id}`,
       account_id: `${params.record.account_id}`,
@@ -119,6 +124,9 @@ class CsOrganize extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getUserHouseNoAsync();
+  }
 
   render() {
     return (

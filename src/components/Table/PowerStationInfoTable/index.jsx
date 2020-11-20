@@ -11,6 +11,7 @@ import './style.less';
 import { Input, Button } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
+import { tips } from '@/utils';
 
 export const DeviceInfoTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
@@ -87,6 +88,33 @@ export const WatchInfoTable = props => {
   );
 };
 
+export const TableInput = props => {
+  const { text, record, index, keys } = props; //
+  // console.log(
+  //   ' %c TableInput 组件 ： ',
+  //   `color: #333; font-weight: bold`,
+  //   props,
+  // ); //
+  return props.record.isEdit ? (
+    <Input
+      defaultValue={text}
+      onChange={e =>
+        props.modifyPowerInfo({
+          action: 'edit',
+          value: e.target.value,
+          // keys: 'outline_number',
+          keys: keys,
+          text,
+          ...record,
+          index,
+        })
+      }
+    ></Input>
+  ) : (
+    text
+  );
+};
+
 export const PowerStationDetailTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
   console.log(
@@ -131,133 +159,91 @@ export const PowerStationDetailTable = props => {
       title: '电源编号',
       dataIndex: 'power_number',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'power_number',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'power_number'}
+        ></TableInput>
       ),
     },
     {
       title: '电表号',
       dataIndex: 'meter_number',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'meter_number',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'meter_number'}
+        ></TableInput>
       ),
     },
     {
       title: '进线名称',
       dataIndex: 'incoming_line_name',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'incoming_line_name',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'incoming_line_name'}
+        ></TableInput>
       ),
     },
     {
       title: '倍率',
       dataIndex: 'magnification',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'magnification',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'magnification'}
+        ></TableInput>
       ),
     },
     {
       title: '装接容量',
       dataIndex: 'transformer_capacity',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'transformer_capacity',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'transformer_capacity'}
+        ></TableInput>
       ),
     },
     {
       title: '实际容量',
       dataIndex: 'real_capacity',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'real_capacity',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'real_capacity'}
+        ></TableInput>
       ),
     },
     {
       title: '出线侧设备数',
       dataIndex: 'outline_number',
       render: (text, record, index, config) => (
-        <Input
-          defaultValue={text}
-          onChange={e =>
-            props.editPowerInfo({
-              action: 'edit',
-              value: e.target.value,
-              keys: 'outline_number',
-              text,
-              record,
-              index,
-            })
-          }
-        ></Input>
+        <TableInput
+          text={text}
+          record={record}
+          index={index}
+          {...props}
+          keys={'outline_number'}
+        ></TableInput>
       ),
     },
     {
@@ -269,27 +255,43 @@ export const PowerStationDetailTable = props => {
         <>
           <a
             onClick={() => {
-              console.log(' record ： ', props, record, edit); //
-              props.editPowerInfo({
+              console.log(' record ：, ', props, record, edit); //
+              // const fn = record.id && record.isEdit
+              let fn = '';
+              if (!record.id) {
+                fn = 'addPowerInfoAsync';
+                //  fn = record.isEdit
+                //  ? 'editPowerInfoAsync'
+                //  :'addPowerInfoAsync'
+              } else {
+                fn = record.isEdit ? 'editPowerInfoAsync' : 'modifyPowerInfo';
+              }
+
+              // const fn = 'editPowerInfoAsync';
+              props[fn]({
                 ...record,
                 index,
+                d_id: record.id,
                 action: 'edit',
+                powerstation: props.init.id,
               });
             }}
           >
-            编辑
+            {record.isEdit ? '保存' : '编辑'}
           </a>
           <a
             onClick={() => {
               console.log(' remove record ： ', props, record, index); //
               const removeFn = record.id
                 ? 'removePowerInfoAsync'
-                : 'removePowerInfo';
+                : 'modifyPowerInfo';
+              // const removeFn = 'removePowerInfoAsync';
               props[removeFn]({
-                // ...record,
+                ...record,
                 index,
                 id: `${record.id}`,
-                action: record.id ? 'remove' : 'localRemove',
+                // action: record.id ? 'remove' : 'localRemove',
+                action: 'remove',
               });
             }}
           >
@@ -309,19 +311,30 @@ export const PowerStationDetailTable = props => {
       rowKey={'key'}
       className={'powerStationDetailTable modalTable'}
       // rowLength={3}
+      pagination={false}
       title={() => (
         <div className={`fje`}>
           <Button
             type="primary"
-            onClick={() => props.editPowerInfo({ action: 'add' })}
+            onClick={() => {
+              console.log(
+                '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
+                props.dataSource.filter(v => v.isEdit),
+              );
+              if (props.dataSource.filter(v => v.isEdit).length < 1) {
+                props.modifyPowerInfo({ action: 'add' });
+              } else {
+                tips('请先保存上一条数据！', 2);
+              }
+            }}
             className={'add'}
           >
             新增电源
           </Button>
           {/* <Button type="primary" onClick={() => props.savePowerInfoAsync(dataSource)}> */}
-          <Button type="primary" onClick={props.addPowerInfoAsync}>
+          {/* <Button type="primary" onClick={props.addPowerInfoAsync}>
             保存
-          </Button>
+          </Button> */}
         </div>
       )}
     ></SmartTable>

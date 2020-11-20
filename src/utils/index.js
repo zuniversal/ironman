@@ -179,7 +179,9 @@ export const renderCheckboxOp = (
 ) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   const CheckboxItems = configs.map(v => (
-    <Checkbox key={v.value}>{v.label}</Checkbox>
+    <Checkbox key={v.value} value={v.value}>
+      {v.label}
+    </Checkbox>
   ));
   return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
   return opType === 'group' ? (

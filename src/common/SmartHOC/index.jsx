@@ -62,6 +62,7 @@ export default ({
 
         // 删除弹框状态
         isShowRemoveModal: false,
+        isBatch: false,
         removeTitle: '',
 
         isShowTitle: true,
@@ -128,54 +129,103 @@ export default ({
     removeAction = props => {
       console.log(' removeAction ： ', props, this.state, this.props);
       const { dispatch } = this.props; //
-      const params = Array.isArray(props)
-        ? props
-        : [
-            props.record.id,
-            // ...props.record,
-            // props.record,
-            // record,
-          ]; //
-      console.log('  params ：', params); //
-      dispatch(actions.removeItemAsync(params));
-      this.setState({
+      const { selectedRowKeys, isBatch } = this.state; //
+      const isArray = Array.isArray(props);
+      // const params = isArray
+      //   ? props
+      //   : [
+      //       props.record.id,
+      //       // ...props.record,
+      //       // props.record,
+      //       // record,
+      //     ]; //
+      const params = props;
+      // const params = isArray
+      //   ? props
+      //   : [
+      //       props.record.id,
+      //       // ...props.record,
+      //       // props.record,
+      //       // record,
+      //     ]; //
+      const resetState = {
         isShowRemoveModal: false,
-      });
+      };
+      if (isBatch) {
+        resetState.selectedRowKeys = [];
+        this.props.dispatch(
+          actions.removeItemsAsync(params ? params : selectedRowKeys),
+        );
+      } else {
+        // dispatch(actions.removeItemAsync({ id: `${props.record.id}` }));
+        this.props.dispatch(actions.removeItemAsync(params));
+      }
+      console.log('  params ：', params, resetState); //
+      // dispatch(actions.removeItemAsync(params));
+      this.setState(resetState);
     };
+    // onBatchRemove = props => {
+    //   console.log(' onBatchRemove ： ', props, this.state, this.props);
+    //   const { dispatch } = this.props; //
+    //   const { selectedRows, selectedRowKeys } = this.state; //
+    //   if (selectedRowKeys.length) {
+    //     this.onRemove(selectedRowKeys);
+    //   } else {
+    //     tips('请先勾选删除项再删除！', 2);
+    //   }
+    // };
+    // onRemove = removeParams => {
+    //   console.log('    onRemove ： ', removeParams, this.state, this.props);
+    //   const { remove } = this.props; //
+    //   this.setState({
+    //     removeParams,
+    //     isShowRemoveModal: true,
+    //   });
+    // };
+
     onBatchRemove = props => {
       console.log(' onBatchRemove ： ', props, this.state, this.props);
       const { dispatch } = this.props; //
       const { selectedRows, selectedRowKeys } = this.state; //
       if (selectedRowKeys.length) {
-        this.onRemove(selectedRowKeys);
+        // this.onRemove(selectedRowKeys, true);
+        this.onRemove(props, true);
       } else {
         tips('请先勾选删除项再删除！', 2);
       }
     };
-
-    onRemove = removeParams => {
-      console.log('    onRemove ： ', removeParams, this.state, this.props);
+    onRemove = (removeParams, isBatch) => {
+      console.log(
+        '  调用删除确认弹框  onRemove ： ',
+        removeParams,
+        isBatch,
+        this.state,
+        this.props,
+      );
       const { remove } = this.props; //
       this.setState({
         removeParams,
         isShowRemoveModal: true,
+        isBatch,
       });
     };
+
     onResultModalOk = e => {
       console.log(' onResultModalOk   e,  ,   ： ', e);
-      tips('删除成功！');
+      // tips('删除成功！');
       this.removeAction(this.state.removeParams);
     };
     onResultModalCancel = e => {
       console.log(' onResultModalCancel   e, ,   ： ', e);
       this.setState({
         isShowRemoveModal: false,
+        isBatch: false,
       });
     };
     renderRemoveModal = params => {
       // console.log(' renderRemoveModal ： ', params);
       const { isShowRemoveModal } = this.state; //
-      const { removeTitle } = this.props; //
+      const { removeTitle = '删除操作' } = this.props; //
 
       const modalProps = {
         title: removeTitle,
@@ -492,11 +542,10 @@ export default ({
             {...this.state}
             {...this.props}
             {...this.actionProps}
-            onRemove={this.onRemove2}
-            onBatchRemove={this.onBatchRemove2}
-            // onRemove={this.onRemove}
-            // onBatchRemove={this.onBatchRemove}
-
+            // onRemove={this.onRemove2}
+            // onBatchRemove={this.onBatchRemove2}
+            onRemove={this.onRemove}
+            onBatchRemove={this.onBatchRemove}
             onSelectChange={this.onSelectChange}
             // showFormModal={this.showFormModal}
             syncOAAsync={this.syncOAAsync}

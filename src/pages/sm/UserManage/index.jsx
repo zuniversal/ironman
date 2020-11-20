@@ -103,7 +103,11 @@ class UserManage extends PureComponent {
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    this.props.removeItemAsync({ d_id: `${params.record.id}` });
+    // this.props.removeItemAsync({ d_id: `${params.record.id}` });
+    this.props.onRemove({
+      id: `${params.record.id}`,
+      d_id: `${params.record.id}`,
+    });
   };
 
   onOk = async props => {

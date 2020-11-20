@@ -603,7 +603,7 @@ class SmartTable extends PureComponent {
             emptyText: (
               <div className={`noData`}>
                 <img src={noData} className={`noDataImg`} />
-                <div className={`text`}>暂无数据~</div>
+                <div className={`text`}>暂无数据</div>
               </div>
             ),
           }}

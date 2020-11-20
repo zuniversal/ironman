@@ -17,6 +17,8 @@ export const removeItem = p => remove(`console/OMS/powerstation/${p.d_id}`, p);
 export const removeItems = p => remove(`console/OMS/powerstation/`, p);
 
 export const addPowerInfo = p => post(`console/OMS/electricalinfo`, p);
+export const editPowerInfo = p =>
+  put(`console/OMS/electricalinfo/${p.d_id}`, p);
 export const removePowerInfo = p => remove(`console/OMS/electricalinfo`, p);
 export const exportData = p => get('console/OMS/powerstation/file', p);
 export const syncOA = p => noTipsGet(`console/OMS/powerstation/oa`, p);

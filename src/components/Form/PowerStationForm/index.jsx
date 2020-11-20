@@ -37,7 +37,7 @@ const selectData = [
 
 const PowerStationForm = props => {
   console.log(' PowerStationForm ： ', props, config); //
-  const { action } = props; //
+  const { action, extra } = props; //
 
   const formProps = {
     // layout: 'vertical',
@@ -463,12 +463,13 @@ const PowerStationForm = props => {
         {...props}
       ></SmartForm>
 
-      <PowerStationDetailTable
+      {extra}
+      {/* <PowerStationDetailTable
         addPowerInfoAsync={props.addPowerInfoAsync}
         removePowerInfoAsync={props.removePowerInfoAsync}
         editPowerInfo={props.editPowerInfo}
         dataSource={props.dataSource}
-      ></PowerStationDetailTable>
+      ></PowerStationDetailTable> */}
     </>
   );
 };

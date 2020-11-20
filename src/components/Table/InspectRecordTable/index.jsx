@@ -10,7 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { inspectMissionStatusMap } from '@/configs';
+import { workOrderStatusMap } from '@/configs';
 
 const InspectRecordTable = props => {
   const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
@@ -53,7 +53,7 @@ const InspectRecordTable = props => {
     {
       title: '当前状态',
       dataIndex: 'status',
-      dataMap: inspectMissionStatusMap,
+      dataMap: workOrderStatusMap,
     },
 
     {

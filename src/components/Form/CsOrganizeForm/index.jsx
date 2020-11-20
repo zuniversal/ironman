@@ -23,6 +23,12 @@ const selectData = [
   },
 ];
 
+const checkboxData = [
+  { label: '户号1', value: 'yes1', key: 'yes1' },
+  { label: '户号2', value: 'yes2', key: 'yes2' },
+  { label: '户号3', value: 'yes3', key: 'yes3' },
+];
+
 export const config = [
   {
     itemProps: {
@@ -51,6 +57,7 @@ export const config = [
   },
   {
     formType: 'Checkbox',
+    checkboxData: checkboxData,
     itemProps: {
       label: '关联户号',
       name: 'customer',

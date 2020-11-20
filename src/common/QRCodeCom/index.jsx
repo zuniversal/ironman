@@ -13,7 +13,13 @@ import PropTypes from 'prop-types';
 import QRCode from 'qrcode.react';
 
 const QRCodeCom = props => {
-  const { value = 'zyb', children = '按钮', width = 260, height = 260 } = props; //
+  const {
+    value = 'zyb',
+    children = '按钮',
+    width = 260,
+    height = 260,
+    size = 260,
+  } = props; //
   console.log(' QRCodeCom ： ', props); //
   let str = value;
   if (typeof value === 'object') {
@@ -28,6 +34,11 @@ const QRCodeCom = props => {
         height={height}
         {...props}
         value={str}
+        size={size}
+        // imageSettings={{
+        //   width: 260,
+        //   height: 260,
+        // }}
         id="qrCode"
       />
     </div>
@@ -38,6 +49,7 @@ QRCodeCom.defaultProps = {
   value: '按钮',
   width: 260,
   height: 260,
+  size: 260,
 };
 
 QRCodeCom.propTypes = {

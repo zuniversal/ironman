@@ -311,6 +311,7 @@ class Client extends PureComponent {
     // this.props.removeItemsAsync({ id: `${params.record.id}` });
     this.props.onRemove({
       id: `${params.record.id}`,
+      d_id: `${params.record.id}`,
     });
   };
   onBatchRemove = params => {
