@@ -1,10 +1,11 @@
-import { toolbox } from '../common';
+import { toolbox, splitLine, grid } from '../common';
 import { PRIMARY } from '@/constants';
 
 const option = params => {
   const { legend, xAxis, data, noToolBox } = params;
 
   return {
+    grid,
     color: [
       PRIMARY,
       '#f50',
@@ -57,6 +58,7 @@ const option = params => {
         axisLabel: {
           formatter: '{value}',
         },
+        splitLine,
       },
       {
         type: 'value',
@@ -65,6 +67,7 @@ const option = params => {
         axisLabel: {
           formatter: '{value}',
         },
+        splitLine,
       },
     ],
     series: [

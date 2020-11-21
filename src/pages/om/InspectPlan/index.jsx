@@ -124,6 +124,9 @@ class InspectPlan extends PureComponent {
   eventsSet = params => {
     console.log(' eventsSet,  , ： ', params);
   };
+  remove = e => {
+    console.log('    remove ： ', e);
+  };
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )
     const { loading, searchInfo } = this.props; //
@@ -137,6 +140,7 @@ class InspectPlan extends PureComponent {
           scheduleList={this.props.scheduleList}
           unScheduleList={this.props.unScheduleList}
           initialDate={searchInfo.month.format('YYYY-MM-DD')}
+          remove={this.remove}
         ></InspectPlanCalendar>
       )
     );

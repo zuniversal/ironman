@@ -10,6 +10,7 @@ import {
   MissionsManageContractForm,
   MissionsManageScheduleForm,
   MissionsManageConfirmScheduleForm,
+  MissionsManageOrderInfoForm,
 } from '@/components/Form/MissionsManageActionForm'; //
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
 import ClientForm from '@/components/Form/ClientForm';
@@ -18,6 +19,7 @@ import ContractForm from '@/components/Form/ContractForm';
 import { actions, mapStateToProps } from '@/models/missionsManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import WorkOrderTicketForm from '@/components/Form/WorkOrderForm';
 
 const TITLE = '任务';
 
@@ -34,6 +36,7 @@ const titleMap = {
   closeMission: `关闭${TITLE}`,
   clientDetail: '客户详情',
   contractDetail: '合同详情',
+  orderInfoDetail: '发起工单详情',
 };
 
 // const mapStateToProps = ({ missionsManage, }) => missionsManage;
@@ -99,7 +102,11 @@ class MissionsManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail, d_id } = this.props; //
     const { form, init } = props; //
-    if (['detail', 'clientDetail', 'contractDetail'].includes(action)) {
+    if (
+      ['detail', 'clientDetail', 'contractDetail', 'orderInfoDetail'].includes(
+        action,
+      )
+    ) {
       this.props.onCancel({});
       return;
     }
@@ -224,6 +231,13 @@ class MissionsManage extends PureComponent {
     if (action === 'detail') {
       formComProps.isDisabledAll = true;
     }
+    if (action === 'orderInfoDetail') {
+      return (
+        <MissionsManageOrderInfoForm
+          {...formComProps}
+        ></MissionsManageOrderInfoForm>
+      );
+    }
     console.log(' formComProps ： ', formComProps); //
     return <MissionsManageForm {...formComProps}></MissionsManageForm>;
   };
@@ -271,6 +285,12 @@ class MissionsManage extends PureComponent {
   }
 
   render() {
+    // return (
+    //   <MissionsManageOrderInfoForm
+    //     init={{}}
+    //   ></MissionsManageOrderInfoForm>
+    // );
+    // return <WorkOrderTicketForm></WorkOrderTicketForm>;
     return (
       <div className="MissionsManage">
         {this.renderSearchForm()}

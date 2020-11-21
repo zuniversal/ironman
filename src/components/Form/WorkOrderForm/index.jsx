@@ -5,6 +5,7 @@ import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import { regoins, workOrderStatusConfig } from '@/configs'; //
 import { formatConfig, createArr } from '@/utils'; //
+import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 
 const choiceRadios = [
   { label: '种类1', value: 'yes', key: 'yes' },
@@ -14,6 +15,21 @@ const choiceRadios = [
 const WorkOrderTicketForm = props => {
   console.log(' WorkOrderTicketForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const logTimeLine = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <InspectMissionTimeline
+          datas={props.init.task_log}
+        ></InspectMissionTimeline>
+      ),
+      itemProps: {
+        label: '任务日志',
+        name: 'task_log',
+      },
+    },
+  ];
 
   const clientConfig = [
     {
@@ -171,6 +187,7 @@ const WorkOrderTicketForm = props => {
     },
     // ...  ? clientConfig : [],
     ...clientConfig,
+    ...logTimeLine,
   ];
 
   const formProps = {

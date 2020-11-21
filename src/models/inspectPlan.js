@@ -93,7 +93,8 @@ export default {
         // console.log(' scheduleListData v ： ', v,  )//
         return {
           ...v,
-          title: `电站-${v.station.name} id:${v.station.id}`,
+          // title: `电站-${v.station.name} id:${v.station.id}`,
+          title: `${v.station.name}`,
           tags: `客户`,
           start: v.plan_date,
           overlap: false,

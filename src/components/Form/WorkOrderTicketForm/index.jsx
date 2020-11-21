@@ -99,14 +99,14 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作负责人',
-        name: 'licensor',
+        name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '离去人员',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -114,14 +114,14 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '时间',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -138,7 +138,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作负责人',
-        name: 'finish_time',
+        // name: '',
         className: 'w50',
       },
     },
@@ -160,14 +160,14 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作负责人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作许可人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -177,7 +177,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作地点',
-        name: 'addr',
+        // name: '',
         className: 'w50',
       },
     },
@@ -185,7 +185,7 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '开始工作',
-        name: 'addr',
+        // name: '',
         className: 'w50',
       },
     },
@@ -193,14 +193,14 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '结束工作',
-        name: 'addr',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        name: 'addr',
+        // name: '',
         className: 'w50',
       },
     },
@@ -332,7 +332,7 @@ const WorkOrderTicketForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: ' ',
-        name: 'work_conditions',
+        name: 'attention',
         className: 'w50',
       },
       comProps: {
@@ -342,18 +342,12 @@ const WorkOrderTicketForm = props => {
         },
       },
     },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: ' ',
-      },
-    },
 
     {
       formType: 'Select',
       itemProps: {
         label: '签发人员',
-        name: 'plan_start_time',
+        name: 'issuer',
         className: 'w50',
       },
     },
@@ -361,7 +355,7 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '签发时间',
-        name: 'plan_end_time',
+        name: 'issue_time',
         className: 'w50',
       },
     },
@@ -375,14 +369,14 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作负责人',
-        name: 'person_num',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作许可人',
-        name: 'person_name',
+        // name: '',
         className: 'w50',
       },
     },
@@ -411,7 +405,7 @@ const WorkOrderTicketForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: ' ',
-        name: 'work_conditions',
+        // name: '',
         className: 'w50',
       },
       comProps: {
@@ -424,22 +418,22 @@ const WorkOrderTicketForm = props => {
     {
       formType: 'rowText',
       itemProps: {
-        label: ' ',
+        label: '9、许可',
       },
     },
 
     {
       formType: 'DatePicker',
       itemProps: {
-        label: '9、许可开始工作时间',
-        name: '',
+        label: '开始工作时间',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -453,21 +447,21 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '原负责人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '离去，变更为',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作许可人',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -475,7 +469,7 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '时间',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },
@@ -484,7 +478,7 @@ const WorkOrderTicketForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '11.工作人员变动',
-        name: '',
+        // name: '',
       },
     },
     ...peopleChangeConfig,
@@ -563,7 +557,7 @@ const WorkOrderTicketForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: ' ',
-        name: 'remarks',
+        name: '',
         className: 'w50',
       },
     },
@@ -600,7 +594,7 @@ const WorkOrderTicketForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '17. 工作票执行完毕印鉴',
-        name: '',
+        // name: '',
       },
     },
     <UploadCom
@@ -617,7 +611,7 @@ const WorkOrderTicketForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '15.工作票检查',
-        name: '',
+        // name: '',
       },
     },
     {
@@ -637,7 +631,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '检查人员',
-        name: '',
+        // name: '',
         className: 'w50',
       },
     },

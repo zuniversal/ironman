@@ -257,6 +257,7 @@ export const formatConfig = (
 ) => {
   const configs = config.map((v, i) => {
     // console.log(' formatConfig ：v.itemProps?.name  ', v, v.itemProps, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
+    const isPlainText = v.formType === 'plainText';
     const items = {
       ...v,
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
@@ -285,7 +286,9 @@ export const formatConfig = (
       // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
       comProps: {
         ...v.comProps,
-        className: `${isSearchForm ? w240 : w320} ${v.comProps?.className} `,
+        className: `${isSearchForm ? w240 : w320} ${
+          v.comProps?.className
+        } plainText ${isPlainText ? 'plainText' : ''}`,
       },
     };
     // console.log(' items ： ', items); //

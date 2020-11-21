@@ -146,6 +146,15 @@ ShiftsArrangeList.propTypes = {
 
 const calendarRef = React.createRef();
 
+// const renderEventContent = (eventInfo) => {
+//   console.log(' renderEventContent   ,   ： ',   )
+//   return (
+//     <div className={`eventWrapper`}  >
+//       {eventInfo.event.title}
+//       <CloseOutlined />
+//     </div>
+//   )
+// }
 const InspectPlanCalendar = props => {
   console.log(' InspectPlanCalendar   props, ,   ： ', props);
   const cusRef = useRef();
@@ -189,7 +198,6 @@ const InspectPlanCalendar = props => {
         // className={`${ANIMATE.slideInLeft} `}
         calendarRef={calendarRef}
         validRange={nowDate => {
-          // <CloseOutlined />;
           return {
             start: nowDate,
           };
@@ -203,6 +211,13 @@ const InspectPlanCalendar = props => {
         // eventRemove={eventRemove}
         eventChange={eventChange}
         initialDate={props.initialDate}
+        eventContent={eventInfo => (
+          <div className={`eventWrapper`}>
+            {eventInfo.event.title}
+            <CloseOutlined onClick={props.cli} />
+          </div>
+        )}
+        eventOverlap={false}
         // dayCellContent={}
       />
 

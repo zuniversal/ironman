@@ -394,6 +394,7 @@ const ClientForm = props => {
       uploadProps={{
         disabled: props.isDisabledAll || action === 'detail',
       }}
+      init={props.init}
     ></UploadCom>,
 
     {
@@ -510,6 +511,7 @@ const ClientForm = props => {
       // formItemProps={{
 
       // }}
+      init={props.init}
     ></UploadCom>,
   ];
 

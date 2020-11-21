@@ -10,6 +10,21 @@ export const tooltip = {
   },
 };
 
+export const grid = {
+  // left: 0,
+  // right: 10,
+  // top: 0,
+  // bottom: 10,
+};
+
+export const splitLine = {
+  show: true,
+  lineStyle: {
+    type: 'dashed',
+    color: ['#f0f0f0'],
+  },
+};
+
 export const toolbox = {
   feature: {
     dataView: {

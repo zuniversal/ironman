@@ -1,4 +1,4 @@
-import { toolbox } from '../common';
+import { toolbox, splitLine, grid } from '../common';
 
 const option = params => {
   const { data, tabData, myExpenseBarTxt } = params;
@@ -11,6 +11,7 @@ const option = params => {
     myExpenseBarTxt,
   ); //
   return {
+    grid,
     color: [
       '#1CBB51',
       '#FD7D7D',
@@ -73,19 +74,21 @@ const option = params => {
     yAxis: [
       {
         type: 'value',
-        name: 'Amount',
+        name: '数据源1',
         axisLabel: {
           formatter: '{value}',
           // rotate: 30,
         },
+        splitLine,
       },
       {
         type: 'value',
-        name: 'Expense Trend',
+        name: '数据源2',
         axisLabel: {
           formatter: '{value}',
           // rotate: 30,
         },
+        splitLine,
       },
     ],
 

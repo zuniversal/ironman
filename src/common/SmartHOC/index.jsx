@@ -66,6 +66,8 @@ export default ({
         removeTitle: '',
 
         isShowTitle: true,
+
+        commonModalContent: null,
       };
       // this.onRemove = this.removeAction
       this.actionProps = {};
@@ -291,7 +293,7 @@ export default ({
     };
 
     renderModalForm = e => {
-      // console.log('    renderModalForm ： ', e, this.state, this.props,   )
+      // console.log('    renderModalForm ： ', e, this.state,   )
       // const {modalForm,  } = this.state//
       if (modalForm) {
         return modalForm;
@@ -421,8 +423,8 @@ export default ({
       }
     };
 
-    getList = (params = {}) => {
-      console.log('    getList ： ', params, this.state);
+    getList = (params = { page: 1, page_size: 10 }) => {
+      console.log('    getList ： ', params, this.state, this.props);
       const { dispatch } = this.props; //
       dispatch(actions.getListAsync(params));
     };
@@ -494,6 +496,24 @@ export default ({
       );
     };
 
+    showModal = e => {
+      console.log('    showModal ： ', e, this.state, this.props);
+      this.props.showCommonModal();
+    };
+    renderCommonModal = params => {
+      return (
+        <SmartFormModal
+          show={this.props.isShowCommonModal}
+          action={this.props.action}
+          titleMap={this.state.titleMap}
+          onOk={this.closeCommonModal}
+          onCancel={this.props.closeCommonModal}
+        >
+          {this.props.commonModalContent}
+        </SmartFormModal>
+      );
+    };
+
     componentDidMount() {
       // console.log(
       //   ' SmartHoc 组件componentDidMount挂载 ： ',
@@ -559,6 +579,8 @@ export default ({
           />
 
           {this.renderSmartFormModal()}
+
+          {this.renderCommonModal()}
 
           {this.renderRemoveModal()}
         </div>

@@ -1,15 +1,23 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/common';
+import * as powerStationServices from '@/services/powerStation';
+import * as clientServices from '@/services/client';
+import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'common';
 const { createActions } = init(namespace);
 
-const otherActions = ['getEnumListAsync'];
+const otherActions = [
+  'getEnumListAsync',
+  'powerStationAsync',
+  'clientAsync',
+  'houseNoAsync',
+];
 
 const batchTurnActions = [];
 
-export const actions = {
+export const commonActions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
@@ -22,112 +30,128 @@ export default {
 
   state: {
     action: '',
-    isShowModal: false,
-    dataList: [],
-    count: 0,
+    isShowCommonModal: false,
     itemDetail: {},
-
-    clientList: [],
-    enumList: [],
+    commonModalContent: null,
   },
 
   reducers: {
-    getEnumList(state, { payload, type }) {
-      console.log(' getEnumList ： ', payload); //
+    showCommonModal(state, { payload, type }) {
+      console.log(' showCommonModal 修改  ： ', state, payload, type); //
       return {
         ...state,
-        enumList: payload.list,
-      };
-    },
-    showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
-      return {
-        ...state,
-        isShowModal: true,
+        isShowCommonModal: true,
         action: payload.action,
+        commonModalContent: payload.content,
       };
     },
-    onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+    closeCommonModal(state, { payload, type }) {
+      console.log(' closeCommonModal 修改  ： ', state, payload, type); //
       return {
         ...state,
-        isShowModal: false,
+        isShowCommonModal: false,
         itemDetail: {},
+        commonModalContent: null,
       };
     },
-    getList(state, { payload, type }) {
-      console.log(' getList ： ', state, payload); //
-      // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, client: `客户`, start: v.plan_date,   }))
-      // console.log(' dataList  dataList.map v ： ', dataList,   )
-      return {
-        ...state,
-        dataList: payload.list,
-        count: payload.rest.count,
-        isShowModal: false,
-      };
-    },
-    getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+    clientDetail(state, { payload, type }) {
+      console.log(' clientDetail ： ', state, payload); //
+      const {
+        customer_admin,
+        service_staff,
+        last_service_staff,
+      } = payload.bean; //
       return {
         ...state,
         action: payload.payload.action,
-        isShowModal: true,
-        d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        isShowCommonModal: true,
+        clientDetail: {
+          ...payload.bean,
+          customer_admin:
+            customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
+          d_id: payload.payload.d_id,
+          service_staff: `${service_staff.id}`,
+          last_service_staff: `${last_service_staff.id}`,
+        },
       };
     },
-    addItem(state, { payload, type }) {
+    powerStationDetail(state, { payload, type }) {
+      const datas = payload.bean.electricalinfromation_set.map(v => ({
+        ...v,
+        key: Math.random(),
+      }));
+      console.log(' getItem ： ', state, payload, datas); //
       return {
         ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          electricity_user: `${payload.bean.electricity_user.id}`,
+        },
+        powerInfoData: datas,
       };
     },
-    editItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
-        isShowModal: false,
+    houseNoDetail(state, { payload, type }) {
+      console.log(' houseNoDetail ： ', state, payload); //
+      const { customer } = payload.bean; //
+      const { clientList } = state;
+      const customerItem = {
+        ...customer,
+        value: `${customer.id}`,
+        label: customer.name,
       };
-    },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
+      console.log(' customer ： ', customer, customerItem); //
       return {
         ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          customer: `${customer.id}`,
+        },
+        clientList: [customerItem, ...clientList],
       };
     },
   },
 
   effects: {
-    // *getListAsync({ payload, action, type }, { call, put }) {
-    //   console.log(' getListAsync ： ', payload, action, type); //
-    //   const res = yield call(services.getList, {
-    //     ...payload,
-    //     // month: payload.month.format('YYYY-MM'),
-    //   });
+    // *getUserAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(userServices.getList, payload);
     //   yield put(action({ ...res, payload }));
     // },
-    // *getItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.getItem, payload);
+    // *getTeamAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(teamServices.getList, payload);
     //   yield put(action({ ...res, payload }));
     // },
-    // *addItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.addItem, payload);
+    // *getPowerAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(powerStationServices.getList, payload);
     //   yield put(action({ ...res, payload }));
     // },
-    // *editItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.editItem, payload);
+    // *getHouseNoAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(houseNoServices.getList, payload);
     //   yield put(action({ ...res, payload }));
     // },
-    // *removeItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.removeItem, payload);
+    // *getClientAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(clientServices.getList, payload);
     //   yield put(action({ ...res, payload }));
     // },
+    *showItemAsync({ payload, action, type }, { call, put }) {
+      const serviceMap = {
+        powerStationDetail: powerStationServices,
+        houseNoDetail: houseNoServices,
+        clientDetail: clientServices,
+      };
+      const service = serviceMap[payload.action];
+      console.log(' showItemAsync service ： ', service, payload); //
+      const res = yield call(service.getItem, payload);
+      yield put({
+        type: `${payload.action}`,
+        payload: {
+          ...res,
+          payload,
+        },
+      });
+    },
   },
 };

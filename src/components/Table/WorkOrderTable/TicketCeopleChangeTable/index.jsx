@@ -16,7 +16,7 @@ import {
   missionsStatusMap,
 } from '@/configs';
 
-const WorkOrderTable = props => {
+const TicketCeopleChangeTable = props => {
   const {
     showModal,
     edit,
@@ -33,7 +33,7 @@ const WorkOrderTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
-      // d_item: 'id',
+      d_item: 'id',
       className: 'textCenter',
     },
     {
@@ -114,8 +114,6 @@ const WorkOrderTable = props => {
   );
 };
 
-WorkOrderTable.defaultProps = {
-  tdClick: () => {},
-};
+TicketCeopleChangeTable.defaultProps = {};
 
-export default WorkOrderTable;
+export default TicketCeopleChangeTable;

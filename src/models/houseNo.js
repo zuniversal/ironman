@@ -84,7 +84,6 @@ export default {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
         itemDetail: {
           ...payload.bean,
           d_id: payload.payload.d_id,

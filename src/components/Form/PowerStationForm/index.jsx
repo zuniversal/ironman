@@ -332,6 +332,7 @@ const PowerStationForm = props => {
       name={'file'}
       key={'file'}
       // extra={'支持扩展名:pdf、jpg、png'}
+      init={props.init}
     ></UploadCom>,
     {
       formType: 'rowText',
@@ -434,7 +435,8 @@ const PowerStationForm = props => {
     ...typeCols,
     {
       formType: 'CustomCom',
-      CustomCom: <ImgBlock>电气图</ImgBlock>,
+      // CustomCom: <ImgBlock>电气图</ImgBlock>,
+      CustomCom: <img src={props.init.file} className={`imgBlock`} />,
       itemProps: {
         label: '一次电气图',
       },

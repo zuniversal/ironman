@@ -110,7 +110,7 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: formatSelectList(payload.list, 'name'),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,

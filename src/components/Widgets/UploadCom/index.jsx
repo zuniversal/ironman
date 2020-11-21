@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import {
@@ -21,6 +21,27 @@ import {
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
 
+const formatFile = data => data.map(url => ({ uid: `-${url}`, url }));
+
+// const formatFileList = fileData => {
+//   const fileList = typeof fileData === 'string' ? [{uid: fileData, url: fileData, }] : formatFile(fileData)
+//   console.log(' formatFileList   e,   ： ', fileData, fileList);
+//   return fileData ? formatFile([fileData]) : []
+// }
+const formatFileList = fileData => {
+  console.log(' formatFileList   e,   ： ', fileData);
+  if (!fileData) {
+    return [];
+  }
+  const fileList =
+    typeof fileData === 'string'
+      ? [{ uid: fileData, url: fileData }]
+      : formatFile(fileData);
+  console.log(' formatFileList   e,   ： ', fileData, fileList);
+  return formatFile([fileData]);
+  // return fileData ? formatFile([fileData]) : []
+};
+
 const UploadCom = props => {
   console.log(' UploadCom   props, ,   ： ', props);
   const {
@@ -34,12 +55,20 @@ const UploadCom = props => {
     formItemCls,
     formItemProps,
     uploadProps,
+    init,
   } = props; //
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
+
+  const [fileData, setFileData] = useState(formatFileList(init[name]));
+
+  // const fileList = formatFileList(fileData)
 
   const onChange = e => {
     console.log(' onChange   e,   ： ', e);
     const { onUploadChange, noTips, uploadSucc } = props; //
+    // const {fileList,  } = e
+    setFileData(e.fileList);
+
     if (e.file.status === 'done') {
       tips(`${e.file.name} 上传成功！`, 1);
     } else if (e.file.status === 'error') {
@@ -97,6 +126,13 @@ const UploadCom = props => {
           strokeWidth: 3,
           format: percent => `${parseFloat(percent.toFixed(2))}%`,
         }}
+        // fileList={[
+        //   {
+        //     uid: '-1',
+        //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        //   },
+        // ]}
+        fileList={fileData}
         // showUploadList={{
         //   showDownloadIcon: true,
         //   downloadIcon: 'download ',
@@ -139,6 +175,7 @@ UploadCom.defaultProps = {
   extra: '',
   uploadProps: {},
   formItemProps: {},
+  init: {},
 };
 
 UploadCom.propTypes = {
@@ -147,6 +184,7 @@ UploadCom.propTypes = {
   name: PropTypes.string,
   uploadProps: PropTypes.object,
   formItemProps: PropTypes.object,
+  init: PropTypes.object,
 };
 
 export default UploadCom;

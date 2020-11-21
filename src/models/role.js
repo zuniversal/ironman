@@ -129,4 +129,14 @@ export default {
       yield put({ type: 'getListAsync' });
     },
   },
+  subscriptions: {
+    setup(props) {
+      console.log(' setup ： ', props); //
+      const { dispatch, history } = props; //
+      history.listen(location => {
+        console.log(' 匹配 ： ', location); //
+      }); //
+      return location => console.log(' unlistenFunction匹配 ： ', location); //
+    },
+  },
 };

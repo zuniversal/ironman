@@ -107,7 +107,7 @@ const inputBefore = (
 
 const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props, props.init); //
-  const { formBtn, ...rest } = props; //
+  const { formBtn, init, ...rest } = props; //
 
   const { power_data } = props.init;
   const tabData = power_data;
@@ -118,7 +118,9 @@ const InspectRecordForm = props => {
 
   const onChange = index => {
     console.log(' onChange   index,   ： ', index, power_data);
-    props.init.powerData = power_data[index];
+    props.init.powerData = {
+      ...power_data[index],
+    };
   };
 
   const config = [
@@ -397,7 +399,6 @@ const InspectRecordForm = props => {
     },
 
     {
-      noRule: true,
       formType: 'rowText',
       itemProps: {
         label: '电表读数',
@@ -525,7 +526,6 @@ const InspectRecordForm = props => {
     },
 
     {
-      noRule: true,
       formType: 'rowText',
       itemProps: {
         label: '高压进制线',
@@ -563,7 +563,8 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'AB',
-        name: ['powperData', 'spect_in', 'v_ab'],
+        // name: ['powperData', 'spectIn', 'v_ab'],
+        name: ['spectIn', 'v_ab'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -575,7 +576,8 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'BC',
-        name: ['powperData', 'spect_in', 'v_bc'],
+        // name: ['powperData', 'spectIn', 'v_bc'],
+        name: ['spectIn', 'v_bc'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -587,7 +589,8 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'CA',
-        name: ['powperData', 'spect_in', 'v_ca'],
+        // name: ['powperData', 'spectIn', 'v_ca'],
+        name: ['spectIn', 'v_ca'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -621,7 +624,8 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'A',
-        name: ['powperData', 'spect_out', 'monitor_a'],
+        // name: ['powperData', 'spectOut', 'monitor_a'],
+        name: ['spectOut', 'monitor_a'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -633,7 +637,8 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'B',
-        name: ['powperData', 'spect_out', 'monitor_b'],
+        // name: ['powperData', 'spectOut', 'monitor_b'],
+        name: ['spectOut', 'monitor_b'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -645,11 +650,26 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: 'C',
-        name: ['powperData', 'spect_out', 'monitor_c'],
+        // name: ['powperData', 'spectOut', 'monitor_c'],
+        name: ['spectOut', 'monitor_c'],
         ...electricFormLayouts,
       },
       comProps: {
         className: 'w-78',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '热成像功能',
+        className: 'w100',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: <img src={init.file} className={`hotImg`} />,
+      itemProps: {
+        label: '',
       },
     },
   ];
@@ -705,6 +725,11 @@ const InspectRecordForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
+        init={{
+          ...init,
+          // spectIn: power_data[0].spect_in[0],
+          // spectOut: power_data[0].spect_out[0],
+        }}
         formLayouts={formLayouts}
         noRuleAll
         isDisabledAll

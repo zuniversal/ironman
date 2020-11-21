@@ -135,19 +135,54 @@ class HouseNo extends PureComponent {
     return (
       <HouseNoSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
         getClientAsync={params =>
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
         getListAsync={params => this.props.getListAsync({ keyword: params })}
         dataList={this.props.dataList}
-        onFieldChange={this.onFieldChange}
+        provinceList={this.props.provinceList}
+        citytList={this.props.citytList}
+        countryList={this.props.countryList}
       ></HouseNoSearchForm>
     );
   };
   onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    console.log(
+      ' onFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { form } = params;
+    if (params.value.province) {
+      console.log(' onFieldChange 清空 province ： '); //
+      form.setFieldsValue({
+        city: null,
+        site: null,
+      });
+    }
+    if (params.value.city) {
+      console.log(' onFieldChange 清空 city ： '); //
+      form.setFieldsValue({
+        site: null,
+      });
+    }
+    if (params.value.site || params.value.customer || params.value.postcode) {
+      this.props.getListAsync(params.formData);
+      return;
+    }
+    if (params.value.province) {
+      const { city, site, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 province ： ', data); //
+      this.props.getDistrictAsync(data);
+    } else if (params.value.city) {
+      const { site, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 city ： ', data); //
+      this.props.getDistrictAsync(data);
+    }
   };
 
   onRemove = params => {
@@ -253,6 +288,7 @@ class HouseNo extends PureComponent {
     this.props.getUserAsync();
     this.props.getClientAsync();
     this.props.getListAsync();
+    this.props.getDistrictAsync({});
   }
 
   render() {

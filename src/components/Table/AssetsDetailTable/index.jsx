@@ -211,7 +211,8 @@ const AssetsDetailTable = props => {
 
       <div className="imgWrapper">
         <div className="label">铭牌</div>
-        <ImgBlock>电气图</ImgBlock>
+        {/* <ImgBlock>电气图</ImgBlock> */}
+        <img src={props.data.file} className={`imgBlock`} />
       </div>
 
       {deviceCols.map((v, i) => (
@@ -237,6 +238,7 @@ const AssetsDetailTable = props => {
 
 AssetsDetailTable.defaultProps = {
   tdClick: () => {},
+  data: {},
 };
 
 export default AssetsDetailTable;

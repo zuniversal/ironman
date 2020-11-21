@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button } from 'antd';
+import { Button, Tag } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
 import CsOrganizeForm from '@/components/Form/CsOrganizeForm'; //
 import CsOrganizeTable from '@/components/Table/CsOrganizeTable'; //

@@ -6,7 +6,11 @@ import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
-import { actions, mapStateToProps } from '@/models/powerStation'; //
+import { commonActions } from '@/models/common'; //
+import {
+  actions,
+  // mapStateToProps
+} from '@/models/powerStation'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -22,7 +26,10 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ houseNo, }) => houseNo;
+const mapStateToProps = ({ powerStation, common }) => ({
+  ...powerStation,
+  common,
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -68,11 +75,13 @@ class PowerStation extends PureComponent {
     return (
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
         getClientAsync={params =>
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
-        onFieldChange={this.onFieldChange}
+        getListAsync={params => this.props.getListAsync({ name: params })}
+        dataList={this.props.dataList}
       ></PowerStationSearchForm>
     );
   };
@@ -128,13 +137,16 @@ class PowerStation extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      if (res.file && res.file.fileList) {
-        const fileList = res.file.fileList;
-        res.file = fileList[fileList.length - 1].response.url;
-      } else {
-        tips('文件不能为空！', 2);
-        return;
+      if (typeof res.file !== 'string') {
+        if (res.file && res.file.fileList.length > 0) {
+          const fileList = res.file.fileList;
+          res.file = fileList[fileList.length - 1].response.url;
+        } else {
+          tips('文件不能为空！', 2);
+          return;
+        }
       }
+
       const params = {
         ...init,
         ...res,
@@ -235,6 +247,12 @@ class PowerStation extends PureComponent {
     //   modifyPowerInfo={this.props.modifyPowerInfo}
     //   dataSource={this.props.powerInfoData}
     // ></PowerStationDetailTable>
+    console.log(
+      ' %c PowerStation 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="PowerStation">
         {this.renderSearchForm()}

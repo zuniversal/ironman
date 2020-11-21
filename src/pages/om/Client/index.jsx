@@ -43,22 +43,6 @@ class Client extends PureComponent {
       modalContent: null,
     };
   }
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params, this.props);
-    const { form } = params;
-    // if (params.value.city) {
-    //   form.setFieldsValue({
-    //     test: '',
-    //   });
-    //   // return
-    // }
-    if (params.value.city) {
-      this.props.getDistrictAsync(params.formData);
-    } else {
-      this.props.getDistrictAsync(params.value);
-    }
-    // this.props.getListAsync(params.formData);
-  };
   addUserAsync = async props => {
     console.log(' addUserAsync ： ', props, this.state, this.props);
     const { action } = this.state; //
@@ -200,13 +184,23 @@ class Client extends PureComponent {
         ...res,
         customer_admin: adminList,
       };
-      if (res.file && res.file.fileList) {
-        const fileList = res.file.fileList;
-        params.file = fileList[fileList.length - 1].response.url;
+      if (typeof res.file !== 'string') {
+        if (res.file && res.file.fileList.length > 0) {
+          const fileList = res.file.fileList;
+          res.file = fileList[fileList.length - 1].response.url;
+        } else {
+          tips('文件不能为空！', 2);
+          return;
+        }
       }
-      if (res.logo && res.logo.fileList) {
-        const logoFileList = res.logo.fileList;
-        params.logo = fileList[fileList.length - 1].response.url;
+      if (typeof res.file !== 'string') {
+        if (res.logo && res.logo.fileList.length > 0) {
+          const fileList = res.logo.fileList;
+          params.logo = fileList[fileList.length - 1].response.url;
+        } else {
+          tips('文件不能为空！', 2);
+          return;
+        }
       }
       console.log(' params ： ', params); //
       actionFn(params);
@@ -289,6 +283,42 @@ class Client extends PureComponent {
         countryList={this.props.countryList}
       ></ClientSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(
+      ' onFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { form } = params;
+    if (params.value.province) {
+      console.log(' onFieldChange 清空 province ： '); //
+      form.setFieldsValue({
+        city: null,
+        site: null,
+      });
+    }
+    if (params.value.city) {
+      console.log(' onFieldChange 清空 city ： '); //
+      form.setFieldsValue({
+        site: null,
+      });
+    }
+    if (params.value.site || params.value.name) {
+      this.props.getListAsync(params.formData);
+      return;
+    }
+    if (params.value.province) {
+      const { city, site, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 province ： ', data); //
+      this.props.getDistrictAsync(data);
+    } else if (params.value.city) {
+      const { site, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 city ： ', data); //
+      this.props.getDistrictAsync(data);
+    }
   };
 
   showFormModalWithProps = params => {

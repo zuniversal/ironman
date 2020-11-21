@@ -37,6 +37,16 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
+const formatTeamList = data => {
+  const res = data.map(v => ({
+    ...v,
+    label: v.team_headman + ' - ' + v.name,
+    value: v.id,
+  }));
+  // console.log(' formatTeamList res ： ', res); //
+  return res;
+};
+
 export default {
   namespace,
 
@@ -181,7 +191,8 @@ export default {
     getTeam(state, { payload, type }) {
       return {
         ...state,
-        teamList: formatSelectList(payload.list, 'team_headman'),
+        // teamList: formatSelectList(payload.list, 'team_headman'),
+        teamList: formatTeamList(payload.list),
       };
     },
     getClient(state, { payload, type }) {
