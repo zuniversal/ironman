@@ -12,7 +12,7 @@ const DeviceStatus = props => {
         <div className="val">26.4℃</div>
       </div>
       <div className="right">
-        <Icon icon={'home'} className={'setting'}></Icon>
+        <Icon icon={'powerStatus'} className={'setting'}></Icon>
         <div className="status">状态</div>
       </div>
     </div>

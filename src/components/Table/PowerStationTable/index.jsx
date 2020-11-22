@@ -17,18 +17,33 @@ const PowerStationTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'customer',
-      d_item: 'id',
+      dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+          // d_id: 1,
+        }),
     },
     {
       title: '所属户号',
-      dataIndex: 'electricity_user',
-      d_item: 'id',
+      dataIndex: ['electricity_user', 'number'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          d_id: record.electricity_user.id,
+          // d_id: 1,
+        }),
     },
     {
       title: '电站名称',
       dataIndex: 'name',
-      d_item: 'id',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.id,
+          // d_id: 1,
+        }),
     },
     {
       title: '电站地址',
@@ -37,25 +52,26 @@ const PowerStationTable = props => {
     // {
     //   title: '业务主体',
     //   dataIndex: 'service_staff',
-    //   d_item: 'id',
     // },
     {
       title: '巡检次数',
       dataIndex: 'inspections_number',
       className: 'textCenter',
-      d_item: 'id',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'inspectDetailAsync',
+          d_id: record.id,
+        }),
     },
     // {
     //   title: '设备数',
     //   dataIndex: 'equipment_num',
     //   className: 'textCenter',
-    //   d_item: 'id',
     // },
     // {
     //   title: '监控次数',
     //   // dataIndex: '',
     //   className: 'textCenter',
-    //   d_item: 'id',
     // },
     // {
     //   title: '一次电气图',

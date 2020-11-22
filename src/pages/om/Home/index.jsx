@@ -15,6 +15,7 @@ import { actions, mapStateToProps } from '@/models/home'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { SettingOutlined } from '@ant-design/icons';
+import Icon from '@/components/Widgets/Icons';
 
 export const TITLE = '首页';
 
@@ -58,8 +59,8 @@ class Home extends PureComponent {
         right={
           <div className="settingWrapper dfc" onClick={this.showSetting}>
             {/* <Icon icon={'setting'} ></Icon> */}
-            {/* <Icon icon={'home'} className={'setting'}></Icon> */}
-            <SettingOutlined className={'setting'} />
+            <Icon icon={'setting'} className={'setting'}></Icon>
+            {/* <SettingOutlined className={'setting'} /> */}
             <div className="settingText">首页设置</div>
           </div>
         }

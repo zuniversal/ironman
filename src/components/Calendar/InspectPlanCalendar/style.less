@@ -27,6 +27,11 @@
   }
 
   #dataListWrapper {
+    overflow-y: scroll;
+    max-height: 600px;
+    min-width: 300px;
+    overflow-x: hidden;
+
     display: inline-flex;
     flex-direction: column;
     margin-left: 30px;
@@ -35,6 +40,8 @@
     font-weight: 400;
     color: #333333;
     .titleRow {
+      // position: absolute;
+
       align-items: center;
       padding: 10px 20px;
 

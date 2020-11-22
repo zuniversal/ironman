@@ -2,10 +2,26 @@ import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
 import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
+import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 
 const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const logTimeLine = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <InspectMissionTimeline
+          datas={props.init?.work_log}
+        ></InspectMissionTimeline>
+      ),
+      itemProps: {
+        label: '任务日志',
+        name: 'task_log',
+      },
+    },
+  ];
 
   const config = [
     {
@@ -76,6 +92,8 @@ const MissionsManageForm = props => {
         name: 'addr',
       },
     },
+
+    ...logTimeLine,
   ];
 
   const formProps = {

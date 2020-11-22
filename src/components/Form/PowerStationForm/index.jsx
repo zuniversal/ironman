@@ -436,7 +436,7 @@ const PowerStationForm = props => {
     {
       formType: 'CustomCom',
       // CustomCom: <ImgBlock>电气图</ImgBlock>,
-      CustomCom: <img src={props.init.file} className={`imgBlock`} />,
+      CustomCom: <img src={props.init?.file} className={`imgBlock`} />,
       itemProps: {
         label: '一次电气图',
       },

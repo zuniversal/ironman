@@ -80,7 +80,7 @@ const InspectMissionDetailForm = props => {
       CustomCom: (
         // <InspectMissionTimeline datas={datas}></InspectMissionTimeline>
         <InspectMissionTimeline
-          datas={props.init.task_log}
+          datas={props.init?.task_log}
         ></InspectMissionTimeline>
       ),
       itemProps: {

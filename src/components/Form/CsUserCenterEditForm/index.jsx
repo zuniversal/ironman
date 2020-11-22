@@ -47,7 +47,6 @@ const CsUserCenterEditForm = props => {
       label={'更换头像'}
       text={'上传照片'}
       key={'logo'}
-      action={'logo'}
       action={'/api/v1/console/custom_info/miniapp/me/pic'}
       name={'logo'}
       extra={'仅支持JPG、PNG格式，文件小于1M(方形图)'}

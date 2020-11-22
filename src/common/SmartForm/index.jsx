@@ -30,6 +30,7 @@ import {
 
 import DynamicForm from './DynamicForm/index.jsx'; //
 import DynamicItem from './DynamicItem/index.jsx'; //
+import DynamicFormTable from './DynamicFormTable/index.jsx'; //
 import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
 import {
   mockFormData,
@@ -168,18 +169,29 @@ const SmartForm = (props, state) => {
 
   const [initData, setInitData] = useState(() => {
     const dynamicFields = configs.filter(
-      v => v.formType === 'Dynamic' || v.formType === 'DynamicItem',
+      v =>
+        v.formType === 'Dynamic' ||
+        v.formType === 'DynamicItem' ||
+        v.formType === 'DynamicFormTable',
     );
     // .map(v => v.itemProps.name);
     const obj = {};
     const dynamicInitMap = {
       Dynamic: [{}],
       DynamicItem: [''],
+      DynamicFormTable: [{}],
     };
     dynamicFields.forEach(
       v => (obj[v.itemProps.name] = dynamicInitMap[v.formType]),
     );
-    console.log(' 惰性初始state   ： ', configs, obj, dynamicFields);
+    console.log(
+      ' 惰性初始state   ： ',
+      init,
+      initData,
+      configs,
+      obj,
+      dynamicFields,
+    );
     return obj;
   });
 
@@ -384,7 +396,8 @@ const SmartForm = (props, state) => {
     const formLabel = customLabel ? customLabel : getLabel(label, formType);
     // console.log('  formLabel ：', formLabel,  )//
 
-    const placeholder = noPh ? '' : formLabel; //
+    const placeholder =
+      noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
     // conso
     if (searchSuffix) {
       comProps.suffix = <SearchOutlined className="searchIcon" />;
@@ -492,11 +505,18 @@ const SmartForm = (props, state) => {
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
       RangePicker: <RangePicker format={'YYYY/MM/DD'} {...realComProps} />,
       TreeSelect: (
-        <TreeSelect treeDefaultExpandAll {...realComProps}></TreeSelect>
+        <TreeSelect
+          treeDefaultExpandAll
+          allowClear
+          {...realComProps}
+        ></TreeSelect>
       ),
 
       Dynamic: <DynamicForm {...dynamicComProps}></DynamicForm>,
       DynamicItem: <DynamicItem {...dynamicComProps}></DynamicItem>,
+      DynamicFormTable: (
+        <DynamicFormTable {...dynamicComProps}></DynamicFormTable>
+      ),
     };
 
     const formItemCom = formItemMap[formType];

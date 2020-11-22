@@ -5,6 +5,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import CsInspectRecordForm from '@/components/Form/CsInspectRecordForm'; //
 import CsInspectRecordSearchForm from '@/components/Form/CsInspectRecordSearchForm'; //
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
+import InspectRecordForm from '@/components/Form/InspectRecordForm'; //
 import CsInspectRecordTable from '@/components/Table/CsInspectRecordTable'; //
 import ExportPdf from '@/components/Pdf/ExportPdf'; //
 import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader'; //
@@ -23,6 +24,11 @@ const titleMap = {
   upload: `文件上传inspectReport`,
   down: `文件下载`,
   detail: `${TITLE}报告`,
+  inspectRecordDetailAsync: `巡检任务详情`,
+};
+
+const detailFormMap = {
+  inspectRecordDetailAsync: InspectRecordForm,
 };
 
 // const mapStateToProps = ({ CsInspectRecord, }) => CsInspectRecord;
@@ -69,11 +75,40 @@ class CsInspectRecord extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       getMissionItemAsync: this.props.getMissionItemAsync,
       showExportPdf: this.showExportPdf,
     };
 
     return <CsInspectRecordTable {...tableProps}></CsInspectRecordTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -150,23 +185,24 @@ class CsInspectRecord extends PureComponent {
   get renderCsInspectRecordForm() {
     return (
       <div className={`pdfDetail`}>
-        {!this.state.isShowExportPdf && (
+        {/* {!this.state.isShowExportPdf && (
           <ExportHeader
             goBack={this.showExportPdf}
             print={this.exportPdf}
           ></ExportHeader>
-        )}
-        <CsInspectRecordForm init={this.props.itemDetail}></CsInspectRecordForm>
+        )} */}
+        <InspectRecordForm init={this.props.itemDetail}></InspectRecordForm>
       </div>
     );
   }
 
-  showExportPdf = e => {
-    console.log('    showExportPdf ： ', e);
-    this.props.toggleShowTitle();
-    this.setState({
-      isShowPdfDetail: !this.state.isShowPdfDetail,
-    });
+  showExportPdf = params => {
+    console.log('    showExportPdf ： ', params);
+    // this.props.toggleShowTitle();
+    this.props.getItemAsync(params);
+    // this.setState({
+    //   isShowPdfDetail: !this.state.isShowPdfDetail,
+    // });
   };
   onClose = e => {
     console.log('    onClose ： ', e, this.state, this.props);
@@ -192,16 +228,16 @@ class CsInspectRecord extends PureComponent {
       this.props,
     ); //
 
-    if (this.state.isShowExportPdf) {
+    if (this.props.isShowExportPdf) {
       return (
-        <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
+        <ExportPdf onClose={this.props.closePdf}>
           {this.renderCsInspectRecordForm}
         </ExportPdf>
       );
     }
-    if (this.state.isShowPdfDetail) {
-      return this.renderCsInspectRecordForm;
-    }
+    // if (this.state.isShowPdfDetail) {
+    //   return this.renderCsInspectRecordForm;
+    // }
 
     return (
       <div className="CsInspectRecord">
@@ -210,6 +246,8 @@ class CsInspectRecord extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

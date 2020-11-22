@@ -173,12 +173,12 @@ export default {
       return {
         ...state,
         tagUserList: formatSelectList(payload.rest.users, 'nickname'),
-        tagUserList: [
-          {
-            value: '1',
-            label: '12312',
-          },
-        ],
+        // tagUserList: [
+        //   {
+        //     value: '1',
+        //     label: '12312',
+        //   },
+        // ],
         tagList: formatSelectList(payload.rest.users, 'name'),
       };
     },

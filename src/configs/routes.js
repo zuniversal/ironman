@@ -44,7 +44,7 @@ export const managerRoutes = [
     path: '/om/shifts',
     name: '班组管理',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'shifts'} />,
+    icon: <Icon icon={'shiftsManage'} />,
     component: '../Shifts',
     routes: [
       {
@@ -91,7 +91,7 @@ export const managerRoutes = [
     path: '/om/clientInfo',
     name: '客户信息管理',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'shifts'} />,
+    icon: <Icon icon={'clientInfoManage'} />,
     component: '../Shifts',
     routes: [
       {
@@ -147,7 +147,7 @@ export const managerRoutes = [
     path: '/om/ps',
     name: '业务管理',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'powerStation'} />,
+    icon: <Icon icon={'bussniessManage'} />,
     component: '../pages/om/PowerStation',
     routes: [
       {
@@ -181,7 +181,7 @@ export const managerRoutes = [
     path: '/om/operation',
     name: '巡检运维',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'operation'} />,
+    icon: <Icon icon={'inspect'} />,
     component: '../pages/om/Operation',
     routes: [
       {
@@ -218,7 +218,7 @@ export const managerRoutes = [
     path: '/om/alarm',
     name: '告警管理',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'alarm'} />,
+    icon: <Icon icon={'alarmManage'} />,
     component: '../Alarm',
     routes: [
       {
@@ -249,7 +249,7 @@ export const managerRoutes = [
     path: '/kpi',
     name: '绩效管理',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'kpi'} />,
+    icon: <Icon icon={'kpiManage'} />,
     component: '../Kpi',
     routes: [
       {
@@ -272,7 +272,7 @@ export const managerRoutes = [
   {
     path: '/waiter',
     name: '客服管理',
-    icon: <Icon icon={'kpi'} />,
+    icon: <Icon icon={'customerManage'} />,
     component: '../Waiter',
     routes: [
       {
@@ -295,7 +295,7 @@ export const managerRoutes = [
   {
     path: '/system',
     name: '系统管理',
-    icon: <Icon icon={'kpi'} />,
+    icon: <Icon icon={'systemManage'} />,
     component: '../Waiter',
     routes: [
       {
@@ -363,14 +363,14 @@ export const customerRoutes = [
     path: '/cs/csHome',
     name: '首页',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'home'} />,
+    icon: <Icon icon={'csHome'} />,
     component: '../Home',
   },
   {
     path: '/cs/msgList',
     name: '消息列表',
     icon: <ScheduleFilled />,
-    icon: <Icon icon={'powerStation'} />,
+    icon: <Icon icon={'msgList'} />,
     component: '../pages/cs/PowerStation',
     routes: [
       {
@@ -390,21 +390,21 @@ export const customerRoutes = [
   {
     path: '/cs/csClientReport',
     name: '客户报告',
-    icon: <Icon icon={'csOrganize'} />,
+    icon: <Icon icon={'csClientReport'} />,
     component: '../pages/cs/CsClientReport',
   },
   {
     path: '/cs/inspectRecord',
     name: '巡检记录',
     // icon: <ScheduleFilled />,
-    icon: <Icon icon={'csOrganize'} />,
+    icon: <Icon icon={'csInspectRecord'} />,
     component: '../pages/om/InspectRecord',
   },
   {
     path: '/cs/bussniessRecord',
     name: '业务记录',
     // icon: <ScheduleFilled />,
-    icon: <Icon icon={'csOrganize'} />,
+    icon: <Icon icon={'bussniessRecord'} />,
     component: '../pages/om/InspectRecord',
   },
   {

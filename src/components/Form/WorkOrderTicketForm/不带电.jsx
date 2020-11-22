@@ -429,7 +429,6 @@ const WorkOrderTicketForm = props => {
     <UploadCom
       label={'一次线路图'}
       key={'logo'}
-      action={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、jpeg、png'}
@@ -695,7 +694,6 @@ const WorkOrderTicketForm = props => {
     <UploadCom
       label={'文件'}
       key={'logo'}
-      action={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、png'}

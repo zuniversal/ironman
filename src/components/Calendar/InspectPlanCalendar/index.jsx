@@ -105,32 +105,34 @@ const ShiftsArrangeList = props => {
           <div>电站</div>
           <div>剩余/总巡检数量</div>
         </div>
-        {props.events.map((event, index) => {
-          // console.log(' CalendarDraggable event ： ', event,)//
-          return (
-            <div key={event.id} className="fsb rowItem ">
-              <div className={'left'}>
-                {/* {true && ( */}
-                {event.surplus_plan_num > 0 && (
-                  <div
-                    className="dragItem "
-                    id={event.id}
-                    url={event.surplus_plan_num}
-                    // data-isdraged={event.isdraged}
-                    data-datas={event}
-                    test={'zyb'}
-                  >
-                    {event.name}
-                  </div>
-                )}
-                <div>客户-{event.customer}</div>
+        {props.events
+          .filter(v => v.surplus_plan_num > 0)
+          .map((event, index) => {
+            // console.log(' CalendarDraggable event ： ', event,)//
+            return (
+              <div key={event.id} className="fsb rowItem ">
+                <div className={'left'}>
+                  {/* {true && ( */}
+                  {event.surplus_plan_num > 0 && (
+                    <div
+                      className="dragItem "
+                      id={event.id}
+                      url={event.surplus_plan_num}
+                      // data-isdraged={event.isdraged}
+                      data-datas={event}
+                      test={'zyb'}
+                    >
+                      {event.name}
+                    </div>
+                  )}
+                  <div>客户-{event.customer}</div>
+                </div>
+                <div>
+                  {event.surplus_plan_num} / {event.spect_plan_num}
+                </div>
               </div>
-              <div>
-                {event.surplus_plan_num} / {event.spect_plan_num}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </>
     </CalendarDraggable>
   );

@@ -187,19 +187,20 @@ class Client extends PureComponent {
       if (typeof res.file !== 'string') {
         if (res.file && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
-          res.file = fileList[fileList.length - 1].response.url;
-        } else {
-          tips('文件不能为空！', 2);
-          return;
+          params.file = fileList[fileList.length - 1].response.url;
+          // } else {
+          //   tips('文件不能为空！', 2);
+          //   return;
         }
       }
-      if (typeof res.file !== 'string') {
+      if (typeof res.logo !== 'string') {
+        console.log(' logologo ： ', res.logo); //
         if (res.logo && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
           params.logo = fileList[fileList.length - 1].response.url;
-        } else {
-          tips('文件不能为空！', 2);
-          return;
+          // } else {
+          //   tips('logo不能为空！', 2);
+          //   return;
         }
       }
       console.log(' params ： ', params); //

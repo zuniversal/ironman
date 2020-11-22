@@ -17,8 +17,8 @@ export const actions = {
 
 export const mapStateToProps = state => state[namespace];
 
-export const recursiveHandle = (data, parent_id) => {
-  // console.log(' recursiveHandle   ,   ： ', data, parent_id);
+export const recursiveHandle = (data = [], parent_id) => {
+  console.log(' recursiveHandle   ,   ： ', data, parent_id);
   return data.map(v => ({
     ...v,
     value: v.id,

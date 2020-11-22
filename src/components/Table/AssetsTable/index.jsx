@@ -26,26 +26,41 @@ const AssetsTable = props => {
     {
       title: '户号',
       dataIndex: 'code',
-      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          // d_id: record.electricity_user.id,
+          d_id: record.id,
+        }),
     },
     {
       title: '电站',
       dataIndex: ['station', 'name'],
-      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.station.id,
+        }),
     },
     {
       title: '设备名称',
       dataIndex: 'name',
-      d_item: 'id',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'assetsDetailAsync',
+          d_id: record.id,
+          // 资产 详情
+          id: record.id,
+        }),
     },
     {
       title: '设备型号',

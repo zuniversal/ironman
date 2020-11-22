@@ -83,11 +83,14 @@ class CsHome extends PureComponent {
         {...this.props}
         title={this.props.route.title}
         right={
-          <Icon
-            icon={'miniPower'}
-            className={'miniPower'}
-            onClick={() => window.open(MINI_POWER)}
-          ></Icon>
+          <div className={`dfc`}>
+            <Icon
+              icon={'miniPower'}
+              className={'miniPower'}
+              onClick={() => window.open(MINI_POWER)}
+            ></Icon>
+            <div className="pageSubTitle">我的微电网</div>
+          </div>
         }
       ></HomeTitleRow>
     );

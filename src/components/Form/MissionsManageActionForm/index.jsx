@@ -412,7 +412,7 @@ export const MissionsManageOrderInfoForm = props => {
       formType: 'CustomCom',
       CustomCom: (
         <InspectMissionTimeline
-          datas={props.init.task_log}
+          datas={props.init?.task_log}
         ></InspectMissionTimeline>
       ),
       itemProps: {

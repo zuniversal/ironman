@@ -303,6 +303,7 @@ export default {
         searchInfo,
         action,
         params,
+        this,
       ); //
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
@@ -474,5 +475,24 @@ export default {
       const res = yield call(houseNoServices.getList, { customer: 1 });
       yield put(action({ ...res, payload }));
     },
+    *batchGetAsync({ payload, action, type }, { call, put }) {
+      // *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
+      console.log(' batchGetAsync ： '); //
+      const res = yield [
+        call(clientServices.getList, payload),
+        call(houseNoServices.getList, { keyword: payload }),
+        call(houseNoServices.getList, { customer: 1 }),
+      ];
+      console.log('  reresresress ：', res); //
+    },
   },
+  // subscriptions: {
+  //   setup: (props) => {
+  //     console.log(' setupsetup ： ', props, this); //
+  //     const { dispatch, history } = props; //
+  //     //
+  //     // const res = await Promise.allSettled(11)
+  //     // console.log(' resresres ： ', res); //
+  //   },
+  // },
 };

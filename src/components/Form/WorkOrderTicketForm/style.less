@@ -23,3 +23,38 @@
     display: none !important;
   }
 }
+.formListTable {
+  .headerWrapper {
+    display: flex;
+    .headerTd {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .formBody {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .formRow {
+      display: flex;
+      flex: 1;
+      .actionCol {
+        .ant-btn:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+    .formItems {
+      flex: 1;
+      .ant-form-item-control-input-content {
+        text-align: center;
+      }
+    }
+
+    .formItemTd {
+      flex: 1;
+    }
+  }
+}

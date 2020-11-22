@@ -56,10 +56,6 @@ class MissionsManage extends PureComponent {
     };
   }
 
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
-  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -79,6 +75,10 @@ class MissionsManage extends PureComponent {
         onFieldChange={this.onFieldChange}
       ></MissionsManageSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
   renderTable = params => {
     const tableProps = {
@@ -239,7 +239,21 @@ class MissionsManage extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
-    return <MissionsManageForm {...formComProps}></MissionsManageForm>;
+    return (
+      <MissionsManageForm
+        {...formComProps}
+        onFormFieldChange={this.onFormFieldChange}
+      ></MissionsManageForm>
+    );
+  };
+  onFormFieldChange = params => {
+    console.log(' onFormFieldChange,  , ： ', params);
+    if (params.customer_id) {
+      this.props.getPowerAsync({ customer: params.customer_id });
+    }
+    if (params.station_id) {
+      this.props.getAssetsAsync({ station: params.station_id });
+    }
   };
   get size() {
     // console.log(' get 取属 size ： ', this.state, this.props);
@@ -278,9 +292,9 @@ class MissionsManage extends PureComponent {
     //   name: '工单类型',
     // });
     this.props.getClientAsync();
-    this.props.getPowerAsync();
+    // this.props.getPowerAsync();
+    // this.props.getAssetsAsync();
     this.props.getTeamAsync();
-    this.props.getAssetsAsync();
     this.props.getContractAsync(); //
   }
 

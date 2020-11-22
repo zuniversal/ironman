@@ -4,6 +4,9 @@ import { Button } from 'antd';
 import AssetsTable from '@/components/Table/AssetsTable'; //
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
 import AssetsForm from '@/components/Form/AssetsForm'; //
+import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
 import AssetsSearchForm from '@/components/Form/AssetsSearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
@@ -43,6 +46,15 @@ const titleMap = {
   detail: `${TITLE}详情`,
   uploadFile: `资产列表`,
   down: `文件下载`,
+  assetsDetailAsync: `资产详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+};
+
+const detailFormMap = {
+  assetsDetailAsync: AssetsForm,
+  houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ assets, }) => assets;
@@ -193,9 +205,38 @@ class Assets extends PureComponent {
 
       add: this.props.showFormModal,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <AssetsTable {...tableProps}></AssetsTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -336,6 +377,8 @@ class Assets extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
 
         {this.renderResultModal()}
       </div>

@@ -156,6 +156,8 @@ const DynamicItemForm = props => {
     limit,
     filterSelect,
     value,
+    noPh,
+    action,
   } = props; //
 
   // const selectDatas = filterSelect ? selectData.filter((v) => {
@@ -227,6 +229,9 @@ const DynamicItemForm = props => {
         const formLabel = customLabel ? customLabel : getLabel(label, formType);
         // console.log('  formLabel ：', formLabel,  )//
 
+        const placeholder =
+          noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
+
         if (isDisabledAll) {
           comProps.disabled = true;
         }
@@ -234,7 +239,7 @@ const DynamicItemForm = props => {
         const realComProps = {
           ...comProps,
           className: ` ${comProps.className} `,
-          placeholder: formLabel,
+          placeholder: placeholder,
         };
         // console.log(' realComProps ： ', realComProps); //
 

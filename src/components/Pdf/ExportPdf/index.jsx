@@ -14,8 +14,10 @@ const ExportPdf = props => {
   // }
 
   useEffect(() => {
+    console.log(' ExportPdf useEffect ： '); //
     window.print();
   }, []);
+  // }, [props.children, ]);
 
   window.onafterprint = e => {
     console.log('    closecloseclose ： ', e);

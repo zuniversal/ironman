@@ -12,17 +12,22 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 import { missionsStatusMap } from '@/configs';
 
-const InspectRecordTable = props => {
+const CsInspectRecordTable = props => {
   const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
 
   const columns = [
     {
       title: '名称',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'inspectRecordDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '电站',
-      dataIndex: ['station', 'name'],
+      dataIndex: ['plan', 'station', 'name'],
     },
     {
       title: 'id',
@@ -41,9 +46,28 @@ const InspectRecordTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a>
-      <a onClick={() => props.showExportPdf({ action: 'showExportPdf' })}>
-        导出报告
+      {/* <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a> */}
+      <a
+        onClick={() =>
+          props.showItemAsync({
+            action: 'inspectRecordDetailAsync',
+            d_id: record.id,
+          })
+        }
+      >
+        查看详情
+      </a>
+
+      <a
+        onClick={() => {
+          props.showExportPdf({
+            action: 'detail',
+            extraAction: 'showExportPdf',
+            d_id: record.id,
+          });
+        }}
+      >
+        导出巡检报告
       </a>
     </>
   );
@@ -58,8 +82,8 @@ const InspectRecordTable = props => {
   );
 };
 
-InspectRecordTable.defaultProps = {
+CsInspectRecordTable.defaultProps = {
   tdClick: () => {},
 };
 
-export default InspectRecordTable;
+export default CsInspectRecordTable;

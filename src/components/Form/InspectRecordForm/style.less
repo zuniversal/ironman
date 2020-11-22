@@ -3,6 +3,16 @@
 
 .inspectRecordForm {
   page-break-inside: avoid;
+  .formList {
+    width: 100%;
+    display: flex;
+    .ant-space-item {
+      flex: 1;
+    }
+    .labelItem {
+    }
+  }
+
   .ant-form-horizontal > .ant-row {
     margin: 0 10px !important;
   }
@@ -10,6 +20,10 @@
     .ant-input-affix-wrapper {
       width: 130px !important;
     }
+  }
+
+  .rowText {
+    margin-top: 20px;
   }
 
   .ant-input-group-addon {
@@ -31,5 +45,6 @@
     background: #f5f5f5;
     border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
     border-radius: 2px;
+    margin-right: 10px;
   }
 }

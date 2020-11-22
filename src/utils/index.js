@@ -237,6 +237,10 @@ export const mockFormData = (config, init) => {
         ],
         // DynamicItem: ['值1', '值2',  ],
         DynamicItem: [1, 2],
+        DynamicFormTable: [
+          { username: 'zyb1', password: '1231', phone: 2222 },
+          { username: 'zyb2', password: '1232', phone: 333 },
+        ],
       }[formType];
       //
       // console.log(' mockDataMap ： ', formType, itemProps, item, mockDataMap, mockData,  )//
@@ -266,6 +270,7 @@ export const formatConfig = (
         v.rowText ||
         v.formType === 'Dynamic' ||
         v.formType === 'DynamicItem' ||
+        v.formType === 'DynamicFormTable' ||
         v.formType === 'Label' ||
         v.formType === 'rowText' ||
         v.formType === 'plainText' ||

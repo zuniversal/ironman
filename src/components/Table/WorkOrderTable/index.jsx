@@ -66,6 +66,11 @@ const WorkOrderTable = props => {
     {
       title: '关联任务',
       dataIndex: ['task', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'missionsManageDetailAsync',
+          d_id: record.task.id,
+        }),
     },
     {
       title: '任务状态',

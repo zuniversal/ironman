@@ -17,17 +17,29 @@ const HouseNoTable = props => {
   const columns = [
     {
       title: '所属客户',
-      dataIndex: 'customer',
+      dataIndex: ['customer', 'name'],
       className: 'textCenter',
       // detailFn: (text, record, index) => showDetail(record.id),
+      // detailFn: record =>
+      //   props.showDetail({ action: 'detail', d_id: record.id }),
       detailFn: record =>
-        props.showDetail({ action: 'detail', d_id: record.id }),
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+          // d_id: 1,
+        }),
     },
     {
       title: '户号',
       // dataIndex: 'code',
       dataIndex: 'number',
       // detailFn: (text, record, index) => props.showDetail(record.id),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          d_id: record.id,
+          // d_id: 1,
+        }),
     },
     // {
     //   title: '签约公司',
@@ -48,7 +60,13 @@ const HouseNoTable = props => {
     {
       title: '托管电站数',
       dataIndex: 'trusteeship_num',
-      detailFn: (text, record, index) => props.showDetail(record.id),
+      // detailFn: (text, record, index) => props.showDetail(record.id),
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'powerStationDetailAsync',
+      //     d_id: record.id,
+      //     // d_id: 1,
+      //   }),
     },
     {
       title: '录入日期',

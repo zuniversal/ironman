@@ -70,19 +70,30 @@ class UserManage extends PureComponent {
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    const { value } = params;
-    if (value.role_id != undefined || value.organization_id != undefined) {
-      console.log(' 列表搜索 ： ', !value.role_id, !value.organization_id); //
-      this.props.getListAsync();
+    const { value, formData } = params;
+    if (
+      formData.role_id != undefined ||
+      formData.organization_id != undefined ||
+      (value.value && `${value.value}`.trim()) ||
+      (formData.value && `${formData.value}`.trim())
+    ) {
+      console.log(
+        ' 参数搜索 ： ',
+        formData.role_id != undefined,
+        formData.organization_id != undefined,
+        `${value.value}`.trim(),
+        `${formData.value}`.trim(),
+      ); //
+      this.props.getSearchListAsync(formData);
       return;
     }
-    if (!`${value.value}`.trim() && !`${formData.value}`.trim()) {
-      console.log(' onFieldChange,22  , ： ', params);
-      tips('搜索参数不能为空！', 2);
-      return;
-    }
-    console.log(' 搜索 ： '); //
-    this.props.getSearchListAsync(params.formData);
+    // if (!`${value.value}`.trim() && !`${formData.value}`.trim()) {
+    //   console.log(' onFieldChange,22  , ： ', params);
+    //   tips('搜索参数不能为空！', 2);
+    //   return;
+    // }
+    console.log(' 列表搜索 ： '); //
+    this.props.getListAsync(formData);
   };
   renderTable = params => {
     const tableProps = {

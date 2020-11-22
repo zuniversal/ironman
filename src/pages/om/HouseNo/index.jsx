@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
 import HouseNoTable from '@/components/Table/HouseNoTable'; //
-import HouseNoForm from '@/components/Form/HouseNoForm'; //
+import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import ClientForm from '@/components/Form/ClientForm';
 import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
@@ -36,6 +38,15 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
@@ -208,9 +219,38 @@ class HouseNo extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <HouseNoTable {...tableProps}></HouseNoTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -306,6 +346,8 @@ class HouseNo extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

@@ -221,6 +221,8 @@ const DynamicForm = props => {
     filterSelect,
     rowExtra,
     extraChildren,
+    noPh,
+    action,
   } = props; //
 
   return (
@@ -260,6 +262,9 @@ const DynamicForm = props => {
         const formLabel = customLabel ? customLabel : getLabel(label, formType);
         // console.log('  formLabel ：', formLabel,  )//
 
+        const placeholder =
+          noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
+
         if (isDisabledAll) {
           comProps.disabled = true;
         }
@@ -267,7 +272,7 @@ const DynamicForm = props => {
         const realComProps = {
           ...comProps,
           className: ` ${comProps.className} `,
-          placeholder: formLabel,
+          placeholder: placeholder,
         };
 
         const selectProps = {
@@ -404,7 +409,7 @@ const DynamicForm = props => {
 
           const extraItem = config.map((v, i) => {
             // console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
-            const { itemProps } = v;
+            const { itemProps, noRule } = v;
             const { label, className } = itemProps;
 
             // const formItemProps = {

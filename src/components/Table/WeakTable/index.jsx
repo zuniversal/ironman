@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsStatusMap } from '@/configs';
 
 const WeakTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
@@ -18,31 +19,26 @@ const WeakTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
-      d_item: 'id',
       className: 'textCenter',
     },
 
     {
       title: '名称',
       dataIndex: 'name',
-      d_item: 'id',
     },
 
     {
       title: '电站',
-      // dataIndex: 'station.name',
       dataIndex: ['station', 'name'],
     },
 
     {
       title: '客户名称',
-      // dataIndex: 'customer.name',
       dataIndex: ['customer', 'name'],
     },
 
     {
       title: '反馈人',
-      // dataIndex: 'team.name',
       dataIndex: ['team', 'name'],
     },
 
@@ -54,6 +50,7 @@ const WeakTable = props => {
     {
       title: '处理状态',
       dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
 
     {

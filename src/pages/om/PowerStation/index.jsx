@@ -7,14 +7,13 @@ import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; /
 import SmartFormModal from '@/common/SmartFormModal'; //
 
 import { commonActions } from '@/models/common'; //
-import {
-  actions,
-  // mapStateToProps
-} from '@/models/powerStation'; //
+import { actions, mapStateToProps } from '@/models/powerStation'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
 import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import ClientForm from '@/components/Form/ClientForm';
 
 const TITLE = '电站';
 
@@ -24,15 +23,30 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+  inspectDetailAsync: `巡检详情`,
 };
 
-const mapStateToProps = ({ powerStation, common }) => ({
-  ...powerStation,
-  common,
-});
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
+  // inspectDetailAsync: ,
+};
+
+// const mapStateToProps = ({ powerStation, common }) => ({
+//   ...powerStation,
+//   common,
+// });
 
 @connect(mapStateToProps)
 @SmartHOC({
+  // actions: {
+  //   ...actions,
+  //   // ...commonActions,
+  // },
   actions,
   titleMap,
   modalForm: PowerStationForm,
@@ -113,9 +127,38 @@ class PowerStation extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <PowerStationTable {...tableProps}></PowerStationTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -228,9 +271,13 @@ class PowerStation extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getBelongHouseNoAsync();
+    // this.props.getBelongHouseNoAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
+    // this.props.showItemAsync({
+    //   action: 'clientDetailAsync',
+    //   d_id: 1,
+    // })
     // this.props.showFormModal({
     //   action: 'add',
     // })
@@ -260,6 +307,8 @@ class PowerStation extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

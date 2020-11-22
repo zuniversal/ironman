@@ -17,6 +17,8 @@ import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
 import { SIZE, DOWN_URL } from '@/constants';
+import { commonActions } from '@/models/common'; //
+import { connect } from 'umi';
 
 /* 
   封装的 通用 业务高阶组件 可选择性使用封装的方法  统一自动处理相关操作 简化重复逻辑的编写 
@@ -41,8 +43,9 @@ export default ({
   noMountFetch,
   isCheckQuery,
   noCreateActions,
-}) => Com =>
-  class extends React.Component {
+  noConnectCommon,
+}) => Com => {
+  class SmartHoc extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -66,20 +69,22 @@ export default ({
         removeTitle: '',
 
         isShowTitle: true,
-
-        commonModalContent: null,
       };
       // this.onRemove = this.removeAction
       this.actionProps = {};
       if (!noCreateActions) {
         const createActions = params => {
           const actionObj = {};
-          Object.keys(actions).forEach(
+          const actionsObj = {
+            ...commonActions,
+            ...actions,
+          };
+          Object.keys(actionsObj).forEach(
             key =>
               (actionObj[key] = params =>
-                this.props.dispatch(actions[key](params))),
+                this.props.dispatch(actionsObj[key](params))),
           );
-          console.log('  actionObj ：', actionObj); //
+          // console.log('  actionObj ：', actionObj, actionsObj); //
           return actionObj;
         };
         this.actionProps = createActions();
@@ -424,7 +429,13 @@ export default ({
     };
 
     getList = (params = { page: 1, page_size: 10 }) => {
-      console.log('    getList ： ', params, this.state, this.props);
+      console.log(
+        '    getList ： ',
+        actions.getListAsync,
+        params,
+        this.state,
+        this.props,
+      );
       const { dispatch } = this.props; //
       dispatch(actions.getListAsync(params));
     };
@@ -500,19 +511,20 @@ export default ({
       console.log('    showModal ： ', e, this.state, this.props);
       this.props.showCommonModal();
     };
-    renderCommonModal = params => {
-      return (
-        <SmartFormModal
-          show={this.props.isShowCommonModal}
-          action={this.props.action}
-          titleMap={this.state.titleMap}
-          onOk={this.closeCommonModal}
-          onCancel={this.props.closeCommonModal}
-        >
-          {this.props.commonModalContent}
-        </SmartFormModal>
-      );
-    };
+    // renderCommonModal = params => {
+    //   console.log(' renderCommonModal ： ', params, this.state, this.props,    )//
+    //   return (
+    //     <SmartFormModal
+    //       show={this.props.common.isShowCommonModal}
+    //       action={this.props.common.action}
+    //       titleMap={titleMap}
+    //       onOk={this.closeCommonModal}
+    //       onCancel={this.props.closeCommonModal}
+    //     >
+    //       {this.props.common.commonModalContent}
+    //     </SmartFormModal>
+    //   );
+    // };
 
     componentDidMount() {
       // console.log(
@@ -580,10 +592,18 @@ export default ({
 
           {this.renderSmartFormModal()}
 
-          {this.renderCommonModal()}
+          {/* {this.renderCommonModal()} */}
 
           {this.renderRemoveModal()}
         </div>
       );
     }
-  };
+  }
+
+  if (noConnectCommon) {
+    // if (true) {
+    return SmartHoc;
+  } else {
+    return connect(({ common }) => ({ common }))(SmartHoc);
+  }
+};

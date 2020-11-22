@@ -26,6 +26,10 @@ const titleMap = {
   detail: `${TITLE}报告`,
 };
 
+const detailFormMap = {
+  inspectRecordDetailAsync: InspectRecordForm,
+};
+
 // const mapStateToProps = ({ inspectRecord, }) => inspectRecord;
 
 @connect(mapStateToProps)
@@ -70,11 +74,40 @@ class InspectRecord extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       getMissionItemAsync: this.props.getMissionItemAsync,
       showExportPdf: this.showExportPdf,
     };
 
     return <InspectRecordTable {...tableProps}></InspectRecordTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -159,13 +192,13 @@ class InspectRecord extends PureComponent {
     console.log(' renderInspectRecordForm ： ', this.props.itemDetail); //
     return (
       <div className={`pdfDetail`}>
-        {!this.state.isShowExportPdf && (
+        {/* {!this.state.isShowExportPdf && (
           <ExportHeader
             // goBack={this.showExportPdf}
             goBack={this.closeExportPdf}
             print={this.exportPdf}
           ></ExportHeader>
-        )}
+        )} */}
         <InspectRecordForm init={this.props.itemDetail}></InspectRecordForm>
       </div>
     );
@@ -173,7 +206,7 @@ class InspectRecord extends PureComponent {
 
   showExportPdf = params => {
     console.log('    showExportPdf ： ', params);
-    this.props.toggleShowTitle();
+    // this.props.toggleShowTitle();
     this.props.getItemAsync(params);
     // this.setState({
     //   isShowPdfDetail: !this.state.isShowPdfDetail,
@@ -263,17 +296,17 @@ class InspectRecord extends PureComponent {
       this.props,
     ); //
 
-    if (this.state.isShowExportPdf) {
+    if (this.props.isShowExportPdf) {
       console.log(' 111111111 ： '); //
       return (
-        <ExportPdf onClose={this.closeExportPdf}>
+        <ExportPdf onClose={this.props.closePdf}>
           {this.renderInspectRecordForm}
         </ExportPdf>
       );
     }
-    if (this.props.isShowPdfDetail) {
-      return this.renderInspectRecordForm;
-    }
+    // if (this.props.isShowPdfDetail) {
+    //   return this.renderInspectRecordForm;
+    // }
 
     return (
       <div className="InspectRecord">
@@ -282,6 +315,8 @@ class InspectRecord extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
 
         {/* <Button type="primary" onClick={this.doPrint}>
           导出

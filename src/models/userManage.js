@@ -120,6 +120,7 @@ export default {
     },
 
     getOrganize(state, { payload, type }) {
+      console.log(' getOrganize ： ', state, payload); //
       const organizeList = recursiveHandle(payload.list);
       return {
         ...state,

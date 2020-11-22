@@ -153,7 +153,7 @@ const UploadCom = props => {
         onChange={onChange}
       >
         {isInputUpload ? (
-          <div className={`${contentClass}`}>
+          <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>
             <IconCom className={'icon'} />
             <div className={'text'}>{text}</div>
           </div>

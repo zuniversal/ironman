@@ -21,7 +21,7 @@ const WorkOrderTicketForm = props => {
       formType: 'CustomCom',
       CustomCom: (
         <InspectMissionTimeline
-          datas={props.init.task_log}
+          datas={props.init?.work_log}
         ></InspectMissionTimeline>
       ),
       itemProps: {

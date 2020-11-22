@@ -31,6 +31,7 @@ export default {
     searchInfo: {},
     isShowPdfDetail: false,
     missionItemDetail: {},
+    isShowExportPdf: false,
   },
 
   reducers: {
@@ -78,6 +79,7 @@ export default {
         ...state,
         action: payload.payload.action,
         isShowPdfDetail: isExportPdf,
+        isShowExportPdf: isExportPdf,
         isShowModal: isExportPdf ? false : true,
         d_id: payload.payload.d_id,
         itemDetail: {
@@ -142,6 +144,13 @@ export default {
           end_time: end_time ? end_time.split('T')[0] : '',
           status: missionsStatusMap[status],
         },
+      };
+    },
+
+    closePdf(state, { payload, type }) {
+      return {
+        ...state,
+        isShowExportPdf: false,
       };
     },
   },

@@ -119,7 +119,8 @@ export const isLoading = ({
   });
 };
 
-export const init = prefix => {
+export const init = (prefix, noDefault) => {
+  const isCrudArr = noDefault ? [] : crudConfigs;
   const turnAction = (types = '') => payload => ({
     type: prefix + '/' + types,
     payload,
@@ -131,6 +132,12 @@ export const init = prefix => {
     action: action(types.split(suffix)[0]),
     // action: action(['addItemAsync', 'editItemAsync', 'removeItemAsync', 'removeItemsAsync', ].includes(types) ? 'getListAsync' : types.split(suffix)[0]),
   });
+  const transferActions = (config = []) => {
+    const actions = {};
+    config.forEach(types => (actions[types] = createAction(types)));
+    console.log(' actionsactions ： ', actions); //
+    return actions;
+  };
   const createCRUD = (config = []) => {
     const actions = {};
     config.forEach(types => (actions[types] = createAction(types)));
@@ -151,11 +158,12 @@ export const init = prefix => {
     names: 'zyb',
     // customActions,
     createAction,
-    createCRUD: (config = []) => createCRUD([...crudConfigs, ...config]),
+    transferActions: (config = []) => transferActions(config),
+    createCRUD: (config = []) => createCRUD([...isCrudArr, ...config]),
     turnAction,
     batchTurn: (config = []) => batchTurn([...commonConfigs, ...config]),
     createActions: (asyncConfig = [], config = []) => ({
-      ...createCRUD([...crudConfigs, ...asyncConfig]),
+      ...createCRUD([...isCrudArr, ...asyncConfig]),
       ...batchTurn([...commonConfigs, ...config]),
     }),
   };

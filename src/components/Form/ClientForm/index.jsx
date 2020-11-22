@@ -95,6 +95,7 @@ export const AdminForm = props => {
             },
           },
           {
+            noRule: action !== 'add',
             itemProps: {
               label: '密码',
               name: 'password',
@@ -167,7 +168,7 @@ export const AdminForm = props => {
       formProps={formProps}
       // init={init}
       // init={{}}
-      name={'admin'}
+      // name={'admin'}
       propsForm={form}
       noRuleAll
       formLayouts={rowLayout}
@@ -387,7 +388,6 @@ const ClientForm = props => {
     <UploadCom
       label={'企业Logo'}
       key={'logo'}
-      action={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、png'}
@@ -499,41 +499,55 @@ const ClientForm = props => {
     //     name: 'attach',
     //   },
     // },
+    // <UploadCom
+    //   label={'附件'}
+    //   key={'attach'}
+    //   isInputUpload
+    //   text={'上传文件'}
+    //   contentClass={'dfc'}
+    //   action={'/api/v1/upload'}
+    //   name={'file'}
+    //   extra={'支持扩展名:pdf、jpg、png'}
+    //   // formItemProps={{
+
+    //   // }}
+    //   init={props.init}
+    // ></UploadCom>,
     <UploadCom
-      label={'附件'}
-      key={'attach'}
       isInputUpload
-      text={'上传文件'}
       contentClass={'dfc'}
+      label={'附件'}
+      key={'file'}
       action={'/api/v1/upload'}
       name={'file'}
       extra={'支持扩展名:pdf、jpg、png'}
-      // formItemProps={{
-
-      // }}
+      uploadProps={{
+        disabled: props.isDisabledAll || action === 'detail',
+      }}
       init={props.init}
     ></UploadCom>,
   ];
 
   const userCaptureInfo = [
-    // {
-    //   itemProps: {
-    //     label: '下属户号',
-    //     name: 'owner',
-    //     colon: false,
-    //   },
-    //   extra: (
-    //     <Button
-    //       onClick={() => {
-    //         console.log(' getCapture ： ', getCapture); //
-    //         return getCapture({ action: 'userCapture' });
-    //       }}
-    //       className="m-l-5"
-    //     >
-    //       用户画像
-    //     </Button>
-    //   ),
-    // },
+    {
+      noRule: true,
+      itemProps: {
+        label: '下属户号',
+        name: 'owner',
+        colon: false,
+      },
+      extra: (
+        <Button
+          onClick={() => {
+            console.log(' getCapture ： ', getCapture); //
+            return getCapture && getCapture({ action: 'userCapture' });
+          }}
+          className="m-l-5"
+        >
+          用户画像
+        </Button>
+      ),
+    },
     // {
     //   itemProps: {
     //     label: '附件',
@@ -542,10 +556,12 @@ const ClientForm = props => {
     // },
   ];
 
+  config.push(...attach);
   if (action === 'add') {
-    config.push(...attach);
+    // config.push(...attach);
     // } else if (action === '') {
-  } else if (action === 'edit' || action === 'detail') {
+    // } else if (action === 'edit' || action === 'detail') {
+  } else if (action === 'detail') {
     config.push(...userCaptureInfo);
   }
   console.log(' configconfig ： ', config); //

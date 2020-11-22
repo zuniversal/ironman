@@ -12,6 +12,7 @@ import ExportPdf from '@/components/Pdf/ExportPdf'; //
 import { actions, mapStateToProps } from '@/models/workOrder'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import MissionsManageForm from '@/components/Form/MissionsManageForm';
 
 const TITLE = '工单';
 
@@ -24,6 +25,11 @@ const titleMap = {
   addTicket: `添加工作票`,
   add: `添加工作票`,
   dispatchOrder: `派单`,
+  missionsManageDetailAsync: `任务详情`,
+};
+
+const detailFormMap = {
+  missionsManageDetailAsync: MissionsManageForm,
 };
 
 // const mapStateToProps = ({ workOrder, }) => workOrder;
@@ -78,10 +84,39 @@ class WorkOrder extends PureComponent {
 
       add: this.props.showFormModal,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       exportData: this.props.exportData,
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -176,7 +211,7 @@ class WorkOrder extends PureComponent {
   }
 
   render() {
-    // return <WorkOrderTicketForm></WorkOrderTicketForm>;
+    return <WorkOrderTicketForm></WorkOrderTicketForm>;
     // return (
     //   <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
     //     <WorkOrderTicketForm></WorkOrderTicketForm>
@@ -189,6 +224,8 @@ class WorkOrder extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

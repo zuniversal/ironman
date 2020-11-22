@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.less';
 import {
   Form,
@@ -25,7 +25,7 @@ const TabPanes = props => {
   const { tabData } = props; //
   return (
     <div className="w100">
-      <Tabs defaultActiveKey="1" onChange={props.onChange}>
+      <Tabs defaultActiveKey="0" onChange={props.onChange}>
         {tabData.map((v, i) => (
           <TabPane tab={`电源编号-${v.power_number}`} key={i}></TabPane>
         ))}
@@ -109,18 +109,38 @@ const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props, props.init); //
   const { formBtn, init, ...rest } = props; //
 
-  const { power_data } = props.init;
+  const { power_data = [{}], file = [] } = props.init;
   const tabData = power_data;
+
+  const [dataInit, setDataInit] = useState({
+    ...props.init,
+    spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
+    spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
+  });
+  console.log(' dataInit ： ', dataInit); //
+
   // const powerData =
 
   const counterRef = React.useRef();
   const htmlRef = React.useRef();
 
   const onChange = index => {
-    console.log(' onChange   index,   ： ', index, power_data);
-    props.init.powerData = {
-      ...power_data[index],
-    };
+    console.log(
+      ' onChange   index,   ： ',
+      index,
+      dataInit,
+      power_data,
+      power_data[index],
+    );
+    // props.init.powerData = {
+    //   ...power_data[index],
+    // };
+    setDataInit({
+      ...dataInit,
+      powerData: power_data[index],
+      spectIn: power_data[index].spect_in,
+      spectOut: power_data[index].spect_out,
+    });
   };
 
   const config = [
@@ -302,7 +322,8 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.electroprobe_status,
+        addonBefore:
+          props.init.safety_equirpment?.electroprobe_status || '正常',
         // className: 'w-130',
       },
     },
@@ -314,7 +335,7 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.ground_wire,
+        addonBefore: props.init.safety_equirpment?.ground_wire || '正常',
         // className: 'w-130',
       },
     },
@@ -326,7 +347,7 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_mat,
+        addonBefore: props.init.safety_equirpment?.insulating_mat || '正常',
         // className: 'w-130',
       },
     },
@@ -338,7 +359,7 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_gloves,
+        addonBefore: props.init.safety_equirpment?.insulating_gloves || '正常',
         // className: 'w-130',
       },
     },
@@ -350,7 +371,7 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_shoes,
+        addonBefore: props.init.safety_equirpment?.insulating_shoes || '正常',
         // className: 'w-130',
       },
     },
@@ -362,7 +383,7 @@ const InspectRecordForm = props => {
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.extinguisher,
+        addonBefore: props.init.safety_equirpment?.extinguisher || '正常',
         // className: 'w-130',
       },
     },
@@ -380,6 +401,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '电压等级',
+        // name: ['powerData', 'power_number'],
         name: ['powerData', 'voltage_level'],
       },
     },
@@ -387,6 +409,7 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '总容量',
+        // name: ['powerData', 'id'],
         name: ['powerData', 'total_capacity'],
       },
     },
@@ -546,57 +569,58 @@ const InspectRecordForm = props => {
     //   },
     //   LabelCom: '电压表',
     // },
-    {
-      flexRow: 4,
-      noRule: true,
-      formType: 'plainText',
-      itemProps: {
-        label: '电压表',
-        ...electricLabelFormLayouts,
-      },
-      comProps: {
-        className: 'w-100',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'AB',
-        // name: ['powperData', 'spectIn', 'v_ab'],
-        name: ['spectIn', 'v_ab'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'BC',
-        // name: ['powperData', 'spectIn', 'v_bc'],
-        name: ['spectIn', 'v_bc'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'CA',
-        // name: ['powperData', 'spectIn', 'v_ca'],
-        name: ['spectIn', 'v_ca'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
+
+    // {
+    //   flexRow: 4,
+    //   noRule: true,
+    //   formType: 'plainText',
+    //   itemProps: {
+    //     label: '电压表',
+    //     ...electricLabelFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-100',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'AB',
+    //     // name: ['powperData', 'spectIn', 'v_ab'],
+    //     name: ['spectIn', 'v_ab'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'BC',
+    //     // name: ['powperData', 'spectIn', 'v_bc'],
+    //     name: ['spectIn', 'v_bc'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'CA',
+    //     // name: ['powperData', 'spectIn', 'v_ca'],
+    //     name: ['spectIn', 'v_ca'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
 
     // {
     //   flexRow: 4,
@@ -607,57 +631,146 @@ const InspectRecordForm = props => {
     //   },
     //   LabelCom: '显示器',
     // },
-    {
-      flexRow: 4,
-      noRule: true,
-      formType: 'plainText',
-      itemProps: {
-        label: '显示器',
-        ...electricLabelFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'A',
-        // name: ['powperData', 'spectOut', 'monitor_a'],
-        name: ['spectOut', 'monitor_a'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'B',
-        // name: ['powperData', 'spectOut', 'monitor_b'],
-        name: ['spectOut', 'monitor_b'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 4,
-      itemProps: {
-        label: 'C',
-        // name: ['powperData', 'spectOut', 'monitor_c'],
-        name: ['spectOut', 'monitor_c'],
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-78',
-      },
-    },
+
+    // {
+    //   flexRow: 4,
+    //   noRule: true,
+    //   formType: 'plainText',
+    //   itemProps: {
+    //     label: '显示器',
+    //     ...electricLabelFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'A',
+    //     // name: ['powperData', 'spectOut', 'monitor_a'],
+    //     name: ['spectOut', 'monitor_a'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'B',
+    //     // name: ['powperData', 'spectOut', 'monitor_b'],
+    //     name: ['spectOut', 'monitor_b'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   flexRow: 4,
+    //   itemProps: {
+    //     label: 'C',
+    //     // name: ['powperData', 'spectOut', 'monitor_c'],
+    //     name: ['spectOut', 'monitor_c'],
+    //     ...electricFormLayouts,
+    //   },
+    //   comProps: {
+    //     className: 'w-78',
+    //   },
+    // },
+
+    <Form.List name="spectIn" key={'spectIn'}>
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields); //
+        const spectInConfig = [
+          { name: 'v_ab', label: 'AB' },
+          { name: 'v_bc', label: 'BC' },
+          { name: 'v_ca', label: 'CA' },
+        ];
+
+        return (
+          <>
+            {fields.map(field => {
+              const formItem = spectInConfig.map((v, i) => (
+                <Form.Item
+                  {...field}
+                  label={v.label}
+                  colon={false}
+                  name={[field.name, v.name]}
+                  fieldKey={[field.fieldKey, v.name]}
+                  className={'formItems '}
+                  {...electricFormLayouts}
+                >
+                  <Input className={'w-78'} disabled />
+                </Form.Item>
+              ));
+              return (
+                <Space key={field.key} className={'formList'}>
+                  <>
+                    <Form.Item
+                      label={'电压表'}
+                      colon={false}
+                      className={'formItems labelItem'}
+                      {...electricLabelFormLayouts}
+                    ></Form.Item>
+                    {formItem}
+                  </>
+                </Space>
+              );
+            })}
+          </>
+        );
+      }}
+    </Form.List>,
+    <Form.List name="spectOut" key={'spectOut'}>
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', dataInit.spectOut, fields); //
+        const spectOutConfig = [
+          { name: 'monitor_a', label: 'A' },
+          { name: 'monitor_b', label: 'B' },
+          { name: 'monitor_c', label: 'C' },
+        ];
+
+        return (
+          <>
+            {fields.map(field => {
+              const formItem = spectOutConfig.map((v, i) => (
+                <Form.Item
+                  {...field}
+                  label={v.label}
+                  colon={false}
+                  name={[field.name, v.name]}
+                  fieldKey={[field.fieldKey, v.name]}
+                  className={'formItems '}
+                  {...electricFormLayouts}
+                >
+                  <Input className={'w-78'} disabled />
+                </Form.Item>
+              ));
+              return (
+                <Space key={field.key} className={'formList'}>
+                  <>
+                    <Form.Item
+                      label={'显示器'}
+                      colon={false}
+                      className={'formItems labelItem'}
+                      {...electricLabelFormLayouts}
+                    ></Form.Item>
+                    {formItem}
+                  </>
+                </Space>
+              );
+            })}
+          </>
+        );
+      }}
+    </Form.List>,
+
     {
       formType: 'rowText',
       itemProps: {
@@ -665,13 +778,24 @@ const InspectRecordForm = props => {
         className: 'w100',
       },
     },
-    {
-      formType: 'CustomCom',
-      CustomCom: <img src={init.file} className={`hotImg`} />,
-      itemProps: {
-        label: '',
-      },
-    },
+    ...(file.length > 0
+      ? [
+          {
+            formType: 'CustomCom',
+            CustomCom: (
+              <div>
+                {file.map((v, i) => (
+                  <img src={v} className={`hotImg`} key={i} />
+                ))}
+              </div>
+            ),
+            itemProps: {
+              label: '',
+              className: 'w100',
+            },
+          },
+        ]
+      : []),
   ];
 
   const configs = config.map(v => ({
@@ -725,18 +849,18 @@ const InspectRecordForm = props => {
         formProps={formProps}
         // init={init}
         // init={{}}
-        init={{
-          ...init,
-          // spectIn: power_data[0].spect_in[0],
-          // spectOut: power_data[0].spect_out[0],
-        }}
         formLayouts={formLayouts}
         noRuleAll
         isDisabledAll
-        {...rest}
+        {...props}
+        init={{
+          ...dataInit,
+          // spectIn: power_data[0].spect_in[0],
+          // spectOut: power_data[0].spect_out[0],
+        }}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

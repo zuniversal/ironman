@@ -26,19 +26,24 @@ const InspectRecordTable = props => {
       title: '名称',
       dataIndex: 'name',
       // d_item: 'id',
-      render: (text, record, index) => (
-        <a
-          onClick={() =>
-            props.getMissionItemAsync({
-              action: 'inspectMission',
-              d_id: record.id,
-              d: record.id,
-            })
-          }
-        >
-          {text}
-        </a>
-      ),
+      // render: (text, record, index) => (
+      //   <a
+      //     onClick={() =>
+      //       props.getMissionItemAsync({
+      //         action: 'inspectMission',
+      //         d_id: record.id,
+      //         d: record.id,
+      //       })
+      //     }
+      //   >
+      //     {text}
+      //   </a>
+      // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'inspectRecordDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '电站',
