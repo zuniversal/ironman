@@ -29,45 +29,47 @@ const checkboxData = [
   { label: '户号3', value: 'yes3', key: 'yes3' },
 ];
 
-export const config = [
-  {
-    itemProps: {
-      label: '登录名',
-      name: 'username',
-    },
-  },
-  {
-    formType: 'Password',
-    itemProps: {
-      label: '密码',
-      name: 'password',
-    },
-  },
-  {
-    itemProps: {
-      label: '用户名',
-      name: 'nickname',
-    },
-  },
-  {
-    itemProps: {
-      label: '手机号',
-      name: 'phone',
-    },
-  },
-  {
-    formType: 'Checkbox',
-    checkboxData: checkboxData,
-    itemProps: {
-      label: '关联户号',
-      name: 'customer',
-    },
-  },
-];
-
 const OrganizeForm = props => {
   console.log(' OrganizeForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      itemProps: {
+        label: '登录名',
+        name: 'username',
+      },
+    },
+    {
+      formType: 'Password',
+      itemProps: {
+        label: '密码',
+        name: 'password',
+      },
+    },
+    {
+      itemProps: {
+        label: '用户名',
+        name: 'nickname',
+      },
+    },
+    {
+      itemProps: {
+        label: '手机号',
+        name: 'phone',
+      },
+    },
+    {
+      formType: 'Checkbox',
+      // checkboxData: checkboxData,
+      checkboxData: props.userHouseNoList,
+      itemProps: {
+        label: '关联户号',
+        name: 'customer',
+      },
+    },
+  ];
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',

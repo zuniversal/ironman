@@ -91,10 +91,17 @@ class CsOrganize extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      if (action === 'setting') {
-        // this.props.homeSetting({
-        //   ...res,
-        // });
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+          customer: res.customer.join(','),
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          customer: res.customer.join(','),
+        });
       }
     } catch (error) {
       console.log(' error ： ', error); //
@@ -105,6 +112,7 @@ class CsOrganize extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
+      userHouseNoList: this.props.userHouseNoList,
     };
     return <CsOrganizeForm {...formComProps}></CsOrganizeForm>;
   };
