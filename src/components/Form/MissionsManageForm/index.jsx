@@ -10,6 +10,7 @@ const MissionsManageForm = props => {
 
   const logTimeLine = [
     {
+      noRule: true,
       formType: 'CustomCom',
       CustomCom: (
         <InspectMissionTimeline
@@ -93,7 +94,7 @@ const MissionsManageForm = props => {
       },
     },
 
-    ...logTimeLine,
+    ...(props.action === 'detail' ? logTimeLine : []),
   ];
 
   const formProps = {

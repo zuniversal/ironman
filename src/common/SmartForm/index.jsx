@@ -508,6 +508,9 @@ const SmartForm = (props, state) => {
         <TreeSelect
           treeDefaultExpandAll
           allowClear
+          showSearch
+          // filterTreeNode={false}
+          treeNodeFilterProp={'label'}
           {...realComProps}
         ></TreeSelect>
       ),

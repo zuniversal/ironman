@@ -163,8 +163,8 @@ class Assets extends PureComponent {
       <AssetsSearchForm
         formBtn={this.renderFormBtn}
         getHouseNoAsync={this.props.getHouseNoAsync}
-        getPowerAsync={this.props.getPowerAsync}
-        getClientAsync={this.props.getClientAsync}
+        getPowerAsync={params => this.props.getPowerAsync({ name: params })}
+        getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
         powerList={this.props.powerList}
         houseNoList={this.props.houseNoList}
@@ -198,6 +198,7 @@ class Assets extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,

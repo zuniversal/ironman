@@ -69,6 +69,7 @@ class MsgList extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,

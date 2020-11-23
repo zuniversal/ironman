@@ -78,6 +78,7 @@ export default {
         customer_admin,
         service_staff,
         last_service_staff,
+        electricityuser,
       } = payload.bean; //
       return {
         ...state,
@@ -89,6 +90,7 @@ export default {
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           service_staff: `${service_staff.id}`,
           last_service_staff: `${last_service_staff.id}`,
+          electricityuser: electricityuser.map(v => v.number).join(','),
         },
       };
     },

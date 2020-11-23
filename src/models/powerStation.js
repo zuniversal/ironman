@@ -9,6 +9,7 @@ const { createActions } = init(namespace);
 
 const otherActions = [
   'exportDataAsync',
+  'getPowerAsync',
   'getHouseNoAsync',
   'getClientAsync',
   'addPowerInfoAsync',
@@ -21,6 +22,16 @@ const batchTurnActions = ['modifyPowerInfo'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
+};
+
+const formatPowerList = (data, labelKey = 'label', idKey = 'id') => {
+  const res = data.map(v => ({
+    ...v,
+    label: v.name + ' - ' + v.id,
+    value: v.name,
+    key: v.id,
+  }));
+  return res;
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -83,6 +94,7 @@ export default {
     d_id: '',
     searchInfo: {},
 
+    powerList: [],
     clientList: [],
     houseNoList: [],
     powerInfoData: [initItem],
@@ -274,6 +286,13 @@ export default {
         powerInfoData: newData,
       };
     },
+    getPower(state, { payload, type }) {
+      console.log(' getPower 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        powerList: formatPowerList(payload.list, 'name', 'name'),
+      };
+    },
     getClient(state, { payload, type }) {
       // console.log(' getClient 修改  ： ', state, payload, type,     )//
       return {
@@ -463,8 +482,8 @@ export default {
       yield put(action({ payload }));
     },
 
-    *getClientAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(clientServices.getList, payload);
+    *getPowerAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {

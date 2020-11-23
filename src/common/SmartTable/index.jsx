@@ -554,9 +554,18 @@ class SmartTable extends PureComponent {
       actionConfig,
       noActionCol,
       count,
+      searchInfo,
       animation,
     } = this.props;
+    const { page_size: pageSize, page: current } = searchInfo;
 
+    const paginationConfig = {
+      ...pagination,
+      total: count,
+      // ...searchInfo,
+      pageSize,
+      current,
+    };
     const col = columns.map((v, i) => ({
       // render: v.render ? v.render : this.renderCol,
       dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
@@ -580,6 +589,9 @@ class SmartTable extends PureComponent {
       ' %c SmartTable 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,
       col,
+      paginationConfig,
+      searchInfo,
+      pageSize,
       this.state,
       this.props,
       history,
@@ -612,7 +624,8 @@ class SmartTable extends PureComponent {
             type: selectionType,
             ...rowSelection,
           }}
-          pagination={{ ...pagination, total: count }}
+          // pagination={{...pagination, total: count,}}
+          pagination={paginationConfig}
           rowClassName={(record, i) => ANIMATE.bounceInRight}
           // rowClassName={(record, i) => ANIMATE.slideInRight}
 
@@ -649,6 +662,7 @@ SmartTable.defaultProps = {
   // edit: () => {},
   remove: () => {},
   showDetail: () => {},
+  searchInfo: {},
   actionConfig: {},
   // extra: null,
   extra: () => {}, // 操作列额外的内容
@@ -668,6 +682,7 @@ SmartTable.propTypes = {
   edit: PropTypes.func,
   remove: PropTypes.func,
   showDetail: PropTypes.func,
+  searchInfo: PropTypes.object,
   actionConfig: PropTypes.object,
   noActionCol: PropTypes.bool,
   noDefault: PropTypes.bool,

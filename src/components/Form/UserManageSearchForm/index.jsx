@@ -30,9 +30,9 @@ const UserManageSearchForm = props => {
     },
 
     {
-      // formType: 'Select',
+      noLabel: true,
       itemProps: {
-        label: '',
+        label: '名字、邮箱、手机号、职位',
         name: 'value',
       },
       comProps: {

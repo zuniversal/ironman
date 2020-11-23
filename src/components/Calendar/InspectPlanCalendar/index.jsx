@@ -101,6 +101,10 @@ const ShiftsArrangeList = props => {
       // )
     >
       <>
+        <div className="titleRow primaryBorderBottom fsb absoulte">
+          <div>电站</div>
+          <div>剩余/总巡检数量</div>
+        </div>
         <div className="titleRow primaryBorderBottom fsb">
           <div>电站</div>
           <div>剩余/总巡检数量</div>

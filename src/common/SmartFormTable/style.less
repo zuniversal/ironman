@@ -1,7 +1,47 @@
-.loadingWrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.smartFormTable {
+  .actionCol a:not(:last-child):after {
+    content: '|';
+    padding: 10px;
+    color: #18b263;
+    width: 2px;
+  }
+  .headerWrapper {
+    display: flex;
+    .headerTd {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      background: #f0f0f0;
+      border-bottom: 2px solid #18b263 !important;
+    }
+  }
+  .formBody {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .formRow {
+      display: flex;
+      flex: 1;
+      .actionCol {
+        .ant-btn:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+      .formItems {
+        flex: 1;
+        padding: 8px;
+        margin-bottom: 0;
+        border-bottom: 1px solid #f0f0f0;
+        .ant-form-item-control-input-content {
+          text-align: center;
+        }
+      }
+    }
+
+    .formItemTd {
+      flex: 1;
+    }
+  }
 }

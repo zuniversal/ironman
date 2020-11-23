@@ -2,6 +2,11 @@
 
 .inspectPlanCalendar {
   display: flex;
+
+  .smartCalendar {
+    flex: 1;
+  }
+
   .dayCellClassNames {
     // width: 110px;
     // height: 130px;
@@ -23,13 +28,15 @@
     height: 20px;
     .anticon-close {
       color: #fff;
+      color: #1bb65c;
     }
   }
 
   #dataListWrapper {
     overflow-y: scroll;
-    max-height: 600px;
-    min-width: 300px;
+    max-height: 500px;
+    width: 300px;
+    // min-width: 300px;
     overflow-x: hidden;
 
     display: inline-flex;
@@ -39,18 +46,24 @@
     font-size: 14px;
     font-weight: 400;
     color: #333333;
+    .absoulte {
+      position: absolute;
+    }
+
     .titleRow {
       // position: absolute;
 
       align-items: center;
       padding: 10px 20px;
 
+      // min-width: 300px;
       width: 300px;
       height: 37px;
       background: #ffffff;
       border: 1px solid rgba(170, 170, 170, 0.14901960784313725);
     }
     .dragItem {
+      cursor: grab;
     }
     .rowItem {
       align-items: center;

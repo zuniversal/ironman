@@ -307,10 +307,6 @@ class Client extends PureComponent {
         site: null,
       });
     }
-    if (params.value.site || params.value.name) {
-      this.props.getListAsync(params.formData);
-      return;
-    }
     if (params.value.province) {
       const { city, site, ...data } = params.formData;
       console.log(' onFieldChange 搜索 province ： ', data); //
@@ -320,6 +316,12 @@ class Client extends PureComponent {
       console.log(' onFieldChange 搜索 city ： ', data); //
       this.props.getDistrictAsync(data);
     }
+    // if (params.value.site || params.value.name) {
+    //   this.props.getListAsync(params.formData);
+    //   return;
+    // }
+    console.log(' 列表搜索 ： '); //
+    this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
   showFormModalWithProps = params => {
@@ -359,6 +361,7 @@ class Client extends PureComponent {
       showDetail: this.props.getItemAsync,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       // edit: this.showFormModalWithProps,
       edit: this.props.getItemAsync,

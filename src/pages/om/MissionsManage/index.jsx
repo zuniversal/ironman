@@ -85,6 +85,7 @@ class MissionsManage extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
@@ -242,17 +243,17 @@ class MissionsManage extends PureComponent {
     return (
       <MissionsManageForm
         {...formComProps}
-        onFormFieldChange={this.onFormFieldChange}
+        onFieldChange={this.onFormFieldChange}
       ></MissionsManageForm>
     );
   };
   onFormFieldChange = params => {
     console.log(' onFormFieldChange,  , ： ', params);
-    if (params.customer_id) {
-      this.props.getPowerAsync({ customer: params.customer_id });
+    if (params.value.customer_id) {
+      this.props.getPowerAsync({ customer: params.value.customer_id });
     }
-    if (params.station_id) {
-      this.props.getAssetsAsync({ station: params.station_id });
+    if (params.value.station_id) {
+      this.props.getAssetsAsync({ station: params.value.station_id });
     }
   };
   get size() {

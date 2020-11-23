@@ -94,14 +94,16 @@ class PowerStation extends PureComponent {
           this.props.getClientAsync({ keyword: params })
         }
         clientList={this.props.clientList}
-        getListAsync={params => this.props.getListAsync({ name: params })}
-        dataList={this.props.dataList}
+        getPowerAsync={params =>
+          this.props.getPowerAsync({ name: params, type: '搜索' })
+        }
+        powerList={this.props.powerList}
       ></PowerStationSearchForm>
     );
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
   onRemove = params => {
@@ -122,6 +124,7 @@ class PowerStation extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
@@ -272,6 +275,7 @@ class PowerStation extends PureComponent {
   };
   componentDidMount() {
     // this.props.getBelongHouseNoAsync();
+    this.props.getPowerAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
     // this.props.showItemAsync({

@@ -10,11 +10,12 @@ const PowerStationSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getListAsync,
-      selectData: props.dataList,
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
       itemProps: {
         label: '电站名称',
         name: 'keyword',
+        name: 'name',
         className: 'w50',
       },
       searchSuffix: true,

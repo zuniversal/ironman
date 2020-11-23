@@ -1,134 +1,134 @@
 import React, { useEffect, useState } from 'react';
 import './style.less';
-import { Input, Button } from 'antd';
-import SmartTable from '@/common/SmartTable'; //
+import PropTypes from 'prop-types';
+import { Button, Form, Input, Space } from 'antd';
+import { ANIMATE } from '@/constants';
 
-export const TableInput = props => {
-  const { text, record, index, keys } = props; //
-  return props.record.isEdit ? (
-    <Input
-      defaultValue={text}
-      onChange={e =>
-        props.modifyPowerInfo({
-          action: 'edit',
-          value: e.target.value,
-          // keys: 'outline_number',
-          keys: keys,
-          text,
-          ...record,
-          index,
-        })
-      }
-    ></Input>
-  ) : (
-    text
-  );
-};
+const { bounceIn, slideInDown, flipInX } = ANIMATE;
 
 const SmartFormTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { edit, remove } = props; //
   console.log(
     ' %c SmartFormTable 组件 ： ',
     `color: #333; font-weight: bold`,
     props,
   ); //
-  const [data, setData] = useState([{ key: Math.random() }]);
 
-  const dataSource = data;
-  const add = () => {
-    console.log(' add   ,   ： ', data);
-    setData(data => [...data, { key: Math.random() }]);
-  };
-  const onChange = (e, params) => {
-    const { index, key } = params;
-    const { value } = e.target;
-    console.log(' onChange   e,   ： ', index, key, e, params, value, data);
-    setData(data =>
-      data.map((v, i) => ({
-        ...(i === index
-          ? {
-              ...v,
-              [key]: value,
-            }
-          : v),
-      })),
-    );
-  };
-  console.log(' data   e,   ： ', data);
-
-  const columns = [
-    {
-      title: '电源编号',
-      dataIndex: 'power_number',
-      render: (text, record, index, config) => (
-        <TableInput
-          text={text}
-          record={record}
-          index={index}
-          {...props}
-          keys={'power_number'}
-          onChange={onChange}
-        ></TableInput>
-      ),
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      className: 'actionCol',
-      notTooltip: true,
-      render: (text, record, index, config) => (
-        <>
-          <a
-            onClick={() => {
-              console.log(' record ：, ', props, record, edit); //
-              add({
-                ...record,
-                index,
-                action: 'add',
-              });
-            }}
-          >
-            新增
-          </a>
-          <a
-            onClick={() => {
-              console.log(' remove record ： ', props, record, index); //
-              remove({
-                ...record,
-                index,
-                action: 'remove',
-              });
-            }}
-          >
-            删除
-          </a>
-        </>
-      ),
-    },
-  ];
+  const { name, config } = props; //
 
   return (
-    <SmartTable
-      columns={columns}
-      noActionCol
-      {...props}
-      // dataSource={dataSource}
-      rowKey={'key'}
-      className={'smartFormTable'}
-      pagination={false}
-      title={() => (
-        <div className={`fje`}>
-          <Button
-            type="primary"
-            onClick={() => ({ action: 'add' })}
-            className={'add'}
-          >
-            新增
-          </Button>
-        </div>
-      )}
-    ></SmartTable>
+    <Form.List
+      name={name}
+      // key={}
+    >
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', fields); //
+        // const config = [
+        //   { name: 'monitor_a', label: 'A' },
+        //   { name: 'monitor_b', label: 'B' },
+        //   { name: 'monitor_c', label: 'C' },
+        // ];
+
+        return (
+          <div className={`formListTable smartFormTable`}>
+            <div className="headerWrapper">
+              {/* {config.map((v, i) => <Form.Item
+              label={`显示器${v.name}`} 
+              colon={false}
+              className={'formItems headerTd'}
+              {...{
+                labelCol: {
+                  sm: { span: 24 }, //
+                },}}
+            >
+            </Form.Item>)} */}
+              {[...config, { name: '操作', label: '操作' }].map((v, i) => (
+                <div className={' headerTd'} key={i}>
+                  {`${v.label}`}{' '}
+                </div>
+              ))}
+            </div>
+            <div className="formBody">
+              {fields.map(field => {
+                // {[
+                //   {monitor_a: 'monitor_a',},
+                //   {monitor_b: 'monitor_b',},
+                //   {monitor_c: 'monitor_c',},
+                // ].map(field => {
+                console.log(' dataInitdataInitdataInit,  ： ', fields); //
+                const formItem = config.map((v, i) => (
+                  <Form.Item
+                    {...field}
+                    label={''}
+                    colon={false}
+                    name={[field.name, v.name]}
+                    fieldKey={[field.fieldKey, v.name]}
+                    key={v.name + field.key}
+                    className={'formItems '}
+                    {...{
+                      wrapperCol: {
+                        sm: { span: 24 }, //
+                      },
+                    }}
+                  >
+                    {/* <Input className={`w-78 ${flipInX}`} /> */}
+                    <Input className={` ${bounceIn}`} />
+                  </Form.Item>
+                ));
+                return (
+                  <div key={field.key} className={'formRow'}>
+                    {formItem}
+                    <Form.Item
+                      colon={false}
+                      {...{
+                        wrapperCol: {
+                          sm: { span: 24 }, //
+                        },
+                      }}
+                      className={'formItems actionCol'}
+                    >
+                      {/* <a
+                        onClick={() => add()}
+                      >
+                        新增{field.key}
+                      </a> */}
+                      <a
+                        className={'add'}
+                        onClick={() => {
+                          // add('', 0);
+                          add();
+                        }}
+                      >
+                        新增
+                      </a>
+                      <a
+                        className={'remove'}
+                        onClick={() => {
+                          remove(field.name);
+                        }}
+                      >
+                        删除
+                      </a>
+                    </Form.Item>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      }}
+    </Form.List>
   );
+};
+
+SmartFormTable.defaultProps = {
+  config: [],
+  name: 'smartFormTableName',
+};
+
+SmartFormTable.propTypes = {
+  config: PropTypes.array,
+  name: PropTypes.string,
 };
 
 export default SmartFormTable;

@@ -84,8 +84,10 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          role_ids: payload.bean.roles.map(v => `${v.role_id}`),
-          tag_ids: payload.bean.tags.map(v => `${v.tag_id}`),
+          // role_ids: payload.bean.roles.map(v => `${v.role_id}`),
+          // tag_ids: payload.bean.tags.map(v => `${v.tag_id}`),
+          role_ids: `${payload.bean.roles[0].role_id}`,
+          tag_ids: `${payload.bean.tags[0].tag_id}`,
           organization_ids: payload.bean.organizations.map(
             v => v.organization_id,
           ),
@@ -228,17 +230,17 @@ export default {
     },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
       console.log(' getOrganizeAsync ： ', payload); //
-      const res = yield call(organizeServices.getList, { keyword: payload });
+      const res = yield call(organizeServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getRoleAsync({ payload, action, type }, { call, put }) {
       console.log(' getRoleAsync ： ', payload); //
-      const res = yield call(roleServices.getList, { keyword: payload });
+      const res = yield call(roleServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getTagsAsync({ payload, action, type }, { call, put }) {
       console.log(' getTagsAsync ： ', payload); //
-      const res = yield call(tagsServices.getList, { keyword: payload });
+      const res = yield call(tagsServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

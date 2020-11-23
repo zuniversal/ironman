@@ -228,7 +228,7 @@ export default {
       const res = yield call(clientServices.getDistrict, payload);
       console.log('  getDistrictAsync res ：', res); //
       yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      // yield put({ type: 'getListAsync' });
     },
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, payload);

@@ -18,14 +18,15 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 export const recursiveHandle = (data = [], parent_id) => {
-  console.log(' recursiveHandle   ,   ： ', data, parent_id);
+  // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   return data.map(v => ({
     ...v,
     value: v.id,
     title: v.name,
     label: v.name,
     parent_id: parent_id,
-    children: recursiveHandle(v.childrens, v.id),
+    // children: recursiveHandle(v.childrens, v.id),
+    children: recursiveHandle(v.children, v.id),
   }));
   // return data.map(({childrens, ...v}) => ({...v, value: v.id, title: v.name, children: recursiveHandle(childrens)}))
 };

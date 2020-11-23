@@ -187,7 +187,7 @@ const WorkOrderTicketForm = props => {
     },
     // ...  ? clientConfig : [],
     ...clientConfig,
-    ...logTimeLine,
+    ...(props.action === 'detail' ? logTimeLine : []),
   ];
 
   const formProps = {

@@ -336,6 +336,7 @@ class Client extends PureComponent {
       // remove: this.props.onRemove,
       remove: this.onRemove,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
     };
 

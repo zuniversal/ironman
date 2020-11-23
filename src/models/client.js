@@ -88,6 +88,7 @@ export default {
         customer_admin,
         service_staff,
         last_service_staff,
+        electricityuser,
       } = payload.bean; //
       const { userList } = state;
       const serviceStaff = {
@@ -117,6 +118,7 @@ export default {
           d_id: payload.payload.d_id,
           service_staff: `${service_staff.id}`,
           last_service_staff: `${last_service_staff.id}`,
+          electricityuser: electricityuser.map(v => v.number).join(','),
           // service_staff: 'zybxxx',
         },
         // adminList: [payload.bean.customer_admin],
@@ -361,7 +363,7 @@ export default {
       const res = yield call(services.getDistrict, payload);
       console.log('  getDistrictAsync res ：', res); //
       yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      // yield put({ type: 'getListAsync' });
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);

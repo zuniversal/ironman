@@ -138,7 +138,7 @@ export const renderSelectOp = (configs = [], opType = 'option') => {
     ? configs.map(v => {
         // console.log(' groupOptions v ： ', v,  )//
         return (
-          <OptGroup label={v.label} key={v.value}>
+          <OptGroup label={v.label} key={v.key || v.value}>
             {v.children.map(v => (
               <Option value={v.value} key={v.value} title={v.label} {...v}>
                 {v.label}
@@ -148,7 +148,7 @@ export const renderSelectOp = (configs = [], opType = 'option') => {
         );
       })
     : configs.map(v => (
-        <Option value={v.value} key={v.value} title={v.label} {...v}>
+        <Option value={v.value} key={v.key || v.value} title={v.label} {...v}>
           {v.label}
         </Option>
       ));

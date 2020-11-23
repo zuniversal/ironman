@@ -181,10 +181,6 @@ class HouseNo extends PureComponent {
         site: null,
       });
     }
-    if (params.value.site || params.value.customer || params.value.postcode) {
-      this.props.getListAsync(params.formData);
-      return;
-    }
     if (params.value.province) {
       const { city, site, ...data } = params.formData;
       console.log(' onFieldChange 搜索 province ： ', data); //
@@ -194,6 +190,12 @@ class HouseNo extends PureComponent {
       console.log(' onFieldChange 搜索 city ： ', data); //
       this.props.getDistrictAsync(data);
     }
+    // if (params.value.site || params.value.customer || params.value.postcode) {
+    //   this.props.getListAsync(params.formData);
+    //   return;
+    // }
+    console.log(' 列表搜索 ： '); //
+    this.props.getListAsync(params.formData);
   };
 
   onRemove = params => {
@@ -214,6 +216,7 @@ class HouseNo extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,

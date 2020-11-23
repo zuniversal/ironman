@@ -145,6 +145,7 @@ class ShiftsManage extends PureComponent {
       showDetail: this.props.getItemAsync,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       // edit: this.props.showFormModal,
       // edit: this.showFormModal,

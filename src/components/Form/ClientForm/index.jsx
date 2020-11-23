@@ -533,7 +533,7 @@ const ClientForm = props => {
       noRule: true,
       itemProps: {
         label: '下属户号',
-        name: 'owner',
+        name: 'electricityuser',
         colon: false,
       },
       extra: (

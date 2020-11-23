@@ -100,6 +100,7 @@ class UserManage extends PureComponent {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
       count: this.props.count,
+      searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
@@ -129,11 +130,15 @@ class UserManage extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+          role_ids: [res.role_ids],
+          tag_ids: [res.tag_ids],
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
+          role_ids: [res.role_ids],
+          tag_ids: [res.tag_ids],
           d_id: itemDetail.id,
         });
       }
@@ -179,9 +184,9 @@ class UserManage extends PureComponent {
   };
   componentDidMount() {
     this.props.getAllAsync(); //
-    this.props.getOrganizeAsync(); //
-    this.props.getRoleAsync(); //
-    this.props.getTagsAsync(); //
+    this.props.getOrganizeAsync({ page_size: 1000 }); //
+    this.props.getRoleAsync({ page_size: 1000 }); //
+    this.props.getTagsAsync({ page_size: 1000 }); //
   }
 
   render() {
