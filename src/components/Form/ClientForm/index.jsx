@@ -597,12 +597,15 @@ const ClientForm = props => {
     },
   ];
 
-  // config.push(
-  //   <SmartFormTable
-  //     config={adminConfig.map(v => v.itemProps)}
-  //     name="customer_admin"
-  //     key={'customer_admin'}
-  //   />,);
+  config.push(
+    <SmartFormTable
+      config={adminConfig.map(v => v.itemProps)}
+      name="customer_admin"
+      key={'customer_admin'}
+      save={props.saveAdmin}
+      remove={props.removeAdmin}
+    />,
+  );
 
   console.log(' configconfig ： ', config); //
 
@@ -628,12 +631,10 @@ const ClientForm = props => {
           // init={{}}
           isDisabledAll={action === 'detail'}
           {...props}
-          // init={{
-          //   ...props.init,
-          //   customer_admin: [
-          //     { },
-          //   ],
-          // }}
+          init={{
+            ...props.init,
+            customer_admin: [{}],
+          }}
         ></SmartForm>
 
         <AdminForm {...restProps}></AdminForm>

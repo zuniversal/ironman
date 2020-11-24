@@ -387,6 +387,11 @@ class Client extends PureComponent {
       addUserAsync: this.addUserAsync,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
+      saveAdmin: params => {
+        console.log(' params ： ', params); //
+        // this.props.addUserAsync({ customer_admin_list: res.customer_admin })
+      },
+      removeAdmin: this.props.removeAdmin,
     };
     if (action !== 'add') {
       // const { customer_admin } = this.props.itemDetail; //

@@ -14,7 +14,7 @@ const SmartFormTable = props => {
     props,
   ); //
 
-  const { name, config, noRule, noRuleAll, actionCol } = props; //
+  const { name, config, noRule, noRuleAll, actionCol, onFieldChange } = props; //
 
   const rules = (params, extra) => {
     const { items, label, formType } = params;
@@ -29,10 +29,7 @@ const SmartFormTable = props => {
   };
 
   return (
-    <Form.List
-      name={name}
-      // key={}
-    >
+    <Form.List name={name}>
       {(fields, { add, remove }) => {
         console.log(' dataInit  fieldsfields ： ', fields); //
         // const config = [
@@ -54,11 +51,26 @@ const SmartFormTable = props => {
                 },}}
             >
             </Form.Item>)} */}
-              {[...config, actionCol].map((v, i) => (
+              {/* {[...config, actionCol].map((v, i) => ( */}
+              {[...config].map((v, i) => (
                 <div className={' headerTd'} key={i}>
                   {`${v.label}`}{' '}
                 </div>
               ))}
+              <div className={' headerTd'}>
+                {!props.hideAdd && (
+                  <a
+                    className={'add'}
+                    onClick={() => {
+                      // add('', 0);
+                      props.add({});
+                      add();
+                    }}
+                  >
+                    新增
+                  </a>
+                )}
+              </div>
             </div>
             <div className="formBody">
               {fields.map((field, i) => {
@@ -83,9 +95,16 @@ const SmartFormTable = props => {
                         sm: { span: 24 }, //
                       },
                     }}
+                    onValuesChange={(params, rest) => {
+                      console.log(' params, rest ： ', params, rest); //
+                      // onFieldChange && onFieldChange({ value, formData, form: formControl })
+                    }}
                   >
                     {/* <Input className={`w-78 ${flipInX}`} /> */}
-                    <Input className={` ${bounceIn}`} />
+                    <Input
+                      className={` ${bounceIn}`}
+                      placeholder={`请输入${v.label}`}
+                    />
                   </Form.Item>
                 ));
                 return (
@@ -100,22 +119,11 @@ const SmartFormTable = props => {
                       }}
                       className={'formItems actionCol'}
                     >
-                      {props.hideAdd && (
+                      {!props.hideSave && (
                         <a
                           className={'add'}
                           onClick={() => {
-                            // add('', 0);
-                            add();
-                          }}
-                        >
-                          新增
-                        </a>
-                      )}
-                      {props.hideSave && (
-                        <a
-                          className={'add'}
-                          onClick={() => {
-                            console.log(' save field ： ', field, i); //
+                            console.log(' save field ： ', fields, field, i); //
                             // props.save({});
                           }}
                         >
@@ -125,7 +133,16 @@ const SmartFormTable = props => {
                       <a
                         className={'remove'}
                         onClick={() => {
-                          remove(field.name);
+                          console.log(
+                            '  对吗  fields.length ',
+                            fields,
+                            field,
+                            i,
+                          );
+                          if (fields.length) {
+                            remove(field.name);
+                            props.remove({ fields, field, i });
+                          }
                         }}
                       >
                         删除
@@ -145,8 +162,13 @@ const SmartFormTable = props => {
 SmartFormTable.defaultProps = {
   config: [],
   actionCol: { name: '操作', label: '操作' },
+  actionCol: {},
   name: 'smartFormTableName',
-  hideSave: true,
+  hideSave: false,
+  add: () => {},
+  remove: () => {},
+  save: () => {},
+  onFieldChange: () => {},
 };
 
 SmartFormTable.propTypes = {
@@ -154,6 +176,10 @@ SmartFormTable.propTypes = {
   actionCol: PropTypes.object,
   name: PropTypes.string,
   hideSave: PropTypes.bool,
+  add: PropTypes.func,
+  remove: PropTypes.func,
+  save: PropTypes.func,
+  onFieldChange: PropTypes.func,
 };
 
 export default SmartFormTable;

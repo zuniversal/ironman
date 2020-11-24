@@ -23,3 +23,4 @@ export const syncOA = p => noTipsGet(`console/OMS/customer/OA`, p);
 export const getPortrait = p =>
   noTipsGet(`console/OMS/customer/portrait/${p.d_id}`, p);
 export const addAdmin = p => post('console/OMS/customer/admin', p);
+export const removedAdmin = p => post('console/OMS/customer/admin', p);

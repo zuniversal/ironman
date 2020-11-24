@@ -16,6 +16,7 @@ const otherActions = [
   'getPortraitAsync',
   'getUserAsync',
   'addUserAsync',
+  'removeUserAsync',
   'exportDataAsync',
   'getDistrictAsync',
 ];
@@ -214,6 +215,13 @@ export default {
         adminList: payload.list,
       };
     },
+    removeUser(state, { payload, type }) {
+      console.log(' removeUseraddUser ： ', payload); //
+      return {
+        ...state,
+        adminList: payload.list,
+      };
+    },
     getDistrict(state, { payload, type }) {
       let datas = [];
       const data = payload.list.map(v => ({
@@ -358,6 +366,12 @@ export default {
       // console.log(' addUserAsync ： ', payload, type,     )//
       const res = yield call(services.addAdmin, payload);
       console.log('  addUserAsync res ：', res); //
+      yield put(action(res));
+    },
+    *removeUserAsync({ payload, action, type }, { call, put }) {
+      // console.log(' removeUserAsync ： ', payload, type,     )//
+      const res = yield call(services.removeAdmin, payload);
+      console.log('  removeUserAsync res ：', res); //
       yield put(action(res));
     },
     *getDistrictAsync({ payload, action, type }, { call, put }) {
