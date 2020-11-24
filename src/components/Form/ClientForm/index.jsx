@@ -20,6 +20,7 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins, customerTypeConfig } from '@/configs'; //
 import { formatConfig, reportRadioOp, tips } from '@/utils'; //
+import SmartFormTable from '@/common/SmartFormTable';
 
 const rowLayout = {
   labelCol: {
@@ -490,6 +491,14 @@ const ClientForm = props => {
         label: '其他信息',
       },
     },
+
+    {
+      formType: 'rowText',
+      noRule: true,
+      itemProps: {
+        label: '管理员信息',
+      },
+    },
   ];
 
   const attach = [
@@ -523,6 +532,7 @@ const ClientForm = props => {
       extra={'支持扩展名:pdf、jpg、png'}
       uploadProps={{
         disabled: props.isDisabledAll || action === 'detail',
+        multiple: true,
       }}
       init={props.init}
     ></UploadCom>,
@@ -564,6 +574,36 @@ const ClientForm = props => {
   } else if (action === 'detail') {
     config.push(...userCaptureInfo);
   }
+
+  const adminConfig = [
+    {
+      itemProps: {
+        name: 'nickname',
+        label: '用户名',
+      },
+    },
+    {
+      noRule: action !== 'add',
+      itemProps: {
+        label: '密码',
+        name: 'password',
+      },
+    },
+    {
+      itemProps: {
+        label: '手机号',
+        name: 'phone',
+      },
+    },
+  ];
+
+  // config.push(
+  //   <SmartFormTable
+  //     config={adminConfig.map(v => v.itemProps)}
+  //     name="customer_admin"
+  //     key={'customer_admin'}
+  //   />,);
+
   console.log(' configconfig ： ', config); //
 
   const { propsForm, ...restProps } = props;
@@ -588,6 +628,12 @@ const ClientForm = props => {
           // init={{}}
           isDisabledAll={action === 'detail'}
           {...props}
+          // init={{
+          //   ...props.init,
+          //   customer_admin: [
+          //     { },
+          //   ],
+          // }}
         ></SmartForm>
 
         <AdminForm {...restProps}></AdminForm>

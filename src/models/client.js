@@ -89,6 +89,7 @@ export default {
         service_staff,
         last_service_staff,
         electricityuser,
+        file,
       } = payload.bean; //
       const { userList } = state;
       const serviceStaff = {
@@ -119,6 +120,7 @@ export default {
           service_staff: `${service_staff.id}`,
           last_service_staff: `${last_service_staff.id}`,
           electricityuser: electricityuser.map(v => v.number).join(','),
+          file: file ? file.split(',') : [],
           // service_staff: 'zybxxx',
         },
         // adminList: [payload.bean.customer_admin],

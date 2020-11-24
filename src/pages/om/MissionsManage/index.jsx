@@ -168,11 +168,15 @@ class MissionsManage extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => {
+        console.log(' getClientAsync params ： ', params); //
+        return this.props.getClientAsync({ name: params });
+      },
       clientList: this.props.clientList,
-      getAssetsAsync: params => this.props.getAssetsAsync({ keyword: params }),
+      getAssetsAsync: params =>
+        this.props.getAssetsAsync({ station: params, page_size: 1000 }),
       assetsList: this.props.assetsList,
-      getPowerAsync: params => this.props.getPowerAsync({ keyword: params }),
+      getPowerAsync: params => this.props.getPowerAsync({ name: params }),
       powerList: this.props.powerList,
       getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
       teamList: this.props.teamList,
@@ -250,10 +254,18 @@ class MissionsManage extends PureComponent {
   onFormFieldChange = params => {
     console.log(' onFormFieldChange,  , ： ', params);
     if (params.value.customer_id) {
-      this.props.getPowerAsync({ customer: params.value.customer_id });
+      console.log(' onFormFieldChange,  搜索 customer_id, ： ', params);
+      this.props.getPowerAsync({
+        customer: params.value.customer_id,
+        page_size: 1000,
+      });
     }
     if (params.value.station_id) {
-      this.props.getAssetsAsync({ station: params.value.station_id });
+      console.log(' onFormFieldChange,  搜索 station_id, ： ', params);
+      this.props.getAssetsAsync({
+        station: params.value.station_id,
+        page_size: 1000,
+      });
     }
   };
   get size() {

@@ -126,6 +126,7 @@ class InspectPlan extends PureComponent {
   };
   remove = e => {
     console.log('    remove ： ', e);
+    tips('暂未开发！', 2);
   };
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )

@@ -220,7 +220,7 @@ const InspectPlanCalendar = props => {
         eventContent={eventInfo => (
           <div className={`eventWrapper`}>
             {eventInfo.event.title}
-            <CloseOutlined onClick={props.cli} />
+            <CloseOutlined onClick={props.remove} />
           </div>
         )}
         eventOverlap={false}

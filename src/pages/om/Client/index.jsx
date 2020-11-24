@@ -184,14 +184,20 @@ class Client extends PureComponent {
         ...res,
         customer_admin: adminList,
       };
-      if (typeof res.file !== 'string') {
-        if (res.file && res.file.fileList.length > 0) {
+      // if (typeof res.file !== 'string') {
+      // if (res.file && res.file.length > 0) {
+      if (res.file) {
+        if (res.file && res.file.fileList && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
-          params.file = fileList[fileList.length - 1].response.url;
+          // params.file = fileList[fileList.length - 1].response.url;
+          console.log(' fileList ： ', fileList); //
+          params.file = fileList.map(v => v.response.url).join(',');
           // } else {
           //   tips('文件不能为空！', 2);
           //   return;
         }
+      } else {
+        params.file = '';
       }
       if (typeof res.logo !== 'string') {
         console.log(' logologo ： ', res.logo); //

@@ -7,6 +7,7 @@ import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'
 const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
+  const { file = [] } = props.init;
 
   const logTimeLine = [
     {
@@ -18,7 +19,7 @@ const MissionsManageForm = props => {
         ></InspectMissionTimeline>
       ),
       itemProps: {
-        label: '任务日志',
+        label: '工单日志',
         name: 'task_log',
       },
     },
@@ -52,7 +53,7 @@ const MissionsManageForm = props => {
     // 选择客户所属电站
     {
       formType: 'Search',
-      selectSearch: props.getPowerAsync,
+      // selectSearch: props.getPowerAsync,
       selectData: props.powerList,
       itemProps: {
         label: '电站',
@@ -61,7 +62,7 @@ const MissionsManageForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getAssetsAsync,
+      // selectSearch: props.getAssetsAsync,
       selectData: props.assetsList,
       itemProps: {
         label: '设备',
@@ -93,6 +94,19 @@ const MissionsManageForm = props => {
         name: 'addr',
       },
     },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div>
+          {file.map((v, i) => (
+            <img src={v} className="feedBackImg" key={i} />
+          ))}
+        </div>
+      ),
+      itemProps: {
+        label: '反馈照片',
+      },
+    },
 
     ...(props.action === 'detail' ? logTimeLine : []),
   ];
@@ -103,7 +117,7 @@ const MissionsManageForm = props => {
   };
 
   return (
-    <div className={' MissionsManageForm '}>
+    <div className={' missionsManageForm '}>
       <SmartForm
         // flexRow={6}
         config={config}

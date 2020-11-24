@@ -25,16 +25,31 @@ const WeakTable = props => {
     {
       title: '名称',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'weakDetailAsync',
+          d_id: record.id,
+        }),
     },
 
     {
       title: '电站',
       dataIndex: ['station', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.station.id,
+        }),
     },
 
     {
       title: '客户名称',
       dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
 
     {

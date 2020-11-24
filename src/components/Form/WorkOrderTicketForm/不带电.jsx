@@ -115,33 +115,37 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '时间',
-        name: '',
+        name: 'time',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '内容摘要',
-        name: '',
+        name: 'content',
         className: 'w50',
       },
     },
+
+    // user
     {
       itemProps: {
         label: '接受汇报人',
-        name: '',
+        name: 'contact_person',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '现场许可人',
-        name: '',
+        name: 'licensor',
         className: 'w50',
       },
     },
   ];
   const peopleChangeConfig = [
+    // 新增 type：1  id
+    // user
     {
       itemProps: {
         label: '增添人员',
@@ -207,7 +211,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '工作负责人',
-        name: 'finish_time',
+        name: 'person_liable',
         className: 'w50',
       },
     },
@@ -245,35 +249,36 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '分票编号',
-        name: '',
+        name: 'code',
         className: 'w50',
       },
     },
+    // 组名
     {
       itemProps: {
         label: '班组',
-        name: '',
+        name: 'team_id',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '分票工作负责人',
-        name: '',
+        name: 'person_liable',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '许可工作时间',
-        name: '',
+        name: 'permit_time',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '汇报结束时间',
-        name: '',
+        name: 'finish_time',
         className: 'w50',
       },
     },
@@ -295,6 +300,7 @@ const WorkOrderTicketForm = props => {
         className: 'w50',
       },
     },
+    // 电站
     {
       itemProps: {
         label: '电站名称',
@@ -309,6 +315,7 @@ const WorkOrderTicketForm = props => {
         label: '1.工作负责人',
       },
     },
+    // user
     {
       itemProps: {
         label: '负责人姓名',
@@ -428,9 +435,9 @@ const WorkOrderTicketForm = props => {
     },
     <UploadCom
       label={'一次线路图'}
-      key={'logo'}
+      key={'file	'}
       action={'/api/v1/upload'}
-      name={'logo'}
+      name={'file	'}
       extra={'支持扩展名:pdf、jpg、jpeg、png'}
       formItemCls={'w50'}
     ></UploadCom>,
@@ -441,6 +448,7 @@ const WorkOrderTicketForm = props => {
         label: '5.工作人员',
       },
     },
+    // user
     {
       itemProps: {
         label: '总人数',
@@ -448,6 +456,7 @@ const WorkOrderTicketForm = props => {
         className: 'w50',
       },
     },
+    // 手输
     {
       itemProps: {
         label: '姓名',
@@ -481,21 +490,21 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '有效期延长至',
-        name: '',
+        name: 'delay',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        name: '',
+        name: 'person_liable',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作许可人',
-        name: '',
+        name: 'person_liable',
         className: 'w50',
       },
     },
@@ -537,6 +546,7 @@ const WorkOrderTicketForm = props => {
         label: '12.工作票终结',
       },
     },
+    // the_end
     {
       formType: 'CustomCom',
       CustomCom: (
@@ -588,14 +598,14 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '操作人',
-        name: '',
+        name: 'equipment_operate',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '监护人',
-        name: '',
+        name: 'equipment_operate',
         className: 'w50',
       },
     },
@@ -610,14 +620,14 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '专责监护人',
-        name: '',
+        name: 'matter',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '负责监护',
-        name: '',
+        name: 'matter',
         className: 'w50',
       },
     },
@@ -684,6 +694,8 @@ const WorkOrderTicketForm = props => {
         },
       },
     },
+
+    // 盖章
     {
       formType: 'rowText',
       itemProps: {
@@ -691,19 +703,18 @@ const WorkOrderTicketForm = props => {
         name: '',
       },
     },
-    <UploadCom
-      label={'文件'}
-      key={'logo'}
-      action={'/api/v1/upload'}
-      name={'logo'}
-      extra={'支持扩展名:pdf、jpg、png'}
-      formItemCls={'w50'}
-    ></UploadCom>,
+    // <UploadCom
+    //   label={'文件'}
+    //   key={'logo'}
+    //   action={'/api/v1/upload'}
+    //   name={'logo'}
+    //   extra={'支持扩展名:pdf、jpg、png'}
+    //   formItemCls={'w50'}
+    // ></UploadCom>,
     {
       formType: 'rowText',
       itemProps: {
         label: '15.工作票检查',
-        name: '',
       },
     },
     // {
@@ -720,6 +731,8 @@ const WorkOrderTicketForm = props => {
     //     className: 'w50',
     //   },
     // },
+
+    // user
     {
       formType: 'CustomCom',
       CustomCom: (
@@ -737,7 +750,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '检查人员',
-        name: '',
+        name: 'check	',
         className: 'w50',
       },
     },

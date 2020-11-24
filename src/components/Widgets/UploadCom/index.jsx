@@ -21,7 +21,8 @@ import {
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
 
-const formatFile = data => data.map(url => ({ uid: `-${url}`, url }));
+const formatFile = data =>
+  data.map(url => ({ uid: `-${url}`, url, response: { url } }));
 
 // const formatFileList = fileData => {
 //   const fileList = typeof fileData === 'string' ? [{uid: fileData, url: fileData, }] : formatFile(fileData)
@@ -30,15 +31,16 @@ const formatFile = data => data.map(url => ({ uid: `-${url}`, url }));
 // }
 const formatFileList = fileData => {
   console.log(' formatFileList   e,   ： ', fileData);
-  if (!fileData) {
+  if (!fileData || fileData.length === 0) {
     return [];
   }
   const fileList =
     typeof fileData === 'string'
       ? [{ uid: fileData, url: fileData }]
       : formatFile(fileData);
-  console.log(' formatFileList   e,   ： ', fileData, fileList);
-  return formatFile([fileData]);
+  const resFileData = Array.isArray(fileData) ? fileData : [fileData];
+  console.log(' formatFileList   e,   ： ', fileData, fileList, resFileData);
+  return formatFile(resFileData);
   // return fileData ? formatFile([fileData]) : []
 };
 
@@ -143,7 +145,6 @@ const UploadCom = props => {
         //     />
         //   ),
         // }}
-        {...uploadProps}
         action={action}
         // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?
         // fileList={[]}
@@ -151,6 +152,7 @@ const UploadCom = props => {
         className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
         multiple={false}
         onChange={onChange}
+        {...uploadProps}
       >
         {isInputUpload ? (
           <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>

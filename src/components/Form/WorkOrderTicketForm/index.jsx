@@ -223,7 +223,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '编号',
-        name: 'codsse',
+        name: 'code',
         className: 'w50',
       },
     },
@@ -375,20 +375,23 @@ const WorkOrderTicketForm = props => {
         label: '6.本工作票1至5项内容已了解无疑 。',
       },
     },
+
+    // 一样
     {
       itemProps: {
         label: '工作负责人',
-        // name: '',
+        // name: 'person_liable',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作许可人',
-        // name: '',
+        // name: 'person_liable',
         className: 'w50',
       },
     },
+
     {
       formType: 'rowText',
       itemProps: {
@@ -399,7 +402,7 @@ const WorkOrderTicketForm = props => {
       formType: 'Select',
       itemProps: {
         label: '工作班人员',
-        // name: '',
+        name: 'person_name',
         className: 'w50',
       },
     },
@@ -414,7 +417,7 @@ const WorkOrderTicketForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: ' ',
-        // name: '',
+        name: 'supplement',
         className: 'w100',
         ...layout15,
       },
@@ -425,6 +428,8 @@ const WorkOrderTicketForm = props => {
         },
       },
     },
+
+    // 对
     {
       formType: 'rowText',
       itemProps: {

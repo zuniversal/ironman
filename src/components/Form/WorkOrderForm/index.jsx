@@ -15,18 +15,29 @@ const choiceRadios = [
 const WorkOrderTicketForm = props => {
   console.log(' WorkOrderTicketForm ： ', props); //
   const { formBtn, ...rest } = props; //
+  const { task = {}, file } = props.init;
+  const buildFile = file ? file : [];
+  const responseFile = task.file ? task.file : [];
+  console.log(
+    ' buildFile, file ： ',
+    buildFile,
+    responseFile,
+    props.init,
+    task,
+    props.init.work_log,
+  ); //
 
   const logTimeLine = [
     {
       formType: 'CustomCom',
       CustomCom: (
         <InspectMissionTimeline
-          datas={props.init?.work_log}
+          datas={props.init.work_log}
         ></InspectMissionTimeline>
       ),
       itemProps: {
         label: '任务日志',
-        name: 'task_log',
+        name: ' ',
       },
     },
   ];
@@ -115,27 +126,30 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '反馈人',
-        name: ['team', 'name'],
+        name: ['task', 'contacts'],
       },
     },
     {
       itemProps: {
         label: '反馈电话',
-        name: 'contacts_phone',
+        name: ['task', 'contacts_phone'],
       },
     },
     {
       itemProps: {
         label: '详细内容',
-        name: 'content',
+        name: ['task', 'describe'],
       },
     },
     {
       formType: 'CustomCom',
       CustomCom: (
         <>
-          {createArr(12).map((v, i) => (
+          {/* {createArr(12).map((v, i) => (
             <WeakDetailImg key={i}></WeakDetailImg>
+          ))} */}
+          {responseFile.map((v, i) => (
+            <img src={v} className={`detailImg`} key={i} />
           ))}
         </>
       ),
@@ -156,13 +170,13 @@ const WorkOrderTicketForm = props => {
       // selectData: props.teamList,
       itemProps: {
         label: '处理人',
-        name: ['recipient', 'name'],
+        name: ['team', 'team_headman'],
       },
     },
     {
       itemProps: {
         label: '领取时间',
-        name: 'receiving_time',
+        // name: '',
       },
     },
     {
@@ -175,8 +189,11 @@ const WorkOrderTicketForm = props => {
       formType: 'CustomCom',
       CustomCom: (
         <>
-          {createArr(4).map((v, i) => (
+          {/* {createArr(4).map((v, i) => (
             <WeakDetailImg key={i}></WeakDetailImg>
+          ))} */}
+          {buildFile.map((v, i) => (
+            <img src={v} className={`detailImg`} key={i} />
           ))}
         </>
       ),

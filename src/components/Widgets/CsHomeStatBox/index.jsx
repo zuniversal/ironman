@@ -32,7 +32,7 @@ const statConfig = [
     icon: weights,
   },
   {
-    title: '完成遇检数',
+    title: '完成巡检数',
     num: '126560',
     style: {
       background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',

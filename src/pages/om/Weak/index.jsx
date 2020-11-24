@@ -10,6 +10,8 @@ import ExportPdf from '@/components/Pdf/ExportPdf'; //
 import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import ClientForm from '@/components/Form/ClientForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
 
 const TITLE = '缺陷';
 
@@ -19,6 +21,15 @@ const titleMap = {
   detail: `${TITLE}单`,
   upload: `文件上传`,
   handleWeak: `缺陷单`,
+  weakDetailAsync: `缺陷单`,
+  clientDetailAsync: `客户详情`,
+  powerStationDetailAsync: `电站详情`,
+};
+
+const detailFormMap = {
+  weakDetailAsync: WeakForm,
+  clientDetailAsync: ClientForm,
+  powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ weak, }) => weak;
@@ -72,6 +83,7 @@ class Weak extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       handleWeakAsync: this.props.handleWeakAsync,
       exportDataAsync: this.props.exportDataAsync,
       showExportPdf: this.showExportPdf,
@@ -79,6 +91,35 @@ class Weak extends PureComponent {
 
     return <WeakTable {...tableProps}></WeakTable>;
   };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    console.log(
+      ' renderCommonModal ： ',
+      this.props.showItemAsync,
+      this.props.closeCommonModal,
+      params,
+      DetailForm,
+      this.state,
+      this.props,
+    ); //
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
+
   showExportPdf = params => {
     console.log('    showExportPdf ： ', params);
     this.props.getItemAsync(params);
@@ -186,6 +227,8 @@ class Weak extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }
