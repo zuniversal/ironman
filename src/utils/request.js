@@ -1,5 +1,5 @@
 import { httpTipsMap } from '@/configs';
-import { URL, LOAD, LOUOUT } from '@/constants';
+import { URL, LOAD, LOUOUT, LOGIN } from '@/constants';
 import {
   getToken,
   getItems,
@@ -11,6 +11,7 @@ import {
   removeItems,
   debounce,
 } from '@/utils';
+import { history } from 'umi';
 import axios from 'axios';
 // import debounce from 'lodash/debounce';
 // axios.defaults.baseURL = URL
@@ -20,6 +21,8 @@ import axios from 'axios';
 // 封装的项目通用的 请求方法 操作
 // 支持 根据请求方式 自动判别是否显示操作 tips
 export const NORMAL_CODE = 100000;
+export const AUTH_FAIL = 104000;
+// export const AUTH_FAIL = 104007;
 
 const codeMap = {
   // 100000: '正常码',
@@ -70,7 +73,9 @@ export const isTips = res => {
     config,
     config.datas,
     res.config.customInfo,
+    url,
   );
+
   if (statusMap[status]) {
     tips(statusMap[status], 2);
     return;
@@ -90,6 +95,9 @@ export const isTips = res => {
       !codeMsg,
       codeMsg,
     );
+    if (code === AUTH_FAIL) {
+      history.push(LOGIN);
+    }
     tips(msg_show || codeMsg, 2);
     // if (!codeMsg) {
     //   tips(codeMsg, 2);

@@ -41,7 +41,8 @@ import {
 } from '@/utils'; //
 import debounce from 'lodash/debounce';
 
-const { bounceIn, slideInDown } = ANIMATE;
+// const { bounceIn, slideInDown } = ANIMATE;
+const bounceIn = '';
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;

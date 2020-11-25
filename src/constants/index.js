@@ -32,6 +32,7 @@ export const CHECK_TXT = 'ON';
 export const UN_CHECK_TXT = 'OFF';
 export const TIME_ZERO = ' 00:00:00';
 
+export const LOGIN = '/login';
 export const HOME = '/om/home';
 export const CS_HOME = '/cs/csHome';
 export const homeMap = {

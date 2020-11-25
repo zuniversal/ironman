@@ -187,8 +187,8 @@ export default {
           ...payload.bean,
           customer_admin:
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
-          service_staff: `${service_staff.id}`,
-          last_service_staff: `${last_service_staff.id}`,
+          service_staff: `${service_staff.nickname}`,
+          last_service_staff: `${last_service_staff.nickname}`,
           electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
         },
@@ -206,7 +206,7 @@ export default {
         isShowCommonModal: true,
         itemDetail: {
           ...payload.bean,
-          electricity_user: `${payload.bean.electricity_user.id}`,
+          electricity_user: `${payload.bean.electricity_user.number}`,
           status: payload.bean.status ? '正常' : '异常',
         },
         powerInfoData: datas,

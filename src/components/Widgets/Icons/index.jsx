@@ -19,7 +19,7 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
+import Icon from '@ant-design/icons';
 import dog from '@/static/img/dog.jpg'; //
 import logo from '@/static/img/logo.png'; //
 import bell from '@/static/img/bell.png'; //
@@ -137,24 +137,34 @@ export const Bell = props => {
   return <img src={bell} {...props} />;
 };
 
-const Icon = props => {
+const Icons = props => {
   // console.log(' Icon   props, ,   ： ', props,   )
   const { icon = 'bell', className } = props;
-  return (
+
+  const HeartSvg = () => (
     <img
       src={iconMap[icon]}
       {...props}
       className={`${icon} icons ${className}  `}
     />
   );
+  // return null//
+  return (
+    // <img
+    //   src={iconMap[icon]}
+    //   {...props}
+    //   className={`${icon} icons ${className}  `}
+    // />
+    <Icon component={HeartSvg} {...props} />
+  );
 };
 
-Icon.defaultProps = {
+Icons.defaultProps = {
   className: '',
 };
 
-Icon.propTypes = {
+Icons.propTypes = {
   className: PropTypes.string,
 };
 
-export default Icon; //
+export default Icons; //

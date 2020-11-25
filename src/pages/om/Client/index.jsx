@@ -379,6 +379,24 @@ class Client extends PureComponent {
     return <ClientTable {...tableProps}></ClientTable>;
   };
 
+  saveAdmin = params => {
+    console.log('    saveAdmin ： ', params);
+    const keys = ['nickname', 'password', 'phone'];
+    let isRight = true;
+    keys.forEach((v, i) => {
+      console.log(' keys v ： ', v, i, params.data[v]);
+      if (!params.data[v]) {
+        isRight = v;
+      }
+    });
+    console.log(' isRight ： ', isRight); //
+    if (isRight !== true) {
+      tips('管理员信息不能为空！', 2);
+      return;
+    }
+
+    this.props.addUserAsync({ customer_admin_list: [params.data] });
+  };
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
@@ -387,23 +405,46 @@ class Client extends PureComponent {
       addUserAsync: this.addUserAsync,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      saveAdmin: params => {
-        console.log(' params ： ', params); //
-        // this.props.addUserAsync({ customer_admin_list: res.customer_admin })
-      },
-      removeAdmin: this.props.removeAdmin,
+      // saveAdmin: params => {
+      //   console.log(' saveAdmin params ： ', params); //
+      //   // this.props.addUserAsync({ customer_admin_list: params.data, })
+      // },
+      adminList: this.props.adminList,
+      saveAdmin: this.saveAdmin,
+      removeAdmin: this.props.removeUserAsync,
+      onAdminChange: (changedFields, allFields) =>
+        this.props.onAdminChange({ changedFields, allFields }),
     };
-    if (action !== 'add') {
-      // const { customer_admin } = this.props.itemDetail; //
-      // console.log(' customer_admin ： ', customer_admin); //
-      // formComProps.init = {
-      //   ...this.props.itemDetail,
-      //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
-      // };
-      formComProps.init = this.props.itemDetail;
-    }
+
+    // if (action !== 'add') {
+    //   // const { customer_admin } = this.props.itemDetail; //
+    //   // console.log(' customer_admin ： ', customer_admin); //
+    //   // formComProps.init = {
+    //   //   ...this.props.itemDetail,
+    //   //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
+    //   // };
+    //   // formComProps.init = this.props.itemDetail;
+    //   formComProps.init = {
+    //     ...this.props.itemDetail,
+    //     customer_admin: this.props.adminList,
+    //   };
+    // }
+
+    formComProps.init = {
+      ...this.props.itemDetail,
+      customer_admin: this.props.adminList,
+    };
     console.log(' formComProps ： ', formComProps); //
-    return <ClientForm {...formComProps}></ClientForm>;
+    return (
+      <ClientForm
+        {...formComProps}
+        addTableItemAsync={this.props.addTableItemAsync}
+        editTableItemAsync={this.props.editTableItemAsync}
+        removeTableItemAsync={this.props.removeTableItemAsync}
+        modifyTableItem={this.props.modifyTableItem}
+        tableData={this.props.tableData}
+      ></ClientForm>
+    );
   };
   renderSmartFormModal = params => {
     return (

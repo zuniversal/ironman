@@ -626,7 +626,7 @@ class SmartTable extends PureComponent {
           }}
           // pagination={{...pagination, total: count,}}
           pagination={paginationConfig}
-          rowClassName={(record, i) => ANIMATE.bounceInRight}
+          // rowClassName={(record, i) => ANIMATE.bounceInRight}
           // rowClassName={(record, i) => ANIMATE.slideInRight}
 
           {...this.props}
@@ -638,7 +638,8 @@ class SmartTable extends PureComponent {
           // dataSource={() => filters(dataSource, searchText, searchKey, )()}
           // dataSource={this.filters(dataSource, searchText, searchKey, )}
           columns={cols}
-          className={`smartTable ${className} ${animation || slideInUp} `}
+          // className={`smartTable ${className} ${animation || slideInUp} `}
+          className={`smartTable ${className}  `}
         />
 
         {this.renderRemoveModal()}

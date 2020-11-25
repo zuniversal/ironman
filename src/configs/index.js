@@ -220,3 +220,36 @@ export const httpTipsMap = {
   notNetWork: '阿哦，没有网络，请您检查网络设置',
   loadError: '阿哦，加载失败了，点击刷新试试（提供刷新按钮）',
 };
+
+export const workTicketExcuteConfig = [
+  {
+    label: '执行',
+    value: 1,
+  },
+  {
+    label: '未执行',
+    value: 0,
+  },
+];
+
+export const workTicketPeopleChangeConfig = [
+  {
+    label: '已全部拆除或拉开',
+    value: 1,
+  },
+  {
+    label: '离开',
+    value: 0,
+  },
+];
+
+export const workTicketEndOptionConfig = [
+  {
+    label: '已全部拆除或拉开',
+    value: 1,
+  },
+  {
+    label: '离开',
+    value: 0,
+  },
+];

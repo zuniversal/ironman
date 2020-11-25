@@ -3,8 +3,9 @@ import * as services from '@/services/user';
 import * as userCenterServices from '@/services/userCenter';
 import { formatSelectList, nowYearMonth, setItem, getItem } from '@/utils';
 import { history } from 'umi';
-import { HOME, CS_HOME, isDev, homeMap } from '@/constants';
+import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
 import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
+import { AUTH_FAIL } from '@/utils/request';
 
 const namespace = 'user';
 const { createActions } = init(namespace);
@@ -36,7 +37,7 @@ const getRoutes = path => {
     const val = dataMap[text];
     return val ? val : [];
   };
-  const routes = isDev
+  const routes = false
     ? [...managerRoutes, ...customerRoutes]
     : getRoutesMap(userInfo.accountType, routesMap);
   console.log(
@@ -147,6 +148,7 @@ export default {
         getRoutes: { ...getRoutes() },
         userInfo: { ...payload },
         accountType: payload.account.account_type,
+        system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
       };
     },
   },
@@ -167,19 +169,23 @@ export default {
         ...resData.bean,
         accountType: accountType,
       };
+      setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo); //
       yield put({
         type: 'login',
         payload: userInfo,
       });
-      setItem('userInfo', userInfo);
       const path = homeMap[accountType] ? homeMap[accountType] : '/';
-      console.log(' path ： ', path, accountType); //
+      console.log(' path ： ', path, accountType, resData); //
+      // if (resData.rest.code === AUTH_FAIL) {
+      //   history.push(LOGIN);
+      // } else {
+      // }
       history.push(path);
     },
     *logoutAsync({ payload, action, type }, { call, put }) {
       // const res = yield call(services.logout, payload);
-      history.push('/login');
+      history.push(LOGIN);
       // yield put(action({ ...res, payload }));
     },
     *getListAsync({ payload, action, type }, { call, put }) {
@@ -202,6 +208,37 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
+    },
+
+    *getUserInfoAsync({ payload, action, type }, { call, put }) {
+      console.log(' getUserInfoAsync ： ', payload, action, type); //
+      const resData = yield call(services.getUserInfo, payload);
+      const accountType = resData.bean.user.account.account_type;
+      // console.log(' resData ： ', resData, accountType,  )//
+      const userInfo = {
+        ...resData.bean.user,
+        ...resData.bean,
+        accountType: accountType,
+      };
+      setItem('userInfo', userInfo);
+      // console.log(' userInfo2 ： ', userInfo); //
+      yield put({
+        type: 'login',
+        payload: userInfo,
+      });
+    },
+  },
+
+  subscriptions: {
+    setup: props => {
+      console.log(' 用户 setup ： ', props, this); //
+      const { dispatch, history } = props; //
+      history.listen(location => {
+        console.log(' 监听路由 匹配 ： ', location); //
+        // dispatch({
+        //   type: 'getUserInfoAsync',
+        // })
+      }); //
     },
   },
 };

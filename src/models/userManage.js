@@ -77,6 +77,9 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const { roles, tags } = payload.bean;
+      const role_ids = roles[0]?.role_id ? roles[0]?.role_id : null;
+      const tag_ids = tags[0]?.tag_id ? tags[0]?.tag_id : null;
       return {
         ...state,
         action: payload.payload.action,
@@ -86,8 +89,10 @@ export default {
           ...payload.bean,
           // role_ids: payload.bean.roles.map(v => `${v.role_id}`),
           // tag_ids: payload.bean.tags.map(v => `${v.tag_id}`),
-          role_ids: `${payload.bean.roles[0].role_id}`,
-          tag_ids: `${payload.bean.tags[0].tag_id}`,
+          // role_ids: `${payload.bean.roles[0]?.role_id}`,
+          // tag_ids: `${payload.bean.tags[0]?.tag_id}`,
+          role_ids,
+          tag_ids,
           organization_ids: payload.bean.organizations.map(
             v => v.organization_id,
           ),

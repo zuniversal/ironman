@@ -3,6 +3,7 @@ import './style.less';
 import PropTypes from 'prop-types';
 import { Button, Form, Input, Space } from 'antd';
 import { ANIMATE, REQUIRE } from '@/constants';
+import { tips } from '@/utils';
 
 const { bounceIn, slideInDown, flipInX } = ANIMATE;
 
@@ -14,7 +15,16 @@ const SmartFormTable = props => {
     props,
   ); //
 
-  const { name, config, noRule, noRuleAll, actionCol, onFieldChange } = props; //
+  const {
+    name,
+    config,
+    noRule,
+    noRuleAll,
+    actionCol,
+    onFieldChange,
+    data,
+  } = props; //
+  const [configs, setConfigs] = useState(config);
 
   const rules = (params, extra) => {
     const { items, label, formType } = params;
@@ -52,19 +62,24 @@ const SmartFormTable = props => {
             >
             </Form.Item>)} */}
               {/* {[...config, actionCol].map((v, i) => ( */}
-              {[...config].map((v, i) => (
-                <div className={' headerTd'} key={i}>
+              {[...configs].map((v, i) => (
+                <div className={`headerTd ${v.hidden ? 'hidden' : ''}`} key={i}>
                   {`${v.label}`}{' '}
                 </div>
               ))}
-              <div className={' headerTd'}>
+              <div className={`headerTd`}>
                 {!props.hideAdd && (
                   <a
                     className={'add'}
                     onClick={() => {
                       // add('', 0);
-                      props.add({});
-                      add();
+                      console.log(' adddatasdatas ： ', configs, data); //
+                      if (data.filter(v => v.editing).length > 0) {
+                        props.add({});
+                        add();
+                      } else {
+                        tips('请先保存上一条数据！', 2);
+                      }
                     }}
                   >
                     新增
@@ -74,37 +89,47 @@ const SmartFormTable = props => {
             </div>
             <div className="formBody">
               {fields.map((field, i) => {
+                {
+                  /* {props.datas.map((field, i) => { */
+                }
                 // {[
                 //   {monitor_a: 'monitor_a',},
                 //   {monitor_b: 'monitor_b',},
                 //   {monitor_c: 'monitor_c',},
                 // ].map(field => {
                 console.log(' dataInitdataInitdataInit,  ： ', fields); //
-                const formItem = config.map((v, i) => (
+                const formItem = configs.map(({ editing, ...v }, index) => (
                   <Form.Item
                     rules={noRule || noRuleAll ? undefined : rules(v)}
                     {...field}
+                    {...v}
                     label={''}
                     colon={false}
                     name={[field.name, v.name]}
                     fieldKey={[field.fieldKey, v.name]}
                     key={v.name + field.key}
-                    className={'formItems '}
+                    className={`formItems ${v.hidden ? 'hidden' : ''}`}
                     {...{
                       wrapperCol: {
                         sm: { span: 24 }, //
                       },
                     }}
-                    onValuesChange={(params, rest) => {
-                      console.log(' params, rest ： ', params, rest); //
-                      // onFieldChange && onFieldChange({ value, formData, form: formControl })
-                    }}
+                    // onValuesChange={(params, rest) => {
+                    //   console.log(' params, rest ： ', params, rest); //
+                    //   // onFieldChange && onFieldChange({ value, formData, form: formControl })
+                    // }}
                   >
                     {/* <Input className={`w-78 ${flipInX}`} /> */}
-                    <Input
-                      className={` ${bounceIn}`}
-                      placeholder={`请输入${v.label}`}
-                    />
+                    {editing ? (
+                      <div className={` xxx`}>
+                        <Input
+                          className={` ${bounceIn}`}
+                          placeholder={`请输入${v.label}`}
+                        />
+                      </div>
+                    ) : (
+                      props.data[i][v.name]
+                    )}
                   </Form.Item>
                 ));
                 return (
@@ -122,9 +147,24 @@ const SmartFormTable = props => {
                       {!props.hideSave && (
                         <a
                           className={'add'}
-                          onClick={() => {
-                            console.log(' save field ： ', fields, field, i); //
-                            // props.save({});
+                          onClick={async () => {
+                            // try {
+                            //   const res = await props.form.validateFields();
+                            // console.log('  res await 结果  ：', res, res.values); //
+                            // console.log('  resresres ：', res,  )//
+                            const datas = props.form.getFieldValue(name);
+                            console.log(
+                              ' save field ： ',
+                              fields,
+                              field,
+                              i,
+                              name,
+                              datas,
+                            ); //
+                            props.save({ data: datas[i], datas, i });
+                            // } catch (error) {
+                            //   console.log(' errorerror ： ', error); //
+                            // }
                           }}
                         >
                           保存
@@ -139,9 +179,18 @@ const SmartFormTable = props => {
                             field,
                             i,
                           );
-                          if (fields.length) {
+                          if (fields.length > 1) {
                             remove(field.name);
-                            props.remove({ fields, field, i });
+                            const datas = props.form.getFieldValue(name);
+                            props.remove({
+                              data: datas[i],
+                              datas,
+                              i,
+                              fields,
+                              field,
+                            });
+                          } else {
+                            tips('至少需要一条数据！', 2);
                           }
                         }}
                       >
@@ -183,3 +232,4 @@ SmartFormTable.propTypes = {
 };
 
 export default SmartFormTable;
+// export default React.memo(SmartFormTable, () => false)

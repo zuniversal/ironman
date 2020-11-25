@@ -19,13 +19,26 @@ const otherActions = [
   'removeUserAsync',
   'exportDataAsync',
   'getDistrictAsync',
+
+  'addTableItemAsync',
+  'editTableItemAsync',
+  'removeTableItemAsync',
 ];
+const batchTurnActions = ['onAdminChange', 'modifyTableItem'];
 
 export const actions = {
-  ...createActions(otherActions),
+  ...createActions(otherActions, batchTurnActions),
 };
 
 export const mapStateToProps = state => state[namespace];
+
+const initItem = {
+  key: Math.random(),
+  nickname: '',
+  password: '',
+  phone: '',
+  isEdit: true,
+};
 
 export default {
   namespace,
@@ -46,10 +59,13 @@ export default {
       // { label: 'zyb1', value: 'value2' },
     ],
     adminList: [],
+    adminList: [{}],
     districtList: [],
     provinceList: [],
     citytList: [],
     countryList: [],
+
+    tableData: [initItem],
   },
 
   reducers: {
@@ -92,7 +108,7 @@ export default {
         electricityuser,
         file,
       } = payload.bean; //
-      const { userList } = state;
+      const { userList, adminList } = state;
       const serviceStaff = {
         ...service_staff,
         value: `${service_staff.id}`,
@@ -125,7 +141,8 @@ export default {
           // service_staff: 'zybxxx',
         },
         // adminList: [payload.bean.customer_admin],
-        adminList: payload.bean.customer_admin,
+        // adminList: payload.bean.customer_admin,
+        adminList: [...adminList, payload.bean.customer_admin],
         userList: [serviceStaff, lastServiceStaff, ...userList],
       };
     },
@@ -207,12 +224,20 @@ export default {
         userList: formatSelectList(payload.list, 'nickname'),
       };
     },
+    onAdminChange(state, { payload, type }) {
+      console.log(' onAdminChange ： ', payload); //
+      return {
+        ...state,
+        // adminList: [...state.adminList, ...payload.list, ],
+        // adminList: payload.list,
+      };
+    },
     addUser(state, { payload, type }) {
       console.log(' addUseraddUser ： ', payload); //
       return {
         ...state,
-        // adminList: [payload.bean, ...state.adminList],
-        adminList: payload.list,
+        adminList: [...state.adminList, ...payload.list],
+        // adminList: payload.list,
       };
     },
     removeUser(state, { payload, type }) {
@@ -266,6 +291,107 @@ export default {
           label: v,
           value: v,
         })),
+      };
+    },
+
+    addTableItem(state, { payload, type }) {
+      const { tableData } = state;
+      console.log(' addTableItem ： ', state, payload, tableData); //
+      return {
+        ...state,
+        // tableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
+        tableData: tableData.map((v, i) => {
+          console.log(
+            ' v.key === payload.payload.key ： ',
+            v.key === payload.payload.key,
+          ); //
+          return v.key === payload.payload.key
+            ? {
+                ...v,
+                ...payload.list[0],
+                isEdit: false,
+              }
+            : v;
+        }),
+      };
+    },
+    editTableItem(state, { payload, type }) {
+      const { tableData } = state;
+      console.log(' editTableItem ： ', state, payload, tableData); //
+      return {
+        ...state,
+        tableData: tableData.map((v, i) => {
+          console.log(
+            ' v.key === payload.payload.key ： ',
+            v.key === payload.payload.key,
+          ); //
+          return v.key === payload.payload.key
+            ? {
+                ...v,
+                ...payload.bean,
+                isEdit: false,
+              }
+            : v;
+        }),
+      };
+    },
+    removeTableItem(state, { payload, type }) {
+      console.log(' removeTableItem ： ', state, payload); //
+      const { tableData } = state;
+      const { action, key, index, value } = payload.payload;
+      let newData = [];
+      // if (action === 'localRemove') {
+      //   newData = tableData.filter((v, i) => v.key != key);
+      // } else {
+      //   newData = payload.list.filter(v => v.id != payload.payload.id);
+      // }
+      newData = tableData.filter(v => {
+        console.log(
+          ' v.id != payload.id ： ',
+          v.id != payload.payload.id,
+          v.id,
+          payload.id,
+        ); //
+        return v.id != payload.payload.id;
+      });
+      console.log(' newData ： ', newData); //
+      return {
+        ...state,
+        tableData: newData,
+      };
+    },
+    modifyTableItem(state, { payload, type }) {
+      console.log(' modifyTableItem ： ', state, payload); //
+      const { tableData } = state;
+      const { action, keys, key, index, value } = payload;
+      let newData = [];
+      if (action === 'add') {
+        newData = [
+          {
+            ...initItem,
+            key: Math.random(),
+          },
+          ...tableData,
+        ];
+      } else if (action === 'edit') {
+        newData = tableData.map((v, i) => ({
+          // ...(i === index
+          ...(v.key === payload.key
+            ? {
+                ...v,
+                [keys]: value,
+                isEdit: true,
+              }
+            : v),
+        }));
+      } else if (action === 'remove') {
+        newData = tableData.filter((v, i) => v.key != key);
+      }
+
+      console.log(' modifyTableItem 修改  ： ', state, payload, type, newData); //
+      return {
+        ...state,
+        tableData: newData,
       };
     },
   },
@@ -384,6 +510,35 @@ export default {
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
       return res;
+    },
+
+    *addTableItemAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' addTableItemAsync ： ', payload);
+      const res = yield call(services.addAdmin, {
+        customer_admin_list: [payload],
+      });
+      yield put(action({ ...res, payload }));
+    },
+    *editTableItemAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' editTableItemAsync ： ', payload);
+      const { account, ...rest } = payload;
+
+      // const res = yield call(services.editAdmin, rest);
+      // 不要携带 account 属性对象
+      const res = yield call(services.editAdmin, {
+        ...rest,
+        tag_ids: [],
+        role_ids: [],
+        organization_ids: [],
+      });
+      yield put(action({ ...res, payload }));
+    },
+    *removeTableItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeTableItemAsync ： ', payload);
+      if (payload.action === 'remove') {
+        const res = yield call(services.removedAdmin, payload);
+      }
+      yield put(action({ payload }));
     },
   },
 };

@@ -21,6 +21,7 @@ import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins, customerTypeConfig } from '@/configs'; //
 import { formatConfig, reportRadioOp, tips } from '@/utils'; //
 import SmartFormTable from '@/common/SmartFormTable';
+import ReduxTable from '@/common/ReduxTable';
 
 const rowLayout = {
   labelCol: {
@@ -491,14 +492,6 @@ const ClientForm = props => {
         label: '其他信息',
       },
     },
-
-    {
-      formType: 'rowText',
-      noRule: true,
-      itemProps: {
-        label: '管理员信息',
-      },
-    },
   ];
 
   const attach = [
@@ -578,6 +571,13 @@ const ClientForm = props => {
   const adminConfig = [
     {
       itemProps: {
+        label: 'id',
+        name: 'id',
+        hidden: true,
+      },
+    },
+    {
+      itemProps: {
         name: 'nickname',
         label: '用户名',
       },
@@ -598,13 +598,15 @@ const ClientForm = props => {
   ];
 
   config.push(
-    <SmartFormTable
-      config={adminConfig.map(v => v.itemProps)}
-      name="customer_admin"
-      key={'customer_admin'}
-      save={props.saveAdmin}
-      remove={props.removeAdmin}
-    />,
+    ...[
+      {
+        formType: 'rowText',
+        noRule: true,
+        itemProps: {
+          label: '管理员信息',
+        },
+      },
+    ],
   );
 
   console.log(' configconfig ： ', config); //
@@ -633,11 +635,41 @@ const ClientForm = props => {
           {...props}
           init={{
             ...props.init,
-            customer_admin: [{}],
+            // customer_admin: [{}],
           }}
         ></SmartForm>
 
-        <AdminForm {...restProps}></AdminForm>
+        <ReduxTable
+          config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+          addTableItemAsync={props.addTableItemAsync}
+          editTableItemAsync={props.editTableItemAsync}
+          removeTableItemAsync={props.removeTableItemAsync}
+          modifyTableItem={props.modifyTableItem}
+          dataSource={props.tableData}
+          // init={this.props.}
+        ></ReduxTable>
+
+        <Form
+          name={'customer_admin'}
+          init={{
+            ...props.init,
+            // customer_admin: [{}],
+          }}
+          form={props.propsForm}
+          onFieldsChange={props.onAdminChange}
+        >
+          <SmartFormTable
+            config={adminConfig.map(v => ({ ...v.itemProps, editing: true }))}
+            name="customer_admin"
+            key={'customer_admin'}
+            // {...props}
+            save={props.saveAdmin}
+            remove={props.removeAdmin}
+            form={props.propsForm}
+            data={props.adminList}
+          />
+        </Form>
+        {/* <AdminForm {...restProps}></AdminForm> */}
       </Form.Provider>
     </div>
   );

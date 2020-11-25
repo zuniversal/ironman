@@ -8,8 +8,22 @@ const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
   const { file = [] } = props.init;
+  // const file = props.init.file ?? []
 
   const logTimeLine = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div>
+          {file.map((v, i) => (
+            <img src={v} className="feedBackImg" key={i} />
+          ))}
+        </div>
+      ),
+      itemProps: {
+        label: '反馈照片',
+      },
+    },
     {
       noRule: true,
       formType: 'CustomCom',
@@ -94,19 +108,6 @@ const MissionsManageForm = props => {
         name: 'addr',
       },
     },
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <div>
-          {file.map((v, i) => (
-            <img src={v} className="feedBackImg" key={i} />
-          ))}
-        </div>
-      ),
-      itemProps: {
-        label: '反馈照片',
-      },
-    },
 
     ...(props.action === 'detail' ? logTimeLine : []),
   ];
@@ -133,6 +134,8 @@ const MissionsManageForm = props => {
   );
 };
 
-MissionsManageForm.defaultProps = {};
+MissionsManageForm.defaultProps = {
+  init: {},
+};
 
 export default MissionsManageForm;
