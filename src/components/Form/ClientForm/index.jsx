@@ -597,17 +597,17 @@ const ClientForm = props => {
     },
   ];
 
-  config.push(
-    ...[
-      {
-        formType: 'rowText',
-        noRule: true,
-        itemProps: {
-          label: '管理员信息',
-        },
-      },
-    ],
-  );
+  // config.push(
+  //   ...[
+  //     {
+  //       formType: 'rowText',
+  //       noRule: true,
+  //       itemProps: {
+  //         label: '管理员信息',
+  //       },
+  //     },
+  //   ],
+  // );
 
   console.log(' configconfig ： ', config); //
 
@@ -639,7 +639,7 @@ const ClientForm = props => {
           }}
         ></SmartForm>
 
-        <ReduxTable
+        {/* <ReduxTable
           config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
           addTableItemAsync={props.addTableItemAsync}
           editTableItemAsync={props.editTableItemAsync}
@@ -668,8 +668,8 @@ const ClientForm = props => {
             form={props.propsForm}
             data={props.adminList}
           />
-        </Form>
-        {/* <AdminForm {...restProps}></AdminForm> */}
+        </Form> */}
+        <AdminForm {...restProps}></AdminForm>
       </Form.Provider>
     </div>
   );

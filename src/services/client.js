@@ -24,4 +24,4 @@ export const getPortrait = p =>
   noTipsGet(`console/OMS/customer/portrait/${p.d_id}`, p);
 export const addAdmin = p => post('console/OMS/customer/admin', p);
 export const editAdmin = p => put(`console/users/${p.d_id}`, p);
-export const removedAdmin = p => post('console/OMS/customer/admin', p);
+export const removedAdmin = p => remove('console/OMS/customer/admin', p);

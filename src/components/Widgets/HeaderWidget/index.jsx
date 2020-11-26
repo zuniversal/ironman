@@ -45,7 +45,7 @@ const HeaderWidget = props => {
           }
         }}
       >
-        {props.system === 'OM' ? 'CS' : 'OM'}
+        {/* {props.system === 'OM' ? 'CS' : 'OM'} */}
       </span>
     </div>
   );

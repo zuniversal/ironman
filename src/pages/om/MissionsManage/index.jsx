@@ -314,6 +314,11 @@ class MissionsManage extends PureComponent {
   render() {
     // return (
     //   <MissionsManageOrderInfoForm
+    //     getWorkOrderDetailAsync={this.getWorkOrderDetailAsync}
+    //   ></MissionsManageOrderInfoForm>
+    // );
+    // return (
+    //   <MissionsManageOrderInfoForm
     //     init={{}}
     //   ></MissionsManageOrderInfoForm>
     // );

@@ -245,8 +245,8 @@ export const MissionsManageOrderInfoForm = props => {
 
   const { power_data } = props.init;
   const onChange = index => {
-    console.log(' onChange   index,   ： ', index, power_data);
-    props.init.powerData = power_data[index];
+    console.log(' onChange   index,   ： ', index);
+    // props.init.powerData = power_data[index];
   };
 
   const config = [

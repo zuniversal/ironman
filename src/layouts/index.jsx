@@ -277,11 +277,11 @@ const Layouts = props => {
         </Suspense>
       </ProLayout>
 
-      <SettingDrawer
+      {/* <SettingDrawer
         getContainer={() => document.getElementById('test-pro-layout')}
         settings={settings}
         onSettingChange={changeSetting => setSetting(changeSetting)}
-      />
+      /> */}
     </div>
   );
 };

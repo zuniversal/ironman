@@ -59,7 +59,7 @@ export default {
       // { label: 'zyb1', value: 'value2' },
     ],
     adminList: [],
-    adminList: [{}],
+    // adminList: [{}],
     districtList: [],
     provinceList: [],
     citytList: [],
@@ -141,8 +141,8 @@ export default {
           // service_staff: 'zybxxx',
         },
         // adminList: [payload.bean.customer_admin],
-        // adminList: payload.bean.customer_admin,
-        adminList: [...adminList, payload.bean.customer_admin],
+        adminList: payload.bean.customer_admin,
+        // adminList: [...adminList, payload.bean.customer_admin],
         userList: [serviceStaff, lastServiceStaff, ...userList],
       };
     },
@@ -236,8 +236,8 @@ export default {
       console.log(' addUseraddUser ： ', payload); //
       return {
         ...state,
-        adminList: [...state.adminList, ...payload.list],
-        // adminList: payload.list,
+        // adminList: [...state.adminList, ...payload.list],
+        adminList: payload.list,
       };
     },
     removeUser(state, { payload, type }) {
@@ -536,7 +536,11 @@ export default {
     *removeTableItemAsync({ payload, action, type }, { call, put }) {
       console.log(' removeTableItemAsync ： ', payload);
       if (payload.action === 'remove') {
-        const res = yield call(services.removedAdmin, payload);
+        // const res = yield call(services.removedAdmin, payload);
+        const res = yield call(services.removedAdmin, {
+          d_id: payload.id,
+          id: `${payload.id}`,
+        });
       }
       yield put(action({ payload }));
     },

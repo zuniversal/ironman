@@ -416,24 +416,24 @@ class Client extends PureComponent {
         this.props.onAdminChange({ changedFields, allFields }),
     };
 
-    // if (action !== 'add') {
-    //   // const { customer_admin } = this.props.itemDetail; //
-    //   // console.log(' customer_admin ： ', customer_admin); //
-    //   // formComProps.init = {
-    //   //   ...this.props.itemDetail,
-    //   //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
-    //   // };
-    //   // formComProps.init = this.props.itemDetail;
-    //   formComProps.init = {
-    //     ...this.props.itemDetail,
-    //     customer_admin: this.props.adminList,
-    //   };
-    // }
+    if (action !== 'add') {
+      // const { customer_admin } = this.props.itemDetail; //
+      // console.log(' customer_admin ： ', customer_admin); //
+      // formComProps.init = {
+      //   ...this.props.itemDetail,
+      //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
+      // };
+      // formComProps.init = this.props.itemDetail;
+      formComProps.init = {
+        ...this.props.itemDetail,
+        customer_admin: this.props.adminList,
+      };
+    }
 
-    formComProps.init = {
-      ...this.props.itemDetail,
-      customer_admin: this.props.adminList,
-    };
+    // formComProps.init = {
+    //   ...this.props.itemDetail,
+    //   customer_admin: this.props.adminList,
+    // };
     console.log(' formComProps ： ', formComProps); //
     return (
       <ClientForm

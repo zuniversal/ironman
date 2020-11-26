@@ -70,6 +70,7 @@ const MissionsManageTable = props => {
     {
       title: '发起工单数',
       dataIndex: 'order_num',
+      // dataIndex: ['order_num', ],
       // detailFn: record =>
       //   props.showDetail({
       //     action: 'orderInfoDetail',

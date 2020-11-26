@@ -235,9 +235,9 @@ export default {
       const { dispatch, history } = props; //
       history.listen(location => {
         console.log(' 监听路由 匹配 ： ', location); //
-        // dispatch({
-        //   type: 'getUserInfoAsync',
-        // })
+        dispatch({
+          type: 'getUserInfoAsync',
+        });
       }); //
     },
   },
