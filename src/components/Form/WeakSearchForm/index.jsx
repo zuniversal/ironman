@@ -32,10 +32,10 @@ const WeakSearchForm = props => {
     // },
 
     {
-      // formType: 'Select',
+      noLabel: true,
       itemProps: {
-        label: '',
-        name: 'keyword',
+        label: '名称',
+        name: 'name',
       },
       comProps: {
         className: 'lastFormItem',

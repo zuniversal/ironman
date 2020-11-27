@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
+import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm'; //
 import AlarmTemplateTable from '@/components/Table/AlarmTemplateTable'; //
@@ -36,23 +36,36 @@ class AlarmTemplate extends PureComponent {
     };
   }
 
-  renderSearchForm = params => {
+  renderFormBtn = params => {
     return (
-      <div className={'fje '}>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出
-          </Button>
-        </div>
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出
+        </Button>
       </div>
     );
+  };
+  renderSearchForm = params => {
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        className={'fje'}
+        onFieldChange={this.onFieldChange}
+        keyword={'name'}
+        label={'名称'}
+        noLabel
+      ></SearchKwForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {

@@ -37,6 +37,11 @@ const titleMap = {
   clientDetail: '客户详情',
   contractDetail: '合同详情',
   orderInfoDetail: '发起工单详情',
+  workOrderDetailAsync: '工单详情',
+};
+
+const detailFormMap = {
+  workOrderDetailAsync: MissionsManageOrderInfoForm,
 };
 
 // const mapStateToProps = ({ missionsManage, }) => missionsManage;
@@ -91,12 +96,33 @@ class MissionsManage extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       closeMissionAsync: this.props.closeMissionAsync,
       showClientAsync: this.props.showClientAsync,
       showContractAsync: this.props.showContractAsync,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+            showItemAsync={this.props.showItemAsync}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -255,6 +281,9 @@ class MissionsManage extends PureComponent {
     console.log(' onFormFieldChange,  , ： ', params);
     if (params.value.customer_id) {
       console.log(' onFormFieldChange,  搜索 customer_id, ： ', params);
+      params.form.setFieldsValue({
+        station_id: '',
+      });
       this.props.getPowerAsync({
         customer: params.value.customer_id,
         page_size: 1000,
@@ -262,6 +291,9 @@ class MissionsManage extends PureComponent {
     }
     if (params.value.station_id) {
       console.log(' onFormFieldChange,  搜索 station_id, ： ', params);
+      params.form.setFieldsValue({
+        equipment_id: '',
+      });
       this.props.getAssetsAsync({
         station: params.value.station_id,
         page_size: 1000,
@@ -330,6 +362,8 @@ class MissionsManage extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

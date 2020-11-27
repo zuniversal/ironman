@@ -20,6 +20,15 @@ import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
 
+const smallLayout = {
+  labelCol: {
+    sm: { span: 5 }, //
+  },
+  wrapperCol: {
+    sm: { span: 19 }, //
+  },
+};
+
 const menuConfig = [
   {
     key: 'upload',
@@ -213,15 +222,6 @@ class Assets extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}
@@ -283,7 +283,7 @@ class Assets extends PureComponent {
       userList: this.props.userList,
       getHouseNoAsync: params =>
         this.props.getHouseNoAsync({ keyword: params }),
-      getPowerAsync: params => this.props.getPowerAsync({ keyword: params }),
+      getPowerAsync: params => this.props.getPowerAsync({ name: params }),
       getListAsync: params => this.props.getListAsync({ keyword: params }),
       dataList: this.props.dataList,
       powerList: this.props.powerList,
@@ -303,6 +303,7 @@ class Assets extends PureComponent {
           action={'/api/v1/upload'}
           name={'file'}
           extra={'支持扩展名:xls、xlsx、csv'}
+          formItemLayout={smallLayout}
         ></UploadCom>
       );
     }

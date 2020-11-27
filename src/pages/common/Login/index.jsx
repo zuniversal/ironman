@@ -15,6 +15,11 @@ export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 const Login = props => {
   const [form] = Form.useForm();
 
+  const goPage = path => {
+    console.log(' goPage   path,   ： ', path);
+    history.push(path);
+  };
+
   const onFinish = values => {
     console.log('Received values of form: ', values, props);
     // form.validateFields(async (err, values) => {
@@ -61,6 +66,8 @@ const Login = props => {
               remember: true,
               username: 'admin',
               password: 'afafa',
+              username: '',
+              password: '',
             }}
             onFinish={onFinish}
           >
@@ -85,11 +92,12 @@ const Login = props => {
                 登录
               </Button>
               <div className="forgetPwdRow">
-                <div className="forgetPwd">忘记密码</div>
+                <div className="forgetPwd" onClick={() => goPage('forgetPwd')}>
+                  忘记密码
+                </div>
               </div>
             </Form.Item>
           </Form>
-          {/* <div onClick={this.logins} className="logins"></div> */}
         </div>
       </div>
     </div>

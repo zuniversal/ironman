@@ -528,6 +528,9 @@ const ClientForm = props => {
         multiple: true,
       }}
       init={props.init}
+      formItemProps={{
+        rules: null,
+      }}
     ></UploadCom>,
   ];
 
@@ -574,6 +577,7 @@ const ClientForm = props => {
         label: 'id',
         name: 'id',
         hidden: true,
+        noEdit: false,
       },
     },
     {
@@ -597,17 +601,29 @@ const ClientForm = props => {
     },
   ];
 
-  // config.push(
-  //   ...[
-  //     {
-  //       formType: 'rowText',
-  //       noRule: true,
-  //       itemProps: {
-  //         label: '管理员信息',
-  //       },
-  //     },
-  //   ],
-  // );
+  const dataSource =
+    action === 'detail' ? props.init.customer_admin : props.tableData;
+  const adminFormTable = [
+    {
+      formType: 'rowText',
+      noRule: true,
+      itemProps: {
+        label: '管理员信息',
+      },
+    },
+    <ReduxTable
+      key={'adminFormTable'}
+      config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+      addTableItemAsync={props.addTableItemAsync}
+      editTableItemAsync={props.editTableItemAsync}
+      removeTableItemAsync={props.removeTableItemAsync}
+      modifyTableItem={props.modifyTableItem}
+      dataSource={dataSource}
+      isDisabledAll={!['add', 'edit'].includes(action)}
+    ></ReduxTable>,
+  ];
+
+  config.push(...adminFormTable);
 
   console.log(' configconfig ： ', config); //
 
@@ -639,21 +655,13 @@ const ClientForm = props => {
           }}
         ></SmartForm>
 
-        {/* <ReduxTable
-          config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
-          addTableItemAsync={props.addTableItemAsync}
-          editTableItemAsync={props.editTableItemAsync}
-          removeTableItemAsync={props.removeTableItemAsync}
-          modifyTableItem={props.modifyTableItem}
-          dataSource={props.tableData}
-          // init={this.props.}
-        ></ReduxTable>
-
-        <Form
+        {/* <Form
           name={'customer_admin'}
           init={{
             ...props.init,
             // customer_admin: [{}],
+
+            customer_admin: props.tableData,
           }}
           form={props.propsForm}
           onFieldsChange={props.onAdminChange}
@@ -663,13 +671,17 @@ const ClientForm = props => {
             name="customer_admin"
             key={'customer_admin'}
             // {...props}
-            save={props.saveAdmin}
-            remove={props.removeAdmin}
+            // save={props.saveAdmin}
+            // remove={props.removeAdmin}
             form={props.propsForm}
-            data={props.adminList}
+            // data={props.adminList}
+            data={props.tableData}
+            modifyTableItem={props.modifyTableItem}
+            save={props.addTableItemAsync}
+            remove={props.removeTableItemAsync}
           />
         </Form> */}
-        <AdminForm {...restProps}></AdminForm>
+        {/* <AdminForm {...restProps}></AdminForm> */}
       </Form.Provider>
     </div>
   );

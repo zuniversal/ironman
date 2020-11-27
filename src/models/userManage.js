@@ -78,8 +78,8 @@ export default {
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
       const { roles, tags } = payload.bean;
-      const role_ids = roles[0]?.role_id ? roles[0]?.role_id : null;
-      const tag_ids = tags[0]?.tag_id ? tags[0]?.tag_id : null;
+      const role_ids = roles[0]?.role_id ? `${roles[0]?.role_id}` : null;
+      const tag_ids = tags[0]?.tag_id ? `${tags[0]?.tag_id}` : null;
       return {
         ...state,
         action: payload.payload.action,

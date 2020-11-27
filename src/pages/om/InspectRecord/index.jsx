@@ -56,6 +56,8 @@ class InspectRecord extends PureComponent {
       <SearchKwForm
         formBtn={this.renderFormBtn}
         onFieldChange={this.onFieldChange}
+        label={'名称'}
+        noLabel
       ></SearchKwForm>
     );
   };
@@ -84,15 +86,6 @@ class InspectRecord extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}
@@ -148,7 +141,7 @@ class InspectRecord extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
     };
     if (action !== 'add') {

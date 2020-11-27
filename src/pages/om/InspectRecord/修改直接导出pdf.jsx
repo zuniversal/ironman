@@ -84,15 +84,6 @@ class InspectRecord extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}

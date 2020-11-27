@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'organize';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getOrganizeAsync'];
 
 const batchTurnActions = [];
 
@@ -43,6 +43,7 @@ export default {
     d_id: '',
 
     searchInfo: {},
+    organizeList: [],
   },
 
   reducers: {
@@ -69,7 +70,6 @@ export default {
         ...state,
         // dataList: payload.list,
         dataList: organizeList,
-        organizeList: organizeList,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -113,6 +113,14 @@ export default {
         ),
       };
     },
+
+    getOrganize(state, { payload, type }) {
+      console.log(' getOrganize 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        organizeList: formatPowerList(payload.list),
+      };
+    },
   },
 
   effects: {
@@ -148,6 +156,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
+    },
+
+    *getOrganizeAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getList, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

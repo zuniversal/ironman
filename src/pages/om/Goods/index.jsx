@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
+import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import GoodsTable from '@/components/Table/GoodsTable'; //
 import GoodsForm from '@/components/Form/GoodsForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
@@ -9,6 +9,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import { actions, mapStateToProps } from '@/models/goods'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '物料';
 
@@ -36,23 +37,35 @@ class Goods extends PureComponent {
     };
   }
 
-  renderSearchForm = params => {
+  renderFormBtn = params => {
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div>
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
+        {/* <Button type="primary" onClick={() => this.props.exportData()}> */}
+        <Button type="primary" onClick={() => tips('暂未开发！')}>
+          导出{TITLE}数据
+        </Button>
       </div>
     );
+  };
+  renderSearchForm = params => {
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        className={'fje'}
+        onFieldChange={this.onFieldChange}
+        keyword={'name'}
+      ></SearchKwForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -71,6 +84,14 @@ class Goods extends PureComponent {
     return <GoodsTable {...tableProps}></GoodsTable>;
   };
 
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    // this.props.removeItemAsync({ d_id: `${params.record.id}` });
+    this.props.onRemove({
+      d_id: `${params.record.id}`,
+    });
+  };
+
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -87,6 +108,7 @@ class Goods extends PureComponent {
         this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {
@@ -98,10 +120,6 @@ class Goods extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
-      clientList: this.props.clientList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

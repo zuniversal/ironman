@@ -8,7 +8,7 @@ const HeaderWidget = props => {
   // console.log(' HeaderWidget   props, ,   ： ', props);
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path);
-    window.open('http://188.131.235.243:31004/screen');
+    window.open('http://188.131.235.243:31004/normal_screen');
   };
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);

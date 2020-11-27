@@ -151,6 +151,9 @@ class CsHome extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getStatCountAsync({});
+  }
 
   render() {
     return (

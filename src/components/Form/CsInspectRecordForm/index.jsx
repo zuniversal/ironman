@@ -27,7 +27,7 @@ function callback(key) {
 
 const TabPanes = () => (
   <div className="w100">
-    <Tabs defaultActiveKey="1" onChange={callback}>
+    <Tabs defaultActiveKey="0" onChange={callback}>
       <TabPane tab={'电源编号1'} key="1">
         {/* 电源编号 121 */}
       </TabPane>

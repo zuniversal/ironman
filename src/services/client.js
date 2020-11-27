@@ -22,6 +22,8 @@ export const exportData = p => get('console/OMS/customer/file', p);
 export const syncOA = p => noTipsGet(`console/OMS/customer/OA`, p);
 export const getPortrait = p =>
   noTipsGet(`console/OMS/customer/portrait/${p.d_id}`, p);
-export const addAdmin = p => post('console/OMS/customer/admin', p);
+// export const addAdmin = p => post('console/OMS/customer/admin', p);
+export const addAdmin = p => post('console/users', p);
 export const editAdmin = p => put(`console/users/${p.d_id}`, p);
-export const removedAdmin = p => remove('console/OMS/customer/admin', p);
+// export const removedAdmin = p => remove('console/OMS/customer/admin', p);
+export const removedAdmin = p => remove(`console/users/${p.d_id}`, p);

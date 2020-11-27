@@ -61,6 +61,8 @@ class ShiftsTransfer extends PureComponent {
         userList={this.props.userList}
         powerList={this.props.powerList}
         onFieldChange={this.onFieldChange}
+        getTeamAsync={this.props.getTeamAsync}
+        teamList={this.props.teamList}
       ></ShiftsTransferSearchForm>
     );
   };
@@ -179,6 +181,7 @@ class ShiftsTransfer extends PureComponent {
   };
   componentDidMount() {
     this.props.getUserAsync(); //
+    this.props.getTeamAsync(); //
   }
 
   render() {

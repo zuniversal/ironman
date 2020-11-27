@@ -3,7 +3,7 @@ import * as services from '@/services/shiftsTransfer';
 import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonthDay } from '@/utils';
 
 const namespace = 'shiftsTransfer';
 const { createActions } = init(namespace);
@@ -28,7 +28,9 @@ export const formatSearch = data => {
   return {
     ...data,
     // page_size: 40,
-    data: data.data ? data.data.format('YYYY-MM') : nowYearMonth,
+    handover_time: data.handover_time
+      ? data.handover_time.format('YYYY-MM-DD')
+      : nowYearMonthDay,
   };
 };
 
@@ -205,7 +207,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(teamServices.getList, { keyword: payload });
+      const res = yield call(teamServices.getList, { name: payload });
       yield put(action({ ...res, payload }));
     },
   },

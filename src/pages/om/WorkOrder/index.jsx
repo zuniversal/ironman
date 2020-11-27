@@ -25,10 +25,12 @@ const titleMap = {
   addTicket: `添加工作票`,
   add: `添加工作票`,
   dispatchOrder: `派单`,
+  workOrderDetailAsync: `任务详情`,
   missionsManageDetailAsync: `任务详情`,
 };
 
 const detailFormMap = {
+  workOrderDetailAsync: WorkOrderForm,
   missionsManageDetailAsync: MissionsManageForm,
 };
 
@@ -48,10 +50,6 @@ class WorkOrder extends PureComponent {
     };
   }
 
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
-  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -70,6 +68,10 @@ class WorkOrder extends PureComponent {
         onFieldChange={this.onFieldChange}
       ></WorkOrderSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -91,17 +93,12 @@ class WorkOrder extends PureComponent {
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;
   };
+  showWorkOrderInfo = params => {
+    console.log(' showWorkOrderInfo,  , ： ', params);
+    // this.props.showItemAsync(params.formData);
+  };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}

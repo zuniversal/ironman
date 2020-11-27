@@ -6,6 +6,7 @@ import { history } from 'umi';
 import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
 import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
+import cookie from 'react-cookies';
 
 const namespace = 'user';
 const { createActions } = init(namespace);
@@ -169,6 +170,7 @@ export default {
         ...resData.bean,
         accountType: accountType,
       };
+      cookie.save('enterprise_id', resData.bean.enterprises[0].enterprise_id);
       setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo); //
       yield put({
@@ -214,13 +216,14 @@ export default {
       console.log(' getUserInfoAsync ： ', payload, action, type); //
       const resData = yield call(services.getUserInfo, payload);
       const accountType = resData.bean.user.account.account_type;
-      // console.log(' resData ： ', resData, accountType,  )//
+      console.log(' resData ： ', resData, accountType); //
       const userInfo = {
         ...resData.bean.user,
         ...resData.bean,
         accountType: accountType,
       };
       setItem('userInfo', userInfo);
+      cookie.save('enterprise_id', resData.bean.enterprises[0].enterprise_id);
       // console.log(' userInfo2 ： ', userInfo); //
       yield put({
         type: 'login',

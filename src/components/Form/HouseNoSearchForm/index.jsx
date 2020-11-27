@@ -38,6 +38,18 @@ const HouseNoSearchForm = props => {
         className: 'w-160',
       },
     },
+    {
+      // formType: 'Search',
+      // selectSearch: props.getHouseNoAsync,
+      // selectData: props.houseNoList,
+      itemProps: {
+        label: '户号',
+        name: 'number',
+      },
+      comProps: {
+        className: 'w-160',
+      },
+    },
     ...config(props),
     // {
     //   formType: 'Search',
@@ -61,16 +73,16 @@ const HouseNoSearchForm = props => {
     //     className: 'w-160',
     //   },
     // },
-    {
-      // formType: 'Input',
-      itemProps: {
-        label: '邮编',
-        name: 'postcode',
-      },
-      comProps: {
-        className: 'w-160',
-      },
-    },
+    // {
+    //   // formType: 'Input',
+    //   itemProps: {
+    //     label: '邮编',
+    //     name: 'postcode',
+    //   },
+    //   comProps: {
+    //     className: 'w-160',
+    //   },
+    // },
     {
       formType: 'Divider',
       itemProps: {

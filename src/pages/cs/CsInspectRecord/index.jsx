@@ -85,15 +85,6 @@ class CsInspectRecord extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}
@@ -148,7 +139,7 @@ class CsInspectRecord extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
     };
     if (action !== 'add') {

@@ -56,7 +56,7 @@ class UserManage extends PureComponent {
       getOrganizeAsync: params =>
         this.props.getOrganizeAsync({ keyword: params }),
       organizeList: this.props.organizeList,
-      getRoleAsync: params => this.props.getRoleAsync({ keyword: params }),
+      getRoleAsync: params => this.props.getRoleAsync({ name: params }),
       roleList: this.props.roleList,
     };
 
@@ -158,7 +158,7 @@ class UserManage extends PureComponent {
       getOrganizeAsync: params =>
         this.props.getOrganizeAsync({ keyword: params }),
       organizeList: this.props.organizeList,
-      getRoleAsync: params => this.props.getRoleAsync({ keyword: params }),
+      getRoleAsync: params => this.props.getRoleAsync({ name: params }),
       roleList: this.props.roleList,
       getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),
       tagsList: this.props.tagsList,

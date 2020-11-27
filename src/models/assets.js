@@ -258,9 +258,7 @@ export default {
       // yield put(action({ ...res, payload }));
     },
     *getPowerAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(powerStationServices.getList, {
-        keyword: payload,
-      });
+      const res = yield call(powerStationServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {

@@ -104,7 +104,7 @@ const WorkOrderTicketForm = props => {
       // selectData: props.userList,
       itemProps: {
         label: '客户',
-        name: ['task', 'customer', 'id'],
+        name: ['task', 'customer', 'name'],
       },
     },
     {
@@ -176,7 +176,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '领取时间',
-        // name: '',
+        name: 'receiving_time',
       },
     },
     {

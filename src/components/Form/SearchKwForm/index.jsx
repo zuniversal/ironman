@@ -17,8 +17,9 @@ const SearchKwForm = props => {
   const config = [
     {
       // formType: 'Select',
+      noLabel: props.noLabel,
       itemProps: {
-        label: '',
+        label: props.label,
         name: keyword,
       },
       searchSuffix: true,
@@ -45,13 +46,17 @@ const SearchKwForm = props => {
 };
 
 SearchKwForm.defaultProps = {
+  label: '',
   className: '',
   keyword: 'keyword',
+  noLabel: false,
 };
 
 SearchKwForm.propTypes = {
+  label: PropTypes.string,
   className: PropTypes.string,
   keyword: PropTypes.string,
+  noLabel: PropTypes.bool,
 };
 
 export default SearchKwForm;

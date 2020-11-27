@@ -74,8 +74,16 @@ export const onDutyTypeConfig = [
     label: '调度',
   },
   {
-    value: '2',
+    value: '1',
     label: '值班',
+  },
+  {
+    value: '2',
+    label: '巡检',
+  },
+  {
+    value: '3',
+    label: '抢修',
   },
 ];
 
@@ -206,6 +214,21 @@ export const weakStatusConfig = [
 
 export const weakStatusMap = arrMapObj(weakStatusConfig);
 
+export const inspectMissionsSearchConfig = [
+  {
+    label: '待处理',
+    value: 'pending',
+  },
+  {
+    label: '待派发',
+    value: 'waiting_dispatch',
+  },
+  {
+    label: '已完成',
+    value: 'completed',
+  },
+];
+
 export const site = province;
 export const city = province;
 
@@ -243,13 +266,13 @@ export const workTicketPeopleChangeConfig = [
   },
 ];
 
-export const workTicketEndOptionConfig = [
+export const knowledgeTypeConfig = [
   {
-    label: '已全部拆除或拉开',
+    label: '新闻',
     value: 1,
   },
   {
-    label: '离开',
-    value: 0,
+    label: '知识点',
+    value: 2,
   },
 ];

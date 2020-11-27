@@ -14,6 +14,7 @@ import SuccResult from '@/components/Widgets/SuccResult'; //
 import { actions, mapStateToProps } from '@/models/houseNo'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const menuConfig = [
   {
@@ -121,7 +122,8 @@ class HouseNo extends PureComponent {
         </Button> */}
         <Button
           type="primary"
-          onClick={() => this.props.showUploadModal({ action: 'uploadFile' })}
+          // onClick={() => this.props.showUploadModal({ action: 'uploadFile' })}
+          onClick={() => tips('暂未开发！')}
         >
           Excel导入
         </Button>
@@ -147,15 +149,17 @@ class HouseNo extends PureComponent {
       <HouseNoSearchForm
         formBtn={this.renderFormBtn}
         onFieldChange={this.onFieldChange}
-        getClientAsync={params =>
-          this.props.getClientAsync({ keyword: params })
-        }
+        getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
         getListAsync={params => this.props.getListAsync({ keyword: params })}
         dataList={this.props.dataList}
         provinceList={this.props.provinceList}
         citytList={this.props.citytList}
         countryList={this.props.countryList}
+        getHouseNoAsync={params =>
+          this.props.getHouseNoAsync({ number: params })
+        }
+        houseNoList={this.props.houseNoList}
       ></HouseNoSearchForm>
     );
   };
@@ -229,15 +233,6 @@ class HouseNo extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}
@@ -295,7 +290,7 @@ class HouseNo extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       getListAsync: params => this.props.getListAsync({ keyword: params }),
       dataList: this.props.dataList,
@@ -332,6 +327,7 @@ class HouseNo extends PureComponent {
     this.props.getClientAsync();
     this.props.getListAsync();
     this.props.getDistrictAsync({});
+    this.props.getHouseNoAsync({});
   }
 
   render() {

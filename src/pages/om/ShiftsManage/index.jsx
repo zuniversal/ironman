@@ -131,10 +131,11 @@ class ShiftsManage extends PureComponent {
       type: 'shiftsArrange/setSearchAsync',
       payload: {
         team: params.id,
+        teamName: params.name,
         // schedule_date: nowYearMonth,
       },
     });
-    const page = `${SHIFTSARRANGE}team=${params.id}&schedule_date=${nowYearMonth}`;
+    const page = `${SHIFTSARRANGE}team=${params.id}&name=${params.name}&schedule_date=${nowYearMonth}`;
     history.push(page);
   };
   renderTable = params => {

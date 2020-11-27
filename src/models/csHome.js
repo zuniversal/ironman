@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'csHome';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getStatCountAsync', 'getPowerInfoAsync'];
 
 const batchTurnActions = [];
 
@@ -26,6 +26,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    statCountList: [],
+    powerInfoList: [],
   },
 
   reducers: {
@@ -89,12 +91,29 @@ export default {
         ),
       };
     },
+    getStatCount(state, { payload, type }) {
+      return {
+        ...state,
+        statCountList: payload.list,
+      };
+    },
+    getPowerInfo(state, { payload, type }) {
+      return {
+        ...state,
+        powerInfoList: payload.list,
+      };
+    },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
+    *getStatCountAsync({ payload, action, type }, { call, put }) {
+      console.log(' getStatCountAsync ： ', payload, action, type); //
+      const res = yield call(services.getStatCount, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getPowerInfoAsync({ payload, action, type }, { call, put }) {
+      console.log(' getPowerInfoAsync ： ', payload, action, type); //
+      const res = yield call(services.getPowerInfo, payload);
       yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {

@@ -46,7 +46,7 @@ export const config = props => [
     noRule: true,
     itemProps: {
       label: '县',
-      name: 'site',
+      name: 'area',
       // key: 'site',
     },
     comProps: {

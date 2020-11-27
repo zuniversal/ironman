@@ -35,10 +35,15 @@ const ClientSearchForm = props => {
   const configs = [
     ...config(props),
     {
+      noLabel: true,
       itemProps: {
         label: '客户名称',
         name: 'name',
       },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
     },
     // {
     //   // formType: 'Select',

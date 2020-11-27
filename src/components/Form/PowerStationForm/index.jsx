@@ -466,12 +466,15 @@ const PowerStationForm = props => {
       ></SmartForm>
 
       {extra}
-      {/* <PowerStationDetailTable
+      <PowerStationDetailTable
         addPowerInfoAsync={props.addPowerInfoAsync}
+        editPowerInfoAsync={props.editPowerInfoAsync}
         removePowerInfoAsync={props.removePowerInfoAsync}
-        editPowerInfo={props.editPowerInfo}
-        dataSource={props.dataSource}
-      ></PowerStationDetailTable> */}
+        modifyPowerInfo={props.modifyPowerInfo}
+        dataSource={props.powerInfoData}
+        init={props.init}
+        isDisabledAll={!['add', 'edit'].includes(action)}
+      ></PowerStationDetailTable>
     </>
   );
 };

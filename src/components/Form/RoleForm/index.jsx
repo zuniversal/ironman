@@ -86,7 +86,7 @@ const RoleTab = props => {
   ];
 
   return (
-    <Tabs defaultActiveKey="1">
+    <Tabs defaultActiveKey="0">
       {tabConfig.map((v, i) => (
         <TabPane tab={v.tab} key={v.tab} disabled={v.disabled}>
           <Tree

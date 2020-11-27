@@ -74,8 +74,12 @@ const SmartFormTable = props => {
                     onClick={() => {
                       // add('', 0);
                       console.log(' adddatasdatas ： ', configs, data); //
-                      if (data.filter(v => v.editing).length > 0) {
-                        props.add({});
+                      if (
+                        data.filter(v => v.editing).length > 0 ||
+                        data.length === 0
+                      ) {
+                        // props.add({});
+                        props.modifyTableItem({ action: 'add' });
                         add();
                       } else {
                         tips('请先保存上一条数据！', 2);

@@ -128,6 +128,9 @@ class Organize extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getOrganizeAsync({ page_size: 1000 });
+  }
 
   render() {
     return (

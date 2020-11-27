@@ -11,6 +11,7 @@ import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
+import { tips } from '@/utils';
 
 const MissionsManageTable = props => {
   const {
@@ -69,13 +70,16 @@ const MissionsManageTable = props => {
     },
     {
       title: '发起工单数',
-      dataIndex: 'order_num',
-      // dataIndex: ['order_num', ],
-      // detailFn: record =>
-      //   props.showDetail({
-      //     action: 'orderInfoDetail',
-      //     d_id: record.id,
-      //   }),
+      dataIndex: ['order_num', 'count'],
+      detailFn: record =>
+        record.order_num.count > 0
+          ? props.showItemAsync({
+              // action: 'workOrderInfoDetailAsync',
+              action: 'workOrderDetailAsync',
+              d_id: record.order_num.order_list[0],
+              extra: record.order_num,
+            })
+          : tips('没有工单！', 2),
     },
     {
       title: '创建时间',

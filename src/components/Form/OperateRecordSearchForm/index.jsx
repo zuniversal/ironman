@@ -13,6 +13,18 @@ const OperateRecordSearchForm = props => {
         label: '模块',
       },
     },
+
+    {
+      noLabel: true,
+      itemProps: {
+        label: '内容关键字',
+        name: 'value',
+      },
+      comProps: {
+        className: 'lastFormItem',
+      },
+      searchSuffix: true,
+    },
   ];
 
   const formProps = {

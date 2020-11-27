@@ -18,13 +18,13 @@ export const managerRoutes = [
   //   icon: <Icon icon={'test'} />,
   // },
 
-  {
-    path: '/login',
-    name: '登录页',
-    icon: <ScheduleFilled />,
-    icon: <Icon icon={'home'} />,
-    component: '../Home',
-  },
+  // {
+  //   path: '/login',
+  //   name: '登录页',
+  //   icon: <ScheduleFilled />,
+  //   icon: <Icon icon={'home'} />,
+  //   component: '../Home',
+  // },
   {
     path: '/om/home',
     name: '首页',
@@ -353,6 +353,27 @@ export const managerRoutes = [
         // icon: <Icon icon={'operateRecord'} />,
         icon: placeIcon,
         component: '../pages/sm/OperateRecord',
+      },
+    ],
+  },
+
+  {
+    path: '/knowledge',
+    name: '新闻与知识点',
+    icon: <Icon icon={'customerManage'} />,
+    component: '../Waiter',
+    routes: [
+      {
+        path: '/om/newsKnow',
+        name: '新闻与知识点',
+        icon: placeIcon,
+        component: '../Online',
+      },
+      {
+        path: '/om/knowledgeCate',
+        name: '知识库分类',
+        icon: placeIcon,
+        component: '../pages',
       },
     ],
   },

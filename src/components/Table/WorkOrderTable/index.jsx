@@ -39,7 +39,12 @@ const WorkOrderTable = props => {
     {
       title: '名称',
       dataIndex: 'name',
-      d_item: 'id',
+      // d_item: 'id',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'workOrderDetailAsync',
+          d_id: record.id,
+        }),
     },
     // {
     //   title: '工单编号',

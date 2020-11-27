@@ -21,9 +21,11 @@ export const filterObjSame = (data, key = 'id') => {
   //   console.log(' deWeightTwo   ,   ： ',   )
   data.forEach(a => {
     let check = temp.every(b => a[key] != b[key]);
+    // console.log(' temp 222 ： ', data, temp, check, key,  )//
     check ? temp.push(a) : '';
   });
   // return data;
+  // console.log(' temp ： ', data, temp,  )//
   return temp;
   // }
 };
@@ -57,7 +59,7 @@ export const getDataMap = (text, dataMap) => {
   return val ? val : text;
 };
 
-export const formatSelectList = (data, labelKey = 'label', idKey = 'id') => {
+export const formatSelectList = (data, labelKey = 'name', idKey = 'id') => {
   const res = data.map(v => ({
     ...v,
     label: v[labelKey],
@@ -88,7 +90,9 @@ const resss = getWeek(datasss);
 
 export const nowYear = new Date().getFullYear();
 export const nowMonth = new Date().getMonth() + 1;
+export const nowDay = new Date().getDate() + 1;
 export const nowYearMonth = `${nowYear}-${nowMonth}`;
+export const nowYearMonthDay = `${nowYear}-${nowMonth}-${nowDay}`;
 export const getCountDays = (month = nowMonth, year = nowYear) =>
   new Date(year, month, 0).getDate();
 export const getMonthDays = (month, year) =>
@@ -126,7 +130,13 @@ const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
 
 // 注意 如果 select 的data数组里没有 value 属性会导致选中表单无值
-export const renderSelectOp = (configs = [], opType = 'option') => {
+export const renderSelectOp = (config = [], opType = 'option') => {
+  // const configs = filterObjSame(config, 'value')
+  const configs = filterObjSame(config, 'value').map(v => ({
+    ...v,
+    value: v.value && typeof v.value === 'number' ? `${v.value}` : v.value,
+  }));
+  // const configs = config
   const OptionMap = {
     Option,
     OptGroup,

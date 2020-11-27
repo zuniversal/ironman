@@ -58,6 +58,8 @@ class Role extends PureComponent {
         className={'fje'}
         onFieldChange={this.onFieldChange}
         keyword={'name'}
+        label={'角色名'}
+        noLabel
       ></SearchKwForm>
     );
   };

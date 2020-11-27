@@ -20,6 +20,7 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
+import { REQUIRE } from '@/constants'; //
 
 const formatFile = data =>
   data.map(url => ({ uid: `-${url}`, url, response: { url } }));
@@ -58,12 +59,23 @@ const UploadCom = props => {
     formItemProps,
     uploadProps,
     init,
+    formItemLayout,
   } = props; //
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
 
   const [fileData, setFileData] = useState(formatFileList(init[name]));
 
   // const fileList = formatFileList(fileData)
+
+  const rules = (params, extra) => {
+    const { items, label } = props;
+    return [
+      {
+        required: true,
+        message: label + REQUIRE,
+      },
+    ];
+  };
 
   const onChange = e => {
     console.log(' onChange   e,   ： ', e);
@@ -114,6 +126,8 @@ const UploadCom = props => {
       colon={false}
       // extra="支持扩展名：.pdf"
       extra={extra}
+      rules={props.noRule ? undefined : rules()}
+      {...formItemLayout}
       {...formItemProps}
       className={`uploadFormItem ${
         isInputUpload ? '' : 'uploadBox'
@@ -178,6 +192,7 @@ UploadCom.defaultProps = {
   uploadProps: {},
   formItemProps: {},
   init: {},
+  formItemLayout: {},
 };
 
 UploadCom.propTypes = {
@@ -187,6 +202,7 @@ UploadCom.propTypes = {
   uploadProps: PropTypes.object,
   formItemProps: PropTypes.object,
   init: PropTypes.object,
+  formItemLayout: PropTypes.object,
 };
 
 export default UploadCom;

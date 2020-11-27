@@ -128,7 +128,7 @@ class InspectMission extends PureComponent {
       action,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
       teamList: this.props.teamList,

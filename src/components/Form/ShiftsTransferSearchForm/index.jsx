@@ -15,8 +15,8 @@ const ShiftsTransferSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getUser,
-      selectData: props.userList,
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '交班人',
         name: 'transfer_team',
@@ -33,18 +33,19 @@ const ShiftsTransferSearchForm = props => {
     // },
     {
       formType: 'Search',
-      selectSearch: props.getUser,
-      selectData: props.userList,
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
         label: '接班人',
         name: 'receive_team',
       },
     },
     {
-      formType: 'MonthPicker',
+      // formType: 'MonthPicker',
+      formType: 'DatePicker',
       itemProps: {
         label: '选择日期',
-        name: 'data',
+        name: 'handover_time',
       },
     },
     // {

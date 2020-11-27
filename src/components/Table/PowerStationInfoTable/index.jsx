@@ -12,6 +12,7 @@ import { Input, Button } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 import { tips } from '@/utils';
+import PowerStationTable from '../PowerStationTable';
 
 export const DeviceInfoTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
@@ -116,7 +117,7 @@ export const TableInput = props => {
 };
 
 export const PowerStationDetailTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick, isDisabledAll } = props; //
   console.log(
     ' %c PowerStationDetailTable 组件 ： ',
     `color: #333; font-weight: bold`,
@@ -257,6 +258,9 @@ export const PowerStationDetailTable = props => {
             onClick={() => {
               console.log(' record ：, ', props, record, edit); //
               // const fn = record.id && record.isEdit
+              if (isDisabledAll) {
+                return;
+              }
               let fn = '';
               if (!record.id) {
                 fn = 'addPowerInfoAsync';
@@ -282,6 +286,9 @@ export const PowerStationDetailTable = props => {
           <a
             onClick={() => {
               console.log(' remove record ： ', props, record, index); //
+              if (isDisabledAll) {
+                return;
+              }
               const removeFn = record.id
                 ? 'removePowerInfoAsync'
                 : 'modifyPowerInfo';
@@ -312,6 +319,7 @@ export const PowerStationDetailTable = props => {
       className={'powerStationDetailTable modalTable'}
       // rowLength={3}
       pagination={false}
+      rowSelection={null}
       title={() => (
         <div className={`fje`}>
           <Button
@@ -319,8 +327,11 @@ export const PowerStationDetailTable = props => {
             onClick={() => {
               console.log(
                 '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
-                props.dataSource.filter(v => v.isEdit),
+                props.dataSource,
               );
+              if (isDisabledAll) {
+                return;
+              }
               if (props.dataSource.filter(v => v.isEdit).length < 1) {
                 props.modifyPowerInfo({ action: 'add' });
               } else {
@@ -339,4 +350,8 @@ export const PowerStationDetailTable = props => {
       )}
     ></SmartTable>
   );
+};
+
+PowerStationTable.defaultProps = {
+  dataSource: [],
 };

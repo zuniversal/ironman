@@ -38,7 +38,7 @@ const ShiftsManageSearchForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '班组名称',
-        name: 'keyword',
+        name: 'name',
       },
       comProps: {
         className: 'lastFormItem',

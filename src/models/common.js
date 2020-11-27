@@ -51,7 +51,7 @@ import * as workOrderServices from '@/services/workOrder';
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
-import { missionsStatusMap } from '@/configs';
+import { missionsStatusMap, missionsTypeMap } from '@/configs';
 
 const namespace = 'common';
 const { createActions } = init(namespace, true);
@@ -283,6 +283,22 @@ export default {
         itemDetail: {
           ...payload.bean,
           status: missionsStatusMap[payload.bean.status],
+        },
+      };
+    },
+    workOrderDetail(state, { payload, type }) {
+      console.log(' workOrderDetail ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          status: missionsStatusMap[payload.bean.status],
+          type: missionsTypeMap[payload.bean.type],
+          receiving_time: `${payload.bean.receiving_time}`.split('T')[0],
+          // customer_id: payload.bean.customer.name,
+          extra: payload.payload.extra,
         },
       };
     },

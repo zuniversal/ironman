@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
+import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
 import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
@@ -35,17 +35,33 @@ class AlarmRecord extends PureComponent {
       titleMap,
     };
   }
-  renderSearchForm = params => {
+  renderFormBtn = params => {
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
-        <div className={'btnWrapper'}>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div>
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+        >
+          新增{TITLE}
+        </Button>
       </div>
     );
+  };
+  renderSearchForm = params => {
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        className={'fje'}
+        onFieldChange={this.onFieldChange}
+        keyword={'name'}
+        label={'名称'}
+        noLabel
+      ></SearchKwForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {

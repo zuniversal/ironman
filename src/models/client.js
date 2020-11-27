@@ -6,7 +6,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
 import * as userServices from '@/services/user';
-import { formatSelectList } from '@/utils';
+import { formatSelectList, filterObjSame } from '@/utils';
 
 const namespace = 'client';
 const { createActions } = init(namespace);
@@ -84,6 +84,7 @@ export default {
         isShowModal: false,
         itemDetail: {},
         customer_admin: [],
+        tableData: [],
       };
     },
     getList(state, { payload, type }) {
@@ -142,8 +143,15 @@ export default {
         },
         // adminList: [payload.bean.customer_admin],
         adminList: payload.bean.customer_admin,
+        tableData: payload.bean.customer_admin.map(v => ({
+          ...v,
+          key: Math.random(),
+          password: '',
+          isEdit: false,
+        })),
         // adminList: [...adminList, payload.bean.customer_admin],
         userList: [serviceStaff, lastServiceStaff, ...userList],
+        userList: filterObjSame([...userList, serviceStaff, lastServiceStaff]),
       };
     },
     addItem(state, { payload, type }) {
@@ -230,14 +238,17 @@ export default {
         ...state,
         // adminList: [...state.adminList, ...payload.list, ],
         // adminList: payload.list,
+        // adminList: [...state.adminList, ...payload.list, ],
       };
     },
     addUser(state, { payload, type }) {
       console.log(' addUseraddUser ： ', payload); //
       return {
         ...state,
-        // adminList: [...state.adminList, ...payload.list],
-        adminList: payload.list,
+        // // adminList: [...state.adminList, ...payload.list],
+        // adminList: payload.list,
+        adminList: [...state.adminList, ...payload.bean],
+        // adminList: payload.bean,
       };
     },
     removeUser(state, { payload, type }) {
@@ -308,7 +319,8 @@ export default {
           return v.key === payload.payload.key
             ? {
                 ...v,
-                ...payload.list[0],
+                // ...payload.list[0],
+                ...payload.bean,
                 isEdit: false,
               }
             : v;
@@ -489,8 +501,22 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addUserAsync({ payload, action, type }, { call, put }) {
-      // console.log(' addUserAsync ： ', payload, type,     )//
-      const res = yield call(services.addAdmin, payload);
+      console.log(' addUserAsync ： ', payload, type); //
+      // const res = yield call(services.addAdmin, payload);
+      const params = {
+        ...payload,
+        // tag_ids: [],
+        // role_ids: [],
+        // organization_ids: [],
+        account: {
+          password: payload.password ? payload.password : null,
+          // 认证状态 默认值 1
+          certification_status: 1,
+          // 默认 - 管理者
+          account_type: 'manager',
+        },
+      };
+      const res = yield call(services.addAdmin, params);
       console.log('  addUserAsync res ：', res); //
       yield put(action(res));
     },
@@ -514,9 +540,20 @@ export default {
 
     *addTableItemAsync({ payload, action, type }, { call, put, select }) {
       console.log(' addTableItemAsync ： ', payload);
-      const res = yield call(services.addAdmin, {
-        customer_admin_list: [payload],
-      });
+      // const res = yield call(services.addAdmin, {
+      //   customer_admin_list: [payload],
+      // });
+      const params = {
+        ...payload,
+        account: {
+          password: payload.password ? payload.password : null,
+          // 认证状态 默认值 1
+          certification_status: 1,
+          // 默认 - 管理者
+          account_type: 'manager',
+        },
+      };
+      const res = yield call(services.addAdmin, params);
       yield put(action({ ...res, payload }));
     },
     *editTableItemAsync({ payload, action, type }, { call, put, select }) {
@@ -526,10 +563,16 @@ export default {
       // const res = yield call(services.editAdmin, rest);
       // 不要携带 account 属性对象
       const res = yield call(services.editAdmin, {
-        ...rest,
-        tag_ids: [],
-        role_ids: [],
-        organization_ids: [],
+        // ...rest,
+        ...payload,
+        email: null,
+        account: {
+          password: payload.password ? payload.password : null,
+          // 认证状态 默认值 1
+          certification_status: 1,
+          // 默认 - 管理者
+          account_type: 'manager',
+        },
       });
       yield put(action({ ...res, payload }));
     },

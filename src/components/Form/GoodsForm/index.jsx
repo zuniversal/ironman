@@ -8,16 +8,19 @@ export const config = [
   {
     itemProps: {
       label: '物料编号',
+      name: 'code',
     },
   },
   {
     itemProps: {
       label: '物料名称',
+      name: 'name',
     },
   },
   {
     itemProps: {
       label: '单价(元)',
+      name: 'price',
     },
   },
 ];

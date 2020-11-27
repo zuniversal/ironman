@@ -41,6 +41,7 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.12.0",
     "react-beautiful-dnd": "^13.0.0",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.12.0",
     "react-draggable-tags": "^1.0.2",
     "react-pdf": "^5.0.0",

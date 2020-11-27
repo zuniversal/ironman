@@ -225,12 +225,14 @@ const TabPanes = props => {
   const { tabData } = props; //
   return (
     <div className="w100">
-      <Tabs defaultActiveKey="1" onChange={props.onChange}>
-        {/* {tabData.map((v, i) => (
-          <TabPane tab={`工单-${v.power_number}`} key={i}></TabPane>
-        ))} */}
-        <TabPane tab={'工单1'} key="1"></TabPane>
+      <Tabs defaultActiveKey="0" onChange={props.onChange}>
+        {tabData.map((v, i) => (
+          <TabPane tab={`工单-${i + 1}`} key={i}></TabPane>
+        ))}
+        {/* <TabPane tab={'工单11'} key="0"></TabPane>
+        <TabPane tab={'工单2'} key="1"></TabPane>
         <TabPane tab={'工单2'} key="2"></TabPane>
+        <TabPane tab={'工单2'} key="3"></TabPane> */}
       </Tabs>
     </div>
   );
@@ -240,19 +242,49 @@ TabPanes.defaultProps = {
   tabData: [],
 };
 
+const formLayouts15 = {
+  labelCol: {
+    sm: { span: 4 }, //
+  },
+  wrapperCol: {
+    sm: { span: 20 }, //
+  },
+};
+
+const formLayouts = {
+  labelCol: {
+    sm: { span: 8 }, //
+  },
+  wrapperCol: {
+    sm: { span: 16 }, //
+  },
+};
+
 export const MissionsManageOrderInfoForm = props => {
   console.log(' MissionsManageOrderInfoForm ： ', props); //
 
-  const { power_data } = props.init;
+  const { extra } = props.init;
+  const { task = {}, file } = props.init;
+  const buildFile = file ? file : [];
+  const responseFile = task.file ? task.file : [];
+  const initData = props.init;
   const onChange = index => {
-    console.log(' onChange   index,   ： ', index);
-    // props.init.powerData = power_data[index];
+    console.log(' onChange   index,   ： ', index, extra.order_list);
+    props.showItemAsync({
+      action: 'workOrderDetailAsync',
+      // d_id: extra.order_list[index],
+      d_id: [0, 1, 2, 3][index],
+      extra: extra,
+    });
+    // props.init.powerData = extra[index];
   };
 
   const config = [
     {
       formType: 'CustomCom',
-      CustomCom: <TabPanes onChange={onChange} tabData={[]}></TabPanes>,
+      CustomCom: (
+        <TabPanes onChange={onChange} tabData={extra.order_list}></TabPanes>
+      ),
       itemProps: {
         label: '',
         className: 'w100',
@@ -262,165 +294,195 @@ export const MissionsManageOrderInfoForm = props => {
       formType: 'rowText',
       itemProps: {
         label: '基本信息',
-        name: 'customer',
         className: 'w100',
       },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '标题',
-        name: 'customer',
-        // className: 'w50',
+        label: '标题:',
+        name: 'name',
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '类型',
-        name: 'customer',
-        // className: 'w50',
+        label: '类型:',
+        name: 'type',
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '状态',
-        name: 'customer',
-        // className: 'w50',
+        label: '状态:',
+        name: 'status',
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
+    },
+    // {
+    //   itemProps: {
+    //     label: '巡检时间:',
+    //     name: '',
+    //   },
+    //   comProps: {
+    //     allowClear: false,
+    //     className: 'detailItem w-200',
+    //   },
+    // },
+    {
+      itemProps: {
+        label: '客户:',
+        name: ['task', 'customer', 'name'],
+      },
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '巡检时间',
-        name: 'customer',
-        // className: 'w50',
+        label: '设备ID:',
+        name: ['task', 'equipments', 'name'],
       },
-      // className: 'w50',
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '客户',
-        name: 'customer',
-        // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
       },
-      // className: 'w50',
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '设备ID',
-        name: 'customer',
-        // className: 'w50',
-      },
-      // className: 'w50',
     },
     {
       formType: 'rowText',
       itemProps: {
         label: '反馈信息',
-        name: 'customer',
         className: 'w100',
       },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '反馈人',
-        name: 'customer',
-        // className: 'w50',
+        label: '反馈人:',
+        name: ['task', 'contacts'],
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '反馈电话',
-        name: 'customer',
-        // className: 'w50',
+        label: '反馈电话:',
+        name: ['task', 'contacts_phone'],
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '详细内容',
-        name: 'customer',
-        // className: 'w50',
+        label: '详细内容:',
+        name: ['task', 'describe'],
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {/* {createArr(12).map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))} */}
+          {responseFile.map((v, i) => (
+            <img src={v} className={`detailImg`} key={i} />
+          ))}
+        </>
+      ),
       itemProps: {
-        label: '反馈图片',
-        name: 'customer',
-        // className: 'w50',
+        label: '反馈图片:',
+        name: ['task', 'file'],
+        className: 'w100',
+        ...formLayouts15,
       },
-      // className: 'w50',
     },
     {
       formType: 'rowText',
       itemProps: {
         label: '派单信息',
-        name: 'customer',
         className: 'w100',
       },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '处理人',
-        name: 'customer',
-        // className: 'w50',
+        label: '处理人:',
+        name: ['team', 'team_headman'],
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '领取时间',
-        name: 'customer',
-        // className: 'w50',
+        label: '领取时间:',
+        name: 'receiving_time',
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
       itemProps: {
-        label: '处理时间',
-        name: 'customer',
-        // className: 'w50',
+        label: '处理时间:',
+        name: 'commencement_date',
       },
-      // className: 'w50',
+      comProps: {
+        allowClear: false,
+        className: 'detailItem w-200',
+      },
     },
     {
-      formType: 'plainText',
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {/* {createArr(4).map((v, i) => (
+            <WeakDetailImg key={i}></WeakDetailImg>
+          ))} */}
+          {buildFile.map((v, i) => (
+            <img src={v} className={`detailImg`} key={i} />
+          ))}
+        </>
+      ),
       itemProps: {
-        label: '施工图片',
-        name: 'customer',
-        // className: 'w50',
+        label: '施工图片:',
+        name: 'file',
+        className: 'w100',
+        ...formLayouts15,
       },
-      // className: 'w50',
     },
     {
       formType: 'CustomCom',
       CustomCom: (
         <InspectMissionTimeline
-          datas={props.init?.task_log}
+          datas={props.init?.work_log}
         ></InspectMissionTimeline>
       ),
       itemProps: {
-        label: '工单日志',
+        label: '工单日志:',
         name: 'task_log',
       },
     },
   ];
+  // .map((v) => ({...v, itemProps: {...v.itemProps, colon: true,  }}));
 
   const formProps = {
     // layout: 'vertical',
@@ -433,10 +495,14 @@ export const MissionsManageOrderInfoForm = props => {
         flexRow={2}
         config={config}
         formProps={formProps}
-        // init={init}
+        init={initData}
         // init={{}}
 
-        {...props}
+        noRuleAll
+        isDisabledAll
+        formLayouts={formLayouts}
+
+        // {...props}
       ></SmartForm>
     </div>
   );

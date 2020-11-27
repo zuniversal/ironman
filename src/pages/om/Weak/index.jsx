@@ -65,7 +65,14 @@ class Weak extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return <WeakSearchForm onFieldChange={this.onFieldChange}></WeakSearchForm>;
+    return (
+      <WeakSearchForm
+        formBtn={this.renderFormBtn}
+        getUser={this.props.getUserAsync}
+        userList={this.props.userList}
+        onFieldChange={this.onFieldChange}
+      ></WeakSearchForm>
+    );
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
@@ -93,15 +100,6 @@ class Weak extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}

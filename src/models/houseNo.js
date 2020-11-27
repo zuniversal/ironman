@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/houseNo';
 import * as clientServices from '@/services/client';
 import * as userServices from '@/services/user';
+import * as houseNoServices from '@/services/houseNo';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'houseNo';
@@ -12,6 +13,7 @@ const otherActions = [
   'getUserAsync',
   'exportDataAsync',
   'getDistrictAsync',
+  'getHouseNoAsync',
 ];
 
 const batchTurnActions = [];
@@ -41,6 +43,7 @@ export default {
     provinceList: [],
     citytList: [],
     countryList: [],
+    houseNoList: [],
   },
 
   reducers: {
@@ -169,6 +172,12 @@ export default {
         userList: formatSelectList(payload.list, 'nickname'),
       };
     },
+    getHouseNo(state, { payload, type }) {
+      return {
+        ...state,
+        houseNoList: formatSelectList(payload.list, 'number'),
+      };
+    },
   },
 
   effects: {
@@ -236,6 +245,10 @@ export default {
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getHouseNoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(houseNoServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

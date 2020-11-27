@@ -14,13 +14,14 @@ import SmartTable from '@/common/SmartTable'; //
 import { tips } from '@/utils';
 
 export const TableInput = props => {
-  const { text, record, index, keys } = props; //
+  const { text, record, index, keys, config } = props; //
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
   // ); //
-  return props.record.isEdit ? (
+  // return props.record.isEdit && config.noEdit ? (
+  return props.record.isEdit && keys !== 'id' ? (
     <Input
       defaultValue={text}
       onChange={e =>
@@ -40,7 +41,7 @@ export const TableInput = props => {
 };
 
 const ReduxTable = props => {
-  const { edit, remove, config } = props; //
+  const { edit, remove, config, isDisabledAll } = props; //
   console.log(
     ' %c ReduxTable 组件 ： ',
     `color: #333; font-weight: bold`,
@@ -58,6 +59,7 @@ const ReduxTable = props => {
           index={index}
           {...props}
           keys={v.name}
+          config={config}
         ></TableInput>
       </div>
     ),
@@ -72,7 +74,11 @@ const ReduxTable = props => {
       <>
         <a
           onClick={() => {
-            console.log(' record ：, ', props, record, edit); //
+            console.log(' record ：, ', props, config, record, edit); //
+            if (isDisabledAll) {
+              return;
+            }
+
             // const fn = record.id && record.isEdit
             let fn = '';
             if (!record.id) {
@@ -99,6 +105,9 @@ const ReduxTable = props => {
         <a
           onClick={() => {
             console.log(' remove record ： ', props, record, index); //
+            if (isDisabledAll) {
+              return;
+            }
             const removeFn = record.id
               ? 'removeTableItemAsync'
               : 'modifyTableItem';
@@ -136,6 +145,9 @@ const ReduxTable = props => {
                 '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
                 props.dataSource.filter(v => v.isEdit),
               );
+              if (isDisabledAll) {
+                return;
+              }
               if (props.dataSource.filter(v => v.isEdit).length < 1) {
                 props.modifyTableItem({ action: 'add' });
               } else {

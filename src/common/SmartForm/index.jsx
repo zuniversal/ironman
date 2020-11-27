@@ -484,7 +484,10 @@ const SmartForm = (props, state) => {
       // InputCompact: <Input allowClear maxLength={32} {...realComProps} />,
       TextArea: (
         <TextArea
-          autoSize={{ minRows: 3, maxRows: 5 }}
+          autoSize={{
+            minRows: 3,
+            // maxRows: 5
+          }}
           allowClear
           {...realComProps}
         />

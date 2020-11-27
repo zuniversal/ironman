@@ -90,9 +90,7 @@ class PowerStation extends PureComponent {
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
         onFieldChange={this.onFieldChange}
-        getClientAsync={params =>
-          this.props.getClientAsync({ keyword: params })
-        }
+        getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
         getPowerAsync={params =>
           this.props.getPowerAsync({ name: params, type: '搜索' })
@@ -137,15 +135,6 @@ class PowerStation extends PureComponent {
   };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
-    console.log(
-      ' renderCommonModal ： ',
-      this.props.showItemAsync,
-      this.props.closeCommonModal,
-      params,
-      DetailForm,
-      this.state,
-      this.props,
-    ); //
     return (
       <SmartFormModal
         show={this.props.common.isShowCommonModal}
@@ -247,7 +236,16 @@ class PowerStation extends PureComponent {
       ></PowerStationDetailTable>
     );
     return (
-      <PowerStationForm {...formComProps} extra={powerTable}></PowerStationForm>
+      <PowerStationForm
+        {...formComProps}
+        addPowerInfoAsync={this.props.addPowerInfoAsync}
+        editPowerInfoAsync={this.props.editPowerInfoAsync}
+        removePowerInfoAsync={this.props.removePowerInfoAsync}
+        modifyPowerInfo={this.props.modifyPowerInfo}
+        powerInfoData={this.props.powerInfoData}
+        init={this.props.itemDetail}
+        // extra={powerTable}
+      ></PowerStationForm>
     );
   };
   get size() {

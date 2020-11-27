@@ -7,8 +7,8 @@ import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'
 const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const { file = [] } = props.init;
-  // const file = props.init.file ?? []
+  // const { file = [] } = props.init;
+  const file = props.init.file ?? [];
 
   const logTimeLine = [
     {
@@ -50,12 +50,17 @@ const MissionsManageForm = props => {
         name: 'customer_id',
       },
     },
-    {
-      itemProps: {
-        label: '名称',
-        name: 'name',
-      },
-    },
+    ...(props.action !== 'add'
+      ? [
+          {
+            noRule: true,
+            itemProps: {
+              label: '名称',
+              name: 'name',
+            },
+          },
+        ]
+      : []),
     {
       formType: 'Search',
       selectData: missionsTypeConfig,
@@ -66,6 +71,7 @@ const MissionsManageForm = props => {
     },
     // 选择客户所属电站
     {
+      noRule: true,
       formType: 'Search',
       // selectSearch: props.getPowerAsync,
       selectData: props.powerList,
@@ -75,6 +81,7 @@ const MissionsManageForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'Search',
       // selectSearch: props.getAssetsAsync,
       selectData: props.assetsList,

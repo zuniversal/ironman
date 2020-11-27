@@ -36,19 +36,29 @@ class OperateRecord extends PureComponent {
       titleMap,
     };
   }
-  renderSearchForm = params => {
-    // console.log(' renderSearchForm {TITLE}数据： ', params,  )
+
+  renderFormBtn = params => {
     return (
-      <div className={'fsb '}>
-        <OperateRecordSearchForm></OperateRecordSearchForm>
-        <div className={'btnWrapper'}>
-          <SearchForm></SearchForm>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出
-          </Button>
-        </div>
+      <div className={'btnWrapper'}>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出
+        </Button>
       </div>
     );
+  };
+  renderSearchForm = params => {
+    return (
+      <OperateRecordSearchForm
+        formBtn={this.renderFormBtn}
+        getUser={this.props.getUserAsync}
+        userList={this.props.userList}
+        onFieldChange={this.onFieldChange}
+      ></OperateRecordSearchForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {

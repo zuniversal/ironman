@@ -67,9 +67,10 @@ class Client extends PureComponent {
       //     certification_status: true,
       //     account_type: 'manager',
       //   },
-      // }))
+      // }))//
       console.log(' customeradmin ： ', res); //
       this.props.addUserAsync({ customer_admin_list: res.customer_admin });
+      // this.props.addUserAsync(res.customer_admin[0]);
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -150,12 +151,15 @@ class Client extends PureComponent {
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
-    // const { action } = this.state; //
-    const { action, addItemAsync, editItemAsync } = this.props; //
-    // let actionFn = actions.addItemAsync;
-    // if (action === 'edit') {
-    //   actionFn = actions.editItemAsync;
-    // }
+    const { action, addItemAsync, editItemAsync, tableData } = this.props; //
+    console.log(' adminList ： ', tableData); //
+
+    const adminIdLen = tableData.filter(v => v.id).length;
+    console.log('  adminIdLen ：', adminIdLen); //
+    if (adminIdLen === 0) {
+      tips('必须添加管理员信息！', 2);
+      return;
+    }
 
     if (['detail'].includes(action)) {
       this.props.onCancel({});
@@ -173,16 +177,18 @@ class Client extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn); //
       const { adminList, itemDetail } = this.props; //
-      console.log(' adminList ： ', adminList); //
-      // if (adminList.length === 0 && action !== 'add') {
-      if (adminList.length === 0) {
-        tips('必须添加管理员信息！', 2);
-        return;
-      }
+      // // if (tableData.length === 0 && action !== 'add') {
+      // // if (tableData.length === 0) {
+      // const adminIdLen = tableData.filter((v) => v.id).length
+      // console.log('  adminIdLen ：', adminIdLen,  )//
+      // if (adminIdLen.length === 0) {
+      //   tips('必须添加管理员信息！', 2);
+      //   return;
+      // }
       const params = {
         ...init,
         ...res,
-        customer_admin: adminList,
+        customer_admin: tableData,
       };
       // if (typeof res.file !== 'string') {
       // if (res.file && res.file.length > 0) {
@@ -204,9 +210,9 @@ class Client extends PureComponent {
         if (res.logo && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
           params.logo = fileList[fileList.length - 1].response.url;
-          // } else {
-          //   tips('logo不能为空！', 2);
-          //   return;
+        } else {
+          tips('logo不能为空！', 2);
+          return;
         }
       }
       console.log(' params ： ', params); //
@@ -380,7 +386,8 @@ class Client extends PureComponent {
   };
 
   saveAdmin = params => {
-    console.log('    saveAdmin ： ', params);
+    console.log('    saveAdmin ： ', params, this.state, this.props);
+    const { action } = this.props; //
     const keys = ['nickname', 'password', 'phone'];
     let isRight = true;
     keys.forEach((v, i) => {
@@ -395,7 +402,8 @@ class Client extends PureComponent {
       return;
     }
 
-    this.props.addUserAsync({ customer_admin_list: [params.data] });
+    // this.props.addUserAsync({ customer_admin_list: [params.data] });
+    this.props.addUserAsync(params.data);
   };
   renderModalContent = e => {
     const { action } = this.props; //

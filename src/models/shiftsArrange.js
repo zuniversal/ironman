@@ -153,10 +153,17 @@ export default {
       };
     },
     getTeam(state, { payload, type }) {
+      console.log(' getTeamgetTeam ： ', payload, state); //
+      const { searchInfo } = state; //
+      const teamList = payload.list;
+      if (searchInfo.team) {
+        teamList.push({ id: searchInfo.team, name: searchInfo.teamName });
+        console.log('  getTeamgetTeam teamList ：', teamList);
+      }
       return {
         ...state,
         // teamList: formatTeamList(payload.list),
-        teamList: formatSelectList(payload.list, 'name'),
+        teamList: formatSelectList(teamList, 'name'),
       };
     },
     onChoiceRadio(state, { payload, type }) {

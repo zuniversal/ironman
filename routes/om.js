@@ -120,4 +120,15 @@ export default [
     component: '@/pages/om/AlarmRecord',
     title: '告警记录',
   },
+
+  {
+    path: '/om/newsKnow',
+    component: '@/pages/om/NewsKnow',
+    title: '新闻与知识点',
+  },
+  {
+    path: '/om/knowledgeCate',
+    component: '@/pages/om/KnowledgeCate',
+    title: '知识库分类',
+  },
 ];
