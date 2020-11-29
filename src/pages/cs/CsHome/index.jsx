@@ -96,7 +96,7 @@ class CsHome extends PureComponent {
     );
   };
   renderCsHomeStatBox = params => {
-    return <CsHomeStatBox></CsHomeStatBox>;
+    return <CsHomeStatBox data={statisticData}></CsHomeStatBox>;
   };
   renderCsHomeStatEcharts = params => {
     return <CsHomeStatEcharts></CsHomeStatEcharts>;
@@ -152,7 +152,7 @@ class CsHome extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getStatCountAsync({});
+    this.props.getStatisticAsync({});
   }
 
   render() {

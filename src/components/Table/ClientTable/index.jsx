@@ -23,15 +23,19 @@ const ClientTable = props => {
       dataIndex: 'id',
       // link: true,
       // render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
-      linkUrlFn: linkUrlFn(['code', 'id', 'ids'], HOUSENO),
+      // linkUrlFn: linkUrlFn(['code', 'id', 'ids'], HOUSENO),
     },
     {
       title: '客户名称',
       dataIndex: 'name',
       noFilter: true,
-      d_item: 'id',
       detailFn: record =>
-        props.showDetail({ action: 'detail', d_id: record.id }),
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.id,
+        }),
+      // detailFn: record =>
+      // props.showDetail({ action: 'detail', d_id: record.id }),
       // detailFn: (text, record, index) => {
       //   console.log(' text, record, index ： ', text, record, index,  )//
       //   showDetail(record.id)
@@ -67,6 +71,12 @@ const ClientTable = props => {
     {
       title: '户号数',
       dataIndex: 'electricityuser_num',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'houseNoDetailAsync',
+      //     d_id: record.electricity_user.id,
+      //
+      //   }),
       // linkUrl: '/om/houseNo',
       // linkUrlFn: (text, record, index) => {
       //   let linkUrl = HOUSENO
@@ -74,7 +84,7 @@ const ClientTable = props => {
       //   console.log(' linkUrl ： ', linkUrl,  )//
       //   return linkUrl
       // },
-      linkUrlFn: linkUrlFn(['code', 'id'], HOUSENO),
+      // linkUrlFn: linkUrlFn(['code', 'id'], HOUSENO),
     },
     {
       title: '客户地址',

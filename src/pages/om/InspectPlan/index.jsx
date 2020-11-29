@@ -140,7 +140,9 @@ class InspectPlan extends PureComponent {
           // scheduleList={this.props.scheduleList}
           scheduleList={this.props.scheduleList}
           unScheduleList={this.props.unScheduleList}
-          initialDate={searchInfo.month.format('YYYY-MM-DD')}
+          initialDate={
+            searchInfo.month ? searchInfo.month.format('YYYY-MM-DD') : null
+          }
           remove={this.remove}
         ></InspectPlanCalendar>
       )

@@ -9,7 +9,6 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getStatCount = p =>
-  noTipsGet(`console/v1/console/CSP/home_page/ep_data`, p);
-export const getPowerInfo = p =>
-  noTipsGet(`console/v1/console/CSP/home_page/ep_data`, p);
+export const getStatistic = p =>
+  noTipsGet(`console/CSP/home_page/statistic`, p);
+export const getPowerInfo = p => noTipsGet(`console/CSP/home_page/ep_data`, p);

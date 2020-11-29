@@ -9,6 +9,30 @@ const ContractSearchForm = props => {
 
   const { formBtn } = props; //
 
+  const config = [
+    {
+      itemProps: {
+        label: '合同名称',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户',
+      },
+    },
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '合同类型',
+      },
+    },
+    {
+      itemProps: {
+        label: '户号',
+      },
+    },
+  ];
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -16,19 +40,19 @@ const ContractSearchForm = props => {
 
   return (
     <div className={'flex-bw'}>
-      {/* <SmartForm
-        flexRow={4}
+      <SearchForm
         config={config}
         formProps={formProps}
         // init={init}
         // init={{}}
 
+        // {...rest}
         {...props}
-      ></SmartForm> */}
+      ></SearchForm>
 
-      <SearchForm></SearchForm>
+      {/* <SearchForm></SearchForm> */}
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

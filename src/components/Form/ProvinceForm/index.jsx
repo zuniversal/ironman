@@ -87,6 +87,8 @@ export const config = props => [
   // },
 ];
 
+export const provinceFormConfig = config;
+
 const init = {
   name: 'zyb',
   role: '巡检人员',

@@ -105,13 +105,17 @@ class Home extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (['setting'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
       if (action === 'setting') {
-        // this.props.homeSetting({
-        //   ...res,
-        // });
+        this.props.homeSetting({
+          ...res,
+        });
       }
     } catch (error) {
       console.log(' error ： ', error); //

@@ -18,24 +18,31 @@ const ContractTable = props => {
     {
       title: '所属客户',
       dataIndex: ['customer', 'name'],
-      d_item: 'id',
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
     {
       title: '合同编号',
       dataIndex: 'code',
-      d_item: 'id',
-      // render: (text, record, index) => (
-      //   <a onClick={() => tdClick({ action: 'detail' })}>{text}</a>
-      // ),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'contractDetailAsync',
+          d_id: record.id,
+          id: record.id,
+        }),
     },
     {
       title: '业务主体',
       dataIndex: 'business_entity',
-      d_item: 'id',
-      link: true,
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'missionsManageDetailAsync',
+      //     d_id: record.task.id,
+      //   }),
+      // link: true,
     },
     {
       title: '业务员',

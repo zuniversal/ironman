@@ -4,7 +4,7 @@ import './style.less';
 import { Form, Input } from 'antd';
 
 const InputCom = props => {
-  console.log(' InputCom   props, ,   ： ', props);
+  // console.log(' InputCom   props, ,   ： ', props);
   const { wrapperClass, left, right, ...rest } = props;
   return (
     <div className={`inputFormWrapper ${wrapperClass}`}>

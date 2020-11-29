@@ -48,10 +48,16 @@ import * as userManageServices from '@/services/userManage';
 import * as visitManageServices from '@/services/visitManage';
 import * as weakServices from '@/services/weak';
 import * as workOrderServices from '@/services/workOrder';
+import * as newsKnowServices from '@/services/newsKnow';
+import * as knowledgeCateServices from '@/services/knowledgeCate';
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
-import { missionsStatusMap, missionsTypeMap } from '@/configs';
+import {
+  missionsStatusMap,
+  missionsTypeMap,
+  inspectMissionsStatusMap,
+} from '@/configs';
 
 const namespace = 'common';
 const { createActions } = init(namespace, true);
@@ -117,6 +123,9 @@ const serviceConfigMap = {
   visitManageServices,
   weakServices,
   workOrderServices,
+
+  newsKnowServices,
+  knowledgeCateServices,
 };
 
 const getService = action => {
@@ -194,6 +203,18 @@ export default {
         },
       };
     },
+    contractDetail(state, { payload, type }) {
+      console.log(' contractDetail ： ', state, payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          list: payload.bean,
+        },
+      };
+    },
     powerStationDetail(state, { payload, type }) {
       const datas = payload.bean.electricalinfromation_set.map(v => ({
         ...v,
@@ -247,6 +268,22 @@ export default {
         },
       };
     },
+    shiftsManageDetail(state, { payload }) {
+      console.log(' shiftsManageDetail ： ', state, payload); //
+      const { team_headman, leader = {}, type, member } = payload.bean; //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          team_headman: `${team_headman.nickname}`,
+          leader: `${leader.nickname}`,
+          type: `${type.name}`,
+          member: member.map(v => v.name),
+        },
+      };
+    },
     missionsManageDetail(state, { payload, type }) {
       console.log(' missionsManageDetail ： ', state, payload); //
       const { customer, person, contacts_phone } = payload.bean;
@@ -259,6 +296,27 @@ export default {
           customer_id: customer.name,
           person: person ? person.nickname : person,
           phone: contacts_phone,
+        },
+      };
+    },
+    inspectMissionDetail(state, { payload, type }) {
+      console.log(' inspectMissionDetail ： ', state, payload); //
+      const {
+        created_time = '',
+        start_time = '',
+        end_time = '',
+        status,
+      } = payload.bean;
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          created_time: created_time ? created_time.split('T')[0] : '',
+          start_time: start_time ? start_time.split('T')[0] : '',
+          end_time: end_time ? end_time.split('T')[0] : '',
+          status: inspectMissionsStatusMap[status],
         },
       };
     },
@@ -297,6 +355,15 @@ export default {
           status: missionsStatusMap[payload.bean.status],
           type: missionsTypeMap[payload.bean.type],
           receiving_time: `${payload.bean.receiving_time}`.split('T')[0],
+          created_time: moment(payload.bean.created_time).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
+          receiving_time: moment(payload.bean.receiving_time).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
+          commencement_date: moment(payload.bean.commencement_date).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
           // customer_id: payload.bean.customer.name,
           extra: payload.payload.extra,
         },

@@ -29,6 +29,7 @@ import UploadCom from '@/components/Widgets/UploadCom'; //
 import { regoins } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 import { ImgBlock } from '@/components/Temp';
+import SmartImg from '@/common/SmartImg';
 
 const selectData = [
   { label: '正常', value: true, key: 'yes' },
@@ -436,7 +437,8 @@ const PowerStationForm = props => {
     {
       formType: 'CustomCom',
       // CustomCom: <ImgBlock>电气图</ImgBlock>,
-      CustomCom: <img src={props.init?.file} className={`imgBlock`} />,
+      // CustomCom: <img src={props.init?.file} className={`imgBlock`} />,
+      CustomCom: <SmartImg src={props.init?.file} />,
       itemProps: {
         label: '一次电气图',
       },

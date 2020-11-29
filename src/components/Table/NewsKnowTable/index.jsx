@@ -18,6 +18,11 @@ const NewsKnowTable = props => {
     {
       title: '标题',
       dataIndex: 'title',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'newsKnowDetailAsync',
+      //     d_id: record.id,
+      //   }),
     },
     {
       title: '发布时间',

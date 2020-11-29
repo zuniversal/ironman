@@ -19,7 +19,12 @@ const BussniessRecordTable = props => {
   const columns = [
     {
       title: '订单ID',
-      dataIndex: 'order_num',
+      dataIndex: 'id',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'houseNoDetailAsync',
+      //     d_id: record.id,
+      //   }),
     },
     {
       title: '类型',

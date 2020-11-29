@@ -3,10 +3,13 @@ import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartImg from '@/common/SmartImg';
 
 const WeakDetailForm = props => {
   console.log(' WeakDetailForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const { file = [] } = props.init;
 
   const config = [
     {
@@ -56,9 +59,17 @@ const WeakDetailForm = props => {
     },
     {
       formType: 'CustomCom',
-      CustomCom: [1, 2, 3, 4, 5, 6, 7].map((v, i) => (
-        <WeakDetailImg key={i}></WeakDetailImg>
-      )),
+      // CustomCom: [1, 2, 3, 4, 5, 6, 7].map((v, i) => (
+      //   <WeakDetailImg key={i}></WeakDetailImg>
+      // )),
+      CustomCom: (
+        <>
+          {file.map((v, i) => (
+            // <img src={v} className={`detailImg`} key={i} />
+            <SmartImg src={v} key={i} />
+          ))}
+        </>
+      ),
       itemProps: {
         label: '图片',
       },

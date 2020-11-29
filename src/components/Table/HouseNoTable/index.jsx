@@ -26,7 +26,6 @@ const HouseNoTable = props => {
         props.showItemAsync({
           action: 'clientDetailAsync',
           d_id: record.customer.id,
-          // d_id: 1,
         }),
     },
     {
@@ -38,7 +37,6 @@ const HouseNoTable = props => {
         props.showItemAsync({
           action: 'houseNoDetailAsync',
           d_id: record.id,
-          // d_id: 1,
         }),
     },
     // {
@@ -65,7 +63,6 @@ const HouseNoTable = props => {
       //   props.showItemAsync({
       //     action: 'powerStationDetailAsync',
       //     d_id: record.id,
-      //     // d_id: 1,
       //   }),
     },
     {

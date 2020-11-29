@@ -118,7 +118,7 @@ export default {
       console.log(' getOrganize 修改  ： ', state, payload, type); //
       return {
         ...state,
-        organizeList: formatPowerList(payload.list),
+        organizeList: recursiveHandle(payload.list),
       };
     },
   },

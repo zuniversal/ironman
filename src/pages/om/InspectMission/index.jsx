@@ -14,6 +14,9 @@ import { actions, mapStateToProps } from '@/models/inspectMission'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { inspectMissionStatusMap } from '@/configs';
+import { tips } from '@/utils';
+import PowerStationForm from '@/components/Form/PowerStationForm';
+import ClientForm from '@/components/Form/ClientForm';
 
 const TITLE = '巡检任务';
 
@@ -26,6 +29,15 @@ const titleMap = {
   assignMission: `分配任务`,
   editDate: `修改日期`,
   mission: `确认领取/开始/完成该任务`,
+  clientDetailAsync: `客户详情`,
+  powerStationDetailAsync: `电站详情`,
+  inspectMissionDetailAsync: `巡检任务详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  powerStationDetailAsync: PowerStationForm,
+  inspectMissionDetailAsync: InspectMissionDetailForm,
 };
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
@@ -47,7 +59,13 @@ class InspectMission extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        {/* <Button type="primary" onClick={() => this.props.exportData()}> */}
+        <Button
+          type="primary"
+          onClick={() => {
+            tips('暂未开发!', 2);
+          }}
+        >
           导出
         </Button>
       </div>
@@ -82,9 +100,29 @@ class InspectMission extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.getItemAsync,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <InspectMissionTable {...tableProps}></InspectMissionTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -189,6 +227,8 @@ class InspectMission extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

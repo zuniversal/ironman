@@ -17,6 +17,7 @@ import {
   Tabs,
 } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
+import SmartImg from '@/common/SmartImg'; //
 import InputCom from '@/components/Widgets/InputCom'; //
 
 const { TabPane } = Tabs;
@@ -27,7 +28,7 @@ const TabPanes = props => {
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
         {tabData.map((v, i) => (
-          <TabPane tab={`电源编号-${v.power_number}`} key={i}></TabPane>
+          <TabPane tab={`电源编号-${v.power_number || '无'}`} key={i}></TabPane>
         ))}
         {/* <TabPane tab={'电源编号1'} key="1">
       </TabPane>
@@ -109,7 +110,14 @@ const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props, props.init); //
   const { formBtn, init, ...rest } = props; //
 
-  const { power_data = [{}], file = [] } = props.init;
+  const {
+    // power_data = [{}],
+    file = [],
+  } = props.init;
+  const power_data =
+    props.init.power_data && props.init.power_data.length > 0
+      ? props.init.power_data
+      : [{}];
   const tabData = power_data;
 
   const [dataInit, setDataInit] = useState({
@@ -774,7 +782,7 @@ const InspectRecordForm = props => {
     {
       formType: 'rowText',
       itemProps: {
-        label: '热成像功能',
+        label: '热成像图片',
         className: 'w100',
       },
     },
@@ -785,7 +793,8 @@ const InspectRecordForm = props => {
             CustomCom: (
               <div>
                 {file.map((v, i) => (
-                  <img src={v} className={`hotImg`} key={i} />
+                  // <img src={v} className={`hotImg`} key={i} />
+                  <SmartImg src={v} key={i} />
                 ))}
               </div>
             ),

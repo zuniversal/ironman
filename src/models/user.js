@@ -163,6 +163,8 @@ export default {
       // const userInfo = yield call(userCenterServices.getItem, payload);
 
       const resData = yield call(services.getUserInfo, payload);
+      const [enterprise = {}] = resData.bean.enterprises;
+      console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {
@@ -170,7 +172,10 @@ export default {
         ...resData.bean,
         accountType: accountType,
       };
-      cookie.save('enterprise_id', resData.bean.enterprises[0].enterprise_id);
+      cookie.remove('enterprise_id');
+      if (enterprise.enterprise_id) {
+        cookie.save('enterprise_id', enterprise.enterprise_id);
+      }
       setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo); //
       yield put({
@@ -215,15 +220,20 @@ export default {
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
       console.log(' getUserInfoAsync ： ', payload, action, type); //
       const resData = yield call(services.getUserInfo, payload);
+      const [enterprise = {}] = resData.bean.enterprises;
+      console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;
-      console.log(' resData ： ', resData, accountType); //
+      // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {
         ...resData.bean.user,
         ...resData.bean,
         accountType: accountType,
       };
+      cookie.remove('enterprise_id');
+      if (enterprise.enterprise_id) {
+        cookie.save('enterprise_id', enterprise.enterprise_id);
+      }
       setItem('userInfo', userInfo);
-      cookie.save('enterprise_id', resData.bean.enterprises[0].enterprise_id);
       // console.log(' userInfo2 ： ', userInfo); //
       yield put({
         type: 'login',
@@ -237,10 +247,13 @@ export default {
       console.log(' 用户 setup ： ', props, this); //
       const { dispatch, history } = props; //
       history.listen(location => {
-        console.log(' 监听路由 匹配 ： ', location); //
-        dispatch({
-          type: 'getUserInfoAsync',
-        });
+        console.log(' 监听路由 匹配 ： ', history, location); //
+        const { pathname } = location;
+        if (pathname !== '/login') {
+          dispatch({
+            type: 'getUserInfoAsync',
+          });
+        }
       }); //
     },
   },

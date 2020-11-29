@@ -3,20 +3,24 @@ import './style.less';
 import SmartForm from '@/common/SmartForm'; //
 import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
+import SmartImg from '@/common/SmartImg';
+import UploadCom from '@/components/Widgets/UploadCom';
 
 const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  const { formBtn, action, ...rest } = props; //
   // const { file = [] } = props.init;
   const file = props.init.file ?? [];
 
   const logTimeLine = [
     {
+      noRule: true,
       formType: 'CustomCom',
       CustomCom: (
         <div>
           {file.map((v, i) => (
-            <img src={v} className="feedBackImg" key={i} />
+            // <img src={v} className="feedBackImg" key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </div>
       ),
@@ -33,10 +37,29 @@ const MissionsManageForm = props => {
         ></InspectMissionTimeline>
       ),
       itemProps: {
-        label: '工单日志',
+        label: '任务日志',
         name: 'task_log',
       },
     },
+  ];
+
+  const actionConfig = [
+    <UploadCom
+      label={'反馈照片'}
+      key={'file'}
+      action={'/api/v1/upload'}
+      name={'file'}
+      extra={'支持扩展名:pdf、jpg、png'}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+        multiple: true,
+      }}
+      init={props.init}
+      formItemProps={{
+        rules: null,
+      }}
+    ></UploadCom>,
   ];
 
   const config = [
@@ -116,7 +139,7 @@ const MissionsManageForm = props => {
       },
     },
 
-    ...(props.action === 'detail' ? logTimeLine : []),
+    ...(props.action === 'detail' ? logTimeLine : actionConfig),
   ];
 
   const formProps = {
@@ -133,10 +156,10 @@ const MissionsManageForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        {...props}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

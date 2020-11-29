@@ -4,6 +4,7 @@ import SmartForm from '@/common/SmartForm'; //
 import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
 import { Tabs } from 'antd';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
+import SmartImg from '@/common/SmartImg';
 
 export const MissionsManageWorkOrderForm = props => {
   console.log(' MissionsManageWorkOrderForm ： ', props); //
@@ -402,7 +403,8 @@ export const MissionsManageOrderInfoForm = props => {
             <WeakDetailImg key={i}></WeakDetailImg>
           ))} */}
           {responseFile.map((v, i) => (
-            <img src={v} className={`detailImg`} key={i} />
+            // <img src={v} className={`detailImg`} key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </>
       ),
@@ -458,7 +460,8 @@ export const MissionsManageOrderInfoForm = props => {
             <WeakDetailImg key={i}></WeakDetailImg>
           ))} */}
           {buildFile.map((v, i) => (
-            <img src={v} className={`detailImg`} key={i} />
+            // <img src={v} className={`detailImg`} key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </>
       ),

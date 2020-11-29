@@ -107,6 +107,8 @@ class Organize extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
       organizeList: this.props.organizeList,
     };
     if (action !== 'add') {

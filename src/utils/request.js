@@ -67,6 +67,7 @@ export const isTips = res => {
 
   console.log(
     ' 提示 对吗  code !== NORMAL_CODE ',
+    history,
     window,
     res,
     code,
@@ -90,7 +91,7 @@ export const isTips = res => {
     const codeMsg = getCodeMsg(code);
     console.log(
       ' 提示 对吗  !codeMsg ',
-
+      history,
       msg_show,
       code,
       !codeMsg,

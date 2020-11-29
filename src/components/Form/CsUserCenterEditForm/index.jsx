@@ -49,6 +49,9 @@ const CsUserCenterEditForm = props => {
       key={'logo'}
       action={'/api/v1/console/custom_info/miniapp/me/pic'}
       name={'logo'}
+      uploadProps={{
+        accept: 'image/png,image/jpeg',
+      }}
       extra={'仅支持JPG、PNG格式，文件小于1M(方形图)'}
     ></UploadCom>,
     {

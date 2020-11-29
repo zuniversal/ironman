@@ -2,6 +2,9 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import ProvinceForm, {
+  provinceFormConfig,
+} from '@/components/Form/ProvinceForm'; //
 
 const PowerStationSearchForm = props => {
   console.log(' PowerStationSearchForm ： ', props); //
@@ -14,12 +17,18 @@ const PowerStationSearchForm = props => {
       selectData: props.powerList,
       itemProps: {
         label: '电站名称',
-        name: 'keyword',
         name: 'name',
-        className: 'w50',
+        // className: 'w50',
       },
       searchSuffix: true,
     },
+    {
+      itemProps: {
+        label: '客户名称',
+        name: 'customer',
+      },
+    },
+    ...provinceFormConfig(props),
   ];
 
   const formProps = {

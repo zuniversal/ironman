@@ -32,7 +32,7 @@ const HomeSettingForm = props => {
   };
 
   return (
-    <div className={' HomeSettingForm '}>
+    <div className={' homeSettingForm '}>
       <SmartForm
         // flexRow={6}
         config={config}
@@ -40,6 +40,9 @@ const HomeSettingForm = props => {
         // init={init}
         // init={{}
 
+        init={{
+          settings: ['yes1', 'yes2'],
+        }}
         noLabelLayout
         {...rest}
       ></SmartForm>

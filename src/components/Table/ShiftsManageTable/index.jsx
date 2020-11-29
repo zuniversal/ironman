@@ -20,7 +20,12 @@ const ShiftsManageTable = props => {
     {
       title: '班组名称',
       dataIndex: 'name',
-      d_item: 'id',
+      // d_item: 'id',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'shiftsManageDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '组长',

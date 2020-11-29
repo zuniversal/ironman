@@ -37,23 +37,25 @@ const formatParams = data => {
   return params;
 };
 
+const initialState = {
+  action: '',
+  isShowModal: false,
+  dataList: [],
+  count: 0,
+  itemDetail: {},
+  d_id: '',
+  searchInfo: {},
+
+  syncOAData: [],
+  powerList: [],
+  houseNoList: [],
+  clientList: [],
+};
+
 export default {
   namespace,
 
-  state: {
-    action: '',
-    isShowModal: false,
-    dataList: [],
-    count: 0,
-    itemDetail: {},
-    d_id: '',
-    searchInfo: {},
-
-    syncOAData: [],
-    powerList: [],
-    houseNoList: [],
-    clientList: [],
-  },
+  state: initialState,
 
   reducers: {
     showFormModal(state, { payload, type }) {

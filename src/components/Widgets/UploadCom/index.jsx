@@ -21,6 +21,7 @@ import {
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
 import { REQUIRE } from '@/constants'; //
+import SmartImg from '@/common/SmartImg';
 
 const formatFile = data =>
   data.map(url => ({ uid: `-${url}`, url, response: { url } }));
@@ -166,6 +167,11 @@ const UploadCom = props => {
         className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
         multiple={false}
         onChange={onChange}
+        // isImageUrl={false}
+        // iconRender={(file, listType) => {
+        //    console.log(' file, listType ： ', file, listType,  )//
+        //   return <SmartImg src={file.thumbUrl}></SmartImg>
+        // }}
         {...uploadProps}
       >
         {isInputUpload ? (

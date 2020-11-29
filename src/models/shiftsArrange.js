@@ -196,6 +196,9 @@ export default {
         searchInfo: {
           ...state.searchInfo,
           ...payload,
+          // schedule_date: payload.schedule_date
+          //   ? payload.schedule_date.format('YYYY-MM')
+          //   : nowYearMonth,
         },
       };
     },

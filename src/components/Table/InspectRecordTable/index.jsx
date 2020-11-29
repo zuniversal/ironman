@@ -19,7 +19,7 @@ const InspectRecordTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
-      d_item: 'id',
+      // d_item: 'id',
       className: 'textCenter',
     },
     {
@@ -48,12 +48,22 @@ const InspectRecordTable = props => {
     {
       title: '电站',
       dataIndex: ['plan', 'station', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.plan.station.id,
+        }),
     },
 
     {
       title: '客户名称',
       // dataIndex: 'plan.customer',
       dataIndex: ['plan', 'customer'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
     {
       title: '当前状态',

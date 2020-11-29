@@ -164,7 +164,7 @@ export const init = (prefix, noDefault) => {
     batchTurn: (config = []) => batchTurn([...commonConfigs, ...config]),
     createActions: (asyncConfig = [], config = []) => ({
       ...createCRUD([...isCrudArr, ...asyncConfig]),
-      ...batchTurn([...commonConfigs, ...config]),
+      ...batchTurn([...commonConfigs, ...config, 'reset']),
     }),
   };
 };

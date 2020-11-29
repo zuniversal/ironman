@@ -12,6 +12,7 @@ import { actions, mapStateToProps } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
+import HouseNoForm from '@/components/Form/HouseNoForm';
 
 export const TITLE = '客户';
 
@@ -20,6 +21,13 @@ const titleMap = {
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   userCapture: `${TITLE}画像`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
 };
 
 // const mapStateToProps = ({ client }) => client;
@@ -380,9 +388,29 @@ class Client extends PureComponent {
       // remove: this.props.onRemove,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   saveAdmin = params => {
@@ -508,6 +536,8 @@ class Client extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
 
         <SmartModal
           title={'客户画像'}

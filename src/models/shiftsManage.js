@@ -6,7 +6,12 @@ import { formatSelectList, filterObjSame } from '@/utils';
 const namespace = 'shiftsManage';
 const { createActions } = init(namespace);
 
-const otherActions = ['getUserAsync', 'uploadFileAsync', 'exportDataAsync'];
+const otherActions = [
+  'getUserAsync',
+  'uploadFileAsync',
+  'exportDataAsync',
+  'getTeamAsync',
+];
 
 export const actions = {
   ...createActions(otherActions),
@@ -41,6 +46,7 @@ export default {
       // { label: 'zyb', value: 'value1' },
       // { label: 'zyb1', value: 'value2' },
     ],
+    teamList: [],
   },
 
   reducers: {
@@ -87,7 +93,7 @@ export default {
       const typeItem = {
         ...type,
         value: `${type.id}`,
-        label: type.nickname,
+        label: type.name,
       };
       const memberList = member.map(v => ({
         ...v,
@@ -114,7 +120,7 @@ export default {
           team_headman: `${team_headman.id}`,
           leader: `${leader.id}`,
           type: `${type.id}`,
-          member: memberIdList.length > 0 ? memberIdList : [''],
+          member: memberIdList,
         },
         userList: filterObjSame([
           ...userList,
@@ -166,6 +172,12 @@ export default {
         ...state,
         // userList: formatUserList(payload.list),
         userList: formatSelectList(payload.list, 'nickname'),
+      };
+    },
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        teamList: formatSelectList(payload.list, 'team_headman'),
       };
     },
   },
@@ -228,6 +240,10 @@ export default {
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

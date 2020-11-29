@@ -34,7 +34,7 @@ export default {
     count: 0,
     itemDetail: {},
     searchInfo: {
-      month: moment(),
+      // month: moment(),
     },
 
     tagList: [],

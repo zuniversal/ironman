@@ -30,27 +30,39 @@ const ShiftsManageForm = props => {
         name: 'team_headman',
       },
     },
+    // {
+    //   formType: 'DynamicItem',
+    //   itemProps: {
+    //     label: '组员姓名',
+    //     className: 'noMargin',
+    //     name: 'member',
+    //   },
+    //   comProps: {
+    //     limit: 5,
+    //     extra: true,
+    //     filterSelect: true,
+    //     formType: 'Search',
+    //     // selectSearch: props.getUser,
+    //     selectData: props.userList,
+    //     itemProps: {
+    //       label: '组员',
+    //     },
+    //     comProps: {
+    //       className: 'w-320',
+    //       // name: 'member',
+    //     },
+    //   },
+    // },
     {
-      formType: 'DynamicItem',
+      formType: 'Select',
+      selectData: props.userList,
       itemProps: {
         label: '组员姓名',
-        className: 'noMargin',
         name: 'member',
       },
       comProps: {
-        limit: 5,
-        extra: true,
-        filterSelect: true,
-        formType: 'Search',
-        // selectSearch: props.getUser,
-        selectData: props.userList,
-        itemProps: {
-          label: '组员',
-        },
-        comProps: {
-          className: 'w-320',
-          // name: 'member',
-        },
+        mode: 'multiple',
+        // maxTagCount: 5,
       },
     },
     {
@@ -87,11 +99,11 @@ const ShiftsManageForm = props => {
         // init={init}
         // init={{}}
 
-        isDisabledAll={props.action === 'detail'}
-        {...rest}
+        isDisabledAll={!['add', 'edit'].includes(props.action)}
+        {...props}
       ></SmartForm>
 
-      {formBtn}
+      {/* {formBtn} */}
     </div>
   );
 };

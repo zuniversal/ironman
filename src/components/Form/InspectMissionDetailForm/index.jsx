@@ -54,7 +54,7 @@ const InspectMissionDetailForm = props => {
     {
       itemProps: {
         label: '领取人',
-        name: ['team', 'name'],
+        name: ['team', 'team_headman'],
       },
     },
     {

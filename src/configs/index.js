@@ -229,6 +229,8 @@ export const inspectMissionsSearchConfig = [
   },
 ];
 
+export const inspectMissionsStatusMap = arrMapObj(inspectMissionsSearchConfig);
+
 export const site = province;
 export const city = province;
 

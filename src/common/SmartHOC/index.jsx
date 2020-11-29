@@ -541,6 +541,10 @@ export default ({
         this.checkQuery();
       } // //
     }
+    // componentWillUnmount() {
+    //   console.log(' %c SmartHoc 组件 componentWillUnmount 将卸载 ： ', `color: red; font-weight: bold`, this.state, this.props,   )//
+    // this.props.dispatch({type: 'reset',  })
+    // }
 
     toggleShowTitle = () => {
       console.log(' toggleShowTitle   ,   ： ');
@@ -562,7 +566,12 @@ export default ({
     }
 
     render() {
-      // console.log(' SmartHoc 组件 this.state, this.props ：', config, this.state, this.props, )
+      console.log(
+        ' SmartHoc 组件 this.state, this.props ：',
+        this,
+        this.state,
+        this.props,
+      );
 
       return (
         <div className="smartHocWrapper">

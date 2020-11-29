@@ -15,6 +15,7 @@ import {
   missionsTypeMap,
   missionsStatusMap,
 } from '@/configs';
+import { tips } from '@/utils';
 
 const WorkOrderTable = props => {
   const {
@@ -37,7 +38,7 @@ const WorkOrderTable = props => {
       className: 'textCenter',
     },
     {
-      title: '名称',
+      title: '编码',
       dataIndex: 'name',
       // d_item: 'id',
       detailFn: record =>
@@ -53,6 +54,11 @@ const WorkOrderTable = props => {
     {
       title: '客户名称',
       dataIndex: ['task', 'customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.task.customer.id,
+        }),
     },
     {
       title: '工单类型',
@@ -86,6 +92,10 @@ const WorkOrderTable = props => {
       title: '创建时间',
       dataIndex: 'created_time',
     },
+    {
+      title: '描述',
+      dataIndex: 'describe',
+    },
   ];
 
   // team返回有数据，派单按钮隐藏不显示
@@ -103,14 +113,14 @@ const WorkOrderTable = props => {
       )}
       <a
         onClick={() =>
-          props.exportData({ action: 'exportData', d_id: record.id })
+          // props.exportData({ action: 'exportData', d_id: record.id })
+          tips('暂无接口！', 2)
         }
       >
         导出
       </a>
-      <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}>
-        添加工作票
-      </a>
+      {/* <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}> */}
+      <a onClick={() => tips('还未开发完成！', 2)}>添加工作票</a>
     </>
   );
 

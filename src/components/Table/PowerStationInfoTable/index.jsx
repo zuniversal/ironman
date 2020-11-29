@@ -247,7 +247,10 @@ export const PowerStationDetailTable = props => {
         ></TableInput>
       ),
     },
-    {
+  ];
+
+  if (!isDisabledAll) {
+    columns.push({
       title: '操作',
       dataIndex: 'action',
       className: 'actionCol',
@@ -306,8 +309,8 @@ export const PowerStationDetailTable = props => {
           </a>
         </>
       ),
-    },
-  ];
+    });
+  }
 
   return (
     <SmartTable
@@ -320,34 +323,36 @@ export const PowerStationDetailTable = props => {
       // rowLength={3}
       pagination={false}
       rowSelection={null}
-      title={() => (
-        <div className={`fje`}>
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(
-                '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
-                props.dataSource,
-              );
-              if (isDisabledAll) {
-                return;
-              }
-              if (props.dataSource.filter(v => v.isEdit).length < 1) {
-                props.modifyPowerInfo({ action: 'add' });
-              } else {
-                tips('请先保存上一条数据！', 2);
-              }
-            }}
-            className={'add'}
-          >
-            新增电源
-          </Button>
-          {/* <Button type="primary" onClick={() => props.savePowerInfoAsync(dataSource)}> */}
-          {/* <Button type="primary" onClick={props.addPowerInfoAsync}>
+      title={() =>
+        !isDisabledAll && (
+          <div className={`fje`}>
+            <Button
+              type="primary"
+              onClick={() => {
+                console.log(
+                  '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
+                  props.dataSource,
+                );
+                if (isDisabledAll) {
+                  return;
+                }
+                if (props.dataSource.filter(v => v.isEdit).length < 1) {
+                  props.modifyPowerInfo({ action: 'add' });
+                } else {
+                  tips('请先保存上一条数据！', 2);
+                }
+              }}
+              className={'add'}
+            >
+              新增电源
+            </Button>
+            {/* <Button type="primary" onClick={() => props.savePowerInfoAsync(dataSource)}> */}
+            {/* <Button type="primary" onClick={props.addPowerInfoAsync}>
             保存
           </Button> */}
-        </div>
-      )}
+          </div>
+        )
+      }
     ></SmartTable>
   );
 };

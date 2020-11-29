@@ -89,6 +89,7 @@ const Layouts = props => {
 
   const logout = path => {
     console.log(' logout   path,   ： ', path);
+    // window.location.href = '/#/login'
     props.dispatch({
       type: 'user/logoutAsync',
     });

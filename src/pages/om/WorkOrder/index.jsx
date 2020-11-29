@@ -13,6 +13,7 @@ import { actions, mapStateToProps } from '@/models/workOrder'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import MissionsManageForm from '@/components/Form/MissionsManageForm';
+import ClientForm from '@/components/Form/ClientForm';
 
 const TITLE = '工单';
 
@@ -25,11 +26,13 @@ const titleMap = {
   addTicket: `添加工作票`,
   add: `添加工作票`,
   dispatchOrder: `派单`,
+  clientDetailAsync: `客户详情`,
   workOrderDetailAsync: `任务详情`,
   missionsManageDetailAsync: `任务详情`,
 };
 
 const detailFormMap = {
+  clientDetailAsync: ClientForm,
   workOrderDetailAsync: WorkOrderForm,
   missionsManageDetailAsync: MissionsManageForm,
 };

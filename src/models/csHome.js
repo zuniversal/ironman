@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'csHome';
 const { createActions } = init(namespace);
 
-const otherActions = ['getStatCountAsync', 'getPowerInfoAsync'];
+const otherActions = ['getStatisticAsync', 'getPowerInfoAsync'];
 
 const batchTurnActions = [];
 
@@ -26,7 +26,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
-    statCountList: [],
+    statisticData: [],
     powerInfoList: [],
   },
 
@@ -91,10 +91,10 @@ export default {
         ),
       };
     },
-    getStatCount(state, { payload, type }) {
+    getStatistic(state, { payload, type }) {
       return {
         ...state,
-        statCountList: payload.list,
+        statisticData: payload.bean,
       };
     },
     getPowerInfo(state, { payload, type }) {
@@ -106,9 +106,9 @@ export default {
   },
 
   effects: {
-    *getStatCountAsync({ payload, action, type }, { call, put }) {
-      console.log(' getStatCountAsync ： ', payload, action, type); //
-      const res = yield call(services.getStatCount, payload);
+    *getStatisticAsync({ payload, action, type }, { call, put }) {
+      console.log(' getStatisticAsync ： ', payload, action, type); //
+      const res = yield call(services.getStatistic, payload);
       yield put(action({ ...res, payload }));
     },
     *getPowerInfoAsync({ payload, action, type }, { call, put }) {

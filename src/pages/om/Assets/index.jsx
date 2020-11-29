@@ -303,6 +303,11 @@ class Assets extends PureComponent {
           action={'/api/v1/upload'}
           name={'file'}
           extra={'支持扩展名:xls、xlsx、csv'}
+          uploadProps={{
+            disabled: props.isDisabledAll || props.action === 'detail',
+            accept:
+              'text/csv,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          }}
           formItemLayout={smallLayout}
         ></UploadCom>
       );

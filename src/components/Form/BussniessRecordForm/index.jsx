@@ -4,6 +4,7 @@ import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
+import SmartImg from '@/common/SmartImg';
 
 const BussniessRecordForm = props => {
   console.log(' BussniessRecordForm ： ', props); //
@@ -127,7 +128,8 @@ const BussniessRecordForm = props => {
       CustomCom: (
         <div>
           {[1, 2].map((v, i) => (
-            <img src={v} className="faultImg" key={i} />
+            // <img src={v} className="faultImg" key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </div>
       ),

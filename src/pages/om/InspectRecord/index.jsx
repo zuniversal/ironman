@@ -14,6 +14,8 @@ import ReactDOM from 'react-dom';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { inspectMissionStatusMap } from '@/configs';
+import ClientForm from '@/components/Form/ClientForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
 
 const TITLE = '巡检';
 
@@ -24,9 +26,14 @@ const titleMap = {
   upload: `文件上传inspectReport`,
   down: `文件下载`,
   detail: `${TITLE}报告`,
+  clientDetailAsync: `客户详情`,
+  powerStationDetailAsync: `电站详情`,
+  inspectRecordDetailAsync: `巡检记录详情`,
 };
 
 const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  powerStationDetailAsync: PowerStationForm,
   inspectRecordDetailAsync: InspectRecordForm,
 };
 

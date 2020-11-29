@@ -602,6 +602,16 @@ class SmartTable extends PureComponent {
     const realData = this.dataFilter();
     // console.log('  realData ：', realData); //
 
+    if (this.state.isShowExportPdf) {
+      console.log(' 111111111 ： '); //
+      return (
+        <ExportPdf onClose={() => setIsShowExportPdf(!isShowExportPdf)}>
+          {this.state.QRCodeContent}
+          sssssssssssssssssssssssssssssssssssssssssssssss
+        </ExportPdf>
+      );
+    }
+
     return (
       <div className="">
         <Table

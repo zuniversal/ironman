@@ -16,13 +16,16 @@ const PowerStationTable = props => {
 
   const columns = [
     {
+      title: '序号',
+      dataIndex: 'id',
+    },
+    {
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
         props.showItemAsync({
           action: 'clientDetailAsync',
           d_id: record.customer.id,
-          // d_id: 1,
         }),
     },
     {
@@ -32,7 +35,6 @@ const PowerStationTable = props => {
         props.showItemAsync({
           action: 'houseNoDetailAsync',
           d_id: record.electricity_user.id,
-          // d_id: 1,
         }),
     },
     {
@@ -42,7 +44,6 @@ const PowerStationTable = props => {
         props.showItemAsync({
           action: 'powerStationDetailAsync',
           d_id: record.id,
-          // d_id: 1,
         }),
     },
     {
@@ -57,11 +58,11 @@ const PowerStationTable = props => {
       title: '巡检次数',
       dataIndex: 'inspections_number',
       className: 'textCenter',
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'inspectDetailAsync',
-          d_id: record.id,
-        }),
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'inspectDetailAsync',
+      //     d_id: record.id,
+      // }),
     },
     // {
     //   title: '设备数',

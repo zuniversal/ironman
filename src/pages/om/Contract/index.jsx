@@ -15,6 +15,7 @@ import ContractStepForm from '@/components/Form/ContractStepForm'; //
 import { actions, mapStateToProps } from '@/models/contract'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import ClientForm from '@/components/Form/ClientForm';
 
 const menuConfig = [
   {
@@ -42,6 +43,17 @@ const titleMap = {
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
+  contractDetailAsync: `客户详情`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+};
+
+const detailFormMap = {
+  contractDetailAsync: ContractForm,
+  clientDetailAsync: ClientForm,
+  // houseNoDetailAsync: HouseNoForm,
+  // powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ contract, }) => contract;
@@ -231,10 +243,30 @@ class Contract extends PureComponent {
 
       add: this.props.showFormModal,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
       exportData: this.props.exportData,
     };
 
     return <ContractTable {...tableProps}></ContractTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -342,6 +374,8 @@ class Contract extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
 
         {this.renderFormModal()}
 

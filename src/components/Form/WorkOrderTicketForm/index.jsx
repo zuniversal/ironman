@@ -86,7 +86,7 @@ const WorkOrderTicketForm = props => {
     {
       itemProps: {
         label: '增添人员',
-        name: 'person',
+        name: 'person1',
         className: 'w50',
       },
     },
@@ -94,21 +94,21 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '时间',
-        name: 'time',
+        name: 'time1',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        name: '',
+        name: 'licensor1',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '离去人员',
-        // name: '',
+        name: 'person2',
         className: 'w50',
       },
     },
@@ -116,14 +116,14 @@ const WorkOrderTicketForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '时间',
-        // name: '',
+        name: 'time2',
         className: 'w50',
       },
     },
     {
       itemProps: {
         label: '工作负责人',
-        // name: '',
+        name: 'licensor2',
         className: 'w50',
       },
     },
@@ -210,7 +210,7 @@ const WorkOrderTicketForm = props => {
 
   // const peopleChangeTable = <SmartFormTable config={peopleChangeConfig.map(v => v.itemProps)} name="spectOut" key={'spectOut'} />
 
-  const config = [
+  const config2 = [
     {
       formType: 'Radio',
       radioData: radioData,
@@ -509,11 +509,11 @@ const WorkOrderTicketForm = props => {
       },
     },
     // ...workTimeConfig,
-    <SmartFormTable
-      config={workTimeConfig.map(v => v.itemProps)}
-      name="spectOut"
-      key={'spectOut'}
-    />,
+    // <SmartFormTable
+    //   config={workTimeConfig.map(v => v.itemProps)}
+    //   name="spectOut"
+    //   key={'spectOut'}
+    // />,
     {
       formType: 'rowText',
       itemProps: {
@@ -541,11 +541,11 @@ const WorkOrderTicketForm = props => {
       },
     },
     // ...transferConfig,
-    <SmartFormTable
-      config={transferConfig.map(v => v.itemProps)}
-      name="spectOut"
-      key={'spectOut'}
-    />,
+    // <SmartFormTable
+    //   config={transferConfig.map(v => v.itemProps)}
+    //   name="spectOut"
+    //   key={'spectOut'}
+    // />,
     {
       formType: 'rowText',
       itemProps: {
@@ -632,6 +632,10 @@ const WorkOrderTicketForm = props => {
       action={'/api/v1/upload'}
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、png'}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg',
+      }}
       formItemCls={'w50'}
     ></UploadCom>,
 
@@ -669,6 +673,14 @@ const WorkOrderTicketForm = props => {
     comProps: { className: 'w-200', ...v.comProps },
   }));
 
+  const config = [
+    <SmartFormTable
+      config={peopleChangeConfig.map(v => v.itemProps)}
+      name="spectOut"
+      key={'spectOut'}
+    />,
+  ];
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -691,9 +703,25 @@ const WorkOrderTicketForm = props => {
           ...props.init,
           type: 0,
           spectOut: [
-            { monitor_a: 'monitor_a' },
-            { monitor_b: 'monitor_b' },
-            { monitor_c: 'monitor_c' },
+            // { monitor_a: 'monitor_a' },
+            // { monitor_b: 'monitor_b' },
+            // { monitor_c: 'monitor_c' },
+            {
+              person1: 'person1',
+              time1: 'time1',
+              licensor1: 'licensor1',
+              person2: 'person2',
+              time2: 'time2',
+              licensor2: 'licensor2',
+            },
+            {
+              person1: 'person11',
+              time1: 'time11',
+              licensor1: 'licensor11',
+              person2: 'person22',
+              time2: 'time22',
+              licensor2: 'licensor22',
+            },
           ],
         }}
       ></SmartForm>

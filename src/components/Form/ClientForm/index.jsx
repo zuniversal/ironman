@@ -394,7 +394,8 @@ const ClientForm = props => {
       name={'logo'}
       extra={'支持扩展名:pdf、jpg、png'}
       uploadProps={{
-        disabled: props.isDisabledAll || action === 'detail',
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
       }}
       init={props.init}
     ></UploadCom>,
@@ -524,7 +525,8 @@ const ClientForm = props => {
       name={'file'}
       extra={'支持扩展名:pdf、jpg、png'}
       uploadProps={{
-        disabled: props.isDisabledAll || action === 'detail',
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
         multiple: true,
       }}
       init={props.init}

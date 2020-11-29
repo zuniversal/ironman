@@ -3,6 +3,7 @@ import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartImg from '@/common/SmartImg';
 
 const WeakForm = props => {
   console.log(' WeakForm ： ', props); //
@@ -69,7 +70,8 @@ const WeakForm = props => {
       CustomCom: (
         <>
           {file.map((v, i) => (
-            <img src={v} className="detailImg" key={i} />
+            // <img src={v} className="detailImg" key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </>
       ),
@@ -100,7 +102,7 @@ const WeakForm = props => {
         // init={init}
         // init={{}}
 
-        isDisabledAll
+        isDisabledAll={!['add', 'edit'].includes(props.action)}
         noRuleAll
         {...rest}
       ></SmartForm>
@@ -110,6 +112,8 @@ const WeakForm = props => {
   );
 };
 
-WeakForm.defaultProps = {};
+WeakForm.defaultProps = {
+  init: {},
+};
 
 export default WeakForm;

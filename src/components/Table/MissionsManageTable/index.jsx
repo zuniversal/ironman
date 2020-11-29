@@ -32,7 +32,7 @@ const MissionsManageTable = props => {
       className: 'textCenter',
     },
     {
-      title: '名称',
+      title: '编码',
       dataIndex: 'name',
       detailFn: record =>
         props.showDetail({ action: 'detail', d_id: record.id }),
@@ -88,6 +88,10 @@ const MissionsManageTable = props => {
     {
       title: '客户确认',
       dataIndex: 'confirm',
+    },
+    {
+      title: '描述',
+      dataIndex: 'describe',
     },
   ];
 
@@ -191,7 +195,7 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {record.finished_tag && (
+      {!record.finished_tag && (
         <a
           onClick={() =>
             props.showFormModal({

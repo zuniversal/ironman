@@ -20,6 +20,7 @@ import { actions, mapStateToProps } from '@/models/missionsManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import WorkOrderTicketForm from '@/components/Form/WorkOrderForm';
+import { tips } from '@/utils';
 
 const TITLE = '任务';
 
@@ -147,17 +148,6 @@ class MissionsManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      if (action === 'add') {
-        this.props.addItemAsync({
-          ...res,
-        });
-      }
-      if (action === 'edit') {
-        this.props.editItemAsync({
-          ...itemDetail,
-          ...res,
-        });
-      }
       if (action === 'startWorkOrder') {
         this.props.startWorkOrderAsync({
           ...res,
@@ -181,6 +171,29 @@ class MissionsManage extends PureComponent {
         this.props.confirmScheduleAsync({
           ...res,
           d_id: d_id,
+        });
+      }
+
+      if (!res.station_id) {
+        res.station_id = null;
+      }
+      if (typeof res.file !== 'string') {
+        console.log(' filefile ： ', res.file); //
+        if (res.file && res.file.fileList.length > 0) {
+          const fileList = res.file.fileList;
+          // res.file = fileList[fileList.length - 1].response.url;
+          res.file = fileList.map(v => v.response.url);
+        }
+      }
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...itemDetail,
+          ...res,
         });
       }
     } catch (error) {

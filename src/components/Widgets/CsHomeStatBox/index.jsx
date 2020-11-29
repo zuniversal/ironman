@@ -16,6 +16,7 @@ const statConfig = [
   {
     title: '运营总天数',
     num: '126560',
+    key: 'operating_days',
     style: {
       background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
       boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
@@ -25,6 +26,7 @@ const statConfig = [
   {
     title: '总负荷',
     num: '126560',
+    key: 'total_load',
     style: {
       background: 'linear-gradient(135deg, #FEB833 0%, #FE9833 100%)',
       boxShadow: '0px 5px 10px rgba(253, 156, 51, 0.5)',
@@ -34,6 +36,7 @@ const statConfig = [
   {
     title: '完成巡检数',
     num: '126560',
+    key: 'inspection_completed_num',
     style: {
       background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
       boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
@@ -55,7 +58,7 @@ const StatBoxCom = props => {
           {props.title}
         </div> */}
             <div className="num">
-              <Statistic title={props.title} value={props.num} />
+              <Statistic title={props.title} value={props.value} />
             </div>
           </div>
         </>
@@ -74,7 +77,7 @@ const CsHomeStatBox = props => {
   return (
     <div className="csHomeStatBoxWrapper">
       {statConfig.map((v, i) => (
-        <StatBoxCom {...v} key={i}></StatBoxCom>
+        <StatBoxCom {...v} {...props} value={props[v.key]} key={i}></StatBoxCom>
       ))}
     </div>
   );

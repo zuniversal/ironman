@@ -67,7 +67,7 @@ class Weak extends PureComponent {
   renderSearchForm = params => {
     return (
       <WeakSearchForm
-        formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
         getUser={this.props.getUserAsync}
         userList={this.props.userList}
         onFieldChange={this.onFieldChange}

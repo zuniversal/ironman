@@ -65,67 +65,69 @@ const ReduxTable = props => {
     ),
   }));
 
-  columns.push({
-    title: '操作',
-    dataIndex: 'action',
-    className: 'actionCol',
-    notTooltip: true,
-    render: (text, record, index, config) => (
-      <>
-        <a
-          onClick={() => {
-            console.log(' record ：, ', props, config, record, edit); //
-            if (isDisabledAll) {
-              return;
-            }
+  if (!isDisabledAll) {
+    columns.push({
+      title: '操作',
+      dataIndex: 'action',
+      className: 'actionCol',
+      notTooltip: true,
+      render: (text, record, index, config) => (
+        <>
+          <a
+            onClick={() => {
+              console.log(' record ：, ', props, config, record, edit); //
+              if (isDisabledAll) {
+                return;
+              }
 
-            // const fn = record.id && record.isEdit
-            let fn = '';
-            if (!record.id) {
-              fn = 'addTableItemAsync';
-              //  fn = record.isEdit
-              //  ? 'editTableItemAsync'
-              //  :'addTableItemAsync'
-            } else {
-              fn = record.isEdit ? 'editTableItemAsync' : 'modifyTableItem';
-            }
+              // const fn = record.id && record.isEdit
+              let fn = '';
+              if (!record.id) {
+                fn = 'addTableItemAsync';
+                //  fn = record.isEdit
+                //  ? 'editTableItemAsync'
+                //  :'addTableItemAsync'
+              } else {
+                fn = record.isEdit ? 'editTableItemAsync' : 'modifyTableItem';
+              }
 
-            // const fn = 'editTableItemAsync';
-            props[fn]({
-              ...record,
-              index,
-              d_id: record.id,
-              action: 'edit',
-              // powerstation: props.init.id,
-            });
-          }}
-        >
-          {record.isEdit ? '保存' : '编辑'}
-        </a>
-        <a
-          onClick={() => {
-            console.log(' remove record ： ', props, record, index); //
-            if (isDisabledAll) {
-              return;
-            }
-            const removeFn = record.id
-              ? 'removeTableItemAsync'
-              : 'modifyTableItem';
-            // const removeFn = 'removeTableItemAsync';
-            props[removeFn]({
-              ...record,
-              index,
-              id: `${record.id}`,
-              // action: record.id ? 'remove' : 'localRemove',
-              action: 'remove',
-            });
-          }}
-        >
-          删除
-        </a>
-      </>
-    ),
-  });
+              // const fn = 'editTableItemAsync';
+              props[fn]({
+                ...record,
+                index,
+                d_id: record.id,
+                action: 'edit',
+                // powerstation: props.init.id,
+              });
+            }}
+          >
+            {record.isEdit ? '保存' : '编辑'}
+          </a>
+          <a
+            onClick={() => {
+              console.log(' remove record ： ', props, record, index); //
+              if (isDisabledAll) {
+                return;
+              }
+              const removeFn = record.id
+                ? 'removeTableItemAsync'
+                : 'modifyTableItem';
+              // const removeFn = 'removeTableItemAsync';
+              props[removeFn]({
+                ...record,
+                index,
+                id: `${record.id}`,
+                // action: record.id ? 'remove' : 'localRemove',
+                action: 'remove',
+              });
+            }}
+          >
+            删除
+          </a>
+        </>
+      ),
+    });
+  }
 
   return (
     <SmartTable
@@ -136,30 +138,33 @@ const ReduxTable = props => {
       rowKey={'key'}
       className={'reduxTable modalTable'}
       pagination={false}
-      title={() => (
-        <div className={`fje`}>
-          <Button
-            type="primary"
-            onClick={() => {
-              console.log(
-                '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
-                props.dataSource.filter(v => v.isEdit),
-              );
-              if (isDisabledAll) {
-                return;
-              }
-              if (props.dataSource.filter(v => v.isEdit).length < 1) {
-                props.modifyTableItem({ action: 'add' });
-              } else {
-                tips('请先保存上一条数据！', 2);
-              }
-            }}
-            className={'add'}
-          >
-            新增
-          </Button>
-        </div>
-      )}
+      rowSelection={null}
+      title={() =>
+        !isDisabledAll && (
+          <div className={`fje`}>
+            <Button
+              type="primary"
+              onClick={() => {
+                console.log(
+                  '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
+                  props.dataSource.filter(v => v.isEdit),
+                );
+                if (isDisabledAll) {
+                  return;
+                }
+                if (props.dataSource.filter(v => v.isEdit).length < 1) {
+                  props.modifyTableItem({ action: 'add' });
+                } else {
+                  tips('请先保存上一条数据！', 2);
+                }
+              }}
+              className={'add'}
+            >
+              新增
+            </Button>
+          </div>
+        )
+      }
     ></SmartTable>
   );
 };

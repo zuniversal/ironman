@@ -78,7 +78,7 @@ const SmartFormTable = props => {
                         data.filter(v => v.editing).length > 0 ||
                         data.length === 0
                       ) {
-                        // props.add({});
+                        props.add({});
                         props.modifyTableItem({ action: 'add' });
                         add();
                       } else {
@@ -101,16 +101,22 @@ const SmartFormTable = props => {
                 //   {monitor_b: 'monitor_b',},
                 //   {monitor_c: 'monitor_c',},
                 // ].map(field => {
-                console.log(' dataInitdataInitdataInit,  ： ', fields); //
+                console.log(
+                  ' dataInitdataInitdataInit,  ： ',
+                  props,
+                  fields,
+                  configs,
+                ); //
                 const formItem = configs.map(({ editing, ...v }, index) => (
                   <Form.Item
                     rules={noRule || noRuleAll ? undefined : rules(v)}
                     {...field}
-                    {...v}
+                    // {...v}
                     label={''}
                     colon={false}
                     name={[field.name, v.name]}
                     fieldKey={[field.fieldKey, v.name]}
+                    // 重要 如果不唯一 删除后 会导致无法保持每行输入框等的值
                     key={v.name + field.key}
                     className={`formItems ${v.hidden ? 'hidden' : ''}`}
                     {...{
@@ -123,21 +129,25 @@ const SmartFormTable = props => {
                     //   // onFieldChange && onFieldChange({ value, formData, form: formControl })
                     // }}
                   >
+                    {/* 注意 不能包裹元素 否则会导致表单值无效 */}
+
                     {/* <Input className={`w-78 ${flipInX}`} /> */}
-                    {editing ? (
-                      <div className={` xxx`}>
-                        <Input
-                          className={` ${bounceIn}`}
-                          placeholder={`请输入${v.label}`}
-                        />
-                      </div>
-                    ) : (
-                      props.data[i][v.name]
-                    )}
+                    {/* {editing ? ( */}
+                    <Input
+                      className={` ${bounceIn}`}
+                      placeholder={`请输入${v.label}`}
+                    />
+                    {/* ) : (
+                      props.data[i] ? props.data[i][v.name] : '222'
+                    )} */}
                   </Form.Item>
                 ));
                 return (
-                  <div key={field.key} className={'formRow'}>
+                  <div
+                    key={field.key}
+                    // key={i}
+                    className={'formRow'}
+                  >
                     {formItem}
                     <Form.Item
                       colon={false}
@@ -185,14 +195,14 @@ const SmartFormTable = props => {
                           );
                           if (fields.length > 1) {
                             remove(field.name);
-                            const datas = props.form.getFieldValue(name);
-                            props.remove({
-                              data: datas[i],
-                              datas,
-                              i,
-                              fields,
-                              field,
-                            });
+                            // const datas = props.form.getFieldValue(name);
+                            // props.remove({
+                            //   data: datas[i],
+                            //   datas,
+                            //   i,
+                            //   fields,
+                            //   field,
+                            // });
                           } else {
                             tips('至少需要一条数据！', 2);
                           }
@@ -214,6 +224,7 @@ const SmartFormTable = props => {
 
 SmartFormTable.defaultProps = {
   config: [],
+  data: [],
   actionCol: { name: '操作', label: '操作' },
   actionCol: {},
   name: 'smartFormTableName',
@@ -222,10 +233,12 @@ SmartFormTable.defaultProps = {
   remove: () => {},
   save: () => {},
   onFieldChange: () => {},
+  modifyTableItem: () => {},
 };
 
 SmartFormTable.propTypes = {
   config: PropTypes.array,
+  data: PropTypes.array,
   actionCol: PropTypes.object,
   name: PropTypes.string,
   hideSave: PropTypes.bool,
@@ -233,6 +246,7 @@ SmartFormTable.propTypes = {
   remove: PropTypes.func,
   save: PropTypes.func,
   onFieldChange: PropTypes.func,
+  modifyTableItem: PropTypes.func,
 };
 
 export default SmartFormTable;

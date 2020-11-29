@@ -5,6 +5,7 @@ import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { workOrderStatusMap, missionsTypeMap } from '@/configs';
+import moment from 'moment'; //
 
 const namespace = 'workOrder';
 const { createActions } = init(namespace);
@@ -96,7 +97,16 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          created_time: created_time ? created_time.split('T')[0] : '',
+          // created_time: created_time ? created_time.split('T')[0] : '',
+          created_time: moment(payload.bean.created_time).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
+          receiving_time: moment(payload.bean.receiving_time).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
+          commencement_date: moment(payload.bean.commencement_date).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
           type: missionsTypeMap[type],
           status: workOrderStatusMap[status],
         },

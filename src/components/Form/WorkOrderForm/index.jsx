@@ -6,6 +6,7 @@ import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import { regoins, workOrderStatusConfig } from '@/configs'; //
 import { formatConfig, createArr } from '@/utils'; //
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
+import SmartImg from '@/common/SmartImg';
 
 const choiceRadios = [
   { label: '种类1', value: 'yes', key: 'yes' },
@@ -149,7 +150,8 @@ const WorkOrderTicketForm = props => {
             <WeakDetailImg key={i}></WeakDetailImg>
           ))} */}
           {responseFile.map((v, i) => (
-            <img src={v} className={`detailImg`} key={i} />
+            // <img src={v} className={`detailImg`} key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </>
       ),
@@ -193,7 +195,8 @@ const WorkOrderTicketForm = props => {
             <WeakDetailImg key={i}></WeakDetailImg>
           ))} */}
           {buildFile.map((v, i) => (
-            <img src={v} className={`detailImg`} key={i} />
+            // <img src={v} className={`detailImg`} key={i} />
+            <SmartImg src={v} key={i} />
           ))}
         </>
       ),

@@ -23,6 +23,11 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  shiftsManageDetailAsync: `班组详情`,
+};
+
+const detailFormMap = {
+  shiftsManageDetailAsync: ShiftsManageForm,
 };
 
 const mapStateToProps = ({ shiftsManage, user }) => ({
@@ -155,9 +160,29 @@ class ShiftsManage extends PureComponent {
       remove: this.onRemove,
       goPage: this.goPage,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <ShiftsManageTable {...tableProps}></ShiftsManageTable>;
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -167,6 +192,11 @@ class ShiftsManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      console.log('  对吗  .length ', res.member);
+      if (res.member.length > 5) {
+        tips('最多添加5个组员！', 2);
+        return;
+      }
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -216,7 +246,8 @@ class ShiftsManage extends PureComponent {
       this.props,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    this.props.getUserAsync({}); //
+    this.props.getUserAsync({ page_size: 1000 }); //
+    // this.props.getTeamAsync({}); //
     // this.props.getUserAsync({ page: 1, page_size: 50 }); //
   }
 
@@ -228,6 +259,8 @@ class ShiftsManage extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }
