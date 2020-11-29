@@ -3,7 +3,7 @@ import * as services from '@/services/assets';
 import * as powerStationServices from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
-import { formatSelectList } from '@/utils';
+import { formatSelectList, filterObjSame } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'assets';
@@ -86,6 +86,13 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItem 修改  ： ', state, payload, type); //
+      const { powerList } = state;
+      const { station } = payload.bean; //
+      const stationItem = {
+        ...station,
+        value: `${station.id}`,
+        label: station.name,
+      };
       return {
         ...state,
         itemDetail: {
@@ -95,11 +102,12 @@ export default {
           production_date: moment(),
           operation_date: moment(),
           list: payload.list,
-          station: payload.bean.station.id,
+          station: `${station.id}`,
         },
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
+        powerList: filterObjSame([...powerList, stationItem]),
       };
       production_date;
     },

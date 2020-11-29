@@ -52,7 +52,7 @@ function deWeightTwo() {
 }
 var newArr2 = deWeightTwo();
 var newArr4 = deWeightTwo();
-console.log('xxxxx', arr4, newArr4);
+// console.log('xxxxx', arr4, newArr4);
 
 export const getDataMap = (text, dataMap) => {
   const val = dataMap[text];
@@ -284,6 +284,7 @@ export const formatConfig = (
         v.formType === 'Label' ||
         v.formType === 'rowText' ||
         v.formType === 'plainText' ||
+        v.formType === 'CustomCom' ||
         v.formType === 'PropsCom'
           ? {
               ...v.itemProps,

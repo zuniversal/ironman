@@ -11,6 +11,7 @@ import {
   Button,
   Input,
   Tooltip,
+  Typography,
 } from 'antd';
 import SmartModal from '@/common/SmartModal'; //
 import ActionCol from './ActionCol'; //
@@ -21,6 +22,7 @@ import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
 import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi'; //
 import noData from '@/static/assets/noData.png'; //
+import ExportPdf from '@/components/Pdf/ExportPdf';
 
 const { slideInUp } = ANIMATE;
 
@@ -76,6 +78,7 @@ class SmartTable extends PureComponent {
       title: '',
       show: false,
       modalContent: null,
+      isShowExportPdf: false,
     };
   }
 
@@ -328,13 +331,16 @@ class SmartTable extends PureComponent {
     const tooltipText = dataMap ? txt : text;
     return text != undefined ? (
       <Tooltip
+        // title={typeof tooltipText !== 'object' ? <Typography.Paragraph className={`tootltipCopy`}  copyable>{tooltipText}</Typography.Paragraph> : `${tooltipText}`}
         title={typeof tooltipText !== 'object' ? tooltipText : `${tooltipText}`}
         // title={tooltipText}
       >
         {content}
+        {/* <Typography.Paragraph copyable>{content}</Typography.Paragraph> */}
       </Tooltip>
     ) : (
       text
+      // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
     );
     // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
     // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>
@@ -472,12 +478,25 @@ class SmartTable extends PureComponent {
     );
   };
 
+  showExportPdf = modalContent => {
+    console.log('    showExportPdf ： ', modalContent);
+    this.setState({
+      isShowExportPdf: true,
+      modalContent,
+    });
+  };
   showQRCode = params => {
     console.log('    showQRCode ： ', params);
     this.setState({
       show: true,
+      // title: params.title,
       // modalContent: <QRCodeCom value={params.record} ></QRCodeCom>,
-      modalContent: <QRCodeContent {...params}></QRCodeContent>,
+      modalContent: (
+        <QRCodeContent
+          {...params}
+          showExportPdf={this.showExportPdf}
+        ></QRCodeContent>
+      ),
     });
   };
   onOk = e => {
@@ -492,6 +511,7 @@ class SmartTable extends PureComponent {
     this.setState({
       show: false,
       modalContent: null,
+      isShowExportPdf: false,
     });
   };
   renderModalContent = e => {
@@ -502,6 +522,12 @@ class SmartTable extends PureComponent {
   renderQRCodeModal = params => {
     // console.log(' renderQRCodeModal ： ', params);
     const { title, show } = this.state; //
+    if (this.state.isShowExportPdf) {
+      console.log(' 2222222222 ： ', this.state.QRCodeContent); //
+      return (
+        <ExportPdf onClose={this.onCancel}>{this.state.modalContent}</ExportPdf>
+      );
+    }
     return (
       <SmartModal
         width={'400px'}
@@ -601,16 +627,6 @@ class SmartTable extends PureComponent {
 
     const realData = this.dataFilter();
     // console.log('  realData ：', realData); //
-
-    if (this.state.isShowExportPdf) {
-      console.log(' 111111111 ： '); //
-      return (
-        <ExportPdf onClose={() => setIsShowExportPdf(!isShowExportPdf)}>
-          {this.state.QRCodeContent}
-          sssssssssssssssssssssssssssssssssssssssssssssss
-        </ExportPdf>
-      );
-    }
 
     return (
       <div className="">

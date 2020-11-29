@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
 import ContractTable from '@/components/Table/ContractTable'; //
 import ContractForm from '@/components/Form/ContractForm'; //
+import ContractSearchForm from '@/components/Form/ContractSearchForm'; //
 import ResultModal from '@/components/Modal/ResultModal'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import DropDownBtn from '@/common/DropDownBtn'; //
@@ -125,35 +126,53 @@ class Contract extends PureComponent {
       return;
     }
   };
+  // renderSearchForm = params => {
+  //   return (
+  //     <div className={'fsb '}>
+  //       {/* <SearchForm></SearchForm> */}
+  //       {/* <div className={'btnWrapper'}>
+  //         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
+  //           Excel导入
+  //         </DropDownBtn>
+  //         <Button
+  //           type="primary"
+  //           htmlType="submit"
+  //           onClick={this.props.syncOAAsync}
+  //         >
+  //           同步OA
+  //         </Button>
+  //         <Button
+  //           type="primary"
+  //           onClick={() => this.props.showFormModal({ action: 'add' })}
+  //         >
+  //           新增{TITLE}
+  //         </Button>
+  //         <Button type="primary" onClick={() => this.props.exportData()}>
+  //           导出{TITLE}数据
+  //         </Button>
+  //         <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+  //           删除
+  //         </Button>
+  //       </div> */}
+  //     </div>
+  //   );
+  // };
+
+  renderFormBtn = params => {
+    return null;
+  };
   renderSearchForm = params => {
     return (
-      <div className={'fsb '}>
-        <SearchForm></SearchForm>
-        {/* <div className={'btnWrapper'}>
-          <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
-            Excel导入
-          </DropDownBtn>
-          <Button
-            type="primary"
-            htmlType="submit"
-            onClick={this.props.syncOAAsync}
-          >
-            同步OA
-          </Button>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-          <Button type="primary" onClick={() => this.props.onBatchRemove()}>
-            删除
-          </Button>
-        </div> */}
-      </div>
+      <ContractSearchForm
+        formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
+        // getClientAsync={params => this.props.getClientAsync({ name: params })}
+        // clientList={this.props.clientList}
+        // getListAsync={params => this.props.getListAsync({ keyword: params })}
+        // dataList={this.props.dataList}
+        // getHouseNoAsync={params => this.props.getHouseNoAsync({ number: params })}
+        // houseNoList={this.props.houseNoList}
+      ></ContractSearchForm>
     );
   };
 
@@ -369,7 +388,7 @@ class Contract extends PureComponent {
 
     return (
       <div className="Contract">
-        {this.renderSearchForm()}
+        {/* {this.renderSearchForm()} */}
 
         {this.renderTable()}
 

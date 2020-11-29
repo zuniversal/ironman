@@ -7,7 +7,7 @@ const { createActions } = init(namespace);
 
 const otherActions = [];
 
-const batchTurnActions = [];
+const batchTurnActions = ['toggleEditInfo'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -26,6 +26,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    isStartEdit: false,
   },
 
   reducers: {
@@ -64,6 +66,14 @@ export default {
         isShowModal: false,
       };
     },
+
+    toggleEditInfo(state, { payload, type }) {
+      console.log(' toggleEditInfo 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        isStartEdit: !state.isStartEdit,
+      };
+    },
   },
 
   effects: {
@@ -73,7 +83,8 @@ export default {
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'toggleEditInfo' });
     },
   },
 };

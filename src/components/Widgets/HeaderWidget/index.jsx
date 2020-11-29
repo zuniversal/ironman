@@ -1,11 +1,13 @@
 import React from 'react';
 import './style.less';
 import Icon from '@/components/Widgets/Icons';
+import DropdownNotice from '@/components/Widgets/DropdownNotice';
+// import DropdownNotice from '@/common/DropDownBtn';
 import { LogoutOutlined } from '@ant-design/icons'; //
 import { history, connect } from 'umi';
 
 const HeaderWidget = props => {
-  // console.log(' HeaderWidget   props, ,   ： ', props);
+  console.log(' HeaderWidget   props, ,   ： ', props);
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path);
     window.open('http://188.131.235.243:31004/normal_screen');
@@ -14,16 +16,23 @@ const HeaderWidget = props => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);
   };
+
+  const avatar = (
+    <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
+  );
+
   return (
     <div className="headerWidget dfc ">
       {/* <Icon icon={'search'} className={'actionItem '} /> */}
-      <Icon icon={'bell'} className={'actionItem '} />
+      <DropdownNotice avatar={avatar}>
+        <Icon icon={'bell'} className={' '} />
+      </DropdownNotice>
       <span className="yAxis actionItem"></span>
       <span className="bigScreenWrapper actionItem dfc" onClick={goBigScreen}>
         <Icon icon={'bigScreen'} />
         <span className="text">大屏展示</span>
       </span>
-      <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
+      {avatar}
       {/* <span className="avatars" onClick={logout}></span> */}
       <span
         className={'actionItem userName '}

@@ -263,7 +263,7 @@ export const workTicketPeopleChangeConfig = [
     value: 1,
   },
   {
-    label: '离开',
+    label: '未拆除已汇报调度由操作员拆除',
     value: 0,
   },
 ];

@@ -26,6 +26,7 @@ import SuccResult from '@/components/Widgets/SuccResult'; //
 import { actions, mapStateToProps } from '@/models/csUserCenter'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 export const TITLE = '用户';
 
@@ -50,7 +51,6 @@ class CsUserCenter extends PureComponent {
     super(props);
     this.state = {
       titleMap,
-      isStartEdit: false,
     };
   }
 
@@ -63,20 +63,14 @@ class CsUserCenter extends PureComponent {
       init: this.props.itemDetail,
     };
     console.log(' formComProps ： ', formComProps); //
-    return this.state.isStartEdit ? (
+    return this.props.isStartEdit ? (
       <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
     ) : (
       <CsUserCenterForm
-        startEdit={this.startEdit}
+        startEdit={this.props.toggleEditInfo}
         {...formComProps}
       ></CsUserCenterForm>
     );
-  };
-  startEdit = params => {
-    console.log(' startEdit,  , ： ', params);
-    this.setState({
-      isStartEdit: !this.state.isStartEdit,
-    });
   };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
@@ -85,6 +79,13 @@ class CsUserCenter extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
       if (action === 'edit') {
+        if (res.logo && res.logo.fileList.length > 0) {
+          const fileList = res.logo.fileList;
+          res.logo = fileList[fileList.length - 1].response.url;
+        } else {
+          tips('logo不能为空！', 2);
+          return;
+        }
         this.props.editItemAsync({
           ...res,
         });

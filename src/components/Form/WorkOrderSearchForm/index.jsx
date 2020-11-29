@@ -36,9 +36,9 @@ const WorkOrderSearchForm = props => {
     // },
 
     {
-      // formType: 'Select',
+      noLabel: true,
       itemProps: {
-        label: '',
+        label: '任务/客户名称',
         name: 'keyword',
       },
       comProps: {

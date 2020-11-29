@@ -199,7 +199,7 @@ class HouseNo extends PureComponent {
     //   return;
     // }
     console.log(' 列表搜索 ： '); //
-    this.props.getListAsync(params.formData);
+    this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
   onRemove = params => {

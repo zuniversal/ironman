@@ -96,7 +96,7 @@ class CsHome extends PureComponent {
     );
   };
   renderCsHomeStatBox = params => {
-    return <CsHomeStatBox data={statisticData}></CsHomeStatBox>;
+    return <CsHomeStatBox data={this.props.statisticData}></CsHomeStatBox>;
   };
   renderCsHomeStatEcharts = params => {
     return <CsHomeStatEcharts></CsHomeStatEcharts>;

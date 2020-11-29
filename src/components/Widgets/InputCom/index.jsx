@@ -5,15 +5,15 @@ import { Form, Input } from 'antd';
 
 const InputCom = props => {
   // console.log(' InputCom   props, ,   ： ', props);
-  const { wrapperClass, left, right, ...rest } = props;
+  const { wrapperClass, left, right, name, label, ...rest } = props;
   return (
     <div className={`inputFormWrapper ${wrapperClass}`}>
       {left && <div className="left">{left}</div>}
       <Form.Item
         className={'inputFormItem  '}
         key={'attach'}
-        name={props.name}
-        label={props.label}
+        name={name}
+        label={label}
         colon={false}
       >
         <Input name="logo" className={'inputCom w-64  '} {...rest} />

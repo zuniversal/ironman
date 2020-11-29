@@ -18,7 +18,8 @@ import SuccResult from '@/components/Widgets/SuccResult'; //
 import { actions, mapStateToProps } from '@/models/assets'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
+import { tips, downLoad } from '@/utils';
+import { DOWN_ASSETS_TPL } from '@/constants';
 
 const smallLayout = {
   labelCol: {
@@ -116,7 +117,8 @@ class Assets extends PureComponent {
   };
   downloadFile = params => {
     console.log('    downloadFile ： ', params);
-    this.props.downloadFile();
+    // this.props.downloadFile();
+    downLoad(DOWN_ASSETS_TPL, { name: '资产数据模板' });
   };
 
   menuClick = params => {

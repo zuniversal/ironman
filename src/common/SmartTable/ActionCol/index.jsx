@@ -55,11 +55,11 @@ const ActionCol = props => {
           </a>
         </>
       )}
-      {!props.noDefault && props.isQRCode && (
+      {/* {!props.noDefault && props.isQRCode && (
         <a onClick={() => showQRCode({ action: 'QRCode', record })}>
           生成二维码
         </a>
-      )}
+      )} */}
       {/* {extra} */}
       {extra(text, record, index, props)}
     </span>

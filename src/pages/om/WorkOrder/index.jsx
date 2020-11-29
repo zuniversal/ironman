@@ -14,6 +14,7 @@ import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import MissionsManageForm from '@/components/Form/MissionsManageForm';
 import ClientForm from '@/components/Form/ClientForm';
+import { tips } from '@/utils';
 
 const TITLE = '工单';
 
@@ -56,7 +57,8 @@ class WorkOrder extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.exportData({})}>
+        {/* <Button type="primary" onClick={() => this.props.exportData({})}> */}
+        <Button type="primary" onClick={() => tips('暂未接口！', 2)}>
           导出
         </Button>
       </div>
@@ -75,6 +77,11 @@ class WorkOrder extends PureComponent {
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);
+  };
+
+  onFormFieldChange = params => {
+    console.log(' onFormFieldChange,  , ： ', params);
+    // this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -163,10 +170,11 @@ class WorkOrder extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
+      getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
-      getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
+      getTeamAsync: params => this.props.getTeamAsync({ name: params }),
       teamList: this.props.teamList,
+      onFieldChange: this.onFormFieldChange,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -182,7 +190,7 @@ class WorkOrder extends PureComponent {
       );
     }
     if (action === 'addTicket') {
-      return <WorkOrderTicketForm></WorkOrderTicketForm>;
+      // return <WorkOrderTicketForm></WorkOrderTicketForm>;
       return <WorkOrderTicketForm {...formComProps}></WorkOrderTicketForm>;
     }
 
@@ -209,10 +217,18 @@ class WorkOrder extends PureComponent {
   componentDidMount() {
     this.props.getUserAsync();
     this.props.getTeamAsync();
+    // this.props.addTicketAsync();
   }
 
   render() {
-    // return <WorkOrderTicketForm></WorkOrderTicketForm>;
+    const formComProps = {
+      getUserAsync: params => this.props.getUserAsync({ value: params }),
+      userList: this.props.userList,
+      getTeamAsync: params => this.props.getTeamAsync({ name: params }),
+      teamList: this.props.teamList,
+      onFieldChange: this.onFormFieldChange,
+    };
+    // return <WorkOrderTicketForm {...formComProps} ></WorkOrderTicketForm>;
     // return (
     //   <ExportPdf goBack={this.showExportPdf} onClose={this.onClose}>
     //     <WorkOrderTicketForm></WorkOrderTicketForm>

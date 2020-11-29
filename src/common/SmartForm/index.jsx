@@ -192,6 +192,7 @@ const SmartForm = (props, state) => {
       configs,
       obj,
       dynamicFields,
+      props,
     );
     return obj;
   });
@@ -231,7 +232,7 @@ const SmartForm = (props, state) => {
       onSubmit,
     );
 
-    // onSubmit && onSubmit({ values, form });
+    onSubmit && onSubmit({ values, form });
   };
 
   // errorFields: Array(5) errors: ["Please input your E-mail!"]

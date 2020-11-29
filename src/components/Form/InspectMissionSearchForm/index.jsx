@@ -10,6 +10,7 @@ const InspectMissionSearchForm = props => {
 
   const config = [
     {
+      // 职位 班组组长
       formType: 'Search',
       selectSearch: props.getUserAsync,
       selectData: props.userList,

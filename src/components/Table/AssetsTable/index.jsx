@@ -85,9 +85,27 @@ const AssetsTable = props => {
     console.log(' showQRCode   e, ,   ： ', e);
   };
 
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() => {
+          console.log('Received values of form: ', props);
+          props.showQRCode({
+            title: `${record.name}`,
+            record,
+            d_id: record.id,
+          });
+        }}
+      >
+        生成二维码
+      </a>
+    </>
+  );
+
   return (
     <SmartTable
       columns={columns}
+      extra={extra}
       // rowKey={'code'}
       isQRCode
       {...props}

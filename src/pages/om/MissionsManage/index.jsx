@@ -177,6 +177,9 @@ class MissionsManage extends PureComponent {
       if (!res.station_id) {
         res.station_id = null;
       }
+      if (!res.equipment_id) {
+        res.equipment_id = null;
+      }
       if (typeof res.file !== 'string') {
         console.log(' filefile ： ', res.file); //
         if (res.file && res.file.fileList.length > 0) {
@@ -185,6 +188,7 @@ class MissionsManage extends PureComponent {
           res.file = fileList.map(v => v.response.url);
         }
       }
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

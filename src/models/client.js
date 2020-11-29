@@ -150,7 +150,7 @@ export default {
           isEdit: false,
         })),
         // adminList: [...adminList, payload.bean.customer_admin],
-        userList: [serviceStaff, lastServiceStaff, ...userList],
+        // userList: [serviceStaff, lastServiceStaff, ...userList],
         userList: filterObjSame([...userList, serviceStaff, lastServiceStaff]),
       };
     },

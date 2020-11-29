@@ -381,7 +381,7 @@ export const managerRoutes = [
 
 export const customerRoutes = [
   {
-    path: '/cs/csHome',
+    path: '/cs/home',
     name: '首页',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'csHome'} />,
@@ -409,7 +409,7 @@ export const customerRoutes = [
     ],
   },
   {
-    path: '/cs/csClientReport',
+    path: '/cs/clientReport',
     name: '客户报告',
     icon: <Icon icon={'csClientReport'} />,
     component: '../pages/cs/CsClientReport',
@@ -436,7 +436,7 @@ export const customerRoutes = [
     component: '../pages/csUserCenter',
   },
   {
-    path: '/cs/csOrganize',
+    path: '/cs/organize',
     name: '组织管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'csOrganize'} />,

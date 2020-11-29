@@ -52,10 +52,10 @@ const ContractTable = props => {
       title: '合同类型',
       dataIndex: 'type',
     },
-    {
-      title: '生效日期',
-      dataIndex: 'entry_date',
-    },
+    // {
+    //   title: '生效日期',
+    //   dataIndex: 'entry_date',
+    // },
     {
       title: '生效日期',
       dataIndex: 'effective_date',

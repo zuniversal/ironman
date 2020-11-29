@@ -16,18 +16,19 @@ const BussniessRecordSearchForm = props => {
     {
       noLabel: true,
       itemProps: {
-        label: 'id或关键字',
+        // label: 'id或关键字',
+        label: '任务/客户名称',
         name: 'keyword',
       },
       searchSuffix: true,
     },
-    {
-      formType: 'RangePicker',
-      itemProps: {
-        label: '日期',
-        name: 'data',
-      },
-    },
+    // {
+    //   formType: 'RangePicker',
+    //   itemProps: {
+    //     label: '日期',
+    //     name: 'data',
+    //   },
+    // },
   ];
 
   return (

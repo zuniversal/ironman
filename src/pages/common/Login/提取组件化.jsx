@@ -14,12 +14,11 @@ const Login = props => {
   };
 
   const onFinish = values => {
-    console.log('onFinish 提交 : ', values, props);
+    console.log('Received values of form: ', values, props);
     const { username, password } = values;
     props.dispatch({
       type: 'user/loginAsync',
-      // payload: values,
-      payload: values.values,
+      payload: values,
     });
   };
 
@@ -35,8 +34,7 @@ const Login = props => {
 
           <LoginForm
             className="login-form"
-            // name="normal_login"
-            name="loginForm"
+            name="normal_login"
             initialValues={{
               remember: true,
               username: 'admin',
@@ -44,8 +42,7 @@ const Login = props => {
               username: '',
               password: '',
             }}
-            onSubmit={onFinish}
-            // onFinish={onFinish}
+            onFinish={onFinish}
           >
             <Form.Item className={`btnFormItem`} noStyle>
               <Button type="primary" htmlType="submit" className="actionBtn">

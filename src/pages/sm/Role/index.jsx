@@ -100,6 +100,11 @@ class Role extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      console.log('  对吗  !res.comments ', !res.comments);
+      if (!res.comments) {
+        res.comments = undefined;
+      }
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

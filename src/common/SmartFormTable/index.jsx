@@ -1,11 +1,129 @@
 import React, { useEffect, useState } from 'react';
 import './style.less';
 import PropTypes from 'prop-types';
-import { Button, Form, Input, Space } from 'antd';
+import {
+  Form,
+  Input,
+  Tooltip,
+  Cascader,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete,
+  Radio,
+  Space,
+  InputNumber,
+  DatePicker,
+  Divider,
+  TreeSelect,
+} from 'antd';
 import { ANIMATE, REQUIRE } from '@/constants';
-import { tips } from '@/utils';
+import { tips, renderSelectOp, renderCheckboxOp, renderRadioOp } from '@/utils';
 
 const { bounceIn, slideInDown, flipInX } = ANIMATE;
+
+const useFormItem = props => {
+  const {
+    formType = 'Input',
+    // formType,
+    checkboxContent,
+    itemProps,
+    comProps,
+    radioOptions,
+    selectOptions,
+    customLabel,
+    rowText,
+    extra,
+    type,
+    noRule,
+    radioData = [],
+    checkboxData = [],
+    selectData = [],
+    // selectSearch = () => {},
+    selectSearch,
+    opType,
+    haveDivider,
+    isSearchForm,
+    searchSuffix,
+    CustomCom,
+    PropsCom,
+    noLabel,
+    LabelCom,
+    plainText,
+
+    isDisabledAll,
+  } = props; //
+
+  const realComProps = {
+    // className: 'w-320',
+    ...comProps,
+    // placeholder: placeholder,
+  };
+
+  const selectProps = {
+    allowClear: true,
+    ...realComProps,
+    filterOption: true,
+    showSearch: true,
+  };
+  const selectCom = (
+    <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
+  );
+
+  const formItemMap = {
+    // Label: LabelCom,
+    // CustomCom: CustomCom,
+    plainText: <span className={`plainText`}>{plainText}</span>,
+    Divider: <Divider />,
+    Input: <Input allowClear maxLength={32} {...realComProps} />,
+    InputNumber: <InputNumber allowClear maxLength={32} {...realComProps} />,
+    // InputCompact: <Input allowClear maxLength={32} {...realComProps} />,
+    TextArea: (
+      <Input.TextArea
+        autoSize={{
+          minRows: 3,
+          // maxRows: 5
+        }}
+        allowClear
+        {...realComProps}
+      />
+    ),
+    Select: selectCom,
+    Search: selectCom,
+    Password: <Input.Password {...realComProps} />,
+    Cascader: <Cascader {...realComProps} />,
+    AutoComplete: (
+      <AutoComplete {...realComProps}>
+        <Input />
+      </AutoComplete>
+    ),
+    // Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
+    // CheckboxGroup: <Checkbox.Group {...realComProps} />,
+    Checkbox: renderCheckboxOp(checkboxData, { opType, isDisabledAll }),
+    Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
+    DatePicker: <DatePicker {...realComProps} />,
+    MonthPicker: <DatePicker {...realComProps} picker="month" />,
+    RangePicker: (
+      <DatePicker.RangePicker format={'YYYY/MM/DD'} {...realComProps} />
+    ),
+    TreeSelect: (
+      <TreeSelect
+        treeDefaultExpandAll
+        allowClear
+        showSearch
+        // filterTreeNode={false}
+        treeNodeFilterProp={'label'}
+        {...realComProps}
+      ></TreeSelect>
+    ),
+  };
+
+  const formItemCom = formItemMap[formType];
+  // console.log(' useFormItem   ,   ： ', props, formType, formItemCom  )
+  return formItemCom;
+};
 
 const SmartFormTable = props => {
   const { edit, remove } = props; //
@@ -133,10 +251,11 @@ const SmartFormTable = props => {
 
                     {/* <Input className={`w-78 ${flipInX}`} /> */}
                     {/* {editing ? ( */}
-                    <Input
+                    {/* <Input
                       className={` ${bounceIn}`}
                       placeholder={`请输入${v.label}`}
-                    />
+                    /> */}
+                    {useFormItem(v)}
                     {/* ) : (
                       props.data[i] ? props.data[i][v.name] : '222'
                     )} */}

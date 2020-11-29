@@ -1,10 +1,5 @@
 export default [
   {
-    path: '/cs/csClientReport',
-    component: '@/pages/cs/CsClientReport',
-    title: '组织管理',
-  },
-  {
     path: '/cs/alarmNotify',
     component: '@/pages/cs/AlarmNotify',
     title: '告警通知',
@@ -16,7 +11,7 @@ export default [
   },
 
   {
-    path: '/cs/csHome',
+    path: '/cs/home',
     component: '@/pages/cs/CsHome',
     title: '首页',
   },
@@ -26,7 +21,7 @@ export default [
     title: '个人中心',
   },
   {
-    path: '/cs/csClientReport',
+    path: '/cs/clientReport',
     component: '@/pages/cs/CsClientReport',
     title: '客户报告',
   },
@@ -42,7 +37,7 @@ export default [
   },
 
   {
-    path: '/cs/csOrganize',
+    path: '/cs/organize',
     component: '@/pages/cs/CsOrganize',
     title: '组织管理',
   },

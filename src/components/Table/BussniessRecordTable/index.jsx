@@ -60,13 +60,16 @@ const BussniessRecordTable = props => {
     console.log('  action ：', action); //
     return (
       <>
-        <a
-          onClick={() => {
-            props.edit({ action: action, d_id: record.id });
-          }}
-        >
-          查看详情
-        </a>
+        {record.type !== 'demand_declaration' && (
+          <a
+            onClick={() => {
+              // console.log(' props.edit ： ', props, props.edit,   )//
+              props.edit({ action: action, d_id: record.id });
+            }}
+          >
+            查看详情
+          </a>
+        )}
         {/* <a onClick={() => props.edit({ action: 'detail', d_id: record.id, })}>查看详情</a> */}
         {/* <a onClick={() => props.edit({ action: 'powerDetail', d_id: record.id, })}>xx详情</a> */}
       </>

@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/workOrder';
 import * as teamServices from '@/services/shiftsManage';
-import * as userServices from '@/services/user';
+import * as userServices from '@/services/userManage';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { workOrderStatusMap, missionsTypeMap } from '@/configs';
@@ -223,10 +223,12 @@ export default {
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, { keyword: payload });
+      // const res = yield call(userServices.getSearchList, payload);
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(teamServices.getList, { keyword: payload });
+      // const res = yield call(teamServices.getList, { name: payload });
+      const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *dispatchOrderAsync({ payload, action, type }, { call, put }) {
@@ -237,14 +239,210 @@ export default {
     },
     *addTicketAsync({ payload, action, type }, { call, put }) {
       console.log(' addTicketAsync ： ', payload, type); //
+      // if (typeof res.file !== 'string') {
+      //   console.log(' filefile ： ', res.file); //
+      //   if (res.file && res.file.fileList.length > 0) {
+      //     const fileList = res.file.fileList;
+      //     res.file = fileList[fileList.length - 1].response.url;
+      //   // } else {
+      //   //   tips('logo不能为空！', 2);
+      //   //   return;
+      //   // }
+      // }
+
       const params = {
-        ...payload,
-        work_date: payload.work_date.format('YYYY-MM-DD'),
+        type: 1,
+        code: '888',
+        station_id: 79558,
+        person_liable: 1,
+        team_id: 72,
+        addr: 'addr',
+        job_content: 'job_content',
+        plan_start_time: '2020-01-22 00:00:00',
+        plan_end_time: '2020-02-22 00:00:00',
+        supplement: 'supplement',
+        file: null,
+        person_num: 66,
+        person_name: 'person_name',
+
+        delay: '2020-01-22 00:00:00',
+
+        finish_time: '2020-12-22 00:00:00',
+        matter1: 'matter1',
+        matter2: 'matter2',
+        safety_measure: 'safety_measure',
+        other: 'other',
+        confirm: 'confirm',
+        checkTime: 'checkTime',
+        checkPointTo: 'checkPointTo',
+        check: 'check',
+
+        the_end1: 1,
+        the_end2: 1,
+        the_end3: 1,
+        the_end4: 1,
+        the_end5: '已全部拆除或',
+        matter1: 1,
+        matter2: 1,
+        safety_measure: 1,
+        other: 1,
+        confirm: 1,
+        wt_person_changes1: [
+          {
+            person: 1,
+            type: 1,
+            time: '2020-11-11 00:00:00',
+            licensor: 1,
+          },
+        ],
+        wt_person_changes0: [
+          {
+            person: 11,
+            type: 0,
+            time: '2020-01-01 00:00:00',
+            licensor: 11,
+          },
+        ],
+
+        equipment_operate1: 1,
+        equipment_operate2: 1,
+        checkTime: '2020-02-02 00:00:00',
+        checkPointTo: 1,
+        checkMan: 1,
+
+        trigger: [
+          {
+            type: 'switch',
+            content: 'content',
+            done: 1,
+            supplement_content: 'supplement_content',
+            supplement_done: 1,
+          },
+        ],
+        ground_wire: [
+          {
+            type: 'ground_wire',
+            content: 'content',
+            done: 1,
+            supplement_content: 'supplement_content',
+            supplement_done: 1,
+          },
+        ],
+        warning_sign: [
+          {
+            type: 'warning_sign',
+            content: 'content',
+            done: 1,
+            supplement_content: 'supplement_content',
+            supplement_done: 1,
+          },
+        ],
+
+        wt_contact: [
+          {
+            time: '2020-03-02 00:00:00',
+            content: 'content',
+            contact_person: 1,
+            licensor: 1,
+          },
+        ],
+        wt_person_changes1: [
+          {
+            type: 1,
+            person: 1,
+            time: '2020-04-02 00:00:00',
+            licensor: 1,
+          },
+        ],
+        wt_person_changes0: [
+          {
+            type: 0,
+            person: 1,
+            time: '2020-05-02 00:00:00',
+            licensor: 1,
+          },
+        ],
+        wt_work_record: [
+          {
+            finish_time: '2020-05-02 00:00:00',
+            person_liable: 1,
+            licensor: 1,
+            start_time: '2020-06-02 00:00:00',
+          },
+        ],
+        wt_child_ticket: [
+          {
+            code: 1,
+            team_id: 72,
+            person_liable: 1,
+            permit_time: '2020-07-02 00:00:00',
+            finish_time: '2020-08-02 00:00:00',
+          },
+        ],
       };
-      console.log(' params ： ', params); //
-      const res = yield call(services.addTicket, params);
+
+      const {
+        equipment_operate1,
+        equipment_operate2,
+        matter1,
+        matter2,
+        safety_measure,
+        other,
+        confirm,
+
+        trigger,
+        ground_wire,
+        warning_sign,
+
+        wt_contact,
+        wt_work_record,
+        wt_child_ticket,
+
+        wt_person_changes1,
+        wt_person_changes0,
+
+        the_end1,
+        the_end2,
+        the_end3,
+        the_end4,
+        the_end5,
+        checkTime,
+        checkPointTo,
+        checkMan,
+      } = params;
+
+      const remarks = {
+        equipment_operate: [equipment_operate1, equipment_operate2],
+        matter: [matter1, matter2],
+        safety_measure,
+        other,
+        confirm,
+      };
+
+      const params2 = {
+        ...params,
+        protective_measure: [...trigger, ...ground_wire, ...warning_sign],
+        wt_contact,
+        wt_person_changes: [...wt_person_changes1, ...wt_person_changes0],
+        wt_work_record,
+        wt_child_ticket,
+        the_end: [the_end1, the_end2, the_end3, the_end4, the_end5],
+        remarks: remarks,
+        check: [checkTime, checkPointTo, checkMan],
+        // work_date: payload.work_date.format('YYYY-MM-DD'),
+      };
+      console.log(' params2 ： ', params, params2); //
+
+      // return
+      const res = yield call(services.addTicket, {
+        d_id: 1,
+        order_id: 1,
+        customer_id: 5996,
+
+        ...params2,
+      });
       // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      // yield put({ type: 'getListAsync' });
     },
   },
 };

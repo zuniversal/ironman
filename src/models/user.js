@@ -38,7 +38,7 @@ const getRoutes = path => {
     const val = dataMap[text];
     return val ? val : [];
   };
-  const routes = false
+  const routes = isDev
     ? [...managerRoutes, ...customerRoutes]
     : getRoutesMap(userInfo.accountType, routesMap);
   console.log(
@@ -156,6 +156,7 @@ export default {
 
   effects: {
     *loginAsync({ payload, action, type }, { call, put }) {
+      console.log(' loginAsync ： '); //
       const res = yield call(services.login, payload);
       console.log(' loginAsync ： ', res, payload, action); //
       setItem('token', res.rest.token, true);
@@ -244,7 +245,7 @@ export default {
 
   subscriptions: {
     setup: props => {
-      console.log(' 用户 setup ： ', props, this); //
+      // console.log(' 用户 setup ： ', props, this); //
       const { dispatch, history } = props; //
       history.listen(location => {
         console.log(' 监听路由 匹配 ： ', history, location); //

@@ -16,20 +16,22 @@ const QRCodeContent = props => {
   );
 
   const QRCodeContent = <QRCodeCom value={props.record}></QRCodeCom>;
+  const FullQRCode = <div className="dfc fullFixed">{QRCodeContent}</div>;
 
-  if (isShowExportPdf) {
-    console.log(' 111111111 ： ', QRCodeContent); //
-    return (
-      <ExportPdf onClose={() => setIsShowExportPdf(!isShowExportPdf)}>
-        <div className="dfc fullFixed">{QRCodeContent}</div>
-        sssssssssssssssssssssssssssssssssssssssssssssss
-      </ExportPdf>
-    );
-  }
+  // if (isShowExportPdf) {
+  //   console.log(' 111111111 ： ', QRCodeContent); //
+  //   return (
+  //     // <ExportPdf onClose={() => setIsShowExportPdf(!isShowExportPdf)}>
+  //     <ExportPdf onClose={() => {}}>
+  //       <div className="dfc fullFixed">{QRCodeContent}</div>
+  //       sssssssssssssssssssssssssssssssssssssssssssssss
+  //     </ExportPdf>
+  //   );
+  // }
 
   return (
     <div className="qrcodeWrapper">
-      <div className="title">M101进线柜</div>
+      <div className="title">{props.title}</div>
       {QRCodeContent}
       <div className="btnWrapper">
         <Button>
@@ -44,11 +46,16 @@ const QRCodeContent = props => {
         </Button>
         <Button>
           {/* <a onClick={() => tips('暂未实现！')}>打印</a> */}
-          <a onClick={() => setIsShowExportPdf(!isShowExportPdf)}>打印</a>
+          {/* <a onClick={() => setIsShowExportPdf(!isShowExportPdf)}>打印</a> */}
+          <a onClick={() => props.showExportPdf(FullQRCode)}>打印</a>
         </Button>
       </div>
     </div>
   );
+};
+
+QRCodeContent.defaultProps = {
+  title: '默认标题',
 };
 
 export default QRCodeContent;
