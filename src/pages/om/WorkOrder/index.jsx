@@ -57,8 +57,18 @@ class WorkOrder extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        {/* <Button type="primary" onClick={() => this.props.exportData({})}> */}
-        <Button type="primary" onClick={() => tips('暂未接口！', 2)}>
+        {/* <Button type="primary" onClick={() => this.props.exportExcelAsync({
+          order_ids: [1],
+        })}> */}
+        <Button
+          type="primary"
+          onClick={() =>
+            this.props.exportData({
+              order_ids: this.props.selectedRowKeys,
+            })
+          }
+        >
+          {/* <Button type="primary" onClick={() => tips('暂未接口！', 2)}> */}
           导出
         </Button>
       </div>
@@ -68,8 +78,14 @@ class WorkOrder extends PureComponent {
     return (
       <WorkOrderSearchForm
         formBtn={this.renderFormBtn}
-        getUser={this.props.getUserAsync}
+        getUserAsync={params =>
+          this.props.getUserAsync({
+            tag_id: 10,
+            keyword: params,
+          })
+        }
         userList={this.props.userList}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></WorkOrderSearchForm>
     );
@@ -215,7 +231,9 @@ class WorkOrder extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getUserAsync();
+    this.props.getUserAsync({
+      tag_id: 10,
+    });
     this.props.getTeamAsync();
     // this.props.addTicketAsync();
   }

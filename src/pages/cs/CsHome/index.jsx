@@ -64,9 +64,13 @@ class CsHome extends PureComponent {
   };
   renderCsHomeStationTable = params => {
     return (
-      <CsHomeStationTable
-        showFormModal={this.props.showFormModal}
-      ></CsHomeStationTable>
+      <>
+        <div className="homeTitle">电站状态</div>
+        <CsHomeStationTable
+          showFormModal={this.props.showFormModal}
+          dataSource={this.props.stationStatusList}
+        ></CsHomeStationTable>
+      </>
     );
   };
   renderSelectForm = params => {
@@ -83,12 +87,8 @@ class CsHome extends PureComponent {
         {...this.props}
         title={this.props.route.title}
         right={
-          <div className={`dfc`}>
-            <Icon
-              icon={'miniPower'}
-              className={'miniPower'}
-              onClick={() => window.open(MINI_POWER)}
-            ></Icon>
+          <div className={`dfc`} onClick={() => window.open(MINI_POWER)}>
+            <Icon icon={'miniPower'} className={'miniPower'}></Icon>
             <div className="pageSubTitle">我的微电网</div>
           </div>
         }
@@ -99,7 +99,9 @@ class CsHome extends PureComponent {
     return <CsHomeStatBox data={this.props.statisticData}></CsHomeStatBox>;
   };
   renderCsHomeStatEcharts = params => {
-    return <CsHomeStatEcharts></CsHomeStatEcharts>;
+    return (
+      <CsHomeStatEcharts data={this.props.powerInfoList}></CsHomeStatEcharts>
+    );
   };
   renderCsHomeTabsTable = params => {
     return <CsHomeTabsTable></CsHomeTabsTable>;
@@ -153,9 +155,19 @@ class CsHome extends PureComponent {
   };
   componentDidMount() {
     this.props.getStatisticAsync({});
+    this.props.getPowerInfoAsync({
+      customer: 5996,
+    });
+    this.props.getStationStatusAsync({});
   }
 
   render() {
+    console.log(
+      ' %c CsHome 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="csHome">
         {this.renderPageTitle()}

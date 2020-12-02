@@ -14,12 +14,12 @@ const ShiftsTransferSearchForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getTeamAsync,
-      selectData: props.teamList,
+      // formType: 'Search',
+      // selectSearch: props.getTeamAsync,
+      // selectData: props.teamList,
       itemProps: {
         label: '交班人',
-        name: 'transfer_team',
+        name: 'transfer_team_name',
       },
     },
     // {
@@ -32,12 +32,12 @@ const ShiftsTransferSearchForm = props => {
     //   },
     // },
     {
-      formType: 'Search',
-      selectSearch: props.getTeamAsync,
-      selectData: props.teamList,
+      // formType: 'Search',
+      // selectSearch: props.getTeamAsync,
+      // selectData: props.teamList,
       itemProps: {
         label: '接班人',
-        name: 'receive_team',
+        name: 'receive_team_name',
       },
     },
     {

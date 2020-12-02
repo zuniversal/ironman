@@ -89,6 +89,7 @@ class PowerStation extends PureComponent {
     return (
       <PowerStationSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
@@ -96,11 +97,50 @@ class PowerStation extends PureComponent {
           this.props.getPowerAsync({ name: params, type: '搜索' })
         }
         powerList={this.props.powerList}
+        getDistrictAsync={this.props.getDistrictAsync}
+        provinceList={this.props.provinceList}
+        citytList={this.props.citytList}
+        countryList={this.props.countryList}
       ></PowerStationSearchForm>
     );
   };
   onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
+    console.log(
+      ' onFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { form } = params;
+    if (params.value.province) {
+      console.log(' onFieldChange 清空 province ： '); //
+      const resetParams = {
+        city: null,
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { city, area, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      this.props.getDistrictAsync(data);
+      // this.props.getDistrictAsync({province: params.value.province});
+      this.props.getListAsync({ ...params.formData, ...resetParams });
+      return;
+    }
+    if (params.value.city) {
+      console.log(' onFieldChange 清空 city ： '); //
+      const resetParams = {
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { area, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+      this.props.getDistrictAsync(data);
+      // this.props.getDistrictAsync({city: params.value.city});
+      this.props.getListAsync({ ...params.formData, ...resetParams });
+      return;
+    }
+    console.log(' onFieldChange 列表搜索 ： '); //
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
@@ -276,6 +316,7 @@ class PowerStation extends PureComponent {
     this.props.getPowerAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
+    this.props.getDistrictAsync({});
     // this.props.showItemAsync({
     //   action: 'clientDetailAsync',
     //   d_id: 1,

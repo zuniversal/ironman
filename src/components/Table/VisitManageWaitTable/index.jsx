@@ -20,7 +20,7 @@ const VisitManageWaitTable = props => {
       dataIndex: '',
     },
     {
-      title: '客户',
+      title: '电站',
       dataIndex: '',
     },
     {
@@ -59,7 +59,7 @@ const VisitManageWaitTable = props => {
           })
         }
       >
-        完成
+        处理回访
       </a>
     </>
   );

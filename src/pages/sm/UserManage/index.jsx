@@ -63,6 +63,7 @@ class UserManage extends PureComponent {
     return (
       <UserManageSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         {...formProps}
       ></UserManageSearchForm>

@@ -162,7 +162,8 @@ class Client extends PureComponent {
     const { action, addItemAsync, editItemAsync, tableData } = this.props; //
     console.log(' adminList ： ', tableData); //
 
-    const adminIdLen = tableData.filter(v => v.id).length;
+    // const adminIdLen = tableData.filter(v => v.id).length;
+    const adminIdLen = tableData.length;
     console.log('  adminIdLen ：', adminIdLen); //
     if (adminIdLen === 0) {
       tips('必须添加管理员信息！', 2);
@@ -297,6 +298,7 @@ class Client extends PureComponent {
       <ClientSearchForm
         formBtn={this.renderFormBtn}
         // onFieldChange={params => this.getDistrictAsync({ keyword: params })}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         getDistrictAsync={this.props.getDistrictAsync}
         provinceList={this.props.provinceList}
@@ -316,31 +318,32 @@ class Client extends PureComponent {
     const { form } = params;
     if (params.value.province) {
       console.log(' onFieldChange 清空 province ： '); //
-      form.setFieldsValue({
+      const resetParams = {
         city: null,
-        site: null,
-      });
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { city, area, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      this.props.getDistrictAsync(data);
+      // this.props.getDistrictAsync({province: params.value.province});
+      this.props.getListAsync({ ...params.formData, ...resetParams });
+      return;
     }
     if (params.value.city) {
       console.log(' onFieldChange 清空 city ： '); //
-      form.setFieldsValue({
-        site: null,
-      });
-    }
-    if (params.value.province) {
-      const { city, site, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 province ： ', data); //
+      const resetParams = {
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { area, ...data } = params.formData;
+      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
       this.props.getDistrictAsync(data);
-    } else if (params.value.city) {
-      const { site, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 city ： ', data); //
-      this.props.getDistrictAsync(data);
+      // this.props.getDistrictAsync({city: params.value.city});
+      this.props.getListAsync({ ...params.formData, ...resetParams });
+      return;
     }
-    // if (params.value.site || params.value.name) {
-    //   this.props.getListAsync(params.formData);
-    //   return;
-    // }
-    console.log(' 列表搜索 ： '); //
+    console.log(' onFieldChange 列表搜索 ： '); //
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
 

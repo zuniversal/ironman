@@ -1,11 +1,17 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/csHome';
+import * as powerStationServices from '@/services/powerStation';
+import * as inspectMissionServices from '@/services/inspectMission';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'csHome';
 const { createActions } = init(namespace);
 
-const otherActions = ['getStatisticAsync', 'getPowerInfoAsync'];
+const otherActions = [
+  'getStatisticAsync',
+  'getPowerInfoAsync',
+  'getStationStatusAsync',
+];
 
 const batchTurnActions = [];
 
@@ -28,6 +34,7 @@ export default {
     itemDetail: {},
     statisticData: [],
     powerInfoList: [],
+    stationStatusList: [],
   },
 
   reducers: {
@@ -100,7 +107,17 @@ export default {
     getPowerInfo(state, { payload, type }) {
       return {
         ...state,
-        powerInfoList: payload.list,
+        powerInfoList: payload.bean.data,
+      };
+    },
+    getStationStatus(state, { payload, type }) {
+      return {
+        ...state,
+        stationStatusList: payload.list.map(v => ({
+          ...v,
+          defect: v.defect ? '有缺陷' : '无缺陷',
+          confirm: !v.confirm ? '已完成' : '未完成',
+        })),
       };
     },
   },
@@ -113,23 +130,19 @@ export default {
     },
     *getPowerInfoAsync({ payload, action, type }, { call, put }) {
       console.log(' getPowerInfoAsync ： ', payload, action, type); //
-      const res = yield call(services.getPowerInfo, payload);
-      yield put(action({ ...res, payload }));
+      const powerStationRes = yield call(powerStationServices.getList, payload);
+      console.log(' powerStationRes ： ', powerStationRes.list); //
+      if (powerStationRes.list[0].id) {
+        const res = yield call(services.getPowerInfo, {
+          station_id: powerStationRes.list[0].id,
+        });
+        console.log(' powerStationRes 有id ： ', powerStationRes, res); //
+        yield put(action({ ...res, payload }));
+      }
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
+    *getStationStatusAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(inspectMissionServices.getList, payload);
+      console.log(' getStationStatusAsync ： ', res); //
       yield put(action({ ...res, payload }));
     },
   },

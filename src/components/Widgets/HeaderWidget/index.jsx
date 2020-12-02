@@ -48,7 +48,7 @@ const HeaderWidget = props => {
         onClick={() => {
           props.toggle();
           if (props.system == 'OM') {
-            goPage('/cs/csHome');
+            goPage('/cs/home');
           } else {
             goPage('/om/home');
           }

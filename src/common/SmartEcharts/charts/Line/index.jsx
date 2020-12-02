@@ -54,17 +54,41 @@ const option = params => {
         type: 'category',
         data: [
           '00:00',
+
+          '01:00',
           '02:00',
+
+          '03:00',
           '04:00',
+
+          '05:00',
           '06:00',
+
+          '07:00',
           '08:00',
+
+          '09:00',
           '10:00',
+
+          '11:00',
           '12:00',
+
+          '13:00',
           '14:00',
+
+          '15:00',
           '16:00',
+
+          '17:00',
           '18:00',
+
+          '19:00',
           '20:00',
+
+          '21:00',
           '22:00',
+
+          '23:00',
         ],
         axisPointer: {
           type: 'shadow',
@@ -81,15 +105,15 @@ const option = params => {
         },
         splitLine,
       },
-      {
-        type: 'value',
-        name: '数据源2',
-        axisLabel: {
-          formatter: '{value}',
-          // rotate: 30,
-        },
-        splitLine,
-      },
+      // {
+      //   type: 'value',
+      //   name: '数据源2',
+      //   axisLabel: {
+      //     formatter: '{value}',
+      //     // rotate: 30,
+      //   },
+      //   splitLine,
+      // },
     ],
 
     // series: myExpenseBarTxt.map((v, i) => {
@@ -111,54 +135,68 @@ const option = params => {
         symbolSize: 8,
         itemStyle: {
           normal: {
-            color: '#FD7D7D',
-            borderWidth: 5,
-            borderColor: '#FD7D7D', //拐点边框颜色
-          },
-        },
-        data: [
-          92.6,
-          5.9,
-          9.0,
-          26.4,
-          28.7,
-          70.7,
-          175.6,
-          182.2,
-          48.7,
-          18.8,
-          6.0,
-          82.3,
-        ],
-      },
-      {
-        name: '数据源2',
-        type: 'line',
-        yAxisIndex: 1,
-        symbol: 'circle',
-        symbolSize: 8,
-        itemStyle: {
-          normal: {
             color: '#1CBB51',
-            borderWidth: 5,
+            borderWidth: 3,
             borderColor: '#1CBB51', //拐点边框颜色
           },
         },
         data: [
-          51.6,
-          751.9,
-          891.0,
-          261.4,
-          281.7,
-          70.7,
-          151.6,
-          121.2,
-          481.7,
-          181.8,
-          61.0,
-          152.3,
+          121.6,
+          151.9,
+          191.0,
+          201.7,
+          231.4,
+          261.7,
+          281.6,
+          221.2,
+          284.3,
+          321.7,
+          371.0,
+          351.8,
+
+          353.6,
+          323.9,
+          283.0,
+          213.4,
+          253.7,
+          243.7,
+          213.6,
+          253.2,
+          113.7,
+          183.8,
+          133.0,
+          163.3,
         ],
+        data,
       },
+      // {
+      //   name: '数据源2',
+      //   type: 'line',
+      //   yAxisIndex: 1,
+      //   symbol: 'circle',
+      //   symbolSize: 8,
+      //   itemStyle: {
+      // normal: {
+      //   color: '#FD7D7D',
+      //   borderWidth: 5,
+      //   borderColor: '#FD7D7D', //拐点边框颜色
+      //     },
+      //   },
+      //   data: [
+      //     51.6,
+      //     751.9,
+      //     891.0,
+      //     261.4,
+      //     281.7,
+      //     70.7,
+      //     151.6,
+      //     121.2,
+      //     481.7,
+      //     181.8,
+      //     61.0,
+      //     152.3,
+      //   ],
+      // },
     ],
   };
 };

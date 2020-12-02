@@ -111,6 +111,7 @@ class InspectPlan extends PureComponent {
         getUserAsync={params => this.props.getUserAsync({ keyword: params })}
         userList={this.props.userList}
         tagUserList={this.props.tagUserList}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         init={this.props.searchInfo}
       ></InspectPlanSearchForm>

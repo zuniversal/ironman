@@ -51,6 +51,7 @@ class NewsKnow extends PureComponent {
       <SearchKwForm
         formBtn={this.renderFormBtn}
         className={'fje'}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         keyword={'title'}
         label={'标题'}

@@ -540,11 +540,13 @@ export default {
 
     *addTableItemAsync({ payload, action, type }, { call, put, select }) {
       console.log(' addTableItemAsync ： ', payload);
+      const { itemDetail } = yield select(state => state[namespace]);
       // const res = yield call(services.addAdmin, {
       //   customer_admin_list: [payload],
       // });
       const params = {
         ...payload,
+        customer_id: itemDetail.id,
         account: {
           password: payload.password ? payload.password : null,
           // 认证状态 默认值 1
@@ -557,7 +559,8 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *editTableItemAsync({ payload, action, type }, { call, put, select }) {
-      console.log(' editTableItemAsync ： ', payload);
+      const { itemDetail } = yield select(state => state[namespace]);
+      console.log(' editTableItemAsync ： ', payload, itemDetail);
       const { account, ...rest } = payload;
 
       // const res = yield call(services.editAdmin, rest);
@@ -565,6 +568,7 @@ export default {
       const res = yield call(services.editAdmin, {
         // ...rest,
         ...payload,
+        customer_id: itemDetail.id,
         email: null,
         account: {
           password: payload.password ? payload.password : null,
@@ -576,13 +580,15 @@ export default {
       });
       yield put(action({ ...res, payload }));
     },
-    *removeTableItemAsync({ payload, action, type }, { call, put }) {
+    *removeTableItemAsync({ payload, action, type }, { call, put, select }) {
+      const { itemDetail } = yield select(state => state[namespace]);
       console.log(' removeTableItemAsync ： ', payload);
       if (payload.action === 'remove') {
         // const res = yield call(services.removedAdmin, payload);
         const res = yield call(services.removedAdmin, {
           d_id: payload.id,
           id: `${payload.id}`,
+          customer_id: itemDetail.id,
         });
       }
       yield put(action({ payload }));

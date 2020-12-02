@@ -56,6 +56,7 @@ class AlarmTemplate extends PureComponent {
       <SearchKwForm
         formBtn={this.renderFormBtn}
         className={'fje'}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         keyword={'name'}
         label={'名称'}

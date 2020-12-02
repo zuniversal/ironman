@@ -114,8 +114,7 @@ class ShiftsArrange extends PureComponent {
     return (
       <ShiftsArrangeSearchForm
         formBtn={this.renderFormBtn}
-        // getTeam={(params) => this.props.dispatch(actions.getTeamAsync(params))}
-        getTeam={this.props.getTeamAsync}
+        getTeamAsync={params => this.props.getTeamAsync({ name: params })}
         teamList={this.props.teamList}
         init={{
           ...this.props.searchInfo,
@@ -123,6 +122,7 @@ class ShiftsArrange extends PureComponent {
             ? `${this.props.searchInfo.team}`
             : null,
         }}
+        // init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></ShiftsArrangeSearchForm>
     );

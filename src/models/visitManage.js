@@ -7,7 +7,7 @@ const { createActions } = init(namespace);
 
 const otherActions = [];
 
-const batchTurnActions = [];
+const batchTurnActions = ['onRadioChange'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -26,6 +26,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    chenckItem: 'waitVisible',
   },
 
   reducers: {
@@ -87,6 +89,14 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    onRadioChange(state, { payload, type }) {
+      console.log(' onRadioChange ： ', payload, payload.target.value); //
+      return {
+        ...state,
+        chenckItem: payload.target.value,
       };
     },
   },

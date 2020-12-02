@@ -253,18 +253,18 @@ export const managerRoutes = [
     component: '../Kpi',
     routes: [
       {
-        path: '/admin/appraise',
+        path: '/om/appraise',
         name: '考核评价',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
         component: '../Appraise',
       },
       {
-        path: '/admin/examine',
+        path: '/om/assessment',
         name: '考核配置',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
-        component: '../Examine',
+        component: '../assessment',
       },
     ],
   },
@@ -276,7 +276,7 @@ export const managerRoutes = [
     component: '../Waiter',
     routes: [
       {
-        path: '/cs/online',
+        path: '/om/onlineService',
         name: '在线客服',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,

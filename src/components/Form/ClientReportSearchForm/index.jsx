@@ -26,21 +26,21 @@ const ClientReportSearchForm = props => {
       //
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '客户',
       },
       //
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: ' 户号',
       },
       //
     },
     {
-      formType: 'Select',
+      // formType: 'Select',
       itemProps: {
         label: '巡检组长',
       },

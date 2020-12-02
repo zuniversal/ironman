@@ -21,7 +21,7 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  complete: `文件下载`,
+  complete: `完成回访`,
 };
 
 // const mapStateToProps = ({ VisitManage, }) => VisitManage;
@@ -44,18 +44,14 @@ class VisitManage extends PureComponent {
   };
   renderSearchForm = params => {
     return (
-      <div>
+      <div className={'dfc'}>
         <Radio.Group
           options={visitManageOptions}
           onChange={this.props.onRadioChange}
           value={this.props.chenckItem}
           optionType="button"
+          buttonStyle="solid"
         />
-        {/* <ShiftsManageSearchForm
-          formBtn={this.renderFormBtn}
-          // onSubmit={this.onSubmit}
-          // onFail={this.onFail}
-        ></ShiftsManageSearchForm> */}
       </div>
     );
   };
@@ -73,8 +69,13 @@ class VisitManage extends PureComponent {
       showFormModal: this.props.showFormModal,
     };
 
-    return <VisitManageWaitTable {...tableProps}></VisitManageWaitTable>;
-    return <VisitManageRecordTable {...tableProps}></VisitManageRecordTable>;
+    const tableMap = {
+      waitVisible: VisitManageWaitTable,
+      visitRecord: VisitManageRecordTable,
+    };
+
+    const TableCom = tableMap[this.props.chenckItem];
+    return <TableCom {...tableProps}></TableCom>;
   };
 
   onOk = async props => {
@@ -130,6 +131,12 @@ class VisitManage extends PureComponent {
   };
 
   render() {
+    console.log(
+      ' %c VisitManage 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="VisitManage">
         {this.renderSearchForm()}

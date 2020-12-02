@@ -12,9 +12,9 @@ const PowerStationSearchForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getPowerAsync,
-      selectData: props.powerList,
+      // formType: 'Search',
+      // selectSearch: props.getPowerAsync,
+      // selectData: props.powerList,
       itemProps: {
         label: '电站名称',
         name: 'name',
@@ -25,7 +25,7 @@ const PowerStationSearchForm = props => {
     {
       itemProps: {
         label: '客户名称',
-        name: 'customer',
+        name: 'customer_name',
       },
     },
     ...provinceFormConfig(props),

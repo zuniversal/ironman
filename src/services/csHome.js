@@ -9,6 +9,5 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getStatistic = p =>
-  noTipsGet(`console/CSP/home_page/statistic`, p);
-export const getPowerInfo = p => noTipsGet(`console/CSP/home_page/ep_data`, p);
+export const getStatistic = p => noTipsGet(`console/home_page/statistic`, p);
+export const getPowerInfo = p => noTipsGet(`console/home_page/ep_data`, p);

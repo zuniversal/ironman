@@ -62,6 +62,7 @@ class InspectRecord extends PureComponent {
     return (
       <SearchKwForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         label={'名称'}
         noLabel

@@ -4,6 +4,7 @@ import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonthDay } from '@/utils';
+import moment from 'moment'; //
 
 const namespace = 'shiftsTransfer';
 const { createActions } = init(namespace);
@@ -59,7 +60,9 @@ export default {
     count: 0,
     itemDetail: {},
     d_id: '',
-    searchInfo: {},
+    searchInfo: {
+      handover_time: moment(),
+    },
     teamList: [
       // { label: 'xxx', value: 'xxx1' },
       // { label: 'yyy', value: 'yyy1' },
@@ -160,7 +163,7 @@ export default {
       const { searchInfo } = yield select(state => state[namespace]);
       const params = {
         ...searchInfo,
-        ...formatSearch(payload),
+        ...payload,
       };
       console.log(
         ' getListAsync  payload ： ',
@@ -169,7 +172,8 @@ export default {
         action,
         params,
       ); //
-      const res = yield call(services.getList, params);
+      // const res = yield call(services.getList, params);
+      const res = yield call(services.getList, formatSearch(params));
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {

@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Table, Icon, notification, Modal, Button, Tag } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
+import Draggable from 'react-draggable';
 
 export const SMALL_WIDTH = '400px'; //
 
@@ -21,6 +22,8 @@ class SmartModal extends PureComponent {
     super(props);
     this.state = {
       show: false,
+      disabled: false,
+      disabled: true,
     };
   }
   onShow = e => {
@@ -97,6 +100,9 @@ class SmartModal extends PureComponent {
         // onOk={this.onOk}
         // onCancel={this.onCancel}
         maskClosable={maskClosable}
+        modalRender={modal => (
+          <Draggable disabled={this.state.disabled}>{modal}</Draggable>
+        )}
         footer={[
           !hideCancel ? (
             <Button key="cancel" onClick={this.onCancel}>

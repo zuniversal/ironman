@@ -90,7 +90,7 @@ const resss = getWeek(datasss);
 
 export const nowYear = new Date().getFullYear();
 export const nowMonth = new Date().getMonth() + 1;
-export const nowDay = new Date().getDate() + 1;
+export const nowDay = new Date().getDate();
 export const nowYearMonth = `${nowYear}-${nowMonth}`;
 export const nowYearMonthDay = `${nowYear}-${nowMonth}-${nowDay}`;
 export const getCountDays = (month = nowMonth, year = nowYear) =>

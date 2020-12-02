@@ -622,6 +622,8 @@ const ClientForm = props => {
       modifyTableItem={props.modifyTableItem}
       dataSource={dataSource}
       isDisabledAll={!['add', 'edit'].includes(action)}
+      noLimitAdd
+      hideSaveEdit={['add'].includes(action)}
     ></ReduxTable>,
   ];
 

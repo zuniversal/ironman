@@ -5,7 +5,13 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'home';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = [
+  'getStatisticAsync',
+  'getOrdersChartAsync',
+  'getInspectionsChartAsync',
+  'getPendingOrdersAsync',
+  'getInspectionTasksAsync',
+];
 
 const batchTurnActions = ['homeSetting'];
 
@@ -26,6 +32,14 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    chartSearchInfo: {},
+    statisticData: {},
+    chartData: {},
+    ordersChartData: {},
+    inspectionsChartData: {},
+    pendingOrdersList: [],
+    inspectionTasksList: [],
   },
 
   reducers: {
@@ -97,29 +111,95 @@ export default {
         ),
       };
     },
+
+    getStatistic(state, { payload, type }) {
+      console.log(' getStatistic ： ', state, payload); //
+      return {
+        ...state,
+        statisticData: payload.bean,
+      };
+    },
+    getChart(state, { payload, type }) {
+      console.log(' getChart ： ', state, payload); //
+      const { chartSearchInfo } = state;
+
+      return {
+        ...state,
+        chartData: payload.bean,
+        chartSearchInfo: {
+          ...chartSearchInfo,
+          ...payload,
+        },
+      };
+    },
+    getOrdersChart(state, { payload, type }) {
+      console.log(' getOrdersChart ： ', state, payload); //
+      return {
+        ...state,
+        chartData: payload.bean,
+        // ordersChartData: payload.bean,
+      };
+    },
+    getInspectionsChart(state, { payload, type }) {
+      console.log(' getInspectionsChart ： ', state, payload); //
+      return {
+        ...state,
+        chartData: payload.bean,
+        // inspectionsChartData: payload.bean,
+      };
+    },
+    getPendingOrders(state, { payload, type }) {
+      console.log(' getPendingOrders ： ', state, payload); //
+      return {
+        ...state,
+        pendingOrdersList: payload.list.map(v => ({
+          ...v,
+          created_time: v.created_time.split('T')[0],
+        })),
+      };
+    },
+    getInspectionTasks(state, { payload, type }) {
+      console.log(' getInspectionTasks ： ', state, payload); //
+      return {
+        ...state,
+        inspectionTasksList: payload.list.map(v => ({
+          ...v,
+          created_time: v.created_time.split('T')[0],
+        })),
+      };
+    },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
+    *getStatisticAsync({ payload, action, type }, { call, put }) {
+      console.log(' getStatisticAsync ： ', payload, action, type); //
+      const res = yield call(services.getStatistic, payload);
       yield put(action(res));
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
+    *getChartAsync({ payload, action, type }, { call, put }) {
+      console.log(' getChartAsync ： ', payload, action, type); //
+      const res = yield call(services.getChart, payload);
       yield put(action(res));
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+    *getOrdersChartAsync({ payload, action, type }, { call, put }) {
+      console.log(' getOrdersChartAsync ： ', payload, action, type); //
+      const res = yield call(services.getOrdersChart, payload);
+      yield put(action(res));
     },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+    *getInspectionsChartAsync({ payload, action, type }, { call, put }) {
+      console.log(' getInspectionsChartAsync ： ', payload, action, type); //
+      const res = yield call(services.getInspectionsChart, payload);
+      // yield put(action(res));
+    },
+    *getPendingOrdersAsync({ payload, action, type }, { call, put }) {
+      console.log(' getPendingOrdersAsync ： ', payload, action, type); //
+      const res = yield call(services.getPendingOrders, payload);
+      yield put(action(res));
+    },
+    *getInspectionTasksAsync({ payload, action, type }, { call, put }) {
+      console.log(' getInspectionTasksAsync ： ', payload, action, type); //
+      const res = yield call(services.getInspectionTasks, payload);
+      yield put(action(res));
     },
   },
 };

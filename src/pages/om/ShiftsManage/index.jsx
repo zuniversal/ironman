@@ -14,6 +14,7 @@ import SmartHOC from '@/common/SmartHOC';
 import { history, connect } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';
 import { nowYearMonth, tips } from '@/utils';
+import moment from 'moment';
 
 const TITLE = '班组';
 
@@ -85,6 +86,7 @@ class ShiftsManage extends PureComponent {
     return (
       <ShiftsManageSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></ShiftsManageSearchForm>
     );
@@ -135,9 +137,10 @@ class ShiftsManage extends PureComponent {
     this.props.dispatch({
       type: 'shiftsArrange/setSearchAsync',
       payload: {
-        team: params.id,
+        team: `${params.id}`,
         teamName: params.name,
         // schedule_date: nowYearMonth,
+        schedule_date: moment(),
       },
     });
     const page = `${SHIFTSARRANGE}team=${params.id}&name=${params.name}&schedule_date=${nowYearMonth}`;

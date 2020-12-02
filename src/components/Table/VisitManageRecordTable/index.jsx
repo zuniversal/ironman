@@ -58,7 +58,7 @@ const VisitManageRecordTable = props => {
       <a
         onClick={() =>
           props.showFormModal({
-            action: 'detail',
+            action: 'complete',
             d_id: record.id,
           })
         }

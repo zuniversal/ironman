@@ -190,7 +190,7 @@ export default {
       };
     },
     setSearchInfo(state, { payload, type }) {
-      console.log(' setSearchInfo ： ', payload); //
+      console.log(' setSearchInfo ： ', state, payload); //
       return {
         ...state,
         searchInfo: {
@@ -267,7 +267,7 @@ export default {
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
       console.log(' getTeamAsync ： ', payload); //
-      const res = yield call(teamServices.getList, { keyword: payload });
+      const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     // *setSearchAsync({ payload, type }, { call, put }) {

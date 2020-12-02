@@ -36,7 +36,7 @@ export const TIME_ZERO = ' 00:00:00';
 
 export const LOGIN = '/login';
 export const HOME = '/om/home';
-export const CS_HOME = '/cs/csHome';
+export const CS_HOME = '/cs/home';
 export const homeMap = {
   manager: HOME,
   customer: CS_HOME,

@@ -19,12 +19,12 @@ import three from '@/static/assets/three.png'; //
 import { ANIMATE } from '@/constants'; //
 
 const groupData = [
-  { title: '小组 1', right: '323222' },
-  { title: '小组 1', right: '323222' },
-  { title: '小组 1', right: '323222' },
-  { title: '小组 1', right: '323222' },
-  { title: '小组 1', right: '323222' },
-  { title: '小组 1', right: '323222' },
+  { title: '小组 1', right: '323' },
+  { title: '小组 2', right: '312' },
+  { title: '小组 3', right: '265' },
+  { title: '小组 4', right: '241' },
+  { title: '小组 5', right: '213' },
+  { title: '小组 6', right: '207' },
 ];
 
 const rankIconMap = {
@@ -36,7 +36,7 @@ const rankIconMap = {
 const HomeGroupRank = props => {
   return (
     <div className={'homeGroupRank '}>
-      {props.dataSource.map((v, i) => (
+      {props.data.map((v, i) => (
         <div className={`rowWrapper ${ANIMATE.flipInX} `} key={i}>
           <div className="left">
             {i < 3 ? (
@@ -56,11 +56,11 @@ const HomeGroupRank = props => {
 };
 
 HomeGroupRank.defaultProps = {
-  dataSource: groupData,
+  data: groupData,
 };
 
 HomeGroupRank.propTypes = {
-  dataSource: PropTypes.array,
+  data: PropTypes.array,
 };
 
 export default HomeGroupRank;

@@ -78,6 +78,7 @@ class MissionsManage extends PureComponent {
     return (
       <MissionsManageSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></MissionsManageSearchForm>
     );

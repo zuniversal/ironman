@@ -112,17 +112,17 @@ const WorkOrderTable = props => {
         </a>
       )}
       <a
-        onClick={() =>
-          // props.exportData({ action: 'exportData', d_id: record.id })
-          tips('暂无接口！', 2)
+        onClick={
+          () => props.exportData({ action: 'exportData', d_id: record.id })
+          // tips('暂无接口！', 2)
         }
       >
         导出
       </a>
-      <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}>
-        {/* <a onClick={() => tips('还未开发完成！', 2)}> */}
+      {/* <a onClick={() => props.edit({ action: 'addTicket', d_id: record.id })}> */}
+      {/* <a onClick={() => tips('还未开发完成！', 2)}>
         添加工作票
-      </a>
+      </a> */}
     </>
   );
 

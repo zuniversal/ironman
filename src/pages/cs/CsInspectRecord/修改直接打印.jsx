@@ -56,6 +56,7 @@ class CsInspectRecord extends PureComponent {
     return (
       <CsInspectRecordSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></CsInspectRecordSearchForm>
     );

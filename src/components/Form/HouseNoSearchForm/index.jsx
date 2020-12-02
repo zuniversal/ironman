@@ -27,12 +27,13 @@ const HouseNoSearchForm = props => {
 
   const configs = [
     {
-      formType: 'Search',
-      selectSearch: props.getClientAsync,
-      selectData: props.clientList,
+      // formType: 'Search',
+      // selectSearch: props.getClientAsync,
+      // selectData: props.clientList,
       itemProps: {
         label: '所属客户',
         name: 'customer',
+        // name: 'customer_name',
       },
       comProps: {
         className: 'w-160',

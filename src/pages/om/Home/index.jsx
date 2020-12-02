@@ -68,16 +68,36 @@ class Home extends PureComponent {
     );
   };
   renderHomeStatBox = params => {
-    return <HomeStatBox></HomeStatBox>;
+    return <HomeStatBox data={this.props.statisticData}></HomeStatBox>;
+  };
+  onOptionChange = params => {
+    console.log(' onOptionChange,  , ： ', params);
+    const data = {
+      ...params,
+    };
+    if (params.request) {
+      data.start_time = null;
+      data.end_time = null;
+    }
   };
   renderHomeStatEcharts = params => {
-    return <HomeStatEcharts></HomeStatEcharts>;
+    return (
+      <HomeStatEcharts
+        // ordersChartList={this.props.ordersChartList}
+        // inspectionsChartList={this.props.inspectionsChartList}
+        chartData={this.props.chartData}
+        getEchartData={this.getEchartData}
+        onOptionChange={this.onOptionChange}
+      ></HomeStatEcharts>
+    );
   };
   renderHomeInspectMissionTable = params => {
     return (
       <div className="">
         <div className="homeTitle">待巡检任务</div>
-        <HomeInspectMissionTable></HomeInspectMissionTable>
+        <HomeInspectMissionTable
+          dataSource={this.props.inspectionTasksList}
+        ></HomeInspectMissionTable>
       </div>
     );
   };
@@ -85,7 +105,9 @@ class Home extends PureComponent {
     return (
       <div className="">
         <div className="homeTitle">待处理工单</div>
-        <HomeWorkOrderTable></HomeWorkOrderTable>
+        <HomeWorkOrderTable
+          dataSource={this.props.pendingOrdersList}
+        ></HomeWorkOrderTable>
       </div>
     );
   };
@@ -142,6 +164,14 @@ class Home extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getStatisticAsync();
+    this.props.getOrdersChartAsync();
+    this.props.getInspectionsChartAsync();
+    this.props.getPendingOrdersAsync();
+    this.props.getInspectionTasksAsync();
+  }
 
   render() {
     console.log(

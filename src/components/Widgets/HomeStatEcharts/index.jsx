@@ -25,10 +25,12 @@ import { ANIMATE } from '@/constants'; //
 const statConfig = [
   {
     tab: '巡检统计',
+    request: 'inspect',
     num: '126560',
   },
   {
     tab: '工单统计',
+    request: 'workOrder',
     num: '126560',
   },
 ];
@@ -53,16 +55,26 @@ const xAxis = [
 const { TabPane } = Tabs;
 
 const StatTabPanes = props => {
-  const callback = key => {
-    console.log(' callback   ,   ： ', key);
+  console.log(' StatTabPanes ： ', props); //
+  const [activeKey, setActiveKey] = useState('0');
+  const onChange = index => {
+    console.log(' onChange   ,   ： ', index, activeKey);
+    setActiveKey(index);
+    props.onOptionChange(statConfig[index]);
   };
 
   return (
     <div className="statTabPanes">
       <Tabs
-        defaultActiveKey="0"
-        onChange={callback}
-        tabBarExtraContent={<TimeChoice></TimeChoice>}
+        // defaultActiveKey="0"
+        activeKey={activeKey}
+        onChange={onChange}
+        tabBarExtraContent={
+          <TimeChoice
+            onOptionChange={props.onOptionChange}
+            key={activeKey}
+          ></TimeChoice>
+        }
       >
         {statConfig.map((v, i) => (
           <TabPane tab={v.tab} key={i}>
@@ -84,7 +96,9 @@ const StatTabPanes = props => {
               >
                 <div className="homeGroupRankWrapper">
                   <div className="homeTitle">小组排名</div>
-                  <HomeGroupRank></HomeGroupRank>
+                  <HomeGroupRank
+                  // data={props.rankData}
+                  ></HomeGroupRank>
                 </div>
               </Col>
             </Row>
@@ -99,12 +113,19 @@ const HomeStatEcharts = props => {
   console.log(' HomeStatEcharts   props, ,   ： ', props);
   return (
     <div className="homeStatEchartsWrapper">
-      <StatTabPanes></StatTabPanes>
+      <StatTabPanes
+        {...props}
+        barData={props.chartData.order_data}
+        // barData={props.chartData.inspection_task_data}
+        rankData={props.chartData.rank_data}
+      ></StatTabPanes>
     </div>
   );
 };
 
-HomeStatEcharts.defaultProps = {};
+HomeStatEcharts.defaultProps = {
+  chartData: {},
+};
 
 HomeStatEcharts.propTypes = {};
 

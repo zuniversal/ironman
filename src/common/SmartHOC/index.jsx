@@ -400,6 +400,7 @@ export default ({
           actions.exportDataAsync({
             page: 1,
             page_size: 100,
+            ...params,
           }),
         )
       ).bean;
@@ -428,9 +429,10 @@ export default ({
       }
     };
 
-    getList = (params = { page: 1, page_size: 10 }) => {
+    getList = (params = {}) => {
+      // getList = (params = { page: 1, page_size: 10 }) => {
       console.log(
-        '    getList ： ',
+        '    getList page: 1, page_size: 10： ',
         actions.getListAsync,
         params,
         this.state,

@@ -16,10 +16,11 @@ const { Countdown } = Statistic;
 
 const statConfig = [
   {
+    dataKey: 'order_data',
     title: '完成工单数',
     num: '126560',
-    week: '周同比  ↑12%',
-    day: '日环比  ↓11%',
+    week: '周同比 ',
+    day: '日环比 ',
     style: {
       background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
       boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
@@ -27,10 +28,11 @@ const statConfig = [
     icon: completeWorkOrder,
   },
   {
+    dataKey: 'task_data',
     title: '完成客户任务数',
     num: '126560',
-    week: '周同比  ↑12%',
-    day: '日环比  ↓11%',
+    week: '周同比 ',
+    day: '日环比 ',
     style: {
       background: 'linear-gradient(135deg, #FEB833 0%, #FE9833 100%)',
       boxShadow: '0px 5px 10px rgba(253, 156, 51, 0.5)',
@@ -38,10 +40,11 @@ const statConfig = [
     icon: completeMissionNum,
   },
   {
+    dataKey: 'inspe_data',
     title: '完成巡检数',
     num: '126560',
-    week: '周同比  ↑12%',
-    day: '日环比  ↓11%',
+    week: '周同比 ',
+    day: '日环比 ',
     style: {
       background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
       boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
@@ -52,6 +55,9 @@ const statConfig = [
 
 const StatBoxCom = props => {
   // console.log(' StatBoxCom   props, ,   ： ', props);
+  const { data } = props; //
+  const weekDirectionText = data.week_compare >= 0 ? '↑' : '↓';
+  const dayDirectionText = data.day_compare >= 0 ? '↑' : '↓';
   return (
     <StatBox
       {...props}
@@ -64,7 +70,7 @@ const StatBoxCom = props => {
             {props.title}
           </div> */}
             <div className="num">
-              <Statistic title={props.title} value={props.num} />
+              <Statistic title={props.title} value={data.total_count ?? 0} />
             </div>
           </div>
         </>
@@ -72,8 +78,13 @@ const StatBoxCom = props => {
       right={
         <>
           <div className="stat">
-            <div className="statInfo">{props.week}</div>
-            <div className="statInfo">{props.day}</div>
+            <div className="statInfo">
+              {props.week} {weekDirectionText}{' '}
+              {Math.abs(data.week_compare) * 100}%
+            </div>
+            <div className="statInfo">
+              {props.day} {dayDirectionText} {Math.abs(data.day_compare) * 100}%
+            </div>
           </div>
         </>
       }
@@ -81,12 +92,16 @@ const StatBoxCom = props => {
   );
 };
 
+StatBoxCom.defaultProps = {
+  data: {},
+};
+
 const HomeStatBox = props => {
   // console.log(' HomeStatBox   props, ,   ： ', props);
   return (
     <div className="homeStatBoxWrapper">
       {statConfig.map((v, i) => (
-        <StatBoxCom {...v} key={i}></StatBoxCom>
+        <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
       ))}
     </div>
   );

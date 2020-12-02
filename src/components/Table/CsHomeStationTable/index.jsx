@@ -11,6 +11,7 @@ import './style.less';
 import { Tabs } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsStatusMap } from '@/configs';
 
 const CsHomeStationTable = props => {
   const { showModal, edit, remove, tdClick, complete } = props; //
@@ -22,27 +23,28 @@ const CsHomeStationTable = props => {
     },
     {
       title: '巡检名称',
-      dataIndex: 'id',
+      dataIndex: 'name',
     },
     {
       title: '巡检状态',
-      dataIndex: 'id',
+      dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
     {
       title: '巡检人',
-      dataIndex: 'id',
+      dataIndex: ['team', 'team_headman'],
     },
     {
       title: '完成时间',
-      dataIndex: 'id',
+      dataIndex: 'work_date',
     },
     {
       title: '巡检结果',
-      dataIndex: 'id',
+      dataIndex: 'confirm',
     },
     {
-      title: '否有缺陷登记',
-      dataIndex: 'id',
+      title: '是否有缺陷登记',
+      dataIndex: 'defect',
     },
   ];
 
@@ -58,9 +60,10 @@ const CsHomeStationTable = props => {
     <SmartTable
       columns={columns}
       scroll={{ x: 800 }}
-      rowLength={3}
+      // rowLength={3}
       pagination={false}
-      extra={extra}
+      // extra={extra}
+      noActionCol
       noDefault
       {...props}
     ></SmartTable>

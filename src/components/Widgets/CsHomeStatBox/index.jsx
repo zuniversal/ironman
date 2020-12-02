@@ -14,6 +14,7 @@ const { Countdown } = Statistic;
 
 const statConfig = [
   {
+    dataKey: 'operating_days',
     title: '运营总天数',
     num: '126560',
     key: 'operating_days',
@@ -24,6 +25,7 @@ const statConfig = [
     icon: operateDays,
   },
   {
+    dataKey: 'total_load',
     title: '总负荷',
     num: '126560',
     key: 'total_load',
@@ -34,6 +36,7 @@ const statConfig = [
     icon: weights,
   },
   {
+    dataKey: 'inspection_completed_num',
     title: '完成巡检数',
     num: '126560',
     key: 'inspection_completed_num',
@@ -58,7 +61,7 @@ const StatBoxCom = props => {
           {props.title}
         </div> */}
             <div className="num">
-              <Statistic title={props.title} value={props.value} />
+              <Statistic title={props.title} value={props.data ?? 0} />
             </div>
           </div>
         </>
@@ -77,7 +80,8 @@ const CsHomeStatBox = props => {
   return (
     <div className="csHomeStatBoxWrapper">
       {statConfig.map((v, i) => (
-        <StatBoxCom {...v} {...props} value={props[v.key]} key={i}></StatBoxCom>
+        // <StatBoxCom {...v} {...props} value={props[v.key]} key={i}></StatBoxCom>
+        <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
       ))}
     </div>
   );

@@ -14,11 +14,12 @@ const ShiftsArrangeSearchForm = props => {
   const config = [
     {
       formType: 'Search',
-      selectSearch: props.getTeam,
+      selectSearch: props.getTeamAsync,
       selectData: props.teamList,
       itemProps: {
         label: '班组',
         name: 'team',
+        // name: 'team_name',
       },
     },
     {

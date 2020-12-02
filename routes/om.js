@@ -1,5 +1,20 @@
 export default [
   {
+    path: '/om/appraise',
+    component: '@/pages/om/Appraise',
+    title: '考核评价',
+  },
+  {
+    path: '/om/assessment',
+    component: '@/pages/om/Assessment',
+    title: '考核配置',
+  },
+  {
+    path: '/om/onlineService',
+    component: '@/pages/om/OnlineService',
+    title: '在线客服',
+  },
+  {
     path: '/om/visitManage',
     component: '@/pages/om/VisitManage',
     title: '回访管理',

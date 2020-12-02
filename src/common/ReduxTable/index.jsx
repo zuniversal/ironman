@@ -73,36 +73,38 @@ const ReduxTable = props => {
       notTooltip: true,
       render: (text, record, index, config) => (
         <>
-          <a
-            onClick={() => {
-              console.log(' record ：, ', props, config, record, edit); //
-              if (isDisabledAll) {
-                return;
-              }
+          {!props.hideSaveEdit && (
+            <a
+              onClick={() => {
+                console.log(' record ：, ', props, config, record, edit); //
+                if (isDisabledAll) {
+                  return;
+                }
 
-              // const fn = record.id && record.isEdit
-              let fn = '';
-              if (!record.id) {
-                fn = 'addTableItemAsync';
-                //  fn = record.isEdit
-                //  ? 'editTableItemAsync'
-                //  :'addTableItemAsync'
-              } else {
-                fn = record.isEdit ? 'editTableItemAsync' : 'modifyTableItem';
-              }
+                // const fn = record.id && record.isEdit
+                let fn = '';
+                if (!record.id) {
+                  fn = 'addTableItemAsync';
+                  //  fn = record.isEdit
+                  //  ? 'editTableItemAsync'
+                  //  :'addTableItemAsync'
+                } else {
+                  fn = record.isEdit ? 'editTableItemAsync' : 'modifyTableItem';
+                }
 
-              // const fn = 'editTableItemAsync';
-              props[fn]({
-                ...record,
-                index,
-                d_id: record.id,
-                action: 'edit',
-                // powerstation: props.init.id,
-              });
-            }}
-          >
-            {record.isEdit ? '保存' : '编辑'}
-          </a>
+                // const fn = 'editTableItemAsync';
+                props[fn]({
+                  ...record,
+                  index,
+                  d_id: record.id,
+                  action: 'edit',
+                  // powerstation: props.init.id,
+                });
+              }}
+            >
+              {record.isEdit ? '保存' : '编辑'}
+            </a>
+          )}
           <a
             onClick={() => {
               console.log(' remove record ： ', props, record, index); //
@@ -139,38 +141,48 @@ const ReduxTable = props => {
       className={'reduxTable modalTable'}
       pagination={false}
       rowSelection={null}
-      title={() =>
-        !isDisabledAll && (
+      title={() => {
+        return (
           <div className={`fje`}>
-            <Button
-              type="primary"
-              onClick={() => {
-                console.log(
-                  '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
-                  props.dataSource.filter(v => v.isEdit),
-                );
-                if (isDisabledAll) {
-                  return;
-                }
-                if (props.dataSource.filter(v => v.isEdit).length < 1) {
-                  props.modifyTableItem({ action: 'add' });
-                } else {
-                  tips('请先保存上一条数据！', 2);
-                }
-              }}
-              className={'add'}
-            >
-              新增
-            </Button>
+            {props.titleCom}
+            {!isDisabledAll && !props.hideAdd && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  console.log(
+                    '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
+                    props.dataSource,
+                  );
+                  if (isDisabledAll) {
+                    return;
+                  }
+                  if (props.noLimitAdd) {
+                    props.modifyTableItem({ action: 'add' });
+                    return;
+                  }
+                  if (props.dataSource.filter(v => v.isEdit).length < 1) {
+                    props.modifyTableItem({ action: 'add' });
+                  } else {
+                    tips('请先保存上一条数据！', 2);
+                  }
+                }}
+                className={'add'}
+              >
+                新增
+              </Button>
+            )}
           </div>
-        )
-      }
+        );
+      }}
     ></SmartTable>
   );
 };
 
 ReduxTable.defaultProps = {
   dataSource: [],
+  noLimitAdd: false,
+  hideAdd: false,
+  hideSaveEdit: false,
 };
 
 export default ReduxTable; //

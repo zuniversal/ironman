@@ -192,8 +192,10 @@ export default {
       history.push(path);
     },
     *logoutAsync({ payload, action, type }, { call, put }) {
+      console.log(' logoutAsync ： ', payload, action, type); //
       // const res = yield call(services.logout, payload);
       history.push(LOGIN);
+      window.location.reload();
       // yield put(action({ ...res, payload }));
     },
     *getListAsync({ payload, action, type }, { call, put }) {

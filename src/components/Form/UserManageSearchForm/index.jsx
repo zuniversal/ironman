@@ -25,9 +25,18 @@ const UserManageSearchForm = props => {
       selectData: props.roleList,
       itemProps: {
         label: '角色',
-        name: 'role_id',
+        name: 'tag_id',
       },
     },
+    // {
+    //   // formType: 'Search',
+    //   // selectSearch: props.getRoleAsync,
+    //   // selectData: props.roleList,
+    //   itemProps: {
+    //     label: '职位',
+    //     name: 'tag_id',
+    //   },
+    // },
 
     {
       noLabel: true,

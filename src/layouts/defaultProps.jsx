@@ -321,7 +321,7 @@ export const managerRoutes = [
 
 export const customerRoutes = [
   {
-    path: '/cs/csHome',
+    path: '/cs/home',
     name: '首页',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'home'} />,

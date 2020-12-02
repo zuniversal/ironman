@@ -75,10 +75,16 @@ class InspectMission extends PureComponent {
     return (
       <InspectMissionSearchForm
         formBtn={this.renderFormBtn}
-        getUserAsync={params => this.props.getUserAsync({ keyword: params })}
+        getUserAsync={params =>
+          this.props.getUserAsync({
+            tag_id: 10,
+            keyword: params,
+          })
+        }
         userList={this.props.userList}
         getClientAsync={this.props.getClientAsync}
         clientList={this.props.clientList}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         init={this.props.searchInfo}
       ></InspectMissionSearchForm>
@@ -214,7 +220,9 @@ class InspectMission extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getUserAsync();
+    this.props.getUserAsync({
+      tag_id: 10,
+    });
     this.props.getTeamAsync();
     // this.props.getListAsync();
   }

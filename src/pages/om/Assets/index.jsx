@@ -43,7 +43,7 @@ const menuConfig = [
     clickFn: 'downloadFile',
     action: 'down',
     text: '下载数据模板',
-    downFile: 'OMS/equipment/getTemplate',
+    // downFile: 'OMS/equipment/getTemplate',
   },
 ];
 
@@ -179,6 +179,7 @@ class Assets extends PureComponent {
         clientList={this.props.clientList}
         powerList={this.props.powerList}
         houseNoList={this.props.houseNoList}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></AssetsSearchForm>
     );

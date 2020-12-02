@@ -45,6 +45,7 @@ class BussniessRecord extends PureComponent {
     return (
       <BussniessRecordSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></BussniessRecordSearchForm>
     );

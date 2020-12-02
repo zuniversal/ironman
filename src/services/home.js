@@ -9,9 +9,11 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet(`console/OMS/team/`, p);
-export const getItem = p => noTipsGet(`console/OMS/team/${p.d_id}`, p);
-export const addItem = p => post(`console/OMS/team/`, p);
-export const editItem = p => put(`console/OMS/team/${p.d_id}`, p);
-export const removeItem = p => remove(`console/OMS/team/${p}`, p);
-export const removeItems = p => remove(`console/OMS/team/`, p);
+export const getStatistic = p =>
+  noTipsGet(`console/home_page/web_statistic`, p);
+export const getOrdersChart = p => noTipsGet(`console/home_page/order_data`, p);
+export const getInspectionsChart = p =>
+  noTipsGet(`console/home_page/inspection_task_data`, p);
+export const getPendingOrders = p => noTipsGet(`console/home_page/orders`, p);
+export const getInspectionTasks = p =>
+  noTipsGet(`console/home_page/inspection_tasks`, p);

@@ -53,6 +53,12 @@ class ShiftsTransfer extends PureComponent {
     );
   };
   renderSearchForm = params => {
+    console.log(
+      ' %c renderSearchForm 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <ShiftsTransferSearchForm
         formBtn={this.renderFormBtn}
@@ -60,6 +66,7 @@ class ShiftsTransfer extends PureComponent {
         getPower={this.props.getPowerAsync}
         userList={this.props.userList}
         powerList={this.props.powerList}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         getTeamAsync={this.props.getTeamAsync}
         teamList={this.props.teamList}

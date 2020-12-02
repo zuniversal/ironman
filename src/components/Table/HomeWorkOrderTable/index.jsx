@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const HomeWorkOrderTable = props => {
   const {
@@ -26,27 +27,42 @@ const HomeWorkOrderTable = props => {
   const columns = [
     {
       title: 'id',
+      dataIndex: 'id',
     },
-    {
-      title: '名称',
-    },
+    // {
+    //   title: '名称',
+    //   dataIndex: 'name',
+    // },
     {
       title: '工单编号',
+      dataIndex: 'name',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'workOrderDetailAsync',
+      //     d_id: record.id,
+      //   }),
     },
     {
       title: '客户名称',
+      dataIndex: ['customer', 'name'],
     },
     {
       title: '工单类型',
+      dataIndex: 'type',
+      dataMap: missionsTypeMap,
     },
     {
       title: '当前状态',
+      dataIndex: 'status',
+      dataMap: missionsStatusMap,
     },
     {
       title: '领取人',
+      dataIndex: ['team', 'team_headman'],
     },
     {
-      title: '创建时间',
+      title: '领取时间',
+      dataIndex: 'created_time',
     },
   ];
 
@@ -61,9 +77,10 @@ const HomeWorkOrderTable = props => {
   return (
     <SmartTable
       columns={columns}
-      rowLength={3}
+      // rowLength={3}
       pagination={false}
-      extra={extra}
+      // extra={extra}
+      noActionCol
       noDefault
       {...props}
     ></SmartTable>

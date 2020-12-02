@@ -16,6 +16,8 @@ const otherActions = [
   'getBelongHouseNoAsync',
   'editPowerInfoAsync',
   'removePowerInfoAsync',
+
+  'getDistrictAsync',
 ];
 
 const batchTurnActions = ['modifyPowerInfo'];
@@ -99,6 +101,10 @@ export default {
     houseNoList: [],
     powerInfoData: [initItem],
     powerInfoData: [],
+
+    provinceList: [],
+    citytList: [],
+    countryList: [],
   },
 
   reducers: {
@@ -307,6 +313,53 @@ export default {
         houseNoList: formatSelectList(payload.list, 'number'),
       };
     },
+
+    getDistrict(state, { payload, type }) {
+      let datas = [];
+      const data = payload.list.map(v => ({
+        label: v,
+        value: v,
+      }));
+      if (Object.keys(payload.payload).length === 0) {
+        datas = {
+          provinceList: data,
+        };
+      }
+      if (payload.payload.province) {
+        datas = {
+          citytList: data,
+        };
+      }
+      if (payload.payload.city) {
+        datas = {
+          countryList: data,
+        };
+      }
+      console.log(' getDistrict ： ', state, payload, datas); //
+
+      return {
+        ...state,
+        ...datas,
+      };
+    },
+    getProvnice(state, { payload, type }) {
+      return {
+        ...state,
+        provinceList: payload.list.map(v => ({
+          label: v,
+          value: v,
+        })),
+      };
+    },
+    getCity(state, { payload, type }) {
+      return {
+        ...state,
+        citytList: payload.list.map(v => ({
+          label: v,
+          value: v,
+        })),
+      };
+    },
   },
 
   effects: {
@@ -503,6 +556,13 @@ export default {
         call(houseNoServices.getList, { customer: 1 }),
       ];
       console.log('  reresresress ：', res); //
+    },
+
+    *getDistrictAsync({ payload, action, type }, { call, put }) {
+      console.log(' getDistrictAsync ： ', payload, type); //
+      const res = yield call(clientServices.getDistrict, payload);
+      console.log('  getDistrictAsync res ：', res); //
+      yield put(action({ ...res, payload }));
     },
   },
   // subscriptions: {
