@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button } from 'antd';
+import { Button, List } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm'; //
 // import OnlineServiceTable from '@/components/Table/OnlineServiceTable'; //
 // import OnlineServiceForm from '@/components/Form/OnlineServiceForm'; //
@@ -128,6 +128,29 @@ class OnlineService extends PureComponent {
   //   console.log(' formComProps ： ', formComProps); //
   //   return <OnlineServiceForm {...formComProps}></OnlineServiceForm>;
   // };
+
+  renderChatList = params => {
+    return (
+      <div
+        className={`chatListWrapper`}
+        // show={this.props.isShowModal}
+        // action={this.props.action}
+        // titleMap={this.state.titleMap}
+        // onOk={this.onOk}
+        // onCancel={this.props.onCancel}
+      >
+        <div className="listItem">
+          <div className="name">{v.name}</div>
+          <div className="subTitle company">{v.company}</div>
+          <div className="subTitle content">{v.content}</div>
+        </div>
+        <div className="right">
+          <div className="time">{v.time}</div>
+        </div>
+      </div>
+    );
+  };
+
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -144,10 +167,11 @@ class OnlineService extends PureComponent {
 
   render() {
     return (
-      <div className="OnlineService">
+      <div className="onlineService">
         {/* {this.renderSearchForm()}
 
         {this.renderTable()} */}
+        {this.renderChatList()}
 
         {this.renderSmartFormModal()}
       </div>

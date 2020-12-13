@@ -18,6 +18,12 @@ const KnowledgeCateTable = props => {
     {
       title: '知识库名称',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'knowledgeCateDetailAsync',
+          d_id: record.id,
+          id: record.id,
+        }),
     },
     {
       title: '推荐到首页',

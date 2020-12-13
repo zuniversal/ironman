@@ -27,17 +27,17 @@ const MsgTable = props => {
 
     {
       title: '通知人员',
-      dataIndex: '',
+      dataIndex: ['reciever', 'nickname'],
     },
 
     {
       title: '通知方法',
-      dataIndex: '',
+      dataIndex: 'send_type',
     },
 
     {
       title: '创建人',
-      dataIndex: 'create_by',
+      dataIndex: ['sender', 'nickname'],
     },
 
     {

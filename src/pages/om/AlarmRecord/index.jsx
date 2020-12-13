@@ -1,16 +1,18 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
 import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
+import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm'; //
+import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
 import { actions, mapStateToProps } from '@/models/alarmRecord'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
-const TITLE = '物料';
+const TITLE = '告警';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -18,6 +20,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  handleAlarm: `确认处理`,
 };
 
 // const mapStateToProps = ({ alarmRecord, }) => alarmRecord;
@@ -35,29 +38,41 @@ class AlarmRecord extends PureComponent {
       titleMap,
     };
   }
+
+  exportDataAsync = e => {
+    console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.exportData({
+        order_ids: this.props.selectedRowKeys,
+      });
+    } else {
+      tips('请勾选导出项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
+          onClick={this.exportDataAsync}
+          // onClick={this.props.exportData}
         >
-          新增{TITLE}
+          导出
         </Button>
       </div>
     );
   };
   renderSearchForm = params => {
     return (
-      <SearchKwForm
+      <AlarmRecordSearchForm
         formBtn={this.renderFormBtn}
-        className={'fje'}
+        // getUser={this.props.getUserAsync}
+        // getPower={this.props.getPowerAsync}
+        // userList={this.props.userList}
+        // powerList={this.props.powerList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        keyword={'name'}
-        label={'名称'}
-        noLabel
-      ></SearchKwForm>
+      ></AlarmRecordSearchForm>
     );
   };
   onFieldChange = params => {
@@ -85,6 +100,10 @@ class AlarmRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (['handleAlarm', 'notifyClient'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -110,9 +129,20 @@ class AlarmRecord extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
+    if (action === 'handleAlarm') {
+      return <AlarmRecordHandleForm {...formComProps}></AlarmRecordHandleForm>;
+    }
+    if (action === 'notifyClient') {
+      return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
+    }
     console.log(' formComProps ： ', formComProps); //
     return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
   };
+  get size() {
+    return ['handleAlarm', 'notifyClient'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -121,6 +151,7 @@ class AlarmRecord extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

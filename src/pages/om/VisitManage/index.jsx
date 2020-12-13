@@ -5,6 +5,7 @@ import VisitManageWaitTable from '@/components/Table/VisitManageWaitTable'; //
 import VisitManageRecordTable from '@/components/Table/VisitManageRecordTable'; //
 import VisitManageForm from '@/components/Form/VisitManageForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import SearchKwForm from '@/components/Form/SearchKwForm'; //
 
 import { actions, mapStateToProps } from '@/models/visitManage'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -40,11 +41,21 @@ class VisitManage extends PureComponent {
     };
   }
   renderFormBtn = params => {
-    return <div className={'btnWrapper'}></div>;
+    return (
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          onClick={this.exportDataAsync}
+          // onClick={this.props.exportData}
+        >
+          导出
+        </Button>
+      </div>
+    );
   };
   renderSearchForm = params => {
     return (
-      <div className={'dfc'}>
+      <div className={'fsb'}>
         <Radio.Group
           options={visitManageOptions}
           onChange={this.props.onRadioChange}
@@ -52,6 +63,17 @@ class VisitManage extends PureComponent {
           optionType="button"
           buttonStyle="solid"
         />
+        <SearchKwForm
+          formBtn={this.renderFormBtn}
+          // className={'fje'}
+          init={this.props.searchInfo}
+          onFieldChange={this.onFieldChange}
+          keyword={'name'}
+          className={`visitManageSearchForm `}
+          label={'名称'}
+          noLabel
+        ></SearchKwForm>
+        {/* {this.renderFormBtn} */}
       </div>
     );
   };

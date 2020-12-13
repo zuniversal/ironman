@@ -23,7 +23,7 @@ const option = params => {
       '#4cabce',
     ],
     tooltip: {
-      trigger: 'item',
+      trigger: 'axis',
       axisPointer: {
         type: 'cross',
         crossStyle: {

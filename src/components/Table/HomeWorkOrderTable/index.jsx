@@ -36,11 +36,11 @@ const HomeWorkOrderTable = props => {
     {
       title: '工单编号',
       dataIndex: 'name',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'workOrderDetailAsync',
-      //     d_id: record.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'workOrderDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '客户名称',
@@ -68,8 +68,16 @@ const HomeWorkOrderTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => dispatchOrder({ action: 'dispatchOrder' })}>派单</a>
-      <a onClick={() => add({ action: 'add' })}>添加工作票</a>
+      <a
+        onClick={() =>
+          props.showFormModal({ action: 'dispatchOrder', extraData: record })
+        }
+      >
+        派单
+      </a>
+      <a onClick={() => add({ action: 'add', extraData: record })}>
+        添加工作票
+      </a>
       {/* <a onClick={() => addTicket({ action: 'addTicket' })}>添加工作票</a> */}
     </>
   );
@@ -78,9 +86,9 @@ const HomeWorkOrderTable = props => {
     <SmartTable
       columns={columns}
       // rowLength={3}
-      pagination={false}
-      // extra={extra}
-      noActionCol
+      // pagination={false}
+      extra={extra}
+      // noActionCol
       noDefault
       {...props}
     ></SmartTable>

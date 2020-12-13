@@ -364,34 +364,41 @@ export default {
           commencement_date: moment(payload.bean.commencement_date).format(
             'YYYY-MM-DD HH:mm:ss',
           ),
+          finish_time: moment(payload.bean.finish_time).format(
+            'YYYY-MM-DD HH:mm:ss',
+          ),
           // customer_id: payload.bean.customer.name,
           extra: payload.payload.extra,
+        },
+      };
+    },
+    newsKnowDetail(state, { payload, type }) {
+      console.log(' newsKnowDetail ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          knowledge_type: `${payload.bean.knowledge_type}`,
+          knowledge_warehouse_type: `${payload.bean.knowledge_warehouse_type}`,
+        },
+      };
+    },
+    knowledgeCateDetail(state, { payload, type }) {
+      console.log(' knowledgeCateDetail ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
         },
       };
     },
   },
 
   effects: {
-    // *getUserAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(userServices.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *getTeamAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(teamServices.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *getPowerAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(powerStationServices.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *getHouseNoAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(houseNoServices.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *getClientAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(clientServices.getList, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
     *showItemAsync({ payload = {}, action, type }, { call, put }) {
       // const service = serviceMap[payload.action];
       const service = getService(payload.action);

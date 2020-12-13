@@ -23,7 +23,7 @@ const AssessmentForm = props => {
     {
       itemProps: {
         label: '系数',
-        name: 'abstract',
+        name: 'abstract2',
       },
     },
   ];

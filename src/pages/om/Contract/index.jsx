@@ -44,7 +44,7 @@ const titleMap = {
   newRelated: `关联新增`,
   upload: `文件上传`,
   down: `文件下载`,
-  contractDetailAsync: `客户详情`,
+  contractDetailAsync: `合同详情`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,

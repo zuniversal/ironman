@@ -7,7 +7,7 @@ import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
 import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
-
+import io from 'socket.io-client';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
@@ -18,6 +18,8 @@ const batchTurnActions = [];
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
+
+export const userActions = actions;
 
 // console.log(' actions ： ', actions,  )//
 
@@ -72,6 +74,7 @@ export default {
     accountType: 'customer',
     getRoutes: getRoutes(),
     system: 'OM',
+    // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
   },
 
   reducers: {
@@ -152,6 +155,16 @@ export default {
         system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
       };
     },
+    // saveHomeSetting(state, { payload, type }) {
+    //   console.log(' saveHomeSetting 修改  ： ', state, payload, type); //
+    //   const { userInfo } = state;
+    //   setItem(`${userInfo.id}_homeSettings`, payload.homeSettings)
+    //   return {
+    //     ...state,
+    //     isShowModal: false,
+    //     ...payload,
+    //   };
+    // },
   },
 
   effects: {
@@ -249,6 +262,39 @@ export default {
     setup: props => {
       // console.log(' 用户 setup ： ', props, this); //
       const { dispatch, history } = props; //
+
+      // const websocket = new window.WebSocket("ws://119.3.123.144:8008/websocket");
+      //   //连接发生错误的回调方法
+      //   websocket.onerror = function(){
+      //       console.log("error");
+      //   };
+
+      //   //连接成功建立的回调方法
+      //   websocket.onopen = function(event){
+      //       console.log("open");
+      //   }
+
+      //   //接收到消息的回调方法
+      //   websocket.onmessage = function(event){
+      //       console.log('请输入消息 !',event.data);
+      //   }
+
+      //   //连接关闭的回调方法
+      //   websocket.onclose = function(){
+      //       console.log("close");
+      //   }
+      // const socket = io('ws://121.40.165.18:8800');
+      // socket.on('connect', () => {
+      //   console.log(" 连接 subscribechannel, params ： ", socket.connected) //
+      // });
+      // const socket = io('http://localhost:8000/wsocket');
+      // console.log(' subscribechannel socket ： ', socket, io )//
+      // socket.on('connect', () => {
+      //   console.log(" 连接 subscribechannel, params ： ", socket.connected) //
+      // });
+      // socket.on('connecting', () => {
+      //   console.log(" 连接 subscribechannel, params2 ： ", socket.connected) //
+      // });
       history.listen(location => {
         console.log(' 监听路由 匹配 ： ', history, location); //
         const { pathname } = location;

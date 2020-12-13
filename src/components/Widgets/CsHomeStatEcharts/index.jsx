@@ -3,156 +3,55 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { DatePicker } from 'antd';
 import SmartEcharts from '@/common/SmartEcharts'; //
+import SmartEchart from '@/common/SmartEchart'; //
 import TimeChoice from '@/components/Widgets/TimeChoice';
 import { ANIMATE } from '@/constants'; //
+import { createIndexArr } from '@/utils';
+import CsHomeLine from '@/components/Echarts/CsHomeLine';
 
-const legend = ['趋势'];
-
-const xAxis = [
-  '10月',
-  '11月',
-  '12月',
-  '01月',
-  '02月',
-  '03月',
-  '04月',
-  '05月',
-  '06月',
-  '07月',
-  '08月',
-  '09月',
-];
+const dayHoursArr = createIndexArr(24).map(
+  v => `${v}`.padStart(2, '0') + ':00',
+);
 
 const option = params => {
-  const { data, tabData, myExpenseBarTxt } = params;
-
-  console.log(
-    ' $$$$$$$$$ myExpenseBar  选项 ： ',
-    params,
-    data,
-    tabData,
-    myExpenseBarTxt,
-  ); //
+  const { data } = params;
   return {
-    tooltip: {
-      trigger: 'item',
-      axisPointer: {
-        type: 'cross',
-        crossStyle: {
-          color: '#999',
-        },
-      },
-    },
-    toolbox,
     legend: {
-      data: ['数据源1', '数据源2', '平均温度'],
-      // data: myExpenseBarTxt
+      data: ['数据源1', '数据源2'],
     },
     xAxis: [
       {
         type: 'category',
-        // data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        // data: ["Airfare", "Hotel", "Meal", "Transportation", "Entertainment", "Purchase", "Other", "Visa", "Courier"],
-        data: tabData,
         axisPointer: {
           type: 'shadow',
         },
-        axisLabel: { rotate: -30 },
+        data: dayHoursArr,
       },
     ],
     yAxis: [
       {
         type: 'value',
-        name: 'Amount',
+        name: '数据源1',
         axisLabel: {
           formatter: '{value}',
-          rotate: 30,
-        },
-      },
-      {
-        type: 'value',
-        name: 'Expense Trend',
-        axisLabel: {
-          formatter: '{value}',
-          rotate: 30,
         },
       },
     ],
-
-    // series: myExpenseBarTxt.map((v, i) => {
-    //     console.log(' myExpenseBarTxt v ： ', v,  )
-    //     return {
-    //         name: v,
-    //         type: 'bar',
-    //         barWidth: 25,
-    //         data: data[i],
-    //         rotate: 30,
-    //     }
-    // }),
     series: [
       {
         name: '数据源1',
         type: 'line',
-        yAxisIndex: 1,
-        data: [
-          21.6,
-          51.9,
-          91.0,
-          261.4,
-          281.7,
-          701.7,
-          751.6,
-          821.2,
-          481.7,
-          181.8,
-          61.0,
-          44.3,
-
-          53.6,
-          73.9,
-          83.0,
-          1113.4,
-          213.7,
-          243.7,
-          213.6,
-          153.2,
-          113.7,
-          83.8,
-          33.0,
-          63.3,
-        ],
-      },
-      {
-        name: '数据源2',
-        type: 'line',
-        yAxisIndex: 1,
-        data: [
-          21.6,
-          51.9,
-          91.0,
-          261.4,
-          281.7,
-          701.7,
-          751.6,
-          821.2,
-          481.7,
-          181.8,
-          61.0,
-          44.3,
-
-          53.6,
-          73.9,
-          83.0,
-          1113.4,
-          213.7,
-          243.7,
-          213.6,
-          153.2,
-          113.7,
-          83.8,
-          33.0,
-          63.3,
-        ],
+        yAxisIndex: 0,
+        symbol: 'circle',
+        symbolSize: 8,
+        itemStyle: {
+          normal: {
+            color: '#1CBB51',
+            borderWidth: 3,
+            borderColor: '#1CBB51', //拐点边框颜色
+          },
+        },
+        data,
       },
     ],
   };
@@ -163,10 +62,15 @@ const CsHomeStatEcharts = props => {
     <div className={`${ANIMATE.flipInX} `}>
       <div className={`fsb csHomeStatEcharts `}>
         <div className={'homeTitle'}>电站实时信息</div>
-        <TimeChoice></TimeChoice>
+        <TimeChoice onOptionChange={props.onOptionChange}></TimeChoice>
       </div>
 
-      <SmartEcharts
+      <CsHomeLine {...props}></CsHomeLine>
+      {/* <SmartEchart
+        {...props}
+        option={option(props)}
+      ></SmartEchart> */}
+      {/* <SmartEcharts
         data={[]}
         type="line"
         legend={legend}
@@ -174,7 +78,7 @@ const CsHomeStatEcharts = props => {
         noToolBox
         {...props}
         // option={option}
-      ></SmartEcharts>
+      ></SmartEcharts> */}
     </div>
   );
 };

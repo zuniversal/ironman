@@ -26,15 +26,11 @@ const MissionsManageSearchForm = props => {
     // },
 
     {
-      // formType: 'Select',
+      noLabel: true,
       itemProps: {
-        label: '',
+        label: '名称',
         name: 'keyword',
       },
-      comProps: {
-        className: 'lastFormItem',
-      },
-      searchSuffix: true,
     },
   ];
 

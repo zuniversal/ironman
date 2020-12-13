@@ -45,6 +45,21 @@ const CsHomeStationTable = props => {
     {
       title: '是否有缺陷登记',
       dataIndex: 'defect',
+      render: (text, record, index) => (
+        <div className={`isWeakCol`}>
+          {text}
+          <a
+            onClick={() =>
+              props.showItemAsync({
+                action: 'weakDetailAsync',
+                d_id: record.id,
+              })
+            }
+          >
+            查看缺陷
+          </a>
+        </div>
+      ),
     },
   ];
 
@@ -61,7 +76,7 @@ const CsHomeStationTable = props => {
       columns={columns}
       scroll={{ x: 800 }}
       // rowLength={3}
-      pagination={false}
+      // pagination={false}
       // extra={extra}
       noActionCol
       noDefault

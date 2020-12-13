@@ -56,16 +56,28 @@ class InspectMission extends PureComponent {
     };
   }
 
+  exportDataAsync = e => {
+    console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.exportData({
+        ids: this.props.selectedRowKeys,
+      });
+    } else {
+      tips('请勾选导出项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        {/* <Button type="primary" onClick={() => this.props.exportData()}> */}
+        {/* <Button type="primary" onClick={() => this.props.exportExcelAsync({
+          ids: [1],
+        })}> */}
         <Button
           type="primary"
-          onClick={() => {
-            tips('暂未开发!', 2);
-          }}
+          onClick={this.exportDataAsync}
+          // onClick={this.props.exportData}
         >
+          {/* <Button type="primary" onClick={() => tips('暂未接口！', 2)}> */}
           导出
         </Button>
       </div>

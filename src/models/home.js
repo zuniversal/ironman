@@ -1,27 +1,42 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/home';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import * as teamServices from '@/services/shiftsManage';
+import * as workOrderServices from '@/services/workOrder';
+import { formatSelectList, getItem, setItem } from '@/utils';
 
 const namespace = 'home';
 const { createActions } = init(namespace);
 
 const otherActions = [
   'getStatisticAsync',
+  'getChartAsync',
   'getOrdersChartAsync',
   'getInspectionsChartAsync',
   'getPendingOrdersAsync',
   'getInspectionTasksAsync',
+  'getTeamAsync',
+  'dispatchOrderAsync',
 ];
 
-const batchTurnActions = ['homeSetting'];
+const batchTurnActions = ['saveHomeSetting'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
-// console.log(' actions ： ', actions,  )//
+console.log(' actions ： ', actions, getItem('homeSettings')); //
 
 export const mapStateToProps = state => state[namespace];
+
+const settingData = [
+  'inspectMission',
+  'pendingOrder',
+  'waitInspect',
+  'waitReceive',
+  'groupCount',
+  'completeOrder',
+  'compeleteInspect',
+];
 
 export default {
   namespace,
@@ -33,13 +48,21 @@ export default {
     count: 0,
     itemDetail: {},
 
-    chartSearchInfo: {},
+    homeSettings:
+      getItem(`${getItem('userInfo').id}_homeSettings`) || settingData,
     statisticData: {},
     chartData: {},
+    requestFn: 'getInspectionsChart',
+    chartSearchInfo: {},
     ordersChartData: {},
     inspectionsChartData: {},
+
+    pendingOrdersSearchInfo: {},
     pendingOrdersList: [],
+    pendingOrdersCount: 0,
     inspectionTasksList: [],
+    inspectionTasksCount: 0,
+    extraData: {},
   },
 
   reducers: {
@@ -49,17 +72,10 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        extraData: payload.extraData,
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
-      return {
-        ...state,
-        isShowModal: false,
-        itemDetail: {},
-      };
-    },
-    homeSetting(state, { payload, type }) {
       console.log(' onCancel 修改  ： ', state, payload, type); //
       return {
         ...state,
@@ -112,6 +128,16 @@ export default {
       };
     },
 
+    saveHomeSetting(state, { payload, type }) {
+      console.log(' saveHomeSetting 修改  ： ', state, payload, type); //
+      const userInfo = getItem('userInfo');
+      setItem(`${userInfo.id}_homeSettings`, payload.homeSettings);
+      return {
+        ...state,
+        isShowModal: false,
+        ...payload,
+      };
+    },
     getStatistic(state, { payload, type }) {
       console.log(' getStatistic ： ', state, payload); //
       return {
@@ -128,8 +154,9 @@ export default {
         chartData: payload.bean,
         chartSearchInfo: {
           ...chartSearchInfo,
-          ...payload,
+          ...payload.payload,
         },
+        requestFn: payload.payload.requestFn,
       };
     },
     getOrdersChart(state, { payload, type }) {
@@ -156,6 +183,9 @@ export default {
           ...v,
           created_time: v.created_time.split('T')[0],
         })),
+        pendingOrdersCount: payload.rest.count,
+        isShowModal: false,
+        pendingOrdersSearchInfo: payload.payload,
       };
     },
     getInspectionTasks(state, { payload, type }) {
@@ -166,6 +196,15 @@ export default {
           ...v,
           created_time: v.created_time.split('T')[0],
         })),
+        inspectionTasksCount: payload.rest.count,
+        isShowModal: false,
+      };
+    },
+
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        teamList: formatSelectList(payload.list, 'name'),
       };
     },
   },
@@ -174,32 +213,63 @@ export default {
     *getStatisticAsync({ payload, action, type }, { call, put }) {
       console.log(' getStatisticAsync ： ', payload, action, type); //
       const res = yield call(services.getStatistic, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
     },
-    *getChartAsync({ payload, action, type }, { call, put }) {
+    *getChartAsync(
+      {
+        payload = {
+          requestFn: 'getInspectionsChart',
+        },
+        action,
+        type,
+      },
+      { call, put },
+    ) {
       console.log(' getChartAsync ： ', payload, action, type); //
-      const res = yield call(services.getChart, payload);
-      yield put(action(res));
+      const res = yield call(services[payload.requestFn], payload);
+      yield put(action({ ...res, payload }));
     },
-    *getOrdersChartAsync({ payload, action, type }, { call, put }) {
-      console.log(' getOrdersChartAsync ： ', payload, action, type); //
-      const res = yield call(services.getOrdersChart, payload);
-      yield put(action(res));
-    },
-    *getInspectionsChartAsync({ payload, action, type }, { call, put }) {
-      console.log(' getInspectionsChartAsync ： ', payload, action, type); //
-      const res = yield call(services.getInspectionsChart, payload);
-      // yield put(action(res));
-    },
-    *getPendingOrdersAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPendingOrdersAsync ： ', payload, action, type); //
-      const res = yield call(services.getPendingOrders, payload);
-      yield put(action(res));
+    // *getOrdersChartAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getOrdersChartAsync ： ', payload, action, type); //
+    //   const res = yield call(services.getOrdersChart, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *getInspectionsChartAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getInspectionsChartAsync ： ', payload, action, type); //
+    //   const res = yield call(services.getInspectionsChart, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    *getPendingOrdersAsync({ payload, action, type }, { call, put, select }) {
+      const { pendingOrdersSearchInfo } = yield select(
+        state => state[namespace],
+      );
+      const params = {
+        ...pendingOrdersSearchInfo,
+        ...payload,
+      };
+      console.log(' getPendingOrdersAsync ： ', payload, action, type, params); //
+      const res = yield call(services.getPendingOrders, params);
+      // yield put(action({ ...res, payload }));
+      yield put({
+        type: 'getPendingOrders',
+        payload: { ...res, payload: params },
+      });
     },
     *getInspectionTasksAsync({ payload, action, type }, { call, put }) {
       console.log(' getInspectionTasksAsync ： ', payload, action, type); //
       const res = yield call(services.getInspectionTasks, payload);
-      yield put(action(res));
+      yield put(action({ ...res, payload }));
+    },
+
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      console.log(' getTeamAsync ： ', payload, action, type); //
+      const res = yield call(teamServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *dispatchOrderAsync({ payload, action, type }, { call, put }) {
+      console.log(' dispatchOrderAsync ： ', payload, type); //
+      const res = yield call(workOrderServices.dispatchOrder, payload);
+      yield put({ type: 'getPendingOrdersAsync' });
     },
   },
 };

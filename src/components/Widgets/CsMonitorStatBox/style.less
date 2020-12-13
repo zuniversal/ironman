@@ -1,0 +1,27 @@
+.csMonitorStatBoxWrapper {
+  color: white;
+  margin-bottom: 30px;
+  .statBox {
+    display: flex;
+    flex-direction: column;
+    align-items: initial;
+    padding: 20px 30px;
+    .left {
+      justify-content: flex-start;
+    }
+    .right {
+      justify-content: space-between;
+      .icon {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  .statInfo {
+    font-size: 32px;
+    font-weight: 400;
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}

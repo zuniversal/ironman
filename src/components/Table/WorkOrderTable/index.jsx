@@ -113,7 +113,11 @@ const WorkOrderTable = props => {
       )}
       <a
         onClick={
-          () => props.exportData({ action: 'exportData', d_id: record.id })
+          () =>
+            props.exportDataAsync({
+              action: 'exportData',
+              order_ids: [record.id],
+            })
           // tips('暂无接口！', 2)
         }
       >

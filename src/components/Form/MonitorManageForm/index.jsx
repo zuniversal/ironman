@@ -17,76 +17,84 @@ const selectData = [
   { label: '邮件', value: 'email' },
 ];
 
-export const config = [
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '户号',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '电站',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '关联客户设备',
-    },
-  },
-  {
-    itemProps: {
-      label: '监控点名称',
-    },
-  },
-  {
-    itemProps: {
-      label: '设备编码',
-    },
-  },
-  {
-    itemProps: {
-      label: '设备名称',
-    },
-  },
-  {
-    itemProps: {
-      label: 'IMEI号',
-    },
-  },
-  {
-    formType: 'Select',
-    itemProps: {
-      label: '设备类型',
-    },
-  },
-  {
-    itemProps: {
-      label: '品牌',
-    },
-  },
-  {
-    itemProps: {
-      label: '告警策略',
-    },
-  },
-  {
-    itemProps: {
-      label: '状态',
-    },
-  },
-  {
-    itemProps: {
-      label: '说明',
-    },
-  },
-];
-
 const MonitorManageForm = props => {
   console.log(' MonitorManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
+
+  const config = [
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '户号',
+      },
+    },
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '电站',
+      },
+    },
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '关联客户设备',
+      },
+    },
+    {
+      itemProps: {
+        label: '监控点名称',
+      },
+    },
+    {
+      itemProps: {
+        label: '设备编码',
+      },
+    },
+    {
+      itemProps: {
+        label: '设备名称',
+      },
+    },
+    {
+      itemProps: {
+        label: 'IMEI号',
+      },
+    },
+    {
+      formType: 'Select',
+      itemProps: {
+        label: '设备类型',
+      },
+    },
+    {
+      itemProps: {
+        label: '品牌',
+      },
+    },
+    {
+      itemProps: {
+        label: '告警策略',
+      },
+    },
+    {
+      itemProps: {
+        label: '状态',
+      },
+    },
+    {
+      itemProps: {
+        label: '说明',
+      },
+    },
+  ];
+
+  const configs = !props.isInsertForm
+    ? config
+    : config.map(v => ({
+        ...v,
+        comProps: { className: 'w-240', ...v.comProps },
+      }));
+
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline',
@@ -96,7 +104,7 @@ const MonitorManageForm = props => {
     <div className={' MonitorManageForm '}>
       <SmartForm
         // flexRow={6}
-        config={config}
+        config={configs}
         formProps={formProps}
         // init={init}
         // init={{}}

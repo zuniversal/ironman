@@ -17,7 +17,7 @@ import SmartModal from '@/common/SmartModal'; //
 import ActionCol from './ActionCol'; //
 import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
+import { SIZE, ANIMATE, INPUT_TXT, PRIMARY } from '@/constants'; //
 import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
 import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi'; //
@@ -331,6 +331,7 @@ class SmartTable extends PureComponent {
     const tooltipText = dataMap ? txt : text;
     return text != undefined ? (
       <Tooltip
+        color={PRIMARY}
         // title={typeof tooltipText !== 'object' ? <Typography.Paragraph className={`tootltipCopy`}  copyable>{tooltipText}</Typography.Paragraph> : `${tooltipText}`}
         title={typeof tooltipText !== 'object' ? tooltipText : `${tooltipText}`}
         // title={tooltipText}
@@ -543,15 +544,16 @@ class SmartTable extends PureComponent {
     );
   };
   get isShowLoading() {
-    const { loadingData } = this.props; //
+    const { loadingData, extraLoading, pathMap } = this.props; //
     const pathArr = history.location.pathname.split('/');
-    const path = pathArr[pathArr.length - 1];
-    // console.log(' get 取属 isShowLoading ： ', this.state, this.props, history, history.location, pathArr, path, isLoading, );
+    const path = pathMap || pathArr[pathArr.length - 1];
+    // console.log(' get 取属 isShowLoading ： ', this.state, this.props, history, history.location, pathArr, path, pathMap, isLoading, );
     const isShowLoading = isLoading({
       path: path,
       actions: loadingData.effects,
+      extraLoading,
     });
-    // console.log('ction === `${path}/${asyncSuffi ************* ： ', isShowLoading, )
+    // console.log(' isShowLoadingisShowLoading ： ', isShowLoading, )
     return {
       spinning: isShowLoading,
       size: 'large',

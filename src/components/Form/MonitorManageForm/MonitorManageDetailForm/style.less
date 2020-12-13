@@ -1,0 +1,62 @@
+.monitorManageDetailForm {
+  display: flex;
+  .leftForm {
+    // width: 400px;
+  }
+  .divider {
+    width: 1px;
+    height: 100%;
+    border: 1px solid #f4f4f4;
+  }
+
+  .infoList {
+    width: 300px;
+    padding-left: 30px;
+    margin-left: 20px;
+    border-left: 1px solid #f4f4f4;
+    .titleTag {
+      width: 300px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 2px;
+      // opacity: 0.1;
+      background: #dcf5e5;
+      color: #1bb65c;
+      padding: 0 10px;
+    }
+    .listWrapper {
+      width: 300px;
+
+      .row {
+        font-size: 14px;
+        font-weight: 400;
+        color: #333333;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        &:not(:last-child) {
+          border-bottom: 1px solid #f4f4f4;
+        }
+
+        .statusTag {
+          font-size: 12px;
+          width: 50px;
+          height: 20px;
+          background: #dcf5e5;
+          color: #1bb65c;
+          border-radius: 999px;
+          display: inline-block;
+          text-align: center;
+        }
+      }
+    }
+    .radioGroup {
+      display: flex;
+      margin: 5px 0;
+      .ant-radio-button-wrapper {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+}

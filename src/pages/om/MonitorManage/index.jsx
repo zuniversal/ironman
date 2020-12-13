@@ -5,12 +5,14 @@ import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import MonitorManageForm from '@/components/Form/MonitorManageForm'; //
 import MonitorManageTable from '@/components/Table/MonitorManageTable'; //
+import MonitorManageSearchForm from '@/components/Form/MonitorManageForm/MonitorManageSearchForm'; //
+import MonitorManageDetailForm from '@/components/Form/MonitorManageForm/MonitorManageDetailForm'; //
 
 import { actions, mapStateToProps } from '@/models/monitorManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '操作';
+const TITLE = '监测';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -18,6 +20,11 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  monitorManageAsync: `${TITLE}详情`,
+};
+
+const detailFormMap = {
+  monitorManageAsync: MonitorManageDetailForm,
 };
 
 // const mapStateToProps = ({ monitorManage, }) => monitorManage;
@@ -45,17 +52,36 @@ class MonitorManage extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        <Button
+          type="primary"
+          // onClick={() => this.props.exportData()}
+        >
           Excel导入设备
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        <Button
+          type="primary"
+          // onClick={() => this.props.exportData()}
+        >
           导出{TITLE}设备数据
         </Button>
       </div>
     );
   };
   renderSearchForm = params => {
-    return <SearchKwForm formBtn={this.renderFormBtn}></SearchKwForm>;
+    return (
+      <MonitorManageSearchForm
+        formBtn={this.renderFormBtn}
+        // getClientAsync={this.props.getClientAsync}
+        // clientList={this.props.clientList}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+        init={this.props.searchInfo}
+      ></MonitorManageSearchForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {
@@ -72,6 +98,26 @@ class MonitorManage extends PureComponent {
     };
 
     return <MonitorManageTable {...tableProps}></MonitorManageTable>;
+  };
+
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -110,6 +156,9 @@ class MonitorManage extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
+    return (
+      <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
+    );
     return <MonitorManageForm {...formComProps}></MonitorManageForm>;
   };
   renderSmartFormModal = params => {
@@ -134,6 +183,8 @@ class MonitorManage extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

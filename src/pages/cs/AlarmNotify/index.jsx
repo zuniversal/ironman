@@ -6,16 +6,17 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm'; //
 import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm'; //
 import AlarmNotifyTable from '@/components/Table/AlarmNotifyTable'; //
+import AlarmNotifyInfo from '@/components/Widgets/AlarmNotifyInfo'; //
 import { actions, mapStateToProps } from '@/models/alarmNotify'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '字典';
+const TITLE = '告警通知';
 
 const titleMap = {
   add: `${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `${TITLE}详情`,
+  detail: `${TITLE}`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -97,8 +98,13 @@ class AlarmNotify extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
+    return <AlarmNotifyInfo></AlarmNotifyInfo>;
     return <AlarmNotifyForm {...formComProps}></AlarmNotifyForm>;
   };
+  get size() {
+    // console.log(' get 取属 size ： ', this.state, this.props);
+    return ['detail'].some(v => v === this.props.action) ? 'small' : 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -107,6 +113,7 @@ class AlarmNotify extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

@@ -25,6 +25,7 @@ const option = params => {
       },
     },
     toolbox: noToolBox ? null : toolbox,
+    toolbox,
     legend: {
       data: legend || ['Year Expense', 'Expense Trend', '平均温度'],
     },

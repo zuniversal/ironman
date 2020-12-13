@@ -100,5 +100,10 @@ export default defineConfig({
       //   '^/api': '',
       // },
     },
+    '/wsocket': {
+      target: 'ws://119.3.123.144:8008/websocket',
+      changeOrigin: true,
+      ws: true,
+    },
   },
 });

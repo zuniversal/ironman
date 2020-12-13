@@ -8,7 +8,7 @@ import { formatConfig } from '@/utils'; //
 
 const SearchKwForm = props => {
   console.log(' SearchKwForm ： ', props); //
-  const { formBtn, className, keyword, ...rest } = props; //
+  const { beforeExtra, formBtn, className, keyword, ...rest } = props; //
   const formProps = {
     // layout: 'vertical',
     // layout: 'inline'
@@ -28,6 +28,7 @@ const SearchKwForm = props => {
 
   return (
     <div className={`fsb searchKwForm ${className}`}>
+      {beforeExtra}
       <SearchForm
         // flexRow={4}
         // flexRow={6}

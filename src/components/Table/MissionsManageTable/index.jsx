@@ -195,7 +195,7 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {!record.finished_tag && (
+      {record.status !== 'completed' && record.finished_tag && (
         <a
           onClick={() =>
             props.showFormModal({

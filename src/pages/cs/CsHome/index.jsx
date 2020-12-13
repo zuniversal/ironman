@@ -13,13 +13,17 @@ import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 import HomeTitleRow from '@/components/Widgets/HomeTitleRow';
 import SmartVideo from '@/common/SmartVideo'; //
 
-import { actions, mapStateToProps } from '@/models/csHome'; //
+import {
+  actions,
+  // mapStateToProps,
+} from '@/models/csHome'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { ANIMATE, MINI_POWER } from '@/constants'; //
 import Icon from '@/components/Widgets/Icons'; //
+import WeakForm from '@/components/Form/WeakForm';
 
-export const TITLE = '排班';
+export const TITLE = '';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -27,9 +31,17 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  weakDetailAsync: `缺陷详情`,
 };
 
-// const mapStateToProps = ({ client, }) => client;
+const detailFormMap = {
+  weakDetailAsync: WeakForm,
+};
+
+const mapStateToProps = ({ csHome, user }) => ({
+  ...csHome,
+  user,
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -69,8 +81,32 @@ class CsHome extends PureComponent {
         <CsHomeStationTable
           showFormModal={this.props.showFormModal}
           dataSource={this.props.stationStatusList}
+          count={this.props.stationStatusCount}
+          getListAsync={this.props.getStationStatusAsync}
+          showItemAsync={this.props.showItemAsync}
+          extraLoading={['getStationStatusAsync']}
+          pathMap={'csHome'}
         ></CsHomeStationTable>
       </>
+    );
+  };
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
     );
   };
   renderSelectForm = params => {
@@ -98,9 +134,25 @@ class CsHome extends PureComponent {
   renderCsHomeStatBox = params => {
     return <CsHomeStatBox data={this.props.statisticData}></CsHomeStatBox>;
   };
+  onOptionChange = params => {
+    console.log(' onOptionChange,  , ： ', params, this.state, this.props);
+    const data = {
+      ...this.props.chartSearchInfo,
+      ...params,
+    };
+    // if (params.requestFn) {
+    //   data.start_time = null;
+    //   data.end_time = null;
+    // }
+    console.log(' data ： ', data); // [params.requestFn]
+    this.props.getPowerInfoAsync(data);
+  };
   renderCsHomeStatEcharts = params => {
     return (
-      <CsHomeStatEcharts data={this.props.powerInfoList}></CsHomeStatEcharts>
+      <CsHomeStatEcharts
+        data={this.props.chartData}
+        onOptionChange={this.onOptionChange}
+      ></CsHomeStatEcharts>
     );
   };
   renderCsHomeTabsTable = params => {
@@ -154,9 +206,16 @@ class CsHome extends PureComponent {
     );
   };
   componentDidMount() {
+    console.log(
+      ' CsHome 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+      this.props.user,
+    ); //
     this.props.getStatisticAsync({});
     this.props.getPowerInfoAsync({
       customer: 5996,
+      // customer: this.props.user.userInfo.id,
     });
     this.props.getStationStatusAsync({});
   }
@@ -173,10 +232,11 @@ class CsHome extends PureComponent {
         {this.renderPageTitle()}
         {this.renderCsHomeStatBox()}
         {this.renderSelectForm()}
-        {this.renderCsHomeMonitor()}
+        {/* {this.renderCsHomeMonitor()} */}
         {this.renderCsHomeStatEcharts()}
         {this.renderCsHomeStationTable()}
         {this.renderSmartFormModal()}
+        {this.renderCommonModal()}
       </div>
     );
   }

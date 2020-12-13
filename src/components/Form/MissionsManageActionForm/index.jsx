@@ -12,9 +12,9 @@ export const MissionsManageWorkOrderForm = props => {
 
   const config = [
     {
-      formType: 'Search',
-      selectSearch: props.getClientAsync,
-      selectData: props.clientData,
+      // formType: 'Search',
+      // selectSearch: props.getClientAsync,
+      // selectData: props.clientData,
       itemProps: {
         label: '客户',
         name: 'client',

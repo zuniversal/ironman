@@ -28,7 +28,7 @@ const titleMap = {
   add: `添加工作票`,
   dispatchOrder: `派单`,
   clientDetailAsync: `客户详情`,
-  workOrderDetailAsync: `任务详情`,
+  workOrderDetailAsync: `工单详情`,
   missionsManageDetailAsync: `任务详情`,
 };
 
@@ -54,6 +54,16 @@ class WorkOrder extends PureComponent {
     };
   }
 
+  exportDataAsync = e => {
+    console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.exportData({
+        order_ids: this.props.selectedRowKeys,
+      });
+    } else {
+      tips('请勾选导出项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -62,11 +72,8 @@ class WorkOrder extends PureComponent {
         })}> */}
         <Button
           type="primary"
-          onClick={() =>
-            this.props.exportData({
-              order_ids: this.props.selectedRowKeys,
-            })
-          }
+          onClick={this.exportDataAsync}
+          // onClick={this.props.exportData}
         >
           {/* <Button type="primary" onClick={() => tips('暂未接口！', 2)}> */}
           导出
@@ -114,7 +121,7 @@ class WorkOrder extends PureComponent {
       add: this.props.showFormModal,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
-      exportData: this.props.exportData,
+      exportDataAsync: this.props.exportData,
     };
 
     return <WorkOrderTable {...tableProps}></WorkOrderTable>;

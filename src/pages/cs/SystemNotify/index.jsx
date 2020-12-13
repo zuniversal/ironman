@@ -15,7 +15,7 @@ const TITLE = '字典';
 const titleMap = {
   add: `${TITLE}`,
   edit: `编辑${TITLE}`,
-  detail: `${TITLE}详情`,
+  detail: `抢修合同通知`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -94,11 +94,23 @@ class SystemNotify extends PureComponent {
       clientList: this.props.clientList,
     };
     if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
+      // formComProps.init = this.props.itemDetail;
+      formComProps.init = {
+        合同ID: '合同ID',
+        业务员: '业务员',
+        对应抢修单ID: '对应抢修单ID',
+        合同类型: '合同类型',
+        处理时间: '处理时间',
+        关联工单ID: '关联工单ID',
+      };
     }
     console.log(' formComProps ： ', formComProps); //
     return <SystemNotifyForm {...formComProps}></SystemNotifyForm>;
   };
+  get size() {
+    // console.log(' get 取属 size ： ', this.state, this.props);
+    return ['detail'].some(v => v === this.props.action) ? 'small' : 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -107,6 +119,7 @@ class SystemNotify extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

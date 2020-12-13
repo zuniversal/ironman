@@ -3,9 +3,8 @@ import './style.less';
 import { Button } from 'antd';
 import CsClientReportTable from '@/components/Table/CsClientReportTable'; //
 import ClientReportForm from '@/components/Form/ClientReportForm'; //
-import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm'; //
+import CsClientReportSearchForm from '@/components/Form/CsClientReportForm/CsClientReportSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
 
 import { actions, mapStateToProps } from '@/models/clientReport'; //
@@ -39,23 +38,30 @@ class ClientReport extends PureComponent {
     };
   }
 
-  renderSearchForm = params => {
+  renderFormBtn = params => {
     return (
-      <div className={'fsb '}>
-        <ClientReportSearchForm></ClientReportSearchForm>
-        {/* <div className={'btnWrapper'}>
-          <Button
-            type="primary"
-            onClick={() => this.props.showFormModal({ action: 'add' })}
-          >
-            新增{TITLE}
-          </Button>
-          <Button type="primary" onClick={() => this.props.exportData()}>
-            导出{TITLE}数据
-          </Button>
-        </div> */}
+      <div className={'btnWrapper'}>
+        <Button
+          type="primary"
+          // onClick={this.exportDataAsync}
+        >
+          查询
+        </Button>
       </div>
     );
+  };
+  renderSearchForm = params => {
+    return (
+      <CsClientReportSearchForm
+        formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+      ></CsClientReportSearchForm>
+    );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderTable = params => {

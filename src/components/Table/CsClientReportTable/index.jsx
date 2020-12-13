@@ -33,10 +33,7 @@ const CsClientReportTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => showDetail({ action: 'detail' })}>查看加急账单</a>
-      <a onClick={() => add({ action: 'add' })}>录入</a>
-      <a onClick={() => edit({ action: 'edit' })}>修改</a>
-      <a onClick={() => props.showFormModal({ action: 'pdf' })}>打印</a>
+      <a onClick={() => props.showFormModal({ action: 'pdf' })}>下载</a>
     </>
   );
 

@@ -16,6 +16,11 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  knowledgeCateDetailAsync: `知识库分类详情`,
+};
+
+const detailFormMap = {
+  knowledgeCateDetailAsync: KnowledgeCateForm,
 };
 
 // const mapStateToProps = ({ KnowledgeCate, }) => KnowledgeCate;
@@ -75,6 +80,7 @@ class KnowledgeCate extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <KnowledgeCateTable {...tableProps}></KnowledgeCateTable>;
@@ -88,6 +94,26 @@ class KnowledgeCate extends PureComponent {
     });
   };
 
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+            isDisabledAll
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -146,6 +172,8 @@ class KnowledgeCate extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

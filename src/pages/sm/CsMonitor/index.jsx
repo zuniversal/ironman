@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
 import CsMonitorTable from '@/components/Table/CsMonitorTable'; //
 import CsMonitorForm from '@/components/Form/CsMonitorForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 
 import { actions, mapStateToProps } from '@/models/csMonitor'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import SearchKwForm from '@/components/Form/SearchKwForm';
 
 const TITLE = '物料';
 
@@ -36,11 +37,18 @@ class CsMonitor extends PureComponent {
     };
   }
 
+  renderStatBox = params => (
+    <CsMonitorStatBox data={this.props.statisticData}></CsMonitorStatBox>
+  );
   renderSearchForm = params => {
     return (
-      <div className={' '}>
-        <SearchForm></SearchForm>
-      </div>
+      <SearchKwForm
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+        keyword={'name'}
+        label={'名称'}
+        noLabel
+      ></SearchKwForm>
     );
   };
 
@@ -109,6 +117,8 @@ class CsMonitor extends PureComponent {
   render() {
     return (
       <div className="AlarmRecord">
+        {this.renderStatBox()}
+
         {this.renderSearchForm()}
 
         {this.renderTable()}

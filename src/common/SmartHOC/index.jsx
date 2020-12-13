@@ -394,6 +394,10 @@ export default ({
         this.state,
         this.props,
       );
+      // if (!params && Object.keys(params).length < 1) {
+      //   tips('请先勾选导出项！', 2)
+      //   return
+      // }
       const { dispatch } = this.props; //
       const url = (
         await dispatch(

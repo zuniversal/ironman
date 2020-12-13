@@ -175,7 +175,7 @@ export const renderRadioOp = (
       {v.label}
     </Radio>
   ));
-  return <RadioGroup>{radioItems}</RadioGroup>;
+  return <RadioGroup disabled={isDisabledAll}>{radioItems}</RadioGroup>;
   return opType === 'group' ? (
     <RadioGroup>{radioItems}</RadioGroup>
   ) : (
@@ -302,9 +302,9 @@ export const formatConfig = (
       // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
       comProps: {
         ...v.comProps,
-        className: `${isSearchForm ? w240 : w320} ${
-          v.comProps?.className
-        } plainText ${isPlainText ? 'plainText' : ''}`,
+        className: `${isSearchForm ? w240 : w320} ${v.comProps?.className} ${
+          isPlainText ? 'plainText' : ''
+        }`,
       },
     };
     // console.log(' items ： ', items); //
@@ -356,6 +356,8 @@ export const downLoadFile = (clickItem, { downEle = 'qrCode' }) => {
   clickItem.download = '二维码'; // 图片name
 };
 
+export const createIndexArr = (length = 6) =>
+  Array.from({ length }, (_, index) => index);
 export const createArr = (length = 6) => {
   const res = Array.from(
     { length },

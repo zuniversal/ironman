@@ -18,6 +18,7 @@ const statConfig = [
   {
     dataKey: 'order_data',
     title: '完成工单数',
+    key: 'completeOrder',
     num: '126560',
     week: '周同比 ',
     day: '日环比 ',
@@ -30,6 +31,7 @@ const statConfig = [
   {
     dataKey: 'task_data',
     title: '完成客户任务数',
+    // key: 'xxx',
     num: '126560',
     week: '周同比 ',
     day: '日环比 ',
@@ -42,6 +44,7 @@ const statConfig = [
   {
     dataKey: 'inspe_data',
     title: '完成巡检数',
+    key: 'compeleteInspect',
     num: '126560',
     week: '周同比 ',
     day: '日环比 ',
@@ -80,10 +83,11 @@ const StatBoxCom = props => {
           <div className="stat">
             <div className="statInfo">
               {props.week} {weekDirectionText}{' '}
-              {Math.abs(data.week_compare) * 100}%
+              {Math.abs(data.week_compare ?? 1).toFixed(1) * 100}%
             </div>
             <div className="statInfo">
-              {props.day} {dayDirectionText} {Math.abs(data.day_compare) * 100}%
+              {props.day} {dayDirectionText}{' '}
+              {Math.abs(data.day_compare ?? 1) * 100}%
             </div>
           </div>
         </>
@@ -100,14 +104,18 @@ const HomeStatBox = props => {
   // console.log(' HomeStatBox   props, ,   ： ', props);
   return (
     <div className="homeStatBoxWrapper">
-      {statConfig.map((v, i) => (
-        <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
-      ))}
+      {statConfig
+        .filter(v => !v.key || props.homeSettings.includes(v.key))
+        .map((v, i) => (
+          <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
+        ))}
     </div>
   );
 };
 
-HomeStatBox.defaultProps = {};
+HomeStatBox.defaultProps = {
+  homeSettings: [],
+};
 
 HomeStatBox.propTypes = {};
 

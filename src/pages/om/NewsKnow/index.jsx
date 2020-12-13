@@ -17,6 +17,11 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  newsKnowDetailAsync: `新闻与知识点详情`,
+};
+
+const detailFormMap = {
+  newsKnowDetailAsync: NewsKnowForm,
 };
 
 // const mapStateToProps = ({ NewsKnow, }) => NewsKnow;
@@ -75,6 +80,7 @@ class NewsKnow extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <NewsKnowTable {...tableProps}></NewsKnowTable>;
@@ -88,6 +94,26 @@ class NewsKnow extends PureComponent {
     });
   };
 
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+            isDisabledAll
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -160,6 +186,8 @@ class NewsKnow extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

@@ -133,7 +133,7 @@ export class Request {
     this.http.interceptors.request.use(
       config => {
         // console.log('getToken() token ：', config, getToken(), getItems('token'),  )
-        config.headers.authorization = getToken();
+        config.headers.Authorization = getToken();
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
         // config.headers.Authorization = getItems('token');
         // config.headers.authorization =

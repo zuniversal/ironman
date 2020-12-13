@@ -15,6 +15,10 @@ export const grid = {
   // right: 10,
   // top: 0,
   // bottom: 10,
+  // left: '5%',
+  // right: '5%',
+  // top: '10%',
+  // bottom: '10%',
 };
 
 export const splitLine = {
@@ -34,7 +38,12 @@ export const toolbox = {
     },
     magicType: {
       show: true,
-      type: ['line', 'bar'],
+      type: [
+        'line',
+        'bar',
+        // 'stack',
+        'tiled',
+      ],
     },
     restore: {
       show: true,

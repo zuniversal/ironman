@@ -3,13 +3,15 @@ import './style.less';
 import SmartForm from '@/common/SmartForm'; //
 
 const checkboxData = [
-  { label: '待巡检任务', value: 'yes1', key: 'yes1' },
-  { label: '待处理工单', value: 'yes2', key: 'yes2' },
-  { label: '未领取巡检任务', value: 'yes3', key: 'yes3' },
-  { label: '未领取工单', value: 'yes4', key: 'yes4' },
-  { label: '小组数据统计', value: 'yes5', key: 'yes5' },
-  { label: '完成工单数', value: 'yes6', key: 'yes6' },
-  { label: '完成巡检数', value: 'yes7', key: 'yes7' },
+  { label: '待巡检任务', value: 'inspectMission', key: 'inspectMission' },
+  { label: '待处理工单', value: 'pendingOrder', key: 'pendingOrder' },
+
+  { label: '未领取巡检任务', value: 'waitInspect', key: 'waitInspect' },
+  { label: '未领取工单', value: 'waitReceive', key: 'waitReceive' },
+
+  { label: '小组数据统计', value: 'groupCount', key: 'groupCount' },
+  { label: '完成工单数', value: 'completeOrder', key: 'completeOrder' },
+  { label: '完成巡检数', value: 'compeleteInspect', key: 'compeleteInspect' },
 ];
 
 export const config = [
@@ -18,7 +20,7 @@ export const config = [
     checkboxData: checkboxData,
     itemProps: {
       label: '',
-      name: 'settings',
+      name: 'homeSettings',
     },
   },
 ];
@@ -40,11 +42,11 @@ const HomeSettingForm = props => {
         // init={init}
         // init={{}
 
-        init={{
-          settings: ['yes1', 'yes2'],
-        }}
+        // init={{
+        //   settings: ['item1', 'item2'],
+        // }}
         noLabelLayout
-        {...rest}
+        {...props}
       ></SmartForm>
 
       {/* {formBtn} */}

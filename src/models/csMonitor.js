@@ -26,6 +26,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    statisticData: {},
   },
 
   reducers: {

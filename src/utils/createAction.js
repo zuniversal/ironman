@@ -100,14 +100,17 @@ export const commonConfigs = ['setSearchInfo', 'showFormModal', 'onCancel'];
 //   }
 // }
 // console.log(' history ： ', history,  )//
-export const isLoading = ({
-  config = [],
-  path = '',
-  actions = {},
-  defConfig = [],
-}) => {
+export const isLoading = props => {
+  const {
+    config = [],
+    extraLoading = [],
+    path = '',
+    actions = {},
+    defConfig = [],
+  } = props;
   // console.log(' get 取属 isShowLoading config, path, actions,  ： ', config, path, actions,  )//
-  const configs = config.length > 0 ? config : crudConfigs; //
+  const configs =
+    config.length > 0 ? config : [...crudConfigs, ...extraLoading]; //
   // console.log('  configs ：', configs,  )//
   return configs.some(asyncSuffix => {
     // console.log(' action === `${path}/${asyncSuffix}` ： ', config, actions, `${path}/${asyncSuffix}`,  actions[`${path}/${asyncSuffix}`], )//

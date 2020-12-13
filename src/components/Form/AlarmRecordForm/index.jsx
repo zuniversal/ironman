@@ -1,69 +1,106 @@
 import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 
-export const config = [
-  {
-    formType: 'Select',
-    noRule: true,
-    itemProps: {
-      label: '模块',
-    },
-  },
-  {
-    itemProps: {
-      label: '名称',
-    },
-  },
-  {
-    formType: 'TextArea',
-    noRule: true,
-    itemProps: {
-      label: '枚举值',
-    },
-  },
-  {
-    noRule: true,
-    itemProps: {
-      label: '关联设备',
-    },
-  },
-  {
-    formType: 'TextArea',
-    noRule: true,
-    itemProps: {
-      label: '备注',
-    },
-  },
-];
-
-const ShiftsForm = props => {
-  console.log(' ShiftsForm ： ', props); //
+const AlarmRecordForm = props => {
+  console.log(' AlarmRecordForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
+  const config = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '基本信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户名称',
+      },
+    },
+    {
+      itemProps: {
+        label: '电站',
+      },
+    },
+    {
+      itemProps: {
+        label: '监测点',
+      },
+    },
+    {
+      itemProps: {
+        label: '地址',
+      },
+    },
+    {
+      itemProps: {
+        label: '关联设备',
+      },
+    },
+    {
+      itemProps: {
+        label: '设备ID',
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '告警信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '告警类型',
+      },
+    },
+    {
+      itemProps: {
+        label: '当前状态',
+      },
+    },
+    {
+      itemProps: {
+        label: '领确认',
+      },
+    },
+    {
+      itemProps: {
+        label: '告警信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '开始时间',
+      },
+    },
+    {
+      itemProps: {
+        label: '开始时间',
+      },
+    },
+    {
+      itemProps: {
+        label: '持续时长',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <InspectMissionTimeline
+          datas={props.init.work_log}
+        ></InspectMissionTimeline>
+      ),
+      itemProps: {
+        label: '处理日志',
+        name: ' ',
+      },
+    },
+  ];
 
-  return (
-    <div className={' ShiftsForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
-ShiftsForm.defaultProps = {};
+AlarmRecordForm.defaultProps = {};
 
-export default ShiftsForm;
+export default AlarmRecordForm;

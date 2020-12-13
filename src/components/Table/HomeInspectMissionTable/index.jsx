@@ -24,11 +24,12 @@ const HomeInspectMissionTable = props => {
       // title: '名称',
       title: '编码',
       dataIndex: 'name',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'workOrderDetailAsync',
-      //     d_id: record.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'inspectMissionDetailAsync',
+          // action: 'workOrderDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '电站',
@@ -64,7 +65,7 @@ const HomeInspectMissionTable = props => {
     <SmartTable
       columns={columns}
       // rowLength={3}
-      pagination={false}
+      // pagination={false}
       // extra={extra}
       noActionCol
       noDefault

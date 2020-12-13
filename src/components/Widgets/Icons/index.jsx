@@ -52,6 +52,11 @@ import kpiManage from '@/static/sideBarIcon/om/kpiManage.png';
 import shiftsManage from '@/static/sideBarIcon/om/shiftsManage.png';
 import systemManage from '@/static/sideBarIcon/om/systemManage.png';
 
+import csMonitorCPU from '@/static/assets/csMonitorCPU.png';
+import csMonitorRAM from '@/static/assets/csMonitorRAM.png';
+import csMonitorMemory from '@/static/assets/csMonitorMemory.png';
+import csMonitorNetwork from '@/static/assets/csMonitorNetwork.png';
+
 // import home from '@/static/sideBarIcon/home.png';
 // import csOrganize from '@/static/sideBarIcon/csOrganize.png';
 // import csUserCenter from '@/static/sideBarIcon/csUserCenter.png';
@@ -106,6 +111,11 @@ const iconMap = {
   kpiManage,
   shiftsManage,
   systemManage,
+
+  csMonitorCPU,
+  csMonitorRAM,
+  csMonitorMemory,
+  csMonitorNetwork,
 
   // home,
   // csOrganize,

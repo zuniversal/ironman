@@ -80,6 +80,10 @@ const NewsKnowForm = props => {
       action={'/api/v1/upload'}
       name={'cover_picture'}
       // extra={''}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
       init={props.init}
     ></UploadCom>,
   ];

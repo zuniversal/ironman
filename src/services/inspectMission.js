@@ -20,4 +20,4 @@ export const assignMission = p =>
   put(`console/OMS/spect/task/${p.d_id}/assign`, p);
 // export const editMission = p => patch(`console/OMS/spect/task/${p.d_id}`, p);p);
 
-export const exportData = p => get('console/OMS/team/files', p);
+export const exportData = p => post('console/OMS/spect/task/export', p);

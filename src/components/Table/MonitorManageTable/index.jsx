@@ -44,7 +44,31 @@ const MonitorManageTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} isQRCode {...props}></SmartTable>;
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() => {
+          console.log('Received values of form: ', props);
+          props.showQRCode({
+            title: `${record.name}`,
+            record,
+            d_id: record.id,
+          });
+        }}
+      >
+        生成二维码
+      </a>
+    </>
+  );
+
+  return (
+    <SmartTable
+      columns={columns}
+      extra={extra}
+      isQRCode
+      {...props}
+    ></SmartTable>
+  );
 };
 
 MonitorManageTable.defaultProps = {

@@ -17,6 +17,7 @@ import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
 import SmartEcharts from '@/common/SmartEcharts'; //
 import TimeChoice from '@/components/Widgets/TimeChoice';
 import HomeGroupRank from '@/components/Widgets/HomeGroupRank';
+import HomeBar from '@/components/Echarts/HomeBar';
 import one from '@/static/assets/one.png'; //
 import two from '@/static/assets/two.png'; //
 import three from '@/static/assets/three.png'; //
@@ -25,13 +26,13 @@ import { ANIMATE } from '@/constants'; //
 const statConfig = [
   {
     tab: '巡检统计',
-    request: 'inspect',
-    num: '126560',
+    requestFn: 'getInspectionsChart',
+    // num: '126560',
   },
   {
     tab: '工单统计',
-    request: 'workOrder',
-    num: '126560',
+    requestFn: 'getOrdersChart',
+    // num: '126560',
   },
 ];
 
@@ -63,6 +64,10 @@ const StatTabPanes = props => {
     props.onOptionChange(statConfig[index]);
   };
 
+  const countData = props.barData.map(v => v.count);
+  const xAxisData = props.barData.map(v => v.date);
+  console.log(' countData  .map v ： ', props.barData, countData, xAxisData);
+
   return (
     <div className="statTabPanes">
       <Tabs
@@ -81,14 +86,19 @@ const StatTabPanes = props => {
             <Row gutter={24}>
               <Col span={16} className={`${ANIMATE.slideInLeft} `}>
                 <div className="homeTitle">趋势</div>
-                <SmartEcharts
+                <HomeBar
+                  // {...props}
+                  data={countData}
+                  xAxisData={xAxisData}
+                ></HomeBar>
+                {/* <SmartEcharts
                   data={[]}
                   type="bar"
                   legend={legend}
                   xAxis={xAxis}
                   noToolBox
                   {...props}
-                ></SmartEcharts>
+                ></SmartEcharts> */}
               </Col>
               <Col
                 span={8}
@@ -96,9 +106,7 @@ const StatTabPanes = props => {
               >
                 <div className="homeGroupRankWrapper">
                   <div className="homeTitle">小组排名</div>
-                  <HomeGroupRank
-                  // data={props.rankData}
-                  ></HomeGroupRank>
+                  <HomeGroupRank data={props.rankData}></HomeGroupRank>
                 </div>
               </Col>
             </Row>
@@ -109,22 +117,21 @@ const StatTabPanes = props => {
   );
 };
 
+StatTabPanes.defaultProps = {
+  barData: [],
+};
+
 const HomeStatEcharts = props => {
   console.log(' HomeStatEcharts   props, ,   ： ', props);
   return (
     <div className="homeStatEchartsWrapper">
-      <StatTabPanes
-        {...props}
-        barData={props.chartData.order_data}
-        // barData={props.chartData.inspection_task_data}
-        rankData={props.chartData.rank_data}
-      ></StatTabPanes>
+      <StatTabPanes {...props}></StatTabPanes>
     </div>
   );
 };
 
 HomeStatEcharts.defaultProps = {
-  chartData: {},
+  // chartData: {},
 };
 
 HomeStatEcharts.propTypes = {};

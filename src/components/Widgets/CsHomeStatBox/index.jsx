@@ -6,7 +6,7 @@ import { Form, Input, Statistic } from 'antd';
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
 import operateDays from '@/static/assets/operateDays.png'; //
 import weights from '@/static/assets/weights.png'; //
-import completeInspect from '@/static/assets/completeInspect.png'; //
+import csCompleteInspect from '@/static/assets/csCompleteInspect.png'; //
 import StatBox from '@/components/Widgets/StatBox';
 import { ANIMATE } from '@/constants'; //
 
@@ -44,7 +44,7 @@ const statConfig = [
       background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
       boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
     },
-    icon: completeInspect,
+    icon: csCompleteInspect,
   },
 ];
 
@@ -76,7 +76,7 @@ const StatBoxCom = props => {
 };
 
 const CsHomeStatBox = props => {
-  // console.log(' CsHomeStatBox   props, ,   ： ', props);
+  console.log(' CsHomeStatBox   props, ,   ： ', props);
   return (
     <div className="csHomeStatBoxWrapper">
       {statConfig.map((v, i) => (

@@ -13,6 +13,9 @@ const VisitManageForm = props => {
       itemProps: {
         label: '回访结论',
       },
+      comProps: {
+        className: 'conclusionItem',
+      },
     },
   ];
 
@@ -22,7 +25,7 @@ const VisitManageForm = props => {
   };
 
   return (
-    <div className={' VisitManageForm '}>
+    <div className={' visitManageForm '}>
       <SearchForm
         // flexRow={6}
         config={config}

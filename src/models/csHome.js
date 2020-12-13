@@ -32,9 +32,11 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
-    statisticData: [],
+    statisticData: {},
     powerInfoList: [],
+    chartSearchInfo: {},
     stationStatusList: [],
+    stationStatusCount: 0,
   },
 
   reducers: {
@@ -105,9 +107,14 @@ export default {
       };
     },
     getPowerInfo(state, { payload, type }) {
+      const { chartSearchInfo } = state;
       return {
         ...state,
-        powerInfoList: payload.bean.data,
+        chartData: payload.bean.data,
+        chartSearchInfo: {
+          ...chartSearchInfo,
+          ...payload.payload,
+        },
       };
     },
     getStationStatus(state, { payload, type }) {
@@ -118,6 +125,7 @@ export default {
           defect: v.defect ? '有缺陷' : '无缺陷',
           confirm: !v.confirm ? '已完成' : '未完成',
         })),
+        stationStatusCount: payload.rest.count,
       };
     },
   },

@@ -56,6 +56,10 @@ export default {
     itemDetail: {},
     d_id: '',
     searchInfo: {},
+
+    powerList: [],
+    userList: [],
+    teamList: [],
   },
 
   reducers: {

@@ -9,7 +9,7 @@ const SystemNotifySearchForm = props => {
 
   const config = [
     {
-      formType: 'DatePicker',
+      formType: 'RangePicker',
       itemProps: {
         label: '日期',
       },

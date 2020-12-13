@@ -39,7 +39,7 @@ class Assessment extends PureComponent {
 
   renderFormBtn = params => {
     return (
-      <div className={'btnWrapper'}>
+      <div className={'btnWrapper fje'}>
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
@@ -50,7 +50,7 @@ class Assessment extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return this.renderFormBtn;
+    return this.renderFormBtn();
     return (
       <SearchKwForm
         formBtn={this.renderFormBtn}
