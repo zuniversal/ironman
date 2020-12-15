@@ -40,11 +40,6 @@ const PowerStationForm = props => {
   console.log(' PowerStationForm ： ', props, config); //
   const { action, extra } = props; //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   // const formConfig = formatConfig(config);
   const deciveRow = {
     formType: 'rowText',
@@ -459,9 +454,6 @@ const PowerStationForm = props => {
       <SmartForm
         config={config}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         isDisabledAll={action === 'detail'}
         {...props}

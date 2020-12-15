@@ -108,6 +108,17 @@ const WeakTable = props => {
       >
         导出
       </a>
+      {/* <a
+        onClick={() =>
+          props.exportPdf({
+            action: 'detail',
+            extraAction: 'showExportPdf',
+            d_id: record.id,
+          })
+        }
+      >
+        导出
+      </a> */}
     </>
   );
 

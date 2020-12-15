@@ -28,22 +28,9 @@ export const WorkOrderDispatchOrderForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' WorkOrderDispatchOrderForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        size={'small'}
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
 
       {formBtn}
     </div>

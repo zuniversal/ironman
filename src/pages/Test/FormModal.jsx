@@ -335,7 +335,9 @@ class Client extends PureComponent {
       edit: this.showFormModal,
       // remove: this.props.onRemove,
       remove: this.onRemove,
+
       count: this.props.count,
+      authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
     };

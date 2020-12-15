@@ -7,10 +7,6 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 const ShiftsTransferSearchForm = props => {
   console.log(' ShiftsTransferSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   const config = [
     {
@@ -59,13 +55,7 @@ const ShiftsTransferSearchForm = props => {
   return (
     <div className={'ShiftsTransferSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         // {...rest}
         {...props}

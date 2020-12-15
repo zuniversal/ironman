@@ -56,11 +56,6 @@ const ShiftsArrangeForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'ShiftsArrangeForm'}>
       <div className="fje btnWrapper ">
@@ -70,14 +65,7 @@ const ShiftsArrangeForm = props => {
         </Button>
       </div>
 
-      <SmartForm
-        // flexRow={4}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        {...props}
-      ></SmartForm>
+      <SmartForm config={config} {...props}></SmartForm>
     </div>
   );
 };

@@ -51,20 +51,10 @@ const UserManageSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'fsb UserManageSearchForm '}>
       <SearchForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         searchRight
         noRuleAll
         // {...rest}

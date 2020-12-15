@@ -181,25 +181,11 @@ const ContractForm = props => {
 
   const { index } = props; //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   // const formConfig = formatConfig(config);
 
   return (
     <div className={''}>
-      <SmartForm
-        config={config}
-        // config={configs}
-        formProps={formProps}
-        // init={mockFormData(formatConfig(config), )}
-        // init={{}}
-
-        isDisabledAll
-        {...props}
-      ></SmartForm>
+      <SmartForm config={config} isDisabledAll {...props}></SmartForm>
     </div>
   );
 };

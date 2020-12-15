@@ -82,7 +82,11 @@ const UploadCom = props => {
     console.log(' onChange   e,   ： ', e);
     const { onUploadChange, noTips, uploadSucc } = props; //
     // const {fileList,  } = e
-    setFileData(e.fileList);
+    if (uploadProps.multiple) {
+      setFileData(e.fileList);
+    } else {
+      setFileData([e.fileList[e.fileList.length - 1]]);
+    }
 
     if (e.file.status === 'done') {
       tips(`${e.file.name} 上传成功！`, 1);

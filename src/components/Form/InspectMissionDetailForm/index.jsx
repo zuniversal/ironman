@@ -90,24 +90,9 @@ const InspectMissionDetailForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' inspectMissionDetailForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        noRuleAll
-        isDisabledAll
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} noRuleAll isDisabledAll {...rest}></SmartForm>
 
       {formBtn}
     </div>

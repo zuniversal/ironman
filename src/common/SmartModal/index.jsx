@@ -23,7 +23,7 @@ class SmartModal extends PureComponent {
     this.state = {
       show: false,
       disabled: true,
-      disabled: false,
+      // disabled: false,
     };
   }
   onShow = e => {

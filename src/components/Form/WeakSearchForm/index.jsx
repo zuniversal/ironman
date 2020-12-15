@@ -44,20 +44,10 @@ const WeakSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' WeakSearchForm '}>
       <SearchForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         // {...rest}
         {...props}
       ></SearchForm>

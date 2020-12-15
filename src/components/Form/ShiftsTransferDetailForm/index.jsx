@@ -164,11 +164,6 @@ const ShiftsTransferDetailForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'shiftsTransferDetailForm'}>
       <div className="fje btnWrapper ">
@@ -179,13 +174,8 @@ const ShiftsTransferDetailForm = props => {
       </div>
 
       <SmartForm
-        // flexRow={4}
         noPh
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         isDisabledAll
         {...props}

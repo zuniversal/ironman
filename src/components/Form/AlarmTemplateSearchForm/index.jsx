@@ -133,22 +133,9 @@ const AlarmTemplateForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' AlarmTemplateForm '}>
-      <SearchForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SearchForm>
+      <SearchForm config={config} {...rest}></SearchForm>
 
       {formBtn}
     </div>

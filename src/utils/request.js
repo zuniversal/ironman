@@ -1,5 +1,5 @@
 import { httpTipsMap } from '@/configs';
-import { URL, LOAD, LOUOUT, LOGIN } from '@/constants';
+import { URL, LOAD, LOUOUT, LOGIN, isDev } from '@/constants';
 import {
   getToken,
   getItems,
@@ -97,7 +97,7 @@ export const isTips = res => {
       !codeMsg,
       codeMsg,
     );
-    if (code === AUTH_FAIL) {
+    if (code === AUTH_FAIL && !isDev) {
       history.push(LOGIN);
     }
     tips(msg_show || codeMsg, 2);

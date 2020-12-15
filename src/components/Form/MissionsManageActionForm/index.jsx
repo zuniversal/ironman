@@ -51,22 +51,9 @@ export const MissionsManageWorkOrderForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MissionsManageWorkOrderForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} {...rest}></SmartForm>
 
       {formBtn}
     </div>
@@ -94,23 +81,9 @@ export const MissionsManageContractForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MissionsManageContractForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        size={'small'}
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
 
       {formBtn}
     </div>
@@ -136,23 +109,9 @@ export const MissionsManageScheduleForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MissionsManageScheduleForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        size={'small'}
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
 
       {formBtn}
     </div>
@@ -195,23 +154,9 @@ export const MissionsManageConfirmScheduleForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MissionsManageConfirmScheduleForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        size={'small'}
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
 
       {formBtn}
     </div>
@@ -487,17 +432,11 @@ export const MissionsManageOrderInfoForm = props => {
   ];
   // .map((v) => ({...v, itemProps: {...v.itemProps, colon: true,  }}));
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' missionsManageOrderInfoForm '}>
       <SmartForm
         flexRow={2}
         config={config}
-        formProps={formProps}
         init={initData}
         // init={{}}
 

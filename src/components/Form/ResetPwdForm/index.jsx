@@ -32,20 +32,7 @@ const ResetPwdForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
-  return (
-    <SmartForm
-      config={config}
-      formProps={formProps}
-      // init={init}
-      className={'  '}
-      {...props}
-    ></SmartForm>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 ResetPwdForm.defaultProps = {

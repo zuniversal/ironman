@@ -49,20 +49,10 @@ const InspectMissionSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' InspectMissionSearchForm '}>
       <SearchForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         // {...rest}
         {...props}
       ></SearchForm>

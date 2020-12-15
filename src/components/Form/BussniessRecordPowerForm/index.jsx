@@ -114,19 +114,11 @@ const BussniessRecordPowerForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' BussniessRecordPowerForm '}>
       <SmartForm
         config={config}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         isDisabledAll
         {...props}

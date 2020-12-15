@@ -211,20 +211,10 @@ const WorkOrderTicketForm = props => {
     ...(props.action === 'detail' ? logTimeLine : []),
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' WorkOrderTicketForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         isDisabledAll
         noRuleAll
         // {...rest}

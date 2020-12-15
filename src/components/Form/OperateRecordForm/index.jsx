@@ -43,22 +43,10 @@ export const config = [
 const ShiftsForm = props => {
   console.log(' ShiftsForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   return (
     <div className={' ShiftsForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} {...rest}></SmartForm>
 
       {formBtn}
     </div>

@@ -73,11 +73,6 @@ const SystemNotifyForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' systemNotifyForm '}>
       <div className="content textCenter">
@@ -85,12 +80,7 @@ const SystemNotifyForm = props => {
       </div>
       <Divider />
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         formLayouts={formLayouts}
         noRuleAll
         // {...rest}

@@ -232,7 +232,7 @@ class CsHome extends PureComponent {
         {this.renderPageTitle()}
         {this.renderCsHomeStatBox()}
         {this.renderSelectForm()}
-        {/* {this.renderCsHomeMonitor()} */}
+        {this.renderCsHomeMonitor()}
         {this.renderCsHomeStatEcharts()}
         {this.renderCsHomeStationTable()}
         {this.renderSmartFormModal()}

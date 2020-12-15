@@ -143,19 +143,11 @@ const BussniessRecordForm = props => {
     ...(isCompleted ? completedConfig : []),
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' bussniessRecordForm '}>
       <SmartForm
         config={config}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         noRuleAll
         isDisabledAll

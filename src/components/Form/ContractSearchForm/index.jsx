@@ -33,19 +33,10 @@ const ContractSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'flex-bw'}>
       <SearchForm
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         // {...rest}
         {...props}
       ></SearchForm>

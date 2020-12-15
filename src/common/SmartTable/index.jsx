@@ -36,6 +36,7 @@ const isMockData = false;
 const mixinData = true;
 
 const mapStateToProps = ({ loading }) => ({ loadingData: loading });
+// const mapStateToProps = ({ loading, user, }) => ({ loadingData: loading, authInfo: user.authInfo, });
 
 @connect(mapStateToProps)
 class SmartTable extends PureComponent {
@@ -687,6 +688,7 @@ SmartTable.defaultProps = {
   // rowKey: 'key',
   // rowKey: 'd_id', //
   rowKey: 'id',
+  authInfo: {},
 
   // edit: () => {},
   remove: () => {},
@@ -708,6 +710,7 @@ SmartTable.propTypes = {
   newTbData: PropTypes.array,
   dataSource: PropTypes.array,
   rowKey: PropTypes.string,
+  authInfo: PropTypes.object,
   edit: PropTypes.func,
   remove: PropTypes.func,
   showDetail: PropTypes.func,

@@ -29,6 +29,7 @@
     "@react-pdf/renderer": "^1.6.12",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.19",
+    "antd": "^4.9.3",
     "axios": "^0.20.0",
     "dayjs": "^1.9.6",
     "echarts": "^4.9.0",

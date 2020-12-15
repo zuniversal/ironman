@@ -23,20 +23,10 @@ export const InspectMissionAssignForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' InspectMissionAssignForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         size={'small'}
         // noRuleAll
         {...rest}
@@ -87,19 +77,10 @@ export const InspectMissionEditDateForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' inspectMissionEditDateForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         size={'small'}
         // noRuleAll
         {...rest}

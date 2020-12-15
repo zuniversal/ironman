@@ -151,24 +151,9 @@ const ShiftsTransferHandInForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'ShiftsTransferHandInForm'}>
-      <SmartForm
-        // flexRow={4}
-        noPh
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        isDisabledAll
-        {...props}
-      ></SmartForm>
+      <SmartForm noPh config={config} isDisabledAll {...props}></SmartForm>
     </div>
   );
 };

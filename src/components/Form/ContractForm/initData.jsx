@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,17 +16,12 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartForm from '@/common/SmartForm' //
-import { regoins } from '@/configs'//
-import { formatConfig, reportRadioOp,  } from '@/utils'//
+import SmartForm from '@/common/SmartForm'; //
+import { regoins } from '@/configs'; //
+import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const normFile = e => {
   console.log('Upload event:', e);
@@ -38,15 +33,12 @@ const normFile = e => {
   return e && e.fileList;
 };
 
-
 const reportConfig = [
-  { value: '是', key: 'yes',  },
-  { value: '否', key: 'no',  },
-]
+  { value: '是', key: 'yes' },
+  { value: '否', key: 'no' },
+];
 
-const reportOption = reportRadioOp(reportConfig,  )
-
-
+const reportOption = reportRadioOp(reportConfig);
 
 export const config = [
   {
@@ -131,7 +123,7 @@ export const config = [
   // // 如果没有给 Form.Item 组件指定 key  会导致报错
   // // Warning: Each child in a list should have a unique "key" prop.
   <Form.Item
-    key={'attach'} 
+    key={'attach'}
     name="upload"
     label="合同附件"
     valuePropName="fileList"
@@ -157,15 +149,9 @@ export const config = [
     itemProps: {
       label: '是否生成客户报告',
     },
-    radioOptions: reportOption, 
+    radioOptions: reportOption,
   },
-  
-  
-  
-  
 ];
-
-
 
 const init = {
   name: 'zyb',
@@ -179,34 +165,27 @@ const init = {
 };
 
 const ContractForm = props => {
-  console.log(' ContractForm ： ', props,  )//
+  console.log(' ContractForm ： ', props); //
 
-  const {index,  } = props// 
-
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
+  const { index } = props; //
 
   // const formConfig = formatConfig(config);
-  
 
   const initialValues = {
     projects: [1, 2],
-    input: 'zyb',  
+    input: 'zyb',
   };
   const newInit = [
     {
-      name: "项目一",
-      id: 1
+      name: '项目一',
+      id: 1,
     },
-    { name: "项目二", id: 2 }
+    { name: '项目二', id: 2 },
   ];
 
   const [form] = Form.useForm();
   // const [form] = Form.useForm(initialValues);
   const formControl = form; //
-  
 
   return (
     <div className={''}>
@@ -214,46 +193,32 @@ const ContractForm = props => {
         // config={config}
         config={formatConfig(config)}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         {...props}
       ></SmartForm>
 
-    <Form 
-    initialValues={initialValues}
-      form={formControl}
-      
-      
-      
-      >
-      <Form.Item name="projects" label="所属项目">
-        <Select
-          mode="multiple"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-        >
-          {newInit.map(item => (
-            <Select.Option key={item.id} value={item.id}>
-              {item.name}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item name="input" label="所属项目">
-        <Input
-          placeholder="Please select"
-        >
-        </Input>
-      </Form.Item>
-    </Form>
-
-
+      <Form initialValues={initialValues} form={formControl}>
+        <Form.Item name="projects" label="所属项目">
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Please select"
+          >
+            {newInit.map(item => (
+              <Select.Option key={item.id} value={item.id}>
+                {item.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item name="input" label="所属项目">
+          <Input placeholder="Please select"></Input>
+        </Form.Item>
+      </Form>
     </div>
-  )
-}
+  );
+};
 
-ContractForm.defaultProps = {}
+ContractForm.defaultProps = {};
 
-export default ContractForm
+export default ContractForm;

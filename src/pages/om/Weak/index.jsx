@@ -6,6 +6,7 @@ import WeakForm from '@/components/Form/WeakForm'; //
 import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
 import WeakTable from '@/components/Table/WeakTable'; //
 import ExportPdf from '@/components/Pdf/ExportPdf'; //
+import WeakFormPdf from '@/components/Pdf/WeakFormPdf'; //
 
 import { actions, mapStateToProps } from '@/models/weak'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -84,7 +85,9 @@ class Weak extends PureComponent {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
+
       count: this.props.count,
+      authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
@@ -221,13 +224,14 @@ class Weak extends PureComponent {
     }
     return (
       <div className="Weak">
-        {this.renderSearchForm()}
+        <WeakFormPdf></WeakFormPdf>
+        {/* {this.renderSearchForm()}
 
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
 
-        {this.renderCommonModal()}
+        {this.renderCommonModal()} */}
       </div>
     );
   }

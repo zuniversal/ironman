@@ -26,11 +26,6 @@ const AssetsForm = props => {
   console.log(' AssetsForm ： ', props, config); //
   const { action } = props; //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   // const formConfig = formatConfig(config);
 
   const config = [
@@ -162,9 +157,6 @@ const AssetsForm = props => {
       <SmartForm
         config={config}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         {...props}
       ></SmartForm>

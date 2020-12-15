@@ -10,6 +10,7 @@ const formatData = (record, rowKey) => {
 
 const ActionCol = props => {
   const {
+    authInfo,
     edit,
     remove,
     extra,
@@ -41,6 +42,7 @@ const ActionCol = props => {
                     ...record,
                   });
             }}
+            disabled={authInfo.edit}
           >
             编辑
           </a>
@@ -50,6 +52,7 @@ const ActionCol = props => {
               console.log(' removeremove ： ', props); //
               remove({ record: formatData(record, props.rowKey) });
             }}
+            disabled={authInfo.remove}
           >
             删除
           </a>

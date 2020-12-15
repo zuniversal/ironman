@@ -6,10 +6,7 @@ import ShiftsManageForm from '@/components/Form/ShiftsManageForm'; //
 import ShiftsManageSearchForm from '@/components/Form/ShiftsManageSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 
-import {
-  actions,
-  // mapStateToProps
-} from '@/models/shiftsManage'; //
+import { actions, mapStateToProps } from '@/models/shiftsManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { history, connect } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';
@@ -31,10 +28,10 @@ const detailFormMap = {
   shiftsManageDetailAsync: ShiftsManageForm,
 };
 
-const mapStateToProps = ({ shiftsManage, user }) => ({
-  ...shiftsManage,
-  teamList: user.dataList,
-});
+// const mapStateToProps = ({ shiftsManage, user }) => ({
+//   ...shiftsManage,
+//   teamList: user.dataList,
+// });
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -68,6 +65,7 @@ class ShiftsManage extends PureComponent {
           //     },
           //   })
           // }
+          disabled
           onClick={() => this.props.showFormModal({ action: 'add' })}
         >
           新增{TITLE}
@@ -153,7 +151,9 @@ class ShiftsManage extends PureComponent {
       // tdClick: this.props.showFormModal,
       showDetail: this.props.getItemAsync,
       dataSource: this.props.dataList,
+
       count: this.props.count,
+      authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       // edit: this.props.showFormModal,
@@ -247,6 +247,7 @@ class ShiftsManage extends PureComponent {
       ' ShiftsManage 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
+      this.props.authInfo,
     ); //
     // this.props.dispatch(actions.getUserAsync());
     this.props.getUserAsync({ page_size: 1000 }); //

@@ -38,11 +38,6 @@ const ShiftsArrangeSearchForm = props => {
     // },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   // const init = {
   //   // schedule_date: nowYearMonth,
   // }
@@ -53,16 +48,7 @@ const ShiftsArrangeSearchForm = props => {
         <Button type="primary "onClick={() => {}}  >导出数据</Button>
       </div> */}
 
-      <SearchForm
-        // flexRow={4}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        noRuleAll
-        {...props}
-      ></SearchForm>
+      <SearchForm config={config} noRuleAll {...props}></SearchForm>
     </div>
   );
 };

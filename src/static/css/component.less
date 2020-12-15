@@ -1,60 +1,46 @@
 @import './variable.less';
 
-// 通用组件样式 
-
+// 通用组件样式
 
 .smartTable {
-  
-    .actionCol a {
-      // &:nth-child(even){
-      //   padding-right: 15px;
+  .actionCol a {
+    // &:nth-child(even){
+    //   padding-right: 15px;
 
-      // }
-      &:not(:last-child):after {
-        content:'|';
-        padding: 10px;
-        color: @primary;
-        width: 2px;
-      }
-      // margin-right: 10px;
-      // border-right: 2px solid @primary;
-      display: inline-block;
+    // }
+    &:not(:last-child):after {
+      content: '|';
+      padding: 10px;
+      color: @primary;
+      width: 2px;
     }
+    // margin-right: 10px;
+    // border-right: 2px solid @primary;
+    display: inline-block;
+  }
 
-    .ant-pagination-item-active{
-      background: @primary;
-      a{
-        color: white;
-      }
+  // [disabled]{
+  //   cursor: not-allowed;
+  // }
+  .ant-pagination-item-active {
+    background: @primary;
+    a {
+      color: white;
     }
-    .ant-table-thead > tr > th{
-      background: #F0F0F0;
+  }
+  .ant-table-thead > tr > th {
+    background: #f0f0f0;
+  }
+  .ant-table-thead {
+  }
 
+  th {
+    border-bottom: 2px solid @primary!important;
+    color: #fff;
+  }
+  .noThLine {
+    th {
+      border-bottom: 2px solid white !important;
     }
-    .ant-table-thead{
-      
-    }
-    
-    th{
-      border-bottom: 2px solid @primary!important;
-      color: #fff; 
-    }
-    .noThLine{
-      th{
-        border-bottom: 2px solid white!important;
-      }
-    }
-      
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-

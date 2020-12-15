@@ -27,19 +27,10 @@ const MonitorManageSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MonitorManageSearchForm '}>
       <SearchForm
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         // {...rest}
         {...props}
       ></SearchForm>

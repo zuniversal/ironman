@@ -126,22 +126,10 @@ export const config = [
 const RoleForm = props => {
   console.log(' RoleForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   return (
     <div className={' RoleForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} {...rest}></SmartForm>
 
       {/* <RoleTab></RoleTab> */}
     </div>

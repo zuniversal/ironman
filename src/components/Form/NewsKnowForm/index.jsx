@@ -88,22 +88,9 @@ const NewsKnowForm = props => {
     ></UploadCom>,
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' NewsKnowForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...props}
-      ></SmartForm>
+      <SmartForm config={config} {...props}></SmartForm>
 
       {/* {formBtn} */}
     </div>

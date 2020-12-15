@@ -48,20 +48,10 @@ const WorkOrderSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' WorkOrderSearchForm '}>
       <SearchForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         // {...rest}
         {...props}

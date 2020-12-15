@@ -34,20 +34,10 @@ const MissionsManageSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MissionsManageSearchForm '}>
       <SearchForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         // {...rest}
         {...props}

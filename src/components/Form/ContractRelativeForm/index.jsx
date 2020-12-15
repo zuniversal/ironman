@@ -612,11 +612,6 @@ const ContractRelativeForm = props => {
 
   const { index, propsForm, formConfigs } = props; //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   // const formConfigs = formatConfig(config);
   // console.log(' formConfigs ： ', formConfigs); //
   const config1 = formatConfig(clientConfig);
@@ -637,10 +632,6 @@ const ContractRelativeForm = props => {
             // config={v}
             // config={v.config}
             config={configArr[i]}
-            formProps={formProps}
-            // init={init}
-            // init={{}}
-
             // propsForm={propsForm}
             // propsForm={formConfigs[index].form}
             propsForm={v.form}

@@ -1,8 +1,6 @@
 import React from 'react';
 import './style.less';
-
 import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
 import SmartImg from '@/common/SmartImg';
 
 const WeakForm = props => {
@@ -88,20 +86,10 @@ const WeakForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' WeakForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         isDisabledAll={!['add', 'edit'].includes(props.action)}
         noRuleAll
         {...rest}

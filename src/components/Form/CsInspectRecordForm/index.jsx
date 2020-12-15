@@ -889,19 +889,11 @@ const CsInspectRecordForm = props => {
   }));
   console.log(' configs  config.map v ： ', configs);
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' inspectRecordForm '}>
       <SmartForm
         flexRow={2}
         config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         formLayouts={formLayouts}
         noRuleAll
         isDisabledAll

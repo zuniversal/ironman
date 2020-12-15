@@ -27,11 +27,6 @@ const HouseNoForm = props => {
   console.log(' HouseNoForm ： ', props, config); //
   const { action } = props; //
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   const capacityConfig = [
     {
       itemProps: {
@@ -214,9 +209,6 @@ const HouseNoForm = props => {
       <SmartForm
         config={config}
         // config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
 
         isDisabledAll={action === 'detail'}
         {...props}

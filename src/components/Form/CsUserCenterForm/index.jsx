@@ -88,18 +88,10 @@ const CsUserCenterForm = props => {
     // },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <SmartForm
       config={config}
       // config={configs}
-      formProps={formProps}
-      // init={init}
-      // init={{}}
       propsForm={form}
       action={'edit'}
       noPh

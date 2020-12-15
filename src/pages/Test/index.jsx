@@ -10,6 +10,13 @@ import ReactPDF, {
 } from '@react-pdf/renderer';
 
 import './style.less';
+// import configs from '@/configs/auth';
+// const keys = Object.keys(configs).map((v) => ({
+//   [v]: configs[v].perms.module
+// }))
+// const subs = Object.values(configs).map((v) => v.sub)
+// console.log(" configsconfigs ： ", configs, Object.values(configs), Object.keys(configs), keys, subs, );
+
 const names = 'zyb';
 
 const config = [
@@ -82,10 +89,12 @@ const MyDoc = () => (
   <Document className={`docs`}>
     <Page>
       {config.map((v, i) => (
-        <Text style={styles.header} key={i}>
-          {/* {v.itemProps.label} */}
-          {`${v.label}`}我我我我我我我我我我我
-        </Text>
+        <View style={styles.header} key={i}>
+          <Text style={styles.header}>
+            {v.itemProps.label}
+            {/* {`${v.label}`}我我我我我我我我我我我 */}
+          </Text>
+        </View>
       ))}
       <Text style={styles.header}>
         ~ Creat我我ed with react-pdf ~我我
@@ -98,12 +107,14 @@ const MyDoc = () => (
 
 const App = () => (
   <div className={`wrapper`}>
-    <PDFViewer>
+    {/* <PDFViewer>
       <MyDoc />
-    </PDFViewer>
-    {/* <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
-      {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
-    </PDFDownloadLink> */}
+    </PDFViewer> */}
+    <PDFDownloadLink document={<MyDoc />} fileName="somename.pdf">
+      {({ blob, url, loading, error }) =>
+        loading ? 'Loading document...' : 'Download now!'
+      }
+    </PDFDownloadLink>
   </div>
 );
 Font.register({
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: 'grey',
-    // fontFamily: 'MicrosoftBlack'
+    fontFamily: 'MicrosoftBlack', //
   },
   pageNumber: {
     position: 'absolute',

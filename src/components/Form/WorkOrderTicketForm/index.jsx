@@ -920,21 +920,10 @@ const WorkOrderTicketForm = props => {
     comProps: { className: 'w-200', ...v.comProps },
   }));
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' workOrderTicketForm '}>
       <SmartForm
-        // flexRow={2}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         formLayouts={formLayouts}
         {...rest}
         init={{

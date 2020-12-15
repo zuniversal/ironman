@@ -813,11 +813,6 @@ const InspectRecordForm = props => {
   }));
   console.log(' configs  config.map v ： ', configs);
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   const doPrint = () => {
     console.log(' doPrint   ,   ： ', counterRef);
     // const newStr = counterRef.current.innerHTML;
@@ -855,9 +850,6 @@ const InspectRecordForm = props => {
       <SmartForm
         flexRow={2}
         config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         formLayouts={formLayouts}
         noRuleAll
         isDisabledAll

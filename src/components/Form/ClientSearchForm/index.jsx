@@ -64,23 +64,12 @@ const ClientSearchForm = props => {
     //   },
     // },
   ];
-
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
   console.log(' configs ： ', configs); //
 
   return (
     <div className="clientSearchForm">
       <SearchForm
-        // flexRow={6}
         config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        // onFieldChange={props.onFieldChange}
         noRuleAll
         // {...rest}
         {...props}

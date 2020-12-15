@@ -383,7 +383,9 @@ class Client extends PureComponent {
       // showDetail: this.showFormModal,
       showDetail: this.props.getItemAsync,
       dataSource: this.props.dataList,
+
       count: this.props.count,
+      authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       // edit: this.showFormModalWithProps,

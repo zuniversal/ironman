@@ -8,6 +8,7 @@ import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
 import io from 'socket.io-client';
+import authData from '@/configs/auth';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
@@ -28,7 +29,40 @@ export const mapStateToProps = state => state[namespace];
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 console.log(' userInfo ： ', userInfo); //
 
-const getRoutes = path => {
+export const flatAuthTest = (data = []) => {
+  // console.log(' flatAuthTest   ,   ： ', data, authData);
+  const authConfig = {};
+  data.forEach(v => {
+    if (v.authKey) {
+      authConfig[v.authKey] = v.authInfo;
+    }
+  });
+  return authConfig;
+};
+// flatAuthTest(authData)
+
+export const flatAuth = (authData = {}, authConfig = {}) => {
+  // console.log('  getRoutes(authData) flatAuthflatAuth   ,   ： ', authData, authConfig);
+  Object.keys(authData).forEach(authKey => {
+    authConfig[authKey] = authData[authKey].perms;
+    if (Object.keys(authData[authKey].sub).length) {
+      flatAuth(authData[authKey].sub, authConfig);
+    }
+  });
+  return authConfig;
+};
+
+export const recursiveAuth = (data = [], authData = {}) => {
+  // console.log(' recursiveAuth   ,   ： ', data, authData);
+  return data.map(v => ({
+    hideInMenu: !(v.authKey ? authData[v.authKey]?.perms.module : true),
+    authInfo: authData[v.authKey]?.perms ?? {},
+    ...v,
+    routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
+  }));
+};
+
+const getRoutes = props => {
   const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 
   const routesMap = {
@@ -48,11 +82,14 @@ const getRoutes = path => {
     userInfo,
     userInfo.accountType,
     routes,
+    props,
   );
+  const routesConfig = recursiveAuth(routes, authData);
   const routesData = {
     route: {
       path: '/',
-      routes: routes,
+      // routes: routes,
+      routes: routesConfig,
     },
     location: {
       pathname: '/',
@@ -60,6 +97,13 @@ const getRoutes = path => {
   };
   return routesData;
 };
+const routesData = getRoutes(authData);
+console.log(
+  ' getRoutes(authData) ： ',
+  routesData,
+  recursiveAuth(routesData.route.routes, authData),
+  flatAuth(authData),
+); //
 
 export default {
   namespace,
@@ -71,8 +115,9 @@ export default {
     count: 0,
     itemDetail: {},
     userInfo,
+    authInfo: {},
     accountType: 'customer',
-    getRoutes: getRoutes(),
+    getRoutes: getRoutes()[0],
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
   },
@@ -146,11 +191,18 @@ export default {
       };
     },
     login(state, { payload, type }) {
-      console.log(' login .userInfo.userInfo：state ', getRoutes(), payload); //
+      const routeData = getRoutes(payload);
+      console.log(
+        ' getRoutes(authData) login .userInfo.userInfo：state ',
+        routeData,
+        payload,
+      ); //
       return {
         ...state,
-        getRoutes: { ...getRoutes() },
-        userInfo: { ...payload },
+        userInfo: payload,
+        getRoutes: routeData,
+        // authInfo: flatAuth(authData),
+        authInfo: flatAuth(payload.perms),
         accountType: payload.account.account_type,
         system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
       };
@@ -178,7 +230,7 @@ export default {
 
       const resData = yield call(services.getUserInfo, payload);
       const [enterprise = {}] = resData.bean.enterprises;
-      console.log(' enterprise ： ', enterprise); //
+      // console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {
@@ -237,7 +289,7 @@ export default {
       console.log(' getUserInfoAsync ： ', payload, action, type); //
       const resData = yield call(services.getUserInfo, payload);
       const [enterprise = {}] = resData.bean.enterprises;
-      console.log(' enterprise ： ', enterprise); //
+      // console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {

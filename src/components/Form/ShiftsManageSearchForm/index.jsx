@@ -9,10 +9,6 @@ import { formatConfig } from '@/utils'; //
 const ShiftsManageSearchForm = props => {
   console.log(' ShiftsManageSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   const config = [
     {
@@ -50,13 +46,7 @@ const ShiftsManageSearchForm = props => {
   return (
     <div className={'ShiftsManageSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         // {...rest}
         {...props}

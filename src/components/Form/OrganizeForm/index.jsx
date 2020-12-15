@@ -8,10 +8,6 @@ import { formatConfig } from '@/utils'; //
 const OrganizeForm = props => {
   console.log(' OrganizeForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   const config = [
     {
@@ -48,15 +44,7 @@ const OrganizeForm = props => {
 
   return (
     <div className={' OrganizeForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={config} {...rest}></SmartForm>
 
       {formBtn}
     </div>

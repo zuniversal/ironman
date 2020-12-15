@@ -158,18 +158,9 @@ export const AdminForm = props => {
     // },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <SmartForm
-      // flexRow={6}
       config={config}
-      formProps={formProps}
-      // init={init}
-      // init={{}}
       // name={'admin'}
       propsForm={form}
       noRuleAll
@@ -633,11 +624,6 @@ const ClientForm = props => {
 
   const { propsForm, ...restProps } = props;
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className="clientForm">
       <Form.Provider
@@ -646,11 +632,7 @@ const ClientForm = props => {
         }}
       >
         <SmartForm
-          // flexRow={4}
           config={config}
-          formProps={formProps}
-          // init={init}
-          // init={{}}
           isDisabledAll={action === 'detail'}
           {...props}
           init={{

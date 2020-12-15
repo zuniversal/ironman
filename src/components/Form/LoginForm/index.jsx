@@ -21,6 +21,7 @@ const LoginForm = props => {
       },
     },
     {
+      formType: 'Password',
       noLabel: true,
       itemProps: {
         label: '密码',
@@ -32,20 +33,7 @@ const LoginForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
-  return (
-    <SmartForm
-      config={config}
-      formProps={formProps}
-      // init={init}
-      className={'  '}
-      {...props}
-    ></SmartForm>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 LoginForm.defaultProps = {

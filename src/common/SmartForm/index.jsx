@@ -507,7 +507,16 @@ const SmartForm = (props, state) => {
       Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
       DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
-      RangePicker: <RangePicker format={'YYYY/MM/DD'} {...realComProps} />,
+      RangePicker: (
+        <RangePicker
+          format={'YYYY/MM/DD'}
+          ranges={{
+            今天: [moment(), moment()],
+            这个月: [moment().startOf('month'), moment().endOf('month')],
+          }}
+          {...realComProps}
+        />
+      ),
       TreeSelect: (
         <TreeSelect
           treeDefaultExpandAll

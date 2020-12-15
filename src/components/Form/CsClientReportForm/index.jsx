@@ -223,21 +223,9 @@ const ClientReportForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={''}>
-      <SmartForm
-        // flexRow={4}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-        {...props}
-      ></SmartForm>
+      <SmartForm config={config} {...props}></SmartForm>
     </div>
   );
 };

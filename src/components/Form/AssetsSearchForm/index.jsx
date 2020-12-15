@@ -4,12 +4,7 @@ import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 
 const AssetsSearchForm = props => {
-  console.log(' AssetsSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
+  console.log(' AssetsSearchForm ： ', props);
 
   const config = [
     // {
@@ -52,12 +47,7 @@ const AssetsSearchForm = props => {
   return (
     <div className={'fsb assetsSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         noRuleAll
         // {...rest}
         {...props}

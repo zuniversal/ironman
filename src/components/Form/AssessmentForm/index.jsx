@@ -28,22 +28,9 @@ const AssessmentForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' AssessmentForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...props}
-      ></SmartForm>
+      <SmartForm config={config} {...props}></SmartForm>
 
       {/* {formBtn} */}
     </div>

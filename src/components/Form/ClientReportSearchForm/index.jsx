@@ -48,24 +48,8 @@ const ClientReportSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={''}>
-      {/* <SmartForm
-        // flexRow={4}
-        config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        isSearchForm
-        {...props}
-      ></SmartForm> */}
-
       <SearchForm config={config} formProps={formProps}></SearchForm>
     </div>
   );

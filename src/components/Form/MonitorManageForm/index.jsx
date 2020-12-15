@@ -95,22 +95,9 @@ const MonitorManageForm = props => {
         comProps: { className: 'w-240', ...v.comProps },
       }));
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={' MonitorManageForm '}>
-      <SmartForm
-        // flexRow={6}
-        config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
-        {...rest}
-      ></SmartForm>
+      <SmartForm config={configs} {...rest}></SmartForm>
 
       {formBtn}
     </div>

@@ -28,20 +28,11 @@ export const config = [
 const HomeSettingForm = props => {
   console.log(' HomeSettingForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   return (
     <div className={' homeSettingForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}
-
         // init={{
         //   settings: ['item1', 'item2'],
         // }}

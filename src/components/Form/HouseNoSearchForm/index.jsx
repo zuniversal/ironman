@@ -93,21 +93,11 @@ const HouseNoSearchForm = props => {
   ];
 
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   return (
     <div className={'fsb HouseNoSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={configs}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         // {...rest}
         {...props}
       ></SearchForm>

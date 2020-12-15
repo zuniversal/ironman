@@ -7,10 +7,6 @@ import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 const BussniessRecordSearchForm = props => {
   console.log(' BussniessRecordSearchForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   const config = [
     {
@@ -34,13 +30,7 @@ const BussniessRecordSearchForm = props => {
   return (
     <div className={'BussniessRecordSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         noRuleAll
         // {...rest}
         {...props}

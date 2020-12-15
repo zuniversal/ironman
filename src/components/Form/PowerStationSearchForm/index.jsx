@@ -37,20 +37,10 @@ const PowerStationSearchForm = props => {
     },
   ];
 
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
-
   return (
     <div className={'fsb PowerStationSearchForm '}>
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         noRuleAll
         // {...rest}
         {...props}

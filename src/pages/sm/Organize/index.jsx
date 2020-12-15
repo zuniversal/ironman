@@ -55,7 +55,9 @@ class Organize extends PureComponent {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
       dataSource: this.props.dataList,
+
       count: this.props.count,
+      authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,

@@ -9,10 +9,6 @@ import { formatConfig } from '@/utils'; //
 const ShiftsManageForm = props => {
   console.log(' ShiftsManageForm ： ', props); //
   const { formBtn, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline',
-  };
 
   const config = [
     {
@@ -93,12 +89,7 @@ const ShiftsManageForm = props => {
   return (
     <div className={' ShiftsManageForm '}>
       <SmartForm
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
-
         isDisabledAll={!['add', 'edit'].includes(props.action)}
         {...props}
       ></SmartForm>

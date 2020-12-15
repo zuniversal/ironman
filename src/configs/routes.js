@@ -42,6 +42,7 @@ export const managerRoutes = [
   // },
   {
     path: '/om/shifts',
+    authKey: 'team',
     name: '班组管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'shiftsManage'} />,
@@ -49,6 +50,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/shiftsManage',
+        authKey: 'teamManagement',
         name: '班组管理',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -56,6 +58,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/shiftsArrange',
+        authKey: 'teamSchedule',
         name: '排班',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -66,6 +69,7 @@ export const managerRoutes = [
         hide: true,
         // path: '/om/shiftsArrange',
         path: '/om/shiftsArrangeDetail',
+        authKey: 'teamSchedule',
         name: '新增/编辑排班',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -79,6 +83,7 @@ export const managerRoutes = [
       // },
       {
         path: '/om/shiftsTransfer',
+        authKey: 'taskHandover',
         name: '交接班',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -89,6 +94,7 @@ export const managerRoutes = [
 
   {
     path: '/om/clientInfo',
+    authKey: 'customerInformation',
     name: '客户信息管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'clientInfoManage'} />,
@@ -96,6 +102,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/contract',
+        authKey: 'contract',
         name: '合同管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'contract'} />,
@@ -104,6 +111,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/client',
+        authKey: 'customer',
         name: '客户管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'client'} />,
@@ -112,6 +120,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/assets',
+        authKey: 'asset',
         name: '资产管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'assets'} />,
@@ -120,6 +129,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/houseNo',
+        authKey: 'number',
         name: '户号管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'houseNo'} />,
@@ -128,6 +138,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/powerStation',
+        authKey: 'powerStation',
         name: '电站管理',
         // icon: <Icon icon={'powerStation'} />,
         // icon: placeIcon,
@@ -135,6 +146,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/clientReport',
+        authKey: 'report',
         name: '客户报告',
         // icon: <Icon icon={'powerStation'} />,
         // icon: placeIcon,
@@ -145,6 +157,7 @@ export const managerRoutes = [
 
   {
     path: '/om/ps',
+    authKey: 'business',
     name: '业务管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'bussniessManage'} />,
@@ -152,6 +165,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/goods',
+        authKey: 'materiel',
         name: '物料管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'goods'} />,
@@ -160,6 +174,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/missionsManage',
+        authKey: 'task',
         name: '任务管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'missionsManage'} />,
@@ -168,6 +183,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/workOrder',
+        authKey: 'order',
         name: '工单管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'workOrder'} />,
@@ -179,6 +195,7 @@ export const managerRoutes = [
 
   {
     path: '/om/operation',
+    authKey: 'inspection',
     name: '巡检运维',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'inspect'} />,
@@ -186,6 +203,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/inspectPlan',
+        authKey: 'inspectionPlan',
         name: '巡检计划',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -193,6 +211,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/inspectMission',
+        authKey: 'inspectionTask',
         name: '巡检任务',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -200,6 +219,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/inspectRecord',
+        authKey: 'inspectionRecord',
         name: '巡检记录',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -207,6 +227,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/weak',
+        authKey: 'defect',
         name: '缺陷管理',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -216,6 +237,7 @@ export const managerRoutes = [
   },
   {
     path: '/om/alarm',
+    authKey: 'alarm',
     name: '告警管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'alarmManage'} />,
@@ -223,6 +245,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/alarmTemplate',
+        authKey: 'alarmTemplate',
         name: '告警策略模板',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -230,6 +253,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/monitorManage',
+        authKey: 'monitorEquipment',
         name: '监测设备管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'monitorManage'} />,
@@ -238,6 +262,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/alarmRecord',
+        authKey: 'alarmRecord',
         name: '告警记录',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -247,6 +272,7 @@ export const managerRoutes = [
   },
   {
     path: '/kpi',
+    authKey: 'achievements',
     name: '绩效管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'kpiManage'} />,
@@ -254,6 +280,7 @@ export const managerRoutes = [
     routes: [
       {
         path: '/om/appraise',
+        authKey: 'assessmentEvaluate',
         name: '考核评价',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -261,6 +288,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/assessment',
+        authKey: 'assessmentConfig',
         name: '考核配置',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -271,12 +299,14 @@ export const managerRoutes = [
 
   {
     path: '/waiter',
+    authKey: 'customerService',
     name: '客服管理',
     icon: <Icon icon={'customerManage'} />,
     component: '../Waiter',
     routes: [
       {
         path: '/om/onlineService',
+        authKey: 'onlineCustomerService',
         name: '在线客服',
         // icon: <ScheduleFilled />,
         // icon: placeIcon,
@@ -284,6 +314,7 @@ export const managerRoutes = [
       },
       {
         path: '/om/visitManage',
+        authKey: 'returnVisit',
         name: '回访管理',
         // icon: <Icon icon={'csOrganize'} />,
         // icon: placeIcon,
@@ -294,12 +325,14 @@ export const managerRoutes = [
 
   {
     path: '/system',
+    authKey: 'system',
     name: '系统管理',
     icon: <Icon icon={'systemManage'} />,
     component: '../Waiter',
     routes: [
       {
         path: '/sm/userManage',
+        authKey: 'user',
         name: '用户管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'userManage'} />,
@@ -308,6 +341,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/organize',
+        authKey: 'organization',
         name: '组织管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'organize'} />,
@@ -316,6 +350,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/role',
+        authKey: 'role',
         name: '角色管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'role'} />,
@@ -324,6 +359,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/dict',
+        authKey: 'dictionary',
         name: '字典管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'dict'} />,
@@ -332,6 +368,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/msg',
+        authKey: 'message',
         name: '消息管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'msg'} />,
@@ -340,6 +377,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/csMonitor',
+        authKey: 'monitor',
         name: '系统监控',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'csMonitor'} />,
@@ -348,6 +386,7 @@ export const managerRoutes = [
       },
       {
         path: '/sm/operateRecord',
+        authKey: 'operationRecord',
         name: '操作记录',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'operateRecord'} />,
@@ -359,18 +398,21 @@ export const managerRoutes = [
 
   {
     path: '/knowledge',
+    authKey: 'newsAndKnowledge',
     name: '新闻与知识点',
     icon: <Icon icon={'customerManage'} />,
     component: '../Waiter',
     routes: [
       {
         path: '/om/newsKnow',
+        authKey: 'newsAndKnowledgePoint',
         name: '新闻与知识点',
         // icon: placeIcon,
         component: '../Online',
       },
       {
         path: '/om/knowledgeCate',
+        authKey: 'knowledgeBase',
         name: '知识库分类',
         // icon: placeIcon,
         component: '../pages',
@@ -389,6 +431,7 @@ export const customerRoutes = [
   },
   {
     path: '/cs/msgList',
+    authKey: '',
     name: '消息列表',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'msgList'} />,
@@ -396,12 +439,14 @@ export const customerRoutes = [
     routes: [
       {
         path: '/cs/alarmNotify',
+        authKey: '',
         name: '告警通知',
         // icon: placeIcon,
         component: '../pages/cs/PowerStation',
       },
       {
         path: '/cs/systemNotify',
+        authKey: '',
         name: '系统通知',
         // icon: placeIcon,
         component: '../pages/cs/ClientReport',
@@ -410,12 +455,14 @@ export const customerRoutes = [
   },
   {
     path: '/cs/clientReport',
+    authKey: '',
     name: '客户报告',
     icon: <Icon icon={'csClientReport'} />,
     component: '../pages/cs/CsClientReport',
   },
   {
     path: '/cs/inspectRecord',
+    authKey: '',
     name: '巡检记录',
     // icon: <ScheduleFilled />,
     icon: <Icon icon={'csInspectRecord'} />,
@@ -423,6 +470,7 @@ export const customerRoutes = [
   },
   {
     path: '/cs/bussniessRecord',
+    authKey: '',
     name: '业务记录',
     // icon: <ScheduleFilled />,
     icon: <Icon icon={'bussniessRecord'} />,
@@ -430,6 +478,7 @@ export const customerRoutes = [
   },
   {
     path: '/cs/userCenter',
+    authKey: '',
     name: '个人中心',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'csUserCenter'} />,
@@ -437,6 +486,7 @@ export const customerRoutes = [
   },
   {
     path: '/cs/organize',
+    authKey: '',
     name: '组织管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'csOrganize'} />,

@@ -49,7 +49,7 @@ export default {
     itemDetail: {},
 
     homeSettings:
-      getItem(`${getItem('userInfo').id}_homeSettings`) || settingData,
+      getItem(`${getItem('userInfo')?.id}_homeSettings`) || settingData,
     statisticData: {},
     chartData: {},
     requestFn: 'getInspectionsChart',

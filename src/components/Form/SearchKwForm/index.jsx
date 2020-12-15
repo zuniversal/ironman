@@ -9,10 +9,6 @@ import { formatConfig } from '@/utils'; //
 const SearchKwForm = props => {
   console.log(' SearchKwForm ： ', props); //
   const { beforeExtra, formBtn, className, keyword, ...rest } = props; //
-  const formProps = {
-    // layout: 'vertical',
-    // layout: 'inline'
-  };
 
   const config = [
     {
@@ -30,12 +26,7 @@ const SearchKwForm = props => {
     <div className={`fsb searchKwForm ${className}`}>
       {beforeExtra}
       <SearchForm
-        // flexRow={4}
-        // flexRow={6}
         config={config}
-        formProps={formProps}
-        // init={init}
-        // init={{}}
         noRuleAll
         // {...rest}
         {...props}
