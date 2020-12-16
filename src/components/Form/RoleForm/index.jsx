@@ -19,6 +19,7 @@ import {
 } from 'antd';
 
 import SmartForm from '@/common/SmartForm'; //
+import { treeList } from '@/configs';
 
 const { TabPane } = Tabs;
 
@@ -106,32 +107,47 @@ const RoleTab = props => {
   );
 };
 
-export const config = [
-  {
-    itemProps: {
-      label: '角色名',
-      name: 'name',
-    },
-  },
-  {
-    noRule: true,
-    formType: 'TextArea',
-    itemProps: {
-      label: '描述',
-      name: 'comments',
-    },
-  },
-];
-
 const RoleForm = props => {
   console.log(' RoleForm ： ', props); //
   const { formBtn, ...rest } = props; //
 
+  const config = [
+    {
+      itemProps: {
+        label: '角色名',
+        name: 'name',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'TextArea',
+      itemProps: {
+        label: '描述',
+        name: 'comments',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: <RoleTab></RoleTab>,
+      itemProps: {
+        label: '',
+      },
+    },
+    // {
+    //   formType: 'TreeSelect',
+    //   itemProps: {
+    //     label: '上级部门',
+    //     name: 'parent_id',
+    //   },
+    //   comProps: {
+    //     treeData: treeList,
+    //   },
+    // },
+  ];
+
   return (
     <div className={' RoleForm '}>
       <SmartForm config={config} {...rest}></SmartForm>
-
-      {/* <RoleTab></RoleTab> */}
     </div>
   );
 };

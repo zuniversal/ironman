@@ -56,6 +56,14 @@ export const managerRoutes = [
         // icon: placeIcon,
         component: '../pages/om/ShiftsManage',
       },
+      // {
+      //   path: '/om/shiftsManage/111',
+      //   authKey: 'teamManagement',
+      //   name: '班组管理2',
+      //   // icon: <ScheduleFilled />,
+      //   // icon: placeIcon,
+      //   component: '../pages/om/ShiftsManage',
+      // },
       {
         path: '/om/shiftsArrange',
         authKey: 'teamSchedule',

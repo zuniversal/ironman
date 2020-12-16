@@ -16,7 +16,7 @@ import { tips, downLoad } from '@/utils';
 import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
-import { SIZE, DOWN_URL } from '@/constants';
+import { SIZE, DOWN_URL, isDev } from '@/constants';
 import { commonActions } from '@/models/common'; //
 import { connect } from 'umi';
 
@@ -29,6 +29,22 @@ import { connect } from 'umi';
    
   
 */
+
+const handleAuth = (props = {}) => {
+  if (isDev) {
+    const authInfo = {};
+    Object.keys(props).forEach(v => (authInfo[v] = true));
+    console.log(
+      ' artHoc 组件 t handleAuth ： ',
+      props,
+      Object.keys(props),
+      authInfo,
+    ); //
+    return authInfo;
+  } else {
+    return props;
+  }
+};
 
 const actionMap = {
   add: 'addItemAsync',
@@ -579,6 +595,8 @@ export default ({
         this.props,
       );
 
+      const { authInfo } = this.props;
+
       return (
         <div className="smartHocWrapper">
           {this.state.isShowTitle && (
@@ -588,6 +606,7 @@ export default ({
           <Com
             {...this.state}
             {...this.props}
+            authInfo={handleAuth(authInfo)}
             {...this.actionProps}
             // onRemove={this.onRemove2}
             // onBatchRemove={this.onBatchRemove2}

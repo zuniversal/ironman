@@ -2,6 +2,8 @@
 // console.log(' regions ： ', regions,  )//
 // export const regoins = regions
 
+import { createIndexArr } from '@/utils';
+
 export const treeList = [
   {
     label: '部门1',
@@ -312,3 +314,31 @@ export const knowledgeTypeConfig = [
     value: 2,
   },
 ];
+
+export const inspectTemplateConfig = [
+  {
+    label: '普通电站',
+    value: 1,
+  },
+  {
+    label: '特例',
+    value: 2,
+  },
+];
+
+export const inspectModelRadio = [
+  {
+    label: '月巡检',
+    value: 1,
+  },
+  {
+    label: '日巡检',
+    value: 2,
+  },
+];
+
+export const dayHours = createIndexArr(24).map(v => ({
+  label: `${v}点`,
+  value: v,
+}));
+console.log(' dayHours ： ', dayHours); //

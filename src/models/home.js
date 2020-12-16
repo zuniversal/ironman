@@ -26,7 +26,10 @@ export const actions = {
 
 console.log(' actions ： ', actions, getItem('homeSettings')); //
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 const settingData = [
   'inspectMission',

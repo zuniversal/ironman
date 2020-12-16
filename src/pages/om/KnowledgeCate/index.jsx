@@ -45,6 +45,7 @@ class KnowledgeCate extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
         >
           新增分类
         </Button>

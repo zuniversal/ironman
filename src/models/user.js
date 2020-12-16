@@ -24,7 +24,10 @@ export const userActions = actions;
 
 // console.log(' actions ： ', actions,  )//
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 console.log(' userInfo ： ', userInfo); //
@@ -55,7 +58,9 @@ export const flatAuth = (authData = {}, authConfig = {}) => {
 export const recursiveAuth = (data = [], authData = {}) => {
   // console.log(' recursiveAuth   ,   ： ', data, authData);
   return data.map(v => ({
-    hideInMenu: !(v.authKey ? authData[v.authKey]?.perms.module : true),
+    hideInMenu: isDev
+      ? false
+      : !(v.authKey ? authData[v.authKey]?.perms.module : true),
     authInfo: authData[v.authKey]?.perms ?? {},
     ...v,
     routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
@@ -84,7 +89,8 @@ const getRoutes = props => {
     routes,
     props,
   );
-  const routesConfig = recursiveAuth(routes, authData);
+  // const routesConfig = recursiveAuth(routes, authData);
+  const routesConfig = recursiveAuth(routes, props?.perms);
   const routesData = {
     route: {
       path: '/',
@@ -97,6 +103,7 @@ const getRoutes = props => {
   };
   return routesData;
 };
+
 const routesData = getRoutes(authData);
 console.log(
   ' getRoutes(authData) ： ',

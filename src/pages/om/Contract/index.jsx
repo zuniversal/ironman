@@ -150,7 +150,7 @@ class Contract extends PureComponent {
   //         <Button type="primary" onClick={() => this.props.exportData()}>
   //           导出{TITLE}数据
   //         </Button>
-  //         <Button type="primary" onClick={() => this.props.onBatchRemove()}>
+  //         <Button type="primary" disabled={this.props.authInfo.delete !== true} onClick={() => this.props.onBatchRemove()}>
   //           删除
   //         </Button>
   //       </div> */}

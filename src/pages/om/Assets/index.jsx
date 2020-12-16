@@ -157,13 +157,18 @@ class Assets extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>
-        <Button type="primary" onClick={this.onBatchRemove}>
+        <Button
+          type="primary"
+          disabled={this.props.authInfo.delete !== true}
+          onClick={this.onBatchRemove}
+        >
           删除
         </Button>
       </div>

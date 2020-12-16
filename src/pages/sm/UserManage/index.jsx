@@ -42,6 +42,7 @@ class UserManage extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
@@ -109,6 +110,7 @@ class UserManage extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      extraLoading: ['getSearchListAsync'],
     };
 
     return <UserManageTable {...tableProps}></UserManageTable>;

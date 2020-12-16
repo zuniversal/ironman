@@ -14,7 +14,10 @@ export const actions = {
 
 // console.log(' history ： ', history, window )//
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 export default {
   namespace,

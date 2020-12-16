@@ -129,6 +129,7 @@ class CRUD extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
         >
           新增客户
         </Button>

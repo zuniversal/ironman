@@ -21,7 +21,6 @@ export const actions = {
 
 export const mapStateToProps = state => ({
   ...state[namespace],
-  // authInfo: state.user.authInfo,
   authInfo: state.user.authInfo.teamManagement,
 });
 

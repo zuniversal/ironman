@@ -31,7 +31,10 @@ export const actions = {
 
 // console.log(' actions ： ', actions,  )//
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 const formartDataList = (data, { id, teamList }) => {
   // const label = teamList.find(v => v.value == id).label;

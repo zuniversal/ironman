@@ -288,10 +288,16 @@ const SmartForm = (props, state) => {
   const [componentSize, setComponentSize] = useState('default');
 
   const onFormLayoutChange = (value, formData) => {
-    console.log(' onFormLayoutChange value, formData,  ： ', value, formData); //
+    console.log(
+      ' onFormLayoutChange value, formData,  ： ',
+      props,
+      value,
+      formData,
+    ); //
     const { layout, size } = value;
     if (isSearchForm) formData.page = 1;
     onFieldChange && onFieldChange({ value, formData, form: formControl });
+    // onFieldChange && debounce(() => onFieldChange({ value, formData, form: formControl }), 500)();
     // setFormLayout(layout);
     // setComponentSize(size);
   };

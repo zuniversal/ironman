@@ -358,6 +358,7 @@ export const downLoadFile = (clickItem, { downEle = 'qrCode' }) => {
 
 export const createIndexArr = (length = 6) =>
   Array.from({ length }, (_, index) => index);
+
 export const createArr = (length = 6) => {
   const res = Array.from(
     { length },

@@ -38,7 +38,10 @@ const formatPowerList = (data, labelKey = 'label', idKey = 'id') => {
 
 // console.log(' actions ： ', actions,  )//
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 const validateConfig = [
   'power_number',

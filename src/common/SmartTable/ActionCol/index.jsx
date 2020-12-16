@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
+import { isDev } from '@/constants';
 
 // 通用的操作列组件
 const formatData = (record, rowKey) => {
@@ -42,7 +43,7 @@ const ActionCol = props => {
                     ...record,
                   });
             }}
-            disabled={authInfo.edit}
+            disabled={isDev ? false : authInfo.edit}
           >
             编辑
           </a>
@@ -52,7 +53,7 @@ const ActionCol = props => {
               console.log(' removeremove ： ', props); //
               remove({ record: formatData(record, props.rowKey) });
             }}
-            disabled={authInfo.remove}
+            disabled={isDev ? false : authInfo.delete}
           >
             删除
           </a>

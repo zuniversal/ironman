@@ -15,7 +15,10 @@ export const actions = {
 
 // console.log(' actions ： ', actions,  )//
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 export default {
   namespace,
@@ -58,7 +61,12 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          work_date: v.work_date.split('T')[0],
+          assign_date: v.assign_date.split('T')[0],
+          created_time: v.work_date.split('T')[0],
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,

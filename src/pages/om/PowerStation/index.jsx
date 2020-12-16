@@ -65,6 +65,7 @@ class PowerStation extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
@@ -79,7 +80,11 @@ class PowerStation extends PureComponent {
           导出Excel
         </Button>
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
-        <Button type="primary" onClick={this.onBatchRemove}>
+        <Button
+          type="primary"
+          disabled={this.props.authInfo.delete !== true}
+          onClick={this.onBatchRemove}
+        >
           删除
         </Button>
       </div>

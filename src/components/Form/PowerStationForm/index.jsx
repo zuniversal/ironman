@@ -26,7 +26,7 @@ import {
   PowerStationDetailTable,
 } from '@/components/Table/PowerStationInfoTable'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
-import { regoins } from '@/configs'; //
+import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
@@ -61,7 +61,7 @@ const PowerStationForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '请筛选设备',
-        name: '',
+        name: '请筛选设备',
       },
     },
     watchRow,
@@ -70,7 +70,7 @@ const PowerStationForm = props => {
       // formType: 'Select',
       itemProps: {
         label: '请筛选监控点',
-        name: '',
+        name: '请筛选监控点',
       },
     },
   ];
@@ -192,6 +192,32 @@ const PowerStationForm = props => {
         label: '运行等级',
         name: 'operation_level',
       },
+    },
+    {
+      formType: 'Search',
+      selectData: inspectTemplateConfig,
+      itemProps: {
+        label: '巡检模板',
+        name: '巡检模板',
+      },
+    },
+    {
+      formType: 'Search',
+      selectData: dayHours,
+      itemProps: {
+        label: '巡检时间',
+        name: '巡检时间',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+    {
+      formType: 'Radio',
+      itemProps: {
+        label: '巡检模式',
+      },
+      radioData: inspectModelRadio,
     },
     {
       formType: 'InputNumber',
@@ -403,6 +429,29 @@ const PowerStationForm = props => {
         label: '运行等级',
         name: 'operation_level',
       },
+    },
+    {
+      formType: 'Search',
+      selectData: inspectTemplateConfig,
+      itemProps: {
+        label: '巡检模板',
+        name: '巡检模板',
+      },
+    },
+    {
+      formType: 'Search',
+      selectData: dayHours,
+      itemProps: {
+        label: '巡检时间',
+        name: '巡检时间',
+      },
+    },
+    {
+      formType: 'Radio',
+      itemProps: {
+        label: '巡检模式',
+      },
+      radioData: inspectModelRadio,
     },
     {
       itemProps: {

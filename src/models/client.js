@@ -30,7 +30,10 @@ export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
-export const mapStateToProps = state => state[namespace];
+export const mapStateToProps = state => ({
+  ...state[namespace],
+  authInfo: state.user.authInfo.teamManagement,
+});
 
 const initItem = {
   key: Math.random(),

@@ -62,6 +62,11 @@ export default [
   },
 
   {
+    path: '/om/shiftsManage/:id',
+    component: '@/pages/om/ShiftsManage',
+    title: '班组管理2',
+  },
+  {
     path: '/om/shiftsManage',
     component: '@/pages/om/ShiftsManage',
     title: '班组管理',
