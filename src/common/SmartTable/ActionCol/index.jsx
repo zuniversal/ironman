@@ -43,7 +43,8 @@ const ActionCol = props => {
                     ...record,
                   });
             }}
-            disabled={isDev ? false : authInfo.edit}
+            // disabled={isDev ? false : authInfo.edit}
+            disabled={authInfo.edit !== true}
           >
             编辑
           </a>
@@ -53,7 +54,8 @@ const ActionCol = props => {
               console.log(' removeremove ： ', props); //
               remove({ record: formatData(record, props.rowKey) });
             }}
-            disabled={isDev ? false : authInfo.delete}
+            // disabled={isDev ? false : authInfo.delete}
+            disabled={authInfo.delete !== true}
           >
             删除
           </a>

@@ -3,6 +3,7 @@ import cs from './routes/cs';
 import om from './routes/om';
 import sm from './routes/sm';
 import common from './routes/common';
+import routes from './routes';
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -63,9 +64,10 @@ export default defineConfig({
       component: '@/layouts/index',
       routes: [
         { path: '/om/test', component: '@/pages/Test' },
-        ...cs,
-        ...om,
-        ...sm,
+        // ...cs,
+        // ...om,
+        // ...sm,
+        ...routes,
       ],
     },
 

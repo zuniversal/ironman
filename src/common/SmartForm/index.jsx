@@ -163,7 +163,11 @@ const SmartForm = (props, state) => {
     size,
     noLabelLayout,
   } = props; //
-
+  console.log(
+    ' %c SmartForm 组件 this.state, this.props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  ); //
   const configs = isFormat
     ? formatConfig(config, { isSearchForm, isDisabledAll, action })
     : config; //
@@ -287,7 +291,7 @@ const SmartForm = (props, state) => {
 
   const [componentSize, setComponentSize] = useState('default');
 
-  const onFormLayoutChange = (value, formData) => {
+  const onFormLayoutChange = debounce((value, formData) => {
     console.log(
       ' onFormLayoutChange value, formData,  ： ',
       props,
@@ -300,7 +304,7 @@ const SmartForm = (props, state) => {
     // onFieldChange && debounce(() => onFieldChange({ value, formData, form: formControl }), 500)();
     // setFormLayout(layout);
     // setComponentSize(size);
-  };
+  }, 500);
 
   const onReset = () => {
     form.resetFields();

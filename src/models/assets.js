@@ -24,11 +24,7 @@ export const actions = {
 };
 
 // console.log(' actions ： ', actions,  )//
-
-export const mapStateToProps = state => ({
-  ...state[namespace],
-  authInfo: state.user.authInfo.teamManagement,
-});
+export const mapStateToProps = state => state[namespace];
 
 const formatParams = data => {
   const params = {

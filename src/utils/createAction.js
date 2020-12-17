@@ -111,7 +111,7 @@ export const isLoading = props => {
   // console.log(' get 取属 isShowLoading config, path, actions,  ： ', config, path, actions,  )//
   const configs =
     config.length > 0 ? config : [...crudConfigs, ...extraLoading]; //
-  console.log(' isLoading  configs ：', configs, path); //
+  // console.log(' isLoading  configs ：', configs, path,  )//
   return configs.some(asyncSuffix => {
     // console.log(' action === `${path}/${asyncSuffix}` ： ', config, actions, `${path}/${asyncSuffix}`,  actions[`${path}/${asyncSuffix}`], )//
     return actions[`${path}/${asyncSuffix}`];

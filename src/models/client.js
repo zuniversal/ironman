@@ -29,11 +29,7 @@ const batchTurnActions = ['onAdminChange', 'modifyTableItem'];
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
-
-export const mapStateToProps = state => ({
-  ...state[namespace],
-  authInfo: state.user.authInfo.teamManagement,
-});
+export const mapStateToProps = state => state[namespace];
 
 const initItem = {
   key: Math.random(),

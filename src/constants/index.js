@@ -43,6 +43,7 @@ export const homeMap = {
 };
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
+export const csSystemNotify = '/cs/systemNotify?';
 
 const animations = [
   'bounce',

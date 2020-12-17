@@ -23,7 +23,7 @@ class SmartModal extends PureComponent {
     this.state = {
       show: false,
       disabled: true,
-      // disabled: false,
+      disabled: false,
     };
   }
   onShow = e => {
@@ -100,21 +100,21 @@ class SmartModal extends PureComponent {
         // onOk={this.onOk}
         // onCancel={this.onCancel}
         maskClosable={maskClosable}
-        onMouseOver={() => {
-          if (this.state.disabled) {
-            this.setState({
-              disabled: false,
-            });
-          }
-        }}
-        onMouseOut={() => {
-          this.setState({
-            disabled: true,
-          });
-        }}
-        modalRender={modal => (
-          <Draggable disabled={this.state.disabled}>{modal}</Draggable>
-        )}
+        // onMouseOver={() => {
+        //   if (this.state.disabled) {
+        //     this.setState({
+        //       disabled: false,
+        //     });
+        //   }
+        // }}
+        // onMouseOut={() => {
+        //   this.setState({
+        //     disabled: true,
+        //   });
+        // }}
+        // modalRender={modal => (
+        //   <Draggable disabled={this.state.disabled}>{modal}</Draggable>
+        // )}
         footer={[
           !hideCancel ? (
             <Button key="cancel" onClick={this.onCancel}>

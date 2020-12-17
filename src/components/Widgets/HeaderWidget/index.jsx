@@ -5,6 +5,7 @@ import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
 import { LogoutOutlined } from '@ant-design/icons'; //
 import { history, connect } from 'umi';
+import { csSystemNotify } from '@/constants'; //
 
 const HeaderWidget = props => {
   console.log(' HeaderWidget   props, ,   ： ', props);
@@ -16,6 +17,12 @@ const HeaderWidget = props => {
     console.log(' goPage   path,   ： ', path);
     history.push(path);
   };
+  const menuClick = params => {
+    // const path = `${csSystemNotify}${params.url}?id=${params.key}`
+    const path = `${csSystemNotify}id=${params.key}`;
+    console.log(' menuClick   params,   ： ', params);
+    history.push(path);
+  };
 
   const avatar = (
     <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
@@ -24,7 +31,7 @@ const HeaderWidget = props => {
   return (
     <div className="headerWidget dfc ">
       {/* <Icon icon={'search'} className={'actionItem '} /> */}
-      <DropdownNotice avatar={avatar}>
+      <DropdownNotice avatar={avatar} menuClick={menuClick}>
         <Icon icon={'bell'} className={' '} />
       </DropdownNotice>
       <span className="yAxis actionItem"></span>

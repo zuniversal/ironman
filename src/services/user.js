@@ -19,3 +19,4 @@ export const editItem = p => put(`console/users/${p.d_id}`, p);
 export const removeItem = p => remove(`console/users/${p.d_id}`, p);
 
 export const getUserInfo = p => noTipsGet('console/initialization', p);
+export const getNotify = p => noTipsGet('http://localhost:8000/ws/message', p);

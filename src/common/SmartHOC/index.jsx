@@ -30,16 +30,50 @@ import { connect } from 'umi';
   
 */
 
+const getAuth = (authInfo = {}, authKey = '') => {
+  const authData = authInfo[authKey];
+  if (authData && Object.keys(authData).length) {
+    // if (false) {
+    if (isDev) {
+      const devAuth = {};
+      Object.keys(authData).forEach(v => (devAuth[v] = true));
+      return devAuth;
+    }
+    return authData;
+  } else {
+    return {};
+  }
+  // if (isDev) {
+  //   if (authInfo[authKey] && Object.keys(authInfo[authKey]).length) {
+  //     const devAuth = {};
+  //     Object.keys(props).forEach(v => (devAuth[v] = true));
+  //     return devAuth
+  //   } else {
+  //     return authData
+
+  //   }
+  //   console.log(
+  //     ' artHoc 组件 t handleAuth ： ',
+  //     props,
+  //     Object.keys(props),
+  //     authInfo,
+  //   ); //
+  //   return authInfo;
+  // } else {
+  //   return authData ? authData : {}
+  // }
+};
+
 const handleAuth = (props = {}) => {
   if (isDev) {
     const authInfo = {};
     Object.keys(props).forEach(v => (authInfo[v] = true));
-    console.log(
-      ' artHoc 组件 t handleAuth ： ',
-      props,
-      Object.keys(props),
-      authInfo,
-    ); //
+    // console.log(
+    //   ' artHoc 组件 t handleAuth ： ',
+    //   props,
+    //   Object.keys(props),
+    //   authInfo,
+    // ); //
     return authInfo;
   } else {
     return props;
@@ -595,7 +629,9 @@ export default ({
         this.props,
       );
 
-      const { authInfo } = this.props;
+      const { authInfo, route } = this.props;
+      const authData = getAuth(authInfo, route.authKey);
+      // console.log('  authData ：', authData,  )//
 
       return (
         <div className="smartHocWrapper">
@@ -606,7 +642,9 @@ export default ({
           <Com
             {...this.state}
             {...this.props}
-            authInfo={handleAuth(authInfo)}
+            // authInfo={handleAuth(authInfo, route.authKey)}
+            // authInfo={authInfo[route.authKey]}
+            authInfo={authData}
             {...this.actionProps}
             // onRemove={this.onRemove2}
             // onBatchRemove={this.onBatchRemove2}
@@ -638,6 +676,8 @@ export default ({
     // if (true) {
     return SmartHoc;
   } else {
-    return connect(({ common }) => ({ common }))(SmartHoc);
+    return connect(({ common, user }) => ({ common, authInfo: user.authInfo }))(
+      SmartHoc,
+    );
   }
 };

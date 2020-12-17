@@ -12,7 +12,12 @@ import authData from '@/configs/auth';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
-const otherActions = ['loginAsync', 'logoutAsync', 'getUserInfo'];
+const otherActions = [
+  'loginAsync',
+  'logoutAsync',
+  'getUserInfo',
+  'getNotifyAsync',
+];
 
 const batchTurnActions = [];
 
@@ -23,11 +28,7 @@ export const actions = {
 export const userActions = actions;
 
 // console.log(' actions ： ', actions,  )//
-
-export const mapStateToProps = state => ({
-  ...state[namespace],
-  authInfo: state.user.authInfo.teamManagement,
-});
+export const mapStateToProps = state => state[namespace];
 
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 console.log(' userInfo ： ', userInfo); //
@@ -67,18 +68,27 @@ export const recursiveAuth = (data = [], authData = {}) => {
   }));
 };
 
+const routesMap = {
+  manager: managerRoutes,
+  // manager: [...managerRoutes, ...customerRoutes],
+  customer: customerRoutes,
+};
+
+const getRoutesMap = (text, dataMap) => {
+  const val = dataMap[text];
+  return val ? val : [];
+};
+
+// const getRoutesAuthMap = (routes, routesAuthMap = []) => {
+//   return routes.forEach(v => {
+//     [v.authKey]: v.authKey,
+//     routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
+//   });
+// };
+
 const getRoutes = props => {
   const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 
-  const routesMap = {
-    manager: managerRoutes,
-    // manager: [...managerRoutes, ...customerRoutes],
-    customer: customerRoutes,
-  };
-  const getRoutesMap = (text, dataMap) => {
-    const val = dataMap[text];
-    return val ? val : [];
-  };
   const routes = isDev
     ? [...managerRoutes, ...customerRoutes]
     : getRoutesMap(userInfo.accountType, routesMap);
@@ -124,7 +134,8 @@ export default {
     userInfo,
     authInfo: {},
     accountType: 'customer',
-    getRoutes: getRoutes()[0],
+    // getRoutes: getRoutes()[0],
+    getRoutes: getRoutes(),
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
   },
@@ -314,6 +325,13 @@ export default {
         type: 'login',
         payload: userInfo,
       });
+    },
+
+    *getNotifyAsync({ payload, action, type }, { call, put }) {
+      console.log(' getNotifyAsync ： ', payload, action, type); //
+      const res = yield call(services.getNotify, payload);
+      console.log(' getNotifyAsync res ： ', res); //
+      // yield put(action({ ...res, payload }));
     },
   },
 

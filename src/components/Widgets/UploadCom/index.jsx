@@ -32,7 +32,7 @@ const formatFile = data =>
 //   return fileData ? formatFile([fileData]) : []
 // }
 const formatFileList = fileData => {
-  console.log(' formatFileList   e,   ： ', fileData);
+  // console.log(' formatFileList   e,   ： ', fileData);
   if (!fileData || fileData.length === 0) {
     return [];
   }
@@ -47,7 +47,7 @@ const formatFileList = fileData => {
 };
 
 const UploadCom = props => {
-  console.log(' UploadCom   props, ,   ： ', props);
+  // console.log(' UploadCom   props, ,   ： ', props);
   const {
     label,
     isInputUpload,
