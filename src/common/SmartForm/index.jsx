@@ -221,7 +221,7 @@ const SmartForm = (props, state) => {
   // const formControl = form; //
 
   useEffect(() => {
-    console.log(' useEffect 更新 ： ', init, formControl); //
+    console.log(' useEffect 更新 ： ', props, init, formControl); //
     // updateInit(init)
     formControl.setFieldsValue(init);
   }, [init]);

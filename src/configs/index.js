@@ -342,3 +342,9 @@ export const dayHours = createIndexArr(24).map(v => ({
   value: v,
 }));
 console.log(' dayHours ： ', dayHours); //
+
+export const notifyTypeConfig = [
+  { label: '应用内通知', value: 2, key: 2 },
+  { label: '短信', value: 0, key: 0 },
+  { label: '邮件', value: 1, key: 1 },
+];

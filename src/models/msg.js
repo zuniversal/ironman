@@ -1,11 +1,12 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/msg';
+import * as userServices from '@/services/user';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'msg';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getUserAsync'];
 
 const batchTurnActions = [];
 
@@ -28,6 +29,7 @@ export default {
     d_id: '',
 
     searchInfo: {},
+    userList: [],
   },
 
   reducers: {
@@ -97,6 +99,13 @@ export default {
         ),
       };
     },
+
+    getUser(state, { payload, type }) {
+      return {
+        ...state,
+        userList: formatSelectList(payload.list, 'nickname'),
+      };
+    },
   },
 
   effects: {
@@ -131,6 +140,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
+    },
+
+    *getUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getList, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

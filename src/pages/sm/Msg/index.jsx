@@ -109,6 +109,8 @@ class Msg extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -129,6 +131,15 @@ class Msg extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getUserAsync();
+    this.props.addItemAsync({
+      content: 'content',
+      send_type: 1,
+      reciever: [1, 2, 79558],
+    });
+  }
 
   render() {
     return (

@@ -60,6 +60,7 @@ export default {
     searchInfo: {},
     clientList: [],
     contractList: [],
+    userList: [],
     clientData: [],
     enumList: [],
     teamList: [],

@@ -2,14 +2,8 @@ import React from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
-import { regoins, treeList } from '@/configs'; //
+import { notifyTypeConfig, treeList } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
-
-const checkboxGroupOptions = [
-  { label: '应用内通知', value: 'app', key: 'app' },
-  { label: '短信', value: 'msg', key: 'msg' },
-  { label: '邮件', value: 'email', key: 'email' },
-];
 
 const selectData = [
   { label: '应用内通知', value: 'app' },
@@ -36,28 +30,41 @@ const MsgForm = props => {
     //     name: 'send_type',
     //   },
     //   comProps: {
-    //     options: checkboxGroupOptions,
+    //     options: notifyTypeConfig,
     //   },
     //   // checkboxContent:
     // },
     {
       formType: 'Checkbox',
-      checkboxData: checkboxGroupOptions,
+      checkboxData: notifyTypeConfig,
       itemProps: {
         label: '通知方法',
         name: 'send_type',
       },
     },
+    // {
+    //   noRule: true,
+    //   formType: 'TreeSelect',
+    //   itemProps: {
+    //     label: '通知人员',
+    //     name: 'reciever',
+    //   },
+    //   comProps: {
+    //     treeData: props.organizeList,
+    //     treeData: treeList,
+    //   },
+    // },
     {
       noRule: true,
-      formType: 'TreeSelect',
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
         label: '通知人员',
         name: 'reciever',
       },
       comProps: {
-        treeData: props.organizeList,
-        treeData: treeList,
+        mode: 'multiple',
       },
     },
   ];
