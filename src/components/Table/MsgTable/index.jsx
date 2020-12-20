@@ -27,7 +27,8 @@ const MsgTable = props => {
 
     {
       title: '通知人员',
-      dataIndex: ['reciever', 'nickname'],
+      // dataIndex: ['reciever', 'nickname'],
+      dataIndex: 'reciever',
     },
 
     {
@@ -37,7 +38,7 @@ const MsgTable = props => {
 
     {
       title: '创建人',
-      dataIndex: ['sender', 'nickname'],
+      dataIndex: ['sender', 'username'],
     },
 
     {

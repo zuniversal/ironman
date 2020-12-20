@@ -55,7 +55,7 @@ class Msg extends PureComponent {
         className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        keyword={'name'}
+        keyword={'keyword'}
         label={'消息关键字'}
         noLabel
       ></SearchKwForm>
@@ -90,10 +90,23 @@ class Msg extends PureComponent {
     const { form, init } = props; //
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      const send_type = res.send_type.join(',');
+      const reciever = res.reciever.filter(v => typeof v !== 'string');
+      console.log('  res await 结果  ：', res, send_type, reciever, action); //
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+          send_type,
+          reciever,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          // ...itemDetail,
+          ...res,
+          send_type,
+          reciever,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {
@@ -105,12 +118,16 @@ class Msg extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
-      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
+      organizeList: this.props.organizeList,
+      getUserManageAsync: params =>
+        this.props.getUserManageAsync({ page_size: 10000, ...params }),
+      // getUserManageAsync: this.props.getUserManageAsync,
       userList: this.props.userList,
+      flatOrganizeList: this.props.flatOrganizeList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -131,14 +148,23 @@ class Msg extends PureComponent {
       </SmartFormModal>
     );
   };
-  componentDidMount() {
+  async componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    this.props.getUserAsync();
-    this.props.addItemAsync({
-      content: 'content',
-      send_type: 1,
-      reciever: [1, 2, 79558],
+    this.props.getOrganizeAsync();
+    // const  = () => new Promise((resolve, reject) => {
+    //   console.log('  Promise ： ',  )
+    //   resolve(this.props.getUserManageAsync())//
+    // })
+    const res = await this.props.getUserManageAsync({
+      organization_id: 1,
     });
+    console.log('  msgmsg res ：', res); //
+    // this.props.addItemAsync({
+    //   content: 'content',
+    //   // send_type: [1, 2],
+    //   send_type: '0,1',
+    //   reciever: [1, 2, 79558],
+    // });
   }
 
   render() {

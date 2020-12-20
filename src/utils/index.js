@@ -166,7 +166,7 @@ export const renderSelectOp = (config = [], opType = 'option') => {
 
 export const renderRadioOp = (
   configs = [],
-  { opType = 'option', isDisabledAll },
+  { opType = 'option', isDisabledAll, comProps = {} },
 ) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   // return opType === 'group' ? <RadioGroup options={configs} ></RadioGroup> : configs.map((v) => <Radio value={v.value} key={v.value} >{v.label}</Radio>)
@@ -175,7 +175,11 @@ export const renderRadioOp = (
       {v.label}
     </Radio>
   ));
-  return <RadioGroup disabled={isDisabledAll}>{radioItems}</RadioGroup>;
+  return (
+    <RadioGroup disabled={isDisabledAll} {...comProps}>
+      {radioItems}
+    </RadioGroup>
+  );
   return opType === 'group' ? (
     <RadioGroup>{radioItems}</RadioGroup>
   ) : (

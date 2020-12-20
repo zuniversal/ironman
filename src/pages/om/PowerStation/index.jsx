@@ -255,8 +255,6 @@ class PowerStation extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
       getHouseNoAsync: params =>
@@ -292,6 +290,12 @@ class PowerStation extends PureComponent {
         powerInfoData={this.props.powerInfoData}
         init={this.props.itemDetail}
         // extra={powerTable}
+
+        addOutLineTableItemAsync={this.props.addOutLineTableItemAsync}
+        editOutLineTableItemAsync={this.props.editOutLineTableItemAsync}
+        removeOutLineTableItemAsync={this.props.removeOutLineTableItemAsync}
+        modifyOutLineTableItem={this.props.modifyOutLineTableItem}
+        outLineTableData={this.props.outLineTableData}
       ></PowerStationForm>
     );
   };

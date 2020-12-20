@@ -126,13 +126,13 @@ const RoleForm = props => {
         name: 'comments',
       },
     },
-    {
-      formType: 'CustomCom',
-      CustomCom: <RoleTab></RoleTab>,
-      itemProps: {
-        label: '',
-      },
-    },
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: <RoleTab></RoleTab>,
+    //   itemProps: {
+    //     label: '',
+    //   },
+    // },
     // {
     //   formType: 'TreeSelect',
     //   itemProps: {
@@ -143,6 +143,48 @@ const RoleForm = props => {
     //     treeData: treeList,
     //   },
     // },
+    {
+      noRule: true,
+      formType: 'TreeSelect',
+      itemProps: {
+        label: '权限详情',
+        name: '',
+      },
+      comProps: {
+        // treeData: props.organizeList,
+        treeData: treeList,
+        // onChange: (e) => {
+        //   console.log(' onChange ： ', e   )//
+        // },
+        // onTreeExpand: (organizationIds) => {
+        //   console.log(' onTreeExpand ： ', organizationIds, props,   )//
+        //   // if (organizationIds.length > 0) {
+        //   //   props.getUserManageAsync({
+        //   //     organization_id: organizationIds[organizationIds.length - 1],
+        //   //   })
+        //   // }
+        // },
+        // onSelect: (e) => {
+        //   console.log(' onSelect ： ', e   )//
+        // },
+        // onSearch: (e) => {
+        //   console.log(' onChange ： ', e   )//
+        // },
+        // loadData: (e) => {
+        //   console.log(' loadData ： ', e   )//
+        //   return new Promise((resolve, reject) => {
+        //     console.log('  Promise ： ',  )
+        //     //   props.getUserManageAsync({
+        //     //     organization_id: organizationIds[organizationIds.length - 1],
+        //     //   })
+        //     resolve()
+        //   })
+        // },
+        multiple: true,
+        treeCheckable: true,
+        treeDefaultExpandAll: false,
+      },
+    },
   ];
 
   return (

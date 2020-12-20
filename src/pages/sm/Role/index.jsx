@@ -153,6 +153,9 @@ class Role extends PureComponent {
       </SmartFormModal>
     );
   };
+  componentDidMount() {
+    this.props.getPermissionAsync(); //
+  }
 
   render() {
     return (

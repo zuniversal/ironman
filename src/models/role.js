@@ -1,11 +1,12 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/role';
+import * as permissionServices from '@/services/permission';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'role';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getPermissionAsync'];
 
 const batchTurnActions = [];
 
@@ -126,6 +127,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
+    },
+
+    *getPermissionAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(permissionServices.getList, payload);
+      yield put(action({ ...res, payload }));
     },
   },
   // subscriptions: {

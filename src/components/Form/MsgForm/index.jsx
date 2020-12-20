@@ -1,19 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
 import { notifyTypeConfig, treeList } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
+import { splitLine } from '@/common/SmartEcharts/charts/common';
 
 const selectData = [
   { label: '应用内通知', value: 'app' },
   { label: '短信', value: 'msg' },
   { label: '邮件', value: 'email' },
 ];
+const loadData = e => {
+  console.log(' loadData   e,   ： ', e);
+};
+
+const genTreeNode = (parentId, isLeaf = false) => {
+  const random = Math.random()
+    .toString(36)
+    .substring(2, 6);
+  return {
+    id: random,
+    pId: parentId,
+    value: random,
+    title: isLeaf ? 'Tree Node' : 'Expand to load',
+    isLeaf,
+  };
+};
+
+const createTreeNode = (parentId, v, isLeaf = false) => {
+  const random = Math.random()
+    .toString(36)
+    .substring(2, 6);
+  return {
+    ...v,
+    // id: random,
+    pId: parentId,
+    value: v.id,
+    title: v.nickname,
+    key: `${v.id}`,
+    // isLeaf: !(v.children.length > 0),
+    isLeaf: true,
+  };
+};
 
 const MsgForm = props => {
   console.log(' MsgForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  const { formBtn, flatOrganizeList, organizeList, ...rest } = props; //
+  // const [ treeData, setTreeData ] = useState(treeList)
+  // const [ treeData, setTreeData ] = useState(organizeList)
+  const [treeData, setTreeData] = useState(flatOrganizeList);
 
   const config = [
     {
@@ -23,50 +59,143 @@ const MsgForm = props => {
         name: 'content',
       },
     },
-    // {
-    //   formType: 'CheckboxGroup',
-    //   itemProps: {
-    //     label: '通知方法',
-    //     name: 'send_type',
-    //   },
-    //   comProps: {
-    //     options: notifyTypeConfig,
-    //   },
-    //   // checkboxContent:
-    // },
     {
       formType: 'Checkbox',
-      checkboxData: notifyTypeConfig,
       itemProps: {
         label: '通知方法',
         name: 'send_type',
       },
+      comProps: {
+        options: notifyTypeConfig,
+      },
+      checkboxData: notifyTypeConfig,
     },
     // {
-    //   noRule: true,
-    //   formType: 'TreeSelect',
+    //   formType: 'Checkbox',
+    //   checkboxData: notifyTypeConfig,
     //   itemProps: {
-    //     label: '通知人员',
-    //     name: 'reciever',
-    //   },
-    //   comProps: {
-    //     treeData: props.organizeList,
-    //     treeData: treeList,
+    //     label: '通知方法',
+    //     name: 'send_type',
     //   },
     // },
     {
       noRule: true,
-      formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      formType: 'TreeSelect',
       itemProps: {
         label: '通知人员',
         name: 'reciever',
       },
       comProps: {
-        mode: 'multiple',
+        // treeData: props.organizeList,
+        // treeData: treeList,
+        treeData: treeData,
+        onChange: e => {
+          console.log(' onChange ： ', e); //
+        },
+        onTreeExpand: organizationIds => {
+          console.log(' onTreeExpand ： ', organizationIds, props, treeData); //
+          // if (organizationIds.length > 0) {
+          //   props.getUserManageAsync({
+          //     organization_id: organizationIds[organizationIds.length - 1],
+          //   })
+          // }
+        },
+        onSelect: e => {
+          console.log(' onSelect ： ', e); //
+        },
+        onSearch: e => {
+          console.log(' onChange ： ', e); //
+        },
+        loadData: treeNode => {
+          console.log(' loadData ： ', treeNode); //
+          const { id } = treeNode.props;
+          const item = id.split('-');
+          const paramId = item[item.length - 1];
+          console.log(' paramId ： ', item, paramId); //
+          return props
+            .getUserManageAsync({
+              organization_id: paramId,
+            })
+            .then(res => {
+              console.log(
+                ' loadData res  ： ',
+                res,
+                treeData,
+                treeNode,
+                treeNode.props,
+                id,
+              );
+              setTreeData(
+                // treeData.concat([
+                //   createTreeNode(id, false),
+                // ])
+                treeData.concat(res.map(v => createTreeNode(id, v))),
+                // [...treeData,
+                //   ...res.map((v) => createTreeNode(id, v))
+                // ]
+              );
+              console.log(' treeDatatreeData ： ', treeData, res); //
+              // return treeData
+            });
+          return new Promise((resolve, reject) => {
+            //   props.getUserManageAsync({
+            //     organization_id: organizationIds[organizationIds.length - 1],
+            //   })
+            const { id } = treeNode.props;
+            console.log(
+              '  Promise ： ',
+              treeData,
+              treeNode,
+              treeNode.props,
+              id,
+            );
+            setTimeout(() => {
+              setTreeData(
+                treeData.concat([
+                  genTreeNode(id, false),
+                  genTreeNode(id, true),
+                ]),
+              );
+              resolve();
+            }, 300);
+          });
+        },
+        multiple: true,
+        treeCheckable: true,
+        treeDefaultExpandAll: false,
+        treeDataSimpleMode: true,
       },
     },
+    // {
+    //   noRule: true,
+    //   formType: 'TreeSelect',
+    //   // formType: 'Search',
+    //   selectSearch: props.getUserManageAsync,
+    //   selectData: props.userList,
+    //   itemProps: {
+    //     label: '通知人员',
+    //     name: 'reciever',
+    //   },
+    //   comProps: {
+    //     mode: 'multiple',
+    //     // loadData: props.loadData,
+    //     // onTreeExpand: loadData,
+    //     treeData: treeList,
+    //     onChange: (e) => {
+    //       console.log(' onChange ： ', e   )//
+    //     },
+    //     onTreeExpand: (e) => {
+    //       console.log(' onTreeExpand ： ', e   )//
+    //     },
+    //     onSelect: (e) => {
+    //       console.log(' onSelect ： ', e   )//
+    //     },
+    //     onSearch: (e) => {
+    //       console.log(' onChange ： ', e   )//
+    //     },
+
+    //   },
+    // },
   ];
 
   return (

@@ -130,7 +130,11 @@ export default {
     saveHomeSetting(state, { payload, type }) {
       console.log(' saveHomeSetting 修改  ： ', state, payload, type); //
       const userInfo = getItem('userInfo');
-      setItem(`${userInfo.id}_homeSettings`, payload.homeSettings);
+      const res =
+        payload.homeSettings && payload.homeSettings.length
+          ? payload.homeSettings
+          : [];
+      setItem(`${userInfo.id}_homeSettings`, res);
       return {
         ...state,
         isShowModal: false,

@@ -152,6 +152,7 @@ const ReduxTable = props => {
                   console.log(
                     '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
                     props.dataSource,
+                    props,
                   );
                   if (isDisabledAll) {
                     return;
@@ -168,7 +169,7 @@ const ReduxTable = props => {
                 }}
                 className={'add'}
               >
-                新增
+                {props.addText}
               </Button>
             )}
           </div>
@@ -183,6 +184,8 @@ ReduxTable.defaultProps = {
   noLimitAdd: false,
   hideAdd: false,
   hideSaveEdit: false,
+  modifyTableItem: () => {},
+  addText: '新增',
 };
 
 export default ReduxTable; //

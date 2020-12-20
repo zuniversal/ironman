@@ -26,6 +26,12 @@ export const recursiveHandle = (data = [], parent_id) => {
     parent_id: parent_id,
     // children: recursiveHandle(v.childrens, v.id),
     children: recursiveHandle(v.children, v.id),
+    // children: Array.from({ length: 300 }, (_, index) => ({
+    //   value: Math.random() + index,
+    //   title: 'v.name' + index,
+    //   label: 'v.name' + index,
+    //   parent_id: index,
+    // })),
   }));
   // return data.map(({childrens, ...v}) => ({...v, value: v.id, title: v.name, children: recursiveHandle(childrens)}))
 };

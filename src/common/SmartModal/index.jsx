@@ -93,6 +93,7 @@ class SmartModal extends PureComponent {
 
     return (
       <Modal
+        destroyOnClose
         wrapClassName={`smartModal ${className} ${this.getCls()}   `}
         // width={width != undefined ? width : '60%'}
         visible={show}

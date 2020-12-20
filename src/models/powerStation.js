@@ -18,9 +18,13 @@ const otherActions = [
   'removePowerInfoAsync',
 
   'getDistrictAsync',
+
+  'addOutLineTableItemAsync',
+  'editOutLineTableItemAsync',
+  'removeOutLineTableItemAsync',
 ];
 
-const batchTurnActions = ['modifyPowerInfo'];
+const batchTurnActions = ['modifyPowerInfo', 'modifyOutLineTableItem'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -83,6 +87,14 @@ const initItem = {
   // action: '',
 };
 
+const outLineTableItem = {
+  key: Math.random(),
+  nickname: '',
+  password: '',
+  phone: '',
+  isEdit: true,
+};
+
 export default {
   namespace,
 
@@ -104,6 +116,12 @@ export default {
     provinceList: [],
     citytList: [],
     countryList: [],
+
+    outLineTableData: [
+      {
+        ...outLineTableItem,
+      },
+    ],
   },
 
   reducers: {
@@ -122,6 +140,7 @@ export default {
         isShowModal: false,
         itemDetail: {},
         powerInfoData: [],
+        outLineTableData: [],
       };
     },
     getList(state, { payload, type }) {
@@ -359,6 +378,119 @@ export default {
         })),
       };
     },
+
+    addOutLineTableItem(state, { payload, type }) {
+      const { outLineTableData } = state;
+      console.log(' addOutLineTableItem ： ', state, payload, outLineTableData); //
+      return {
+        ...state,
+        // outLineTableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
+        outLineTableData: outLineTableData.map((v, i) => {
+          console.log(
+            ' v.key === payload.payload.key ： ',
+            v.key === payload.payload.key,
+          ); //
+          return v.key === payload.payload.key
+            ? {
+                ...v,
+                // ...payload.list[0],
+                ...payload.bean,
+                isEdit: false,
+              }
+            : v;
+        }),
+      };
+    },
+    editOutLineTableItem(state, { payload, type }) {
+      const { outLineTableData } = state;
+      console.log(
+        ' editOutLineTableItem ： ',
+        state,
+        payload,
+        outLineTableData,
+      ); //
+      return {
+        ...state,
+        outLineTableData: outLineTableData.map((v, i) => {
+          console.log(
+            ' v.key === payload.payload.key ： ',
+            v.key === payload.payload.key,
+          ); //
+          return v.key === payload.payload.key
+            ? {
+                ...v,
+                ...payload.bean,
+                isEdit: false,
+              }
+            : v;
+        }),
+      };
+    },
+    removeOutLineTableItem(state, { payload, type }) {
+      console.log(' removeOutLineTableItem ： ', state, payload); //
+      const { outLineTableData } = state;
+      const { action, key, index, value } = payload.payload;
+      let newData = [];
+      // if (action === 'localRemove') {
+      //   newData = outLineTableData.filter((v, i) => v.key != key);
+      // } else {
+      //   newData = payload.list.filter(v => v.id != payload.payload.id);
+      // }
+      newData = outLineTableData.filter(v => {
+        console.log(
+          ' v.id != payload.id ： ',
+          v.id != payload.payload.id,
+          v.id,
+          payload.id,
+        ); //
+        return v.id != payload.payload.id;
+      });
+      console.log(' newData ： ', newData); //
+      return {
+        ...state,
+        outLineTableData: newData,
+      };
+    },
+    modifyOutLineTableItem(state, { payload, type }) {
+      console.log(' modifyOutLineTableItem ： ', state, payload); //
+      const { outLineTableData } = state;
+      const { action, keys, key, index, value } = payload;
+      let newData = [];
+      if (action === 'add') {
+        newData = [
+          {
+            ...outLineTableItem,
+            key: Math.random(),
+          },
+          ...outLineTableData,
+        ];
+      } else if (action === 'edit') {
+        newData = outLineTableData.map((v, i) => ({
+          // ...(i === index
+          ...(v.key === payload.key
+            ? {
+                ...v,
+                [keys]: value,
+                isEdit: true,
+              }
+            : v),
+        }));
+      } else if (action === 'remove') {
+        newData = outLineTableData.filter((v, i) => v.key != key);
+      }
+
+      console.log(
+        ' modifyOutLineTableItem 修改  ： ',
+        state,
+        payload,
+        type,
+        newData,
+      ); //
+      return {
+        ...state,
+        outLineTableData: newData,
+      };
+    },
   },
 
   effects: {
@@ -562,6 +694,45 @@ export default {
       const res = yield call(clientServices.getDistrict, payload);
       console.log('  getDistrictAsync res ：', res); //
       yield put(action({ ...res, payload }));
+    },
+
+    *addOutLineTableItemAsync(
+      { payload, action, type },
+      { call, put, select },
+    ) {
+      console.log(' addOutLineTableItemAsync ： ', payload);
+      const { itemDetail } = yield select(state => state[namespace]);
+      const params = {
+        ...payload,
+      };
+      const res = yield call(services.addAdmin, params);
+      yield put(action({ ...res, payload }));
+    },
+    *editOutLineTableItemAsync(
+      { payload, action, type },
+      { call, put, select },
+    ) {
+      const { itemDetail } = yield select(state => state[namespace]);
+      console.log(' editOutLineTableItemAsync ： ', payload, itemDetail);
+      const { account, ...rest } = payload;
+      const res = yield call(services.editAdmin, {
+        ...payload,
+      });
+      yield put(action({ ...res, payload }));
+    },
+    *removeOutLineTableItemAsync(
+      { payload, action, type },
+      { call, put, select },
+    ) {
+      const { itemDetail } = yield select(state => state[namespace]);
+      console.log(' removeOutLineTableItemAsync ： ', payload);
+      if (payload.action === 'remove') {
+        const res = yield call(services.removedAdmin, {
+          d_id: payload.id,
+          id: `${payload.id}`,
+        });
+      }
+      yield put(action({ payload }));
     },
   },
   // subscriptions: {

@@ -513,8 +513,16 @@ const SmartForm = (props, state) => {
       ),
       // Checkbox: <Checkbox {...realComProps}>{checkboxContent}</Checkbox>,
       // CheckboxGroup: <Checkbox.Group {...realComProps} />,
-      Checkbox: renderCheckboxOp(checkboxData, { opType, isDisabledAll }),
-      Radio: renderRadioOp(radioData, { opType, isDisabledAll }),
+      Checkbox: renderCheckboxOp(checkboxData, {
+        opType,
+        isDisabledAll,
+        comProps: realComProps,
+      }),
+      Radio: renderRadioOp(radioData, {
+        opType,
+        isDisabledAll,
+        comProps: realComProps,
+      }),
       DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
       RangePicker: (

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Form,
@@ -30,6 +31,7 @@ import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs'; 
 import { formatConfig, reportRadioOp } from '@/utils'; //
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
+import ReduxTable from '@/common/ReduxTable';
 
 const selectData = [
   { label: '正常', value: true, key: 'yes' },
@@ -39,6 +41,15 @@ const selectData = [
 const PowerStationForm = props => {
   console.log(' PowerStationForm ： ', props, config); //
   const { action, extra } = props; //
+  const [inspectMode, setInspectMode] = useState(1);
+  const onInspectModeChange = e => {
+    console.log(' PowerStationForm onInspectModeChange   e,   ： ', e);
+    const inspectMode = props.propsForm.getFieldValue('inspectMode');
+    console.log(' PowerStationForm inspectMode ： ', inspectMode); //
+    setInspectMode(inspectMode);
+  };
+  // const inspectMode = props.propsForm.getFieldValue('inspectMode')
+  // console.log(' PowerStationForm inspectMode ： ', inspectMode); //
 
   // const formConfig = formatConfig(config);
   const deciveRow = {
@@ -128,15 +139,32 @@ const PowerStationForm = props => {
     typeCols = editCol;
   }
 
+  const inspectTimeCol = [
+    {
+      formType: 'Search',
+      selectData: dayHours,
+      itemProps: {
+        label: '巡检时间',
+        name: 'inspectTime',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+  ];
+  const inspectCountCol = [
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '巡检次数',
+        name: 'inspections_number',
+      },
+    },
+  ];
+
+  const inspectCol = inspectMode == 1 ? inspectTimeCol : inspectCountCol;
+
   const actionConfig = [
-    // {
-    //   formType: 'rowText',
-    //   // rowText: '基本信息',
-    //   // noRule: true,
-    //   itemProps: {
-    //     label: '基本信息',
-    //   },
-    // },
     {
       itemProps: {
         label: '电站名称',
@@ -149,36 +177,10 @@ const PowerStationForm = props => {
       selectSearch: props.getHouseNoAsync,
       selectData: props.houseNoList,
       itemProps: {
-        label: '户号',
+        label: '所属户号',
         name: 'electricity_user',
       },
     },
-    // {
-    //   formType: 'Search',
-    //   selectSearch: props.getClientAsync,
-    //   selectData: props.clientList,
-    //   itemProps: {
-    //     label: '所属客户',
-    //     name: 'customer',
-    //   },
-    // },
-    // {
-    //   formType: 'Search',
-    //   selectSearch: props.getHouseNoAsync,
-    //   selectData: props.houseNoList,
-    //   itemProps: {
-    //     label: '户号',
-    //     name: 'electricity_user',
-    //   },
-    // },
-
-    {
-      itemProps: {
-        label: '业务主体',
-        name: 'person',
-      },
-    },
-
     {
       formType: 'Search',
       selectData: selectData,
@@ -193,159 +195,39 @@ const PowerStationForm = props => {
         name: 'operation_level',
       },
     },
-    {
-      formType: 'Search',
-      selectData: inspectTemplateConfig,
-      itemProps: {
-        label: '巡检模板',
-        name: '巡检模板',
-      },
-    },
-    {
-      formType: 'Search',
-      selectData: dayHours,
-      itemProps: {
-        label: '巡检时间',
-        name: '巡检时间',
-      },
-      comProps: {
-        mode: 'multiple',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectData: inspectTemplateConfig,
+    //   itemProps: {
+    //     label: '巡检模板',
+    //     name: '巡检模板',
+    //   },
+    // },
+
     {
       formType: 'Radio',
       itemProps: {
         label: '巡检模式',
+        name: 'inspectMode',
+      },
+      comProps: {
+        onChange: onInspectModeChange,
       },
       radioData: inspectModelRadio,
     },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '巡检次数',
-        name: 'inspections_number',
-      },
-    },
-    // {
-    //   itemProps: {
-    //     label: '区域',
-    //     name: 'addr',
-    //   },
-    // },
+    ...inspectCol,
     {
       itemProps: {
         label: '电话',
         name: 'phone',
       },
     },
-    // {
-    //   itemProps: {
-    //     label: '电气图',
-    //     name: 'file',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '托管电站数',
-    //     name: '',
-    //   },
-    // },
-
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '电气信息',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '电源编号',
-    //     name: 'power_number',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '进线名称',
-    //     name: '',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '电压等级',
-    //     name: 'voltage_level',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '倍率',
-    //     name: '',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '变压器容量',
-    //     name: '',
-    //   },
-    // },
-
-    // {
-    //   itemProps: {
-    //     label: '电表号',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电价类型',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电功率考核因数',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '计费方式',
-    //     name: '',
-    //   },
-    // },
-
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '位置信息',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '详细用电地址',
-    //     name: 'addr',
-    //   },
-    // },
     {
       itemProps: {
         label: '电站地址',
         name: 'addr',
       },
     },
-
-    // ...typeCols,
-
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '一次电气图',
-    //   },
-    // },
 
     <UploadCom
       label={'上传电气图'}
@@ -385,6 +267,7 @@ const PowerStationForm = props => {
     //   </Upload>
     // </Form.Item>,
   ];
+
   const detailConfig = [
     {
       noRule: true,
@@ -431,46 +314,11 @@ const PowerStationForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectData: inspectTemplateConfig,
-      itemProps: {
-        label: '巡检模板',
-        name: '巡检模板',
-      },
-    },
-    {
-      formType: 'Search',
-      selectData: dayHours,
-      itemProps: {
-        label: '巡检时间',
-        name: '巡检时间',
-      },
-    },
-    {
-      formType: 'Radio',
-      itemProps: {
-        label: '巡检模式',
-      },
-      radioData: inspectModelRadio,
-    },
-    {
-      itemProps: {
-        label: '巡检次数',
-        name: 'inspections_number',
-      },
-    },
-    {
       itemProps: {
         label: '电话',
         name: 'phone',
       },
     },
-    // {
-    //   itemProps: {
-    //     label: '区域',
-    //     // name: '',
-    //   },
-    // },
     {
       itemProps: {
         label: '电站地址',
@@ -498,6 +346,21 @@ const PowerStationForm = props => {
   const config = action !== 'detail' ? actionConfig : detailConfig; //
   console.log('  config ：', config); //
 
+  const outLineConfig = [
+    {
+      itemProps: {
+        label: '出线侧编号',
+        name: 'nickname',
+      },
+    },
+    {
+      itemProps: {
+        label: '出线侧名称',
+        name: 'phone',
+      },
+    },
+  ];
+
   return (
     <>
       <SmartForm
@@ -506,6 +369,10 @@ const PowerStationForm = props => {
 
         isDisabledAll={action === 'detail'}
         {...props}
+        init={{
+          inspectMode: 1,
+          ...props.init,
+        }}
       ></SmartForm>
 
       {extra}
@@ -518,10 +385,30 @@ const PowerStationForm = props => {
         init={props.init}
         isDisabledAll={!['add', 'edit'].includes(action)}
       ></PowerStationDetailTable>
+
+      <ReduxTable
+        key={'outLineFormTable'}
+        config={outLineConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+        addTableItemAsync={props.addOutLineTableItemAsync}
+        editTableItemAsync={props.editOutLineTableItemAsync}
+        removeTableItemAsync={props.removeOutLineTableItemAsync}
+        modifyTableItem={props.modifyOutLineTableItem}
+        dataSource={props.outLineTableData}
+        isDisabledAll={!['add', 'edit'].includes(action)}
+        noLimitAdd
+        // hideSaveEdit={['add'].includes(action)}
+        addText={'新增出线侧'}
+      ></ReduxTable>
     </>
   );
 };
 
-PowerStationForm.defaultProps = {};
+PowerStationForm.defaultProps = {
+  init: {},
+};
+
+PowerStationForm.propTypes = {
+  init: PropTypes.object,
+};
 
 export default PowerStationForm;

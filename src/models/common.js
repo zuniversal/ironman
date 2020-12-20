@@ -333,12 +333,18 @@ export default {
     },
     weakDetail(state, { payload, type }) {
       console.log(' weakDetail ： ', payload); //
+      const { inspection_task = {} } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowCommonModal: true,
         itemDetail: {
           ...payload.bean,
+          inspection_task: {
+            ...inspection_task,
+            work_date: inspection_task?.work_date?.split('T')[0],
+          },
           status: missionsStatusMap[payload.bean.status],
         },
       };

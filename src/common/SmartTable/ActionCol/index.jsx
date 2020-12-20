@@ -28,37 +28,41 @@ const ActionCol = props => {
     <span>
       {!props.noDefault && (
         <>
-          <a
-            onClick={() => {
-              // edit({ action: 'edit', ...record });
-              console.log(' record ： ', props, record, edit); //
-              props.dataSource.length > 0
-                ? edit({
-                    action: 'edit',
-                    ...record,
-                    d_id: record[props.rowKey],
-                  })
-                : props.showFormModal({
-                    action: 'add',
-                    ...record,
-                  });
-            }}
-            // disabled={isDev ? false : authInfo.edit}
-            disabled={authInfo.edit !== true}
-          >
-            编辑
-          </a>
+          {!props.noEdit && (
+            <a
+              onClick={() => {
+                // edit({ action: 'edit', ...record });
+                console.log(' record ： ', props, record, edit); //
+                props.dataSource.length > 0
+                  ? edit({
+                      action: 'edit',
+                      ...record,
+                      d_id: record[props.rowKey],
+                    })
+                  : props.showFormModal({
+                      action: 'add',
+                      ...record,
+                    });
+              }}
+              // disabled={isDev ? false : authInfo.edit}
+              disabled={authInfo.edit !== true}
+            >
+              编辑
+            </a>
+          )}
           {/* <a onClick={() => remove({action: 'remove', record})}>删除</a> */}
-          <a
-            onClick={() => {
-              console.log(' removeremove ： ', props); //
-              remove({ record: formatData(record, props.rowKey) });
-            }}
-            // disabled={isDev ? false : authInfo.delete}
-            disabled={authInfo.delete !== true}
-          >
-            删除
-          </a>
+          {!props.noRemove && (
+            <a
+              onClick={() => {
+                console.log(' removeremove ： ', props); //
+                remove({ record: formatData(record, props.rowKey) });
+              }}
+              // disabled={isDev ? false : authInfo.delete}
+              disabled={authInfo.delete !== true}
+            >
+              删除
+            </a>
+          )}
         </>
       )}
       {/* {!props.noDefault && props.isQRCode && (

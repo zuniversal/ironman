@@ -28,7 +28,10 @@ const TabPanes = props => {
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
         {tabData.map((v, i) => (
-          <TabPane tab={`电源编号-${v.power_number || '无'}`} key={i}></TabPane>
+          <TabPane
+            tab={`${props.tabPrefix}-${v[props.tabItemKey] || '无'}`}
+            key={i}
+          ></TabPane>
         ))}
         {/* <TabPane tab={'电源编号1'} key="1">
       </TabPane>
@@ -40,6 +43,8 @@ const TabPanes = props => {
 };
 
 TabPanes.defaultProps = {
+  tabItemKey: '',
+  tabPrefix: '',
   tabData: [],
 };
 
@@ -151,6 +156,25 @@ const InspectRecordForm = props => {
     });
   };
 
+  const onOutLineChange = index => {
+    console.log(
+      ' onOutLineChange   index,   ： ',
+      index,
+      dataInit,
+      power_data,
+      power_data[index],
+    );
+    // props.init.powerData = {
+    //   ...power_data[index],
+    // };
+    setDataInit({
+      ...dataInit,
+      powerData: power_data[index],
+      spectIn: power_data[index].spect_in,
+      spectOut: power_data[index].spect_out,
+    });
+  };
+
   const config = [
     {
       // formType: 'plainText',
@@ -241,7 +265,7 @@ const InspectRecordForm = props => {
       flexRow: 4,
       itemProps: {
         label: '温度',
-        name: 'temperature',
+        // name: '',
         ...weatherFormLayouts,
       },
       comProps: {
@@ -397,8 +421,41 @@ const InspectRecordForm = props => {
     },
 
     {
+      formType: 'rowText',
+      itemProps: {
+        label: '高压直流电源屏',
+        className: 'w100',
+      },
+    },
+    {
+      itemProps: {
+        label: '电池电压',
+        name: '',
+      },
+      comProps: {
+        suffix: 'V',
+      },
+    },
+    {
+      itemProps: {
+        label: '控母电压',
+        name: '',
+      },
+      comProps: {
+        suffix: 'V',
+      },
+    },
+
+    {
       formType: 'CustomCom',
-      CustomCom: <TabPanes onChange={onChange} tabData={power_data}></TabPanes>,
+      CustomCom: (
+        <TabPanes
+          tabItemKey={'power_number'}
+          tabPrefix={'电源编号'}
+          onChange={onChange}
+          tabData={power_data}
+        ></TabPanes>
+      ),
       itemProps: {
         label: '',
         className: 'w100',
@@ -534,6 +591,14 @@ const InspectRecordForm = props => {
         name: ['powerData', 'declare_md'],
       },
     },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电压表',
+        className: 'w100',
+      },
+    },
     {
       noRule: true,
       itemProps: {
@@ -556,13 +621,298 @@ const InspectRecordForm = props => {
       },
     },
 
+    // 新增
     {
-      formType: 'rowText',
+      formType: 'CustomCom',
+      CustomCom: (
+        <TabPanes
+          tabItemKey={'power_number'}
+          tabPrefix={'电压出现测设备'}
+          onChange={onOutLineChange}
+          tabData={power_data}
+        ></TabPanes>
+      ),
       itemProps: {
-        label: '高压进制线',
+        label: '',
         className: 'w100',
       },
     },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表A',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表B',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表C',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器A',
+        name: 'monitor_a',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器B',
+        name: 'monitor_b',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器C',
+        name: 'monitor_c',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '变压器1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '运行声音',
+        name: 'voice',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '风扇运行',
+        name: 'fan',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '温度',
+        name: 'temperature',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '油位及渗漏油',
+        name: 'oil_leak',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '干燥剂',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '有无异常',
+        name: 'abnormal',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '0.4KV总开关1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表AB',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表BC',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表CA',
+        name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表A',
+        name: 'switch_ia',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表B',
+        name: 'switch_ib',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表C',
+        name: 'switch_ic',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电容柜1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电容柜1',
+        name: 'GGJ',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '有功kWh',
+        // name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '高压进制线',
+    //     className: 'w100',
+    //   },
+    // },
 
     // {
     //   flexRow: 4,
@@ -689,6 +1039,15 @@ const InspectRecordForm = props => {
     //   },
     //   comProps: {
     //     className: 'w-78',
+    //   },
+    // },
+
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: <TabPanes onChange={onChange} tabData={power_data}></TabPanes>,
+    //   itemProps: {
+    //     label: '',
+    //     className: 'w100',
     //   },
     // },
 

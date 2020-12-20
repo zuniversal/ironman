@@ -7,33 +7,97 @@ import { createIndexArr } from '@/utils';
 export const treeList = [
   {
     label: '部门1',
+    title: '部门1',
     value: 'app1',
-    children: [
-      {
-        label: '子部门1',
-        value: 'msg1',
-        children: [
-          {
-            label: '子部门111',
-            value: 'msg12',
-            children: [
-              { label: '子部门1222', value: 'msg132' },
-              { label: '子部门2333', value: 'email1342' },
-            ],
-          },
-          { label: '子部门2', value: 'email12' },
-        ],
-      },
-      { label: '子部门2', value: 'email1' },
-    ],
+    id: 'app1',
+    pId: 0,
+    indexes: 0,
+    // children: [{
+    //     label: '子部门1',
+    //     title: '子部门1',
+    //     value: 'msg1',
+    //     id: 'msg1',
+    //     // pId: 1,
+    //     children: [{
+    //         label: '子部门111',
+    //         title: '子部门111',
+    //         value: 'msg12',
+    //         id: 'msg12',
+    //         // pId: 2,
+    //         children: [{
+    //             label: '子部门1222',
+    //             title: '子部门1222',
+    //             value: 'msg132',
+    //             id: 'value',
+    //             // pId: 3,
+    //           },
+    //           {
+    //             label: '子部门2333',
+    //             title: '子部门2333',
+    //             value: 'email1342',
+    //             id: 'value',
+    //             // pId: 3,
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         label: '子部门2',
+    //         title: '子部门2',
+    //         value: 'email12',
+    //         id: 'email12',
+    //         // pId: 2,
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     label: '子部门2',
+    //     title: '子部门2',
+    //     value: 'email1',
+    //     id: 'email1',
+    //     // pId: 1,
+    //   },
+    // ],
   },
   {
-    label: '部门2',
+    label: '部门12',
+    title: '部门2',
     value: 'app2',
-    children: [
-      { label: '子部门1', value: 'msg2' },
-      { label: '子部门2', value: 'email2' },
-    ],
+    id: 'app2',
+    pId: 0,
+    indexes: 8,
+    // children: [{
+    //     label: '子部门1',
+    //     title: '子部门1',
+    //     value: 'msg2',
+    //     id: 'msg2',
+    //     // pId: 1,
+    //   },
+    //   {
+    //     label: '子部门2',
+    //     title: '子部门2',
+    //     value: 'email2',
+    //     id: 'email2',
+    //     // pId: 1,
+    //   },
+    // ],
+  },
+  {
+    id: 1,
+    name: '总经办',
+    value: 1,
+    pId: 11,
+    title: '总经办',
+    label: '总经办',
+    parent_id: null,
+  },
+  {
+    id: '1',
+    name: '营销客服中心',
+    value: 2,
+    pId: 22,
+    title: '营销客服中心',
+    label: '营销客服中心',
+    parent_id: null,
   },
 ];
 
@@ -344,7 +408,19 @@ export const dayHours = createIndexArr(24).map(v => ({
 console.log(' dayHours ： ', dayHours); //
 
 export const notifyTypeConfig = [
-  { label: '应用内通知', value: 2, key: 2 },
-  { label: '短信', value: 0, key: 0 },
-  { label: '邮件', value: 1, key: 1 },
+  {
+    label: '应用内通知',
+    value: 2,
+    key: 2,
+  },
+  {
+    label: '短信',
+    value: 0,
+    key: 0,
+  },
+  {
+    label: '邮件',
+    value: 1,
+    key: 1,
+  },
 ];

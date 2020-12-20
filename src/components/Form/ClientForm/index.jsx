@@ -575,8 +575,8 @@ const ClientForm = props => {
     },
     {
       itemProps: {
-        name: 'nickname',
         label: '用户名',
+        name: 'nickname',
       },
     },
     {

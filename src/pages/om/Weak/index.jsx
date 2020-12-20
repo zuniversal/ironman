@@ -222,14 +222,14 @@ class Weak extends PureComponent {
     }
     return (
       <div className="Weak">
-        <WeakFormPdf></WeakFormPdf>
-        {/* {this.renderSearchForm()}
+        {/* <WeakFormPdf></WeakFormPdf> */}
+        {this.renderSearchForm()}
 
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
 
-        {this.renderCommonModal()} */}
+        {this.renderCommonModal()}
       </div>
     );
   }
