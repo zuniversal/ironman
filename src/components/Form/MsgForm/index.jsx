@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
-import { notifyTypeConfig, treeList } from '@/configs'; //
+import { notifyTypeConfig, expandLoadTreeList } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 import { splitLine } from '@/common/SmartEcharts/charts/common';
 
@@ -47,7 +47,7 @@ const createTreeNode = (parentId, v, isLeaf = false) => {
 const MsgForm = props => {
   console.log(' MsgForm ： ', props); //
   const { formBtn, flatOrganizeList, organizeList, ...rest } = props; //
-  // const [ treeData, setTreeData ] = useState(treeList)
+  // const [ treeData, setTreeData ] = useState(expandLoadTreeList)
   // const [ treeData, setTreeData ] = useState(organizeList)
   const [treeData, setTreeData] = useState(flatOrganizeList);
 
@@ -87,7 +87,7 @@ const MsgForm = props => {
       },
       comProps: {
         // treeData: props.organizeList,
-        // treeData: treeList,
+        // treeData: expandLoadTreeList,
         treeData: treeData,
         onChange: e => {
           console.log(' onChange ： ', e); //
@@ -180,7 +180,7 @@ const MsgForm = props => {
     //     mode: 'multiple',
     //     // loadData: props.loadData,
     //     // onTreeExpand: loadData,
-    //     treeData: treeList,
+    //     treeData: expandLoadTreeList,
     //     onChange: (e) => {
     //       console.log(' onChange ： ', e   )//
     //     },

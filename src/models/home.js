@@ -24,7 +24,7 @@ export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
-console.log(' actions ： ', actions, getItem('homeSettings')); //
+// console.log(' actions ： ', actions, getItem('homeSettings')); //
 export const mapStateToProps = state => state[namespace];
 
 const settingData = [

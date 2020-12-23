@@ -7,7 +7,7 @@ import { regoins } from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 
 const SearchKwForm = props => {
-  console.log(' SearchKwForm ： ', props); //
+  // console.log(' SearchKwForm ： ', props); //
   const { beforeExtra, formBtn, className, keyword, ...rest } = props; //
 
   const config = [

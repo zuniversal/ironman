@@ -182,16 +182,16 @@ class SmartTable extends PureComponent {
         d_id: v[rowKey] ? v[rowKey] : Math.random(),
       }));
 
-    console.log(
-      ' dataFilter ：',
-      this.state,
-      this.props,
-      data,
-      'k ：',
-      searchKey,
-      'searchText ：',
-      searchText,
-    );
+    // console.log(
+    //   ' dataFilter ：',
+    //   this.state,
+    //   this.props,
+    //   data,
+    //   'k ：',
+    //   searchKey,
+    //   'searchText ：',
+    //   searchText,
+    // );
 
     if (data.length && searchKey != '') {
       const reg = new RegExp(searchText, 'gi');
@@ -222,17 +222,17 @@ class SmartTable extends PureComponent {
 
         return sliceData;
       }
-      console.log(
-        ' isMockData ： ',
-        mpckAddData,
-        newTbData,
-        data,
-        isMockData,
-        dataSource,
-        this.state.mockTbData,
-        this.state,
-        this.props,
-      ); //
+      // console.log(
+      //   ' isMockData ： ',
+      //   mpckAddData,
+      //   newTbData,
+      //   data,
+      //   isMockData,
+      //   dataSource,
+      //   this.state.mockTbData,
+      //   this.state,
+      //   this.props,
+      // ); //
       if (Object.keys(mpckAddData).length && isMockData) {
         return [mpckAddData, ...data];
       } else {

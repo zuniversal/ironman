@@ -71,14 +71,14 @@ const SmartFormModal = props => {
   //   })
   // }
 
-  console.log(
-    ' SmartFormModal ： ',
-    props,
-    form,
-    modalProps,
-    React.isValidElement(null),
-    React.isValidElement(FormCom),
-  ); //
+  // console.log(
+  //   ' SmartFormModal ： ',
+  //   props,
+  //   form,
+  //   modalProps,
+  //   React.isValidElement(null),
+  //   React.isValidElement(FormCom),
+  // ); //
 
   const handleOk = e => {
     console.log(' handleOk   e, ,   ： ', e, props);

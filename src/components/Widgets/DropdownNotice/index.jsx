@@ -2,8 +2,12 @@ import React from 'react';
 import './style.less';
 import PropTypes from 'prop-types';
 import { CloseOutlined } from '@ant-design/icons'; //
-import { Menu, Dropdown, Divider } from 'antd';
+import { Menu, Dropdown, notification, Divider } from 'antd';
 import { history, connect } from 'umi';
+import SmartForm from '@/common/SmartForm'; //
+import useWebsocket from '@/hooks/useWebsocket';
+import { notifyWs } from '@/services/common';
+// import { openNotification } from '@/utlis';
 
 const menuConfig = [
   {
@@ -33,7 +37,7 @@ const menuConfig = [
 ];
 
 const DropdownNotice = props => {
-  console.log(' DropdownNotice ： ', props); //
+  // console.log(' DropdownNotice ： ', props); //
 
   const {
     handleClick,
@@ -43,6 +47,7 @@ const DropdownNotice = props => {
     menuClick,
     noEllipsis,
     avatar,
+    userInfo,
   } = props; //
 
   const handleMenuClick = item => {
@@ -52,13 +57,21 @@ const DropdownNotice = props => {
     menuClick && menuClick({ ...clickItem, ...item });
   };
 
+  // const Com = useWebsocket()
+  const url = notifyWs + `?user_id=${userInfo.id}`;
+  const { data } = useWebsocket({
+    url,
+    // url: 'ws://119.3.123.144:8008/websocket',
+  });
+  console.log(' useWebsocket data ： ', url, data); //
+
   const menuCom = menu ? (
     menu
   ) : (
     <Menu onClick={handleMenuClick} className={`dropdownContent`}>
       <Menu.Item key={'header'}>
         <div className="header divider">
-          <div className="text">通知 ({props.count})</div>
+          <div className="text">通知 ({props.count}) </div>
           <CloseOutlined className={`closeIcon`} onClick={props.closeNotice} />
         </div>
       </Menu.Item>

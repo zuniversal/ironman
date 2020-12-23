@@ -11,6 +11,7 @@ const otherActions = [
   'getStatisticAsync',
   'getPowerInfoAsync',
   'getStationStatusAsync',
+  'getDeviceStatusAsync',
 ];
 
 const batchTurnActions = [];
@@ -36,6 +37,7 @@ export default {
     chartSearchInfo: {},
     stationStatusList: [],
     stationStatusCount: 0,
+    deviceStatus: {},
   },
 
   reducers: {
@@ -105,6 +107,19 @@ export default {
         statisticData: payload.bean,
       };
     },
+    getDeviceStatus(state, { payload, type }) {
+      const { t_status, s_status, equipment_status } = payload.bean;
+
+      return {
+        ...state,
+        deviceStatus: {
+          ...payload.bean,
+          wdStatus: t_status === 0 ? '异常' : '正常',
+          sdStatus: s_status === 0 ? '异常' : '正常',
+          equipmentStatus: equipment_status === 0 ? '异常' : '正常',
+        },
+      };
+    },
     getPowerInfo(state, { payload, type }) {
       const { chartSearchInfo } = state;
       return {
@@ -133,6 +148,11 @@ export default {
     *getStatisticAsync({ payload, action, type }, { call, put }) {
       console.log(' getStatisticAsync ： ', payload, action, type); //
       const res = yield call(services.getStatistic, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getDeviceStatusAsync({ payload, action, type }, { call, put }) {
+      console.log(' getDeviceStatusAsync ： ', payload, action, type); //
+      const res = yield call(services.getDeviceStatus, payload);
       yield put(action({ ...res, payload }));
     },
     *getPowerInfoAsync({ payload, action, type }, { call, put }) {

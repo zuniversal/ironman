@@ -15,6 +15,7 @@ import {
   Space,
   InputNumber,
   Tabs,
+  Divider,
 } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
 import SmartImg from '@/common/SmartImg'; //
@@ -593,31 +594,126 @@ const InspectRecordForm = props => {
     },
 
     {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <Divider className={`divider`} />
+          <div className="titleRow">高压进侧线</div>
+        </>
+      ),
+      itemProps: {
+        label: '',
+        className: 'w100',
+      },
+    },
+
+    {
       formType: 'rowText',
       itemProps: {
         label: '电压表',
+        className: 'w100 voltageRowTitle',
+      },
+    },
+    //   {
+    //     noRule: true,
+    //     itemProps: {
+    //       label: '无功1 (07)',
+    //       name: ['powerData', 'reactive_power_1'],
+    //     },
+    //   },
+    //   {
+    //     noRule: true,
+    //     itemProps: {
+    //       label: '无功2 (08)',
+    //       name: ['powerData', 'reactive_power_2'],
+    //     },
+    //   },
+    //   {
+    //     noRule: true,
+    //     itemProps: {
+    //       label: '实际功率因数',
+    //       name: ['powerData', 'real_power_factor'],
+    //     },
+    //   },
+
+    // },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'AB',
+        // name: '',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'BC',
+        // name: '',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'CA',
+        // name: '',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电流表',
         className: 'w100',
       },
     },
     {
       noRule: true,
       itemProps: {
-        label: '无功1 (07)',
-        name: ['powerData', 'reactive_power_1'],
+        label: 'A',
+        // name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
-        label: '无功2 (08)',
-        name: ['powerData', 'reactive_power_2'],
+        label: 'B',
+        // name: '',
       },
     },
     {
       noRule: true,
       itemProps: {
-        label: '实际功率因数',
-        name: ['powerData', 'real_power_factor'],
+        label: 'C',
+        // name: '',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '显示器',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'A',
+        // name: '',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'B',
+        // name: '',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'C',
+        // name: '',
       },
     },
 
@@ -627,7 +723,7 @@ const InspectRecordForm = props => {
       CustomCom: (
         <TabPanes
           tabItemKey={'power_number'}
-          tabPrefix={'电压出现测设备'}
+          tabPrefix={'电压出线侧设备'}
           onChange={onOutLineChange}
           tabData={power_data}
         ></TabPanes>
@@ -873,6 +969,30 @@ const InspectRecordForm = props => {
         className: 'w-96',
       },
     },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '有功kWh',
+        // name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: 'cosΦ',
+        // name: '',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
 
     {
       formType: 'rowText',
@@ -887,18 +1007,6 @@ const InspectRecordForm = props => {
       itemProps: {
         label: '电容柜1',
         name: 'GGJ',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '有功kWh',
-        // name: '',
         ...electricFormLayouts,
       },
       comProps: {

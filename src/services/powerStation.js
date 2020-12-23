@@ -20,6 +20,12 @@ export const addPowerInfo = p => post(`console/OMS/electricalinfo`, p);
 export const editPowerInfo = p =>
   put(`console/OMS/electricalinfo/${p.d_id}`, p);
 export const removePowerInfo = p => remove(`console/OMS/electricalinfo`, p);
+
+export const addOutLine = p => post(`console/OMS/powerstation/outline`, p);
+export const editOutLine = p =>
+  put(`console/OMS/powerstation/outline/${p.d_id}`, p);
+export const removeOutLine = p => remove(`console/OMS/powerstation/outline`, p);
+
 export const exportData = p => get('console/OMS/powerstation/file', p);
 export const syncOA = p => noTipsGet(`console/OMS/powerstation/oa`, p);
 export const createQRCode = p =>

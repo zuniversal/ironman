@@ -4,7 +4,7 @@
 
 import { createIndexArr } from '@/utils';
 
-export const treeList = [
+export const expandLoadTreeList = [
   {
     label: '部门1',
     title: '部门1',
@@ -12,51 +12,6 @@ export const treeList = [
     id: 'app1',
     pId: 0,
     indexes: 0,
-    // children: [{
-    //     label: '子部门1',
-    //     title: '子部门1',
-    //     value: 'msg1',
-    //     id: 'msg1',
-    //     // pId: 1,
-    //     children: [{
-    //         label: '子部门111',
-    //         title: '子部门111',
-    //         value: 'msg12',
-    //         id: 'msg12',
-    //         // pId: 2,
-    //         children: [{
-    //             label: '子部门1222',
-    //             title: '子部门1222',
-    //             value: 'msg132',
-    //             id: 'value',
-    //             // pId: 3,
-    //           },
-    //           {
-    //             label: '子部门2333',
-    //             title: '子部门2333',
-    //             value: 'email1342',
-    //             id: 'value',
-    //             // pId: 3,
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         label: '子部门2',
-    //         title: '子部门2',
-    //         value: 'email12',
-    //         id: 'email12',
-    //         // pId: 2,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     label: '子部门2',
-    //     title: '子部门2',
-    //     value: 'email1',
-    //     id: 'email1',
-    //     // pId: 1,
-    //   },
-    // ],
   },
   {
     label: '部门12',
@@ -65,21 +20,6 @@ export const treeList = [
     id: 'app2',
     pId: 0,
     indexes: 8,
-    // children: [{
-    //     label: '子部门1',
-    //     title: '子部门1',
-    //     value: 'msg2',
-    //     id: 'msg2',
-    //     // pId: 1,
-    //   },
-    //   {
-    //     label: '子部门2',
-    //     title: '子部门2',
-    //     value: 'email2',
-    //     id: 'email2',
-    //     // pId: 1,
-    //   },
-    // ],
   },
   {
     id: 1,
@@ -98,6 +38,89 @@ export const treeList = [
     title: '营销客服中心',
     label: '营销客服中心',
     parent_id: null,
+  },
+];
+
+export const treeList = [
+  {
+    label: '部门1',
+    title: '部门1',
+    value: 'app1',
+    id: 'app1',
+    pId: 0,
+    indexes: 0,
+    children: [
+      {
+        label: '子部门1',
+        title: '子部门1',
+        value: 'msg1',
+        id: 'msg1',
+        // pId: 1,
+        children: [
+          {
+            label: '子部门111',
+            title: '子部门111',
+            value: 'msg12',
+            id: 'msg12',
+            // pId: 2,
+            children: [
+              {
+                label: '子部门1222',
+                title: '子部门1222',
+                value: 'msg132',
+                id: 'value',
+                // pId: 3,
+              },
+              {
+                label: '子部门2333',
+                title: '子部门2333',
+                value: 'email1342',
+                id: 'value',
+                // pId: 3,
+              },
+            ],
+          },
+          {
+            label: '子部门2',
+            title: '子部门2',
+            value: 'email12',
+            id: 'email12',
+            // pId: 2,
+          },
+        ],
+      },
+      {
+        label: '子部门2',
+        title: '子部门2',
+        value: 'email1',
+        id: 'email1',
+        // pId: 1,
+      },
+    ],
+  },
+  {
+    label: '部门12',
+    title: '部门2',
+    value: 'app2',
+    id: 'app2',
+    pId: 0,
+    indexes: 8,
+    children: [
+      {
+        label: '子部门1',
+        title: '子部门1',
+        value: 'msg2',
+        id: 'msg2',
+        // pId: 1,
+      },
+      {
+        label: '子部门2',
+        title: '子部门2',
+        value: 'email2',
+        id: 'email2',
+        // pId: 1,
+      },
+    ],
   },
 ];
 
@@ -393,19 +416,18 @@ export const inspectTemplateConfig = [
 export const inspectModelRadio = [
   {
     label: '月巡检',
-    value: 1,
+    value: 0,
   },
   {
     label: '日巡检',
-    value: 2,
+    value: 1,
   },
 ];
 
 export const dayHours = createIndexArr(24).map(v => ({
   label: `${v}点`,
-  value: v,
+  value: `${v}`.padStart(2, '0') + ':00',
 }));
-console.log(' dayHours ： ', dayHours); //
 
 export const notifyTypeConfig = [
   {

@@ -23,6 +23,7 @@ export const TableInput = props => {
   // return props.record.isEdit && config.noEdit ? (
   return props.record.isEdit && keys !== 'id' ? (
     <Input
+      allowClear
       defaultValue={text}
       onChange={e =>
         props.modifyTableItem({

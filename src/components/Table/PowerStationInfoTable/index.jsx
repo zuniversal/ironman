@@ -234,16 +234,29 @@ export const PowerStationDetailTable = props => {
         ></TableInput>
       ),
     },
+    // {
+    //   title: '出线侧设备数',
+    //   dataIndex: 'outline_number',
+    //   render: (text, record, index, config) => (
+    //     <TableInput
+    //       text={text}
+    //       record={record}
+    //       index={index}
+    //       {...props}
+    //       keys={'outline_number'}
+    //     ></TableInput>
+    //   ),
+    // },
     {
-      title: '出线侧设备数',
-      dataIndex: 'outline_number',
+      title: '电源等级',
+      dataIndex: 'voltage_level',
       render: (text, record, index, config) => (
         <TableInput
           text={text}
           record={record}
           index={index}
           {...props}
-          keys={'outline_number'}
+          keys={'voltage_level'}
         ></TableInput>
       ),
     },

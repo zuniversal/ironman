@@ -1,7 +1,7 @@
 import { init } from '@/utils/createAction'; //
 import * as services from '@/services/user';
 import * as userCenterServices from '@/services/userCenter';
-import { formatSelectList, nowYearMonth, setItem, getItem } from '@/utils';
+import { formatSelectList, openNotification, setItem, getItem } from '@/utils';
 import { history } from 'umi';
 import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
 import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
@@ -9,6 +9,7 @@ import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
 import io from 'socket.io-client';
 import authData from '@/configs/auth';
+import { notifyWs } from '@/services/common';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
@@ -273,6 +274,10 @@ export default {
       // } else {
       // }
       history.push(path);
+      openNotification({
+        message: '系统通知',
+        description: '欢迎来到电管家！',
+      });
     },
     *logoutAsync({ payload, action, type }, { call, put }) {
       console.log(' logoutAsync ： ', payload, action, type); //
@@ -340,26 +345,60 @@ export default {
       // console.log(' 用户 setup ： ', props, this); //
       const { dispatch, history } = props; //
 
-      // const websocket = new window.WebSocket("ws://119.3.123.144:8008/websocket");
-      //   //连接发生错误的回调方法
-      //   websocket.onerror = function(){
-      //       console.log("error");
-      //   };
+      history.listen(location => {
+        console.log(' 监听路由 匹配 ： ', history, location); //
+        const { pathname } = location;
+        if (pathname !== '/login') {
+          dispatch({
+            type: 'getUserInfoAsync',
+          });
+        }
+      }); //
 
-      //   //连接成功建立的回调方法
-      //   websocket.onopen = function(event){
-      //       console.log("open");
-      //   }
+      return;
+      const msgs = [
+        {
+          id: 1,
+          unread: true,
+          description: '创建快捷方式1',
+          verb: 'admin发送了一条消息通知1',
+          timestamp: '2020-12-22T11:56:56.472362',
+          recipient_id: 79597,
+        },
+        {
+          id: 2,
+          unread: true,
+          description: '创建快捷方式2',
+          verb: 'admin发送了一条消息通知2',
+          timestamp: '2020-12-22T11:56:56.472362',
+          recipient_id: 79597,
+        },
+      ];
+      const websocket = new window.WebSocket(
+        'ws://119.3.123.144:8008/websocket',
+      );
+      // const websocket = new window.WebSocket(notifyWs);
+      //连接成功建立的回调方法
+      websocket.onopen = event => {
+        console.log(' websocket.onopen ： ', event); //
+      };
 
-      //   //接收到消息的回调方法
-      //   websocket.onmessage = function(event){
-      //       console.log('请输入消息 !',event.data);
-      //   }
+      //连接发生错误的回调方法
+      websocket.onerror = () => {
+        console.log(' websocket.onerror ： '); //
+      };
 
-      //   //连接关闭的回调方法
-      //   websocket.onclose = function(){
-      //       console.log("close");
-      //   }
+      //接收到消息的回调方法
+      websocket.onmessage = event => {
+        console.log(' websocket.onmessage ： ', event.data);
+        // console.log(' websocket.onmessage2 ： ', JSON.parse(event.data));
+      };
+
+      //连接关闭的回调方法
+      websocket.onclose = () => {
+        console.log(' websocket.onclose ： '); //
+      };
+
       // const socket = io('ws://121.40.165.18:8800');
       // socket.on('connect', () => {
       //   console.log(" 连接 subscribechannel, params ： ", socket.connected) //
@@ -372,15 +411,6 @@ export default {
       // socket.on('connecting', () => {
       //   console.log(" 连接 subscribechannel, params2 ： ", socket.connected) //
       // });
-      history.listen(location => {
-        console.log(' 监听路由 匹配 ： ', history, location); //
-        const { pathname } = location;
-        if (pathname !== '/login') {
-          dispatch({
-            type: 'getUserInfoAsync',
-          });
-        }
-      }); //
     },
   },
 };

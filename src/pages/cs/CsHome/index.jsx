@@ -60,16 +60,14 @@ class CsHome extends PureComponent {
     return (
       <div className="monitorWrapper df">
         <div className={`left ${ANIMATE.bounceInLeft} `}>
-          <CsHomeMonitor></CsHomeMonitor>
+          <CsHomeMonitor data={this.props.deviceStatus}></CsHomeMonitor>
         </div>
         <div className={`center ${ANIMATE.zoomIn} `}>
           {/* <CsHomeVideo></CsHomeVideo> */}
-          <div className="csHomeVideo ">
-            <SmartVideo></SmartVideo>
-          </div>
+          <div className="csHomeVideo ">{/* <SmartVideo></SmartVideo> */}</div>
         </div>
         <div className={`right ${ANIMATE.bounceInRight} `}>
-          <CsHomeMonitorVideo></CsHomeMonitorVideo>
+          {/* <CsHomeMonitorVideo></CsHomeMonitorVideo> */}
         </div>
       </div>
     );
@@ -213,6 +211,7 @@ class CsHome extends PureComponent {
       this.props.user,
     ); //
     this.props.getStatisticAsync({});
+    this.props.getDeviceStatusAsync();
     this.props.getPowerInfoAsync({
       customer: 5996,
       // customer: this.props.user.userInfo.id,

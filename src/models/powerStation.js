@@ -50,7 +50,8 @@ const validateConfig = [
   'magnification',
   'transformer_capacity',
   'real_capacity',
-  'outline_number',
+  // 'outline_number',
+  'voltage_level',
 ];
 
 export const getIsRight = (
@@ -83,15 +84,15 @@ const initItem = {
   transformer_capacity: '',
   real_capacity: '',
   outline_number: '',
+  voltage_level: '',
   isEdit: true,
   // action: '',
 };
 
 const outLineTableItem = {
   key: Math.random(),
-  nickname: '',
-  password: '',
-  phone: '',
+  name: '',
+  powerstation: '',
   isEdit: true,
 };
 
@@ -111,7 +112,7 @@ export default {
     clientList: [],
     houseNoList: [],
     powerInfoData: [initItem],
-    powerInfoData: [],
+    // powerInfoData: [],
 
     provinceList: [],
     citytList: [],
@@ -154,22 +155,45 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      const datas = payload.bean.electricalinfromation_set.map(v => ({
+      const {
+        electricity_user,
+        electricalinfromation_set,
+        outline_set,
+      } = payload.bean;
+
+      const datas = electricalinfromation_set.map(v => ({
         ...v,
         key: Math.random(),
       }));
       console.log(' getItemgetItem ： ', payload, datas); //
+      const itemDetail = {
+        ...payload.bean,
+        electricity_user: `${electricity_user.id}`,
+      };
+      // if (!itemDetail.inspection_time && itemDetail.inspection_time.length > 0) {
+      if (!itemDetail.inspection_time) {
+        delete itemDetail.inspection_time;
+      } else {
+        // itemDetail.inspection_time = itemDetail.inspection_time.split('[')[1].split(']')[0].split(',')
+        itemDetail.inspection_time = itemDetail.inspection_time.split(',');
+      }
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
         // itemDetail: payload.bean,
-        itemDetail: {
-          ...payload.bean,
-          electricity_user: `${payload.bean.electricity_user.id}`,
-        },
+        // itemDetail: {
+        //   ...payload.bean,
+        //   electricity_user: `${payload.bean.electricity_user.id}`,
+        // },
+        itemDetail,
         powerInfoData: datas,
+        outLineTableData: outline_set.map(v => ({
+          ...v,
+          key: Math.random(),
+        })),
       };
     },
     addItem(state, { payload, type }) {
@@ -393,8 +417,8 @@ export default {
           return v.key === payload.payload.key
             ? {
                 ...v,
-                // ...payload.list[0],
-                ...payload.bean,
+                ...payload.list[0],
+                // ...payload.bean,
                 isEdit: false,
               }
             : v;
@@ -516,7 +540,9 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put, select }) {
-      const { powerInfoData } = yield select(state => state[namespace]);
+      const { powerInfoData, outLineTableData } = yield select(
+        state => state[namespace],
+      );
       console.log(' addItemAsync ： ', powerInfoData, payload); //
       if (powerInfoData.length < 1) {
         tips('电源列表不能为空！', 2);
@@ -536,9 +562,23 @@ export default {
       // ];
       const elecrical_info_list = powerInfoData.map(v => v.id);
       const isHaveId = elecrical_info_list.every(v => v);
-      console.log(' isHaveId some  ： ', elecrical_info_list, isHaveId);
+      const outline_list = outLineTableData.map(v => v.id);
+      const isHaveOutlineId = outline_list.every(v => v);
+      console.log(
+        ' isHaveId some  ： ',
+        outLineTableData,
+        outLineTableData,
+        outline_list,
+        isHaveId,
+        outline_list,
+        isHaveOutlineId,
+      );
       if (!isHaveId) {
         tips(`请先保存电源列表！`, 2);
+        return;
+      }
+      if (!isHaveOutlineId) {
+        tips(`请先保存出线侧列表！`, 2);
         return;
       }
       // const isRight = getIsRight(powerInfoData);
@@ -555,6 +595,7 @@ export default {
       const res = yield call(services.addItem, {
         ...payload,
         elecrical_info_list: elecrical_info_list,
+        outline_list: outline_list,
       });
       // const res = yield call(services.addItem, {payload});
       // yield put(action({ ...res, payload }));
@@ -562,8 +603,15 @@ export default {
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       // const { latitude, longitude, ...rest } = payload;
-      const { powerInfoData } = yield select(state => state[namespace]);
-      console.log(' addItemAsync ： ', powerInfoData, payload); //
+      const { powerInfoData, outLineTableData } = yield select(
+        state => state[namespace],
+      );
+      console.log(
+        ' editItemAsync ： ',
+        powerInfoData,
+        outLineTableData,
+        payload,
+      ); //
       if (powerInfoData.length < 1) {
         tips('电源列表不能为空！', 2);
         return;
@@ -573,6 +621,12 @@ export default {
       console.log(' isHaveId some  ： ', elecrical_info_list, isHaveId);
       if (!isHaveId) {
         tips(`请先保存电源列表！`, 2);
+        return;
+      }
+      const outline_list = outLineTableData.map(v => v.id);
+      const isHaveOutlineId = outline_list.every(v => v);
+      if (!isHaveOutlineId) {
+        tips(`请先保存出线侧列表！`, 2);
         return;
       }
       const isRight = getIsRight(powerInfoData);
@@ -585,11 +639,17 @@ export default {
         return;
       }
       // return;
-
-      const res = yield call(services.editItem, {
+      const params = {
         ...payload,
         elecrical_info_list: elecrical_info_list,
-      });
+        outline_list: outline_list,
+      };
+      if (payload.inspection_time) {
+        params.inspection_time = params.inspection_time.join(',');
+        console.log(' params ： ', params); //
+      }
+      console.log(' params ： ', params); //
+      const res = yield call(services.editItem, params);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
@@ -703,9 +763,9 @@ export default {
       console.log(' addOutLineTableItemAsync ： ', payload);
       const { itemDetail } = yield select(state => state[namespace]);
       const params = {
-        ...payload,
+        outline_list: [{ ...payload, powerstation: itemDetail.id }],
       };
-      const res = yield call(services.addAdmin, params);
+      const res = yield call(services.addOutLine, params);
       yield put(action({ ...res, payload }));
     },
     *editOutLineTableItemAsync(
@@ -714,10 +774,11 @@ export default {
     ) {
       const { itemDetail } = yield select(state => state[namespace]);
       console.log(' editOutLineTableItemAsync ： ', payload, itemDetail);
-      const { account, ...rest } = payload;
-      const res = yield call(services.editAdmin, {
-        ...payload,
-      });
+      const params = {
+        outline_set: payload,
+        // powerstation: itemDetail.id,
+      };
+      const res = yield call(services.editOutLine, payload);
       yield put(action({ ...res, payload }));
     },
     *removeOutLineTableItemAsync(
@@ -727,7 +788,7 @@ export default {
       const { itemDetail } = yield select(state => state[namespace]);
       console.log(' removeOutLineTableItemAsync ： ', payload);
       if (payload.action === 'remove') {
-        const res = yield call(services.removedAdmin, {
+        const res = yield call(services.removeOutLine, {
           d_id: payload.id,
           id: `${payload.id}`,
         });

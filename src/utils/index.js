@@ -12,8 +12,24 @@ import {
   Checkbox,
   DatePicker,
 } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import business from 'moment-business';
+// import { PRIMARY } from '@/constants';
+
+const PRIMARY = '#00B460';
+
+export const openNotification = (
+  params = {
+    key: 'notificationKey',
+  },
+) => {
+  notification.open({
+    key: params.key,
+    icon: <SmileOutlined style={{ color: PRIMARY }} />,
+    ...params,
+  });
+};
 
 export const filterObjSame = (data, key = 'id') => {
   const temp = [];
@@ -557,7 +573,7 @@ export const wrapParams = p => ({
 export const backupFn = o => JSON.parse(JSON.stringify(o));
 
 export const setItem = (k, v, isString) =>
-  localStorage.setItem(k, isString ? v : JSON.stringify(v));
+  v && localStorage.setItem(k, isString ? v : JSON.stringify(v));
 export const getItem = k => JSON.parse(localStorage.getItem(k));
 export const removeItem = k => localStorage.removeItem(k);
 export const setItems = (k, v) => sessionStorage.setItem(k, JSON.stringify(v));

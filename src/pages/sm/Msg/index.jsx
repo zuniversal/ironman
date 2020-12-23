@@ -170,6 +170,10 @@ class Msg extends PureComponent {
   render() {
     return (
       <div className="AlarmRecord">
+        <embed
+          src="http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf"
+          type=""
+        />
         {this.renderSearchForm()}
 
         {this.renderTable()}

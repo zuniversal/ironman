@@ -65,5 +65,5 @@ export default {
   tooltip,
   grid,
   splitLine,
-  toolbox,
+  // toolbox,
 };

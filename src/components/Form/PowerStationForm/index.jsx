@@ -39,17 +39,30 @@ const selectData = [
 ];
 
 const PowerStationForm = props => {
-  console.log(' PowerStationForm ： ', props, config); //
+  console.log(' PowerStationForm 挂载 ： ', props, config); //
   const { action, extra } = props; //
-  const [inspectMode, setInspectMode] = useState(1);
+  // const [inspectMode, setInspectMode] = useState(0);
+  const { inspection_type = 0 } = props.init;
+
+  const [inspectMode, setInspectMode] = useState(inspection_type);
+  console.log(
+    ' PowerStationForm  inspectModeinspectModeinspectMode ： ',
+    inspection_type,
+    props,
+    inspectMode,
+  ); //
   const onInspectModeChange = e => {
-    console.log(' PowerStationForm onInspectModeChange   e,   ： ', e);
+    console.log(
+      ' PowerStationForm onInspectModeChange   e, 改变设置  ： ',
+      e,
+      e.target.value,
+      inspectMode,
+    );
     const inspectMode = props.propsForm.getFieldValue('inspectMode');
-    console.log(' PowerStationForm inspectMode ： ', inspectMode); //
-    setInspectMode(inspectMode);
+    // console.log(' PowerStationForm inspectMode 设置 ： ', inspectMode, ); //
+    setInspectMode(e.target.value);
+    // setInspectMode(inspectMode == 0 ? 1 : 0);
   };
-  // const inspectMode = props.propsForm.getFieldValue('inspectMode')
-  // console.log(' PowerStationForm inspectMode ： ', inspectMode); //
 
   // const formConfig = formatConfig(config);
   const deciveRow = {
@@ -139,13 +152,26 @@ const PowerStationForm = props => {
     typeCols = editCol;
   }
 
+  const inspectModeCol = [
+    {
+      formType: 'Radio',
+      itemProps: {
+        label: '巡检模式',
+        name: 'inspection_type',
+      },
+      comProps: {
+        onChange: onInspectModeChange,
+      },
+      radioData: inspectModelRadio,
+    },
+  ];
   const inspectTimeCol = [
     {
       formType: 'Search',
       selectData: dayHours,
       itemProps: {
         label: '巡检时间',
-        name: 'inspectTime',
+        name: 'inspection_time',
       },
       comProps: {
         mode: 'multiple',
@@ -162,7 +188,14 @@ const PowerStationForm = props => {
     },
   ];
 
+  // const inspectCol = props.propsForm.getFieldValue('inspection_type') == 0 ? inspectTimeCol : inspectCountCol;
   const inspectCol = inspectMode == 1 ? inspectTimeCol : inspectCountCol;
+
+  console.log(
+    ' PowerStationForm inspectMode const inspectMode 查看值 ： = ',
+    inspectMode,
+    props.propsForm.getFieldValue('inspection_type'),
+  ); //
 
   const actionConfig = [
     {
@@ -204,17 +237,7 @@ const PowerStationForm = props => {
     //   },
     // },
 
-    {
-      formType: 'Radio',
-      itemProps: {
-        label: '巡检模式',
-        name: 'inspectMode',
-      },
-      comProps: {
-        onChange: onInspectModeChange,
-      },
-      radioData: inspectModelRadio,
-    },
+    ...inspectModeCol,
     ...inspectCol,
     {
       itemProps: {
@@ -238,12 +261,12 @@ const PowerStationForm = props => {
       // extra={'支持扩展名:pdf、jpg、png'}
       init={props.init}
     ></UploadCom>,
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电源信息',
-      },
-    },
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '电源信息',
+    //   },
+    // },
     // <UploadCom
     //   label={'上传一次电气图'}
     //   text={'上传文件'}
@@ -313,6 +336,8 @@ const PowerStationForm = props => {
         name: 'operation_level',
       },
     },
+
+    ...inspectModeCol,
     {
       itemProps: {
         label: '电话',
@@ -350,13 +375,13 @@ const PowerStationForm = props => {
     {
       itemProps: {
         label: '出线侧编号',
-        name: 'nickname',
+        name: 'id',
       },
     },
     {
       itemProps: {
         label: '出线侧名称',
-        name: 'phone',
+        name: 'name',
       },
     },
   ];
@@ -369,10 +394,11 @@ const PowerStationForm = props => {
 
         isDisabledAll={action === 'detail'}
         {...props}
-        init={{
-          inspectMode: 1,
-          ...props.init,
-        }}
+        // init={{
+        //   // inspection_type: 0,
+        //   // inspection_type: inspectMode,
+        //   ...props.init,
+        // }}
       ></SmartForm>
 
       {extra}
