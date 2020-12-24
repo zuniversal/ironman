@@ -91,7 +91,7 @@ const ContractTable = props => {
     // },
   ];
 
-  return <SmartTable columns={columns} noActionCol {...props}></SmartTable>;
+  return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
 ContractTable.defaultProps = {

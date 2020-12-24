@@ -133,7 +133,6 @@ export const getLabel = (label, key) => {
   支持表单配置形式传入 与 原来的直接传入表单组件形式
   
   尚未开发完 根据项目持续完善 
-
 */
 
 const SmartForm = (props, state) => {
@@ -718,14 +717,12 @@ const SmartForm = (props, state) => {
             </div>
           </>
         </Row> */}
-
         {children}
       </Form>
       {/* {formBtn && formBtn({ form })} */}
     </>
   );
 };
-
 SmartForm.defaultProps = {
   name: 'smartForm',
   className: '',
@@ -747,7 +744,6 @@ SmartForm.defaultProps = {
   noRuleAll: false,
   size: '',
 };
-
 SmartForm.propTypes = {
   name: PropTypes.string,
   className: PropTypes.string,
@@ -768,11 +764,8 @@ SmartForm.propTypes = {
   noRuleAll: PropTypes.bool,
   size: PropTypes.string,
 };
-
 export default SmartForm;
-
 // 带有默认属性的搜索型表单组件
-
 // export const SearchForm = props => React.cloneElement(SmartForm, {
 //   isSearchForm: true,
 //   ...props,

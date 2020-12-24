@@ -12,8 +12,14 @@ const UserManageForm = props => {
   const config = [
     {
       itemProps: {
-        label: '姓名',
+        label: '用户名',
         name: 'nickname',
+      },
+    },
+    {
+      itemProps: {
+        label: '账号',
+        name: 'username',
       },
     },
     {

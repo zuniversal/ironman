@@ -183,6 +183,7 @@ export default {
           certification_status: 1,
           // 默认 - 管理者
           account_type: 'manager',
+          username: payload.username,
         },
       };
       console.log(' params ： ', params); //
