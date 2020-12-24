@@ -63,11 +63,11 @@ class CsHome extends PureComponent {
           <CsHomeMonitor data={this.props.deviceStatus}></CsHomeMonitor>
         </div>
         <div className={`center ${ANIMATE.zoomIn} `}>
-          {/* <CsHomeVideo></CsHomeVideo> */}
+          <CsHomeVideo></CsHomeVideo>
           <div className="csHomeVideo ">{/* <SmartVideo></SmartVideo> */}</div>
         </div>
         <div className={`right ${ANIMATE.bounceInRight} `}>
-          {/* <CsHomeMonitorVideo></CsHomeMonitorVideo> */}
+          <CsHomeMonitorVideo></CsHomeMonitorVideo>
         </div>
       </div>
     );
