@@ -438,7 +438,8 @@ export const mockTbData = (params = {}) => {
   });
 };
 
-const NUM_LEN = 9;
+// const NUM_LEN = 9;
+const NUM_LEN = 20;
 // const NUM_LEN = 5
 const WORD_LEN = 10;
 const LETTER_LEN = 20;
@@ -468,7 +469,8 @@ export const getLengthLimit = text => {
   } else {
     // console.log(' 文字 ： ',    )//
     // textLength = lengthMap.word
-    return 15;
+    // return 15;
+    return 20;
   }
   console.log(' 默认长度 ： ', isNaN(text), text, textLength); //
   return textLength;

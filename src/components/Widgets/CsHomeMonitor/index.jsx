@@ -22,7 +22,7 @@ const DeviceStatus = props => {
   return (
     <div className="deviceInfo ">
       <div className="left">
-        <div className="text">温度</div>
+        <div className="text">{props.title}</div>
         <div className="val">
           {props.data[props.valKey]}
           {props.unit}

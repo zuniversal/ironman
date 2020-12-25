@@ -85,6 +85,7 @@ const NewsKnowForm = props => {
         accept: 'image/png,image/jpeg,image/pdf,application/pdf',
       }}
       init={props.init}
+      formAction={props.action}
     ></UploadCom>,
   ];
 

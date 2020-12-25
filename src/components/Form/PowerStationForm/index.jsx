@@ -260,6 +260,7 @@ const PowerStationForm = props => {
       key={'file'}
       // extra={'支持扩展名:pdf、jpg、png'}
       init={props.init}
+      formAction={props.action}
     ></UploadCom>,
     // {
     //   formType: 'rowText',

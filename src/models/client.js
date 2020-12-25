@@ -34,6 +34,7 @@ export const mapStateToProps = state => state[namespace];
 const initItem = {
   key: Math.random(),
   nickname: '',
+  username: '',
   password: '',
   phone: '',
   isEdit: true,
@@ -144,6 +145,7 @@ export default {
         adminList: payload.bean.customer_admin,
         tableData: payload.bean.customer_admin.map(v => ({
           ...v,
+          // acount:
           key: Math.random(),
           password: '',
           isEdit: false,
@@ -552,6 +554,7 @@ export default {
           certification_status: 1,
           // 默认 - 管理者
           account_type: 'manager',
+          username: payload.username,
         },
       };
       const res = yield call(services.addAdmin, params);
@@ -575,6 +578,7 @@ export default {
           certification_status: 1,
           // 默认 - 管理者
           account_type: 'manager',
+          username: payload.username,
         },
       });
       yield put(action({ ...res, payload }));

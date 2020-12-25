@@ -12,8 +12,8 @@ const BussniessRecordSearchForm = props => {
     {
       noLabel: true,
       itemProps: {
-        // label: 'id或关键字',
-        label: '任务/客户名称',
+        label: 'id或关键字',
+        // label: '任务/客户名称',
         name: 'keyword',
       },
       searchSuffix: true,

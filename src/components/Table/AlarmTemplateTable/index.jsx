@@ -16,15 +16,15 @@ const AlarmTemplateTable = props => {
 
   const columns = [
     {
+      title: 'id',
+      dataIndex: 'id',
+    },
+    {
       title: '名称',
     },
-
-    // {
-    //   title: 'id',
-    // },
-    // {
-    //   title: '通知方法',
-    // },
+    {
+      title: '通知方式',
+    },
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;

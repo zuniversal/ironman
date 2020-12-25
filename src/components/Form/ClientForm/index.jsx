@@ -389,6 +389,7 @@ const ClientForm = props => {
         accept: 'image/png,image/jpeg,image/pdf,application/pdf',
       }}
       init={props.init}
+      formAction={props.action}
     ></UploadCom>,
 
     {
@@ -524,6 +525,7 @@ const ClientForm = props => {
       formItemProps={{
         rules: null,
       }}
+      formAction={props.action}
     ></UploadCom>,
   ];
 
@@ -580,6 +582,12 @@ const ClientForm = props => {
       },
     },
     {
+      itemProps: {
+        label: '账号',
+        name: 'username',
+      },
+    },
+    {
       noRule: action !== 'add',
       itemProps: {
         label: '密码',
@@ -614,7 +622,7 @@ const ClientForm = props => {
       dataSource={dataSource}
       isDisabledAll={!['add', 'edit'].includes(action)}
       noLimitAdd
-      hideSaveEdit={['add'].includes(action)}
+      // hideSaveEdit={['add'].includes(action)}
     ></ReduxTable>,
   ];
 

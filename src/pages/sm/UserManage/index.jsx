@@ -141,10 +141,16 @@ class UserManage extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
+          ...itemDetail,
           ...res,
           role_ids: [res.role_ids],
           tag_ids: [res.tag_ids],
           d_id: itemDetail.id,
+          account: {
+            ...itemDetail.account,
+            username: res.username,
+          },
+          customer_id: null,
         });
       }
     } catch (error) {

@@ -113,7 +113,7 @@ class InspectPlan extends PureComponent {
         tagUserList={this.props.tagUserList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        init={this.props.searchInfo}
+        date={this.props.searchInfo?.month?.format('YYYY-MM-DD')}
       ></InspectPlanSearchForm>
     );
   };
@@ -145,6 +145,7 @@ class InspectPlan extends PureComponent {
             searchInfo.month ? searchInfo.month.format('YYYY-MM-DD') : null
           }
           remove={this.remove}
+          removePlanAsync={this.props.removePlanAsync}
         ></InspectPlanCalendar>
       )
     );

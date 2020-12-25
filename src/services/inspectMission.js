@@ -12,12 +12,13 @@ import {
 
 export const getList = p => noTipsGet('console/OMS/spect/task', p);
 export const getItem = p => noTipsGet(`console/OMS/spect/task/${p.d_id}`, p);
-export const addItem = p => post('console/OMS/spect/task', p);
+export const addItem = p => post('console/OMS/spect/task/create', p);
 export const editItem = p => put(`console/OMS/spect/task/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/spect/task/${p.d_id}`, p);
 
 export const assignMission = p =>
   put(`console/OMS/spect/task/${p.d_id}/assign`, p);
 // export const editMission = p => patch(`console/OMS/spect/task/${p.d_id}`, p);p);
+export const batchDispatch = p => put(`console/OMS/spect/task/assign`, p);
 
 export const exportData = p => post('console/OMS/spect/task/export', p);

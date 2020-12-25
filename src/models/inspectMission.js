@@ -1,20 +1,24 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectMission';
-import * as userServices from '@/services/user';
+import * as userServices from '@/services/userManage';
 import * as teamServices from '@/services/shiftsManage';
+import * as clientServices from '@/services/client';
+import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'inspectMission';
 const { createActions } = init(namespace);
 
 const otherActions = [
-  // 'editMissionAsync',
   'getUserAsync',
   'getTeamAsync',
+  'getPowerAsync',
+  'getClientAsync',
   'exportDataAsync',
+  'batchDispatchAsync',
 ];
 
-const batchTurnActions = [];
+const batchTurnActions = ['batchDispatch'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -22,6 +26,16 @@ export const actions = {
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
+
+const formatParams = data => {
+  const params = {
+    ...data,
+    work_date: data.work_date.format('YYYY-MM-DD'),
+    // work_time: data.work_time.format('YYYY-MM-DD'),
+  };
+  console.log(' formatParams params ： ', params); //
+  return params;
+};
 
 export default {
   namespace,
@@ -37,6 +51,8 @@ export default {
 
     userList: [],
     teamList: [],
+    clientList: [],
+    powerList: [],
   },
 
   reducers: {
@@ -59,7 +75,11 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          work_date: v.work_date?.split('T')[0],
+          assign_date: v.assign_date?.split('T')[0],
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -131,6 +151,20 @@ export default {
         teamList: formatSelectList(payload.list, 'team_headman'),
       };
     },
+    getPower(state, { payload, type }) {
+      console.log(' getPower 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        powerList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getClient(state, { payload, type }) {
+      console.log(' getClient 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
   },
 
   effects: {
@@ -156,8 +190,9 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
+      console.log(' addItemAsync ： ', payload); //
+      const res = yield call(services.addItem, formatParams(payload));
+      yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       console.log(' editItemAsync ： ', payload); //
@@ -172,7 +207,7 @@ export default {
       if (payload.date) {
         params.date = payload.date.format('YYYY-MM-DD');
       }
-      const res = yield call(services.assignMission, params);
+      const res = yield call(services.assignMission, formatParams(params));
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
@@ -183,17 +218,34 @@ export default {
 
     *getUserAsync({ payload, action, type }, { call, put }) {
       console.log(' getUserAsync ： ', payload); //
-      const res = yield call(userServices.getList, payload);
+      const res = yield call(userServices.getSearchList, {
+        ...payload,
+        team_headman: 1,
+      });
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
+    *getPowerAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(powerStationServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
 
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
       return res;
+    },
+
+    *batchDispatchAsync({ payload, action, type }, { call, put }) {
+      console.log(' batchDispatchAsync ： ', payload); //
+      const res = yield call(services.batchDispatch, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

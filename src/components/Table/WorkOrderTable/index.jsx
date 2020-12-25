@@ -94,7 +94,7 @@ const WorkOrderTable = props => {
     },
     {
       title: '描述',
-      dataIndex: 'describe',
+      dataIndex: ['task', 'describe'],
     },
   ];
 

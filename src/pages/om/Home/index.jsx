@@ -101,7 +101,13 @@ class Home extends PureComponent {
     );
   };
   onOptionChange = params => {
-    console.log(' onOptionChange,  , ： ', params, this.state, this.props);
+    console.log(
+      ' onOptionChange,  , ： ',
+      params,
+      this.props.chartSearchInfo,
+      this.state,
+      this.props,
+    );
     const data = {
       ...this.props.chartSearchInfo,
       ...params,

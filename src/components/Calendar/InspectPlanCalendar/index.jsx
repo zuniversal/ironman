@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import { Form, Input } from 'antd';
+import { Form, Tooltip } from 'antd';
 import SmartCalendar, {
   CalendarDraggable,
   dayCellContent,
 } from '@/common/SmartCalendar'; //
-import { ANIMATE } from '@/constants'; //
+import { ANIMATE, PRIMARY } from '@/constants'; //
 import { CloseOutlined } from '@ant-design/icons';
 
 let matchList = [
@@ -83,13 +83,52 @@ const calendarEvents = [
   // items2
 ];
 
-const ShiftsArrangeList = props => {
+const ShiftsArrangeDetailList = props => {
   console.log(
-    ' %c ShiftsArrangeList 组件 props ： ',
+    ' %c ShiftsArrangeDetailList 组件 props ： ',
     `color: #333; font-weight: bold`,
     props,
   );
-  const { className } = props; //
+  const { className, leftTitle, rightTitle, placement, noToolTip } = props; //
+
+  const Com = (
+    <>
+      <div className="titleRow primaryBorderBottom fsb absoulte">
+        <div>{leftTitle}</div>
+        <div>{rightTitle}</div>
+      </div>
+      <div className="titleRow primaryBorderBottom fsb">
+        <div>{leftTitle}</div>
+        <div>{rightTitle}</div>
+      </div>
+      {props.events
+        .filter(v => v.surplus_plan_num > 0)
+        .map((event, index) => {
+          // console.log(' CalendarDraggable event ： ', event,)//
+          return (
+            <div key={event.id} className="fsb rowItem ">
+              <div className={'left'}>
+                {/* {true && ( */}
+                {event.surplus_plan_num > 0 && (
+                  <div
+                    className="dragItem "
+                    id={event.id}
+                    url={event.surplus_plan_num}
+                    // data-isdraged={event.isdraged}
+                    data-datas={event}
+                    test={'zyb'}
+                  >
+                    {event.name}
+                  </div>
+                )}
+                <div>客户-{event.customer}</div>
+              </div>
+              <div>{props.renderRight(event)}</div>
+            </div>
+          );
+        })}
+    </>
+  );
 
   return (
     <CalendarDraggable
@@ -100,54 +139,124 @@ const ShiftsArrangeList = props => {
       //   </div>
       // )
     >
-      <>
-        <div className="titleRow primaryBorderBottom fsb absoulte">
-          <div>电站</div>
-          <div>剩余/总巡检数量</div>
-        </div>
-        <div className="titleRow primaryBorderBottom fsb">
-          <div>电站</div>
-          <div>剩余/总巡检数量</div>
-        </div>
-        {props.events
-          .filter(v => v.surplus_plan_num > 0)
-          .map((event, index) => {
-            // console.log(' CalendarDraggable event ： ', event,)//
-            return (
-              <div key={event.id} className="fsb rowItem ">
-                <div className={'left'}>
-                  {/* {true && ( */}
-                  {event.surplus_plan_num > 0 && (
-                    <div
-                      className="dragItem "
-                      id={event.id}
-                      url={event.surplus_plan_num}
-                      // data-isdraged={event.isdraged}
-                      data-datas={event}
-                      test={'zyb'}
-                    >
-                      {event.name}
-                    </div>
-                  )}
-                  <div>客户-{event.customer}</div>
-                </div>
-                <div>
-                  {event.surplus_plan_num} / {event.spect_plan_num}
-                </div>
+      {!noToolTip ? (
+        <Tooltip
+          {...props}
+          placement={placement}
+          title={'拖入日历'}
+          overlayClassName="aaa"
+        >
+          {Com}
+        </Tooltip>
+      ) : (
+        Com
+      )}
+    </CalendarDraggable>
+  );
+};
+
+ShiftsArrangeDetailList.defaultProps = {
+  unScheduleList: [],
+  placement: 'left',
+  leftTitle: '电站 (月度)',
+  rightTitle: '剩余/总巡检数量',
+  noToolTip: false,
+};
+
+ShiftsArrangeDetailList.propTypes = {
+  unScheduleList: PropTypes.array,
+  placement: PropTypes.string,
+  leftTitle: PropTypes.string,
+  rightTitle: PropTypes.string,
+  noToolTip: PropTypes.bool,
+};
+
+const ShiftsArrangeList = props => {
+  console.log(
+    ' %c ShiftsArrangeList 组件 props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  );
+  const { className, leftTitle, rightTitle, placement, noToolTip } = props; //
+
+  const Com = (
+    <>
+      <div className="titleRow primaryBorderBottom fsb absoulte">
+        <div>{leftTitle}</div>
+        <div>{rightTitle}</div>
+      </div>
+      <div className="titleRow primaryBorderBottom fsb">
+        <div>{leftTitle}</div>
+        <div>{rightTitle}</div>
+      </div>
+      {props.events
+        .filter(v => v.surplus_plan_num > 0)
+        .map((event, index) => {
+          // console.log(' CalendarDraggable event ： ', event,)//
+          return (
+            <div key={event.id} className="fsb rowItem ">
+              <div className={'left'}>
+                {/* {true && ( */}
+                {event.surplus_plan_num > 0 && (
+                  <div
+                    className="dragItem "
+                    id={event.id}
+                    url={event.surplus_plan_num}
+                    // data-isdraged={event.isdraged}
+                    data-datas={event}
+                    test={'zyb'}
+                  >
+                    {event.name}
+                  </div>
+                )}
+                <div>客户-{event.customer}</div>
               </div>
-            );
-          })}
-      </>
+              <div>{props.renderRight(event)}</div>
+            </div>
+          );
+        })}
+    </>
+  );
+
+  return (
+    <CalendarDraggable
+      className={`${className} `}
+      itemSelector={'.dragItem'}
+      // renderItem={(event, index) => (
+      //   <div key={event.id} className="fsb rowItem ">
+      //   </div>
+      // )
+    >
+      {!noToolTip ? (
+        <Tooltip
+          {...props}
+          placement={placement}
+          title={'拖入日历'}
+          overlayClassName="aaa"
+        >
+          {Com}
+        </Tooltip>
+      ) : (
+        Com
+      )}
     </CalendarDraggable>
   );
 };
 
 ShiftsArrangeList.defaultProps = {
   unScheduleList: [],
+  placement: 'left',
+  leftTitle: '电站 (月度)',
+  rightTitle: '剩余/总巡检数量',
+  noToolTip: false,
 };
 
 ShiftsArrangeList.propTypes = {
   unScheduleList: PropTypes.array,
+  placement: PropTypes.string,
+  leftTitle: PropTypes.string,
+  rightTitle: PropTypes.string,
+  noToolTip: PropTypes.bool,
 };
 
 const calendarRef = React.createRef();
@@ -197,6 +306,16 @@ const InspectPlanCalendar = props => {
 
   return (
     <div className="inspectPlanCalendar ">
+      {/* <ShiftsArrangeList
+        noToolTip
+        events={props.unScheduleList}
+        leftTitle={props.initialDate}
+        rightTitle={`任务数：${10}`}
+        renderRight={(event) => <a onClick={props.removePlanAsync}>移除</a>}
+        className={`leftTable`} 
+        // className={`${ANIMATE.slideInRight} `}
+      ></ShiftsArrangeList> */}
+
       <SmartCalendar
         // events={calendarEvents}
 
@@ -228,6 +347,10 @@ const InspectPlanCalendar = props => {
       />
 
       <ShiftsArrangeList
+        className={`rightTable`}
+        renderRight={event => (
+          <>{event.surplus_plan_num / event.spect_plan_num}</>
+        )}
         events={props.unScheduleList}
         // className={`${ANIMATE.slideInRight} `}
       ></ShiftsArrangeList>
@@ -238,11 +361,13 @@ const InspectPlanCalendar = props => {
 InspectPlanCalendar.defaultProps = {
   scheduleList: [],
   eventsSet: () => {},
+  date: '',
 };
 
 InspectPlanCalendar.propTypes = {
   scheduleList: PropTypes.array,
   eventsSet: PropTypes.func,
+  date: PropTypes.string,
 };
 
 export default InspectPlanCalendar;

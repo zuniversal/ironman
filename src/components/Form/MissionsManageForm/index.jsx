@@ -59,6 +59,7 @@ const MissionsManageForm = props => {
       formItemProps={{
         rules: null,
       }}
+      formAction={props.action}
     ></UploadCom>,
   ];
 

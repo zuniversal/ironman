@@ -66,6 +66,7 @@ export default {
     teamList: [],
     clientDetail: {},
     contractDetail: {},
+    powerList: [],
   },
 
   reducers: {

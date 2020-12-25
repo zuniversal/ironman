@@ -28,7 +28,7 @@ const AlarmRecordSearchForm = props => {
     {
       noLabel: true,
       itemProps: {
-        label: '客户名称',
+        label: '告警关键字',
         name: '',
       },
     },

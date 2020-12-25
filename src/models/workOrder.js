@@ -229,7 +229,10 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getList, { keyword: payload });
+      const res = yield call(userServices.getSearchList, {
+        ...payload,
+        team_headman: 1,
+      });
       // const res = yield call(userServices.getSearchList, payload);
       yield put(action({ ...res, payload }));
     },

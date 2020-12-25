@@ -64,7 +64,7 @@ class CsHome extends PureComponent {
         </div>
         <div className={`center ${ANIMATE.zoomIn} `}>
           <CsHomeVideo></CsHomeVideo>
-          <div className="csHomeVideo ">{/* <SmartVideo></SmartVideo> */}</div>
+          {/* <div className="csHomeVideo "><SmartVideo></SmartVideo></div> */}
         </div>
         <div className={`right ${ANIMATE.bounceInRight} `}>
           <CsHomeMonitorVideo></CsHomeMonitorVideo>
@@ -133,7 +133,13 @@ class CsHome extends PureComponent {
     return <CsHomeStatBox data={this.props.statisticData}></CsHomeStatBox>;
   };
   onOptionChange = params => {
-    console.log(' onOptionChange,  , ： ', params, this.state, this.props);
+    console.log(
+      ' onOptionChange,  , ： ',
+      params,
+      this.props.chartSearchInfo,
+      this.state,
+      this.props,
+    );
     const data = {
       ...this.props.chartSearchInfo,
       ...params,

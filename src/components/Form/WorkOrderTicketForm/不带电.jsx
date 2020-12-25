@@ -440,6 +440,7 @@ const WorkOrderTicketForm = props => {
       name={'file	'}
       extra={'支持扩展名:pdf、jpg、jpeg、png'}
       formItemCls={'w50'}
+      formAction={props.action}
     ></UploadCom>,
 
     {

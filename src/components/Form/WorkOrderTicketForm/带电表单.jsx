@@ -637,6 +637,7 @@ const WorkOrderTicketForm = props => {
         accept: 'image/png,image/jpeg',
       }}
       formItemCls={'w50'}
+      formAction={props.action}
     ></UploadCom>,
 
     {

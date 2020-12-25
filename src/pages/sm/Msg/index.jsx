@@ -91,13 +91,13 @@ class Msg extends PureComponent {
     try {
       const res = await form.validateFields();
       const send_type = res.send_type.join(',');
-      const reciever = res.reciever.filter(v => typeof v !== 'string');
+      // const reciever = res.reciever.filter(v => typeof v !== 'string');
       console.log('  res await 结果  ：', res, send_type, reciever, action); //
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
           send_type,
-          reciever,
+          // reciever,
         });
       }
       if (action === 'edit') {
@@ -105,7 +105,7 @@ class Msg extends PureComponent {
           // ...itemDetail,
           ...res,
           send_type,
-          reciever,
+          // reciever,
           d_id: itemDetail.id,
         });
       }
@@ -170,10 +170,10 @@ class Msg extends PureComponent {
   render() {
     return (
       <div className="AlarmRecord">
-        <embed
+        {/* <embed
           src="http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf"
           type=""
-        />
+        /> */}
         {this.renderSearchForm()}
 
         {this.renderTable()}

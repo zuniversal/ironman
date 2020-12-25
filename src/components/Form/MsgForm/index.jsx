@@ -46,10 +46,10 @@ const createTreeNode = (parentId, v, isLeaf = false) => {
 
 const MsgForm = props => {
   console.log(' MsgForm ： ', props); //
-  const { formBtn, flatOrganizeList, organizeList, ...rest } = props; //
+  const { formBtn, organizeList, flatOrganizeList, ...rest } = props; //
   // const [ treeData, setTreeData ] = useState(expandLoadTreeList)
-  // const [ treeData, setTreeData ] = useState(organizeList)
-  const [treeData, setTreeData] = useState(flatOrganizeList);
+  const [treeData, setTreeData] = useState(organizeList);
+  // const [treeData, setTreeData] = useState(flatOrganizeList);
 
   const config = [
     {
@@ -106,60 +106,60 @@ const MsgForm = props => {
         onSearch: e => {
           console.log(' onChange ： ', e); //
         },
-        loadData: treeNode => {
-          console.log(' loadData ： ', treeNode); //
-          const { id } = treeNode.props;
-          const item = id.split('-');
-          const paramId = item[item.length - 1];
-          console.log(' paramId ： ', item, paramId); //
-          return props
-            .getUserManageAsync({
-              organization_id: paramId,
-            })
-            .then(res => {
-              console.log(
-                ' loadData res  ： ',
-                res,
-                treeData,
-                treeNode,
-                treeNode.props,
-                id,
-              );
-              setTreeData(
-                // treeData.concat([
-                //   createTreeNode(id, false),
-                // ])
-                treeData.concat(res.map(v => createTreeNode(id, v))),
-                // [...treeData,
-                //   ...res.map((v) => createTreeNode(id, v))
-                // ]
-              );
-              console.log(' treeDatatreeData ： ', treeData, res); //
-              // return treeData
-            });
-          return new Promise((resolve, reject) => {
-            //   props.getUserManageAsync({
-            //     organization_id: organizationIds[organizationIds.length - 1],
-            //   })
-            const { id } = treeNode.props;
-            console.log(
-              '  Promise ： ',
-              treeData,
-              treeNode,
-              treeNode.props,
-              id,
-            );
-            setTimeout(() => {
-              setTreeData(
-                treeData.concat([
-                  genTreeNode(id, false),
-                  genTreeNode(id, true),
-                ]),
-              );
-              resolve();
-            }, 300);
-          });
-        },
+        // loadData: treeNode => {
+        //   console.log(' loadData ： ', treeNode); //
+        //   const { id } = treeNode.props;
+        //   const item = id.split('-');
+        //   const paramId = item[item.length - 1];
+        //   console.log(' paramId ： ', item, paramId); //
+        //   return props
+        //     .getUserManageAsync({
+        //       organization_id: paramId,
+        //     })
+        //     .then(res => {
+        //       console.log(
+        //         ' loadData res  ： ',
+        //         res,
+        //         treeData,
+        //         treeNode,
+        //         treeNode.props,
+        //         id,
+        //       );
+        //       setTreeData(
+        //         // treeData.concat([
+        //         //   createTreeNode(id, false),
+        //         // ])
+        //         treeData.concat(res.map(v => createTreeNode(id, v))),
+        //         // [...treeData,
+        //         //   ...res.map((v) => createTreeNode(id, v))
+        //         // ]
+        //       );
+        //       console.log(' treeDatatreeData ： ', treeData, res); //
+        //       // return treeData
+        //     });
+        //   return new Promise((resolve, reject) => {
+        //     //   props.getUserManageAsync({
+        //     //     organization_id: organizationIds[organizationIds.length - 1],
+        //     //   })
+        //     const { id } = treeNode.props;
+        //     console.log(
+        //       '  Promise ： ',
+        //       treeData,
+        //       treeNode,
+        //       treeNode.props,
+        //       id,
+        //     );
+        //     setTimeout(() => {
+        //       setTreeData(
+        //         treeData.concat([
+        //           genTreeNode(id, false),
+        //           genTreeNode(id, true),
+        //         ]),
+        //       );
+        //       resolve();
+        //     }, 300);
+        //   });
+        // },
         multiple: true,
         treeCheckable: true,
         treeDefaultExpandAll: false,

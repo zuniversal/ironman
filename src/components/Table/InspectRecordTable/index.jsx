@@ -81,7 +81,7 @@ const InspectRecordTable = props => {
       dataIndex: 'work_date',
     },
     {
-      title: '领取时间',
+      title: '完成时间',
       dataIndex: 'assign_date',
     },
   ];

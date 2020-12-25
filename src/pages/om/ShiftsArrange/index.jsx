@@ -81,14 +81,25 @@ class ShiftsArrange extends PureComponent {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);
   };
-  // exportData = (e,  ) => {
-  //   console.log('    exportData ： ', e, this.state, this.props,   )
-  //   // this.props.exportData()
-  //   if () {
-  //     tips('')
-  //   }
-
-  // }
+  exportData = e => {
+    const { team, schedule_date } = this.props.searchInfo;
+    console.log(
+      '    exportData ： ',
+      e,
+      this.state,
+      this.props,
+      this.props.searchInfo,
+      team && schedule_date,
+    );
+    if (team && schedule_date) {
+      this.props.exportData({
+        ...this.props.searchInfo,
+        schedule_date: this.props.searchInfo.schedule_date.format('YYYY-MM'),
+      });
+    } else {
+      tips('请先选择班组及月份！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -98,7 +109,7 @@ class ShiftsArrange extends PureComponent {
         >
           {TITLE}
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        <Button type="primary" onClick={this.exportData}>
           导出{TITLE}数据
         </Button>
       </div>
@@ -136,6 +147,7 @@ class ShiftsArrange extends PureComponent {
     // console.log(' renderShiftsArrangeCalendar ： ', params,  )
     return (
       <ShiftsArrangeCalendar
+        schedule_date={this.props.searchInfo.schedule_date.format('YYYY.MM.DD')}
         data={this.props.dataList}
         loading={this.props.loading}
       ></ShiftsArrangeCalendar>

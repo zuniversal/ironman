@@ -76,8 +76,8 @@ export default {
       };
     },
     getItem(state, { payload }) {
-      console.log(' getItem ： ', payload); //
       const { team_headman, leader = {}, type, member } = payload.bean; //
+      console.log(' getItem ： ', payload, leader); //
       const { userList } = state;
       const teamHeadmanItem = {
         ...team_headman,
@@ -86,8 +86,8 @@ export default {
       };
       const leaderItem = {
         ...leader,
-        value: `${leader.id}`,
-        label: leader.nickname,
+        value: `${leader ? leader?.id : null}`,
+        label: leader ? leader.nickname : '',
       };
       const typeItem = {
         ...type,
@@ -117,7 +117,7 @@ export default {
           ...payload.bean,
           d_id: payload.payload.d_id,
           team_headman: `${team_headman.id}`,
-          leader: `${leader.id}`,
+          leader: `${leader ? leader?.id : null}`,
           type: `${type.id}`,
           member: memberIdList,
         },

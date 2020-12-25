@@ -22,7 +22,7 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  complete: `完成回访`,
+  complete: `处理回访`,
 };
 
 // const mapStateToProps = ({ VisitManage, }) => VisitManage;

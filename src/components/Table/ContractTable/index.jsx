@@ -91,7 +91,33 @@ const ContractTable = props => {
     // },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'showPDF',
+            extraData: {
+              path: `${record.effective_date.split('-')[0]}/${
+                record.effective_date.split('-')[1]
+              }/${record.code}`,
+            },
+          })
+        }
+      >
+        查看PDF
+      </a>
+    </>
+  );
+
+  return (
+    <SmartTable
+      columns={columns}
+      {...props}
+      extra={extra}
+      noDefault
+    ></SmartTable>
+  );
 };
 
 ContractTable.defaultProps = {

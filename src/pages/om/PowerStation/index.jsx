@@ -329,13 +329,13 @@ class PowerStation extends PureComponent {
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
     this.props.getDistrictAsync({});
-    setTimeout(() => {
-      console.log('  延时器 ： ');
-      this.props.getListAsync({
-        page: 249,
-        page_size: 10,
-      });
-    }, 1000);
+    // setTimeout(() => {
+    //   console.log('  延时器 ： ');
+    //   this.props.getListAsync({
+    //     page: 249,
+    //     page_size: 10,
+    //   });
+    // }, 1000);
 
     // this.props.showItemAsync({
     //   action: 'clientDetailAsync',

@@ -47,7 +47,7 @@ const formatFileList = fileData => {
 };
 
 const UploadCom = props => {
-  // console.log(' UploadCom   props, ,   ： ', props);
+  console.log(' UploadCom   props, ,   ： ', props);
   const {
     label,
     isInputUpload,
@@ -61,6 +61,8 @@ const UploadCom = props => {
     uploadProps,
     init,
     formItemLayout,
+    isHide,
+    formAction,
   } = props; //
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
 
@@ -76,6 +78,15 @@ const UploadCom = props => {
         message: label + REQUIRE,
       },
     ];
+  };
+
+  const beforeUpload = file => {
+    console.log(' beforeUpload   file,   ： ', file, props.size);
+    const isLt10M = file.size / props.size / props.size < 2;
+    if (!isLt10M) {
+      tips(`文件大小超过${props.size} * ${props.size}M！`, 0);
+    }
+    return isLt10M;
   };
 
   const onChange = e => {
@@ -153,6 +164,7 @@ const UploadCom = props => {
         //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         //   },
         // ]}
+        beforeUpload={beforeUpload}
         fileList={fileData}
         // showUploadList={{
         //   showDownloadIcon: true,
@@ -178,17 +190,19 @@ const UploadCom = props => {
         // }}
         {...uploadProps}
       >
-        {isInputUpload ? (
-          <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>
-            <IconCom className={'icon'} />
-            <div className={'text'}>{text}</div>
-          </div>
-        ) : (
-          <div className={`dfc uploadContent`}>
-            <IconCom className={'icon'} />
-            <div className={'text'}>{text}</div>
-          </div>
-        )}
+        {isHide || formAction !== 'detail' ? (
+          isInputUpload ? (
+            <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>
+              <IconCom className={'icon'} />
+              <div className={'text'}>{text}</div>
+            </div>
+          ) : (
+            <div className={`dfc uploadContent`}>
+              <IconCom className={'icon'} />
+              <div className={'text'}>{text}</div>
+            </div>
+          )
+        ) : null}
       </Upload>
     </Form.Item>
   );
@@ -203,6 +217,8 @@ UploadCom.defaultProps = {
   formItemProps: {},
   init: {},
   formItemLayout: {},
+  size: 1024,
+  // size: 2,
 };
 
 UploadCom.propTypes = {
@@ -213,6 +229,7 @@ UploadCom.propTypes = {
   formItemProps: PropTypes.object,
   init: PropTypes.object,
   formItemLayout: PropTypes.object,
+  size: PropTypes.number,
 };
 
 export default UploadCom;

@@ -84,7 +84,7 @@ const InspectMissionTable = props => {
           props.showFormModal({ action: 'assignMission', d_id: record.id })
         }
       >
-        分配
+        派发
       </a>
       <a
         onClick={() =>

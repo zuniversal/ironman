@@ -53,6 +53,7 @@ const CsUserCenterEditForm = props => {
         accept: 'image/png,image/jpeg',
       }}
       extra={'仅支持JPG、PNG格式，文件小于1M(方形图)'}
+      formAction={props.action}
     ></UploadCom>,
     {
       itemProps: {

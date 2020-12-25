@@ -87,7 +87,7 @@ class WorkOrder extends PureComponent {
         formBtn={this.renderFormBtn}
         getUserAsync={params =>
           this.props.getUserAsync({
-            tag_id: 10,
+            team_headman: 1,
             keyword: params,
           })
         }
@@ -241,7 +241,7 @@ class WorkOrder extends PureComponent {
   };
   componentDidMount() {
     this.props.getUserAsync({
-      tag_id: 10,
+      team_headman: 1,
     });
     this.props.getTeamAsync();
     // this.props.addTicketAsync();

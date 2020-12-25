@@ -170,7 +170,27 @@ class InspectRecord extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
-    return <InspectRecordForm {...formComProps}></InspectRecordForm>;
+    return (
+      <>
+        <div className="fje ">
+          <Button
+            type="primary"
+            // onClick={this.exportDataAsync}
+            onClick={() => {
+              console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+              this.showExportPdf({
+                action: 'detail',
+                extraAction: 'showExportPdf',
+                d_id: this.props.itemDetail?.id,
+              });
+            }}
+          >
+            导出PDF
+          </Button>
+        </div>
+        <InspectRecordForm {...formComProps}></InspectRecordForm>
+      </>
+    );
     // if (action === 'inspectReport') {
     //   return <InspectRecordForm {...formComProps}></InspectRecordForm>;
     // }
@@ -313,7 +333,7 @@ class InspectRecord extends PureComponent {
     // }
 
     return (
-      <div className="InspectRecord">
+      <div className="inspectRecord">
         {this.renderSearchForm()}
 
         {this.renderTable()}

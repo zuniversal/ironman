@@ -23,14 +23,16 @@ export const recursiveHandle = (data = [], parent_id) => {
   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   return data.map(v => ({
     ...v,
-    key: `id-${v.id}`,
-    // value: v.id,
-    id: `id-${v.id}`,
+    key: v.id,
+    children: recursiveHandle(v.children, v.id),
     title: v.name,
     label: v.name,
     parent_id: parent_id || Math.random(),
     pId: parent_id || Math.random(),
-    children: recursiveHandle(v.children, `id-${v.id}`),
+    // key: `id-${v.id}`,
+    // // value: v.id,
+    // id: `id-${v.id}`,
+    // children: recursiveHandle(v.children, `id-${v.id}`),
   }));
 };
 
@@ -145,17 +147,27 @@ export default {
 
     getOrganize(state, { payload, type }) {
       console.log(' getOrganize ： ', state, payload); //
-      const organizeList = recursiveHandle(payload.list);
+      // const organizeList = recursiveHandle(payload.list);
+      const organizeList = recursiveHandle([
+        {
+          id: 'all',
+          name: '全部',
+          children: payload.list,
+        },
+      ]);
       // 注意 id 和 pId 不能一样 否则会导致下拉项不渲染
       const flatOrganizeList = flatOrganize(
         organizeList,
         null,
         [],
       ).map(({ children, ...v }) => ({ ...v }));
-      console.log(' flatOrganizeList ： ', flatOrganizeList); //
+      console.log(' flatOrganizeList ： ', organizeList, flatOrganizeList); //
       return {
         ...state,
         organizeList,
+        // organizeList: [
+        //   : organizeList,
+        // ],
         flatOrganizeList,
         // flatOrganizeList: [
         //   {

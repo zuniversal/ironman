@@ -12,6 +12,7 @@ const otherActions = [
   'getTagUserAsync',
   'getUserAsync',
   'getScheduledListAsync',
+  'removePlanAsync',
 ];
 
 const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
@@ -243,6 +244,18 @@ export default {
         ...state,
       };
     },
+    removePlan(state, { payload, type }) {
+      console.log(' removePlan ： ', state, payload); //
+      const { planDetailList } = state;
+      const planDetailListRes = planDetailList.filter(
+        v => v.id != payload.payload.data[0],
+      );
+      console.log(' planDetailListRes ： ', planDetailListRes); //
+      return {
+        ...state,
+        planDetailList: planDetailListRes,
+      };
+    },
   },
 
   effects: {
@@ -373,6 +386,10 @@ export default {
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *removePlanAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.removePlan, payload);
       yield put(action({ ...res, payload }));
     },
   },

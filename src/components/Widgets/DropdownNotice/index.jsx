@@ -14,25 +14,25 @@ const menuConfig = [
     key: 'upload',
     clickFn: 'showUploadModal',
     action: 'uploadFile',
-    title: '张明发来一条通知',
-    content: '各单位注意，下午三点集体大厅开会',
-    time: '16分钟前',
+    verb: '张明发来一条通知',
+    description: '各单位注意，下午三点集体大厅开会',
+    timestamp: '16分钟前',
   },
   {
     key: 'upload1',
     clickFn: 'showUploadModal',
     action: 'uploadFile',
-    title: '张明发来一条通知',
-    content: '各单位注意，下午三点集体大厅开会',
-    time: '16分钟前',
+    verb: '张明发来一条通知',
+    description: '各单位注意，下午三点集体大厅开会',
+    timestamp: '16分钟前',
   },
   {
     key: 'upload2',
     clickFn: 'showUploadModal',
     action: 'uploadFile',
-    title: '张明发来一条通知',
-    content: '各单位注意，下午三点集体大厅开会',
-    time: '16分钟前',
+    verb: '张明发来一条通知',
+    description: '各单位注意，下午三点集体大厅开会',
+    timestamp: '16分钟前',
   },
 ];
 
@@ -84,9 +84,9 @@ const DropdownNotice = props => {
               </div>
             </div>
             <div className="right">
-              <div className="title subText ">{v.title}</div>
-              <div className="content ellipsis">{v.content}</div>
-              <div className="time subText">{v.time}</div>
+              <div className="title subText ">{v.verb}</div>
+              <div className="content ellipsis">{v.description}</div>
+              <div className="time subText">{v.timestamp}</div>
             </div>
           </div>
         </Menu.Item>

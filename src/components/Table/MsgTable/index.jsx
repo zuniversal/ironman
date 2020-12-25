@@ -47,7 +47,9 @@ const MsgTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props} noDefault></SmartTable>;
+  return (
+    <SmartTable columns={columns} {...props} noActionCol noDefault></SmartTable>
+  );
 };
 
 MsgTable.defaultProps = {

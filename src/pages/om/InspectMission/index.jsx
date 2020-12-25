@@ -17,6 +17,7 @@ import { inspectMissionStatusMap } from '@/configs';
 import { tips } from '@/utils';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 import ClientForm from '@/components/Form/ClientForm';
+import InspectMissionForm from '@/components/Form/InspectMissionForm';
 
 const TITLE = '巡检任务';
 
@@ -66,12 +67,34 @@ class InspectMission extends PureComponent {
       tips('请勾选导出项！', 2);
     }
   };
+  batchDispatch = e => {
+    console.log('    batchDispatch ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      // this.props.batchDispatch({
+      this.props.showFormModal({
+        // ids: this.props.selectedRowKeys,
+        action: 'batchDispatch',
+      });
+    } else {
+      tips('请勾选派发项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
         {/* <Button type="primary" onClick={() => this.props.exportExcelAsync({
           ids: [1],
         })}> */}
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增
+        </Button>
+        <Button type="primary" onClick={this.batchDispatch}>
+          派发
+        </Button>
         <Button
           type="primary"
           onClick={this.exportDataAsync}
@@ -89,7 +112,7 @@ class InspectMission extends PureComponent {
         formBtn={this.renderFormBtn}
         getUserAsync={params =>
           this.props.getUserAsync({
-            tag_id: 10,
+            team_headman: 1,
             keyword: params,
           })
         }
@@ -168,6 +191,13 @@ class InspectMission extends PureComponent {
           d_id: itemDetail.id,
         });
       }
+      if (['assignMission', 'batchDispatch'].includes(action)) {
+        this.props.batchDispatchAsync({
+          ...itemDetail,
+          ...res,
+          task_list: this.props.selectedRowKeys,
+        });
+      }
       if (action === 'editDate') {
         this.props.editItemAsync({
           ...itemDetail,
@@ -184,12 +214,14 @@ class InspectMission extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
+      getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
-      getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
+      getTeamAsync: params => this.props.getTeamAsync({ name: params }),
       teamList: this.props.teamList,
+      getPowerAsync: params => this.props.getPowerAsync({ name: params }),
+      powerList: this.props.powerList,
     };
     if (action !== 'add') {
       formComProps.init = {
@@ -197,7 +229,8 @@ class InspectMission extends PureComponent {
         status: inspectMissionStatusMap[this.props.itemDetail.status],
       };
     }
-    if (action === 'assignMission') {
+    // if (action === 'assignMission') {
+    if (['assignMission', 'batchDispatch'].includes(action)) {
       return (
         <InspectMissionAssignForm {...formComProps}></InspectMissionAssignForm>
       );
@@ -209,13 +242,18 @@ class InspectMission extends PureComponent {
         ></InspectMissionEditDateForm>
       );
     }
+    if (action === 'detail') {
+      return (
+        <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
+      );
+    }
     console.log(' formComProps ： ', formComProps); //
-    return (
-      <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
-    );
+    return <InspectMissionForm {...formComProps}></InspectMissionForm>;
   };
   get size() {
-    return ['assignMission', 'editDate'].some(v => v === this.props.action)
+    return ['assignMission', 'batchDispatch', 'editDate'].some(
+      v => v === this.props.action,
+    )
       ? 'small'
       : 'default';
   }
@@ -235,9 +273,11 @@ class InspectMission extends PureComponent {
   };
   componentDidMount() {
     this.props.getUserAsync({
-      tag_id: 10,
+      team_headman: 1,
     });
     this.props.getTeamAsync();
+    this.props.getClientAsync();
+    this.props.getPowerAsync();
     // this.props.getListAsync();
   }
 

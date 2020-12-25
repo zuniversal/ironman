@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'contract';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getPdfAsync'];
 
 const batchTurnActions = ['showModal', 'onModalCancel'];
 
@@ -36,6 +36,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        extraData: payload.extraData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -126,8 +127,9 @@ export default {
       const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
+
+    *getPdfAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getPdf, payload);
       yield put(action({ ...res, payload }));
     },
   },

@@ -142,6 +142,7 @@ const AssetsForm = props => {
         accept: 'image/png,image/jpeg,image/pdf,application/pdf',
       }}
       init={props.init}
+      formAction={props.action}
     ></UploadCom>,
     // <UploadCom label={'上传铭牌'} key={'file'} extra={'支持上传.DWG文件'} name={'file'} ></UploadCom>,
   ];

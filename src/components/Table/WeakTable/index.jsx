@@ -62,11 +62,11 @@ const WeakTable = props => {
       dataIndex: 'created_time',
     },
 
-    {
-      title: '处理状态',
-      dataIndex: 'status',
-      dataMap: missionsStatusMap,
-    },
+    // {
+    //   title: '处理状态',
+    //   dataIndex: 'status',
+    //   dataMap: missionsStatusMap,
+    // },
 
     {
       title: '备注',
@@ -79,7 +79,7 @@ const WeakTable = props => {
       {/* <a onClick={() => props.showDetail({ action: 'handleWeak', d_id: record.id })}>处理</a> */}
       {record.status === 'completed' ? (
         <a disabled className={`disabled `}>
-          已排期
+          已处理
         </a>
       ) : (
         <a

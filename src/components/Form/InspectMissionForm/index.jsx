@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
+import { dayHours } from '@/configs';
 
 const InspectMissionForm = props => {
   console.log(' InspectMissionForm ： ', props); //
@@ -8,142 +9,49 @@ const InspectMissionForm = props => {
 
   const config = [
     {
-      formType: 'rowText',
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
       itemProps: {
-        label: '电气告警条件',
+        label: '客户',
+        name: 'customer_id',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
       itemProps: {
-        label: '设备状态',
-        // name: '',
+        label: '电站',
+        name: 'station_id',
       },
     },
     {
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
       itemProps: {
-        label: '持续',
-        // name: '',
+        label: '班组',
+        name: 'team_id',
       },
     },
     {
-      formType: 'rowText',
+      formType: 'DatePicker',
       itemProps: {
-        label: '能耗阈值',
+        label: '执行日期',
+        name: 'work_date',
       },
     },
     {
+      formType: 'Search',
+      selectData: dayHours,
       itemProps: {
-        label: '能耗过低',
-        // name: '',
+        label: '执行时间',
+        name: 'work_time',
       },
-    },
-    {
-      itemProps: {
-        label: '能耗过高',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-        // name: '',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电流阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '电流过低',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '电流过高',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-        // name: '',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电压阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '电压过低',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '电压过高',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-        // name: '',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '温度阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '温度过低',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '温度过高',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-        // name: '',
-      },
-    },
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '湿度阈值',
-      },
-    },
-    {
-      itemProps: {
-        label: '湿度过低',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '湿度过高',
-        // name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '持续',
-        // name: '',
-      },
+      // comProps: {
+      //   mode: 'multiple',
+      // },
     },
   ];
 

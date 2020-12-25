@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm'; //
+import SmartShowPDF from '@/common/SmartShowPDF'; //
 import ContractTable from '@/components/Table/ContractTable'; //
 import ContractForm from '@/components/Form/ContractForm'; //
 import ContractSearchForm from '@/components/Form/ContractSearchForm'; //
@@ -48,6 +49,7 @@ const titleMap = {
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
+  showPDF: `${TITLE}详情`,
 };
 
 const detailFormMap = {
@@ -295,6 +297,10 @@ class Contract extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (['showPDF'].includes(action)) {
+      this.props.onCancel();
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -330,6 +336,15 @@ class Contract extends PureComponent {
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'showPDF') {
+      console.log('showPDF this.state, this.props ： ', this.state, this.props); //
+      // return <SmartShowPDF src={'http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf'} ></SmartShowPDF>;
+      return (
+        <SmartShowPDF
+          src={'http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf'}
+        ></SmartShowPDF>
+      );
     }
     if (action === 'detail') {
       return <ContractForm {...formComProps}></ContractForm>;
