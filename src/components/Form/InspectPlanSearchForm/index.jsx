@@ -17,9 +17,9 @@ const InspectPlanSearchForm = props => {
     // },
     {
       formType: 'Search',
-      // selectSearch: props.getUserAsync,
-      // selectData: props.userList,
-      selectData: props.tagUserList,
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
+      // selectData: props.tagUserList,
       itemProps: {
         label: '客户代表',
         name: 'leader',

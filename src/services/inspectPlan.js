@@ -19,3 +19,6 @@ export const editItem = p => put(`console/OMS/spect/plan/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/spect/plan/${p.d_id}`, p);
 export const removePlan = p => remove(`console/OMS/spect/plan/remove`, p);
 export const changePlan = p => put(`console/OMS/spect/plan/change_plan`, p);
+
+export const getScheduledDetailList = p =>
+  noTipsGet('console/OMS/spect/date/plans', p);

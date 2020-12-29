@@ -98,8 +98,8 @@ const ContractTable = props => {
           props.showFormModal({
             action: 'showPDF',
             extraData: {
-              path: `${record.effective_date.split('-')[0]}/${
-                record.effective_date.split('-')[1]
+              path: `${record.entry_date.split('-')[0]}/${
+                record.entry_date.split('-')[1]
               }/${record.code}`,
             },
           })

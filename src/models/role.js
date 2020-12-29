@@ -17,6 +17,148 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
+const formatPerms = (data = []) => {
+  // console.log(' formatPerms   data,   ： ', data  )
+  const init = [];
+  // const init = {}
+  // data.forEach((v) => {
+  //   console.log(' v ： ', v,  )//
+  // })
+  // data.forEach((v) => init[v[2]] = v[1])
+  data.forEach(v =>
+    init.push({
+      value: v[2],
+      title: v[1],
+      label: v[1],
+    }),
+  );
+  const [item1, ...rest] = init;
+  console.log(' initinitinitinit ： ', init, rest); //
+  return init;
+  return rest;
+};
+
+export const flatData = (data = {}, init = {}) => {
+  // console.log(' flatData  permission  ,   ： ', data, init);
+  Object.keys(data).forEach((key, i) => {
+    // init[data[key].perms[2]] = data[key].perms[1]
+    // init[key] = formatPerms(data[key].perms)
+    init[key] = formatPerms(data[key].perms);
+    if (Object.keys(data[key].sub).length > 0) {
+      flatData(data[key].sub, init);
+    }
+  });
+  console.log(' init ： ', init); //
+  return init;
+};
+
+// export const recursiveHandle = (data = [], perms = {}) => {
+//   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
+//   return data.map(v => ({
+//     ...v,
+//     value: v.path,
+//     title: v.name,
+//     label: v.name,
+//     // children: recursiveHandle(v.children, perms[v.authKey]),
+//     children: [
+//       ...v,
+//     ],
+//   }));
+// };
+
+export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
+  // console.log(' recursiveHandle   ,   ： ', data, parent_id);
+  data.forEach(v => {
+    console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]); //
+    const item = {
+      ...v,
+      // value: v.path,
+      value:
+        v.authKey && perms[v.authKey]
+          ? perms[v.authKey][0].value
+          : Math.random(),
+      title: v.name,
+      label: v.name,
+      // children: [
+      //   ...v,
+      //   // perms[v.authKey],
+      // ],
+    };
+    if (v.routes.length > 0) {
+      recursiveHandle(v.children, perms[v.authKey], datas);
+    }
+    if (v.authKey && perms[v.authKey]) {
+      // console.log(' perms[v.authKey] ： ', perms, v, v.authKey, perms[v.authKey], )//
+      // item.children = [
+      //   // ...item.children,
+      //   perms[v.authKey],
+      // ]
+      // item.children = perms[v.authKey]
+      item.children = v.routes;
+    }
+    // if (v.authKey && perms[v.authKey] && perms[v.authKey].routes.length > 0) {
+    // if (v.authKey && perms[v.authKey] && v.routes.length > 0) {
+
+    datas.push(item);
+  });
+  console.log('  datas ：', datas);
+  return datas;
+};
+
+export const recursiveHandle = (data = [], perms = {}, datas = []) => {
+  // console.log(' recursiveHandle   ,   ： ', data, parent_id);
+  data.forEach(item => {
+    console.log(
+      ' recursiitemeHandle ： ',
+      perms,
+      item,
+      `22${item.authKey}11`,
+      perms[item.authKey],
+      data,
+    ); //
+    item.value =
+      item.authKey && perms[item.authKey]
+        ? perms[item.authKey][0].value
+        : Math.random();
+    item.title = item.name;
+    item.label = item.name;
+    if (!item.hideInMenu && item.routes.length > 0) {
+      // recursiveHandle(item.routes, perms[item.authKey], datas)
+      recursiveHandle(item.routes, perms, datas);
+    }
+    if (!item.hideInMenu && item.authKey && perms[item.authKey]) {
+      // console.log(' perms[v.authKey] ： ', perms, v, v.authKey, perms[v.authKey], )//
+      // item.children = [
+      //   // ...item.children,
+      //   perms[v.authKey],
+      // ]
+      // item.children = perms[v.authKey]
+      const [item1, ...rest] = perms[item.authKey];
+      let routes = [];
+      if (item.haveDetail) {
+        routes = item.routes.filter(v => !v.hideInMenu);
+      } else {
+        routes = item.routes;
+      }
+
+      item.children = [
+        // ...perms[item.authKey],
+        ...rest,
+        // .map((v) => ({...v, label: `${v.label}${item.name}`, title: `${v.title}${item.name}`,  })),
+        ...routes,
+      ];
+    }
+    // if (v.authKey && perms[v.authKey] && perms[v.authKey].routes.length > 0) {
+    // if (v.authKey && perms[v.authKey] && v.routes.length > 0) {
+    if (item.hideInMenu) {
+    }
+
+    datas.push(item);
+  });
+  console.log('  datasdatasdatas ：', data, datas);
+  // return data
+};
+
 export default {
   namespace,
 
@@ -29,6 +171,7 @@ export default {
     d_id: '',
 
     searchInfo: {},
+    permission: [],
   },
 
   reducers: {
@@ -93,6 +236,37 @@ export default {
         ),
       };
     },
+
+    getPermission(state, { payload, type }) {
+      console.log(' getPermission ： ', state, payload); //
+      // const permsData = flatData(payload.bean.system.sub)
+      const permsData = flatData(payload.bean);
+      const routeData = payload.payload.filter(v => !v.noAuth);
+      const dataArr = [];
+      const permission = recursiveHandle(routeData, permsData, dataArr);
+      console.log(
+        '  permissionpermissionpermissionpermission ：',
+        payload,
+        routeData,
+        permission,
+        payload.bean,
+        permsData,
+        dataArr,
+      ); //
+      return {
+        ...state,
+        permission: [
+          {
+            id: 'all',
+            value: '全部',
+            title: '全部',
+            label: '全部',
+            // children: permission,
+            children: routeData,
+          },
+        ],
+      };
+    },
   },
 
   effects: {
@@ -130,7 +304,8 @@ export default {
     },
 
     *getPermissionAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(permissionServices.getList, payload);
+      console.log(' getPermissionAsync ： ', payload); //
+      const res = yield call(permissionServices.getList);
       yield put(action({ ...res, payload }));
     },
   },

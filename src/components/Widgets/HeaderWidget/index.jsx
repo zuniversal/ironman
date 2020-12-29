@@ -5,13 +5,14 @@ import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
 import { LogoutOutlined } from '@ant-design/icons'; //
 import { history, connect } from 'umi';
-import { csSystemNotify } from '@/constants'; //
+import { csSystemNotify, BIG_SCREEN } from '@/constants'; //
 
 const HeaderWidget = props => {
   // console.log(' HeaderWidget   props, ,   ： ', props);
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path);
-    window.open('http://188.131.235.243:31004/normal_screen');
+    window.open(BIG_SCREEN);
+    // window.open('http://188.131.235.243:31004/normal_screen');
   };
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);

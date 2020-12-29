@@ -47,7 +47,7 @@ const statConfig = [
 ];
 
 const StatBox = props => {
-  console.log(' StatBox   props, ,   ： ', props);
+  // console.log(' StatBox   props, ,   ： ', props);
   return (
     <div style={props.style} className={`statBox ${props.statBoxCls}`}>
       <div className="left">{props.left}</div>

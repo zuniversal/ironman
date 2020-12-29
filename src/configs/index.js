@@ -229,6 +229,12 @@ export const customerTypeConfig = [
   },
 ];
 
+export const customerTypeMap = arrMapObj(customerTypeConfig);
+
+export const industryTypeMap = {
+  1: '工业',
+};
+
 export const missionsTypeConfig = [
   {
     label: '抢修',
@@ -423,6 +429,8 @@ export const inspectModelRadio = [
     value: 1,
   },
 ];
+
+export const inspectModelRadioMap = arrMapObj(inspectModelRadio);
 
 export const dayHours = createIndexArr(24).map(v => ({
   label: `${v}点`,

@@ -255,7 +255,8 @@ class ShiftsManage extends PureComponent {
       this.props.authInfo,
     ); //
     // this.props.dispatch(actions.getUserAsync());
-    this.props.getUserAsync({ page_size: 1000 }); //
+    // this.props.getUserAsync({ page_size: 1000 }); //
+    this.props.getUserAsync(); //
     // this.props.getTeamAsync({}); //
     // this.props.getUserAsync({ page: 1, page_size: 50 }); //
   }

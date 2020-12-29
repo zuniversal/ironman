@@ -318,6 +318,9 @@ const ClientForm = props => {
         label: '上一任客户代表',
         name: 'last_service_staff',
       },
+      comProps: {
+        disabled: action !== 'add',
+      },
     },
     {
       // formType: 'Select',
@@ -337,6 +340,7 @@ const ClientForm = props => {
 
     {
       // formType: 'Select',
+      noRule: true,
       itemProps: {
         label: '所属行业',
         name: 'industry',
@@ -344,6 +348,7 @@ const ClientForm = props => {
     },
     {
       // formType: 'Select',
+      noRule: true,
       itemProps: {
         label: '企业规模',
         name: 'scale',
@@ -351,6 +356,7 @@ const ClientForm = props => {
     },
     {
       // formType: 'Select',
+      noRule: true,
       itemProps: {
         label: '资产规模',
         name: 'asset',
@@ -366,6 +372,7 @@ const ClientForm = props => {
     // },
     {
       // formType: 'Select',
+      noRule: true,
       itemProps: {
         label: '占地面积',
         name: 'covered_area',
@@ -390,6 +397,7 @@ const ClientForm = props => {
       }}
       init={props.init}
       formAction={props.action}
+      noRule
     ></UploadCom>,
 
     {
@@ -578,13 +586,13 @@ const ClientForm = props => {
     {
       itemProps: {
         label: '用户名',
-        name: 'nickname',
+        name: 'username',
       },
     },
     {
       itemProps: {
         label: '账号',
-        name: 'username',
+        name: 'nickname',
       },
     },
     {

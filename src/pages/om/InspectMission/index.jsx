@@ -186,14 +186,14 @@ class InspectMission extends PureComponent {
       }
       if (action === 'assignMission') {
         this.props.editItemAsync({
-          ...itemDetail,
+          // ...itemDetail,
           ...res,
           d_id: itemDetail.id,
         });
       }
-      if (['assignMission', 'batchDispatch'].includes(action)) {
+      if (['batchDispatch'].includes(action)) {
         this.props.batchDispatchAsync({
-          ...itemDetail,
+          // ...itemDetail,
           ...res,
           task_list: this.props.selectedRowKeys,
         });

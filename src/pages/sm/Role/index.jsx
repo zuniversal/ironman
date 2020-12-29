@@ -6,7 +6,10 @@ import RoleForm from '@/components/Form/RoleForm'; //
 import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import RoleTable from '@/components/Table/RoleTable'; //
 
-import { actions, mapStateToProps } from '@/models/role'; //
+import {
+  actions,
+  // mapStateToProps
+} from '@/models/role'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -20,7 +23,10 @@ const titleMap = {
   down: `文件下载`,
 };
 
-// const mapStateToProps = ({ houseNo, }) => houseNo;
+const mapStateToProps = ({ role, user }) => ({
+  ...role,
+  getRoutes: user.getRoutes,
+});
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -133,6 +139,7 @@ class Role extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
+      permission: this.props.permission,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -154,7 +161,12 @@ class Role extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getPermissionAsync(); //
+    this.props.getPermissionAsync(this.props.getRoutes.route.routes); //
+    // this.props.addItemAsync({
+    //   "name":"12323","comments":"12312",
+    //   "perms_codes": [100000, 180000]
+
+    // }); //
   }
 
   render() {

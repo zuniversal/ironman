@@ -148,11 +148,11 @@ const RoleForm = props => {
       formType: 'TreeSelect',
       itemProps: {
         label: '权限详情',
-        name: '',
+        name: 'perms_codes',
       },
       comProps: {
-        // treeData: props.organizeList,
-        treeData: treeList,
+        treeData: props.permission,
+        // treeData: treeList,
         // onChange: (e) => {
         //   console.log(' onChange ： ', e   )//
         // },
@@ -182,7 +182,6 @@ const RoleForm = props => {
         // },
         multiple: true,
         treeCheckable: true,
-        treeDefaultExpandAll: false,
       },
     },
   ];

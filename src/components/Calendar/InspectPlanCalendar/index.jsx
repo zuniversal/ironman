@@ -89,10 +89,10 @@ const ShiftsArrangeDetailList = props => {
     `color: #333; font-weight: bold`,
     props,
   );
-  const { className, leftTitle, rightTitle, placement, noToolTip } = props; //
+  const { className, leftTitle, rightTitle, type } = props; //
 
   const Com = (
-    <>
+    <div className={`${className} `}>
       <div className="titleRow primaryBorderBottom fsb absoulte">
         <div>{leftTitle}</div>
         <div>{rightTitle}</div>
@@ -101,58 +101,57 @@ const ShiftsArrangeDetailList = props => {
         <div>{leftTitle}</div>
         <div>{rightTitle}</div>
       </div>
-      {props.events
-        .filter(v => v.surplus_plan_num > 0)
+      <div className="titleRow primaryBorderBottom fsb subTitle">
+        {/* <div>电站({type === 0 ? '月检' : '日检'}){type === 0 ? '时间点' : ''}</div> */}
+        <div>电站({0 === 0 ? '月检' : '日检'})</div>
+      </div>
+      {props.dayEvents
+        // .filter(v => v.surplus_plan_num > 0)
         .map((event, index) => {
-          // console.log(' CalendarDraggable event ： ', event,)//
+          // console.log(' ShiftsArrangeDetailList event ： ', event, event.station.inspection_type, )//
           return (
             <div key={event.id} className="fsb rowItem ">
               <div className={'left'}>
-                {/* {true && ( */}
-                {event.surplus_plan_num > 0 && (
-                  <div
-                    className="dragItem "
-                    id={event.id}
-                    url={event.surplus_plan_num}
-                    // data-isdraged={event.isdraged}
-                    data-datas={event}
-                    test={'zyb'}
-                  >
-                    {event.name}
-                  </div>
-                )}
-                <div>客户-{event.customer}</div>
+                <div className={'top'}>电站-{event.station.name}</div>
+                <div className={'bottom'}>
+                  客户-{event.station.customer.name}
+                </div>
               </div>
               <div>{props.renderRight(event)}</div>
             </div>
           );
         })}
-    </>
+      <div className="titleRow primaryBorderBottom fsb subTitle">
+        {/* <div>电站({type === 0 ? '月检' : '日检'}){type === 0 ? '时间点' : ''}</div> */}
+        <div>电站({1 === 0 ? '月检' : '日检'})</div>
+        <div>{1 === 1 ? '时间点' : ''}</div>
+      </div>
+      {props.monthEvents
+        // .filter(v => v.surplus_plan_num > 0)
+        .map((event, index) => {
+          // console.log(' ShiftsArrangeDetailList event ： ', event, event.station.inspection_type, )//
+          return (
+            <div key={event.id} className="fsb rowItem ">
+              <div className={'left'}>
+                <div className={'top'}>电站-{event.station.name}</div>
+                <div className={'bottom'}>
+                  客户-{event.station.customer.name}
+                </div>
+              </div>
+              <div className={''}>
+                {event.station.inspection_time.map((v, i) => (
+                  <div key={i} className={'timeBox'}>
+                    {v}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+    </div>
   );
 
-  return (
-    <CalendarDraggable
-      className={`${className} `}
-      itemSelector={'.dragItem'}
-      // renderItem={(event, index) => (
-      //   <div key={event.id} className="fsb rowItem ">
-      //   </div>
-      // )
-    >
-      {!noToolTip ? (
-        <Tooltip
-          {...props}
-          placement={placement}
-          title={'拖入日历'}
-          overlayClassName="aaa"
-        >
-          {Com}
-        </Tooltip>
-      ) : (
-        Com
-      )}
-    </CalendarDraggable>
-  );
+  return <div className="leftWrapper">{Com}</div>;
 };
 
 ShiftsArrangeDetailList.defaultProps = {
@@ -306,15 +305,19 @@ const InspectPlanCalendar = props => {
 
   return (
     <div className="inspectPlanCalendar ">
-      {/* <ShiftsArrangeList
+      <ShiftsArrangeDetailList
         noToolTip
-        events={props.unScheduleList}
-        leftTitle={props.initialDate}
-        rightTitle={`任务数：${10}`}
-        renderRight={(event) => <a onClick={props.removePlanAsync}>移除</a>}
-        className={`leftTable`} 
-        // className={`${ANIMATE.slideInRight} `}
-      ></ShiftsArrangeList> */}
+        events={props.dateList}
+        dayEvents={props.dayEvents}
+        monthEvents={props.monthEvents}
+        leftTitle={props.dayInfo.date}
+        rightTitle={`任务数：${props.dayEvents.length +
+          props.monthEvents.length}`}
+        renderRight={event => (
+          <a onClick={() => props.removePlanAsync(event)}>移除</a>
+        )}
+        className={`leftTable listWrapper`}
+      ></ShiftsArrangeDetailList>
 
       <SmartCalendar
         // events={calendarEvents}
@@ -322,32 +325,36 @@ const InspectPlanCalendar = props => {
         // initialDate={new Date(2020, 9, 1)}
         // className={`${ANIMATE.slideInLeft} `}
         calendarRef={calendarRef}
-        validRange={nowDate => {
-          return {
-            start: nowDate,
-          };
-        }}
+        // validRange={nowDate => {
+        //   return {
+        //     start: nowDate,
+        //   };
+        // }}
+        // dayCellClassNames={(e) => {
+        //   console.log(' dayCellClassNames ： ', e,  )//
+        // }}
         events={props.scheduleList}
         select={select}
-        eventClick={eventClick}
+        eventClick={props.eventClick}
         eventsSet={eventsSet}
         eventDrop={eventDrop}
         eventAdd={eventAdd}
         // eventRemove={eventRemove}
         eventChange={eventChange}
         initialDate={props.initialDate}
+        dayMaxEvents={1}
         eventContent={eventInfo => (
           <div className={`eventWrapper`}>
             {eventInfo.event.title}
-            <CloseOutlined onClick={props.remove} />
+            {/* <CloseOutlined onClick={props.remove} /> */}
           </div>
         )}
-        eventOverlap={false}
+        // eventOverlap={false}
         // dayCellContent={}
       />
 
       <ShiftsArrangeList
-        className={`rightTable`}
+        className={`rightTable listWrapper`}
         renderRight={event => (
           <>{event.surplus_plan_num / event.spect_plan_num}</>
         )}

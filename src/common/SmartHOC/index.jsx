@@ -453,7 +453,7 @@ export default ({
         await dispatch(
           actions.exportDataAsync({
             page: 1,
-            page_size: 100,
+            // page_size: 100,
             ...params,
           }),
         )

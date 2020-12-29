@@ -62,9 +62,9 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          work_date: v.work_date?.split('T')[0],
-          assign_date: v.assign_date?.split('T')[0],
-          created_time: v.work_date?.split('T')[0],
+          work_date: v.work_date ? v.work_date.split('T')[0] : '',
+          assign_date: v.assign_date ? v.assign_date.split('T')[0] : '',
+          // created_time: v.created_time?.split('T')[0],
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -91,6 +91,9 @@ export default {
           // created_time: created_time ? created_time.split('T')[0] : '',
           // start_time: start_time ? start_time.split('T')[0] : '',
           // end_time: end_time ? end_time.split('T')[0] : '',
+          workDate: payload.bean.inspection_task.work_date
+            ? payload.bean.inspection_task.work_date.split('T')[0]
+            : '',
           powerData: payload.bean.power_data && payload.bean.power_data[0],
         },
       };

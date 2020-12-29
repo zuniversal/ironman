@@ -26,6 +26,7 @@ export const managerRoutes = [
   //   component: '../Home',
   // },
   {
+    noAuth: true,
     path: '/om/home',
     name: '首页',
     icon: <ScheduleFilled />,
@@ -41,6 +42,7 @@ export const managerRoutes = [
   //   component: '../pages/userCenter',
   // },
   {
+    haveDetail: true,
     path: '/om/shifts',
     authKey: 'team',
     name: '班组管理',
@@ -431,6 +433,7 @@ export const managerRoutes = [
 
 export const customerRoutes = [
   {
+    noAuth: true,
     path: '/cs/home',
     name: '首页',
     icon: <ScheduleFilled />,
@@ -438,6 +441,7 @@ export const customerRoutes = [
     component: '../Home',
   },
   {
+    noAuth: true,
     path: '/cs/msgList',
     authKey: '',
     name: '消息列表',
@@ -462,6 +466,7 @@ export const customerRoutes = [
     ],
   },
   {
+    noAuth: true,
     path: '/cs/clientReport',
     authKey: '',
     name: '客户报告',
@@ -469,6 +474,7 @@ export const customerRoutes = [
     component: '../pages/cs/CsClientReport',
   },
   {
+    noAuth: true,
     path: '/cs/inspectRecord',
     authKey: '',
     name: '巡检记录',
@@ -477,6 +483,7 @@ export const customerRoutes = [
     component: '../pages/om/InspectRecord',
   },
   {
+    noAuth: true,
     path: '/cs/bussniessRecord',
     authKey: '',
     name: '业务记录',
@@ -485,6 +492,7 @@ export const customerRoutes = [
     component: '../pages/om/InspectRecord',
   },
   {
+    noAuth: true,
     path: '/cs/userCenter',
     authKey: '',
     name: '个人中心',
@@ -493,6 +501,7 @@ export const customerRoutes = [
     component: '../pages/csUserCenter',
   },
   {
+    noAuth: true,
     path: '/cs/organize',
     authKey: '',
     name: '组织管理',

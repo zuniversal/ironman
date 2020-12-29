@@ -155,7 +155,7 @@ class ShiftsArrange extends PureComponent {
   };
   componentDidMount() {
     this.props.getTeamAsync({
-      page_size: 1000,
+      // page_size: 1000,
     });
   }
 

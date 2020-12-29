@@ -4,12 +4,15 @@ import './style.less';
 
 const SmartShowPDF = props => {
   console.log(' SmartShowPDF   props, ,   ： ', props);
+  const { src } = props;
+
   return (
     <embed
       // src="http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf"
       className="embed"
       type="application/pdf"
-      {...props}
+      // {...props}
+      src={src}
       key={props.src}
     />
   );

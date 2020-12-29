@@ -10,11 +10,24 @@ export const DOWN_ASSETS_TPL = '/api/v1/export/equipment.xlsx'; //
 // export const TEST_URL = `http://188.131.235.243:31002/api/v1/console/`;
 // export const TEST_URL = `http://188.131.235.243:31005/api/v1/console/`;
 // export const TEST_URL = `http://188.131.235.243:31005/api/v1/console/`;
-export const URL_PREFIX = `http://188.131.235.243:31002`;
-export const WS_PREFIX = `ws://188.131.235.243:31002`;
+// export const URL_PREFIX = `http://188.131.235.243:31002`;
+export const URL_PREFIX = `http://81.68.218.18:31002`;
+// export const URL_PREFIX = `https://epk.faladi.cn:31009`;
+export const WS_DEV = `188.131.235.243:31002`;
+export const WS_HOST = window.location.host;
+
+const { protocol = 'http:', origin } = window.location;
+
+const wsMap = {
+  'http:': 'ws:',
+  'https:': 'wss:',
+}[protocol];
+
+export const WS_PREFIX = `${wsMap}//${isDev ? WS_DEV : WS_HOST}`;
 export const TEST_URL = `/api/v1/`;
 export const PROXY_URL = `/api/v1/`;
 // export const PROXY_URL = `/api/v1/cnosole/`;
+// export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 // console.log(' BASE_URL ： ', BASE_URL, process.env); //
 // export const URL = `${URL_PREFIX}${BASE_URL}`;
@@ -47,6 +60,7 @@ export const homeMap = {
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
+export const BIG_SCREEN = origin + ':31004/normal_screen?';
 
 const animations = [
   'bounce',

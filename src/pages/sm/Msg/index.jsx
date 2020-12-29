@@ -124,7 +124,10 @@ class Msg extends PureComponent {
         this.props.getOrganizeAsync({ keyword: params }),
       organizeList: this.props.organizeList,
       getUserManageAsync: params =>
-        this.props.getUserManageAsync({ page_size: 10000, ...params }),
+        this.props.getUserManageAsync({
+          // page_size: 10000,
+          ...params,
+        }),
       // getUserManageAsync: this.props.getUserManageAsync,
       userList: this.props.userList,
       flatOrganizeList: this.props.flatOrganizeList,

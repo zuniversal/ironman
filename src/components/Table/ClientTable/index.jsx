@@ -12,6 +12,7 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
+import { industryTypeMap } from '@/configs'; //
 
 const ClientTable = props => {
   const { tdClick, showDetail } = props; //
@@ -50,6 +51,7 @@ const ClientTable = props => {
       // noFilter: true,
       title: '所属行业',
       dataIndex: 'industry',
+      dataMap: industryTypeMap,
     },
     {
       // noFilter: true,

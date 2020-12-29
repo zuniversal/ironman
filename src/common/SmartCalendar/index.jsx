@@ -87,14 +87,17 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         locale="zh-cn"
         allDayText="全天"
         title={''}
-        dayMaxEvents={3}
-        // moreLinkContent={(params) => { console.log(' params ： ', params,  ) return 'xxx'  }}
-        moreLinkContent={'...'}
+        // dayMaxEvents={3}
+        moreLinkContent={params => {
+          console.log(' paramsparams ： ', params);
+          return 'xxx';
+        }}
+        // moreLinkContent={'...'}
         // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
         // showNonCurrentDates={false}
         dayCellContent={dayCellContent}
-        dayCellClassNames={`dayCellClassNames ${ANIMATE.bounceIn}`}
-        eventClassNames={`eventClassNames ${bounceIn}`}
+        dayCellClassNames={`dayCellClassNames ${props.dayCellClassNames} ${ANIMATE.bounceIn}`}
+        eventClassNames={`eventClassNames ${props.eventClassNames} ${bounceIn}`}
         slotLabelClassNames={'slotLabelClassNames'}
         moreLinkClassNames={'moreLinkClassNames'}
         dayHeaderClassNames={'dayHeaderClassNames'}
@@ -114,6 +117,8 @@ const SmartCalendar = React.forwardRef((props, ref) => {
 SmartCalendar.defaultProps = {
   dayMaxEvents: 3,
   eventsSet: () => {},
+  dayCellClassNames: '',
+  eventClassNames: '',
 };
 
 SmartCalendar.propTypes = {

@@ -7,7 +7,7 @@ import { history, connect } from 'umi';
 import SmartForm from '@/common/SmartForm'; //
 import useWebsocket from '@/hooks/useWebsocket';
 import { notifyWs } from '@/services/common';
-// import { openNotification } from '@/utlis';
+import { openNotification } from '@/utils';
 
 const menuConfig = [
   {
@@ -50,47 +50,67 @@ const DropdownNotice = props => {
     userInfo,
   } = props; //
 
-  const handleMenuClick = item => {
-    console.log(' handleMenuClick   item, ,   ： ', item, props);
+  const handleMenuClick = (item, rest) => {
+    console.log(' handleMenuClick   item, ,   ： ', item, rest, props);
     const clickItem = menuConfig.find(v => v.key === item.key);
     console.log(' clickItem  menuConfig.find v ： ', clickItem);
     menuClick && menuClick({ ...clickItem, ...item });
   };
+  const closeNotice = e => {
+    console.log(' closeNotice   e,   ： ', e);
+    props.closeNotice(e);
+  };
+  const clearNotice = e => {
+    console.log(' clearNotice   e,   ： ', e);
+    props.clearNotice(e);
+  };
 
   // const Com = useWebsocket()
   const url = notifyWs + `?user_id=${userInfo.id}`;
-  const { data } = useWebsocket({
+  const { wsData } = useWebsocket({
     url,
+    init: [],
     // url: 'ws://119.3.123.144:8008/websocket',
   });
-  console.log(' useWebsocket data ： ', url, data); //
+  // console.log(' useWebsocket wsData ： ', url, wsData); //
 
   const menuCom = menu ? (
     menu
   ) : (
-    <Menu onClick={handleMenuClick} className={`dropdownContent`}>
-      <Menu.Item key={'header'}>
+    <Menu className={`dropdownContent`}>
+      {/* <Menu.Item key={'header'}>
         <div className="header divider">
-          <div className="text">通知 ({props.count}) </div>
+          <div className="text">通知 ({wsData.length}) </div>
           <CloseOutlined className={`closeIcon`} onClick={props.closeNotice} />
         </div>
-      </Menu.Item>
-      {menuConfig.map((v, i) => (
-        <Menu.Item key={v.key} action={v.action}>
-          <div className="menuItem divider">
-            <div className="left">
-              <div className="avatar">
-                <span className="avatars" onClick={() => {}}></span>
-              </div>
-            </div>
-            <div className="right">
-              <div className="title subText ">{v.verb}</div>
-              <div className="content ellipsis">{v.description}</div>
-              <div className="time subText">{v.timestamp}</div>
-            </div>
+      </Menu.Item> */}
+      <Menu.ItemGroup
+        title={
+          <div className="header divider">
+            <div className="text">通知 ({wsData.length}) </div>
+            <CloseOutlined className={`closeIcon`} onClick={closeNotice} />
           </div>
+        }
+      >
+        <Menu.Item key={'header'}>
+          {wsData.map((v, i) => (
+            <Menu.Item key={v.id} action={v.action} onClick={handleMenuClick}>
+              <div className="menuItem divider">
+                <div className="left">
+                  <div className="avatar">
+                    <span className="avatars" onClick={() => {}}></span>
+                  </div>
+                </div>
+                <div className="right">
+                  <div className="title subText ">{v.verb}</div>
+                  <div className="content ellipsis">{v.description}</div>
+                  <div className="time subText">{v.timestamp}</div>
+                </div>
+              </div>
+            </Menu.Item>
+          ))}
         </Menu.Item>
-      ))}
+      </Menu.ItemGroup>
       <Menu.Item key={'footer'}>
         <div className="footer">
           <div className="clearText" onClick={props.clearNotice}>

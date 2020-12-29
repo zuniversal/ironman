@@ -50,15 +50,15 @@ class SmartEcharts extends React.PureComponent {
     };
 
     // const options = getOption(props.option)
-    console.log(
-      ' SmartEchart myExpenseBar11 ：',
-      common,
-      type,
-      this.props,
-      option,
-      tabData,
-      optionConfig,
-    );
+    // console.log(
+    //   ' SmartEchart myExpenseBar11 ：',
+    //   common,
+    //   type,
+    //   this.props,
+    //   option,
+    //   tabData,
+    //   optionConfig,
+    // );
 
     // return null
 

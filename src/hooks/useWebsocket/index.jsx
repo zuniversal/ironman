@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
+import { openNotification } from '@/utils';
 
 const useWebsocket = (props = {}) => {
   console.log(
@@ -16,35 +17,55 @@ const useWebsocket = (props = {}) => {
   //   return () => {
   //   }
   // }, [])
-  const [socket, setSocket] = useState(new window.WebSocket(url));
-  const [wsData, setWsData] = useState();
+  const [socket, setSocket] = useState(null);
+  const [wsData, setWsData] = useState(props.init);
 
-  useEffect(() => {
-    console.log(' useWebsocket useEffect ： '); //
-  }, []);
-
+  // useEffect(() => {
+  // console.log(' useWebsocket useEffect 副作用 ： '); //
   // const socket = new window.WebSocket(notifyWs);
-  //连接成功建立的回调方法
-  socket.onopen = event => {
-    console.log(' socket.onopen ： ', event); //
-  };
+  if (socket) {
+    //连接成功建立的回调方法
+    socket.onopen = event => {
+      console.log(' socket.onopen 副作用 ： ', event); //
+    };
 
-  //连接发生错误的回调方法
-  socket.onerror = error => {
-    console.log(' socket.onerror ： ', error); //
-  };
+    //连接发生错误的回调方法
+    socket.onerror = error => {
+      console.log(' socket.onerror 副作用 ： ', error); //
+    };
 
-  //接收到消息的回调方法
-  socket.onmessage = event => {
-    console.log(' socket.onmessage ： ', event, event.data);
-    setWsData(event.data);
-    // console.log(' socket.onmessage2 ： ', JSON.parse(event.data));
-  };
+    //接收到消息的回调方法
+    socket.onmessage = event => {
+      const data = JSON.parse(event.data);
+      console.log(
+        ' socket.onmessage 副作用 ： ',
+        wsData,
+        event,
+        event.data,
+        data,
+      );
+      setWsData(data);
+      data.forEach((v, i) => {
+        console.log(' menuConfig v ： ', v, i);
+        openNotification({
+          message: v.verb,
+          description: v.description,
+        });
+      });
 
-  //连接关闭的回调方法
-  socket.onclose = () => {
-    console.log(' socket.onclose ： '); //
-  };
+      // console.log(' socket.onmessage2 ： ', JSON.parse(event.data));
+    };
+
+    //连接关闭的回调方法
+    socket.onclose = () => {
+      console.log(' socket.onclose ： '); //
+    };
+  } else {
+    setSocket(new window.WebSocket(url));
+  }
+
+  // }, []);
+  // });
 
   return {
     socket,

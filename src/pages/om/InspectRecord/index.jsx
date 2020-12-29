@@ -311,6 +311,16 @@ class InspectRecord extends PureComponent {
     //   window.print()
     // }, 2000)
   };
+  componentDidMount() {
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    setTimeout(() => {
+      console.log('  延时器 ： ');
+      this.props.getListAsync({
+        page: 36,
+        page_size: 10,
+      });
+    }, 2000);
+  }
 
   render() {
     console.log(

@@ -13,6 +13,7 @@ import {
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
+import moment from 'moment';
 
 const TITLE = '操作';
 
@@ -141,11 +142,16 @@ class InspectPlan extends PureComponent {
           // scheduleList={this.props.scheduleList}
           scheduleList={this.props.scheduleList}
           unScheduleList={this.props.unScheduleList}
+          dateList={this.props.dateList}
+          dayEvents={this.props.dayEvents}
+          monthEvents={this.props.monthEvents}
+          dayInfo={this.props.dayInfo}
           initialDate={
             searchInfo.month ? searchInfo.month.format('YYYY-MM-DD') : null
           }
           remove={this.remove}
           removePlanAsync={this.props.removePlanAsync}
+          eventClick={this.props.getScheduledDetailListAsync}
         ></InspectPlanCalendar>
       )
     );
@@ -223,14 +229,23 @@ class InspectPlan extends PureComponent {
 
     // 目前区块链经理ID为2去获取用户
     // 根据职位获取到所有的客户代表，然后选中客户代表之后把客户代表的ID传递获取待排计划的电站
-    this.props.getTagUserAsync({
-      d_id: 2,
-    });
-    // this.props.getListAsync({
-    //   leader: 1,
-    //   // leader: 2,
-    //   // month: '2020-10',
+    // this.props.getTagUserAsync({
+    //   d_id: 2,
     // });
+    this.props.getUserAsync({
+      // team_headman: 1,
+      // page_size: 100,
+    });
+    this.props.getListAsync({
+      // leader: 79640,
+      leader: 1,
+      //   // month: '2020-10',
+      // leader: 2,
+      // month: '2020-10',
+      // month: moment('2020-11-11',)
+      // month: moment('2020-11',)
+      month: moment('2020-12'),
+    });
   }
 
   render() {

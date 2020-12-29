@@ -5,6 +5,7 @@ import * as teamServices from '@/services/shiftsManage';
 import * as clientServices from '@/services/client';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import moment from 'moment'; //
 
 const namespace = 'inspectMission';
 const { createActions } = init(namespace);
@@ -77,7 +78,7 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          work_date: v.work_date?.split('T')[0],
+          work_date: moment(v.work_date).format('YYYY-MM-DD HH:mm:ss'),
           assign_date: v.assign_date?.split('T')[0],
         })),
         count: payload.rest.count,

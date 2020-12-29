@@ -236,7 +236,8 @@ const InspectRecordForm = props => {
       // plainText: props.init[name],
       itemProps: {
         label: '巡检时间：',
-        name: ['inspection_task', 'work_date'],
+        // name: ['inspection_task', 'work_date'],
+        name: 'workDate',
       },
     },
     {
@@ -431,7 +432,7 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '电池电压',
-        name: '',
+        name: 'battery_voltage',
       },
       comProps: {
         suffix: 'V',
@@ -440,7 +441,7 @@ const InspectRecordForm = props => {
     {
       itemProps: {
         label: '控母电压',
-        name: '',
+        name: 'direct_voltage',
       },
       comProps: {
         suffix: 'V',
@@ -844,7 +845,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '温度',
-        name: 'temperature',
+        // name: '',
         ...electricFormLayouts,
       },
       comProps: {

@@ -7,6 +7,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
 import * as userServices from '@/services/user';
 import { formatSelectList, filterObjSame } from '@/utils';
+import { customerTypeMap } from '@/configs';
 
 const namespace = 'client';
 const { createActions } = init(namespace);
@@ -94,6 +95,7 @@ export default {
         dataList: payload.list.map(v => ({
           ...v,
           admin: v.customer_admin.map(v => v.nickname),
+          type: customerTypeMap[v.type],
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -498,7 +500,10 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getList, payload);
+      const res = yield call(userServices.getSearchList, {
+        service_staff: 1,
+        ...payload,
+      });
       yield put(action({ ...res, payload }));
     },
     *addUserAsync({ payload, action, type }, { call, put }) {

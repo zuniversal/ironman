@@ -307,7 +307,7 @@ class MissionsManage extends PureComponent {
       });
       this.props.getPowerAsync({
         customer: params.value.customer_id,
-        page_size: 1000,
+        // page_size: 1000,
       });
     }
     if (params.value.station_id) {
@@ -317,7 +317,7 @@ class MissionsManage extends PureComponent {
       });
       this.props.getAssetsAsync({
         station: params.value.station_id,
-        page_size: 1000,
+        // page_size: 1000,
       });
     }
   };

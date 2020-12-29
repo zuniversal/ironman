@@ -10,7 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { missionsStatusMap } from '@/configs';
+import { missionsStatusMap, inspectModelRadioMap } from '@/configs';
 
 const InspectMissionTable = props => {
   const { showModal, edit, remove, tdClick, assignMission, editDate } = props; //
@@ -51,6 +51,11 @@ const InspectMissionTable = props => {
           action: 'clientDetailAsync',
           d_id: record.customer.id,
         }),
+    },
+    {
+      title: '巡检类型',
+      dataIndex: ['plan', 'station', 'inspection_type'],
+      dataMap: inspectModelRadioMap,
     },
     {
       title: '当前状态',
