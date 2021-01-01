@@ -203,7 +203,7 @@ export default {
       };
     },
     changeStationPlan(state, { payload = [], type }) {
-      const { initList, unScheduleList } = state;
+      const { initList, unScheduleList, scheduleList } = state;
       const dragList = payload.map(v => ({
         start: v.startStr,
         plan_date: v.startStr,
@@ -212,7 +212,13 @@ export default {
         // station_id: v.station.station_id,
         // station_id: v.id,
       }));
-      console.log(' dragList ： ', state, dragList, payload); //
+      console.log(
+        ' dragList latestDrag ： ',
+        state,
+        scheduleList,
+        dragList,
+        payload,
+      ); //
       const latestDrag = payload[payload.length - 1]; // 当前拖动的最新的一个电站
       console.log(' latestDrag ： ', latestDrag); //
       const unScheduleListFilter = unScheduleList.map(v => {
@@ -237,10 +243,30 @@ export default {
         latestDrag,
         [...payload],
       );
+
+      const scheduleListData =
+        latestDrag && latestDrag.id
+          ? scheduleList.map(v => {
+              console.log(' latestDrag scheduleList ： ', v, latestDrag); //
+              return v.start != latestDrag.startStr
+                ? v
+                : {
+                    ...v,
+                    count: v.count + 1,
+                    title: v.count + 1,
+                  };
+            })
+          : scheduleList; //
+      console.log('  latestDrag scheduleListData ：', scheduleListData); //
       return {
         ...state,
         dragList: dragList,
         unScheduleList: unScheduleListFilter,
+        // scheduleList: scheduleListData,
+        // scheduleList: scheduleList.map((v) => {
+        //   console.log(' scheduleList ： ', v, latestDrag, )//
+        //   return v
+        // })
       };
     },
     resetStationData(state, { payload, type }) {
@@ -365,28 +391,31 @@ export default {
     *addItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
       console.log(' addItemAsync dragList ： ', dragList); //
-      const planData = dragList
-        .filter(v => v.plan_date != v.extendedProps.plan_date)
-        .map(v => {
-          const { station, id } = v.extendedProps;
-          const items = {
-            plan_date: v.plan_date,
-            station_id: station ? station.id : v.id,
-          };
-          if (id) {
-            items.id = id;
-          }
+      console.log('  对吗  dragList.length ', dragList.length);
+      if (dragList.length > 0) {
+        const planData = dragList
+          .filter(v => v.plan_date != v.extendedProps.plan_date)
+          .map(v => {
+            const { station, id } = v.extendedProps;
+            const items = {
+              plan_date: v.plan_date,
+              station_id: station ? station.id : v.id,
+            };
+            if (id) {
+              items.id = id;
+            }
 
-          return items;
+            return items;
+          });
+        console.log(' planData ： ', planData); //
+        // return
+        const res = yield call(services.addItem, {
+          // data: planData,
+          data: planData,
         });
-      console.log(' planData ： ', planData); //
-      // return
-      const res = yield call(services.addItem, {
-        // data: planData,
-        data: planData,
-      });
-      // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+        // yield put(action({ ...res, payload }));
+        yield put({ type: 'getListAsync' });
+      }
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
@@ -438,6 +467,7 @@ export default {
     *getUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(userServices.getSearchList, {
         service_staff: 1,
+        choices: 1,
         ...payload,
       });
       yield put(action({ ...res, payload }));

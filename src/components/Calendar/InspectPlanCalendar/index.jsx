@@ -289,7 +289,7 @@ const InspectPlanCalendar = props => {
   };
   const eventDrop = params => {
     console.log(' eventDrop   ,   ： ', params);
-    // props.eventDrop(params);
+    // props.eventsSet(params);
   };
   const eventAdd = params => {
     console.log(' eventAdd   ,   ： ', params);
@@ -356,7 +356,9 @@ const InspectPlanCalendar = props => {
       <ShiftsArrangeList
         className={`rightTable listWrapper`}
         renderRight={event => (
-          <>{event.surplus_plan_num / event.spect_plan_num}</>
+          <>
+            {event.surplus_plan_num} / {event.spect_plan_num}
+          </>
         )}
         events={props.unScheduleList}
         // className={`${ANIMATE.slideInRight} `}

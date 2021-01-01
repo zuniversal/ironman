@@ -193,7 +193,19 @@ export default {
       yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
+      const params = {
+        ...payload,
+        account: {
+          password: payload.password ? payload.password : null,
+          // 认证状态 默认值 1
+          certification_status: 1,
+          // 默认 - 管理者
+          account_type: 'manager',
+          username: payload.username,
+        },
+      };
+      console.log(' params ： ', params); //
+      const res = yield call(services.editItem, params);
       yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {

@@ -50,7 +50,8 @@ const ShiftsManageForm = props => {
     //   },
     // },
     {
-      formType: 'Select',
+      formType: 'Search',
+      selectSearch: props.getUser,
       selectData: props.userList,
       itemProps: {
         label: '组员姓名',
@@ -58,6 +59,7 @@ const ShiftsManageForm = props => {
       },
       comProps: {
         mode: 'multiple',
+        // onChange: props.getUser,
         // maxTagCount: 5,
       },
     },

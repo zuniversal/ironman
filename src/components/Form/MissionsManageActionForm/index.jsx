@@ -133,6 +133,18 @@ export const MissionsManageConfirmScheduleForm = props => {
 
   const config = [
     {
+      formType: 'DatePicker',
+      noRule: true,
+      itemProps: {
+        label: '排期日期',
+        name: 'plan_date',
+      },
+      comProps: {
+        className: 'w-280',
+        disabled: true,
+      },
+    },
+    {
       formType: 'Radio',
       radioData: scheduleRadios,
       itemProps: {

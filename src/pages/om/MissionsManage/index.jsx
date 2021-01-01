@@ -251,6 +251,9 @@ class MissionsManage extends PureComponent {
       );
     }
     if (action === 'confirmSchedule') {
+      formComProps.init = {
+        plan_date: this.props.itemDetail.plan_date,
+      };
       return (
         <MissionsManageConfirmScheduleForm
           {...formComProps}

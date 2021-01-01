@@ -257,8 +257,7 @@ class PowerStation extends PureComponent {
       action,
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
-      getHouseNoAsync: params =>
-        this.props.getHouseNoAsync({ keyword: params }),
+      getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
       houseNoList: this.props.houseNoList,
       // editPowerInfo: this.props.editPowerInfo,
       // addPowerInfoAsync: this.props.addPowerInfoAsync,

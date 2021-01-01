@@ -4,6 +4,27 @@
 #root {
   min-height: 100%;
 }
+.ant-layout-has-sider {
+  .ant-layout {
+    overflow: scroll;
+  }
+  .ant-layout > div {
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    background: white;
+    margin: 15px;
+
+    // overflow: scroll;
+    // min-height: initial!important;
+  }
+  .ant-pro-basicLayout-has-header {
+    .ant-pro-basicLayout-children-content-wrap {
+      flex: 1;
+      display: flex;
+    }
+  }
+}
 
 .w-64 {
   width: 78px !important;

@@ -52,7 +52,15 @@ class BussniessRecord extends PureComponent {
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    const { date } = params.formData;
+    const searchParams = {
+      ...params.formData,
+    };
+    if (params.value.date) {
+      searchParams.start_time = date[0].format('YYYY-MM-DD');
+      searchParams.end_time = date[1].format('YYYY-MM-DD');
+    }
+    this.props.getListAsync(searchParams);
   };
   renderTable = params => {
     const tableProps = {

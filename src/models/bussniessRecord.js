@@ -107,7 +107,7 @@ export default {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
       const params = {
-        ...searchInfo,
+        // ...searchInfo,
         // ...formatSearch(payload),
         // data: payload.data ? payload.data.format('YYYY-MM') : nowYearMonth,
         ...payload,

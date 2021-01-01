@@ -6,7 +6,7 @@ import { Button } from 'antd';
 
 const ExportPdf = props => {
   console.log(' ExportPdfExportPdf ： ', props); //
-  const { goBack, onClose } = props; //
+  const { goBack, onClose, noPrint } = props; //
   const cusRef = useRef();
   const counterRef = React.useRef();
   // const print = () => {
@@ -17,7 +17,9 @@ const ExportPdf = props => {
 
   useEffect(() => {
     console.log(' ExportPdf useEffect ： ', counterRef, counterRef.current); //
-    window.print();
+    if (!noPrint) {
+      window.print();
+    }
   }, []);
   // }, [props.children, ]);
 
@@ -36,6 +38,8 @@ const ExportPdf = props => {
   );
 };
 
-ExportPdf.defaultProps = {};
+ExportPdf.defaultProps = {
+  onClose: () => {},
+};
 
 export default ExportPdf;

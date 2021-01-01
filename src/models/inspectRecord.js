@@ -8,7 +8,7 @@ const { createActions } = init(namespace);
 
 const otherActions = ['getMissionItemAsync'];
 
-const batchTurnActions = ['closePdf'];
+const batchTurnActions = ['closePdf', 'toggleExportPDF'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -31,6 +31,8 @@ export default {
     isShowPdfDetail: false,
     missionItemDetail: {},
     isShowExportPdf: false,
+
+    isExportPDF: false,
   },
 
   reducers: {
@@ -76,9 +78,15 @@ export default {
         created_time = '',
         start_time = '',
         end_time = '',
+        power_data = [],
+        inspection_task,
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload); //
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
+      const spectInData = [];
+      power_data.forEach(v =>
+        v.spect_in.forEach(item => spectInData.push(item)),
+      );
       return {
         ...state,
         action: payload.payload.action,
@@ -91,10 +99,12 @@ export default {
           // created_time: created_time ? created_time.split('T')[0] : '',
           // start_time: start_time ? start_time.split('T')[0] : '',
           // end_time: end_time ? end_time.split('T')[0] : '',
-          workDate: payload.bean.inspection_task.work_date
-            ? payload.bean.inspection_task.work_date.split('T')[0]
-            : '',
-          powerData: payload.bean.power_data && payload.bean.power_data[0],
+          workDate:
+            inspection_task && inspection_task.work_date
+              ? inspection_task.work_date.split('T')[0]
+              : '',
+          powerData: power_data && power_data[0],
+          spectInData,
         },
       };
     },
@@ -158,6 +168,13 @@ export default {
       return {
         ...state,
         isShowExportPdf: false,
+      };
+    },
+    toggleExportPDF(state, { payload, type }) {
+      console.log(' toggleExportPDF ： ', payload); //
+      return {
+        ...state,
+        isExportPDF: !state.isExportPDF,
       };
     },
   },

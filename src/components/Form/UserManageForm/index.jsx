@@ -42,7 +42,7 @@ const UserManageForm = props => {
       },
     },
     {
-      noRule: true,
+      noRule: props.action !== 'add',
       itemProps: {
         label: '密码',
         name: 'password',

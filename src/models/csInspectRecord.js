@@ -59,9 +59,9 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          work_date: v.work_date.split('T')[0],
-          assign_date: v.assign_date.split('T')[0],
-          created_time: v.work_date.split('T')[0],
+          work_date: v.work_date ? v.work_date.split('T')[0] : '',
+          assign_date: v.assign_date ? v.assign_date.split('T')[0] : '',
+          created_time: v.work_date ? v.work_date.split('T')[0] : '',
         })),
         count: payload.rest.count,
         isShowModal: false,

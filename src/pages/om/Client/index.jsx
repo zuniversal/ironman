@@ -215,6 +215,8 @@ class Client extends PureComponent {
           // } else {
           //   tips('文件不能为空！', 2);
           //   return;
+        } else {
+          params.file = '';
         }
       } else {
         params.file = '';

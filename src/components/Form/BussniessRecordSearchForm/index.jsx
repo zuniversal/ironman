@@ -18,13 +18,13 @@ const BussniessRecordSearchForm = props => {
       },
       searchSuffix: true,
     },
-    // {
-    //   formType: 'RangePicker',
-    //   itemProps: {
-    //     label: '日期',
-    //     name: 'data',
-    //   },
-    // },
+    {
+      formType: 'RangePicker',
+      itemProps: {
+        label: '日期',
+        name: 'date',
+      },
+    },
   ];
 
   return (

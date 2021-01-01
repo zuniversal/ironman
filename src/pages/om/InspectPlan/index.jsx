@@ -3,6 +3,7 @@ import './style.less';
 import { Button, Spin } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
 import InspectPlanForm from '@/components/Form/InspectPlanForm'; //
+import InspectPlanAddForm from '@/components/Form/InspectPlanAddForm'; //
 import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm'; //
 import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar'; //
 
@@ -23,6 +24,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  addPlan: `修改日期`,
 };
 
 const mapStateToProps = ({ inspectPlan, loading }) => ({
@@ -95,9 +97,9 @@ class InspectPlan extends PureComponent {
           重置
         </Button>
         {/* <Button type="primary" onClick={() => this.props.addItemAsync()}> */}
-        <Button type="primary" onClick={this.savePlan}>
+        {/* <Button type="primary" onClick={this.savePlan}>
           保存计划
-        </Button>
+        </Button> */}
       </div>
     );
   };
@@ -120,11 +122,25 @@ class InspectPlan extends PureComponent {
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    if (params.formData.leader && params.formData.month) {
+      this.props.getListAsync(params.formData);
+    } else {
+      tips('需要同时选择客户代表及月份进行搜索！', 2);
+    }
   };
 
   eventsSet = params => {
     console.log(' eventsSet,  , ： ', params);
+    if (params.length > 0) {
+      this.props.changeStationPlan(params);
+    }
+    const latestDrag = params[params.length - 1]; //
+    if (latestDrag && latestDrag.id) {
+      this.props.showFormModal({
+        action: 'addPlan',
+      });
+    }
+    // this.props.addItemAsync();
   };
   remove = e => {
     console.log('    remove ： ', e);
@@ -138,7 +154,8 @@ class InspectPlan extends PureComponent {
       // !loading && <InspectPlanCalendar
       !loading && (
         <InspectPlanCalendar
-          eventsSet={this.props.changeStationPlan}
+          // eventsSet={this.props.changeStationPlan}
+          eventsSet={this.eventsSet}
           // scheduleList={this.props.scheduleList}
           scheduleList={this.props.scheduleList}
           unScheduleList={this.props.unScheduleList}
@@ -157,6 +174,11 @@ class InspectPlan extends PureComponent {
     );
   };
 
+  onCancel = e => {
+    console.log('    onCancel ： ', e);
+    this.props.onCancel();
+    this.props.getListAsync();
+  };
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
@@ -168,6 +190,11 @@ class InspectPlan extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      if (action === 'addPlan') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -195,7 +222,10 @@ class InspectPlan extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
-    // return <PowerStationForm {...formComProps} ></PowerStationForm>;
+    if (action === 'addPlan') {
+      return <InspectPlanAddForm {...formComProps}></InspectPlanAddForm>;
+    }
+    return <InspectPlanAddForm {...formComProps}></InspectPlanAddForm>;
   };
   get size() {
     return 'small';
@@ -214,7 +244,8 @@ class InspectPlan extends PureComponent {
         action={this.props.action}
         titleMap={this.state.titleMap}
         onOk={this.onOk}
-        onCancel={this.props.onCancel}
+        // onCancel={this.props.onCancel}
+        onCancel={this.onCancel}
         size={this.size}
         isNoForm={this.isNoForm}
       >
@@ -236,16 +267,18 @@ class InspectPlan extends PureComponent {
       // team_headman: 1,
       // page_size: 100,
     });
-    this.props.getListAsync({
-      // leader: 79640,
-      leader: 1,
-      //   // month: '2020-10',
-      // leader: 2,
-      // month: '2020-10',
-      // month: moment('2020-11-11',)
-      // month: moment('2020-11',)
-      month: moment('2020-12'),
-    });
+    // this.props.getListAsync({
+    //   // leader: 79640,
+    //   leader: 1,
+    //   //   // month: '2020-10',
+    //   // leader: 2,
+    //   // month: '2020-10',
+    //   // month: moment('2020-11-11',)
+    //   // month: moment('2020-11',)
+    //   // month: moment('2020-12'),
+    //   leader: 79612,
+    //   month: moment('2021-01'),
+    // });
   }
 
   render() {

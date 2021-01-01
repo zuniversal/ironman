@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/shiftsManage';
-import * as userServices from '@/services/user';
+import * as userServices from '@/services/userManage';
 import { formatSelectList, filterObjSame } from '@/utils';
 
 const namespace = 'shiftsManage';
@@ -238,7 +238,7 @@ export default {
       return res;
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getList, payload);
+      const res = yield call(userServices.getList, { ...payload, choices: 1 });
       yield put(action({ ...res, payload }));
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {

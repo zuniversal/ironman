@@ -92,7 +92,8 @@ const getRoutes = props => {
 
   const routes = isDev
     ? [...managerRoutes, ...customerRoutes]
-    : getRoutesMap(userInfo.accountType, routesMap);
+    : // ? [...customerRoutes]
+      getRoutesMap(userInfo.accountType, routesMap);
   console.log(
     ' getRoutes   userInfo,   ： ',
     userInfo,
@@ -247,7 +248,7 @@ export default {
       setItem('tokens', res.rest.token);
       // const userInfo = yield call(userCenterServices.getItem, payload);
 
-      const resData = yield call(services.getUserInfo, payload);
+      const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
       // console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;
@@ -310,7 +311,7 @@ export default {
 
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
       console.log(' getUserInfoAsync ： ', payload, action, type); //
-      const resData = yield call(services.getUserInfo, payload);
+      const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
       // console.log(' enterprise ： ', enterprise); //
       const accountType = resData.bean.user.account.account_type;

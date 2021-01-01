@@ -20,17 +20,23 @@ import {
 import SmartForm from '@/common/SmartForm'; //
 import SmartImg from '@/common/SmartImg'; //
 import InputCom from '@/components/Widgets/InputCom'; //
+// import SmartExportPdf from '@/common/SmartExportPdf'; //
+import useExportPdf from '@/hooks/useExportPdf'; //
 
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData } = props; //
+  const { tabData, tab } = props; //
   return (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
         {tabData.map((v, i) => (
           <TabPane
-            tab={`${props.tabPrefix}-${v[props.tabItemKey] || '无'}`}
+            tab={`${props.tabPrefix}-${
+              props.useIndex ? i + 1 : v[props.tabItemKey]
+            }`}
+            // tab={`${props.tabPrefix}-${v[props.tabItemKey] || '无'}`}
+            // tab={tab}
             key={i}
           ></TabPane>
         ))}
@@ -57,6 +63,15 @@ const formLayouts = {
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 15 }, //
+  },
+};
+
+const fullFormLayouts = {
+  labelCol: {
+    sm: { span: 0 }, //
+  },
+  wrapperCol: {
+    sm: { span: 24 }, //
   },
 };
 
@@ -112,9 +127,57 @@ const inputBefore = (
   </Select>
 );
 
+const createFormList = props => {
+  const { config = [], name } = props; //
+  console.log(' createFormList   config,   ： ', config);
+  const spectOutItem = (
+    <Form.List name={name} key={name}>
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', fields); //
+
+        return (
+          <>
+            {fields.map((field, index) => {
+              const formItem = config.map((v, i) =>
+                v.type !== 'rowText' && !v.rowTitle ? (
+                  <Form.Item
+                    {...field}
+                    key={`${index}-${i}`}
+                    label={v.label}
+                    colon={false}
+                    name={[field.name, v.name]}
+                    fieldKey={[field.fieldKey, v.name]}
+                    className={`formItems listFormItem  ${
+                      v.type !== 'rowText' ? 'ant-col ant-col-8' : ''
+                    }`}
+                    {...(v.type !== 'rowText' ? electricFormLayouts : {})}
+                  >
+                    <Input className={'w-78'} disabled />
+                  </Form.Item>
+                ) : (
+                  <div
+                    className={`w100  ${v.label ? 'formItems' : ''} ${
+                      v.rowTitle ? 'rowTitle' : 'rowItem'
+                    }`}
+                    key={`${index}-${i}`}
+                  >
+                    {v.label ? v.label + (index + 1) : ''}
+                  </div>
+                ),
+              );
+              return formItem;
+            })}
+          </>
+        );
+      }}
+    </Form.List>
+  );
+  return spectOutItem;
+};
+
 const InspectRecordForm = props => {
   console.log(' InspectRecordForm ： ', props, props.init); //
-  const { formBtn, init, ...rest } = props; //
+  const { formBtn, init, isExportPDF, ...rest } = props; //
 
   const {
     // power_data = [{}],
@@ -129,14 +192,664 @@ const InspectRecordForm = props => {
   const [dataInit, setDataInit] = useState({
     ...props.init,
     spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
-    spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
+    // spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
+    spectOut: props.init.spect_out,
   });
-  console.log(' dataInit ： ', dataInit); //
+  console.log(' dataInit ： ', dataInit, power_data); //
 
   // const powerData =
+  setTimeout(() => {
+    console.log('  延时器 ： ');
+  }, 2000);
 
   const counterRef = React.useRef();
   const htmlRef = React.useRef();
+
+  const spectInVoltageConfig = [
+    { name: 'v_ab', label: 'AB' },
+    { name: 'v_bc', label: 'BC' },
+    { name: 'v_ca', label: 'CA' },
+  ];
+  const spectInElectricConfig = [
+    { name: 'i_ab', label: 'A' },
+    { name: 'i_bc', label: 'B' },
+    { name: 'i_ca', label: 'C' },
+  ];
+  const spectInMonitorConfig = [
+    { name: 'monitor_a', label: 'A' },
+    { name: 'monitor_b', label: 'B' },
+    { name: 'monitor_c', label: 'C' },
+  ];
+  const spectInBatchConfig = [
+    { label: '电压表', config: spectInVoltageConfig },
+    { label: '电流表', config: spectInElectricConfig },
+    { label: '显示器', config: spectInMonitorConfig },
+  ];
+
+  // const spectInDetail = <Form.List name="spectInData" key={'spectIn'}>
+  const spectInDetail = (
+    <Form.List name={'spectIn'} key={'spectIn'}>
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields); //
+        const spectInConfig = [
+          { name: 'v_ab', label: 'AB' },
+          { name: 'v_bc', label: 'BC' },
+          { name: 'v_ca', label: 'CA' },
+        ];
+
+        return (
+          <>
+            {fields.map(field => {
+              return spectInBatchConfig.map((item, index) => {
+                // const formItem = spectInConfig.map((v, i) => (
+                const formItem = item.config.map((v, i) => (
+                  <Form.Item
+                    {...field}
+                    label={v.label}
+                    colon={false}
+                    name={[field.name, v.name]}
+                    fieldKey={[field.fieldKey, v.name]}
+                    className={'formItems '}
+                    {...electricFormLayouts}
+                  >
+                    <Input className={'w-78'} disabled />
+                  </Form.Item>
+                ));
+                return (
+                  <Space key={index + field.key} className={'formList'}>
+                    <>
+                      <Form.Item
+                        // label={'电压表'}
+                        label={item.label}
+                        colon={false}
+                        className={'formItems labelItem'}
+                        {...electricLabelFormLayouts}
+                      ></Form.Item>
+                      {formItem}
+                    </>
+                  </Space>
+                );
+              });
+            })}
+          </>
+        );
+      }}
+    </Form.List>
+  );
+
+  const spectInConfig = [
+    { label: '高压进侧线', name: '', rowTitle: true },
+    { label: '电压表', name: '', type: 'rowText' },
+    ...spectInVoltageConfig,
+    { label: '电流表', name: '', type: 'rowText' },
+    ...spectInElectricConfig,
+    { label: '显示器', name: '', type: 'rowText' },
+    ...spectInMonitorConfig,
+    { label: '', name: '', type: 'rowText' },
+  ];
+  const spectInItem = createFormList({
+    config: spectInConfig,
+    name: 'spectInData',
+  });
+
+  const spectOutConfig = [
+    { label: '高压出线侧设备', name: '', rowTitle: true },
+    { label: '电流表A', name: 'switch_ia' },
+    { label: '电流表B', name: 'switch_ib' },
+    { label: '电流表C', name: 'switch_ic' },
+    { label: '显示器A', name: 'monitor_a' },
+    { label: '显示器B', name: 'monitor_b' },
+    { label: '显示器C', name: 'monitor_c' },
+    { label: '变压器', name: '', type: 'rowText' },
+    { label: '运行声音', name: 'voice' },
+    { label: '风扇运行', name: 'fan' },
+    { label: '温度', name: 'temperature' },
+    { label: '油位及渗漏油', name: 'oil_leak' },
+    { label: '干燥剂', name: 'dry' },
+    { label: '有无异常', name: 'abnormal' },
+    { label: '0.4KV总开关', name: '', type: 'rowText' },
+    { label: '电压表AB', name: 'switch_v_ab' },
+    { label: '电压表BC', name: 'switch_v_bc' },
+    { label: '电压表CA', name: 'switch_v_ca' },
+    { label: '电流表A', name: 'o_ia' },
+    { label: '电流表B', name: 'o_ib' },
+    { label: '电流表C', name: 'o_ic' },
+    { label: '电流表C', name: 'o_ic' },
+    { label: '电容柜', name: '', type: 'rowText' },
+    { label: '电容柜', name: 'GGJ' },
+    { label: '', name: '', type: 'rowText' },
+  ];
+  const spectOutItem = createFormList({
+    config: spectOutConfig,
+    name: 'spect_out',
+  });
+
+  const powerDataConfig = [
+    { label: '电源编号', name: '', rowTitle: true },
+    { label: '电压等级', name: 'voltage_level' },
+    { label: '总容量', name: 'total_capacity' },
+    { label: '实际总容量', name: 'real_capacity' },
+    { label: '电表读数', name: '', type: 'rowText' },
+    { label: '表号', name: 'meter_number' },
+    { label: '倍率', name: 'multiplying_power' },
+    { label: '考核功率因数', name: 'power_factor' },
+    { label: '总有功(02)', name: 'total_active_power' },
+    { label: '峰(03)', name: 'peak' },
+    { label: '平1 (41)', name: 'flat_1' },
+    { label: '平2 (42)', name: 'flat_2' },
+    { label: '谷(05)', name: 'valley' },
+    { label: '峰MD1(61)', name: 'peak_md' },
+    { label: '平1MD(62)', name: 'flat_1_md' },
+    { label: '平2MD(63)', name: 'flat_2_md' },
+    { label: '谷MD(64)', name: 'valley_md' },
+    { label: '最大MD', name: 'max_md' },
+    { label: '本月申报MD', name: 'declare_md' },
+    { label: '', name: '', type: 'rowText' },
+  ];
+
+  const powerDataItem = createFormList({
+    config: powerDataConfig,
+    name: 'power_data',
+  });
+
+  const powerDataDetail = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <TabPanes
+          tabItemKey={'power_number'}
+          tabPrefix={'电源编号'}
+          onChange={onChange}
+          tabData={power_data}
+        ></TabPanes>
+      ),
+      itemProps: {
+        label: '',
+        className: 'w100',
+      },
+    },
+
+    {
+      noRule: true,
+      itemProps: {
+        label: '电压等级',
+        // name: ['powerData', 'power_number'],
+        name: ['powerData', 'voltage_level'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '总容量',
+        // name: ['powerData', 'id'],
+        name: ['powerData', 'total_capacity'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '实际总容量',
+        name: ['powerData', 'real_capacity'],
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电表读数',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '表号',
+        name: ['powerData', 'meter_number'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '倍率',
+        name: ['powerData', 'multiplying_power'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '考核功率因数',
+        name: ['powerData', 'power_factor'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '总有功(02)',
+        name: ['powerData', 'total_active_power'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '峰(03)',
+        name: ['powerData', 'peak'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '平1 (41)',
+        name: ['powerData', 'flat_1'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '平2 (42)',
+        name: ['powerData', 'flat_2'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '谷(05)',
+        name: ['powerData', 'valley'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '峰MD1(61)',
+        name: ['powerData', 'peak_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '平1MD(62)',
+        name: ['powerData', 'flat_1_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '平2MD(63)',
+        name: ['powerData', 'flat_2_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '谷MD(64)',
+        name: ['powerData', 'valley_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '最大MD',
+        name: ['powerData', 'max_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '本月申报MD',
+        name: ['powerData', 'declare_md'],
+      },
+    },
+  ];
+
+  const spectOutItem2 = (
+    <Form.List name="spect_out" key={'spect_out'}>
+      {(fields, { add, remove }) => {
+        return (
+          <>
+            {fields.map((field, index) => {
+              const formItem = spectOutConfig.map((v, i) =>
+                v.type !== 'rowText' ? (
+                  <Form.Item
+                    {...field}
+                    key={index + i}
+                    label={v.label}
+                    colon={false}
+                    name={[field.name, v.name]}
+                    fieldKey={[field.fieldKey, v.name]}
+                    className={`formItems listFormItem  ${
+                      v.type !== 'rowText' ? 'ant-col ant-col-8' : ''
+                    }`}
+                    {...(v.type !== 'rowText' ? electricFormLayouts : {})}
+                  >
+                    <Input className={'w-78'} disabled />
+                  </Form.Item>
+                ) : (
+                  <div className="w100 formItems rowItem">{v.label}</div>
+                ),
+              );
+              return formItem;
+              return (
+                <Space
+                  key={field.key}
+                  className={'formList'}
+                  {...electricFormLayouts}
+                >
+                  <>
+                    <Form.Item
+                      // label={'电压表'}
+                      colon={false}
+                      className={'formItems labelItem'}
+                      {...electricLabelFormLayouts}
+                    ></Form.Item>
+                    {formItem}
+                  </>
+                </Space>
+              );
+            })}
+          </>
+        );
+      }}
+    </Form.List>
+  );
+
+  const spectOutDetail = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <TabPanes
+          useIndex
+          // tabItemKey={'power_number'}
+          tabPrefix={'电压出线侧设备'}
+          onChange={onOutLineChange}
+          tabData={dataInit.spectOut}
+        ></TabPanes>
+      ),
+      itemProps: {
+        label: '',
+        className: 'w100',
+        ...fullFormLayouts,
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表A',
+        name: ['spectOut', 'switch_ia'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表B',
+        name: ['spectOut', 'switch_ib'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表C',
+        name: ['spectOut', 'switch_ic'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器A',
+        name: ['spectOut', 'monitor_a'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器B',
+        name: ['spectOut', 'monitor_b'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '显示器C',
+        name: ['spectOut', 'monitor_c'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '变压器1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '运行声音',
+        name: ['spectOut', 'voice'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '风扇运行',
+        name: ['spectOut', 'fan'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '温度',
+        name: ['spectOut', 'temperature'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '油位及渗漏油',
+        name: ['spectOut', 'oil_leak'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '干燥剂',
+        name: ['spectOut', 'dry'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '有无异常',
+        name: ['spectOut', 'abnormal'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '0.4KV总开关1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表AB',
+        name: ['spectOut', 'switch_v_ab'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表BC',
+        name: ['spectOut', 'switch_v_bc'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电压表CA',
+        name: ['spectOut', 'switch_v_ca'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表A',
+        name: ['spectOut', 'o_ia'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表B',
+        name: ['spectOut', 'o_ib'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电流表C',
+        name: ['spectOut', 'o_ic'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '有功kWh',
+        name: 'power',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: 'cosΦ',
+        name: 'cos',
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电容柜1',
+        className: 'w100',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '电容柜1',
+        name: ['spectOut', 'GGJ'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+  ];
 
   const onChange = index => {
     console.log(
@@ -153,7 +866,7 @@ const InspectRecordForm = props => {
       ...dataInit,
       powerData: power_data[index],
       spectIn: power_data[index].spect_in,
-      spectOut: power_data[index].spect_out,
+      // spectOut: power_data[index].spect_out,
     });
   };
 
@@ -170,9 +883,8 @@ const InspectRecordForm = props => {
     // };
     setDataInit({
       ...dataInit,
-      powerData: power_data[index],
-      spectIn: power_data[index].spect_in,
-      spectOut: power_data[index].spect_out,
+      // spectOut: power_data[index].spect_out,
+      // spectOut: dataInit.spect_out[index],
     });
   };
 
@@ -193,36 +905,6 @@ const InspectRecordForm = props => {
         name: 'electricity_user',
       },
     },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '电压等级',
-    //     name: '',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '总存量',
-    //     name: '',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '电源编号',
-    //     name: '',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
     {
       // formType: 'plainText',
       // plainText: props.init[name],
@@ -254,20 +936,12 @@ const InspectRecordForm = props => {
       itemProps: {
         label: ' ',
       },
-      comProps: {
-        // labelCol: {
-        //   sm: { span: 9 }, //
-        // },
-        // wrapperCol: {
-        //   sm: { span: 15 }, //
-        // },
-      },
     },
     {
       flexRow: 4,
       itemProps: {
         label: '温度',
-        // name: '',
+        name: 'temperature',
         ...weatherFormLayouts,
       },
       comProps: {
@@ -448,804 +1122,50 @@ const InspectRecordForm = props => {
       },
     },
 
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <TabPanes
-          tabItemKey={'power_number'}
-          tabPrefix={'电源编号'}
-          onChange={onChange}
-          tabData={power_data}
-        ></TabPanes>
-      ),
-      itemProps: {
-        label: '',
-        className: 'w100',
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '电压等级',
-        // name: ['powerData', 'power_number'],
-        name: ['powerData', 'voltage_level'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '总容量',
-        // name: ['powerData', 'id'],
-        name: ['powerData', 'total_capacity'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '实际总容量',
-        name: ['powerData', 'real_capacity'],
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电表读数',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '表号',
-        name: ['powerData', 'meter_number'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '倍率',
-        name: ['powerData', 'multiplying_power'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '考核功率因数',
-        name: ['powerData', 'power_factor'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '总有功(02)',
-        name: ['powerData', 'total_active_power'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '峰(03)',
-        name: ['powerData', 'peak'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '平1 (41)',
-        name: ['powerData', 'flat_1'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '平2 (42)',
-        name: ['powerData', 'flat_2'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '谷(05)',
-        name: ['powerData', 'valley'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '峰MD1(61)',
-        name: ['powerData', 'peak_md'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '平1MD(62)',
-        name: ['powerData', 'flat_1_md'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '平2MD(63)',
-        name: ['powerData', 'flat_2_md'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '谷MD(64)',
-        name: ['powerData', 'valley_md'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '最大MD ',
-        name: ['powerData', 'max_md'],
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '本月申报MD',
-        name: ['powerData', 'declare_md'],
-      },
-    },
-
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <>
-          <Divider className={`divider`} />
-          <div className="titleRow">高压进侧线</div>
-        </>
-      ),
-      itemProps: {
-        label: '',
-        className: 'w100',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电压表',
-        className: 'w100 voltageRowTitle',
-      },
-    },
-    //   {
-    //     noRule: true,
-    //     itemProps: {
-    //       label: '无功1 (07)',
-    //       name: ['powerData', 'reactive_power_1'],
-    //     },
-    //   },
-    //   {
-    //     noRule: true,
-    //     itemProps: {
-    //       label: '无功2 (08)',
-    //       name: ['powerData', 'reactive_power_2'],
-    //     },
-    //   },
-    //   {
-    //     noRule: true,
-    //     itemProps: {
-    //       label: '实际功率因数',
-    //       name: ['powerData', 'real_power_factor'],
-    //     },
-    //   },
-
-    // },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'AB',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'BC',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'CA',
-        // name: '',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电流表',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'A',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'B',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'C',
-        // name: '',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '显示器',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'A',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'B',
-        // name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: 'C',
-        // name: '',
-      },
-    },
-
-    // 新增
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <TabPanes
-          tabItemKey={'power_number'}
-          tabPrefix={'电压出线侧设备'}
-          onChange={onOutLineChange}
-          tabData={power_data}
-        ></TabPanes>
-      ),
-      itemProps: {
-        label: '',
-        className: 'w100',
-      },
-    },
-
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表A',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表B',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表C',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '显示器A',
-        name: 'monitor_a',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '显示器B',
-        name: 'monitor_b',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '显示器C',
-        name: 'monitor_c',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '变压器1',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '运行声音',
-        name: 'voice',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '风扇运行',
-        name: 'fan',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '温度',
-        // name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '油位及渗漏油',
-        name: 'oil_leak',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '干燥剂',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '有无异常',
-        name: 'abnormal',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '0.4KV总开关1',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电压表AB',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电压表BC',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电压表CA',
-        name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表A',
-        name: 'switch_ia',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表B',
-        name: 'switch_ib',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电流表C',
-        name: 'switch_ic',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '有功kWh',
-        // name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: 'cosΦ',
-        // name: '',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电容柜1',
-        className: 'w100',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      itemProps: {
-        label: '电容柜1',
-        name: 'GGJ',
-        ...electricFormLayouts,
-      },
-      comProps: {
-        className: 'w-96',
-      },
-    },
-
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '高压进制线',
-    //     className: 'w100',
-    //   },
-    // },
-
-    // {
-    //   flexRow: 4,
-    //   noRule: true,
-    //   formType: 'Label',
-    //   itemProps: {
-    //     label: ' ',
-    //     ...weatherFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-100',
-    //   },
-    //   LabelCom: '电压表',
-    // },
-
-    // {
-    //   flexRow: 4,
-    //   noRule: true,
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '电压表',
-    //     ...electricLabelFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-100',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'AB',
-    //     // name: ['powperData', 'spectIn', 'v_ab'],
-    //     name: ['spectIn', 'v_ab'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'BC',
-    //     // name: ['powperData', 'spectIn', 'v_bc'],
-    //     name: ['spectIn', 'v_bc'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'CA',
-    //     // name: ['powperData', 'spectIn', 'v_ca'],
-    //     name: ['spectIn', 'v_ca'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-
-    // {
-    //   flexRow: 4,
-    //   noRule: true,
-    //   formType: 'Label',
-    //   itemProps: {
-    //     label: ' ',
-    //   },
-    //   LabelCom: '显示器',
-    // },
-
-    // {
-    //   flexRow: 4,
-    //   noRule: true,
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '显示器',
-    //     ...electricLabelFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'A',
-    //     // name: ['powperData', 'spectOut', 'monitor_a'],
-    //     name: ['spectOut', 'monitor_a'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'B',
-    //     // name: ['powperData', 'spectOut', 'monitor_b'],
-    //     name: ['spectOut', 'monitor_b'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   flexRow: 4,
-    //   itemProps: {
-    //     label: 'C',
-    //     // name: ['powperData', 'spectOut', 'monitor_c'],
-    //     name: ['spectOut', 'monitor_c'],
-    //     ...electricFormLayouts,
-    //   },
-    //   comProps: {
-    //     className: 'w-78',
-    //   },
-    // },
+    ...(isExportPDF ? [powerDataItem] : powerDataDetail),
 
     // {
     //   formType: 'CustomCom',
-    //   CustomCom: <TabPanes onChange={onChange} tabData={power_data}></TabPanes>,
+    //   CustomCom: (
+    //     <TabPanes
+    //       useIndex
+    //       tabPrefix={'高压进侧线'}
+    //       onChange={onOutLineChange}
+    //       tabData={dataInit.spectIn}
+    //     ></TabPanes>
+    //   ),
     //   itemProps: {
     //     label: '',
     //     className: 'w100',
+    //     ...fullFormLayouts,
     //   },
     // },
+    // spectInItem,
+    ...(isExportPDF
+      ? [spectInItem]
+      : [
+          {
+            formType: 'CustomCom',
+            CustomCom: (
+              <TabPanes
+                useIndex
+                tabPrefix={'高压进侧线'}
+                onChange={onOutLineChange}
+                tabData={dataInit.spectIn}
+              ></TabPanes>
+            ),
+            itemProps: {
+              label: '',
+              className: 'w100',
+              ...fullFormLayouts,
+            },
+          },
+          spectInDetail,
+        ]),
 
-    <Form.List name="spectIn" key={'spectIn'}>
-      {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields); //
-        const spectInConfig = [
-          { name: 'v_ab', label: 'AB' },
-          { name: 'v_bc', label: 'BC' },
-          { name: 'v_ca', label: 'CA' },
-        ];
+    ...(isExportPDF ? [spectOutItem] : spectOutDetail),
 
-        return (
-          <>
-            {fields.map(field => {
-              const formItem = spectInConfig.map((v, i) => (
-                <Form.Item
-                  {...field}
-                  label={v.label}
-                  colon={false}
-                  name={[field.name, v.name]}
-                  fieldKey={[field.fieldKey, v.name]}
-                  className={'formItems '}
-                  {...electricFormLayouts}
-                >
-                  <Input className={'w-78'} disabled />
-                </Form.Item>
-              ));
-              return (
-                <Space key={field.key} className={'formList'}>
-                  <>
-                    <Form.Item
-                      label={'电压表'}
-                      colon={false}
-                      className={'formItems labelItem'}
-                      {...electricLabelFormLayouts}
-                    ></Form.Item>
-                    {formItem}
-                  </>
-                </Space>
-              );
-            })}
-          </>
-        );
-      }}
-    </Form.List>,
-    <Form.List name="spectOut" key={'spectOut'}>
-      {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', dataInit.spectOut, fields); //
-        const spectOutConfig = [
-          { name: 'monitor_a', label: 'A' },
-          { name: 'monitor_b', label: 'B' },
-          { name: 'monitor_c', label: 'C' },
-        ];
-
-        return (
-          <>
-            {fields.map(field => {
-              const formItem = spectOutConfig.map((v, i) => (
-                <Form.Item
-                  {...field}
-                  label={v.label}
-                  colon={false}
-                  name={[field.name, v.name]}
-                  fieldKey={[field.fieldKey, v.name]}
-                  className={'formItems '}
-                  {...electricFormLayouts}
-                >
-                  <Input className={'w-78'} disabled />
-                </Form.Item>
-              ));
-              return (
-                <Space key={field.key} className={'formList'}>
-                  <>
-                    <Form.Item
-                      label={'显示器'}
-                      colon={false}
-                      className={'formItems labelItem'}
-                      {...electricLabelFormLayouts}
-                    ></Form.Item>
-                    {formItem}
-                  </>
-                </Space>
-              );
-            })}
-          </>
-        );
-      }}
-    </Form.List>,
+    // // 新增
 
     {
       formType: 'rowText',
@@ -1281,40 +1201,16 @@ const InspectRecordForm = props => {
   }));
   console.log(' configs  config.map v ： ', configs);
 
-  const doPrint = () => {
-    console.log(' doPrint   ,   ： ', counterRef);
-    // const newStr = counterRef.current.innerHTML;
-    // document.body.innerHTML = newStr;
-    // htmlRef.current = document.body.innerHTML;
-    window.print();
-  };
-
-  // useEffect(() => {
-  //   const {matchMedia, } = window
-  //   const mediaQueryList = matchMedia('print')
-  //   console.log(' InspectRecordForm  useEffect ： ', mediaQueryList, );
-  //   if (matchMedia) {
-  //     console.log(' InspectRecordForm matchMediamatchMedia ： ', matchMedia,  )
-  //     mediaQueryList.addListener(mql => {
-  //       console.log(' InspectRecordForm mql ： ', mql, mql.matches, counterRef,  )
-  //       if (mql.matches) {
-
-  //       }
-  //       if (!mql.matches) {
-  //         console.log(' InspectRecordForm mql 关闭 ： ', mql, mql.matches, counterRef,  )
-  //         // console.log(' this.close ： ', this.close,  )
-  //         // this.close()
-  //         document.body.innerHTML = htmlRef.current
-  //       }
-  //     })
-  //   }
-  // }, [])
+  useExportPdf({
+    // element: document.getElementsByClassName('inspectRecordForm')[0],
+    element: 'inspectRecordForm',
+    isExportPDF,
+    finish: props.toggleExportPDF,
+  });
 
   return (
     <div className={' inspectRecordForm '} ref={counterRef}>
-      {/* <Button type="primary" onClick={doPrint}>
-        导出
-      </Button> */}
+      {/* <SmartExportPdf></SmartExportPdf> */}
       <SmartForm
         flexRow={2}
         config={configs}
@@ -1327,9 +1223,11 @@ const InspectRecordForm = props => {
           // spectIn: power_data[0].spect_in[0],
           // spectOut: power_data[0].spect_out[0],
         }}
+        className={'inspectRecordForm'}
+        formProps={{
+          id: 'inspectRecordForm',
+        }}
       ></SmartForm>
-
-      {/* {formBtn} */}
     </div>
   );
 };

@@ -88,11 +88,11 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         allDayText="全天"
         title={''}
         // dayMaxEvents={3}
-        moreLinkContent={params => {
-          console.log(' paramsparams ： ', params);
-          return 'xxx';
-        }}
-        // moreLinkContent={'...'}
+        // moreLinkContent={params => {
+        //   console.log(' paramsparams ： ', params);
+        //   return 'xxx';
+        // }}
+        moreLinkContent={'...'}
         // eventContent={(params) => { console.log(' eventContent params ： ', params,  ); return 'xxx'  }}// 有事件的显示内容
         // showNonCurrentDates={false}
         dayCellContent={dayCellContent}

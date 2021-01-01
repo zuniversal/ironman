@@ -195,6 +195,7 @@ const PowerStationForm = props => {
     ' PowerStationForm inspectMode const inspectMode 查看值 ： = ',
     inspectMode,
     props.propsForm.getFieldValue('inspection_type'),
+    inspectCol,
   ); //
 
   const actionConfig = [
@@ -339,6 +340,7 @@ const PowerStationForm = props => {
     },
 
     ...inspectModeCol,
+    ...inspectCol,
     {
       itemProps: {
         label: '电话',

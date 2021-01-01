@@ -291,8 +291,7 @@ class Assets extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getHouseNoAsync: params =>
-        this.props.getHouseNoAsync({ keyword: params }),
+      getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
       getPowerAsync: params => this.props.getPowerAsync({ name: params }),
       getListAsync: params => this.props.getListAsync({ keyword: params }),
       dataList: this.props.dataList,

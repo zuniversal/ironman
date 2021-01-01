@@ -191,6 +191,13 @@ class InspectMission extends PureComponent {
           d_id: itemDetail.id,
         });
       }
+      if (action === 'dispatchMission') {
+        this.props.batchDispatchAsync({
+          // ...itemDetail,
+          ...res,
+          task_list: [itemDetail.id],
+        });
+      }
       if (['batchDispatch'].includes(action)) {
         this.props.batchDispatchAsync({
           // ...itemDetail,
@@ -230,7 +237,8 @@ class InspectMission extends PureComponent {
       };
     }
     // if (action === 'assignMission') {
-    if (['assignMission', 'batchDispatch'].includes(action)) {
+    // if (['assignMission', 'batchDispatch'].includes(action)) {
+    if (['dispatchMission', 'batchDispatch'].includes(action)) {
       return (
         <InspectMissionAssignForm {...formComProps}></InspectMissionAssignForm>
       );
@@ -251,9 +259,12 @@ class InspectMission extends PureComponent {
     return <InspectMissionForm {...formComProps}></InspectMissionForm>;
   };
   get size() {
-    return ['assignMission', 'batchDispatch', 'editDate'].some(
-      v => v === this.props.action,
-    )
+    return [
+      'assignMission',
+      'dispatchMission',
+      'batchDispatch',
+      'editDate',
+    ].some(v => v === this.props.action)
       ? 'small'
       : 'default';
   }

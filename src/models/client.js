@@ -514,12 +514,15 @@ export default {
         // tag_ids: [],
         // role_ids: [],
         // organization_ids: [],
+        customer: true,
+        customer_id: null,
         account: {
           password: payload.password ? payload.password : null,
           // 认证状态 默认值 1
           certification_status: 1,
           // 默认 - 管理者
-          account_type: 'manager',
+          // account_type: 'manager',
+          account_type: 'customer',
         },
       };
       const res = yield call(services.addAdmin, params);
@@ -552,13 +555,15 @@ export default {
       // });
       const params = {
         ...payload,
-        customer_id: itemDetail.id,
+        customer: true,
+        customer_id: itemDetail.id ? itemDetail.id : null,
         account: {
           password: payload.password ? payload.password : null,
           // 认证状态 默认值 1
           certification_status: 1,
           // 默认 - 管理者
-          account_type: 'manager',
+          // account_type: 'manager',
+          account_type: 'customer',
           username: payload.username,
         },
       };
@@ -575,14 +580,15 @@ export default {
       const res = yield call(services.editAdmin, {
         // ...rest,
         ...payload,
-        customer_id: itemDetail.id,
+        customer_id: itemDetail.id ? itemDetail.id : null,
         email: null,
         account: {
           password: payload.password ? payload.password : null,
           // 认证状态 默认值 1
           certification_status: 1,
           // 默认 - 管理者
-          account_type: 'manager',
+          // account_type: 'manager',
+          account_type: 'customer',
           username: payload.username,
         },
       });
@@ -596,7 +602,7 @@ export default {
         const res = yield call(services.removedAdmin, {
           d_id: payload.id,
           id: `${payload.id}`,
-          customer_id: itemDetail.id,
+          customer_id: itemDetail.id ? itemDetail.id : null,
         });
       }
       yield put(action({ payload }));

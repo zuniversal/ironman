@@ -29,12 +29,12 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 const formatParams = data => {
+  console.log(' formatParams data ： ', data); //
   const params = {
     ...data,
     work_date: data.work_date.format('YYYY-MM-DD'),
     // work_time: data.work_time.format('YYYY-MM-DD'),
   };
-  console.log(' formatParams params ： ', params); //
   return params;
 };
 
@@ -208,7 +208,8 @@ export default {
       if (payload.date) {
         params.date = payload.date.format('YYYY-MM-DD');
       }
-      const res = yield call(services.assignMission, formatParams(params));
+      // const res = yield call(services.assignMission, formatParams(params));
+      const res = yield call(services.assignMission, params);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },

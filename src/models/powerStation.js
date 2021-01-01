@@ -731,7 +731,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(houseNoServices.getList, { keyword: payload });
+      const res = yield call(houseNoServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {

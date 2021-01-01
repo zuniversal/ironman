@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import { openNotification } from '@/utils';
+import { isDev } from '@/constants';
 
 const useWebsocket = (props = {}) => {
-  console.log(
-    ' %c useWebsocket 组件 this.state, this.props ： ',
-    `color: #333; font-weight: bold`,
-    props,
-  ); //
+  // console.log(
+  //   ' %c useWebsocket 组件 this.state, this.props ： ',
+  //   `color: #333; font-weight: bold`,
+  //   props,
+  // ); //
   const { url = 'ws://119.3.123.144:8008/websocket' } = props;
   console.log(' %c useWebsocketuseWebsocket 组件 ', props, url); //
 
@@ -45,13 +46,15 @@ const useWebsocket = (props = {}) => {
         data,
       );
       setWsData(data);
-      data.forEach((v, i) => {
-        console.log(' menuConfig v ： ', v, i);
-        openNotification({
-          message: v.verb,
-          description: v.description,
+      if (!isDev) {
+        data.forEach((v, i) => {
+          console.log(' menuConfig v ： ', v, i);
+          openNotification({
+            message: v.verb,
+            description: v.description,
+          });
         });
-      });
+      }
 
       // console.log(' socket.onmessage2 ： ', JSON.parse(event.data));
     };

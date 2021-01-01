@@ -208,11 +208,15 @@ export const renderCheckboxOp = (
   { opType = 'option', isDisabledAll },
 ) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
-  const CheckboxItems = configs.map(v => (
-    <Checkbox key={v.value} value={v.value}>
-      {v.label}
-    </Checkbox>
-  ));
+  const CheckboxItems = configs.map(v =>
+    v.CustomCom ? (
+      v.CustomCom
+    ) : (
+      <Checkbox key={v.value} value={v.value}>
+        {v.label}
+      </Checkbox>
+    ),
+  );
   return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
   return opType === 'group' ? (
     <CheckboxGroup>{CheckboxItems}</CheckboxGroup>

@@ -86,7 +86,8 @@ const InspectMissionTable = props => {
       {/* <a onClick={() => tdClick({ action: 'showList' })}>任务</a> */}
       <a
         onClick={() =>
-          props.showFormModal({ action: 'assignMission', d_id: record.id })
+          // props.showFormModal({ action: 'assignMission', d_id: record.id })
+          props.showFormModal({ action: 'dispatchMission', d_id: record.id })
         }
       >
         派发
