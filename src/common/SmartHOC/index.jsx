@@ -119,6 +119,7 @@ export default ({
         removeTitle: '',
 
         isShowTitle: true,
+        removeParams: {},
       };
       // this.onRemove = this.removeAction
       this.actionProps = {};
@@ -277,15 +278,17 @@ export default ({
       this.setState({
         isShowRemoveModal: false,
         isBatch: false,
+        removeParams: {},
       });
     };
     renderRemoveModal = params => {
-      // console.log(' renderRemoveModal ： ', params);
-      const { isShowRemoveModal } = this.state; //
+      console.log(' renderRemoveModal ： ', params, this.state, this.props);
+      const { isShowRemoveModal, removeParams } = this.state; //
       const { removeTitle = '删除操作' } = this.props; //
 
       const modalProps = {
         title: removeTitle,
+        // title: removeParams.title,
         show: isShowRemoveModal,
         onOk: this.onResultModalOk,
         onCancel: this.onResultModalCancel,
@@ -295,6 +298,7 @@ export default ({
         // offFn: this.handleOff,
         okFn: this.onResultModalOk,
         offFn: this.onResultModalCancel,
+        removeContent: removeParams.removeContent,
       };
 
       return (

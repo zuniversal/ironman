@@ -132,6 +132,7 @@ class ShiftsManage extends PureComponent {
     // }
     this.props.onBatchRemove({
       id: `${this.props.selectedRowKeys.join(',')}`,
+      // removeContent: 'removeTitletitletitletitle',
     });
   };
 

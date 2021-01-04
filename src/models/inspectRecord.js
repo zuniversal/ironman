@@ -175,6 +175,7 @@ export default {
       return {
         ...state,
         isExportPDF: !state.isExportPDF,
+        isShowExportPdf: !state.isShowExportPdf,
       };
     },
   },

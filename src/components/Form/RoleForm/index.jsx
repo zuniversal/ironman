@@ -17,6 +17,7 @@ import {
   Tabs,
   Tree,
 } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm'; //
 import { treeList } from '@/configs';
@@ -108,8 +109,13 @@ const RoleTab = props => {
 };
 
 const RoleForm = props => {
-  console.log(' RoleForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  const { formBtn, init, ...rest } = props; //
+  const { perms_codes = [] } = init;
+  console.log(' RoleForm 1 ： ', props, perms_codes); //
+
+  const onSelect = (selectedKeys, info) => {
+    console.log('onSelect', info);
+  };
 
   const config = [
     {
@@ -143,56 +149,89 @@ const RoleForm = props => {
     //     treeData: treeList,
     //   },
     // },
+
+    // {
+    //   noRule: true,
+    //   formType: 'TreeSelect',
+    //   itemProps: {
+    //     label: '权限详情',
+    //     name: 'perms_codes',
+    //   },
+    //   comProps: {
+    //     treeData: props.permission,
+    //     // treeData: treeList,
+    //     // onChange: (e) => {
+    //     //   console.log(' onChange ： ', e   )//
+    //     // },
+    //     // onTreeExpand: (organizationIds) => {
+    //     //   console.log(' onTreeExpand ： ', organizationIds, props,   )//
+    //     //   // if (organizationIds.length > 0) {
+    //     //   //   props.getUserManageAsync({
+    //     //   //     organization_id: organizationIds[organizationIds.length - 1],
+    //     //   //   })
+    //     //   // }
+    //     // },
+    //     // onSelect: (e) => {
+    //     //   console.log(' onSelect ： ', e   )//
+    //     // },
+    //     // onSearch: (e) => {
+    //     //   console.log(' onChange ： ', e   )//
+    //     // },
+    //     // loadData: (e) => {
+    //     //   console.log(' loadData ： ', e   )//
+    //     //   return new Promise((resolve, reject) => {
+    //     //     console.log('  Promise ： ',  )
+    //     //     //   props.getUserManageAsync({
+    //     //     //     organization_id: organizationIds[organizationIds.length - 1],
+    //     //     //   })
+    //     //     resolve()
+    //     //   })
+    //     // },
+    //     multiple: true,
+    //     // treeCheckStrictly: true,
+    //     treeCheckable: true,
+    //   },
+    // },
+
     {
-      noRule: true,
-      formType: 'TreeSelect',
+      formType: 'CustomCom',
+      CustomCom: <div>权限详情</div>,
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <Tree
+          checkable
+          // onExpand={onExpand}
+          // expandedKeys={expandedKeys}
+          // autoExpandParent={autoExpandParent}
+          // onCheck={onCheck}
+          // checkedKeys={checkedKeys}
+          // onSelect={props.onPermsSelect}
+          // onSelect={onSelect}
+          // selectedKeys={perms_codes}
+          checkedKeys={props.permsData}
+          onCheck={props.onPermsCheck}
+          treeData={props.permission}
+          className={`roleAuthTree`}
+          switcherIcon={<DownOutlined />}
+        />
+      ),
       itemProps: {
-        label: '权限详情',
-        name: 'perms_codes',
-      },
-      comProps: {
-        treeData: props.permission,
-        // treeData: treeList,
-        // onChange: (e) => {
-        //   console.log(' onChange ： ', e   )//
-        // },
-        // onTreeExpand: (organizationIds) => {
-        //   console.log(' onTreeExpand ： ', organizationIds, props,   )//
-        //   // if (organizationIds.length > 0) {
-        //   //   props.getUserManageAsync({
-        //   //     organization_id: organizationIds[organizationIds.length - 1],
-        //   //   })
-        //   // }
-        // },
-        // onSelect: (e) => {
-        //   console.log(' onSelect ： ', e   )//
-        // },
-        // onSearch: (e) => {
-        //   console.log(' onChange ： ', e   )//
-        // },
-        // loadData: (e) => {
-        //   console.log(' loadData ： ', e   )//
-        //   return new Promise((resolve, reject) => {
-        //     console.log('  Promise ： ',  )
-        //     //   props.getUserManageAsync({
-        //     //     organization_id: organizationIds[organizationIds.length - 1],
-        //     //   })
-        //     resolve()
-        //   })
-        // },
-        multiple: true,
-        treeCheckable: true,
+        label: '',
       },
     },
   ];
 
   return (
     <div className={' RoleForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
+      <SmartForm config={config} {...props}></SmartForm>
     </div>
   );
 };
 
-RoleForm.defaultProps = {};
+RoleForm.defaultProps = {
+  init: {},
+};
 
 export default RoleForm;

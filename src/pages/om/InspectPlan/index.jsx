@@ -13,7 +13,7 @@ import {
 } from '@/models/inspectPlan'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
+import { tips, nowYearMonthDay } from '@/utils';
 import moment from 'moment';
 
 const TITLE = '操作';
@@ -27,9 +27,10 @@ const titleMap = {
   addPlan: `修改日期`,
 };
 
-const mapStateToProps = ({ inspectPlan, loading }) => ({
+const mapStateToProps = ({ inspectPlan, loading, user }) => ({
   ...inspectPlan,
   loading: loading.effects['inspectPlan/getListAsync'],
+  userInfo: user.userInfo,
   // loading: loading.effects,
 });
 
@@ -49,6 +50,10 @@ class InspectPlan extends PureComponent {
   }
   savePlan = e => {
     console.log('    savePlan ： ', e, this.state, this.props);
+    this.props.showFormModal({
+      action: 'addPlan',
+    });
+    return;
     const { dragList, scheduleList } = this.props;
     const dragListlen = dragList.length; //
     const scheduleListlen = scheduleList.length; //
@@ -97,9 +102,9 @@ class InspectPlan extends PureComponent {
           重置
         </Button>
         {/* <Button type="primary" onClick={() => this.props.addItemAsync()}> */}
-        {/* <Button type="primary" onClick={this.savePlan}>
+        <Button type="primary" onClick={this.savePlan}>
           保存计划
-        </Button> */}
+        </Button>
       </div>
     );
   };
@@ -112,7 +117,14 @@ class InspectPlan extends PureComponent {
         }
         tagList={this.props.tagList}
         getUserAsync={params => this.props.getUserAsync({ keyword: params })}
-        userList={this.props.userList}
+        // userList={this.props.userList}
+        userList={[
+          {
+            label: this.props.userInfo.nickname,
+            value: `${this.props.userInfo.id}`,
+          },
+          ...this.props.userList,
+        ]}
         tagUserList={this.props.tagUserList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
@@ -134,12 +146,13 @@ class InspectPlan extends PureComponent {
     if (params.length > 0) {
       this.props.changeStationPlan(params);
     }
-    const latestDrag = params[params.length - 1]; //
-    if (latestDrag && latestDrag.id) {
-      this.props.showFormModal({
-        action: 'addPlan',
-      });
-    }
+    // const latestDrag = params[params.length - 1]; //
+    // if (latestDrag && latestDrag.id) {
+    //   this.props.showFormModal({
+    //     action: 'addPlan',
+    //   });
+    // }
+
     // this.props.addItemAsync();
   };
   remove = e => {
@@ -279,6 +292,11 @@ class InspectPlan extends PureComponent {
     //   leader: 79612,
     //   month: moment('2021-01'),
     // });
+    this.props.getListAsync({
+      leader: `${this.props.userInfo.id}`,
+      // month: nowYearMonthDay,
+      month: moment(),
+    });
   }
 
   render() {

@@ -36,6 +36,7 @@ const HeaderWidget = props => {
         avatar={avatar}
         menuClick={menuClick}
         userInfo={props.userInfo}
+        userMsg={props.userMsg}
       >
         <Icon icon={'bell'} className={' '} />
       </DropdownNotice>

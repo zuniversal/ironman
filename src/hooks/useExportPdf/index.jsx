@@ -20,7 +20,7 @@ const useSmartExportPdf = props => {
     const opt = {
       mode: 'avoid-all',
       pagebreak: {
-        mode: ['css', 'legacy'],
+        mode: ['avoid-all', 'css', 'legacy'],
       },
       margin: 1,
       filename: '导出的pdf名称',
@@ -33,7 +33,7 @@ const useSmartExportPdf = props => {
         .set(opt)
         .from(element)
         .save(); // 导出
-
+      console.log(' finish ： ', props.finish); //
       props.finish && props.finish(); //
       setIsExport(false);
     }

@@ -48,6 +48,7 @@ const DropdownNotice = props => {
     noEllipsis,
     avatar,
     userInfo,
+    userMsg,
   } = props; //
 
   const handleMenuClick = (item, rest) => {
@@ -87,13 +88,13 @@ const DropdownNotice = props => {
       <Menu.ItemGroup
         title={
           <div className="header divider">
-            <div className="text">通知 ({wsData.length}) </div>
+            <div className="text">通知 ({userMsg.length}) </div>
             <CloseOutlined className={`closeIcon`} onClick={closeNotice} />
           </div>
         }
       >
-        <Menu.Item key={'header'}>
-          {wsData.map((v, i) => (
+        <Menu.ItemGroup key={'header'}>
+          {userMsg.map((v, i) => (
             <Menu.Item key={v.id} action={v.action} onClick={handleMenuClick}>
               <div className="menuItem divider">
                 <div className="left">
@@ -109,7 +110,7 @@ const DropdownNotice = props => {
               </div>
             </Menu.Item>
           ))}
-        </Menu.Item>
+        </Menu.ItemGroup>
       </Menu.ItemGroup>
       <Menu.Item key={'footer'}>
         <div className="footer">

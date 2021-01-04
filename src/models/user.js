@@ -18,6 +18,7 @@ const otherActions = [
   'logoutAsync',
   'getUserInfo',
   'getNotifyAsync',
+  'getUserMsgAsync',
 ];
 
 const batchTurnActions = [];
@@ -140,6 +141,7 @@ export default {
     getRoutes: getRoutes(),
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
+    userMsg: [],
   },
 
   reducers: {
@@ -225,6 +227,12 @@ export default {
         authInfo: flatAuth(payload.perms),
         accountType: payload.account.account_type,
         system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
+      };
+    },
+    getUserMsg(state, { payload, type }) {
+      return {
+        ...state,
+        userMsg: payload.list,
       };
     },
     // saveHomeSetting(state, { payload, type }) {
@@ -339,12 +347,29 @@ export default {
       console.log(' getNotifyAsync res ： ', res); //
       // yield put(action({ ...res, payload }));
     },
+
+    *getUserMsgAsync({ payload, action, type }, { call, put }) {
+      console.log(' getUserMsgAsync ： ', payload, action, type); //
+      const res = yield call(services.getUserMsg, payload);
+      // yield put(action({ ...res, payload }));
+      yield put({
+        type: 'getUserMsg',
+        payload: res,
+      });
+    },
   },
 
   subscriptions: {
     setup: props => {
-      // console.log(' 用户 setup ： ', props, this); //
+      console.log(' 用户 setup ： ', props, this); //
       const { dispatch, history } = props; //
+
+      dispatch({
+        type: 'getUserMsgAsync',
+        payload: {
+          user_id: 1,
+        },
+      });
 
       history.listen(location => {
         console.log(' 监听路由 匹配 ： ', history, location); //

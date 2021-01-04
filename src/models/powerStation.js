@@ -123,6 +123,7 @@ export default {
         ...outLineTableItem,
       },
     ],
+    outLineTableData: [],
   },
 
   reducers: {
@@ -544,10 +545,12 @@ export default {
         state => state[namespace],
       );
       console.log(' addItemAsync ： ', powerInfoData, payload); //
-      if (powerInfoData.length < 1) {
-        tips('电源列表不能为空！', 2);
-        return;
-      }
+
+      // if (powerInfoData.length < 1) {
+      //   tips('电源列表不能为空！', 2);
+      //   return;
+      // }
+
       // const datas = [
       //   {
       //     id: 1,
@@ -573,14 +576,16 @@ export default {
         outline_list,
         isHaveOutlineId,
       );
-      if (!isHaveId) {
-        tips(`请先保存电源列表！`, 2);
-        return;
-      }
-      if (!isHaveOutlineId) {
-        tips(`请先保存出线侧列表！`, 2);
-        return;
-      }
+
+      // if (!isHaveId) {
+      //   tips(`请先保存电源列表！`, 2);
+      //   return;
+      // }
+      // if (!isHaveOutlineId) {
+      //   tips(`请先保存出线侧列表！`, 2);
+      //   return;
+      // }
+
       // const isRight = getIsRight(powerInfoData);
       // console.log(' isRight ： ', isRight); //
       // if (isRight !== true) {
@@ -592,11 +597,18 @@ export default {
       // }
       // // return;
 
-      const res = yield call(services.addItem, {
+      const params = {
         ...payload,
         elecrical_info_list: elecrical_info_list,
         outline_list: outline_list,
-      });
+      };
+      if (payload.inspection_time) {
+        params.inspection_time = params.inspection_time.join(',');
+        console.log(' params ： ', params); //
+      }
+      console.log(' params ： ', params); //
+
+      const res = yield call(services.addItem, params);
       // const res = yield call(services.addItem, {payload});
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
@@ -612,32 +624,32 @@ export default {
         outLineTableData,
         payload,
       ); //
-      if (powerInfoData.length < 1) {
-        tips('电源列表不能为空！', 2);
-        return;
-      }
+      // if (powerInfoData.length < 1) {
+      //   tips('电源列表不能为空！', 2);
+      //   return;
+      // }
       const elecrical_info_list = powerInfoData.map(v => v.id);
       const isHaveId = elecrical_info_list.every(v => v);
       console.log(' isHaveId some  ： ', elecrical_info_list, isHaveId);
-      if (!isHaveId) {
-        tips(`请先保存电源列表！`, 2);
-        return;
-      }
+      // if (!isHaveId) {
+      //   tips(`请先保存电源列表！`, 2);
+      //   return;
+      // }
       const outline_list = outLineTableData.map(v => v.id);
       const isHaveOutlineId = outline_list.every(v => v);
-      if (!isHaveOutlineId) {
-        tips(`请先保存出线侧列表！`, 2);
-        return;
-      }
+      // if (!isHaveOutlineId) {
+      //   tips(`请先保存出线侧列表！`, 2);
+      //   return;
+      // }
       const isRight = getIsRight(powerInfoData);
       console.log(' isRight ： ', isRight); //
-      if (isRight !== true) {
-        tips(
-          `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
-          2,
-        );
-        return;
-      }
+      // if (isRight !== true) {
+      //   tips(
+      //     `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
+      //     2,
+      //   );
+      //   return;
+      // }
       // return;
       const params = {
         ...payload,

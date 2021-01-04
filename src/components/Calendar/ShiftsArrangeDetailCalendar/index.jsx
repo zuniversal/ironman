@@ -88,7 +88,7 @@ const ShiftsArrangeDetailCalendar = props => {
           //   params.date,
           // ); //
           return (
-            <div className={`fsb`}>
+            <div className={`fsb`} onClick={e => props.dayClick(params)}>
               {dayCellContent(params)}
               <Checkbox
                 checked={

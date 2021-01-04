@@ -8,7 +8,7 @@ const { createActions } = init(namespace);
 
 const otherActions = ['getPermissionAsync'];
 
-const batchTurnActions = [];
+const batchTurnActions = ['onPermsCheck'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -27,6 +27,7 @@ const formatPerms = (data = []) => {
   // data.forEach((v) => init[v[2]] = v[1])
   data.forEach(v =>
     init.push({
+      key: v[2],
       value: v[2],
       title: v[1],
       label: v[1],
@@ -70,13 +71,13 @@ export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   data.forEach(v => {
     console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]); //
+    const value =
+      v.authKey && perms[v.authKey] ? perms[v.authKey][0].value : Math.random();
     const item = {
       ...v,
       // value: v.path,
-      value:
-        v.authKey && perms[v.authKey]
-          ? perms[v.authKey][0].value
-          : Math.random(),
+      value: value,
+      key: value,
       title: v.name,
       label: v.name,
       // children: [
@@ -116,10 +117,12 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
       perms[item.authKey],
       data,
     ); //
-    item.value =
+    const value =
       item.authKey && perms[item.authKey]
         ? perms[item.authKey][0].value
         : Math.random();
+    item.value = value;
+    item.key = value;
     item.title = item.name;
     item.label = item.name;
     if (!item.hideInMenu && item.routes.length > 0) {
@@ -172,6 +175,7 @@ export default {
 
     searchInfo: {},
     permission: [],
+    permsData: [],
   },
 
   reducers: {
@@ -208,6 +212,7 @@ export default {
         isShowModal: true,
         d_id: payload.payload.d_id,
         itemDetail: payload.bean,
+        permsData: payload.bean.perms_codes,
       };
     },
     addItem(state, { payload, type }) {
@@ -258,13 +263,21 @@ export default {
         permission: [
           {
             id: 'all',
-            value: '全部',
+            value: 'all',
+            key: 'all',
             title: '全部',
             label: '全部',
             // children: permission,
             children: routeData,
           },
         ],
+      };
+    },
+    onPermsCheck(state, { payload, type }) {
+      console.log(' onPermsCheck ： ', state, payload); //
+      return {
+        ...state,
+        permsData: payload,
       };
     },
   },

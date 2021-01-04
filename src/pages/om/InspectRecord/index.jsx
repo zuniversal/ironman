@@ -44,7 +44,7 @@ const detailFormMap = {
   actions,
   titleMap,
   modalForm: InspectMissionDetailForm,
-  noMountFetch: true,
+  // noMountFetch: true,
 })
 class InspectRecord extends PureComponent {
   constructor(props) {
@@ -182,7 +182,7 @@ class InspectRecord extends PureComponent {
       // isExportPDF: this.props.isShowExportPdf,
       isExportPDF: this.props.isExportPDF,
       closeExportPdf: this.closeExportPdf,
-      toggleExportPDF: this.toggleExportPDF,
+      toggleExportPDF: this.props.toggleExportPDF,
     };
     if (action !== 'add') {
       formComProps.init = {
@@ -202,7 +202,7 @@ class InspectRecord extends PureComponent {
     console.log(' formComProps ： ', formComProps); //
     return (
       <>
-        {this.renderExportBtn()}
+        {/* {this.renderExportBtn()} */}
         <InspectRecordForm {...formComProps}></InspectRecordForm>
       </>
     );
@@ -241,6 +241,7 @@ class InspectRecord extends PureComponent {
         <InspectRecordForm
           init={this.props.itemDetail}
           closeExportPdf={this.closeExportPdf}
+          toggleExportPDF={this.props.toggleExportPDF}
           isExportPDF
         ></InspectRecordForm>
       </div>
@@ -335,16 +336,16 @@ class InspectRecord extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    setTimeout(() => {
-      console.log('  延时器 ： ');
-      this.props.getListAsync({
-        page: 38,
-        page_size: 10,
-      });
-      // this.props.showFormModal({
-      //   action: 'detail', d_id: 31
-      // });
-    }, 1000);
+    // setTimeout(() => {
+    //   console.log('  延时器 ： ');
+    //   this.props.getListAsync({
+    //     page: 38,
+    //     page_size: 10,
+    //   });
+    //   // this.props.showFormModal({
+    //   //   action: 'detail', d_id: 31
+    //   // });
+    // }, 1000);
   }
 
   render() {

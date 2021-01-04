@@ -118,12 +118,14 @@ class Role extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+          perms_codes: this.props.permsData,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
           d_id: itemDetail.id,
+          perms_codes: this.props.permsData,
         });
       }
     } catch (error) {
@@ -140,6 +142,8 @@ class Role extends PureComponent {
       getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
       permission: this.props.permission,
+      permsData: this.props.permsData,
+      onPermsCheck: this.props.onPermsCheck,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

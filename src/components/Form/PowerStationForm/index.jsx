@@ -35,7 +35,7 @@ import ReduxTable from '@/common/ReduxTable';
 
 const selectData = [
   { label: '正常', value: true, key: 'yes' },
-  { label: '不正常', value: false, key: 'no' },
+  { label: '异常', value: false, key: 'no' },
 ];
 
 const PowerStationForm = props => {
@@ -262,6 +262,9 @@ const PowerStationForm = props => {
       // extra={'支持扩展名:pdf、jpg、png'}
       init={props.init}
       formAction={props.action}
+      formItemProps={{
+        rules: null,
+      }}
     ></UploadCom>,
     // {
     //   formType: 'rowText',

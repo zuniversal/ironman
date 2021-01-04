@@ -12,13 +12,16 @@ const UserManageForm = props => {
   const config = [
     {
       itemProps: {
-        label: '用户名',
+        label: '账号',
         name: 'username',
+      },
+      comProps: {
+        disabled: props.action !== 'add',
       },
     },
     {
       itemProps: {
-        label: '账号',
+        label: '姓名',
         name: 'nickname',
       },
     },

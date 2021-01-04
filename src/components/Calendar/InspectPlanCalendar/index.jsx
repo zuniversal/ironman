@@ -110,7 +110,7 @@ const ShiftsArrangeDetailList = props => {
         .map((event, index) => {
           // console.log(' ShiftsArrangeDetailList event ： ', event, event.station.inspection_type, )//
           return (
-            <div key={event.id} className="fsb rowItem ">
+            <div key={event.station?.id} className="fsb rowItem ">
               <div className={'left'}>
                 <div className={'top'}>电站-{event.station.name}</div>
                 <div className={'bottom'}>
@@ -131,7 +131,7 @@ const ShiftsArrangeDetailList = props => {
         .map((event, index) => {
           // console.log(' ShiftsArrangeDetailList event ： ', event, event.station.inspection_type, )//
           return (
-            <div key={event.id} className="fsb rowItem ">
+            <div key={event.station?.id} className="fsb rowItem ">
               <div className={'left'}>
                 <div className={'top'}>电站-{event.station.name}</div>
                 <div className={'bottom'}>
@@ -343,6 +343,8 @@ const InspectPlanCalendar = props => {
         eventChange={eventChange}
         initialDate={props.initialDate}
         dayMaxEvents={1}
+        moreLinkContent={'新拖入电站列表...'}
+        // dayMaxEvents={0}
         eventContent={eventInfo => (
           <div className={`eventWrapper`}>
             {eventInfo.event.title}

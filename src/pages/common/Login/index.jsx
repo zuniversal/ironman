@@ -13,12 +13,12 @@ const Login = props => {
     history.push(path);
   };
 
-  props.dispatch({
-    type: 'user/getNotifyAsync',
-    payload: {
-      name: 'zyb',
-    },
-  });
+  // props.dispatch({
+  //   type: 'user/getNotifyAsync',
+  //   payload: {
+  //     name: 'zyb',
+  //   },
+  // });
   const onFinish = values => {
     console.log('onFinish 提交 : ', values, props);
     const { username, password } = values;

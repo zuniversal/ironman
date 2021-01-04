@@ -3,8 +3,23 @@
 .inspectPlanCalendar {
   display: flex;
 
+  // .fc-daygrid-day-bottom {
+  //   display: none;
+  // }
+  .fc-daygrid-day-events {
+    height: 80px;
+  }
+  .fc-event-draggable,
   .fc-daygrid-day-bottom {
-    display: none;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .moreLinkClassNames {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .leftWrapper {

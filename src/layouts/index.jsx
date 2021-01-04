@@ -66,6 +66,7 @@ const Layouts = props => {
     system,
     accountType,
     getRoutes,
+    userMsg,
   } = props; //
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
@@ -237,6 +238,7 @@ const Layouts = props => {
             system={system}
             logout={logout}
             toggle={toggle}
+            userMsg={userMsg}
           ></HeaderWidget>
         )}
         // title={'POWERKEEPER'}
@@ -293,6 +295,7 @@ const mapStateToProps = ({ loading, user }) => ({
   system: user.system,
   accountType: user.accountType,
   getRoutes: user.getRoutes,
+  userMsg: user.userMsg,
 });
 
 export default connect(mapStateToProps)(Layouts);

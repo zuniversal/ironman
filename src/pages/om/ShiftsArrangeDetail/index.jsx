@@ -96,7 +96,8 @@ class ShiftsArrangeDetail extends PureComponent {
   // };
 
   handleCancel = e => {
-    console.log('    handleCancel ： ', e);
+    console.log('    handleCancel ： ', e, this.state, this.props);
+    this.props.getListAsync(this.props.searchInfo);
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
@@ -106,7 +107,7 @@ class ShiftsArrangeDetail extends PureComponent {
     console.log(' renderFormBtn ： ', params, actions); //
     return (
       <div className={'btnWrapper'}>
-        <Button onClick={() => this.handleCancel()}>取消</Button>
+        <Button onClick={this.handleCancel}>取消</Button>
         {/* <Button type="primary" onClick={() => this.handleArrangeOk()}> */}
         <Button
           type="primary"
@@ -183,7 +184,9 @@ class ShiftsArrangeDetail extends PureComponent {
       </div>
     );
   };
-
+  dayClick = e => {
+    console.log('    dayClick ： ', e);
+  };
   renderShiftsArrangeDetailCalendar = params => {
     console.log(
       ' renderShiftsArrangeDetailCalendar ： ',
@@ -206,6 +209,8 @@ class ShiftsArrangeDetail extends PureComponent {
         //   payload: params,
         // })}
         onCheck={this.props.onCheck}
+        // dayClick={this.props.dayClick}
+        dayClick={this.dayClick}
       ></ShiftsArrangeDetailCalendar>
     );
   };

@@ -102,7 +102,7 @@ export default {
           ...v,
           // title: `电站-${v.station.name} id:${v.station.id}`,
           // title: `${v.station.name}`,
-          title: `${v.count}`,
+          title: `${v.count} 已排`,
           tags: `客户`,
           start: v.plan_date,
 
