@@ -34,7 +34,7 @@ const formatPerms = (data = []) => {
     }),
   );
   const [item1, ...rest] = init;
-  console.log(' initinitinitinit ： ', init, rest); //
+  // console.log(' initinitinitinit ： ', init, rest); //
   return init;
   return rest;
 };
@@ -70,7 +70,7 @@ export const flatData = (data = {}, init = {}) => {
 export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   data.forEach(v => {
-    console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]); //
+    // console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]); //
     const value =
       v.authKey && perms[v.authKey] ? perms[v.authKey][0].value : Math.random();
     const item = {
@@ -109,14 +109,14 @@ export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
 export const recursiveHandle = (data = [], perms = {}, datas = []) => {
   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   data.forEach(item => {
-    console.log(
-      ' recursiitemeHandle ： ',
-      perms,
-      item,
-      `22${item.authKey}11`,
-      perms[item.authKey],
-      data,
-    ); //
+    // console.log(
+    //   ' recursiitemeHandle ： ',
+    //   perms,
+    //   item,
+    //   `22${item.authKey}11`,
+    //   perms[item.authKey],
+    //   data,
+    // ); //
     const value =
       item.authKey && perms[item.authKey]
         ? perms[item.authKey][0].value
@@ -158,7 +158,7 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
 
     datas.push(item);
   });
-  console.log('  datasdatasdatas ：', data, datas);
+  // console.log('  datasdatasdatas ：', data, datas);
   // return data
 };
 
@@ -193,6 +193,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        permsData: [],
       };
     },
     getList(state, { payload, type }) {
@@ -206,13 +207,17 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const permsData = payload.bean.perms_codes.filter(
+        v => !`${v}`.endsWith('00'),
+      );
+      console.log('  permsData ：', payload.bean.perms_codes, permsData); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
         itemDetail: payload.bean,
-        permsData: payload.bean.perms_codes,
+        permsData: permsData,
       };
     },
     addItem(state, { payload, type }) {

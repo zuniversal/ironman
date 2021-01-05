@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
-import { notifyTypeConfig, expandLoadTreeList } from '@/configs'; //
+import {
+  // notifyTypeConfig,
+  expandLoadTreeList,
+} from '@/configs'; //
 import { formatConfig } from '@/utils'; //
 import { splitLine } from '@/common/SmartEcharts/charts/common';
 
@@ -11,6 +14,32 @@ const selectData = [
   { label: '短信', value: 'msg' },
   { label: '邮件', value: 'email' },
 ];
+
+const innerItem = {
+  label: 'APP与运维管理平台',
+  value: 2,
+  key: 2,
+};
+
+const clientItem = {
+  label: '小程序与客户平台',
+  value: 2,
+  key: 2,
+};
+
+const notifyTypeConfig = [
+  {
+    label: '短信',
+    value: 0,
+    key: 0,
+  },
+  {
+    label: '邮件',
+    value: 1,
+    key: 1,
+  },
+];
+
 const loadData = e => {
   console.log(' loadData   e,   ： ', e);
 };
@@ -44,6 +73,12 @@ const createTreeNode = (parentId, v, isLeaf = false) => {
   };
 };
 
+// 注意 radio 设置了初始值 配置项的 value 值类型必须一致
+const choiceRadios = [
+  { label: '内部通知', value: 0, key: '0' },
+  { label: '客户通知', value: 1, key: '1' },
+];
+
 const MsgForm = props => {
   console.log(' MsgForm ： ', props); //
   const { formBtn, organizeList, flatOrganizeList, ...rest } = props; //
@@ -51,39 +86,16 @@ const MsgForm = props => {
   const [treeData, setTreeData] = useState(organizeList);
   // const [treeData, setTreeData] = useState(flatOrganizeList);
 
-  const config = [
-    {
-      formType: 'TextArea',
-      itemProps: {
-        label: '消息内容',
-        name: 'content',
-      },
-    },
-    {
-      formType: 'Checkbox',
-      itemProps: {
-        label: '通知方法',
-        name: 'send_type',
-      },
-      comProps: {
-        options: notifyTypeConfig,
-      },
-      checkboxData: notifyTypeConfig,
-    },
-    // {
-    //   formType: 'Checkbox',
-    //   checkboxData: notifyTypeConfig,
-    //   itemProps: {
-    //     label: '通知方法',
-    //     name: 'send_type',
-    //   },
-    // },
+  const { type = 0 } = props.init;
+  const [msgType, setMsgType] = useState(type);
+
+  const msgDeptCol = [
     {
       noRule: true,
       formType: 'TreeSelect',
       itemProps: {
         label: '通知人员',
-        name: 'reciever',
+        name: 'department',
       },
       comProps: {
         // treeData: props.organizeList,
@@ -166,6 +178,74 @@ const MsgForm = props => {
         treeDataSimpleMode: true,
       },
     },
+  ];
+  const msgClientCol = [
+    {
+      formType: 'Search',
+      selectData: props.clientList,
+      itemProps: {
+        label: '通知人员',
+        name: 'customer',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+  ];
+
+  const onTypeChange = e => {
+    console.log('  onTypeChange   e, 改变设置  ： ', e, e.target.value);
+    setMsgType(e.target.value);
+  };
+
+  // const msgType = props.propsForm.getFieldValue('type');
+  const notifyCol = msgType == 0 ? msgDeptCol : msgClientCol;
+  const methodItem = msgType == 0 ? innerItem : clientItem;
+  console.log(' msgType ： ', msgType, methodItem); //
+
+  const config = [
+    {
+      formType: 'TextArea',
+      itemProps: {
+        label: '消息内容',
+        name: 'content',
+      },
+    },
+    {
+      formType: 'Radio',
+      itemProps: {
+        label: '通知类型',
+        name: 'type',
+      },
+      comProps: {
+        onChange: onTypeChange,
+      },
+      radioData: choiceRadios,
+    },
+    {
+      formType: 'Checkbox',
+      itemProps: {
+        label: '通知方法',
+        name: 'send_type',
+      },
+      checkboxData: [
+        // msgType == 0 ? innerItem : clientItem,
+        methodItem,
+        ...notifyTypeConfig,
+      ],
+    },
+
+    ...notifyCol,
+
+    // {
+    //   formType: 'Checkbox',
+    //   checkboxData: notifyTypeConfig,
+    //   itemProps: {
+    //     label: '通知方法',
+    //     name: 'send_type',
+    //   },
+    // },
+
     // {
     //   noRule: true,
     //   formType: 'TreeSelect',
@@ -200,13 +280,22 @@ const MsgForm = props => {
 
   return (
     <div className={' MsgForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
+      <SmartForm
+        config={config}
+        {...rest}
+        init={{
+          type: 0,
+          ...props.init,
+        }}
+      ></SmartForm>
 
       {formBtn}
     </div>
   );
 };
 
-MsgForm.defaultProps = {};
+MsgForm.defaultProps = {
+  init: {},
+};
 
 export default MsgForm;

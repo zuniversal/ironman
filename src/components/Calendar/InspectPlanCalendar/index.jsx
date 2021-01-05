@@ -7,7 +7,7 @@ import SmartCalendar, {
   dayCellContent,
 } from '@/common/SmartCalendar'; //
 import { ANIMATE, PRIMARY } from '@/constants'; //
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, BarsOutlined } from '@ant-design/icons';
 
 let matchList = [
   {
@@ -205,6 +205,7 @@ const ShiftsArrangeList = props => {
                     data-datas={event}
                     test={'zyb'}
                   >
+                    <BarsOutlined className={`dragIcon`} />
                     {event.name}
                   </div>
                 )}
@@ -311,7 +312,7 @@ const InspectPlanCalendar = props => {
         dayEvents={props.dayEvents}
         monthEvents={props.monthEvents}
         leftTitle={props.dayInfo.date}
-        rightTitle={`任务数：${props.dayEvents.length +
+        rightTitle={`已排电站数：${props.dayEvents.length +
           props.monthEvents.length}`}
         renderRight={event => (
           <a onClick={() => props.removePlanAsync(event)}>移除</a>

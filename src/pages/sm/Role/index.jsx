@@ -12,6 +12,7 @@ import {
 } from '@/models/role'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { filterArr } from '@/utils';
 
 const TITLE = '角色';
 
@@ -107,10 +108,18 @@ class Role extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    const permsCodesMain = filterArr(
+      this.props.permsData
+        .filter(v => v !== 'all')
+        .map(v => `${v}`.slice(0, 4))
+        .map(v => Number(v + '00')),
+    );
+    const permsCodes = filterArr([...this.props.permsData, ...permsCodesMain]);
+    console.log(' permsCodes0 ： ', permsCodesMain, permsCodes); //
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      console.log('  对吗  !res.comments ', !res.comments);
+      // return
       if (!res.comments) {
         res.comments = undefined;
       }
@@ -118,14 +127,14 @@ class Role extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
-          perms_codes: this.props.permsData,
+          perms_codes: permsCodes,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
           d_id: itemDetail.id,
-          perms_codes: this.props.permsData,
+          perms_codes: permsCodes,
         });
       }
     } catch (error) {

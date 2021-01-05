@@ -78,7 +78,22 @@ class Weak extends PureComponent {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);
   };
-
+  handleAction = params => {
+    console.log('    handleAction ： ', params, this.state, this.props);
+    this.props.setData({
+      isShowRemoveModal: true,
+      removeParams: {
+        noRemove: true,
+        removeTitle: '提示',
+        removeContent: '是否确认处理',
+        okFn: e => {
+          console.log(' okFnokFnokFnokFn ： ', e, params); //
+          this.props.handleWeakAsync(params);
+          this.props.onResultModalCancel();
+        },
+      },
+    });
+  };
   renderTable = params => {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
@@ -96,6 +111,7 @@ class Weak extends PureComponent {
       handleWeakAsync: this.props.handleWeakAsync,
       exportDataAsync: this.props.exportDataAsync,
       showExportPdf: this.showExportPdf,
+      handleAction: this.handleAction,
     };
 
     return <WeakTable {...tableProps}></WeakTable>;

@@ -16,7 +16,7 @@ import {
   Space,
   InputNumber,
   Upload,
-  Result,
+  Modal,
 } from 'antd';
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
@@ -46,6 +46,16 @@ const formatFileList = fileData => {
   // return fileData ? formatFile([fileData]) : []
 };
 
+const getBase64 = file => {
+  console.log(' getBase64   ,   ： ', file);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+};
+
 const UploadCom = props => {
   console.log(' UploadCom   props, ,   ： ', props);
   const {
@@ -64,6 +74,9 @@ const UploadCom = props => {
     isHide,
     formAction,
   } = props; //
+
+  const [state, setState] = useState({});
+
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
 
   const [fileData, setFileData] = useState(formatFileList(init[name]));
@@ -79,7 +92,6 @@ const UploadCom = props => {
       },
     ];
   };
-
   const beforeUpload = file => {
     console.log(' beforeUpload   file,   ： ', file, props.size);
     const isLt10M = file.size / props.size / props.size < 2;
@@ -93,11 +105,12 @@ const UploadCom = props => {
     console.log(' onChange   e,   ： ', e);
     const { onUploadChange, noTips, uploadSucc } = props; //
     // const {fileList,  } = e
-    if (uploadProps.multiple) {
-      setFileData(e.fileList);
-    } else {
-      setFileData([e.fileList[e.fileList.length - 1]]);
-    }
+    // if (uploadProps.multiple) {
+    //   setFileData(e.fileList);
+    // } else {
+    //   setFileData([e.fileList[e.fileList.length - 1]]);
+    // }
+    setFileData(e.fileList);
 
     if (e.file.status === 'done') {
       tips(`${e.file.name} 上传成功！`, 1);
@@ -133,78 +146,106 @@ const UploadCom = props => {
     //   }
     // }
   };
+
+  const handleCancel = () => setState({ previewVisible: false });
+
+  const handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+      previewTitle:
+        file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
+    });
+  };
+
   return (
-    <Form.Item
-      key={'attach'}
-      // name="upload"
-      name={name}
-      label={label}
-      colon={false}
-      // extra="支持扩展名：.pdf"
-      extra={extra}
-      rules={props.noRule ? undefined : rules()}
-      {...formItemLayout}
-      {...formItemProps}
-      className={`uploadFormItem ${
-        isInputUpload ? '' : 'uploadBox'
-      } ${formItemCls} `}
-    >
-      <Upload
-        progress={{
-          strokeColor: {
-            '0%': '#108ee9',
-            '100%': '#87d068',
-          },
-          strokeWidth: 3,
-          format: percent => `${parseFloat(percent.toFixed(2))}%`,
-        }}
-        // fileList={[
-        //   {
-        //     uid: '-1',
-        //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        //   },
-        // ]}
-        beforeUpload={beforeUpload}
-        fileList={fileData}
-        // showUploadList={{
-        //   showDownloadIcon: true,
-        //   downloadIcon: 'download ',
-        //   showRemoveIcon: true,
-        //   removeIcon: (
-        //     <StarOutlined
-        //       onClick={e => console.log(e, 'custom removeIcon event')}
-        //     />
-        //   ),
-        // }}
-        action={action}
-        // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?
-        // fileList={[]}
-        listType="picture-card"
-        className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
-        multiple={false}
-        onChange={onChange}
-        // isImageUrl={false}
-        // iconRender={(file, listType) => {
-        //    console.log(' file, listType ： ', file, listType,  )//
-        //   return <SmartImg src={file.thumbUrl}></SmartImg>
-        // }}
-        {...uploadProps}
+    <>
+      <Form.Item
+        key={'attach'}
+        // name="upload"
+        name={name}
+        label={label}
+        colon={false}
+        // extra="支持扩展名：.pdf"
+        extra={extra}
+        rules={props.noRule ? undefined : rules()}
+        {...formItemLayout}
+        {...formItemProps}
+        className={`uploadFormItem ${
+          isInputUpload ? '' : 'uploadBox'
+        } ${formItemCls} `}
       >
-        {isHide || formAction !== 'detail' ? (
-          isInputUpload ? (
-            <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>
-              <IconCom className={'icon'} />
-              <div className={'text'}>{text}</div>
-            </div>
-          ) : (
-            <div className={`dfc uploadContent`}>
-              <IconCom className={'icon'} />
-              <div className={'text'}>{text}</div>
-            </div>
-          )
-        ) : null}
-      </Upload>
-    </Form.Item>
+        <Upload
+          progress={{
+            strokeColor: {
+              '0%': '#108ee9',
+              '100%': '#87d068',
+            },
+            strokeWidth: 3,
+            format: percent => `${parseFloat(percent.toFixed(2))}%`,
+          }}
+          // fileList={[
+          //   {
+          //     uid: '-1',
+          //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+          //   },
+          // ]}
+          beforeUpload={beforeUpload}
+          fileList={fileData}
+          onPreview={handlePreview}
+          // showUploadList={{
+          //   showDownloadIcon: true,
+          //   downloadIcon: 'download ',
+          //   showRemoveIcon: true,
+          //   removeIcon: (
+          //     <StarOutlined
+          //       onClick={e => console.log(e, 'custom removeIcon event')}
+          //     />
+          //   ),
+          // }}
+          action={action}
+          // devScripts.js:5836 Warning: [antd: Upload] `value` is not a valid prop, do you mean `fileList`?
+          // fileList={[]}
+          listType="picture-card"
+          className={`uploadCom ${isInputUpload ? 'inputUpload' : ''}`}
+          multiple={false}
+          onChange={onChange}
+          // isImageUrl={false}
+          // iconRender={(file, listType) => {
+          //    console.log(' file, listType ： ', file, listType,  )//
+          //   return <SmartImg src={file.thumbUrl}></SmartImg>
+          // }}
+          {...uploadProps}
+        >
+          {isHide || formAction !== 'detail' ? (
+            isInputUpload ? (
+              <div className={`${contentClass} ${isInputUpload ? 'dfc' : ''}`}>
+                <IconCom className={'icon'} />
+                <div className={'text'}>{text}</div>
+              </div>
+            ) : (
+              <div className={`dfc uploadContent`}>
+                <IconCom className={'icon'} />
+                <div className={'text'}>{text}</div>
+              </div>
+            )
+          ) : null}
+        </Upload>
+      </Form.Item>
+      <Modal
+        visible={state.previewVisible}
+        title={'图片预览'}
+        footer={null}
+        onCancel={handleCancel}
+        className={`previewModal`}
+      >
+        <img className={`previewImg`} src={state.previewImage} />
+      </Modal>
+    </>
   );
 };
 

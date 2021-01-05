@@ -10,7 +10,7 @@ import { csSystemNotify, BIG_SCREEN } from '@/constants'; //
 const HeaderWidget = props => {
   // console.log(' HeaderWidget   props, ,   ： ', props);
   const goBigScreen = path => {
-    console.log(' goBigScreen   path,   ： ', path);
+    console.log(' goBigScreen   path,   ： ', path, BIG_SCREEN);
     window.open(BIG_SCREEN);
     // window.open('http://188.131.235.243:31004/normal_screen');
   };

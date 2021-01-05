@@ -474,7 +474,7 @@ const SmartForm = (props, state) => {
       // console.log(' selectSearch ： ', selectProps, item.selectSearch); //
       if (item.selectSearch) {
         // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的
-        selectProps.onSearch = debounce(item.selectSearch, 500);
+        selectProps.onSearch = debounce(item.selectSearch, 1500);
         // selectProps.onSearch = item.selectSearch
       }
     }
@@ -486,7 +486,11 @@ const SmartForm = (props, state) => {
       rowText: label,
       Label: LabelCom,
       CustomCom: CustomCom,
-      plainText: <span className={`plainText`}>{plainText}</span>,
+      plainText: (
+        <span className={`plainText`} {...comProps}>
+          {plainText}
+        </span>
+      ),
       Divider: <Divider />,
       Input: <Input allowClear maxLength={32} {...realComProps} />,
       InputNumber: <InputNumber allowClear maxLength={32} {...realComProps} />,

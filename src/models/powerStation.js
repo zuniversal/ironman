@@ -2,7 +2,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
-import { formatSelectList, nowYearMonth, tips } from '@/utils';
+import { formatSelectList, nowYearMonth, tips, filterObjSame } from '@/utils';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
@@ -161,6 +161,7 @@ export default {
         electricalinfromation_set,
         outline_set,
       } = payload.bean;
+      const { houseNoList } = state; //
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
@@ -179,6 +180,21 @@ export default {
         itemDetail.inspection_time = itemDetail.inspection_time.split(',');
       }
 
+      const electricityUserItem = {
+        value: `${electricity_user ? electricity_user?.id : null}`,
+        label: electricity_user ? electricity_user.number : '',
+      };
+
+      const houseNoListData = [...houseNoList, electricityUserItem];
+      const houseNoListFitler = filterObjSame(houseNoListData, 'value');
+      console.log(
+        ' houseNoListData ： ',
+        houseNoList,
+        electricityUserItem,
+        houseNoListData,
+        houseNoListFitler,
+      ); //
+
       return {
         ...state,
         action: payload.payload.action,
@@ -195,6 +211,7 @@ export default {
           ...v,
           key: Math.random(),
         })),
+        houseNoList: houseNoListData,
       };
     },
     addItem(state, { payload, type }) {
@@ -209,7 +226,12 @@ export default {
       return {
         ...state,
         dataList: state.dataList.map(v =>
-          v.id == payload.payload.d_id ? { ...v, ...payload.bean } : v,
+          v.id == payload.payload.d_id
+            ? {
+                ...v,
+                ...payload.bean,
+              }
+            : v,
         ),
         isShowModal: false,
       };
@@ -534,11 +556,22 @@ export default {
         this,
       ); //
       const res = yield call(services.getList, params);
-      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
+      yield put({
+        type: 'getList',
+        payload: {
+          ...res,
+          searchInfo: params,
+        },
+      });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *addItemAsync({ payload, action, type }, { call, put, select }) {
       const { powerInfoData, outLineTableData } = yield select(
@@ -611,7 +644,9 @@ export default {
       const res = yield call(services.addItem, params);
       // const res = yield call(services.addItem, {payload});
       // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      yield put({
+        type: 'getListAsync',
+      });
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       // const { latitude, longitude, ...rest } = payload;
@@ -663,18 +698,24 @@ export default {
       console.log(' params ： ', params); //
       const res = yield call(services.editItem, params);
       // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      yield put({
+        type: 'getListAsync',
+      });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      yield put({
+        type: 'getListAsync',
+      });
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
       console.log(' removeItemsAsync ： ', payload, type); //
       const res = yield call(services.removeItems, payload);
       // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
+      yield put({
+        type: 'getListAsync',
+      });
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
@@ -722,41 +763,76 @@ export default {
       const res = yield call(services.addPowerInfo, {
         electrical_info_list: [payload],
       });
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *editPowerInfoAsync({ payload, action, type }, { call, put, select }) {
       console.log(' editPowerInfoAsync ： ', payload);
       // const { powerInfoData } = yield select(state => state[namespace]);
       const res = yield call(services.editPowerInfo, payload);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *removePowerInfoAsync({ payload, action, type }, { call, put }) {
       console.log(' removePowerInfoAsync ： ', payload);
       if (payload.action === 'remove') {
         const res = yield call(services.removePowerInfo, payload);
       }
-      yield put(action({ payload }));
+      yield put(
+        action({
+          payload,
+        }),
+      );
     },
 
     *getPowerAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *getHouseNoAsync({ payload, action, type }, { call, put }) {
       const res = yield call(houseNoServices.getList, payload);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(houseNoServices.getList, { customer: 1 });
-      yield put(action({ ...res, payload }));
+      const res = yield call(houseNoServices.getList, {
+        customer: 1,
+      });
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *batchGetAsync({ payload, action, type }, { call, put }) {
       // *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
       console.log(' batchGetAsync ： '); //
       const res = yield [
         call(clientServices.getList, payload),
-        call(houseNoServices.getList, { keyword: payload }),
-        call(houseNoServices.getList, { customer: 1 }),
+        call(houseNoServices.getList, {
+          keyword: payload,
+        }),
+        call(houseNoServices.getList, {
+          customer: 1,
+        }),
       ];
       console.log('  reresresress ：', res); //
     },
@@ -765,7 +841,12 @@ export default {
       console.log(' getDistrictAsync ： ', payload, type); //
       const res = yield call(clientServices.getDistrict, payload);
       console.log('  getDistrictAsync res ：', res); //
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
 
     *addOutLineTableItemAsync(
@@ -775,10 +856,20 @@ export default {
       console.log(' addOutLineTableItemAsync ： ', payload);
       const { itemDetail } = yield select(state => state[namespace]);
       const params = {
-        outline_list: [{ ...payload, powerstation: itemDetail.id }],
+        outline_list: [
+          {
+            ...payload,
+            powerstation: itemDetail.id,
+          },
+        ],
       };
       const res = yield call(services.addOutLine, params);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *editOutLineTableItemAsync(
       { payload, action, type },
@@ -791,7 +882,12 @@ export default {
         // powerstation: itemDetail.id,
       };
       const res = yield call(services.editOutLine, payload);
-      yield put(action({ ...res, payload }));
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
     },
     *removeOutLineTableItemAsync(
       { payload, action, type },
@@ -805,7 +901,11 @@ export default {
           id: `${payload.id}`,
         });
       }
-      yield put(action({ payload }));
+      yield put(
+        action({
+          payload,
+        }),
+      );
     },
   },
   // subscriptions: {

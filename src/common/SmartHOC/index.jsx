@@ -282,9 +282,10 @@ export default ({
       });
     };
     renderRemoveModal = params => {
-      console.log(' renderRemoveModal ： ', params, this.state, this.props);
+      // console.log(' renderRemoveModal ： ', params, this.state, this.props);
       const { isShowRemoveModal, removeParams } = this.state; //
-      const { removeTitle = '删除操作' } = this.props; //
+      // const { removeTitle = '删除操作' } = this.props; //
+      const { removeTitle = '删除操作' } = removeParams;
 
       const modalProps = {
         title: removeTitle,
@@ -296,7 +297,11 @@ export default ({
       const resProps = {
         // okFn: this.handleOk,
         // offFn: this.handleOff,
-        okFn: this.onResultModalOk,
+        okFn: removeParams.okFn
+          ? removeParams.okFn
+          : !removeParams.noRemove
+          ? this.onResultModalOk
+          : this.onResultModalCancel,
         offFn: this.onResultModalCancel,
         removeContent: removeParams.removeContent,
       };
@@ -624,6 +629,10 @@ export default ({
       };
       return getShowTitle(this.props);
     }
+    setData = params => {
+      console.log(' setData,  , ： ', params);
+      this.setState(params);
+    };
 
     render() {
       console.log(
@@ -664,6 +673,8 @@ export default ({
             onPageChange={this.onPageChange}
             dispatchAction={this.dispatchAction}
             toggleShowTitle={this.toggleShowTitle}
+            setData={this.setData}
+            onResultModalCancel={this.onResultModalCancel}
           />
 
           {this.renderSmartFormModal()}

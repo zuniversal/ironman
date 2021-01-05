@@ -7,8 +7,9 @@ import ChoiceRadio from '@/components/Widgets/ChoiceRadio'; //
 
 import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
 import SmartHOC from '@/common/SmartHOC';
-import { connect } from 'umi';
+import { connect, history } from 'umi';
 import { getMonthWeekDaysSimple, nowYear, tips, filterArr } from '@/utils';
+import { SHIFTSARRANGE } from '@/constants';
 
 export const TITLE = '排班';
 
@@ -97,11 +98,8 @@ class ShiftsArrangeDetail extends PureComponent {
 
   handleCancel = e => {
     console.log('    handleCancel ： ', e, this.state, this.props);
-    this.props.getListAsync(this.props.searchInfo);
-  };
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    // this.props.getListAsync(this.props.searchInfo);
+    history.push(SHIFTSARRANGE);
   };
   renderFormBtn = params => {
     console.log(' renderFormBtn ： ', params, actions); //
@@ -130,6 +128,10 @@ class ShiftsArrangeDetail extends PureComponent {
         onFieldChange={this.onFieldChange}
       ></ShiftsArrangeSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
   // onFieldChange = params => {
   //   console.log('    onFieldChange ： ', params);

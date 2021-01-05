@@ -109,7 +109,7 @@ const RoleTab = props => {
 };
 
 const RoleForm = props => {
-  const { formBtn, init, ...rest } = props; //
+  const { formBtn, init, permsData = [], ...rest } = props; //
   const { perms_codes = [] } = init;
   console.log(' RoleForm 1 ： ', props, perms_codes); //
 
@@ -211,10 +211,12 @@ const RoleForm = props => {
           // onSelect={onSelect}
           // selectedKeys={perms_codes}
           checkedKeys={props.permsData}
+          // checkedKeys={[...permsData, 190000]}
           onCheck={props.onPermsCheck}
           treeData={props.permission}
           className={`roleAuthTree`}
           switcherIcon={<DownOutlined />}
+          // checkStrictly
         />
       ),
       itemProps: {

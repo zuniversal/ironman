@@ -226,9 +226,11 @@ class Client extends PureComponent {
         if (res.logo && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
           params.logo = fileList[fileList.length - 1].response.url;
-          // } else {
-          //   tips('logo不能为空！', 2);
-          //   return;
+        } else {
+          // tips('logo不能为空！', 2);
+          // return;
+          console.log(' paramsparamsparams ： ', params); //
+          params.logo = '';
         }
       }
       console.log(' params ： ', params); //

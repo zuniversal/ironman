@@ -16,8 +16,8 @@ export const URL_PREFIX = `http://81.68.218.18:31002`;
 export const WS_DEV = `188.131.235.243:31002`;
 export const WS_HOST = window.location.host;
 
-const { protocol = 'http:', origin } = window.location;
-
+const { protocol = 'http:', hostname } = window.location;
+console.log(' protocol ： ', protocol + hostname); //
 const wsMap = {
   'http:': 'ws:',
   'https:': 'wss:',
@@ -60,7 +60,7 @@ export const homeMap = {
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
-export const BIG_SCREEN = origin + ':31004/normal_screen?';
+export const BIG_SCREEN = protocol + '//' + hostname + ':31004/normal_screen';
 
 const animations = [
   'bounce',

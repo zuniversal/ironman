@@ -140,13 +140,29 @@ export default {
     },
 
     getUser(state, { payload, type }) {
-      console.log(' getUserAsync 修改  ： ', state, payload, type); //
+      console.log(' getUserAsync 修改 1 ： ', state, payload); //
+      const userList = payload.list.map(v => {
+        // console.log(' getUserAsync 修改 22 ： ', state, payload, v.team); //
+        return { ...v, id: `${v.team[0]?.id}`, teamId: `${v.team[0]?.id}` };
+      });
+      console.log(' getUserAsync 修改  ： ', state, payload, userList); //
       return {
         ...state,
-        userList: formatSelectList(payload.list, 'nickname'),
+        userList: formatSelectList(userList, 'nickname'),
       };
     },
+    // getTeam(state, { payload, type }) {
+    //   console.log(' getTeam 修改 1 ： ', state, payload, ); //
+    //   const teamList = payload.list
+    //   // .map(v => ({...v, teamId: v.team[0].id}))
+    //   console.log(' getTeam 修改  ： ', state, payload, teamList); //
+    //   return {
+    //     ...state,
+    //     teamList: formatSelectList(teamList, 'team_headman', 'teamId'),
+    //   };
+    // },
     getTeam(state, { payload, type }) {
+      console.log(' getTeam 修改  ： ', state, payload, type); //
       return {
         ...state,
         teamList: formatSelectList(payload.list, 'team_headman'),

@@ -241,6 +241,7 @@ const PowerStationForm = props => {
     ...inspectModeCol,
     ...inspectCol,
     {
+      noRule: true,
       itemProps: {
         label: '电话',
         name: 'phone',
@@ -345,6 +346,7 @@ const PowerStationForm = props => {
     ...inspectModeCol,
     ...inspectCol,
     {
+      noRule: true,
       itemProps: {
         label: '电话',
         name: 'phone',

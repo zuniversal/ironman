@@ -114,13 +114,13 @@ export default {
       const { userList, adminList } = state;
       const serviceStaff = {
         ...service_staff,
-        value: `${service_staff.id}`,
-        label: service_staff.nickname,
+        value: `${service_staff?.id}`,
+        label: service_staff?.nickname,
       };
       const lastServiceStaff = {
         ...last_service_staff,
-        value: `${last_service_staff.id}`,
-        label: last_service_staff.nickname,
+        value: `${last_service_staff?.id}`,
+        label: last_service_staff?.nickname,
       };
       console.log(
         ' serviceStaff, lastServiceStaff ： ',
@@ -137,8 +137,8 @@ export default {
           customer_admin:
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           d_id: payload.payload.d_id,
-          service_staff: `${service_staff.id}`,
-          last_service_staff: `${last_service_staff.id}`,
+          service_staff: `${service_staff?.id}`,
+          last_service_staff: `${last_service_staff?.id}`,
           electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
           // service_staff: 'zybxxx',

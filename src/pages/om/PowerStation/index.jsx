@@ -224,8 +224,9 @@ class PowerStation extends PureComponent {
           const fileList = res.file.fileList;
           res.file = fileList[fileList.length - 1].response.url;
         } else {
-          tips('文件不能为空！', 2);
-          return;
+          // tips('文件不能为空！', 2);
+          // return;
+          res.file = '';
         }
       }
 

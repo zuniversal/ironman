@@ -27,6 +27,11 @@ const { TabPane } = Tabs;
 
 const TabPanes = props => {
   const { tabData, tab } = props; //
+  console.log(
+    ' %c tabData 组件 this.state, this.props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  ); //
   return (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
@@ -53,6 +58,7 @@ TabPanes.defaultProps = {
   tabItemKey: '',
   tabPrefix: '',
   tabData: [],
+  onChange: () => {},
 };
 
 const formLayouts = {
@@ -182,6 +188,7 @@ const InspectRecordForm = props => {
   const {
     // power_data = [{}],
     file = [],
+    spect_out,
   } = props.init;
   const power_data =
     props.init.power_data && props.init.power_data.length > 0
@@ -193,9 +200,31 @@ const InspectRecordForm = props => {
     ...props.init,
     spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
     // spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
-    spectOut: props.init.spect_out,
+    // spectOut: [props.init.spect_out[0]],
+    // spectOut: spect_out.length > 0 ? [spect_out[0]] : [],
+    // spectOut: spect_out.length > 0 ? spect_out[0] : {},
+    spectOut: props.init.spect_out[0],
   });
   console.log(' dataInit ： ', dataInit, power_data); //
+
+  const onOutLineChange = index => {
+    console.log(
+      ' onOutLineChange   index,   ： ',
+      index,
+      dataInit,
+      power_data,
+      power_data[index],
+    );
+    // props.init.powerData = {
+    //   ...power_data[index],
+    // };
+    setDataInit({
+      ...dataInit,
+      // spectOut: power_data[index].spect_out,
+      // spectOut: [dataInit.spect_out[index]],
+      spectOut: dataInit.spect_out[index],
+    });
+  };
 
   // const powerData =
   setTimeout(() => {
@@ -560,7 +589,7 @@ const InspectRecordForm = props => {
           // tabItemKey={'power_number'}
           tabPrefix={'电压出线侧设备'}
           onChange={onOutLineChange}
-          tabData={dataInit.spectOut}
+          tabData={dataInit.spect_out}
         ></TabPanes>
       ),
       itemProps: {
@@ -870,31 +899,39 @@ const InspectRecordForm = props => {
     });
   };
 
-  const onOutLineChange = index => {
-    console.log(
-      ' onOutLineChange   index,   ： ',
-      index,
-      dataInit,
-      power_data,
-      power_data[index],
-    );
-    // props.init.powerData = {
-    //   ...power_data[index],
-    // };
-    setDataInit({
-      ...dataInit,
-      // spectOut: power_data[index].spect_out,
-      // spectOut: dataInit.spect_out[index],
-    });
-  };
-
   const config = [
+    // {
+    //   // formType: 'plainText',
+    //   // plainText: props.init[name],
+    //   // formType: 'TextArea',
+    //   itemProps: {
+    //     label: '客户名称：',
+    //     name: ['customer', 'name'],
+    //   },
+    // },
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: (
+    //     // <div className={'w-200 ant-col ant-col-12 '}>
+    //     <div className={''}>
+    //       {props.init.customer.name}
+    //     </div>
+    //   ),
+    //   itemProps: {
+    //     label: '客户名称：',
+    //     name: ['customer', 'name'],
+    //     className: 'ant-col ant-col-12 clientName',
+    //   },
+    // },
     {
-      // formType: 'plainText',
-      // plainText: props.init[name],
+      formType: 'plainText',
+      plainText: props.init?.customer?.name,
       itemProps: {
         label: '客户名称：',
         name: ['customer', 'name'],
+      },
+      comProps: {
+        className: 'clientName',
       },
     },
     {
@@ -1150,7 +1187,7 @@ const InspectRecordForm = props => {
               <TabPanes
                 useIndex
                 tabPrefix={'高压进侧线'}
-                onChange={onOutLineChange}
+                // onChange={onInLineChange}
                 tabData={dataInit.spectIn}
               ></TabPanes>
             ),
@@ -1199,7 +1236,7 @@ const InspectRecordForm = props => {
     ...v,
     comProps: { className: 'w-200', ...v.comProps },
   }));
-  console.log(' configs  config.map v ： ', configs);
+  console.log(' configs  config.map v ： ', dataInit, configs);
 
   useExportPdf({
     // element: document.getElementsByClassName('inspectRecordForm')[0],

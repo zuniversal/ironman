@@ -84,7 +84,8 @@ const WeakTable = props => {
       ) : (
         <a
           onClick={() =>
-            props.handleWeakAsync({
+            // props.handleWeakAsync({
+            props.handleAction({
               action: 'handleWeak',
               d_id: record.id,
               id: record.id,
