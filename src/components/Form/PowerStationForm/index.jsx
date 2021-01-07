@@ -61,6 +61,9 @@ const PowerStationForm = props => {
     const inspectMode = props.propsForm.getFieldValue('inspectMode');
     // console.log(' PowerStationForm inspectMode 设置 ： ', inspectMode, ); //
     setInspectMode(e.target.value);
+    props.propsForm.setFieldsValue({
+      service_team: undefined,
+    });
     // setInspectMode(inspectMode == 0 ? 1 : 0);
   };
 
@@ -188,8 +191,37 @@ const PowerStationForm = props => {
     },
   ];
 
+  const monthTeamCol = [
+    {
+      key: 'monthTeamCol',
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
+      itemProps: {
+        label: '服务班组',
+        name: 'service_team',
+      },
+    },
+  ];
+  const dayTeamCol = [
+    {
+      key: 'dayTeamCol',
+      formType: 'Search',
+      selectSearch: props.getTeamAsync,
+      selectData: props.teamList,
+      itemProps: {
+        label: '服务班组',
+        name: 'service_team',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+  ];
+
   // const inspectCol = props.propsForm.getFieldValue('inspection_type') == 0 ? inspectTimeCol : inspectCountCol;
   const inspectCol = inspectMode == 1 ? inspectTimeCol : inspectCountCol;
+  const teamCol = inspectMode == 1 ? dayTeamCol : monthTeamCol;
 
   console.log(
     ' PowerStationForm inspectMode const inspectMode 查看值 ： = ',
@@ -240,6 +272,7 @@ const PowerStationForm = props => {
 
     ...inspectModeCol,
     ...inspectCol,
+    ...teamCol,
     {
       noRule: true,
       itemProps: {
@@ -345,6 +378,7 @@ const PowerStationForm = props => {
 
     ...inspectModeCol,
     ...inspectCol,
+    ...teamCol,
     {
       noRule: true,
       itemProps: {
@@ -402,11 +436,11 @@ const PowerStationForm = props => {
 
         isDisabledAll={action === 'detail'}
         {...props}
-        // init={{
-        //   // inspection_type: 0,
-        //   // inspection_type: inspectMode,
-        //   ...props.init,
-        // }}
+        init={{
+          // inspection_type: 0,
+          inspection_type: inspectMode,
+          ...props.init,
+        }}
       ></SmartForm>
 
       {extra}

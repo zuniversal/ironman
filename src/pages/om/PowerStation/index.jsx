@@ -234,6 +234,10 @@ class PowerStation extends PureComponent {
         ...init,
         ...res,
       };
+      if (res.inspection_type === 1) {
+        res.service_team = res.service_team.join(',');
+      }
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -260,6 +264,8 @@ class PowerStation extends PureComponent {
       clientList: this.props.clientList,
       getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
       houseNoList: this.props.houseNoList,
+      getTeamAsync: params => this.props.getTeamAsync({ number: params }),
+      teamList: this.props.teamList,
       // editPowerInfo: this.props.editPowerInfo,
       // addPowerInfoAsync: this.props.addPowerInfoAsync,
       // editPowerInfo: this.props.editPowerInfo,
@@ -328,6 +334,7 @@ class PowerStation extends PureComponent {
     this.props.getPowerAsync();
     this.props.getClientAsync();
     this.props.getHouseNoAsync();
+    this.props.getTeamAsync();
     this.props.getDistrictAsync({});
     // setTimeout(() => {
     //   console.log('  延时器 ： ');

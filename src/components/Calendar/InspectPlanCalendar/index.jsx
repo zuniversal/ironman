@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import { Form, Tooltip } from 'antd';
+import { Input, Tooltip } from 'antd';
 import SmartCalendar, {
   CalendarDraggable,
   dayCellContent,
 } from '@/common/SmartCalendar'; //
 import { ANIMATE, PRIMARY } from '@/constants'; //
 import { CloseOutlined, BarsOutlined } from '@ant-design/icons';
+import SmartInput from '@/common/SmartInput';
+
+const { Search } = Input;
 
 let matchList = [
   {
@@ -194,23 +197,29 @@ const ShiftsArrangeList = props => {
           // console.log(' CalendarDraggable event ： ', event,)//
           return (
             <div key={event.id} className="fsb rowItem ">
-              <div className={'left'}>
-                {/* {true && ( */}
-                {event.surplus_plan_num > 0 && (
-                  <div
-                    className="dragItem "
-                    id={event.id}
-                    url={event.surplus_plan_num}
-                    // data-isdraged={event.isdraged}
-                    data-datas={event}
-                    test={'zyb'}
-                  >
-                    <BarsOutlined className={`dragIcon`} />
-                    {event.name}
-                  </div>
-                )}
+              <Tooltip
+                placement={placement}
+                title={'拖拽电站到日历里！'}
+                overlayClassName="aaa"
+              >
+                <div className={'left'}>
+                  {/* {true && ( */}
+                  {event.surplus_plan_num > 0 && (
+                    <div
+                      id={event.id}
+                      url={event.surplus_plan_num}
+                      // data-isdraged={event.isdraged}
+                      data-datas={event}
+                      className="dragItem "
+                      test={'zyb'}
+                    >
+                      <BarsOutlined className={`dragIcon`} />
+                      电站-{event.name}
+                    </div>
+                  )}
+                </div>
                 <div>客户-{event.customer}</div>
-              </div>
+              </Tooltip>
               <div>{props.renderRight(event)}</div>
             </div>
           );
@@ -219,27 +228,31 @@ const ShiftsArrangeList = props => {
   );
 
   return (
-    <CalendarDraggable
-      className={`${className} `}
-      itemSelector={'.dragItem'}
-      // renderItem={(event, index) => (
-      //   <div key={event.id} className="fsb rowItem ">
-      //   </div>
-      // )
-    >
-      {!noToolTip ? (
-        <Tooltip
-          {...props}
-          placement={placement}
-          title={'拖入日历'}
-          overlayClassName="aaa"
-        >
-          {Com}
-        </Tooltip>
-      ) : (
-        Com
-      )}
-    </CalendarDraggable>
+    <div className={`rightList rightTable`}>
+      {/* <SearchForm className={`w100 `}
+        onSearch={null}
+        onChange={props.onUnScheduleListChange}
+        selectData={props.unScheduleFilter}
+      ></SearchForm> */}
+      <SmartInput
+        className={`w100 `}
+        placeholder={'请输入关键字过滤'}
+        onChange={props.onUnScheduleListChange}
+        // onChange={() => {
+        //   console.log(' ssssssssss ： ',    )//
+        // }}
+      ></SmartInput>
+      <CalendarDraggable
+        className={`${className} `}
+        itemSelector={'.dragItem'}
+        // renderItem={(event, index) => (
+        //   <div key={event.id} className="fsb rowItem ">
+        //   </div>
+        // ){}
+      >
+        {!noToolTip ? Com : Com}
+      </CalendarDraggable>
+    </div>
   );
 };
 
@@ -346,24 +359,35 @@ const InspectPlanCalendar = props => {
         dayMaxEvents={1}
         moreLinkContent={'新拖入电站列表...'}
         // dayMaxEvents={0}
-        eventContent={eventInfo => (
-          <div className={`eventWrapper`}>
-            {eventInfo.event.title}
-            {/* <CloseOutlined onClick={props.remove} /> */}
-          </div>
-        )}
+        eventContent={eventInfo => {
+          console.log(' eventInfo ： ', eventInfo); //
+          return (
+            <div
+              className={`eventWrapper`}
+              onClick={e => {
+                console.log(' eventWrappereventWrapper ： '); //
+              }}
+            >
+              {eventInfo.event.title?.split('客户')[0]}
+              {/* <CloseOutlined onClick={props.remove} /> */}
+            </div>
+          );
+        }}
         // eventOverlap={false}
         // dayCellContent={}
       />
 
       <ShiftsArrangeList
-        className={`rightTable listWrapper`}
+        className={` listWrapper`}
         renderRight={event => (
           <>
             {event.surplus_plan_num} / {event.spect_plan_num}
           </>
         )}
         events={props.unScheduleList}
+        events={props.unScheduleFilter}
+        unScheduleFilter={props.unScheduleFilter}
+        onUnScheduleListChange={props.onUnScheduleListChange}
         // className={`${ANIMATE.slideInRight} `}
       ></ShiftsArrangeList>
     </div>

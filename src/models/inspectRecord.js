@@ -64,7 +64,7 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          work_date: v.work_date ? v.work_date.split('T')[0] : '',
+          end_time: v.end_time ? v.end_time.split('T')[0] : '',
           assign_date: v.assign_date ? v.assign_date.split('T')[0] : '',
           // created_time: v.created_time?.split('T')[0],
         })),
@@ -186,6 +186,7 @@ export default {
       const params = {
         ...searchInfo,
         ...payload,
+        status: 'completed',
       };
       console.log(
         ' getListAsync  payload ： ',

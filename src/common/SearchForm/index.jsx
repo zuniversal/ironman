@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import './style.less';
 import {
   Table,
@@ -27,8 +27,7 @@ import {
 } from 'antd';
 // import debounce from 'lodash/debounce'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
-import { INPUT_TXT, WORD,    } from '@/constants'; //
-
+import { INPUT_TXT, WORD } from '@/constants'; //
 
 const { Option } = Select;
 
@@ -51,20 +50,20 @@ class SearchForm extends PureComponent {
     const obj = {};
     // https://segmentfault.com/a/1190000020221170
     const data = new Array(20).fill(0).map((v, i) => {
-    // const data = Array.from({ length: 20, }, () => ({})).map((v, i) => {
+      // const data = Array.from({ length: 20, }, () => ({})).map((v, i) => {
       // obj[`value`] = `value${i}`
       const obj = {};
-      obj[`value`] = `value-${i}`
-      obj[`text`] = `text-${i}`
-      return obj 
+      obj[`value`] = `value-${i}`;
+      obj[`label`] = `text-${i}`;
+      return obj;
     });
 
     // const data = new Array(20).fill((e, ) => {
-    //   console.log(' objobjobjobj ： ', e,    )// 
-    //   return 111 
+    //   console.log(' objobjobjobj ： ', e,    )//
+    //   return 111
     // })
     // const data = new Array(20).fill(obj)
-    console.log(' data ： ', data,  )// 
+    console.log(' data ： ', data); //
 
     this.setState({
       // value,
@@ -74,8 +73,8 @@ class SearchForm extends PureComponent {
   };
 
   handleChange = value => {
-    console.log(' handleChange ： ', value,    )// 
-
+    console.log(' handleChange ： ', value); //
+    this.props.onChange();
 
     this.setState({
       value,
@@ -86,11 +85,25 @@ class SearchForm extends PureComponent {
 
   render() {
     const { fetching, data, value } = this.state;
-    const { className, menuConfig, placeholder, word, defPh, ...rest } = this.props;
-
+    const {
+      className,
+      menuConfig,
+      placeholder,
+      word,
+      defPh,
+      selectData,
+      children,
+      ...rest
+    } = this.props;
+    console.log(
+      ' %c SearchForm 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     const prop = {
-      placeholder: defPh ? placeholder + word : placeholder
-    }
+      placeholder: defPh ? placeholder + word : placeholder,
+    };
 
     return (
       <Select
@@ -103,34 +116,36 @@ class SearchForm extends PureComponent {
         onSearch={this.request}
         onChange={this.handleChange}
         suffixIcon={<SearchOutlined className="searchIcon" />}
-        {...prop} 
-        {...rest} 
+        {...prop}
+        {...rest}
         className={`${className} searchForm w-224 `}
+        optionFilterProp={'children'}
         // style={{ width: '100%' }}
       >
-        {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-
+        {children ||
+          (selectData || data).map(d => (
+            <Option key={d.value}>{d.label}</Option>
+          ))}
       </Select>
     );
   }
 }
 
 SearchForm.defaultProps = {
-    className: '',
-    menuConfig: [],
-    placeholder: INPUT_TXT,
-    word: WORD, 
-    defPh: true,  
-
-
+  className: '',
+  menuConfig: [],
+  placeholder: INPUT_TXT,
+  word: WORD,
+  defPh: true,
+  selectData: [],
 };
 
 SearchForm.propTypes = {
-    menuConfig: PropTypes.array,
-    placeholder: PropTypes.string,
-    word: PropTypes.string,
-    defPh: PropTypes.bool,
-
-}
+  menuConfig: PropTypes.array,
+  placeholder: PropTypes.string,
+  word: PropTypes.string,
+  defPh: PropTypes.bool,
+  selectData: PropTypes.array,
+};
 
 export default SearchForm;

@@ -162,6 +162,8 @@ class Msg extends PureComponent {
       organization_id: 1,
     });
     console.log('  msgmsg res ：', res); //
+
+    this.props.getClientAsync();
     // this.props.addItemAsync({
     //   content: 'content',
     //   // send_type: [1, 2],

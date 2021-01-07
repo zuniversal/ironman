@@ -1,12 +1,25 @@
 .exportPdfWrapper {
 }
+
 #inspectRecordForm {
-  padding: 0 10px;
+  padding: 0 12px;
   // padding: 0 8px;
 }
+
+.exportPdf {
+  padding-bottom: 200px;
+}
+
 .inspectRecordForm {
   page-break-inside: avoid;
   margin-top: 10px;
+
+  .formTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
 
   .clientName {
     padding: 4px 11px;
@@ -15,11 +28,13 @@
     border-radius: 2px;
     background-color: #f5f5f5;
     width: 200px !important;
+    min-height: 34px;
   }
 
   .listFormItem {
     display: flex;
   }
+
   .rowTitle {
     padding-left: 14px;
     border-left: 4px solid #18b263;
@@ -32,16 +47,20 @@
   .formList {
     width: 100%;
     display: flex;
+
     .ant-space-item {
       flex: 1;
     }
+
     .labelItem {
     }
   }
+
   .divider {
     margin-top: 10px;
     // margin-bottom: 0;
   }
+
   .titleRow {
     font-size: 14px;
     color: #333333;
@@ -54,6 +73,7 @@
   .ant-form-horizontal > .ant-row {
     margin: 0 10px !important;
   }
+
   .withBefore {
     .ant-input-affix-wrapper {
       width: 130px !important;
@@ -71,6 +91,7 @@
   .smartForm {
     page-break-inside: avoid;
   }
+
   .ant-tabs {
     margin-top: 8px;
     margin-bottom: 14px;
@@ -79,9 +100,11 @@
   .ant-tabs-nav {
     margin-bottom: 0;
   }
+
   .ant-tabs-top > .ant-tabs-nav::before {
     border-bottom: none;
   }
+
   .hotImg {
     width: 140px;
     height: 140px;

@@ -182,6 +182,8 @@ class InspectPlan extends PureComponent {
           remove={this.remove}
           removePlanAsync={this.props.removePlanAsync}
           eventClick={this.props.getScheduledDetailListAsync}
+          unScheduleFilter={this.props.unScheduleFilter}
+          onUnScheduleListChange={this.props.onUnScheduleListChange}
         ></InspectPlanCalendar>
       )
     );
@@ -294,6 +296,7 @@ class InspectPlan extends PureComponent {
     // });
     this.props.getListAsync({
       leader: `${this.props.userInfo.id}`,
+      leader: 112,
       // month: nowYearMonthDay,
       month: moment(),
     });

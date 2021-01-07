@@ -284,7 +284,7 @@ const MsgForm = props => {
         config={config}
         {...rest}
         init={{
-          type: 0,
+          type: msgType,
           ...props.init,
         }}
       ></SmartForm>

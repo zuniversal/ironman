@@ -3,6 +3,7 @@ import './style.less';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import html2pdf from 'html2pdf.js';
+import { tips } from '@/utils';
 
 const useSmartExportPdf = props => {
   const [isExport, setIsExport] = useState(false);
@@ -13,26 +14,41 @@ const useSmartExportPdf = props => {
     // const element = document.getElementsByClassName('ant-modal-body')[0]
     // const element = document.getElementsByClassName('inspectRecordForm')[0]
     // const element = document.getElementsByClassName()[0]
-    const { element: ele } = props;
-    const element = document.getElementById(ele);
-    console.log(' exportPdf element ： ', element); //
+    const {
+      element: ele,
+      exportText = 'PDF导出生成中，请稍等！',
+      tipsText = 'PDF导出成功！',
+      filename = 'PDF文件',
+      option = {},
+    } = props;
+    const idEle = document.getElementById(ele);
+    const clsEle = document.getElementsByClassName(ele)[0];
+    const element = idEle || clsEle;
+    console.log(' exportPdf element ： ', element, clsEle); //
     // 导出配置
     const opt = {
       mode: 'avoid-all',
       pagebreak: {
         mode: ['avoid-all', 'css', 'legacy'],
       },
-      margin: 1,
-      filename: '导出的pdf名称',
-      image: { type: 'jpeg', quality: 0.98 }, // 导出的图片质量和格式
-      html2canvas: { scale: 1, useCORS: true }, // useCORS很重要，解决文档中图片跨域问题
+      // margin: [0, 1],
+      filename,
+      image: { type: 'jpeg', quality: 1 }, // 导出的图片质量和格式
+      html2canvas: { scale: 5, useCORS: true }, // useCORS很重要，解决文档中图片跨域问题
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      ...option,
     };
+    tips(exportText);
     if (element) {
       html2pdf()
         .set(opt)
         .from(element)
-        .save(); // 导出
+        .save()
+        .then(res => {
+          console.log(' finish res  ： ', res);
+          tips(tipsText);
+          return res;
+        }); // 导出
       console.log(' finish ： ', props.finish); //
       props.finish && props.finish(); //
       setIsExport(false);

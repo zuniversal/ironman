@@ -1,5 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/msg';
+import * as clientServices from '@/services/client';
 import * as organizeServices from '@/services/organize';
 import * as userManageServices from '@/services/userManage';
 import { formatSelectList, nowYearMonth } from '@/utils';
@@ -8,7 +9,11 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'msg';
 const { createActions } = init(namespace);
 
-const otherActions = ['getUserManageAsync', 'getOrganizeAsync'];
+const otherActions = [
+  'getUserManageAsync',
+  'getOrganizeAsync',
+  'getClientAsync',
+];
 
 const batchTurnActions = [];
 
@@ -71,6 +76,7 @@ export default {
     organizeList: [],
     flatOrganizeList: [],
     userList: [],
+    clientList: [],
   },
 
   reducers: {
@@ -199,6 +205,12 @@ export default {
         userList: organizeList,
       };
     },
+    getClient(state, { payload, type }) {
+      return {
+        ...state,
+        clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
   },
 
   effects: {
@@ -235,6 +247,11 @@ export default {
       yield put({ type: 'getListAsync' });
     },
 
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      console.log(' getClientAsync ： ', payload); //
+      const res = yield call(clientServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
       console.log(' getOrganizeAsync ： ', payload); //
       const res = yield call(organizeServices.getList, payload);

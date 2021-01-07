@@ -46,29 +46,29 @@ export const filterObjSame = (data, key = 'id') => {
   // }
 };
 
-var arr4 = [
-  { name: 'a', id: 1 },
-  { name: 'a', id: 2 },
-  { name: 'b', id: 3 },
-  { name: 'c', id: 4 },
-  { name: 'c', id: 6 },
-  { name: 'b', id: 6 },
-  { name: 'd', id: 7 },
-];
-var obj = {};
-var temp = [];
-function deWeightTwo() {
-  arr4.forEach(function(a) {
-    var check = temp.every(function(b) {
-      return a.name !== b.name;
-    });
-    check ? temp.push(a) : '';
-  });
-  return temp;
-}
-var newArr2 = deWeightTwo();
-var newArr4 = deWeightTwo();
-// console.log('xxxxx', arr4, newArr4);
+// var arr4 = [
+//   { name: 'a', id: 1 },
+//   { name: 'a', id: 2 },
+//   { name: 'b', id: 3 },
+//   { name: 'c', id: 4 },
+//   { name: 'c', id: 6 },
+//   { name: 'b', id: 6 },
+//   { name: 'd', id: 7 },
+// ];
+// var obj = {};
+// var temp = [];
+// function deWeightTwo() {
+//   arr4.forEach(function(a) {
+//     var check = temp.every(function(b) {
+//       return a.name !== b.name;
+//     });
+//     check ? temp.push(a) : '';
+//   });
+//   return temp;
+// }
+// var newArr2 = deWeightTwo();
+// var newArr4 = deWeightTwo();
+// // console.log('xxxxx', arr4, newArr4);
 
 export const getDataMap = (text, dataMap) => {
   const val = dataMap[text];
@@ -125,21 +125,6 @@ var day = getCountDays();
 var months = getMonthDays();
 var formatMonthDayformatMonthDay = formatMonthDay(months);
 const resss2222 = getWeek(formatMonthDayformatMonthDay);
-// console.log(
-//   '  resss ：',
-//   resss,
-//   day,
-//   months,
-//   formatMonthDayformatMonthDay,
-//   getNowMonthDays,
-//   getMonthWeekDays,
-//   getMonthWeekDaysSimple,
-// ); //
-
-// export {request, } from './request'
-
-// import { INPUT_TXT,  } from 'constants'
-// import {SUCC_TXT, } from 'constants'
 const RadioGroup = Radio.Group;
 const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
@@ -312,12 +297,20 @@ export const formatConfig = (
         v.formType === 'PropsCom'
           ? {
               ...v.itemProps,
-              key: v.itemProps?.name ? v.itemProps.name : `field${i}`,
+              key: v.key
+                ? v.key
+                : v.itemProps?.name
+                ? v.itemProps.name
+                : `field${i}`,
             }
           : // : { ...v.itemProps, key: `field${i}`,  },
             {
               ...v.itemProps,
-              key: v.itemProps?.name ? v.itemProps.name : `field${i}`,
+              key: v.key
+                ? v.key
+                : v.itemProps?.name
+                ? v.itemProps.name
+                : `field${i}`,
               name: v.itemProps?.name ? v.itemProps.name : `field${i}`,
             },
       // 直接生成 name

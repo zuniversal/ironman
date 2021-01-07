@@ -58,7 +58,7 @@ TabPanes.defaultProps = {
   tabItemKey: '',
   tabPrefix: '',
   tabData: [],
-  onChange: () => {},
+  // onChange: () => {},
 };
 
 const formLayouts = {
@@ -187,9 +187,12 @@ const InspectRecordForm = props => {
 
   const {
     // power_data = [{}],
-    file = [],
-    spect_out,
+    // file = [],
+    spect_out = [],
   } = props.init;
+
+  const file = props.init.file ? props.init.file : []; //
+
   const power_data =
     props.init.power_data && props.init.power_data.length > 0
       ? props.init.power_data
@@ -203,9 +206,44 @@ const InspectRecordForm = props => {
     // spectOut: [props.init.spect_out[0]],
     // spectOut: spect_out.length > 0 ? [spect_out[0]] : [],
     // spectOut: spect_out.length > 0 ? spect_out[0] : {},
-    spectOut: props.init.spect_out[0],
+    // spectOut: props.init?.spect_out[0],
+    spectOut: spect_out.length > 0 ? spect_out[0] : {},
   });
-  console.log(' dataInit ： ', dataInit, power_data); //
+  console.log(' dataInit ： ', file, dataInit, power_data); //
+
+  const onChange = index => {
+    console.log(
+      ' onChange   index,   ： ',
+      index,
+      dataInit,
+      power_data,
+      power_data[index],
+    );
+    // props.init.powerData = {
+    //   ...power_data[index],
+    // };
+    setDataInit({
+      ...dataInit,
+      powerData: power_data[index],
+      spectIn: power_data[index].spect_in,
+      // spectOut: power_data[index].spect_out,
+    });
+  };
+
+  const onInLineChange = index => {
+    console.log(
+      ' onInLineChange   index,   ： ',
+      index,
+      dataInit,
+      power_data,
+      power_data[index],
+      powerData,
+    );
+    setDataInit({
+      ...dataInit,
+      spectIn: powerData.spect_in,
+    });
+  };
 
   const onOutLineChange = index => {
     console.log(
@@ -225,11 +263,6 @@ const InspectRecordForm = props => {
       spectOut: dataInit.spect_out[index],
     });
   };
-
-  // const powerData =
-  setTimeout(() => {
-    console.log('  延时器 ： ');
-  }, 2000);
 
   const counterRef = React.useRef();
   const htmlRef = React.useRef();
@@ -342,7 +375,6 @@ const InspectRecordForm = props => {
     { label: '电压表CA', name: 'switch_v_ca' },
     { label: '电流表A', name: 'o_ia' },
     { label: '电流表B', name: 'o_ib' },
-    { label: '电流表C', name: 'o_ic' },
     { label: '电流表C', name: 'o_ic' },
     { label: '电容柜', name: '', type: 'rowText' },
     { label: '电容柜', name: 'GGJ' },
@@ -880,25 +912,6 @@ const InspectRecordForm = props => {
     },
   ];
 
-  const onChange = index => {
-    console.log(
-      ' onChange   index,   ： ',
-      index,
-      dataInit,
-      power_data,
-      power_data[index],
-    );
-    // props.init.powerData = {
-    //   ...power_data[index],
-    // };
-    setDataInit({
-      ...dataInit,
-      powerData: power_data[index],
-      spectIn: power_data[index].spect_in,
-      // spectOut: power_data[index].spect_out,
-    });
-  };
-
   const config = [
     // {
     //   // formType: 'plainText',
@@ -1187,7 +1200,7 @@ const InspectRecordForm = props => {
               <TabPanes
                 useIndex
                 tabPrefix={'高压进侧线'}
-                // onChange={onInLineChange}
+                onChange={onInLineChange}
                 tabData={dataInit.spectIn}
               ></TabPanes>
             ),
@@ -1238,16 +1251,23 @@ const InspectRecordForm = props => {
   }));
   console.log(' configs  config.map v ： ', dataInit, configs);
 
+  const formTitle = props.init?.inspection_task?.name;
+
   useExportPdf({
     // element: document.getElementsByClassName('inspectRecordForm')[0],
-    element: 'inspectRecordForm',
     isExportPDF,
+    element: 'inspectRecordForm',
     finish: props.toggleExportPDF,
+    filename: formTitle,
   });
 
   return (
-    <div className={' inspectRecordForm '} ref={counterRef}>
+    <div
+      className={`inspectRecordForm ${isExportPDF ? 'exportPdf' : ''}`}
+      ref={counterRef}
+    >
       {/* <SmartExportPdf></SmartExportPdf> */}
+      <div className="formTitle">报告：{formTitle}</div>
       <SmartForm
         flexRow={2}
         config={configs}
@@ -1261,9 +1281,11 @@ const InspectRecordForm = props => {
           // spectOut: power_data[0].spect_out[0],
         }}
         className={'inspectRecordForm'}
-        formProps={{
-          id: 'inspectRecordForm',
-        }}
+        formProps={
+          {
+            // id: 'inspectRecordForm',
+          }
+        }
       ></SmartForm>
     </div>
   );

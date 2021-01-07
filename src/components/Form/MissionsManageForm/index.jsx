@@ -118,8 +118,7 @@ const MissionsManageForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: '任务描述',
-        name: 'content',
-        name: 'describe',
+        name: props.action === 'detail' ? 'describe' : 'content',
       },
     },
     {

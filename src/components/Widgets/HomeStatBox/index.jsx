@@ -87,7 +87,7 @@ const StatBoxCom = props => {
             </div>
             <div className="statInfo">
               {props.day} {dayDirectionText}{' '}
-              {Math.abs(data.day_compare ?? 1) * 100}%
+              {(Math.abs(data.day_compare ?? 1) * 100).toFixed(1)}%
             </div>
           </div>
         </>

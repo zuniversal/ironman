@@ -219,13 +219,29 @@ export default {
         ...v,
         key: Math.random(),
       }));
+      const itemDetail = {
+        ...payload.bean,
+      };
+
+      if (
+        itemDetail.inspection_type === 0 &&
+        Array.isArray(itemDetail.service_team)
+      ) {
+        itemDetail.service_team = `${itemDetail.service_team[0].name}`;
+      }
+      if (
+        itemDetail.inspection_type === 1 &&
+        Array.isArray(itemDetail.service_team)
+      ) {
+        itemDetail.service_team = itemDetail.service_team.map(v => v.name);
+      }
       console.log(' powerStationDetail ： ', state, payload, datas); //
       return {
         ...state,
         action: payload.payload.action,
         isShowCommonModal: true,
         itemDetail: {
-          ...payload.bean,
+          ...itemDetail,
           electricity_user: `${payload.bean.electricity_user.number}`,
           status: payload.bean.status ? '正常' : '异常',
         },

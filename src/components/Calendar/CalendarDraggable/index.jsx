@@ -22,6 +22,7 @@ const CalendarDraggable = props => {
           id: id,
           display: display,
           color: color,
+          // href: '#',
         };
       },
     });

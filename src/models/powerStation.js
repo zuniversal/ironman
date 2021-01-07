@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
+import * as teamServices from '@/services/shiftsManage';
 import { formatSelectList, nowYearMonth, tips, filterObjSame } from '@/utils';
 
 const namespace = 'powerStation';
@@ -18,6 +19,7 @@ const otherActions = [
   'removePowerInfoAsync',
 
   'getDistrictAsync',
+  'getTeamAsync',
 
   'addOutLineTableItemAsync',
   'editOutLineTableItemAsync',
@@ -160,8 +162,9 @@ export default {
         electricity_user,
         electricalinfromation_set,
         outline_set,
+        service_team = [],
       } = payload.bean;
-      const { houseNoList } = state; //
+      const { houseNoList, teamList } = state;
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
@@ -172,6 +175,21 @@ export default {
         ...payload.bean,
         electricity_user: `${electricity_user.id}`,
       };
+      // if (itemDetail.inspection_type === 0 && Array.isArray(itemDetail.service_team)) {
+      //   itemDetail.service_team = itemDetail.service_team.split(',')
+      // }
+      if (
+        itemDetail.inspection_type === 0 &&
+        Array.isArray(itemDetail.service_team)
+      ) {
+        itemDetail.service_team = `${itemDetail.service_team[0].id}`;
+      }
+      if (
+        itemDetail.inspection_type === 1 &&
+        Array.isArray(itemDetail.service_team)
+      ) {
+        itemDetail.service_team = itemDetail.service_team.map(v => `${v.id}`);
+      }
       // if (!itemDetail.inspection_time && itemDetail.inspection_time.length > 0) {
       if (!itemDetail.inspection_time) {
         delete itemDetail.inspection_time;
@@ -212,6 +230,7 @@ export default {
           key: Math.random(),
         })),
         houseNoList: houseNoListData,
+        teamList: formatSelectList([...teamList, ...service_team], 'name'),
       };
     },
     addItem(state, { payload, type }) {
@@ -376,6 +395,12 @@ export default {
       return {
         ...state,
         houseNoList: formatSelectList(payload.list, 'number'),
+      };
+    },
+    getTeam(state, { payload, type }) {
+      return {
+        ...state,
+        teamList: formatSelectList(payload.list, 'name'),
       };
     },
 
@@ -810,6 +835,11 @@ export default {
           payload,
         }),
       );
+    },
+    *getTeamAsync({ payload, action, type }, { call, put }) {
+      console.log(' getTeamAsync ： ', payload); //
+      const res = yield call(teamServices.getList, payload);
+      yield put(action({ ...res, payload }));
     },
     *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
       const res = yield call(houseNoServices.getList, {

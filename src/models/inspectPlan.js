@@ -16,7 +16,12 @@ const otherActions = [
   'getScheduledDetailListAsync',
 ];
 
-const batchTurnActions = ['reset', 'changeStationPlan', 'changePlanAsync'];
+const batchTurnActions = [
+  'reset',
+  'changeStationPlan',
+  'changePlanAsync',
+  'onUnScheduleListChange',
+];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -51,6 +56,7 @@ export default {
     dayEvents: [],
     monthEvents: [],
     dayInfo: {},
+    unScheduleFilter: [],
   },
 
   reducers: {
@@ -87,13 +93,16 @@ export default {
         return {
           ...v,
           url: i,
-
+          href: '#',
           // overlap: false,
 
           extendedProps: {
             ...v,
             isScheduled: false,
           },
+
+          value: v.id,
+          label: `${v.name} - ${v.customer}`,
         };
       });
       const scheduleListData = payload.scheduleList.map(v => {
@@ -109,6 +118,7 @@ export default {
           // overlap: false,
 
           isdraged: true,
+          constraint: 'availableForMeeting',
           // station_id: v.station.station_id,
           extendedProps: {
             ...v,
@@ -135,6 +145,7 @@ export default {
         searchInfo: payload.searchInfo,
         dayEvents: [],
         monthEvents: [],
+        unScheduleFilter: unScheduleListData,
       };
     },
     getItem(state, { payload, type }) {
@@ -311,6 +322,22 @@ export default {
         planDetailList: planDetailListRes,
       };
     },
+    onUnScheduleListChange(state, { payload, type }) {
+      const { unScheduleList } = state;
+      const unScheduleFilter = unScheduleList.filter(v => {
+        // console.log(' unScheduleList includes v ： ', v )
+        return v.label.includes(payload.target.value);
+      });
+      console.log(
+        ' onUnScheduleListChange ： ',
+        payload.target.value,
+        unScheduleFilter,
+      ); //
+      return {
+        ...state,
+        unScheduleFilter,
+      };
+    },
   },
 
   effects: {
@@ -325,6 +352,7 @@ export default {
           payloads && payloads.month
             ? payloads.month.format('YYYY-MM')
             : nowYearMonth,
+        page_size: 1000,
         // month: searchInfo.month.format('YYYY-MM'),
       };
 
