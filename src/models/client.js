@@ -598,8 +598,8 @@ export default {
       const { itemDetail } = yield select(state => state[namespace]);
       console.log(' removeTableItemAsync ： ', payload);
       if (payload.action === 'remove') {
-        // const res = yield call(services.removedAdmin, payload);
-        const res = yield call(services.removedAdmin, {
+        // const res = yield call(services.removeAdmin, payload);
+        const res = yield call(services.removeAdmin, {
           d_id: payload.id,
           id: `${payload.id}`,
           customer_id: itemDetail.id ? itemDetail.id : null,

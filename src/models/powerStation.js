@@ -164,7 +164,10 @@ export default {
         outline_set,
         service_team = [],
       } = payload.bean;
-      const { houseNoList, teamList } = state;
+      const { houseNoList, teamList, clientList } = state;
+
+      const customer = payload.bean.customer || {};
+      console.log('  customer ：', customer); //
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
@@ -174,6 +177,7 @@ export default {
       const itemDetail = {
         ...payload.bean,
         electricity_user: `${electricity_user.id}`,
+        customer: `${customer.id}`,
       };
       // if (itemDetail.inspection_type === 0 && Array.isArray(itemDetail.service_team)) {
       //   itemDetail.service_team = itemDetail.service_team.split(',')
@@ -231,6 +235,7 @@ export default {
         })),
         houseNoList: houseNoListData,
         teamList: formatSelectList([...teamList, ...service_team], 'name'),
+        clientList: formatSelectList([...clientList, customer], 'name'),
       };
     },
     addItem(state, { payload, type }) {

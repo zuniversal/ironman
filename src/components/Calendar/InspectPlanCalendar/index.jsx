@@ -215,10 +215,10 @@ const ShiftsArrangeList = props => {
                     >
                       <BarsOutlined className={`dragIcon`} />
                       电站-{event.name}
+                      <div>客户-{event.customer}</div>
                     </div>
                   )}
                 </div>
-                <div>客户-{event.customer}</div>
               </Tooltip>
               <div>{props.renderRight(event)}</div>
             </div>

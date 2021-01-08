@@ -221,6 +221,7 @@ export default {
       }));
       const itemDetail = {
         ...payload.bean,
+        customer: payload.bean.customer?.name,
       };
 
       if (

@@ -17,13 +17,23 @@ export const WS_DEV = `188.131.235.243:31002`;
 export const WS_HOST = window.location.host;
 
 const { protocol = 'http:', hostname } = window.location;
-console.log(' protocol ： ', protocol + hostname); //
 const wsMap = {
   'http:': 'ws:',
   'https:': 'wss:',
 }[protocol];
 
 export const WS_PREFIX = `${wsMap}//${isDev ? WS_DEV : WS_HOST}`;
+
+export const DEV_SCREEN_PORT = '31004';
+export const PROD_SCREEN_PORT = '31008';
+export const screenPort = {
+  'http:': DEV_SCREEN_PORT,
+  'https:': PROD_SCREEN_PORT,
+}[protocol];
+console.log(' protocol ： ', screenPort); //
+export const BIG_SCREEN =
+  protocol + '//' + hostname + `:${screenPort}/normal_screen`;
+
 export const TEST_URL = `/api/v1/`;
 export const PROXY_URL = `/api/v1/`;
 // export const PROXY_URL = `/api/v1/cnosole/`;
@@ -60,7 +70,6 @@ export const homeMap = {
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
-export const BIG_SCREEN = protocol + '//' + hostname + ':31004/normal_screen';
 
 const animations = [
   'bounce',

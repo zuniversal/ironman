@@ -35,6 +35,7 @@ const useSmartExportPdf = props => {
       filename,
       image: { type: 'jpeg', quality: 1 }, // 导出的图片质量和格式
       html2canvas: { scale: 5, useCORS: true }, // useCORS很重要，解决文档中图片跨域问题
+      // jsPDF: { unit: 'px', format: 'A4', orientation: 'portrait' },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
       ...option,
     };

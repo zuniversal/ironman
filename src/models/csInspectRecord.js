@@ -150,13 +150,13 @@ export default {
     //   yield put(action({ ...res, payload }));
     // },
 
-    *getMissionItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getMissionItem, payload);
-      yield put({ type: 'getItem', payload: { ...res, payload } });
-    },
-    *confirmInspectAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.confirmInspect, payload);
-      yield put({ type: 'getItem', payload: { ...res, payload } });
-    },
+    // *getMissionItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.getMissionItem, payload);
+    //   yield put({ type: 'getItem', payload: { ...res, payload } });
+    // },
+    // *confirmInspectAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.confirmInspect, payload);
+    //   yield put({ type: 'getItem', payload: { ...res, payload } });
+    // },
   },
 };

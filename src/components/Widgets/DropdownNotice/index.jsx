@@ -68,11 +68,11 @@ const DropdownNotice = props => {
 
   // const Com = useWebsocket()
   const url = notifyWs + `?user_id=${userInfo.id}`;
-  const { wsData } = useWebsocket({
-    url,
-    init: [],
-    // url: 'ws://119.3.123.144:8008/websocket',
-  });
+  // const { wsData } = useWebsocket({
+  //   url,
+  //   init: [],
+  //   // url: 'ws://119.3.123.144:8008/websocket',
+  // });
   // console.log(' useWebsocket wsData ： ', url, wsData); //
 
   const menuCom = menu ? (
@@ -145,10 +145,6 @@ DropdownNotice.defaultProps = {
   clearNotice: () => {},
 };
 
-DropdownNotice.propTypes = {
-  // noEllipsis: PropTypes.bool,
-  // menuConfig: propTypes.array,
-  // menuClick: PropTypes.func,
-};
+DropdownNotice.propTypes = {};
 
 export default DropdownNotice;

@@ -57,7 +57,7 @@ class WorkOrder extends PureComponent {
   exportAllDataAsync = e => {
     console.log('    exportAllDataAsync ： ', e, this.props.selectedRowKeys);
     this.props.exportData({
-      order_ids: this.props.dataList,
+      order_ids: [],
     });
   };
   exportDataAsync = e => {
@@ -76,12 +76,9 @@ class WorkOrder extends PureComponent {
         {/* <Button type="primary" onClick={() => this.props.exportExcelAsync({
           order_ids: [1],
         })}> */}
-        {/* <Button
-          type="primary"
-          onClick={this.exportAllDataAsync}
-        >
+        <Button type="primary" onClick={this.exportAllDataAsync}>
           全部导出
-        </Button> */}
+        </Button>
         <Button
           type="primary"
           onClick={this.exportDataAsync}

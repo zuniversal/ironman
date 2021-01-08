@@ -38,7 +38,7 @@ const mapStateToProps = ({ inspectPlan, loading, user }) => ({
 @SmartHOC({
   actions,
   titleMap,
-  noMountFetch: true,
+  // noMountFetch: true,
   modalForm: InspectPlanForm,
 })
 class InspectPlan extends PureComponent {
@@ -294,12 +294,12 @@ class InspectPlan extends PureComponent {
     //   leader: 79612,
     //   month: moment('2021-01'),
     // });
-    this.props.getListAsync({
-      leader: `${this.props.userInfo.id}`,
-      leader: 112,
-      // month: nowYearMonthDay,
-      month: moment(),
-    });
+    // this.props.getListAsync({
+    //   leader: `${this.props.userInfo.id}`,
+    //   leader: 112,
+    //   // month: nowYearMonthDay,
+    //   month: moment(),
+    // });
   }
 
   render() {
