@@ -115,6 +115,8 @@ const CsUserCenterForm = props => {
   );
 };
 
-CsUserCenterForm.defaultProps = {};
+CsUserCenterForm.defaultProps = {
+  init: {},
+};
 
 export default CsUserCenterForm;

@@ -81,6 +81,8 @@ class MissionsManage extends PureComponent {
         formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
+        getClientAsync={params => this.props.getClientAsync({ name: params })}
+        clientList={this.props.clientList}
       ></MissionsManageSearchForm>
     );
   };

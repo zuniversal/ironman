@@ -117,8 +117,10 @@ class InspectMission extends PureComponent {
           })
         }
         userList={this.props.userList}
-        getClientAsync={this.props.getClientAsync}
+        getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
+        getPowerAsync={params => this.props.getPowerAsync({ name: params })}
+        powerList={this.props.powerList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         init={this.props.searchInfo}

@@ -1,12 +1,14 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/inspectRecord';
+import * as clientServices from '@/services/client';
+import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { missionsStatusMap } from '@/configs';
 
 const namespace = 'inspectRecord';
 const { createActions } = init(namespace);
 
-const otherActions = ['getMissionItemAsync'];
+const otherActions = ['getMissionItemAsync', 'getClientAsync', 'getPowerAsync'];
 
 const batchTurnActions = ['closePdf', 'toggleExportPDF'];
 
@@ -33,6 +35,8 @@ export default {
     isShowExportPdf: false,
 
     isExportPDF: false,
+    clientList: [],
+    powerList: [],
   },
 
   reducers: {
@@ -135,6 +139,20 @@ export default {
       };
     },
 
+    getClient(state, { payload, type }) {
+      console.log(' getClient 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        clientList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getPower(state, { payload, type }) {
+      console.log(' getPower 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        powerList: formatSelectList(payload.list, 'name'),
+      };
+    },
     closePdf(state, { payload, type }) {
       return {
         ...state,
@@ -216,6 +234,14 @@ export default {
       yield put(action({ ...res, payload }));
     },
 
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getPowerAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(powerStationServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
     *getMissionItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getMissionItem, payload);
       yield put(action({ ...res, payload }));

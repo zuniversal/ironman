@@ -68,6 +68,7 @@ class CsOrganize extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      pathMap: 'csOrganize',
     };
 
     return <CsOrganizeTable {...tableProps}></CsOrganizeTable>;

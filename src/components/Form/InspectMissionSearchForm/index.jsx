@@ -27,7 +27,24 @@ const InspectMissionSearchForm = props => {
         name: 'status',
       },
     },
-    // {
+    {
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
+      itemProps: {
+        label: '客户',
+        name: 'customer_id',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getPowerAsync,
+      selectData: props.powerList,
+      itemProps: {
+        label: '电站',
+        name: 'station_id',
+      },
+    },
     //   formType: 'Divider',
     //   itemProps: {
     //     label: '',

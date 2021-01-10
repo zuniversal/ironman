@@ -253,10 +253,6 @@ const SmartForm = (props, state) => {
     // console.log(' rules   params, extra,  ,   ： ', params, extra, message, label, formType,  );
 
     return [
-      // {
-      //   type: 'pwd',
-      //   message: 'The input is not valid E-mail!',
-      // },
       {
         required: true,
         message: label + REQUIRE,

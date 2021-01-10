@@ -50,7 +50,7 @@ const ClientReportSearchForm = props => {
 
   return (
     <div className={''}>
-      <SearchForm config={config} formProps={formProps}></SearchForm>
+      <SearchForm config={config}></SearchForm>
     </div>
   );
 };

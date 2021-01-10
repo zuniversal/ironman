@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { missionsStatusConfig } from '@/configs';
+import { missionsStatusConfig, missionsTypeConfig } from '@/configs';
 
 const MissionsManageSearchForm = props => {
   console.log(' MissionsManageSearchForm ： ', props); //
@@ -30,6 +30,23 @@ const MissionsManageSearchForm = props => {
       itemProps: {
         label: '名称',
         name: 'keyword',
+      },
+    },
+    {
+      formType: 'Search',
+      selectSearch: props.getClientAsync,
+      selectData: props.clientList,
+      itemProps: {
+        label: '客户',
+        name: 'customer_id',
+      },
+    },
+    {
+      formType: 'Search',
+      selectData: missionsTypeConfig,
+      itemProps: {
+        label: '任务类型',
+        name: 'type',
       },
     },
   ];
