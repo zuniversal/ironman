@@ -330,7 +330,8 @@ class SmartTable extends PureComponent {
       return content;
     }
     const tooltipText = dataMap ? txt : text;
-    return text != undefined ? (
+    // console.log(' text ： ', text, this.props )//
+    const tdCom = (
       <Tooltip
         color={PRIMARY}
         // title={typeof tooltipText !== 'object' ? <Typography.Paragraph className={`tootltipCopy`}  copyable>{tooltipText}</Typography.Paragraph> : `${tooltipText}`}
@@ -340,10 +341,12 @@ class SmartTable extends PureComponent {
         {content}
         {/* <Typography.Paragraph copyable>{content}</Typography.Paragraph> */}
       </Tooltip>
-    ) : (
-      text
-      // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
     );
+    // return tdCom
+    return text != undefined
+      ? tdCom
+      : text;
+        // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
     // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
     // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>
   };

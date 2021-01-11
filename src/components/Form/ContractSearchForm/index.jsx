@@ -1,8 +1,7 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import SearchForm from '@/common/SearchForm'; //
-import { regoins } from '@/configs'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import { contractTypeConfig } from '@/configs'; //
 
 const ContractSearchForm = props => {
   console.log(' ContractSearchForm ： ', props); //
@@ -10,25 +9,33 @@ const ContractSearchForm = props => {
   const { formBtn } = props; //
 
   const config = [
-    {
-      itemProps: {
-        label: '合同名称',
-      },
-    },
-    {
-      itemProps: {
-        label: '客户',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '合同名称',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '客户',
+    //   },
+    // },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '合同类型',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '户号',
+    //   },
+    // },
     {
       formType: 'Select',
+      selectData: contractTypeConfig,
       itemProps: {
         label: '合同类型',
-      },
-    },
-    {
-      itemProps: {
-        label: '户号',
+        name: 'type',
       },
     },
   ];
@@ -40,10 +47,6 @@ const ContractSearchForm = props => {
         // {...rest}
         {...props}
       ></SearchForm>
-
-      {/* <SearchForm></SearchForm> */}
-
-      {/* {formBtn} */}
     </div>
   );
 };

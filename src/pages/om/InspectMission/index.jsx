@@ -123,7 +123,6 @@ class InspectMission extends PureComponent {
         powerList={this.props.powerList}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        init={this.props.searchInfo}
       ></InspectMissionSearchForm>
     );
   };

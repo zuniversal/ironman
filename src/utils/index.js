@@ -693,3 +693,12 @@ export const pagination = total => ({
   showSizeChanger: true,
   showTotal,
 });
+
+// 格式化部分提交数据 处理为 null
+export const format2Null = (data = {}, keys = []) => {
+  const formatObj = {
+    ...data,
+  };
+  keys.forEach(k => (formatObj[k] = data[k] ? data[k] : null));
+  return formatObj;
+};

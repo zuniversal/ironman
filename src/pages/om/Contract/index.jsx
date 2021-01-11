@@ -167,7 +167,7 @@ class Contract extends PureComponent {
   renderSearchForm = params => {
     return (
       <ContractSearchForm
-        formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
         // getClientAsync={params => this.props.getClientAsync({ name: params })}
@@ -178,6 +178,10 @@ class Contract extends PureComponent {
         // houseNoList={this.props.houseNoList}
       ></ContractSearchForm>
     );
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.props.getListAsync(params.formData);
   };
 
   renderResultModal = params => {
@@ -345,6 +349,7 @@ class Contract extends PureComponent {
         <SmartShowPDF
           // src={'http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf'}
           src={`${getPdf}${this.props.extraData.path}.pdf`}
+          path={`${this.props.extraData.path}.pdf`}
         ></SmartShowPDF>
       );
     }
@@ -408,7 +413,7 @@ class Contract extends PureComponent {
 
     return (
       <div className="Contract">
-        {/* {this.renderSearchForm()} */}
+        {this.renderSearchForm()}
 
         {this.renderTable()}
 

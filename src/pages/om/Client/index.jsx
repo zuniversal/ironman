@@ -11,7 +11,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import { actions, mapStateToProps } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
+import { tips, format2Null } from '@/utils';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 
 export const TITLE = '客户';
@@ -216,10 +216,10 @@ class Client extends PureComponent {
           //   tips('文件不能为空！', 2);
           //   return;
         } else {
-          params.file = '';
+          params.file = null;
         }
       } else {
-        params.file = '';
+        params.file = null;
       }
       if (typeof res.logo !== 'string') {
         console.log(' logologo ： ', res.logo); //
@@ -230,11 +230,18 @@ class Client extends PureComponent {
           // tips('logo不能为空！', 2);
           // return;
           console.log(' paramsparamsparams ： ', params); //
-          params.logo = '';
+          params.logo = null;
         }
       }
-      console.log(' params ： ', params); //
-      actionFn(params);
+      const datas = format2Null(params, [
+        'last_service_staff',
+        'industry',
+        'scale',
+        'asset',
+        'covered_area',
+      ]);
+      console.log(' params ： ', params, datas); //
+      actionFn(datas);
       // const { dispatch } = this.props; //
       // dispatch(
       //   actionFn(params),

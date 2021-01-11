@@ -106,9 +106,9 @@ export const isTips = res => {
     // }
     return;
   } else {
-    console.log(' 提示 对吗  !noTips ', !noTips, noTips, status);
-    if (!noTips || status != 200) {
-      tips(msg_show, status != 200 ? 2 : 1);
+    console.log(' 提示 对吗  !noTips ', !noTips, msg_show, noTips, status);
+    if (!noTips || (status != 200 && status != 201)) {
+      tips(msg_show, status != 200 && status != 201 ? 2 : 1);
     }
     // const isNormal = `${status}`.startsWith('2')
     // console.log(' 提示 对吗  !noTips ', !noTips, noTips, status, isNormal);

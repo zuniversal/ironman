@@ -3,7 +3,13 @@ import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
 import * as teamServices from '@/services/shiftsManage';
-import { formatSelectList, nowYearMonth, tips, filterObjSame } from '@/utils';
+import {
+  formatSelectList,
+  nowYearMonth,
+  tips,
+  filterObjSame,
+  format2Null,
+} from '@/utils';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
@@ -186,14 +192,21 @@ export default {
         itemDetail.inspection_type === 0 &&
         Array.isArray(itemDetail.service_team)
       ) {
+        console.log(' itemDetail.service_team 0 ： ', itemDetail.service_team); //
         itemDetail.service_team = `${itemDetail.service_team[0].id}`;
       }
       if (
         itemDetail.inspection_type === 1 &&
         Array.isArray(itemDetail.service_team)
       ) {
+        console.log(' itemDetail.service_team 1 ： ', itemDetail.service_team); //
         itemDetail.service_team = itemDetail.service_team.map(v => `${v.id}`);
       }
+      if (!itemDetail.service_team) {
+        console.log(' itemDetail.service_team 2 ： ', itemDetail.service_team); //
+        itemDetail.service_team = null;
+      }
+
       // if (!itemDetail.inspection_time && itemDetail.inspection_time.length > 0) {
       if (!itemDetail.inspection_time) {
         delete itemDetail.inspection_time;
@@ -791,7 +804,7 @@ export default {
     *addPowerInfoAsync({ payload, action, type }, { call, put, select }) {
       console.log(' addPowerInfoAsync ： ', payload);
       const res = yield call(services.addPowerInfo, {
-        electrical_info_list: [payload],
+        electrical_info_list: [format2Null(payload, validateConfig)],
       });
       yield put(
         action({
@@ -803,7 +816,10 @@ export default {
     *editPowerInfoAsync({ payload, action, type }, { call, put, select }) {
       console.log(' editPowerInfoAsync ： ', payload);
       // const { powerInfoData } = yield select(state => state[namespace]);
-      const res = yield call(services.editPowerInfo, payload);
+      const res = yield call(
+        services.editPowerInfo,
+        format2Null(payload, validateConfig),
+      );
       yield put(
         action({
           ...res,

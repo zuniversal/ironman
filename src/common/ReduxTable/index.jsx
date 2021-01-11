@@ -53,7 +53,7 @@ const ReduxTable = props => {
     title: v.label,
     dataIndex: v.name,
     render: (text, record, index, config) => (
-      <div>
+      <div className={`tableItem`}>
         <TableInput
           text={text}
           record={record}

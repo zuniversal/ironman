@@ -311,6 +311,7 @@ const ClientForm = props => {
     },
 
     {
+      noRule: true,
       formType: 'Search',
       selectSearch: props.getUserAsync,
       selectData: props.userList,
@@ -585,14 +586,14 @@ const ClientForm = props => {
     },
     {
       itemProps: {
-        label: '用户名',
-        name: 'username',
+        label: '姓名',
+        name: 'nickname',
       },
     },
     {
       itemProps: {
         label: '账号',
-        name: 'nickname',
+        name: 'username',
       },
     },
     {

@@ -454,3 +454,120 @@ export const notifyTypeConfig = [
     key: 1,
   },
 ];
+
+export const contractTypeConfig = [
+  {
+    label: '托管',
+    value: 1,
+  },
+  {
+    label: '24小时托管',
+    value: 2,
+  },
+  {
+    label: '协管',
+    value: 3,
+  },
+  {
+    label: '维修',
+    value: 4,
+  },
+  {
+    label: '抢修',
+    value: 5,
+  },
+  {
+    label: '后出线',
+    value: 6,
+  },
+  {
+    label: '电试',
+    value: 7,
+  },
+  {
+    label: '业扩',
+    value: 8,
+  },
+  {
+    label: '综合能源服务',
+    value: 9,
+  },
+  {
+    label: '光伏及并网',
+    value: 10,
+  },
+  {
+    label: '监控安装',
+    value: 11,
+  },
+  {
+    label: '其他',
+    value: 12,
+  },
+  {
+    label: '电护卫',
+    value: 13,
+  },
+  {
+    label: '承揽加工',
+    value: 14,
+  },
+  {
+    label: '售电',
+    value: 50,
+  },
+  {
+    label: '购销',
+    value: 51,
+  },
+  {
+    label: '品牌服务',
+    value: 15,
+  },
+  {
+    label: '微电网',
+    value: 16,
+  },
+  {
+    label: '框架协议',
+    value: 17,
+  },
+  {
+    label: '共享电工',
+    value: 18,
+  },
+  {
+    label: '咨询',
+    value: 19,
+  },
+  {
+    label: '维保',
+    value: 20,
+  },
+  {
+    label: '租赁',
+    value: 21,
+  },
+  {
+    label: '会员制',
+    value: 22,
+  },
+  {
+    label: '充电桩',
+    value: 23,
+  },
+  {
+    label: '售电',
+    value: 50,
+  },
+  {
+    label: '购销',
+    value: 51,
+  },
+  {
+    label: '微电网分租',
+    value: 101,
+  },
+];
+
+export const contractTypeConfigMap = arrMapObj(contractTypeConfig);

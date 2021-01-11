@@ -18,3 +18,4 @@ export const removeItem = p => remove(`console/OMS/contract/${p.d_id}`, p);
 // export const getPdf = p =>
 //   noTipsGet(`console/OMS/contract/static/${p.path}.pdf`, p);
 export const getPdf = '/api/v1/console/OMS/contract/static/';
+export const pdfPrefix = '/console/OMS/contract/static/';
