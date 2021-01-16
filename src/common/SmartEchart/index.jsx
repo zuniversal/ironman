@@ -35,10 +35,22 @@ class SmartEcharts extends React.PureComponent {
   onChartLegendselectchanged = e => {
     console.log('    onChartLegendselectchanged ： ', e);
   };
+  onChartReadyCallback = e => {
+    console.log(
+      '    onChartReadyCallback Com e.getImage() ： ',
+      e,
+      e.getDataURL(),
+    );
+  };
 
   render() {
     const { data, type, legend, tabData, option } = this.props;
-
+    console.log(
+      ' %c SmartEchart 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     let onEvents = {
       click: this.onChartClick,
       legendselectchanged: this.onChartLegendselectchanged,
@@ -66,12 +78,13 @@ class SmartEcharts extends React.PureComponent {
       <ReactEcharts
         echarts={echarts}
         notMerge
-        lazyUpdate
+        // lazyUpdate
         theme={'theme_name'}
         onChartReady={this.onChartReadyCallback}
         onEvents={onEvents}
         {...this.props}
         option={optionConfig}
+        ref={ref => (this.echartsRef = ref)}
       />
     );
   }

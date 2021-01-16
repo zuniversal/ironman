@@ -316,7 +316,6 @@ class Contract extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }

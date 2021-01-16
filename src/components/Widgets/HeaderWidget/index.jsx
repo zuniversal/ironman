@@ -8,7 +8,9 @@ import { history, connect } from 'umi';
 import { csSystemNotify, BIG_SCREEN } from '@/constants'; //
 
 const HeaderWidget = props => {
-  // console.log(' HeaderWidget   props, ,   ： ', props);
+  console.log(' HeaderWidget   props, ,   ： ', props);
+  const haveScreenAuth = props.userInfo?.perms?.screen?.perms?.module;
+  console.log(' haveScreenAuth,   ： ', haveScreenAuth);
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path, BIG_SCREEN);
     window.open(BIG_SCREEN);
@@ -41,10 +43,12 @@ const HeaderWidget = props => {
         <Icon icon={'bell'} className={' '} />
       </DropdownNotice>
       <span className="yAxis actionItem"></span>
-      <span className="bigScreenWrapper actionItem dfc" onClick={goBigScreen}>
-        <Icon icon={'bigScreen'} />
-        <span className="text">大屏展示</span>
-      </span>
+      {haveScreenAuth && (
+        <span className="bigScreenWrapper actionItem dfc" onClick={goBigScreen}>
+          <Icon icon={'bigScreen'} />
+          <span className="text">大屏展示</span>
+        </span>
+      )}
       {avatar}
       {/* <span className="avatars" onClick={logout}></span> */}
       <span

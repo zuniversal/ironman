@@ -1,0 +1,179 @@
+.monthPowerReport,
+.monthStationReport {
+  width: 100%;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.csClientReportDescription {
+  width: 100%;
+  font-family: KaiTi;
+  padding: 10px;
+  .ant-descriptions-bordered {
+    .ant-descriptions-item-label {
+      background: #f3f3f4;
+    }
+  }
+
+  .reportCoverWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 11cm 5cm 0 5cm;
+    // padding: 11cm 4cm 0 6cm;
+    // padding: 11cm 10cm 0 10cm;
+    font-size: 20px;
+    .infoWrapper {
+      flex-direction: column;
+    }
+    .imgWrapper {
+      display: flex;
+      // flex-direction: column;
+    }
+
+    .rowItem {
+      display: flex;
+      .label {
+        width: 100px;
+        text-align-last: justify;
+      }
+
+      // .f2{
+      //   flex: 2;
+      //   text-align-last: justify;
+      // }
+      .f3 {
+        flex: 3;
+      }
+    }
+    .f1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &:first-child {
+        // align-items: flex-start;
+        padding: 20px;
+      }
+      &:last-child {
+        // align-items: flex-end;
+        padding: 20px;
+      }
+      // align-items: center;
+    }
+
+    .label {
+      line-height: 25px;
+    }
+    .coverImg {
+      width: 150px;
+      height: 150px;
+    }
+  }
+}
+
+.descWrapper {
+  &.monthPowerReport {
+    .ant-descriptions-item-label,
+    .ant-descriptions-item-content {
+      padding: 5px;
+      padding: 12px;
+      text-align: center;
+      font-size: 12px;
+    }
+    .ant-descriptions-item-label.label {
+      width: 36px;
+      padding: 0 8px;
+      line-height: 1.3;
+    }
+  }
+  &.monthStationReport {
+    .ant-descriptions-item-label,
+    .ant-descriptions-item-content {
+      padding: 0px;
+    }
+  }
+  .pdfTitle {
+    font-weight: bold;
+    font-size: 20px !important;
+    text-align: center;
+    .ant-descriptions-item-label {
+      font-weight: bold;
+      font-size: 16px !important;
+    }
+  }
+
+  .columns {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    .f1 {
+      flex: 1;
+      // width: 50%;
+      // width: 100%;
+    }
+
+    .colWrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .rowItem {
+        flex: 1;
+        display: flex;
+        font-weight: bold;
+        justify-content: space-evenly;
+      }
+    }
+    .pie {
+      height: 150px !important;
+      width: 100%;
+      width: 300px;
+    }
+  }
+
+  .stamp {
+    position: absolute;
+    right: 50px;
+    bottom: 40px;
+  }
+
+  .descTitle {
+    font-weight: bold;
+    font-size: 14px !important;
+  }
+  .headerWrapper {
+    .ant-descriptions-item-container {
+      justify-content: center;
+    }
+
+    .ant-descriptions-item,
+    .ant-descriptions-row > td {
+      padding-bottom: 0;
+    }
+  }
+  .ant-descriptions-item-content {
+    min-height: 28px;
+  }
+
+  .ant-descriptions-item-content.noPadding {
+    padding: 0;
+  }
+
+  .appraisalWrapper {
+    margin-top: 10px;
+  }
+  .footerWrapper {
+    margin-top: 10px;
+    .ant-descriptions-item-label,
+    .ant-descriptions-item-content {
+      padding: 10px;
+    }
+    .ant-descriptions-item-label {
+      min-width: 150px;
+    }
+
+    .signLine {
+      border-bottom: 1px solid #000;
+      min-width: 200px;
+    }
+  }
+}

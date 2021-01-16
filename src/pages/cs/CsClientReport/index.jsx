@@ -6,8 +6,11 @@ import ClientReportForm from '@/components/Form/ClientReportForm'; //
 import CsClientReportSearchForm from '@/components/Form/CsClientReportForm/CsClientReportSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
+import CsClientReportDescription from '@/components/Description/CsClientReportDescription'; //
+// import ExportPdf from '@/components/Pdf/ExportPdf'; //
+import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf'; //
 
-import { actions, mapStateToProps } from '@/models/clientReport'; //
+import { actions, mapStateToProps } from '@/models/csClientReport'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -36,6 +39,7 @@ class ClientReport extends PureComponent {
     super(props);
     this.state = {
       titleMap,
+      isExportPdf: false,
     };
   }
 
@@ -47,6 +51,26 @@ class ClientReport extends PureComponent {
           // onClick={this.exportDataAsync}
         >
           查询
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+            this.props.showFormModal({
+              action: 'pdfss',
+            });
+          }}
+        >
+          导出PDF
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+            this.props.toggleExportPDF();
+          }}
+        >
+          导出PDF
         </Button>
       </div>
     );
@@ -103,7 +127,6 @@ class ClientReport extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }
@@ -118,7 +141,7 @@ class ClientReport extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
     };
     if (action !== 'add') {
@@ -128,6 +151,7 @@ class ClientReport extends PureComponent {
       return <ClientReportPdf></ClientReportPdf>;
     }
     console.log(' formComProps ： ', formComProps); //
+    return this.renderExportPdf;
     return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
@@ -150,14 +174,81 @@ class ClientReport extends PureComponent {
     );
   };
 
+  get renderExportPdf() {
+    console.log(' ExportPdf this.ref ： ', this.ref); //
+    return (
+      <div className={`pdfDetail `} ref={ref => (this.ref = ref)}>
+        <CsClientReportDescription
+          init={this.props.itemDetail}
+          closeExportPdf={this.closeExportPdf}
+          toggleExportPDF={this.props.toggleExportPDF}
+          isExportPDF
+          // className={this.props.isShowExportPdf ? '' : 'hide'}
+          className={this.state.isExportPdf ? 'posAbs' : ''}
+          top={
+            <div className={'fje noPrint '}>
+              {/* <Button
+              type="primary"
+              onClick={() => {
+                this.setState({
+                  isExportPdf: true,
+                }, () => {
+                  console.log(' xxxxx ： ', ); //
+                  window.print();
+                })
+              }}
+            >
+              导出PDFx
+            </Button> */}
+              <Button
+                type="primary"
+                onClick={() => {
+                  console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+                  this.props.toggleExportPDF();
+                }}
+              >
+                导出PDF
+              </Button>
+            </div>
+          }
+        ></CsClientReportDescription>
+      </div>
+    );
+  }
+
   render() {
+    // const com = this.renderExportPdf
+    // // console.log(' comcom ：com &&  ', com,  )//   isShowExportPdf={this.props.isShowExportPdf}
+    // if (this.props.isShowExportPdf) {
+    // // if (true) {
+    //   return (
+    //     <ExportPdf onClose={this.props.closePdf}>
+
+    //         {/* {com} */}
+    //         {this.renderExportPdf}
+
+    //     </ExportPdf>
+    //   );
+    // }
+
     return (
       <div className="ClientReport">
         {this.renderSearchForm()}
 
-        {this.renderTable()}
+        {this.renderExportPdf}
+        {/* {this.props.isShowExportPdf && <ExportPdf onClose={this.props.closePdf} com={this.ref}></ExportPdf>} */}
+        <ExportPdf
+          onClose={this.props.closePdf}
+          com={this.ref}
+          isPrintPdf={this.props.isShowExportPdf}
+        ></ExportPdf>
+        {/* <CsClientReportDescription></CsClientReportDescription> */}
 
         {this.renderSmartFormModal()}
+
+        {/* {this.renderTable()}
+
+        {this.renderSmartFormModal()} */}
       </div>
     );
   }

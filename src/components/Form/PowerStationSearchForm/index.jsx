@@ -29,12 +29,12 @@ const PowerStationSearchForm = props => {
       },
     },
     ...provinceFormConfig(props),
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    // },
   ];
 
   return (

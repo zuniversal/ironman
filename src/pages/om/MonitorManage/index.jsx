@@ -137,7 +137,6 @@ class MonitorManage extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }
@@ -150,10 +149,6 @@ class MonitorManage extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
-      clientList: this.props.clientList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

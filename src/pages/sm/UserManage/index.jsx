@@ -164,7 +164,7 @@ class UserManage extends PureComponent {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       getOrganizeAsync: params =>
         this.props.getOrganizeAsync({ keyword: params }),

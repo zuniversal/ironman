@@ -95,7 +95,8 @@ export default {
         dataList: payload.list.map(v => ({
           ...v,
           admin: v.customer_admin.map(v => v.nickname),
-          type: customerTypeMap[v.type],
+          // type: customerTypeMap[v.type],
+          type: v.type.map(v => customerTypeMap[v]),
         })),
         count: payload.rest.count,
         isShowModal: false,

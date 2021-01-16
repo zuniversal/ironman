@@ -42,7 +42,7 @@ const ShiftsTransferTable = props => {
       dataMap: onDutyTypeMap,
     },
     {
-      title: '创建时间',
+      title: '交接时间',
       dataIndex: 'handover_time',
     },
   ];

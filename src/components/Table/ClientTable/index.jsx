@@ -12,7 +12,7 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
-import { industryTypeMap } from '@/configs'; //
+import { industryTypeMap, clientLevelConfigMap } from '@/configs'; //
 
 const ClientTable = props => {
   const { tdClick, showDetail } = props; //
@@ -47,20 +47,29 @@ const ClientTable = props => {
       title: '客户类型',
       dataIndex: 'type',
     },
+    // {
+    //   // noFilter: true,
+    //   title: '所属行业',
+    //   dataIndex: 'industry',
+    //   dataMap: industryTypeMap,
+    // },
+    // {
+    //   // noFilter: true,
+    //   title: '企业规模',
+    //   dataIndex: 'scale',
+    // },
+    // {
+    //   title: '资产规模',
+    //   dataIndex: 'asset',
+    // },
     {
-      // noFilter: true,
-      title: '所属行业',
-      dataIndex: 'industry',
-      dataMap: industryTypeMap,
-    },
-    {
-      // noFilter: true,
-      title: '企业规模',
-      dataIndex: 'scale',
-    },
-    {
-      title: '资产规模',
-      dataIndex: 'asset',
+      title: '客户等级',
+      dataIndex: 'level',
+      dataMap: clientLevelConfigMap,
+      // render: (text, record, index, config) => (
+      //   <div className={`tableItem`}>
+      //   </div>
+      // ),
     },
     {
       title: '管理员',

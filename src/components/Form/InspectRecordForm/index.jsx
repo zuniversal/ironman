@@ -182,8 +182,14 @@ const createFormList = props => {
 };
 
 const InspectRecordForm = props => {
-  console.log(' InspectRecordForm ： ', props, props.init); //
   const { formBtn, init, isExportPDF, ...rest } = props; //
+  const [isEdit, setIsEdit] = useState(false);
+  // const [ modalExport, setModalExport ] = useState(true)
+  const [modalExport, setModalExport] = useState(false);
+  console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport); //
+
+  // const isExport = isExportPDF || !modalExport
+  const isExport = isExportPDF || modalExport;
 
   const {
     // power_data = [{}],
@@ -1172,7 +1178,7 @@ const InspectRecordForm = props => {
       },
     },
 
-    ...(isExportPDF ? [powerDataItem] : powerDataDetail),
+    ...(isExport ? [powerDataItem] : powerDataDetail),
 
     // {
     //   formType: 'CustomCom',
@@ -1191,7 +1197,7 @@ const InspectRecordForm = props => {
     //   },
     // },
     // spectInItem,
-    ...(isExportPDF
+    ...(isExport
       ? [spectInItem]
       : [
           {
@@ -1213,7 +1219,7 @@ const InspectRecordForm = props => {
           spectInDetail,
         ]),
 
-    ...(isExportPDF ? [spectOutItem] : spectOutDetail),
+    ...(isExport ? [spectOutItem] : spectOutDetail),
 
     // // 新增
 
@@ -1253,40 +1259,68 @@ const InspectRecordForm = props => {
 
   const formTitle = props.init?.inspection_task?.name;
 
+  const actionBtn = (
+    <div className="btnWrapper fje ">
+      <Button type="primary" onClick={() => setIsEdit(!isEdit)}>
+        编辑
+      </Button>
+      <Button type="primary" onClick={() => setModalExport(!modalExport)}>
+        导出pdf
+      </Button>
+    </div>
+  );
+
+  const finish =
+    props.type === 'comExportPdf'
+      ? () => {
+          setTimeout(() => {
+            console.log('  延时器 ： ');
+            setModalExport(!modalExport);
+          }, 2000);
+        }
+      : props.toggleExportPDF;
+  // const finish = props.type === 'comExportPdf' ? setModalExport : props.toggleExportPDF
+
   useExportPdf({
     // element: document.getElementsByClassName('inspectRecordForm')[0],
-    isExportPDF,
-    element: 'inspectRecordForm',
-    finish: props.toggleExportPDF,
+    isExportPDF: isExport,
+    element: 'formWrapper',
+    // finish: props.toggleExportPDF,
+    finish: finish,
     filename: formTitle,
   });
 
   return (
     <div
-      className={`inspectRecordForm ${isExportPDF ? 'exportPdf' : ''}`}
+      className={`inspectRecordForm ${isExport ? 'exportPdf' : ''}`}
       ref={counterRef}
     >
+      {/* {props.showActionBtn && modalExport ? actionBtn : null} */}
+      {props.showActionBtn ? actionBtn : null}
       {/* <SmartExportPdf></SmartExportPdf> */}
-      <div className="formTitle">报告：{formTitle}</div>
-      <SmartForm
-        flexRow={2}
-        config={configs}
-        formLayouts={formLayouts}
-        noRuleAll
-        isDisabledAll
-        {...props}
-        init={{
-          ...dataInit,
-          // spectIn: power_data[0].spect_in[0],
-          // spectOut: power_data[0].spect_out[0],
-        }}
-        className={'inspectRecordForm'}
-        formProps={
-          {
-            // id: 'inspectRecordForm',
+      <div className="formWrapper">
+        <div className="formTitle">报告：{formTitle}</div>
+        <SmartForm
+          flexRow={2}
+          config={configs}
+          formLayouts={formLayouts}
+          noRuleAll
+          // isDisabledAll
+          {...rest}
+          init={{
+            ...dataInit,
+            // spectIn: power_data[0].spect_in[0],
+            // spectOut: power_data[0].spect_out[0],
+          }}
+          className={'inspectRecordForm'}
+          formProps={
+            {
+              // id: 'inspectRecordForm',
+            }
           }
-        }
-      ></SmartForm>
+          action={isEdit ? 'edit' : 'detail'}
+        ></SmartForm>
+      </div>
     </div>
   );
 };

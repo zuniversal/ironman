@@ -7,7 +7,7 @@ const { createActions } = init(namespace);
 
 const otherActions = [];
 
-const batchTurnActions = [];
+const batchTurnActions = ['closePdf', 'toggleExportPDF'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -25,6 +25,8 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+
+    isShowExportPdf: false,
   },
 
   reducers: {
@@ -86,6 +88,21 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    closePdf(state, { payload, type }) {
+      return {
+        ...state,
+        isShowExportPdf: false,
+      };
+    },
+    toggleExportPDF(state, { payload, type }) {
+      console.log(' toggleExportPDF ： ', payload); //
+      return {
+        ...state,
+        isExportPDF: !state.isExportPDF,
+        isShowExportPdf: !state.isShowExportPdf,
       };
     },
   },

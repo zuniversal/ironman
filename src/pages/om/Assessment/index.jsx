@@ -107,7 +107,6 @@ class Assessment extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
           d_id: itemDetail.id,
         });

@@ -8,10 +8,11 @@ import React, {
   useState,
 } from 'react';
 import './style.less';
-import { Input, Button } from 'antd';
+import { Input, Button, Select, InputNumber } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
-import { tips } from '@/utils';
+import { tips, renderSelectOp } from '@/utils';
+import { voltageLevelConfig } from '@/configs';
 import PowerStationTable from '../PowerStationTable';
 
 export const DeviceInfoTable = props => {
@@ -89,6 +90,76 @@ export const WatchInfoTable = props => {
   );
 };
 
+export const selectCom = props => {
+  const { comProps, selectData, text, record } = props; //
+  const selectProps = {
+    allowClear: true,
+    ...comProps,
+    filterOption: true,
+    showSearch: true,
+    optionFilterProp: 'children',
+    defaultValue: text,
+    onChange: value =>
+      props.modifyPowerInfo({
+        action: 'edit',
+        value: value,
+        // keys: 'outline_number',
+        ...props,
+        ...record,
+      }),
+  };
+
+  return <Select {...selectProps}>{renderSelectOp(selectData)}</Select>;
+};
+
+export const getWidget = props => {
+  console.log(' getWidget   props,   ： ', props);
+  const {
+    formType = 'Input',
+    comProps,
+    label,
+    LabelCom,
+    CustomCom,
+    text,
+    plainText,
+    keys,
+    record,
+    index,
+  } = props; //
+
+  const formItemMap = {
+    rowText: label,
+    Label: LabelCom,
+    CustomCom: CustomCom,
+    plainText: (
+      <span className={`plainText`} {...comProps}>
+        {plainText}
+      </span>
+    ),
+    Input: (
+      <Input
+        defaultValue={text}
+        onChange={e =>
+          props.modifyPowerInfo({
+            action: 'edit',
+            value: e.target.value,
+            // keys: 'outline_number',
+            keys: keys,
+            text,
+            ...record,
+            index,
+          })
+        }
+      />
+    ),
+    InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
+    Select: selectCom(props),
+  };
+
+  const formItemCom = formItemMap[formType];
+  return formItemCom;
+};
+
 export const TableInput = props => {
   const { text, record, index, keys } = props; //
   // console.log(
@@ -96,24 +167,7 @@ export const TableInput = props => {
   //   `color: #333; font-weight: bold`,
   //   props,
   // ); //
-  return props.record.isEdit ? (
-    <Input
-      defaultValue={text}
-      onChange={e =>
-        props.modifyPowerInfo({
-          action: 'edit',
-          value: e.target.value,
-          // keys: 'outline_number',
-          keys: keys,
-          text,
-          ...record,
-          index,
-        })
-      }
-    ></Input>
-  ) : (
-    text
-  );
+  return props.record.isEdit ? getWidget(props) : text;
 };
 
 export const PowerStationDetailTable = props => {
@@ -168,6 +222,7 @@ export const PowerStationDetailTable = props => {
           keys={'power_number'}
         ></TableInput>
       ),
+      // render: (text, record, index, config) => text
     },
     {
       title: '电表号',
@@ -205,6 +260,7 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'magnification'}
+          // formType={'InputNumber'}
         ></TableInput>
       ),
     },
@@ -257,6 +313,8 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'voltage_level'}
+          formType={'Select'}
+          selectData={voltageLevelConfig}
         ></TableInput>
       ),
     },

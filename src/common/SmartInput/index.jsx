@@ -9,31 +9,16 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Table,
-  Icon,
-  notification,
-  Modal,
-  Button,
-  Tag,
-  Form,
-  Input,
-  Row,
-  Col,
-  Menu,
-  Dropdown,
-  Select,
-  Spin,
-} from 'antd';
+import { Input } from 'antd';
 import debounce from 'lodash/debounce';
 import { INPUT_TXT, WORD } from '@/constants'; //
 
 const SmartInput = props => {
-  console.log(' SmartInput ： ', props); //
+  console.log(' SmartInput  + word： ', props); //
   const { placeholder, word, defPh, className, time, ...rest } = props; //
 
   const prop = {
-    placeholder: defPh ? placeholder + word : placeholder,
+    placeholder: defPh ? placeholder : placeholder,
   };
 
   const onChange = debounce(props.onChange, time);

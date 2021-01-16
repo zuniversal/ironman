@@ -61,6 +61,7 @@ class Goods extends PureComponent {
         className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
+        label={'名称'}
         keyword={'name'}
       ></SearchKwForm>
     );
@@ -110,7 +111,6 @@ class Goods extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
           d_id: itemDetail.id,
         });

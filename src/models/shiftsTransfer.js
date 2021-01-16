@@ -28,9 +28,12 @@ export const formatSearch = data => {
   return {
     ...data,
     // page_size: 40,
+    // handover_time: data.handover_time
+    // ? data.handover_time.format('YYYY-MM-DD')
+    // : nowYearMonthDay,
     handover_time: data.handover_time
       ? data.handover_time.format('YYYY-MM-DD')
-      : nowYearMonthDay,
+      : '',
   };
 };
 
@@ -60,7 +63,7 @@ export default {
     itemDetail: {},
     d_id: '',
     searchInfo: {
-      handover_time: moment(),
+      // handover_time: moment(),
     },
     teamList: [
       // { label: 'xxx', value: 'xxx1' },

@@ -299,6 +299,9 @@ const ClientForm = props => {
         label: '客户类型',
         name: 'type',
       },
+      comProps: {
+        mode: 'multiple',
+      },
     },
     {
       formType: 'Search',

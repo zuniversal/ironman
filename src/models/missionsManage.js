@@ -218,7 +218,6 @@ export default {
       };
     },
     startWorkOrder(state, { payload, type }) {
-      console.log(' startWorkOrderstartWorkOrder ： '); //
       return {
         ...state,
         isShowModal: false,

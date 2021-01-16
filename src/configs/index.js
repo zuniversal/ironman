@@ -227,6 +227,10 @@ export const customerTypeConfig = [
     value: 2,
     label: 'VIP客户',
   },
+  {
+    value: 10,
+    label: '监控客户',
+  },
 ];
 
 export const customerTypeMap = arrMapObj(customerTypeConfig);
@@ -571,3 +575,55 @@ export const contractTypeConfig = [
 ];
 
 export const contractTypeConfigMap = arrMapObj(contractTypeConfig);
+
+export const voltageLevelConfig = [
+  {
+    label: '35kv',
+    value: '35kv',
+  },
+  {
+    label: '10kv',
+    value: '10kv',
+  },
+  {
+    label: '0.4kv',
+    value: '0.4kv',
+  },
+];
+
+export const clientLevelConfig = [
+  {
+    label: '【签】VIP客户(集团)',
+    value: 119,
+  },
+  {
+    label: '【签】VIP客户',
+    value: 120,
+  },
+  {
+    label: '【签】优质客户',
+    value: 110,
+  },
+  {
+    label: '【签】普通客户',
+    value: 100,
+  },
+  {
+    label: '【签】边际客户',
+    value: 90,
+  },
+  {
+    label: '【分】已分配客户',
+    value: 10,
+  },
+  {
+    label: '【未】未分配客户',
+    value: 0,
+  },
+  {
+    label: '【无】无意向客户',
+    value: 10,
+  },
+];
+
+export const clientLevelConfigMap = arrMapObj(clientLevelConfig);

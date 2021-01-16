@@ -39,7 +39,7 @@ class CsOrganize extends PureComponent {
     return (
       <div className={'fsb '}>
         <div>
-          <Tag color={PRIMARY}>
+          <Tag className={'orgTag'}>
             最多支持创建3个账户，每个账户可在小程序接受通知
           </Tag>
         </div>

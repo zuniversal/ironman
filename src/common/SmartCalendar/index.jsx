@@ -87,7 +87,7 @@ const SmartCalendar = React.forwardRef((props, ref) => {
         locale="zh-cn"
         allDayText="全天"
         title={''}
-        // dayMaxEvents={3}
+        // dayMaxEvents={0}
         // moreLinkContent={params => {
         //   console.log(' paramsparams ： ', params);
         //   return 'xxx';

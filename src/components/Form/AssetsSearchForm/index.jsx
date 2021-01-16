@@ -28,12 +28,12 @@ const AssetsSearchForm = props => {
       },
     },
 
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    // },
     // {
     //   // formType: 'Select',
     //   itemProps: {

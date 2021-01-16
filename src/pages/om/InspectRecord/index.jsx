@@ -174,10 +174,6 @@ class InspectRecord extends PureComponent {
 
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ name: params }),
-      clientList: this.props.clientList,
       // isExportPDF: this.props.isExportPDF,
       // isExportPDF: this.props.isShowExportPdf,
       isExportPDF: this.props.isExportPDF,
@@ -203,7 +199,12 @@ class InspectRecord extends PureComponent {
     return (
       <>
         {/* {this.renderExportBtn()} */}
-        <InspectRecordForm {...formComProps}></InspectRecordForm>
+        <InspectRecordForm
+          {...formComProps}
+          // action={'edit'}
+          showActionBtn
+          type={'comExportPdf'}
+        ></InspectRecordForm>
       </>
     );
     // if (action === 'inspectReport') {
@@ -356,14 +357,14 @@ class InspectRecord extends PureComponent {
       this.props,
     ); //
 
-    if (this.props.isShowExportPdf) {
-      console.log(' 111111111 ： '); //
-      return (
-        <ExportPdf onClose={this.props.closePdf} noPrint>
-          {this.renderInspectRecordForm}
-        </ExportPdf>
-      );
-    }
+    // if (this.props.isShowExportPdf) {
+    //   console.log(' 111111111 ： '); //
+    //   return (
+    //     <ExportPdf onClose={this.props.closePdf} noPrint>
+    //       {this.renderInspectRecordForm}
+    //     </ExportPdf>
+    //   );
+    // }
 
     // if (this.props.isShowPdfDetail) {
     //   return this.renderInspectRecordForm;

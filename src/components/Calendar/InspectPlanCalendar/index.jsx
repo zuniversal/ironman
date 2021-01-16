@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import { Input, Tooltip } from 'antd';
+import { Input, Tooltip, Popover, Button } from 'antd';
 import SmartCalendar, {
   CalendarDraggable,
   dayCellContent,
@@ -11,6 +11,22 @@ import { CloseOutlined, BarsOutlined } from '@ant-design/icons';
 import SmartInput from '@/common/SmartInput';
 
 const { Search } = Input;
+
+const content = (
+  <div>
+    <p>Content</p>
+    <p>Content</p>
+  </div>
+);
+
+const PopoverCom = props => {
+  console.log(' PopoverCom   ,   ： ');
+  return (
+    <Popover content={content} title="Title">
+      {props.children}
+    </Popover>
+  );
+};
 
 let matchList = [
   {
@@ -207,7 +223,8 @@ const ShiftsArrangeList = props => {
                   {event.surplus_plan_num > 0 && (
                     <div
                       id={event.id}
-                      url={event.surplus_plan_num}
+                      textcolor={event.surplus_plan_num}
+                      // url={event.surplus_plan_num}
                       // data-isdraged={event.isdraged}
                       data-datas={event}
                       className="dragItem "
@@ -314,6 +331,9 @@ const InspectPlanCalendar = props => {
   const eventChange = params => {
     console.log(' eventChange   ,   ： ', params);
   };
+  const eventMouseEnter = params => {
+    console.log(' eventMouseEnter   ,   ： ', params);
+  };
 
   console.log(' cusRef ： ', cusRef, calendarRef); //
 
@@ -355,22 +375,31 @@ const InspectPlanCalendar = props => {
         eventAdd={eventAdd}
         // eventRemove={eventRemove}
         eventChange={eventChange}
+        // eventMouseEnter={eventMouseEnter}
         initialDate={props.initialDate}
         dayMaxEvents={1}
+        // dayMaxEvents={0}
         moreLinkContent={'新拖入电站列表...'}
+        // moreLinkContent={
+        //   <PopoverCom>
+        //     <div>新排</div>
+        //   </PopoverCom>
+        // }
         // dayMaxEvents={0}
         eventContent={eventInfo => {
-          console.log(' eventInfo ： ', eventInfo); //
+          // console.log(' eventInfo ： ', eventInfo); //
           return (
-            <div
-              className={`eventWrapper`}
-              onClick={e => {
-                console.log(' eventWrappereventWrapper ： '); //
-              }}
-            >
-              {eventInfo.event.title?.split('客户')[0]}
-              {/* <CloseOutlined onClick={props.remove} /> */}
-            </div>
+            <PopoverCom>
+              <div
+                className={`eventWrapper ellipsis`}
+                onClick={e => {
+                  console.log(' eventWrappereventWrapper ： '); //
+                }}
+              >
+                {eventInfo.event.title?.split('客户')[0]}
+                {/* <CloseOutlined onClick={props.remove} /> */}
+              </div>
+            </PopoverCom>
           );
         }}
         // eventOverlap={false}

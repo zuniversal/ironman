@@ -21,6 +21,7 @@ import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import WorkOrderTicketForm from '@/components/Form/WorkOrderForm';
 import { tips } from '@/utils';
+import moment from 'moment'; //
 
 const TITLE = '任务';
 
@@ -202,7 +203,6 @@ class MissionsManage extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }
@@ -254,7 +254,7 @@ class MissionsManage extends PureComponent {
     }
     if (action === 'confirmSchedule') {
       formComProps.init = {
-        plan_date: this.props.itemDetail.plan_date,
+        plan_date: moment(this.props.itemDetail.plan_date),
       };
       return (
         <MissionsManageConfirmScheduleForm

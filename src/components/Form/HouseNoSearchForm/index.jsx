@@ -84,12 +84,12 @@ const HouseNoSearchForm = props => {
     //     className: 'w-160',
     //   },
     // },
-    {
-      formType: 'Divider',
-      itemProps: {
-        label: '',
-      },
-    },
+    // {
+    //   formType: 'Divider',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    // },
   ];
 
   const { formBtn, ...rest } = props; //

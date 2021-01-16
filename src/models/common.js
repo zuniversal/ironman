@@ -302,7 +302,7 @@ export default {
     },
     missionsManageDetail(state, { payload, type }) {
       console.log(' missionsManageDetail ： ', state, payload); //
-      const { customer, person, contacts_phone } = payload.bean;
+      const { customer, person, contacts_phone, _log } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -312,6 +312,9 @@ export default {
           customer_id: customer.name,
           person: person ? person.nickname : person,
           phone: contacts_phone,
+          _log: _log.map(v =>
+            moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
+          ),
         },
       };
     },

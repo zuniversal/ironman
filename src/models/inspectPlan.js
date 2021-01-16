@@ -93,6 +93,8 @@ export default {
         return {
           ...v,
           url: i,
+          textColor: i,
+          // url: '#',
           href: '#',
           // overlap: false,
 
@@ -231,7 +233,7 @@ export default {
         payload,
       ); //
       const latestDrag = payload[payload.length - 1]; // 当前拖动的最新的一个电站
-      console.log(' latestDrag ： ', latestDrag); //
+      console.log(' latestDrag ： ', latestDrag, latestDrag.textColor); //
       const unScheduleListFilter = unScheduleList.map(v => {
         return latestDrag && v.id != latestDrag.id
           ? v
@@ -240,7 +242,8 @@ export default {
               surplus_plan_num:
                 v.surplus_plan_num > 0 &&
                 latestDrag &&
-                latestDrag.url == v.surplus_plan_num
+                // latestDrag.url == v.surplus_plan_num
+                latestDrag.textColor == v.surplus_plan_num
                   ? v.surplus_plan_num - 1
                   : v.surplus_plan_num,
               // isdraged: true,
@@ -268,11 +271,16 @@ export default {
                   };
             })
           : scheduleList; //
-      console.log('  latestDrag scheduleListData ：', scheduleListData); //
+      console.log(
+        '  latestDrag scheduleListData ：',
+        unScheduleListFilter,
+        scheduleListData,
+      ); //
       return {
         ...state,
         dragList: dragList,
         unScheduleList: unScheduleListFilter,
+        unScheduleFilter: unScheduleListFilter,
         // scheduleList: scheduleListData,
         // scheduleList: scheduleList.map((v) => {
         //   console.log(' scheduleList ： ', v, latestDrag, )//

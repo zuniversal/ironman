@@ -102,7 +102,6 @@ class Appraise extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
           d_id: itemDetail.id,
         });

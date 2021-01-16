@@ -146,10 +146,6 @@ class Role extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
-      clientList: this.props.clientList,
       permission: this.props.permission,
       permsData: this.props.permsData,
       onPermsCheck: this.props.onPermsCheck,

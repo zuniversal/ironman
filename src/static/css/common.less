@@ -46,6 +46,16 @@ body {
 //     background: #e2e2e2;
 // }
 
+.posAbs {
+  position: absolute;
+  // position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+}
+
 .textCenter {
   text-align: center;
 }
@@ -94,9 +104,14 @@ body {
   }
 }
 
+.posHidden {
+  position: fixed;
+  bottom: -100%;
+  right: -100%;
+}
+
 .hidden {
-  transition: all 2s linear !important;
-  display: none !important;
+  display: none;
 }
 
 .hide {

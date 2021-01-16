@@ -167,9 +167,11 @@ class ShiftsTransfer extends PureComponent {
       };
     }
     console.log(' formComProps ： ', formComProps, itemDetail, itemDetail.type); //
-    if (itemDetail.type == 0) {
+    // if (itemDetail.type == 0) {
+    if (itemDetail.type == '调度') {
       return <ShiftsTransferForm {...formComProps}></ShiftsTransferForm>;
-    } else if (itemDetail.type == 1) {
+      // } else if (itemDetail.type == 1) {
+    } else if (itemDetail.type == '值班') {
       return (
         <ShiftsTransferDetailForm {...formComProps}></ShiftsTransferDetailForm>
       );

@@ -1,13 +1,20 @@
 import { PRIMARY } from '@/constants';
 
+export const gridZero = {
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+};
+
 export const color = [
   PRIMARY,
   '#f50',
   '#108ee9',
   '#13CE66',
-  '#006699',
   '#e5323e',
   '#4cabce',
+  '#006699',
 ];
 
 export const tooltip = {

@@ -1,4 +1,6 @@
 .exportPdfWrapper {
+  // transition: all 1s linear !important;
+  width: 100%;
   height: 100%;
   position: absolute;
   // position: fixed;
@@ -44,6 +46,10 @@
 // }
 
 @media print {
+  .noPrint {
+    display: none;
+  }
+
   .ant-pro-setting-drawer-handle {
     // display: none;
   }
