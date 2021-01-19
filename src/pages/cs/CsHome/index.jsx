@@ -219,8 +219,8 @@ class CsHome extends PureComponent {
     this.props.getStatisticAsync({});
     this.props.getDeviceStatusAsync();
     this.props.getPowerInfoAsync({
-      customer: 5996,
-      // customer: this.props.user.userInfo.id,
+      // customer: 5996,
+      customer: this.props.user.userInfo.id,
     });
     this.props.getStationStatusAsync({});
   }

@@ -102,7 +102,6 @@ class Msg extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          // ...itemDetail,
           ...res,
           send_type,
           // reciever,

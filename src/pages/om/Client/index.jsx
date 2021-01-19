@@ -460,7 +460,7 @@ class Client extends PureComponent {
       action,
       getCapture: this.showCapture,
       addUserAsync: this.addUserAsync,
-      getUserAsync: params => this.props.getUserAsync({ keyword: params }),
+      getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
       // saveAdmin: params => {
       //   console.log(' saveAdmin params ： ', params); //

@@ -139,7 +139,10 @@ export default {
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           d_id: payload.payload.d_id,
           service_staff: `${service_staff?.id}`,
-          last_service_staff: `${last_service_staff?.id}`,
+          last_service_staff:
+            last_service_staff && last_service_staff?.id
+              ? `${last_service_staff?.id}`
+              : null,
           electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
           // service_staff: 'zybxxx',

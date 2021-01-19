@@ -105,6 +105,9 @@ class Organize extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
+      organizeList: this.props.organizeList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;

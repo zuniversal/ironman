@@ -15,7 +15,7 @@ const ShiftsTransferSearchForm = props => {
       // selectData: props.teamList,
       itemProps: {
         label: '交班班组',
-        name: 'transfer_team_name',
+        name: 'transfer_team',
       },
     },
     // {
@@ -33,7 +33,7 @@ const ShiftsTransferSearchForm = props => {
       // selectData: props.teamList,
       itemProps: {
         label: '接班班组',
-        name: 'receive_team_name',
+        name: 'recieve_team',
       },
     },
     {

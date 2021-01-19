@@ -14,18 +14,38 @@ import debounce from 'lodash/debounce';
 import { INPUT_TXT, WORD } from '@/constants'; //
 
 const SmartInput = props => {
-  console.log(' SmartInput  + word： ', props); //
-  const { placeholder, word, defPh, className, time, ...rest } = props; //
+  console.log(' SmartInput  + word{...prop} ： ', props); //
+  const { placeholder, word, ph, className, time, ...rest } = props; //
 
   const prop = {
-    placeholder: defPh ? placeholder : placeholder,
+    placeholder: ph ? INPUT_TXT + ph : placeholder,
+    ...rest,
   };
 
-  const onChange = debounce(props.onChange, time);
+  const onChange = (e, rest) => {
+    console.log(
+      ' e (e) => {...rest}  onChange={props.onChange}{this.props.getHouseNoAsync({keyword: e.target.value})debounce(, 500)： ',
+      e,
+      e.target.value,
+      rest,
+    ); //
+    props.onChange(e);
+    // props.onPressEnter(e) debounce(() => , time)
+  };
+  const onPressEnter = (e, rest) => {
+    console.log(
+      ' e (e) => {...rest} onPressEnter={onPressEnter}  onChange={props.onChange}{this.props.getHouseNoAsync({keyword: e.target.value})debounce(, 500)： ',
+      e,
+      e.target.value,
+      rest,
+    ); //
+    props.onPressEnter(e);
+    // props.onPressEnter(e) debounce(() => , time)
+  };
 
   return (
-    <Input {...prop} {...rest} className={`searchInput ${className}`} />
-    // <Input {...prop} {...props} onChange={debounce(props.onChange, 500)} className={`searchInput ${className}`} />
+    <Input allowClear {...prop} className={`searchInput ${className}`} />
+    // <Input {...props} onChange={debounce(props.onChange, 500)} className={`searchInput ${className}`} />
   );
 };
 
@@ -33,15 +53,17 @@ SmartInput.defaultProps = {
   className: '',
   placeholder: INPUT_TXT,
   word: WORD,
-  defPh: true,
+  ph: '',
   time: 500,
+  onChange: () => {},
 };
 
 SmartInput.propTypes = {
   placeholder: PropTypes.string,
   word: PropTypes.string,
-  defPh: PropTypes.bool,
+  ph: PropTypes.string,
   time: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 export default SmartInput;

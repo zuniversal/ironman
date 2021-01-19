@@ -1,4 +1,53 @@
 .missionsManageForm {
+  display: flex;
+  flex-direction: column;
+  .stepWrapper {
+    display: flex;
+    justify-content: center;
+    .step {
+      width: 350px;
+    }
+  }
+  .adminBox {
+    // height: 32px;
+    padding: 4px 8px;
+    width: fit-content;
+    background: #f4f4f4;
+    border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+    opacity: 1;
+    border-radius: 2px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  .btnWrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px;
+  }
+
+  .right {
+    border-left: 1px solid #f4f4f4;
+    padding-left: 10px;
+    margin-left: 10px;
+  }
+
+  .missionsManageFormWrapper {
+    display: flex;
+  }
+
+  .smartTable {
+    max-width: 360px;
+    .ant-pagination {
+      display: block;
+      text-align: center;
+      .ant-pagination-options {
+        margin-top: 10px;
+      }
+    }
+  }
+
   .feedBackImg {
     width: 250px;
     height: 160px;

@@ -11,10 +11,13 @@ import {
   MissionsManageScheduleForm,
   MissionsManageConfirmScheduleForm,
   MissionsManageOrderInfoForm,
+  MissionsClientForm,
 } from '@/components/Form/MissionsManageActionForm'; //
 import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
 import ClientForm from '@/components/Form/ClientForm';
 import ContractForm from '@/components/Form/ContractForm';
+import MissionsHouseNoTable from '@/components/Table/MissionsHouseNoTable';
+import SmartInput from '@/common/SmartInput';
 
 import { actions, mapStateToProps } from '@/models/missionsManage'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -199,11 +202,13 @@ class MissionsManage extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+          customer_id: this.props.clientItem.id,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
+          customer_id: this.props.clientItem.id,
         });
       }
     } catch (error) {
@@ -233,6 +238,9 @@ class MissionsManage extends PureComponent {
         this.props.getContractAsync({ keyword: params }),
       contractList: this.props.contractList,
       clientData: this.props.clientData,
+      selectClient: this.props.selectClient,
+      clientItem: this.props.clientItem,
+      onCancel: this.props.onCancel,
     };
     if (action === 'clientDetail') {
       formComProps.init = this.props.clientDetail;
@@ -296,12 +304,90 @@ class MissionsManage extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
+
+    const tableProps = {
+      dataSource: this.props.houseNoList,
+      count: this.props.houseNoCount,
+      getListAsync: this.props.getHouseNoAsync,
+      selectClient: this.props.selectClient,
+      getClientDetailAsync: this.props.getClientDetailAsync,
+      searchInfo: this.props.houseNoSearchInfo,
+      // showDetail: this.props.getItemAsync,
+      // edit: this.props.getItemAsync,
+      // remove: this.onRemove,
+      // showFormModal: this.props.showFormModal,
+      // showItemAsync: this.props.showItemAsync,
+    };
+    console.log(' tableProps ： ', tableProps); //
+
+    const {
+      customer_admin = [],
+      person,
+      team_id,
+      team,
+    } = this.props.clientItem;
+
+    const formInfo =
+      this.props.action === 'detail'
+        ? this.props.itemDetail
+        : {
+            // station_id: this.props.clientItem.,
+            addr: this.props.clientItem.address,
+            customer_admin: customer_admin,
+            // team: this.props.clientItem.team,
+            // person: customer_admin[0]?.nickname,
+            // team_id: this.props.clientItem.team? `${this.props.clientItem.team[0].id}` : null,
+            team,
+            person,
+            team_id,
+          };
+
     return (
       <MissionsManageForm
         {...formComProps}
         onFieldChange={this.onFormFieldChange}
+        // houseNotable={this.renderHouseNoTable()}
+        // missionsClientForm={this.renderMissionsClientForm()}
+        onOk={this.onOk}
+        init={formInfo}
+        clientItem={this.props.clientItem}
+        // onChange={this.onChange}
+        onChange={(e, rest) => {
+          console.log(' e ： ', e, e.target.value); //
+          this.props.getHouseNoAsync({ keyword: e.target.value });
+        }}
+        tableProps={tableProps}
       ></MissionsManageForm>
     );
+  };
+  onChange = params => {
+    console.log(' onChange,  , ： ', params);
+  };
+  renderHouseNoTable = e => {
+    const tableProps = {
+      dataSource: this.props.houseNoList,
+      count: this.props.houseNoCount,
+      getListAsync: this.props.getHouseNoAsync,
+      selectClient: this.props.selectClient,
+      getClientDetailAsync: this.props.getClientDetailAsync,
+      // showDetail: this.props.getItemAsync,
+      // edit: this.props.getItemAsync,
+      // remove: this.onRemove,
+      // showFormModal: this.props.showFormModal,
+      // showItemAsync: this.props.showItemAsync,
+    };
+    return (
+      <>
+        <SmartInput onChange={this.onChange}></SmartInput>
+        <MissionsHouseNoTable {...tableProps}></MissionsHouseNoTable>
+      </>
+    );
+  };
+  renderMissionsClientForm = e => {
+    const formProps = {
+      init: this.props.clientItem,
+    };
+    return <MissionsClientForm {...formProps}></MissionsClientForm>;
   };
   onFormFieldChange = params => {
     console.log(' onFormFieldChange,  , ： ', params);
@@ -339,6 +425,13 @@ class MissionsManage extends PureComponent {
     return ['closeMission'].some(v => v === this.props.action);
   }
   renderSmartFormModal = params => {
+    const isMission = ['add', 'edit'].includes(this.props.action);
+    const detailProps = isMission
+      ? {
+          footer: null,
+        }
+      : {}; //
+    console.log('  detailProps ：', detailProps); //
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -348,6 +441,7 @@ class MissionsManage extends PureComponent {
         onCancel={this.props.onCancel}
         size={this.size}
         isNoForm={this.isNoForm}
+        {...detailProps}
       >
         {this.renderModalContent()}
       </SmartFormModal>
@@ -367,6 +461,7 @@ class MissionsManage extends PureComponent {
     // this.props.getAssetsAsync();
     this.props.getTeamAsync();
     this.props.getContractAsync(); //
+    this.props.getHouseNoAsync(); //
   }
 
   render() {

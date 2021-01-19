@@ -316,7 +316,7 @@ const ClientForm = props => {
     {
       noRule: true,
       formType: 'Search',
-      selectSearch: props.getUserAsync,
+      // selectSearch: props.getUserAsync,
       selectData: props.userList,
       itemProps: {
         label: '上一任客户代表',
@@ -655,10 +655,10 @@ const ClientForm = props => {
           config={config}
           isDisabledAll={action === 'detail'}
           {...props}
-          init={{
-            ...props.init,
-            // customer_admin: [{}],
-          }}
+          // init={{
+          //   ...props.init,
+          //   // customer_admin: [{}],
+          // }}
         ></SmartForm>
 
         {/* <Form
@@ -696,3 +696,9 @@ const ClientForm = props => {
 ClientForm.defaultProps = {};
 
 export default ClientForm;
+// export default React.memo(ClientForm,
+//   (prev, next) => {
+//    console.log('ClientForm memo ', prev, next, prev.init === next.init, prev.init, next.init, Object.keys(prev.init).length === Object.keys(next.init).length);
+//   //  return Object.keys(prev.init).length === Object.keys(next.init).length
+//    return true
+// });

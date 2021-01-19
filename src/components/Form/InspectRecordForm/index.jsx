@@ -183,7 +183,10 @@ const createFormList = props => {
 
 const InspectRecordForm = props => {
   const { formBtn, init, isExportPDF, ...rest } = props; //
-  const [isEdit, setIsEdit] = useState(false);
+  // const [isEdit, setIsEdit] = useState(false);
+  // const {isEdit,  } = props//
+  const isEdit = true;
+
   // const [ modalExport, setModalExport ] = useState(true)
   const [modalExport, setModalExport] = useState(false);
   console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport); //
@@ -214,6 +217,7 @@ const InspectRecordForm = props => {
     // spectOut: spect_out.length > 0 ? spect_out[0] : {},
     // spectOut: props.init?.spect_out[0],
     spectOut: spect_out.length > 0 ? spect_out[0] : {},
+    index: 0,
   });
   console.log(' dataInit ： ', file, dataInit, power_data); //
 
@@ -229,6 +233,7 @@ const InspectRecordForm = props => {
     //   ...power_data[index],
     // };
     setDataInit({
+      index,
       ...dataInit,
       powerData: power_data[index],
       spectIn: power_data[index].spect_in,
@@ -243,7 +248,6 @@ const InspectRecordForm = props => {
       dataInit,
       power_data,
       power_data[index],
-      powerData,
     );
     setDataInit({
       ...dataInit,
@@ -320,7 +324,7 @@ const InspectRecordForm = props => {
                     className={'formItems '}
                     {...electricFormLayouts}
                   >
-                    <Input className={'w-78'} disabled />
+                    <Input className={'w-78'} disabled={!isEdit} />
                   </Form.Item>
                 ));
                 return (
@@ -411,6 +415,9 @@ const InspectRecordForm = props => {
     { label: '谷MD(64)', name: 'valley_md' },
     { label: '最大MD', name: 'max_md' },
     { label: '本月申报MD', name: 'declare_md' },
+    { label: '无功1(07)', name: 'reactive_power_1' },
+    { label: '无功2(07)', name: 'reactive_power_2' },
+    { label: '实际功率因素', name: 'real_power_factor' },
     { label: '', name: '', type: 'rowText' },
   ];
 
@@ -418,6 +425,16 @@ const InspectRecordForm = props => {
     config: powerDataConfig,
     name: 'power_data',
   });
+
+  const onMaxMdChange = e => {
+    console.log(' onChange ： ', e, e.target, e.target.value, props, dataInit); //
+    props.onMaxChange({
+      aimFor: 'maxMd',
+      value: e.target.value,
+      formData: props.propsForm.getFieldsValue(),
+      index: dataInit.index,
+    }); //
+  };
 
   const powerDataDetail = [
     {
@@ -529,12 +546,18 @@ const InspectRecordForm = props => {
         label: '峰MD1(61)',
         name: ['powerData', 'peak_md'],
       },
+      comProps: {
+        onChange: onMaxMdChange,
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '平1MD(62)',
         name: ['powerData', 'flat_1_md'],
+      },
+      comProps: {
+        onChange: onMaxMdChange,
       },
     },
     {
@@ -543,12 +566,18 @@ const InspectRecordForm = props => {
         label: '平2MD(63)',
         name: ['powerData', 'flat_2_md'],
       },
+      comProps: {
+        onChange: onMaxMdChange,
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '谷MD(64)',
         name: ['powerData', 'valley_md'],
+      },
+      comProps: {
+        onChange: onMaxMdChange,
       },
     },
     {
@@ -563,6 +592,27 @@ const InspectRecordForm = props => {
       itemProps: {
         label: '本月申报MD',
         name: ['powerData', 'declare_md'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '无功1(07)',
+        name: ['powerData', 'reactive_power_1'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '无功2(07)',
+        name: ['powerData', 'reactive_power_2'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '实际功率因素',
+        name: ['powerData', 'real_power_factor'],
       },
     },
   ];
@@ -876,6 +926,42 @@ const InspectRecordForm = props => {
       noRule: true,
       flexRow: 3,
       itemProps: {
+        label: 'A相温度',
+        name: ['spectOut', 'temperature_a'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: 'B相温度',
+        name: ['spectOut', 'temperature_b'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: 'C相温度',
+        name: ['spectOut', 'temperature_c'],
+        ...electricFormLayouts,
+      },
+      comProps: {
+        className: 'w-96',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
         label: '有功kWh',
         name: 'power',
         ...electricFormLayouts,
@@ -950,28 +1036,28 @@ const InspectRecordForm = props => {
         name: ['customer', 'name'],
       },
       comProps: {
-        className: 'clientName',
+        // className: 'clientName',
       },
     },
     {
-      // formType: 'plainText',
-      // plainText: props.init[name],
+      formType: 'plainText',
+      plainText: props.init.electricity_user,
       itemProps: {
         label: '户号：',
         name: 'electricity_user',
       },
     },
     {
-      // formType: 'plainText',
-      // plainText: props.init[name],
+      formType: 'plainText',
+      plainText: props.init?.team?.member,
       itemProps: {
         label: '巡检人员：',
         name: ['team', 'member'],
       },
     },
     {
-      // formType: 'plainText',
-      // plainText: props.init[name],
+      formType: 'plainText',
+      plainText: props.init.workDate,
       itemProps: {
         label: '巡检时间：',
         // name: ['inspection_task', 'work_date'],
@@ -979,8 +1065,8 @@ const InspectRecordForm = props => {
       },
     },
     {
-      // formType: 'plainText',
-      // plainText: props.init[name],
+      formType: 'plainText',
+      plainText: props.init.remarks,
       itemProps: {
         label: '备注：',
         name: 'remarks',
@@ -1079,6 +1165,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '高压试电笔(1年)',
         // name: ['safety_equirpment', 'electroprobe_status'],
@@ -1092,6 +1179,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '接地线(4年)',
         // name: ['safety_equirpment', 'ground_wire'],
@@ -1104,6 +1192,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '绝缘毯(4年)',
         // name: ['safety_equirpment', 'insulating_mat'],
@@ -1116,6 +1205,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '绝缘手套(半年)',
         // name: ['safety_equirpment', 'insulating_gloves'],
@@ -1128,6 +1218,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '绝缘鞋(半年)',
         // name: ['safety_equirpment', 'insulating_shoes'],
@@ -1140,6 +1231,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      // formType: 'DatePicker',
       itemProps: {
         label: '灭火器压力(半年)',
         // name: ['safety_equirpment', 'extinguisher'],
@@ -1261,9 +1353,16 @@ const InspectRecordForm = props => {
 
   const actionBtn = (
     <div className="btnWrapper fje ">
-      <Button type="primary" onClick={() => setIsEdit(!isEdit)}>
-        编辑
-      </Button>
+      {/* <Button type="primary" onClick={() => setIsEdit(!isEdit)}> */}
+      {isEdit ? (
+        <Button type="primary" onClick={props.editItem}>
+          保存
+        </Button>
+      ) : (
+        <Button type="primary" onClick={props.toggleEdit}>
+          编辑
+        </Button>
+      )}
       <Button type="primary" onClick={() => setModalExport(!modalExport)}>
         导出pdf
       </Button>
@@ -1319,6 +1418,7 @@ const InspectRecordForm = props => {
             }
           }
           action={isEdit ? 'edit' : 'detail'}
+          // key={props.formKey}
         ></SmartForm>
       </div>
     </div>

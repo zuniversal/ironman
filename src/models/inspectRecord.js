@@ -10,7 +10,12 @@ const { createActions } = init(namespace);
 
 const otherActions = ['getMissionItemAsync', 'getClientAsync', 'getPowerAsync'];
 
-const batchTurnActions = ['closePdf', 'toggleExportPDF'];
+const batchTurnActions = [
+  'closePdf',
+  'toggleExportPDF',
+  'toggleEdit',
+  'onFieldChange',
+];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -37,6 +42,9 @@ export default {
     isExportPDF: false,
     clientList: [],
     powerList: [],
+    isEdit: false,
+    itemDetailCopy: {},
+    formKey: 0,
   },
 
   reducers: {
@@ -61,6 +69,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        isEdit: false,
       };
     },
     getList(state, { payload, type }) {
@@ -91,6 +100,26 @@ export default {
       power_data.forEach(v =>
         v.spect_in.forEach(item => spectInData.push(item)),
       );
+      // const powerDataFormat = power_data.map((v, index) => {
+      //   v.spect_in.forEach(item => spectInData.push(item))
+      //   return {
+      //     ...v,
+      //     index,
+      //   }
+      // });
+
+      const itemDetail = {
+        ...payload.bean,
+        // created_time: created_time ? created_time.split('T')[0] : '',
+        // start_time: start_time ? start_time.split('T')[0] : '',
+        // end_time: end_time ? end_time.split('T')[0] : '',
+        workDate:
+          inspection_task && inspection_task.work_date
+            ? inspection_task.work_date.split('T')[0]
+            : '',
+        powerData: power_data && power_data[0],
+        spectInData,
+      };
       return {
         ...state,
         action: payload.payload.action,
@@ -98,18 +127,8 @@ export default {
         isShowExportPdf: isExportPdf,
         isShowModal: isExportPdf ? false : true,
         d_id: payload.payload.d_id,
-        itemDetail: {
-          ...payload.bean,
-          // created_time: created_time ? created_time.split('T')[0] : '',
-          // start_time: start_time ? start_time.split('T')[0] : '',
-          // end_time: end_time ? end_time.split('T')[0] : '',
-          workDate:
-            inspection_task && inspection_task.work_date
-              ? inspection_task.work_date.split('T')[0]
-              : '',
-          powerData: power_data && power_data[0],
-          spectInData,
-        },
+        itemDetail: itemDetail,
+        itemDetailCopy: itemDetail,
       };
     },
     addItem(state, { payload, type }) {
@@ -194,6 +213,56 @@ export default {
         ...state,
         isExportPDF: !state.isExportPDF,
         isShowExportPdf: !state.isShowExportPdf,
+      };
+    },
+    toggleEdit(state, { payload, type }) {
+      console.log(' toggleEdit ： ', payload); //
+      return {
+        ...state,
+        isEdit: !state.isEdit,
+      };
+    },
+    onFieldChange(state, { payload, type }) {
+      console.log(' onFieldChange ： ', payload); //
+      // const {powerData,  } = payload.formData
+      // // const {powerData,  } = payload.value
+      const { itemDetailCopy, itemDetail, formKey } = state;
+      const newState = {
+        ...itemDetailCopy,
+      };
+      const { aimFor, index, formData } = payload;
+      const { powerData } = formData;
+
+      if (aimFor === 'maxMd') {
+        // if (payload.value.powerData) {
+        const maxMDKeys = ['peak_md', 'flat_1_md', 'flat_2_md', 'valley_md'];
+        const maxMDArr = maxMDKeys.map(v => powerData[v]).filter(v => v);
+        const maxMD = Math.max(...maxMDArr) * powerData.multiplying_power;
+        console.log(
+          ' maxMDArr  maxMDKeys.map v ： ',
+          formData,
+          maxMDArr,
+          maxMD,
+          newState,
+          formKey,
+          itemDetailCopy,
+        );
+        itemDetailCopy.power_data[index].maxMD = maxMD;
+        itemDetail.power_data[index].maxMD = maxMD;
+        newState.maxMD = maxMD;
+      }
+      // const {powerData,  } = payload.formData
+      // // const {powerData,  } = payload.value
+
+      return {
+        ...state,
+        // formKey: formKey++,
+        // itemDetailCopy: {
+        //   ...newState
+        // },
+        // itemDetail: {
+        //   ...itemDetail,
+        // },
       };
     },
   },

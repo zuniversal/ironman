@@ -213,7 +213,6 @@ class InspectPlan extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }
@@ -290,7 +289,7 @@ class InspectPlan extends PureComponent {
     // });
     this.props.getListAsync({
       leader: `${this.props.userInfo.id}`,
-      leader: 119,
+      // leader: 119,
       // month: nowYearMonthDay,
       month: moment(),
     });

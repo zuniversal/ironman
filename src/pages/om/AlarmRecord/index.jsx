@@ -141,7 +141,10 @@ class AlarmRecord extends PureComponent {
     return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
   };
   get size() {
-    return ['handleAlarm', 'notifyClient'].some(v => v === this.props.action)
+    return [
+      'handleAlarm',
+      // 'notifyClient'
+    ].some(v => v === this.props.action)
       ? 'small'
       : 'default';
   }

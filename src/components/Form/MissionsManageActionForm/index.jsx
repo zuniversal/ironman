@@ -463,3 +463,143 @@ export const MissionsManageOrderInfoForm = props => {
 };
 
 MissionsManageOrderInfoForm.defaultProps = {};
+
+export const MissionsClientForm = props => {
+  console.log(' MissionsClientForm       ： ', props);
+
+  const config = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '所属客户',
+        name: 'name',
+      },
+    },
+    {
+      itemProps: {
+        label: '详细地址',
+        name: 'address',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户代表',
+        name: ['service_staff', 'nickname'],
+      },
+    },
+    {
+      itemProps: {
+        label: '电话',
+        name: 'phone',
+      },
+    },
+    {
+      itemProps: {
+        label: '户号',
+        // name: ['electricityuser', 'number'],
+        name: 'houseNo',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户类型',
+        // name: ['electricityuser', 'type'],
+        name: 'clientType',
+      },
+    },
+    {
+      itemProps: {
+        label: '变压器台数',
+        name: 'trasformer_count',
+      },
+    },
+    {
+      itemProps: {
+        label: '变压器容量',
+        name: 'trasformer_capacity',
+      },
+    },
+
+    // props.showFormModal({
+    //   action: 'showPDF',
+    //   extraData: {
+    //     path: `${record.entry_date.split('-')[0]}/${
+    //       record.entry_date.split('-')[1]
+    //     }/${record.code}`,
+    //   },
+    // })
+
+    {
+      formType: 'plainText',
+      plainText: (
+        <div
+          className="textInput "
+          // onClick={() => props.showFormModal({
+          //     action: "showPDF",
+          //     // extraData: {path: "2020/12/D042-WDW-2020-0001"},
+          //     extraData: {
+          //       path: `${record.entry_date.split('-')[0]}/${
+          //         record.entry_date.split('-')[1]
+          //       }/${record.code}`,
+          //     },
+          //   })}
+        >
+          {/* 关联合同 */}
+          {props.init?.contract?.map((v, i) => (
+            <div
+              className="contractItem"
+              key={i}
+              onClick={() =>
+                props.showFormModal({
+                  action: 'showPDF',
+                  // extraData: {path: "2020/12/D042-WDW-2020-0001"},
+                  extraData: {
+                    path: `${v.entry_date.split('-')[0]}/${
+                      v.entry_date.split('-')[1]
+                    }/${v.code}`,
+                  },
+                })
+              }
+            >
+              {v.code}
+            </div>
+          ))}
+        </div>
+      ),
+      itemProps: {
+        label: '关联合同',
+        name: 'contract',
+      },
+    },
+    {
+      itemProps: {
+        label: '服务班组组长',
+        // name: ['team', 'team_headman'],
+        name: 'team_headman',
+      },
+    },
+    {
+      itemProps: {
+        label: '班组组长电话',
+        // name: ['team', 'phone'],
+        name: 'tel',
+      },
+    },
+  ].map(v => ({
+    ...v,
+    comProps: { className: 'w-240', ...v.comProps },
+  }));
+
+  return (
+    <div className={' missionsClientForm '}>
+      <SmartForm config={config} noRuleAll isDisabledAll {...props}></SmartForm>
+    </div>
+  );
+};
+
+MissionsClientForm.defaultProps = {};

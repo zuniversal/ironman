@@ -6,8 +6,10 @@ import * as powerStationServices from '@/services/powerStation';
 import * as assetsServices from '@/services/assets';
 import * as clientServices from '@/services/client';
 import * as contractServices from '@/services/contract';
+import * as houseNoServices from '@/services/houseNo';
 import * as commonServices from '@/services/common';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { customerTypeMap } from '@/configs';
 
 const namespace = 'missionsManage';
 const { createActions } = init(namespace);
@@ -19,6 +21,7 @@ const otherActions = [
   'getClientAsync',
   'getAssetsAsync',
   'getContractAsync',
+  'getHouseNoAsync',
   'startWorkOrderAsync',
   'closeMissionAsync',
   'linkContractAsync',
@@ -27,10 +30,13 @@ const otherActions = [
   'getEnumListAsync',
   'showClientAsync',
   'showContractAsync',
+  'getClientDetailAsync',
 ];
 
+const batchTurnActions = ['selectClient'];
+
 export const actions = {
-  ...createActions(otherActions),
+  ...createActions(otherActions, batchTurnActions),
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -67,6 +73,11 @@ export default {
     clientDetail: {},
     contractDetail: {},
     powerList: [],
+    clientItem: {},
+    houseNoList: [],
+    houseNoCount: 0,
+    houseNoSearchInfo: {},
+    extraData: {},
   },
 
   reducers: {
@@ -93,6 +104,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        clientItem: {},
       };
     },
     getList(state, { payload, type }) {
@@ -120,7 +132,7 @@ export default {
         //   label: 'label-2',
         // },
       ];
-      const { customer, person, contacts_phone } = payload.bean;
+      const { customer, person, contacts_phone, team } = payload.bean;
 
       const itemDetail = {
         ...payload.bean,
@@ -135,6 +147,8 @@ export default {
         // itemDetail.client = customer ? customer.name : customer
         itemDetail.person = person ? person.nickname : person;
         itemDetail.phone = contacts_phone;
+        // itemDetail.team_id = team ? team.name : null;
+        itemDetail.team_id = team?.name;
       }
       if (payload.payload.action === 'startWorkOrder') {
         itemDetail.client = customer ? customer.name : customer;
@@ -147,6 +161,15 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: itemDetail,
         clientData,
+        clientItem: {
+          ...payload.bean,
+          ...customer,
+          address: payload.bean.addr,
+          clientType: customer.type,
+          // houseNo: ,
+          // team_headman: payload.bean.team?.,
+          // tel: payload.bean.team?.,
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -217,6 +240,42 @@ export default {
         contractList: formatSelectList(payload.list, 'code'),
       };
     },
+    getClientDetail(state, { payload, type }) {
+      console.log(' getClientDetail 修改  ： ', state, payload, type); //
+      const { customer_admin = [] } = payload.bean;
+      return {
+        ...state,
+        clientItem: {
+          trasformer_capacity: payload.payload.record?.trasformer_capacity,
+          trasformer_count: payload.payload.record?.trasformer_count,
+          real_capacity: payload.payload.real_capacity,
+          houseNo: payload.payload.record?.number,
+          ...payload.bean,
+          clientType: payload.bean.type.map(v => customerTypeMap[v]).join(','),
+          // team_headman: payload.bean.customer_admin.map((v) => v.nickname).join(','),
+          tel: payload.bean.customer_admin.map(v => v.phone).join(','),
+          team_headman: payload.bean.team
+            ? `${payload.bean.team[0].team_headman}`
+            : null,
+          // phone: payload.bean.contract,
+          person: customer_admin[0]?.nickname,
+          team_id: payload.bean.team ? `${payload.bean.team[0].id}` : null,
+        },
+      };
+    },
+    getHouseNo(state, { payload, type }) {
+      console.log(' getHouseNo 修改  ： ', state, payload, type); //
+      const { houseNoSearchInfo } = state;
+      return {
+        ...state,
+        houseNoList: formatSelectList(payload.list, 'id', 'number'),
+        houseNoCount: payload.rest.count,
+        houseNoSearchInfo: {
+          ...houseNoSearchInfo,
+          ...payload.payload,
+        },
+      };
+    },
     startWorkOrder(state, { payload, type }) {
       return {
         ...state,
@@ -273,6 +332,13 @@ export default {
           // ...payload.list[0],
           ...payload.bean,
         },
+      };
+    },
+    selectClient(state, { payload, type }) {
+      console.log(' selectClient ： ', payload); //
+      return {
+        ...state,
+        clientItem: payload.payload,
       };
     },
   },
@@ -335,6 +401,19 @@ export default {
     },
     *getContractAsync({ payload, action, type }, { call, put }) {
       const res = yield call(contractServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getHouseNoAsync({ payload, action, type }, { call, put, select }) {
+      const { houseNoSearchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...houseNoSearchInfo,
+        ...payload,
+      };
+      const res = yield call(houseNoServices.getList, params);
+      yield put(action({ ...res, payload }));
+    },
+    *getClientDetailAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getItem, payload);
       yield put(action({ ...res, payload }));
     },
 

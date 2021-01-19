@@ -436,11 +436,11 @@ const PowerStationForm = props => {
 
         isDisabledAll={action === 'detail'}
         {...props}
-        init={{
-          // inspection_type: 0,
-          inspection_type: inspectMode,
-          ...props.init,
-        }}
+        // init={{
+        //   // inspection_type: 0,
+        //   inspection_type: inspectMode,
+        //   ...props.init,
+        // }}
       ></SmartForm>
 
       {extra}
@@ -480,3 +480,8 @@ PowerStationForm.propTypes = {
 };
 
 export default PowerStationForm;
+// export default React.memo(PowerStationForm,
+//   (prev, next) => {
+//   console.log('ClientForm memo ', prev, next, prev.init === next.init, prev.init, next.init, );
+//   return true
+// });

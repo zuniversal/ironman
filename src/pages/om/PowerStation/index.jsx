@@ -245,7 +245,6 @@ class PowerStation extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          // ...itemDetail,
           ...res,
           id: d_id,
           d_id,
@@ -264,7 +263,7 @@ class PowerStation extends PureComponent {
       clientList: this.props.clientList,
       getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
       houseNoList: this.props.houseNoList,
-      getTeamAsync: params => this.props.getTeamAsync({ number: params }),
+      getTeamAsync: params => this.props.getTeamAsync({ name: params }),
       teamList: this.props.teamList,
       // editPowerInfo: this.props.editPowerInfo,
       // addPowerInfoAsync: this.props.addPowerInfoAsync,

@@ -177,6 +177,7 @@ export default {
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
+        voltage_level: '',
         key: Math.random(),
       }));
       console.log(' getItemgetItem ： ', payload, datas); //

@@ -131,7 +131,6 @@ class KnowledgeCate extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          // ...itemDetail,
           ...res,
           id: itemDetail.id,
           // d_id: itemDetail.id,

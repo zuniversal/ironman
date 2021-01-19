@@ -80,6 +80,7 @@ const CsHomeStationTable = props => {
       // extra={extra}
       noActionCol
       noDefault
+      rowSelection={null}
       {...props}
     ></SmartTable>
   );

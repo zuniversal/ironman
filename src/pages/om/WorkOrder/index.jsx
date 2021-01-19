@@ -155,6 +155,7 @@ class WorkOrder extends PureComponent {
           <DetailForm
             init={this.props.common.itemDetail}
             action={'detail'}
+            {...this.props.common.extraData}
           ></DetailForm>
         )}
       </SmartFormModal>
@@ -256,6 +257,12 @@ class WorkOrder extends PureComponent {
   }
 
   render() {
+    console.log(
+      ' %c workOrder 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     const formComProps = {
       getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,

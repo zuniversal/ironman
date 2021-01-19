@@ -315,7 +315,16 @@ class SmartTable extends PureComponent {
       //     <a onClick={detailFn}>{txt}</a>
       //   );
     } else if (render) {
+      console.log(
+        ' texttext || render ： ',
+        text,
+        record,
+        text !== undefined,
+        undefined !== undefined,
+        content,
+      ); //
       content = render(text, record, index, config);
+      // return content;
     } else if (detailFn) {
       content = (
         <a onClick={() => detailFn(record, text, index, config)}>{txt}</a>
@@ -323,7 +332,6 @@ class SmartTable extends PureComponent {
     } else {
       content = <span className={``}>{txt}</span>;
     }
-    // console.log(' texttext ： ', text, record, index, config, content )//
     // return typeof text !== 'object' && text
 
     if (notTooltip) {
@@ -343,10 +351,8 @@ class SmartTable extends PureComponent {
       </Tooltip>
     );
     // return tdCom
-    return text != undefined
-      ? tdCom
-      : text;
-        // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
+    return text != undefined ? tdCom : text;
+    // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
     // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
     // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>
   };
@@ -588,11 +594,13 @@ class SmartTable extends PureComponent {
       count,
       searchInfo,
       animation,
+      pageConfig,
     } = this.props;
     const { page_size: pageSize, page: current } = searchInfo;
 
     const paginationConfig = {
       ...pagination,
+      ...pageConfig,
       total: count,
       // ...searchInfo,
       pageSize,
@@ -692,6 +700,7 @@ SmartTable.defaultProps = {
   // rowKey: 'd_id', //
   rowKey: 'id',
   authInfo: {},
+  pageConfig: {},
 
   // edit: () => {},
   remove: () => {},
@@ -714,6 +723,7 @@ SmartTable.propTypes = {
   dataSource: PropTypes.array,
   rowKey: PropTypes.string,
   authInfo: PropTypes.object,
+  pageConfig: PropTypes.object,
   edit: PropTypes.func,
   remove: PropTypes.func,
   showDetail: PropTypes.func,

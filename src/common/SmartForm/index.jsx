@@ -219,11 +219,11 @@ const SmartForm = (props, state) => {
   const formControl = propsForm ? propsForm : form; //
   // const formControl = form; //
 
-  useEffect(() => {
-    console.log(' useEffect 更新 ： ', props, init, formControl); //
-    // updateInit(init)
-    formControl.setFieldsValue(init);
-  }, [init]);
+  // useEffect(() => {
+  //   console.log(' useEffect 更新 ： ', props, init, formControl); //
+  //   // updateInit(init)
+  //   formControl.setFieldsValue(init);
+  // }, [init]);
 
   const onFinish = (values, rest) => {
     console.log(
@@ -488,7 +488,16 @@ const SmartForm = (props, state) => {
         </span>
       ),
       Divider: <Divider />,
-      Input: <Input allowClear maxLength={32} {...realComProps} />,
+      Input: (
+        <Input
+          allowClear
+          maxLength={32}
+          onPressEnter={e => {
+            console.log(' onPressEnter ： ', e); //
+          }}
+          {...realComProps}
+        />
+      ),
       InputNumber: <InputNumber allowClear maxLength={32} {...realComProps} />,
       // InputCompact: <Input allowClear maxLength={32} {...realComProps} />,
       TextArea: (
@@ -764,7 +773,13 @@ SmartForm.propTypes = {
   noRuleAll: PropTypes.bool,
   size: PropTypes.string,
 };
+
 export default SmartForm;
+// export default React.memo(SmartForm,
+//  (prev, next) => {
+//   console.log('xxxxxxxxxx', prev.init === next.init, prev.init, next.init);
+//   return prev.init === next.init
+// })
 // 带有默认属性的搜索型表单组件
 // export const SearchForm = props => React.cloneElement(SmartForm, {
 //   isSearchForm: true,

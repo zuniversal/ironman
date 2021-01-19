@@ -6,7 +6,7 @@ import { Timeline, Steps } from 'antd';
 const { Step } = Steps;
 
 const InspectMissionTimeline = props => {
-  console.log(' InspectMissionTimeline   props, ,   ： ', props);
+  // console.log(' InspectMissionTimeline   props, ,   ： ', props);
   return (
     <Steps
       size={'small'}

@@ -17,7 +17,7 @@ const WeakTable = props => {
   const columns = [
     {
       title: '通知',
-      dataIndex: 'content',
+      dataIndex: 'verb',
     },
   ];
 

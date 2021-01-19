@@ -20,6 +20,15 @@ const PowerStationTable = props => {
       dataIndex: 'id',
     },
     {
+      title: '电站名称',
+      dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.id,
+        }),
+    },
+    {
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
@@ -35,15 +44,6 @@ const PowerStationTable = props => {
         props.showItemAsync({
           action: 'houseNoDetailAsync',
           d_id: record.electricity_user.id,
-        }),
-    },
-    {
-      title: '电站名称',
-      dataIndex: 'name',
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'powerStationDetailAsync',
-          d_id: record.id,
         }),
     },
     {

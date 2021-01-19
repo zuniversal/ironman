@@ -96,7 +96,6 @@ class ClientReport extends PureComponent {
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...itemDetail,
           ...res,
         });
       }

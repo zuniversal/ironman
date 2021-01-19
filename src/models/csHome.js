@@ -163,14 +163,11 @@ export default {
     *getPowerInfoAsync({ payload, action, type }, { call, put }) {
       console.log(' getPowerInfoAsync ： ', payload, action, type); //
       const powerStationRes = yield call(powerStationServices.getList, payload);
-      console.log(
-        ' powerStationRes ： ',
-        powerStationRes.list,
-        powerStationRes.list[0].id,
-      ); //
-      if (powerStationRes.list[0].id) {
+      console.log(' powerStationRes ： ', powerStationRes.list); //
+      if (powerStationRes.list.length > 0 && powerStationRes.list[0].id) {
         const res = yield call(services.getPowerInfo, {
           station_id: powerStationRes.list[0].id,
+          ...payload,
         });
         console.log(' powerStationRes 有id ： ', powerStationRes, res); //
         yield put(action({ ...res, payload }));

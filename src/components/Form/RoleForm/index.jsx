@@ -210,6 +210,7 @@ const RoleForm = props => {
           // onSelect={props.onPermsSelect}
           // onSelect={onSelect}
           // selectedKeys={perms_codes}
+          defaultExpandedKeys={['all']}
           checkedKeys={props.permsData}
           // checkedKeys={[...permsData, 190000]}
           onCheck={props.onPermsCheck}

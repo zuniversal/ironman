@@ -17,6 +17,20 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
+const otherRoutes = [
+  {
+    authKey: 'screen',
+    name: '大屏',
+    routes: [
+      {
+        authKey: 'screenDashboard',
+        name: '大屏面板',
+        routes: [],
+      },
+    ],
+  },
+];
+
 const formatPerms = (data = []) => {
   // console.log(' formatPerms   data,   ： ', data  )
   const init = [];
@@ -107,7 +121,7 @@ export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
 };
 
 export const recursiveHandle = (data = [], perms = {}, datas = []) => {
-  // console.log(' recursiveHandle   ,   ： ', data, parent_id);
+  console.log(' recursiveHandle   ,   ： ', data, perms, datas);
   data.forEach(item => {
     // console.log(
     //   ' recursiitemeHandle ： ',
@@ -125,7 +139,7 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
     item.key = value;
     item.title = item.name;
     item.label = item.name;
-    if (!item.hideInMenu && item.routes.length > 0) {
+    if (!item.hideInMenu && item.routes && item.routes.length > 0) {
       // recursiveHandle(item.routes, perms[item.authKey], datas)
       recursiveHandle(item.routes, perms, datas);
     }
@@ -252,8 +266,9 @@ export default {
       // const permsData = flatData(payload.bean.system.sub)
       const permsData = flatData(payload.bean);
       const routeData = payload.payload.filter(v => !v.noAuth);
+      const allRouteData = [...routeData, ...otherRoutes];
       const dataArr = [];
-      const permission = recursiveHandle(routeData, permsData, dataArr);
+      const permission = recursiveHandle(allRouteData, permsData, dataArr);
       console.log(
         '  permissionpermissionpermissionpermission ：',
         payload,
@@ -262,6 +277,7 @@ export default {
         payload.bean,
         permsData,
         dataArr,
+        allRouteData,
       ); //
       return {
         ...state,
@@ -273,7 +289,8 @@ export default {
             title: '全部',
             label: '全部',
             // children: permission,
-            children: routeData,
+            // children: routeData,
+            children: allRouteData,
           },
         ],
       };

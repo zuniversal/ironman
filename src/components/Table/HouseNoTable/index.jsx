@@ -16,19 +16,6 @@ const HouseNoTable = props => {
 
   const columns = [
     {
-      title: '所属客户',
-      dataIndex: ['customer', 'name'],
-      className: 'textCenter',
-      // detailFn: (text, record, index) => showDetail(record.id),
-      // detailFn: record =>
-      //   props.showDetail({ action: 'detail', d_id: record.id }),
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'clientDetailAsync',
-          d_id: record.customer.id,
-        }),
-    },
-    {
       title: '户号',
       // dataIndex: 'code',
       dataIndex: 'number',
@@ -37,6 +24,19 @@ const HouseNoTable = props => {
         props.showItemAsync({
           action: 'houseNoDetailAsync',
           d_id: record.id,
+        }),
+    },
+    {
+      title: '所属客户',
+      dataIndex: ['customer', 'name'],
+      // className: 'textCenter',
+      // detailFn: (text, record, index) => showDetail(record.id),
+      // detailFn: record =>
+      //   props.showDetail({ action: 'detail', d_id: record.id }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
         }),
     },
     // {

@@ -157,6 +157,7 @@ export default {
     isShowCommonModal: false,
     itemDetail: {},
     commonModalContent: null,
+    extraData: {},
   },
 
   reducers: {
@@ -196,7 +197,9 @@ export default {
           customer_admin:
             customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
           service_staff: `${service_staff.nickname}`,
-          last_service_staff: `${last_service_staff.nickname}`,
+          last_service_staff: last_service_staff
+            ? `${last_service_staff.nickname}`
+            : '',
           electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
         },
@@ -302,7 +305,7 @@ export default {
     },
     missionsManageDetail(state, { payload, type }) {
       console.log(' missionsManageDetail ： ', state, payload); //
-      const { customer, person, contacts_phone, _log } = payload.bean;
+      const { customer, person, contacts_phone, work_log, team } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -312,9 +315,19 @@ export default {
           customer_id: customer.name,
           person: person ? person.nickname : person,
           phone: contacts_phone,
-          _log: _log.map(v =>
-            moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
-          ),
+          work_log: work_log.map(v => ({
+            ...v,
+            created_time: moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
+          })),
+          team_id: team?.name,
+        },
+        extraData: {
+          clientItem: {
+            ...payload.bean,
+            ...customer,
+            address: payload.bean.addr,
+            clientType: customer.type,
+          },
         },
       };
     },

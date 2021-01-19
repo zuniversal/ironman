@@ -137,7 +137,6 @@ class InspectRecord extends PureComponent {
       }
       if (action === 'inspectReport') {
         // this.props.inspectReportAsync({
-        //   ...itemDetail,
         //   ...res,
         // });
       }
@@ -196,16 +195,21 @@ class InspectRecord extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
+    // {this.renderExportBtn()}
     return (
-      <>
-        {/* {this.renderExportBtn()} */}
-        <InspectRecordForm
-          {...formComProps}
-          // action={'edit'}
-          showActionBtn
-          type={'comExportPdf'}
-        ></InspectRecordForm>
-      </>
+      <InspectRecordForm
+        {...formComProps}
+        // action={'edit'}
+        showActionBtn
+        type={'comExportPdf'}
+        editItem={this.props.editItem}
+        toggleEdit={this.props.toggleEdit}
+        isEdit={this.props.isEdit}
+        // onFieldChange={this.props.onFieldChange}
+        onMaxChange={this.props.onFieldChange}
+        formKey={this.props.formKey}
+        // key={this.props.formKey}
+      ></InspectRecordForm>
     );
     // if (action === 'inspectReport') {
     //   return <InspectRecordForm {...formComProps}></InspectRecordForm>;
