@@ -35,15 +35,23 @@ const MissionsManageTable = props => {
       title: '编码',
       dataIndex: 'name',
       detailFn: record =>
-        props.showDetail({ action: 'detail', d_id: record.id }),
+        // props.showDetail({ action: 'detail', d_id: record.id }),
+        props.showItemAsync({
+          action: 'missionsManageDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '客户',
       // dataIndex: 'customer',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
-        props.showClientAsync({
-          action: 'clientDetail',
+        // props.showClientAsync({
+        //   action: 'clientDetail',
+        //   d_id: record.customer.id,
+        // }),
+        props.showItemAsync({
+          action: 'clientDetailAsync',
           d_id: record.customer.id,
         }),
     },

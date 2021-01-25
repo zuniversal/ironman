@@ -574,22 +574,22 @@ export const contractTypeConfig = [
   },
 ];
 
-export const contractTypeConfigMap = arrMapObj(contractTypeConfig);
+export const contractTypeMap = arrMapObj(contractTypeConfig);
 
-export const voltageLevelConfig = [
-  {
-    label: '35kv',
-    value: '35kv',
-  },
-  {
-    label: '10kv',
-    value: '10kv',
-  },
-  {
-    label: '0.4kv',
-    value: '0.4kv',
-  },
-];
+// export const voltageLevelConfig = [
+//   {
+//     label: '35kv',
+//     value: '35kv',
+//   },
+//   {
+//     label: '10kv',
+//     value: '10kv',
+//   },
+//   {
+//     label: '0.4kv',
+//     value: '0.4kv',
+//   },
+// ];
 
 export const clientLevelConfig = [
   {
@@ -626,4 +626,319 @@ export const clientLevelConfig = [
   },
 ];
 
-export const clientLevelConfigMap = arrMapObj(clientLevelConfig);
+export const clientLevelMap = arrMapObj(clientLevelConfig);
+
+export const clientTypeSearchConfig = [
+  {
+    label: '托管',
+    value: 0,
+  },
+  {
+    label: '普通客户',
+    value: 1,
+  },
+];
+
+export const clientTypeConfig = [
+  {
+    label: '托管',
+    value: 0,
+  },
+  {
+    label: '非托管',
+    value: 1,
+  },
+];
+
+export const clientTypeMap = arrMapObj(clientTypeConfig);
+
+export const fullFormLayouts = {
+  labelCol: {
+    sm: { span: 0 },
+  },
+  wrapperCol: {
+    sm: { span: 24 },
+  },
+};
+
+export const repairSourceConfig = [
+  {
+    label: '客户',
+    value: '客户',
+  },
+  {
+    label: '业务员',
+    value: '业务员',
+  },
+];
+
+export const enterpriseScaleConfig = [
+  {
+    label: '特大型',
+    value: '0',
+  },
+  {
+    label: '大型',
+    value: '1',
+  },
+  {
+    label: '中型',
+    value: '2',
+  },
+  {
+    label: '小型',
+    value: '3',
+  },
+  {
+    label: '微型',
+    value: '4',
+  },
+];
+
+export const enterpriseNatureConfig = [
+  {
+    label: '国有企业',
+    value: '0',
+  },
+  {
+    label: '集体所有制企业',
+    value: '1',
+  },
+  {
+    label: '联营企业',
+    value: '2',
+  },
+  {
+    label: '三资企业',
+    value: '3',
+  },
+  {
+    label: '私营企业 ',
+    value: '4',
+  },
+];
+
+export const industryConfig = [
+  {
+    label: '农、林、牧、渔业',
+    value: 0,
+  },
+  {
+    label: '采矿业',
+    value: 1,
+  },
+  {
+    label: '制造业',
+    value: 2,
+  },
+  {
+    label: '电力、热力、燃气及水生产和供应业',
+    value: 3,
+  },
+  {
+    label: '建筑业；F 交通运输、仓储和邮政业',
+    value: 4,
+  },
+  {
+    label: '信息传输、软件和信息技术服务业',
+    value: 5,
+  },
+  {
+    label: '批发和零售业',
+    value: 6,
+  },
+  {
+    label: '住宿和餐饮业',
+    value: 7,
+  },
+  {
+    label: '金融业',
+    value: 8,
+  },
+  {
+    label: '房地产业',
+    value: 9,
+  },
+  {
+    label: '租赁和商务服务业',
+    value: 10,
+  },
+  {
+    label: '科学研究和技术服务业',
+    value: 11,
+  },
+  {
+    label: '水利、环境和公共设施管理业',
+    value: 12,
+  },
+  {
+    label: '居民服务、修理和其他服务业',
+    value: 13,
+  },
+  {
+    label: '教育',
+    value: 14,
+  },
+  {
+    label: '卫生和社会工作',
+    value: 15,
+  },
+  {
+    label: '文化、体育和娱乐业',
+    value: 16,
+  },
+  {
+    label: '公共管理、社会保障和社会组织',
+    value: 17,
+  },
+  {
+    label: '国际组织',
+    value: 18,
+  },
+];
+
+export const assetScaleConfig = [
+  {
+    label: '100万以下',
+    value: 0,
+  },
+  {
+    label: '100万-1000万',
+    value: 1,
+  },
+  {
+    label: '1000万-5000万',
+    value: 2,
+  },
+  {
+    label: '5000万以上 ',
+    value: 3,
+  },
+];
+
+export const corverAreaConfig = [
+  {
+    label: '100平米以下',
+    value: 0,
+  },
+  {
+    label: '100平米-1000平米',
+    value: 1,
+  },
+  {
+    label: '1000平米-5000平米',
+    value: 2,
+  },
+  {
+    label: '5000平米-1万平米',
+    value: 3,
+  },
+  {
+    label: '1万平米-10万平米',
+    value: 4,
+  },
+  {
+    label: '10万平米以上',
+    value: 5,
+  },
+];
+
+export const voltageLevelConfig = [
+  {
+    label: '0.4KV',
+    value: 1,
+  },
+  {
+    label: '10KV',
+    value: 2,
+  },
+  {
+    label: '20KV',
+    value: 6,
+  },
+  {
+    label: '35KV',
+    value: 3,
+  },
+  {
+    label: '110KV',
+    value: 4,
+  },
+  {
+    label: '220KV',
+    value: 5,
+  },
+];
+
+export const voltageLevelMap = arrMapObj(voltageLevelConfig);
+
+export const electricTypeConfig = [
+  {
+    label: '【分】单一制 工商业及其他用电',
+    value: 1,
+  },
+  {
+    label: '【分】单一制 农业生产用电',
+    value: 2,
+  },
+  {
+    label: '【分】两部制 大工业用电',
+    value: 3,
+  },
+  {
+    label: '【分】两部制 农业生产用电',
+    value: 4,
+  },
+  {
+    label: '【未】单一制 工商业及其他用电',
+    value: 5,
+  },
+  {
+    label: '【未】单一制 下水道动力用电',
+    value: 6,
+  },
+  {
+    label: '【未】单一制 农业生产用电',
+    value: 7,
+  },
+  {
+    label: '【未】单一制 农副业动力用电',
+    value: 8,
+  },
+  {
+    label: '【未】单一制 排灌动力用电',
+    value: 9,
+  },
+  {
+    label: '【未】两部制 工商业及其他用电',
+    value: 10,
+  },
+  {
+    label: '【未】两部制 铁合金烧碱用电',
+    value: 11,
+  },
+  {
+    label: '非居民 学校养老院用电',
+    value: 12,
+  },
+  {
+    label: '【新】单一制 工商业及其他用电',
+    value: 13,
+  },
+  {
+    label: '【新】单一制 未分时公廉租房用电',
+    value: 14,
+  },
+  {
+    label: '【分】两部制 工商业及其他用电',
+    value: 15,
+  },
+  {
+    label: '【未】两部制 大工业用电',
+    value: 16,
+  },
+  {
+    label: '光伏发电',
+    value: 50,
+  },
+];

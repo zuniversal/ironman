@@ -12,7 +12,7 @@ import './style.less';
 import SmartTable from '@/common/SmartTable'; //
 import { HOUSENO } from '@/constants'; //
 import { linkUrlFn } from '@/utils'; //
-import { industryTypeMap, clientLevelConfigMap } from '@/configs'; //
+import { industryTypeMap, clientLevelMap } from '@/configs'; //
 
 const ClientTable = props => {
   const { tdClick, showDetail } = props; //
@@ -30,11 +30,16 @@ const ClientTable = props => {
       title: '客户名称',
       dataIndex: 'name',
       noFilter: true,
+      className: 'linkTd',
       detailFn: record =>
-        props.showItemAsync({
-          action: 'clientDetailAsync',
+        props.showDetail({
+          action: 'detail',
           d_id: record.id,
         }),
+      // props.showItemAsync({
+      //   action: 'clientDetailAsync',
+      //   d_id: record.id,
+      // }),
       // detailFn: record =>
       // props.showDetail({ action: 'detail', d_id: record.id }),
       // detailFn: (text, record, index) => {
@@ -65,20 +70,20 @@ const ClientTable = props => {
     {
       title: '客户等级',
       dataIndex: 'level',
-      dataMap: clientLevelConfigMap,
+      dataMap: clientLevelMap,
       // render: (text, record, index, config) => (
       //   <div className={`tableItem`}>
       //   </div>
       // ),
     },
-    {
-      title: '管理员',
-      // dataIndex: 'customer_admin',
-      // dataIndex: ['customer_admin', 'nickname'],
-      dataIndex: 'admin',
-      // detail: true,
-      // detailFn: (text, record, index) => showDetail(record.id),
-    },
+    // {
+    //   title: '管理员',
+    //   // dataIndex: 'customer_admin',
+    //   // dataIndex: ['customer_admin', 'nickname'],
+    //   dataIndex: 'admin',
+    //   // detail: true,
+    //   // detailFn: (text, record, index) => showDetail(record.id),
+    // },
     {
       title: '户号数',
       dataIndex: 'electricityuser_num',

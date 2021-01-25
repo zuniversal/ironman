@@ -111,6 +111,7 @@ export default {
       return {
         ...state,
         itemDetail: payload.list,
+        dayList: [],
       };
     },
     addItem(state, { payload, type }) {
@@ -179,9 +180,22 @@ export default {
     },
     onCheck(state, { payload, type }) {
       console.log(' onCheck ： ', state, payload); //
-      const { checked, day } = payload.target;
       const { dayList } = state; //
-      const datas = checked ? [...dayList, day] : dayList.filter(v => v != day);
+      let datas = [];
+      // 点击日期切换选中
+      if (payload.startStr) {
+        console.log(' 点击日期切换选中 ： '); //
+        const day = payload.startStr.split('-')[2] * 1;
+        const checked = dayList.includes(day);
+        console.log('  day ：', day, checked, dayList); //
+        datas = !checked ? [...dayList, day] : dayList.filter(v => v != day);
+      } else {
+        // 勾选切换选中
+        console.log(' 勾选切换选中 ： '); //
+        const { checked, day } = payload.target;
+        datas = checked ? [...dayList, day] : dayList.filter(v => v != day);
+      }
+      // const datas = dayList.includes(day) ? [...dayList, day] : dayList.filter(v => v != day);
       console.log('  datas ：', datas); //
       return {
         ...state,

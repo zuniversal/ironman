@@ -22,6 +22,7 @@ import SmartImg from '@/common/SmartImg'; //
 import InputCom from '@/components/Widgets/InputCom'; //
 // import SmartExportPdf from '@/common/SmartExportPdf'; //
 import useExportPdf from '@/hooks/useExportPdf'; //
+import { isDev } from '@/constants';
 
 const { TabPane } = Tabs;
 
@@ -182,10 +183,10 @@ const createFormList = props => {
 };
 
 const InspectRecordForm = props => {
-  const { formBtn, init, isExportPDF, ...rest } = props; //
+  const { formBtn, init, isExportPDF, formData, ...rest } = props; //
   // const [isEdit, setIsEdit] = useState(false);
   // const {isEdit,  } = props//
-  const isEdit = true;
+  const isEdit = isDev ? true : props.isEdit;
 
   // const [ modalExport, setModalExport ] = useState(true)
   const [modalExport, setModalExport] = useState(false);
@@ -232,9 +233,17 @@ const InspectRecordForm = props => {
     // props.init.powerData = {
     //   ...power_data[index],
     // };
-    setDataInit({
+    // setDataInit({
+    //   index,
+    //   ...dataInit,
+    //   powerData: power_data[index],
+    //   spectIn: power_data[index].spect_in,
+    //   // spectOut: power_data[index].spect_out,
+    // });
+
+    props.propsForm.setFieldsValue({
       index,
-      ...dataInit,
+      ...formData,
       powerData: power_data[index],
       spectIn: power_data[index].spect_in,
       // spectOut: power_data[index].spect_out,
@@ -302,7 +311,13 @@ const InspectRecordForm = props => {
   const spectInDetail = (
     <Form.List name={'spectIn'} key={'spectIn'}>
       {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields); //
+        console.log(
+          ' dataInit  fieldsfields ： ',
+          dataInit,
+          dataInit.spectIn,
+          fields,
+          props.propsForm.getFieldsValue(),
+        ); //
         const spectInConfig = [
           { name: 'v_ab', label: 'AB' },
           { name: 'v_bc', label: 'BC' },
@@ -426,13 +441,39 @@ const InspectRecordForm = props => {
     name: 'power_data',
   });
 
-  const onMaxMdChange = e => {
-    console.log(' onChange ： ', e, e.target, e.target.value, props, dataInit); //
+  const onMaxMdChange = (e, keys) => {
+    console.log(
+      ' onChange ： ',
+      e,
+      keys,
+      e.target,
+      e.target.value,
+      props,
+      dataInit,
+    ); //
+    // props.propsForm.setFieldsValue({
+    //   // max_md: maxMD,
+    //   max_md: 'maxMD',
+    // })
+    // setDataInit({
+    //   // powerData: power_data[index],
+    //   // ...dataInit,
+    //   powerData: {},
+    //   spectIn: [],
+    //   spectOut: {
+    //     switch_ia: "11111110"
+    //   },
+    //   electricity_user: '',
+    // })
+    // return
     props.onMaxChange({
+      keys,
       aimFor: 'maxMd',
       value: e.target.value,
-      formData: props.propsForm.getFieldsValue(),
+      formVal: props.propsForm.getFieldsValue(),
       index: dataInit.index,
+      form: props.propsForm,
+      setDataInit,
     }); //
   };
 
@@ -458,7 +499,8 @@ const InspectRecordForm = props => {
       itemProps: {
         label: '电压等级',
         // name: ['powerData', 'power_number'],
-        name: ['powerData', 'voltage_level'],
+        // name: ['powerData', 'voltage_level'],
+        name: ['powerData', 'id'],
       },
     },
     {
@@ -547,7 +589,7 @@ const InspectRecordForm = props => {
         name: ['powerData', 'peak_md'],
       },
       comProps: {
-        onChange: onMaxMdChange,
+        onChange: e => onMaxMdChange(e, 'peak_md'),
       },
     },
     {
@@ -557,7 +599,7 @@ const InspectRecordForm = props => {
         name: ['powerData', 'flat_1_md'],
       },
       comProps: {
-        onChange: onMaxMdChange,
+        onChange: e => onMaxMdChange(e, 'flat_1_md'),
       },
     },
     {
@@ -567,7 +609,7 @@ const InspectRecordForm = props => {
         name: ['powerData', 'flat_2_md'],
       },
       comProps: {
-        onChange: onMaxMdChange,
+        onChange: e => onMaxMdChange(e, 'flat_2_md'),
       },
     },
     {
@@ -577,7 +619,7 @@ const InspectRecordForm = props => {
         name: ['powerData', 'valley_md'],
       },
       comProps: {
-        onChange: onMaxMdChange,
+        onChange: e => onMaxMdChange(e, 'valley_md'),
       },
     },
     {
@@ -1004,7 +1046,7 @@ const InspectRecordForm = props => {
     },
   ];
 
-  const config = [
+  const topConfig = [
     // {
     //   // formType: 'plainText',
     //   // plainText: props.init[name],
@@ -1048,8 +1090,8 @@ const InspectRecordForm = props => {
       },
     },
     {
-      formType: 'plainText',
-      plainText: props.init?.team?.member,
+      // formType: 'plainText',
+      // plainText: props.init?.team?.member,
       itemProps: {
         label: '巡检人员：',
         name: ['team', 'member'],
@@ -1269,6 +1311,10 @@ const InspectRecordForm = props => {
         suffix: 'V',
       },
     },
+  ];
+
+  const config = [
+    ...(isDev ? [] : topConfig),
 
     ...(isExport ? [powerDataItem] : powerDataDetail),
 
@@ -1412,13 +1458,16 @@ const InspectRecordForm = props => {
             // spectOut: power_data[0].spect_out[0],
           }}
           className={'inspectRecordForm'}
-          formProps={
-            {
-              // id: 'inspectRecordForm',
-            }
-          }
+          // formProps={
+          //   {
+          //     // id: 'inspectRecordForm',
+          //   }
+          // }
           action={isEdit ? 'edit' : 'detail'}
           // key={props.formKey}
+          // key={dataInit?.powerData?.id}
+          // key={dataInit}
+          setInit
         ></SmartForm>
       </div>
     </div>

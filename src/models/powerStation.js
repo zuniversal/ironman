@@ -19,6 +19,7 @@ const otherActions = [
   'getPowerAsync',
   'getHouseNoAsync',
   'getClientAsync',
+  'getPowerInfoAsync',
   'addPowerInfoAsync',
   'getBelongHouseNoAsync',
   'editPowerInfoAsync',
@@ -101,6 +102,7 @@ const outLineTableItem = {
   key: Math.random(),
   name: '',
   powerstation: '',
+  power_number: [],
   isEdit: true,
 };
 
@@ -131,7 +133,8 @@ export default {
         ...outLineTableItem,
       },
     ],
-    outLineTableData: [],
+    // outLineTableData: [],
+    powerInfoList: [],
   },
 
   reducers: {
@@ -177,7 +180,7 @@ export default {
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
-        voltage_level: '',
+        voltage_level: v.voltage_level ?? '',
         key: Math.random(),
       }));
       console.log(' getItemgetItem ： ', payload, datas); //
@@ -295,6 +298,12 @@ export default {
       };
     },
 
+    getPowerInfo(state, { payload, type }) {
+      return {
+        ...state,
+        powerInfoList: formatSelectList(payload.list, 'power_number'),
+      };
+    },
     addPowerInfo(state, { payload, type }) {
       const { powerInfoData } = state;
       console.log(' addPowerInfo ： ', state, payload, powerInfoData); //
@@ -621,7 +630,13 @@ export default {
       const { powerInfoData, outLineTableData } = yield select(
         state => state[namespace],
       );
-      console.log(' addItemAsync ： ', powerInfoData, payload); //
+      console.log(
+        ' addItemAsync ： ',
+        powerInfoData,
+        outLineTableData,
+        powerInfoData,
+        payload,
+      ); //
 
       // if (powerInfoData.length < 1) {
       //   tips('电源列表不能为空！', 2);
@@ -802,6 +817,15 @@ export default {
     //   yield put(action({ ...res, payload }));
     //   // yield put({ type: 'getListAsync' };
     // },
+    *getPowerInfoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getPowerInfo, payload);
+      yield put(
+        action({
+          ...res,
+          payload,
+        }),
+      );
+    },
     *addPowerInfoAsync({ payload, action, type }, { call, put, select }) {
       console.log(' addPowerInfoAsync ： ', payload);
       const res = yield call(services.addPowerInfo, {
@@ -912,6 +936,7 @@ export default {
           {
             ...payload,
             powerstation: itemDetail.id,
+            power_number: payload.power_number.join(','),
           },
         ],
       };

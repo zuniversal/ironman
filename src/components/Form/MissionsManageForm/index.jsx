@@ -2,17 +2,25 @@ import React, { Component, useRef, useState } from 'react';
 import './style.less';
 import { Steps, Button } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
-import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
+import {
+  missionsTypeConfig,
+  missionsStatusConfig,
+  repairSourceConfig,
+} from '@/configs';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 import SmartImg from '@/common/SmartImg';
 import SmartInput from '@/common/SmartInput';
 import UploadCom from '@/components/Widgets/UploadCom';
 import MissionsHouseNoTable from '@/components/Table/MissionsHouseNoTable';
-import { MissionsClientForm } from '@/components/Form/MissionsManageActionForm'; //
+import {
+  MissionsClientForm,
+  MissionsSimpleClientForm,
+} from '@/components/Form/MissionsManageActionForm'; //
 import SmartShowPDF from '@/common/SmartShowPDF'; //
 import SmartModal from '@/common/SmartModal'; //
 import { tips } from '@/utils';
 import { getPdf } from '@/services/contract';
+import moment from 'moment';
 
 const { Step } = Steps;
 
@@ -42,6 +50,11 @@ const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const [isShow, setIsShow] = useState(false);
   const [pdfData, setPdfData] = useState({});
+  const [current, setCurrent] = useState(isDetail ? 1 : 0);
+  const [simpleMission, setSimpleMission] = useState(isDetail ? true : false);
+  const [formKey, setFormKey] = useState(0);
+
+  const completeIndex = useRef(0);
 
   const onModalOk = params => {
     console.log(' onModalOk params ： ', params); //
@@ -63,6 +76,30 @@ const MissionsManageForm = props => {
 
   const isDetail = props.action === 'detail';
   console.log(' isDetail ： ', isDetail); //
+
+  const setContacter = params => {
+    console.log(' setContacter   params,   ： ', params, props);
+    if (!isDetail) {
+      props.propsForm.setFieldsValue({
+        // contacts: 'params.nickname',
+        // contacts_phone: 'params.phone',
+        person: params.name,
+        phone: params.phone,
+        // person: 'params.nickname',
+        // phone: 'params.phone',
+      });
+    }
+    // props.propsForm.setFields([
+    //   {
+    //     // contacts: params.nickname,
+    //     contacts: 'params.nickname',
+    //   },
+    //   {
+    //     // phone: params.phone,
+    //     phone: 'params.phone',
+    //   },
+    // ]);
+  };
 
   const logTimeLine = [
     {
@@ -115,6 +152,61 @@ const MissionsManageForm = props => {
     ></UploadCom>,
   ];
 
+  const onServiceStaffChange = (e, params) => {
+    console.log(' onChange ： ', e, params, props, props.serviceStaffList); //
+    props.propsForm.setFieldsValue({
+      service_phone: params.phone,
+    });
+  };
+
+  const clientConfig = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户信息',
+      },
+    },
+    {
+      // formType: 'Search',
+      // selectSearch: props.getClientAsync,
+      // selectData: props.clientList,
+      itemProps: {
+        label: '所属客户',
+        // name: 'customer_id',
+        name: 'customer',
+      },
+    },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '详细地址',
+    //     name: 'address',
+    //   },
+    // },
+    {
+      formType: 'Search',
+      // selectSearch: props.getServiceStaffAsync,
+      selectData: props.serviceStaffList,
+      itemProps: {
+        label: '客户代表',
+        name: 'service_staff',
+      },
+      comProps: {
+        onChange: onServiceStaffChange,
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '客户代表电话',
+        name: 'service_phone',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+  ];
+
   const config = [
     // {
     //   formType: 'Search',
@@ -127,16 +219,22 @@ const MissionsManageForm = props => {
     //   },
     // },
 
-    ...(isDetail
-      ? [
-          {
-            formType: 'rowText',
-            itemProps: {
-              label: '任务信息',
-            },
-          },
-        ]
-      : []),
+    // ...(isDetail
+    //   ? [
+    //       {
+    //         formType: 'rowText',
+    //         itemProps: {
+    //           label: '任务信息',
+    //         },
+    //       },
+    //     ]
+    //   : []),
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '任务信息',
+      },
+    },
 
     ...(props.action !== 'add'
       ? [
@@ -149,6 +247,18 @@ const MissionsManageForm = props => {
           },
         ]
       : []),
+
+    ...(simpleMission
+      ? [
+          {
+            itemProps: {
+              label: '所属客户',
+              name: 'customer',
+            },
+          },
+        ]
+      : []),
+
     {
       formType: 'Search',
       selectData: missionsTypeConfig,
@@ -191,21 +301,23 @@ const MissionsManageForm = props => {
         name: isDetail ? 'contacts' : 'person',
       },
     },
-    // {
-    //   noRule: true,
-    //   formType: 'CustomCom',
-    //   CustomCom: (
-    //     <div>
-    //       {props.init?.customer_admin?.map((v, i) => (
-    //         <div className="adminBox" key={i} >{v.nickname}</div>
-    //       ))}
-    //     </div>
-    //   ),
-    //   itemProps: {
-    //     label: '客户管理员',
-    //     name: '',
-    //   },
-    // },
+    // ...simpleMission ? [] : [
+    //   {
+    //     noRule: true,
+    //     formType: 'CustomCom',
+    //     CustomCom: (
+    //       <div>
+    //         {props.init?.customer_admin?.map((v, i) => (
+    //           <div className="adminBox" key={i} onClick={() => setContacter(v)}>{v.nickname}</div>
+    //         ))}
+    //       </div>
+    //     ),
+    //     itemProps: {
+    //       label: '客户联系人',
+    //       name: '',
+    //     },
+    //   }
+    // ],
     {
       itemProps: {
         label: '电话',
@@ -228,37 +340,114 @@ const MissionsManageForm = props => {
         name: 'team_id',
       },
     },
+    {
+      noRule: true,
+      formType: 'DatePicker',
+      itemProps: {
+        label: '报修时间',
+        name: 'repair_time',
+      },
+      comProps: isDetail
+        ? {}
+        : {
+            showTime: true,
+          },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '当班调度',
+        name: 'dispatcher',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Search',
+      selectData: repairSourceConfig,
+      itemProps: {
+        label: '报修来源',
+        name: 'source',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'TextArea',
+      itemProps: {
+        label: '备注',
+        name: 'remarks',
+      },
+    },
 
     ...(isDetail ? logTimeLine : actionConfig),
+
+    ...(simpleMission
+      ? [
+          {
+            formType: 'Search',
+            // selectSearch: props.getServiceStaffAsync,
+            selectData: props.serviceStaffList,
+            itemProps: {
+              label: '客户代表',
+              name: 'service_staff',
+            },
+            comProps: {
+              onChange: onServiceStaffChange,
+            },
+          },
+          {
+            noRule: true,
+            itemProps: {
+              label: '客户代表电话',
+              name: 'service_phone',
+            },
+            comProps: {
+              disabled: true,
+            },
+          },
+        ]
+      : []),
+
+    // ...simpleMission ? clientConfig : [],
   ].map(v => ({
     ...v,
     // comProps: isDetail ? v.comProps : { className: 'w-240', ...v.comProps },
-    comProps: { className: 'w-240', ...v.comProps },
+    // comProps: { className: 'w-240', ...v.comProps },
+    comProps: simpleMission
+      ? v.comProps
+      : { className: 'w-240', ...v.comProps },
   }));
-
-  const [current, setCurrent] = useState(isDetail ? 1 : 0);
-  const completeIndex = useRef(0);
 
   const onChange = goIndex => {
     console.log('onChange:', goIndex, completeIndex.current);
     // if (current > -1 && current < contractStepConfig.length) {
     if (goIndex < completeIndex.current) {
       setCurrent(goIndex);
+      setFormKey(formKey + 1);
     }
   };
 
-  const next = async () => {
+  const next = () => {
     console.log(' next ： ', current, props); //
     const indexs = current + 1;
     // if (Object.keys(props.init).length) {
     if (Object.keys(props.clientItem).length) {
       setCurrent(indexs);
+      setSimpleMission(false);
+      setFormKey(formKey + 1);
       if (indexs > completeIndex.current) {
         completeIndex.current = indexs;
       }
     } else {
       tips('请先选择一个客户在继续！', 2);
     }
+  };
+
+  const onSimpleMission = () => {
+    console.log(' onSimpleMission ： ', current, props); //
+    const indexs = current + 1;
+    setCurrent(indexs);
+    setSimpleMission(true);
+    setFormKey(formKey + 1);
   };
 
   const onFieldChange = v => {
@@ -270,6 +459,8 @@ const MissionsManageForm = props => {
 
     if (current > 0) {
       setCurrent(current - 1);
+      setSimpleMission(false);
+      setFormKey(formKey + 1);
     }
   };
   console.log(' current ： ', current); //
@@ -305,8 +496,11 @@ const MissionsManageForm = props => {
 
   const nextCom = (
     <>
-      <Button className={'m-r-10 '} onClick={next}>
+      <Button className={'m-r-10 '} type="primary" onClick={next}>
         下一步
+      </Button>
+      <Button className={'m-r-10 '} type="primary" onClick={onSimpleMission}>
+        无户号填报
       </Button>
     </>
   );
@@ -354,7 +548,11 @@ const MissionsManageForm = props => {
     </>
   );
 
-  console.log(' missionsManage SmartForm props ： ', props); //
+  console.log(' missionsManage SmartForm props ： ', props, formKey); //
+
+  const MissionsClientFormCom = MissionsClientForm;
+  // const MissionsClientFormCom = simpleMission && !isDetail ? MissionsSimpleClientForm : MissionsClientForm
+  // const MissionsClientFormCom = simpleMission && !isDetail ? MissionsSimpleClientForm : Object.keys(props.clientItem).length === 0 ? MissionsClientForm
 
   return (
     <div className={' missionsManageForm '}>
@@ -365,21 +563,47 @@ const MissionsManageForm = props => {
           {current == 0 && !isDetail ? (
             houseNotable
           ) : (
-            <SmartForm config={config} {...props}></SmartForm>
+            <SmartForm
+              config={config}
+              {...props}
+              // init={simpleMission ? {
+              //   repair_time: moment(),
+              // } : {
+              //   repair_time: moment(),
+              //   ...props.init,
+              // }}
+              init={
+                simpleMission
+                  ? {
+                      repair_time: moment(),
+                    }
+                  : {
+                      ...props.init,
+                    }
+              }
+              // key={props.init?.contact}
+              // key={props.init}
+              key={formKey}
+              // key={Math.random()}
+            ></SmartForm>
           )}
         </div>
         {/* {!isDetail && } */}
-        <div className="right f1">
-          {/* {
+        {!simpleMission && (
+          <div className="right f1">
+            {/* {
             Object.keys(props.clientItem).length > 0 ? <MissionsClientForm key={props.clientItem?.id} init={props.clientItem} ></MissionsClientForm> : null
           } */}
-          <MissionsClientForm
-            key={props.clientItem?.id}
-            init={props.clientItem}
-            showFormModal={showFormModal}
-          ></MissionsClientForm>
-          {/* {props.missionsClientForm} */}
-        </div>
+            <MissionsClientFormCom
+              key={props.clientItem?.id}
+              // init={props.clientItem}
+              init={simpleMission && !isDetail ? {} : props.clientItem}
+              showFormModal={showFormModal}
+              setContacter={setContacter}
+            ></MissionsClientFormCom>
+            {/* {props.missionsClientForm} */}
+          </div>
+        )}
       </div>
       {!isDetail && footerCom}
 

@@ -6,7 +6,7 @@ import { getPdf } from '@/services/common'; //
 import { pdfPrefix } from '@/services/contract'; //
 
 const SmartShowPDF = props => {
-  console.log(' SmartShowPDF   props, ,   ： ', props);
+  // console.log(' SmartShowPDF   props, ,   ： ', props);
   const { src } = props;
 
   const [isError, setIsError] = useState(false);
@@ -21,7 +21,7 @@ const SmartShowPDF = props => {
   // }, [])
 
   useEffect(() => {
-    console.log(' useEffect   副作用,   ： ', props);
+    // console.log(' useEffect   副作用,   ： ', props);
     getPdf(pdfPrefix + props.path)
       .then(res => {
         console.log('  res  ： ', res);

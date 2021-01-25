@@ -19,14 +19,27 @@ const MissionsHouseNoTable = props => {
 
   const columns = [
     {
+      title: '所属客户',
+      // dataIndex: ['customer', 'name'],
+      dataIndex: 'name',
+      className: 'linkTd',
+      // detailFn: record =>
+      //   props.getClientDetailAsync({
+      //     action: 'clientDetailAsync',
+      //     record,
+      //     d_id: record.customer.id,
+      //   }),
+    },
+    {
       title: '户号',
       dataIndex: 'number',
-      detailFn: record =>
-        props.getClientDetailAsync({
-          action: 'clientDetailAsync',
-          record,
-          d_id: record.customer.id,
-        }),
+      className: 'linkTd',
+      // detailFn: record =>
+      //   props.getClientDetailAsync({
+      //     action: 'clientDetailAsync',
+      //     record,
+      //     d_id: record.customer.id,
+      //   }),
       // detailFn: record => props.selectClient({
       //   record,
       // }),
@@ -36,18 +49,9 @@ const MissionsHouseNoTable = props => {
       // }),
     },
     {
-      title: '所属客户',
-      dataIndex: ['customer', 'name'],
-      detailFn: record =>
-        props.getClientDetailAsync({
-          action: 'clientDetailAsync',
-          record,
-          d_id: record.customer.id,
-        }),
-    },
-    {
       title: '地址',
       dataIndex: 'addr',
+      // dataIndex: ['enterprise', 'address'],
     },
   ];
 
@@ -60,14 +64,19 @@ const MissionsHouseNoTable = props => {
       pageConfig={{
         size: 'small',
       }}
+      rowKey={'customer_id'}
       onRow={record => {
         return {
           onClick: (event, rest) => {
             console.log(' event, rest, recordrecord ,： ', event, rest, record); //
             props.getClientDetailAsync({
+              // props.getClientItemAsync({
               action: 'clientDetailAsync',
-              record,
-              d_id: record.customer.id,
+              // record,
+              // d_id: record.customer.id,
+              // d_id: record.id,
+              d_id: record.customer_id,
+              ele_user_id: record.ele_user_id,
             });
           },
         };

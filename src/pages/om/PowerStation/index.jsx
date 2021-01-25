@@ -296,6 +296,8 @@ class PowerStation extends PureComponent {
         init={this.props.itemDetail}
         // extra={powerTable}
 
+        getPowerInfoAsync={this.getPowerInfoAsync}
+        powerInfoList={this.props.powerInfoList}
         addOutLineTableItemAsync={this.props.addOutLineTableItemAsync}
         editOutLineTableItemAsync={this.props.editOutLineTableItemAsync}
         removeOutLineTableItemAsync={this.props.removeOutLineTableItemAsync}
@@ -304,6 +306,8 @@ class PowerStation extends PureComponent {
       ></PowerStationForm>
     );
   };
+  getPowerInfoAsync = params =>
+    this.props.getPowerInfoAsync({ power_number: params });
   get size() {
     return ['removeStation'].some(v => v === this.props.action)
       ? 'small'
@@ -335,6 +339,7 @@ class PowerStation extends PureComponent {
     this.props.getHouseNoAsync();
     this.props.getTeamAsync();
     this.props.getDistrictAsync({});
+    // this.props.getPowerInfoAsync({});
     // setTimeout(() => {
     //   console.log('  延时器 ： ');
     //   this.props.getListAsync({

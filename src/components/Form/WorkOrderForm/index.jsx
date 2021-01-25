@@ -166,6 +166,45 @@ const WorkOrderTicketForm = props => {
         label: '派单信息',
       },
     },
+
+    {
+      itemProps: {
+        label: '事故描述',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故排查',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故处理',
+        name: '',
+      },
+    },
+
+    {
+      itemProps: {
+        label: '事故措施与建议',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '是否完成任务',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '使用耗材',
+        name: '',
+      },
+    },
+
     {
       // formType: 'Search',
       // selectSearch: props.getTeamAsync,
@@ -208,7 +247,7 @@ const WorkOrderTicketForm = props => {
     },
     // ...  ? clientConfig : [],
     ...clientConfig,
-    ...(props.action === 'detail' ? logTimeLine : []),
+    // ...(props.action === 'detail' ? logTimeLine : []),
   ];
 
   return (

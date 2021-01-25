@@ -426,21 +426,33 @@ const PowerStationForm = props => {
         name: 'name',
       },
     },
+    {
+      formType: 'Search',
+      selectSearch: props.getPowerInfoAsync,
+      selectData: props.powerInfoList,
+      itemProps: {
+        label: '电源编号',
+        name: 'power_number',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
   ];
 
   return (
-    <>
+    <div className={`powerStationForm`}>
       <SmartForm
         config={config}
         // config={configs}
 
         isDisabledAll={action === 'detail'}
         {...props}
-        // init={{
-        //   // inspection_type: 0,
-        //   inspection_type: inspectMode,
-        //   ...props.init,
-        // }}
+        init={{
+          // inspection_type: 0,
+          inspection_type: inspectMode,
+          ...props.init,
+        }}
       ></SmartForm>
 
       {extra}
@@ -456,7 +468,11 @@ const PowerStationForm = props => {
 
       <ReduxTable
         key={'outLineFormTable'}
-        config={outLineConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+        config={outLineConfig.map(v => ({
+          ...v,
+          ...v.itemProps,
+          isEdit: true,
+        }))}
         addTableItemAsync={props.addOutLineTableItemAsync}
         editTableItemAsync={props.editOutLineTableItemAsync}
         removeTableItemAsync={props.removeOutLineTableItemAsync}
@@ -467,7 +483,7 @@ const PowerStationForm = props => {
         // hideSaveEdit={['add'].includes(action)}
         addText={'新增出线侧'}
       ></ReduxTable>
-    </>
+    </div>
   );
 };
 

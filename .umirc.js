@@ -102,6 +102,14 @@ export default defineConfig({
       //   '^/api': '',
       // },
     },
+    '/proapi': {
+      target: 'https://epk.faladi.cn:31009',
+      // target: 'http://192.168.124.14:8001',
+      changeOrigin: true,
+      // pathRewrite: {
+      //   '^/api': '',
+      // },
+    },
     '/wsocket': {
       target: 'ws://119.3.123.144:8008/websocket',
       changeOrigin: true,

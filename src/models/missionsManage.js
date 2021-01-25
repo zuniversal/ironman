@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/missionsManage';
 import * as teamServices from '@/services/shiftsManage';
-import * as userServices from '@/services/user';
+import * as userServices from '@/services/userManage';
 import * as powerStationServices from '@/services/powerStation';
 import * as assetsServices from '@/services/assets';
 import * as clientServices from '@/services/client';
@@ -9,7 +9,7 @@ import * as contractServices from '@/services/contract';
 import * as houseNoServices from '@/services/houseNo';
 import * as commonServices from '@/services/common';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import { customerTypeMap } from '@/configs';
+import { customerTypeMap, voltageLevelMap, clientTypeMap } from '@/configs';
 
 const namespace = 'missionsManage';
 const { createActions } = init(namespace);
@@ -19,6 +19,7 @@ const otherActions = [
   'getUserAsync',
   'getPowerAsync',
   'getClientAsync',
+  'getClientDetailAsync',
   'getAssetsAsync',
   'getContractAsync',
   'getHouseNoAsync',
@@ -30,7 +31,9 @@ const otherActions = [
   'getEnumListAsync',
   'showClientAsync',
   'showContractAsync',
-  'getClientDetailAsync',
+  'getServiceStaffAsync',
+  'getMissionClientAsync',
+  'getClientItemAsync',
 ];
 
 const batchTurnActions = ['selectClient'];
@@ -74,10 +77,12 @@ export default {
     contractDetail: {},
     powerList: [],
     clientItem: {},
-    houseNoList: [],
-    houseNoCount: 0,
-    houseNoSearchInfo: {},
+    clientNo: [],
+    clientCount: 0,
+    missionClientList: [],
+    clientSearchInfo: {},
     extraData: {},
+    serviceStaffList: [],
   },
 
   reducers: {
@@ -118,6 +123,7 @@ export default {
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
+        clientItem: {},
       };
     },
     getItem(state, { payload, type }) {
@@ -144,6 +150,7 @@ export default {
       };
       if (payload.payload.action === 'detail') {
         itemDetail.customer_id = customer.name;
+        itemDetail.customer_admin = customer.customer_admin;
         // itemDetail.client = customer ? customer.name : customer
         itemDetail.person = person ? person.nickname : person;
         itemDetail.phone = contacts_phone;
@@ -165,7 +172,10 @@ export default {
           ...payload.bean,
           ...customer,
           address: payload.bean.addr,
-          clientType: customer.type,
+          // clientType: customerTypeMap[customer.type],
+          type: customerTypeMap[customer.type],
+          // clientType: customer.type?.map(v => customerTypeMap[v]).join(', '),
+          // clientType: customer.type?.map(v => v == 1 ? '托管' : '非托管'),
           // houseNo: ,
           // team_headman: payload.bean.team?.,
           // tel: payload.bean.team?.,
@@ -175,9 +185,8 @@ export default {
     addItem(state, { payload, type }) {
       return {
         ...state,
-        dataList: [payload.bean, ...state.dataList],
+        // dataList: [payload.bean, ...state.dataList],
         isShowModal: false,
-        count: state.count + 1,
       };
     },
     editItem(state, { payload, type }) {
@@ -226,6 +235,23 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
+    getMissionClient(state, { payload, type }) {
+      console.log(' getMissionClient 修改  ： ', state, payload, type); //
+      const { clientSearchInfo } = state;
+      return {
+        ...state,
+        missionClientList: formatSelectList(
+          payload.list,
+          'name',
+          'customer_id',
+        ),
+        clientCount: payload.rest.count,
+        clientSearchInfo: {
+          ...clientSearchInfo,
+          ...payload.payload,
+        },
+      };
+    },
     getAssets(state, { payload, type }) {
       // console.log(' getAssets 修改  ： ', state, payload, type,     )//
       return {
@@ -240,6 +266,13 @@ export default {
         contractList: formatSelectList(payload.list, 'code'),
       };
     },
+    getServiceStaff(state, { payload, type }) {
+      // console.log(' getServiceStaff 修改  ： ', state, payload, type,     )//
+      return {
+        ...state,
+        serviceStaffList: formatSelectList(payload.list, 'nickname'),
+      };
+    },
     getClientDetail(state, { payload, type }) {
       console.log(' getClientDetail 修改  ： ', state, payload, type); //
       const { customer_admin = [] } = payload.bean;
@@ -251,7 +284,10 @@ export default {
           real_capacity: payload.payload.real_capacity,
           houseNo: payload.payload.record?.number,
           ...payload.bean,
-          clientType: payload.bean.type.map(v => customerTypeMap[v]).join(','),
+          // clientType: payload.bean.type.map(v => customerTypeMap[v]).join(','),
+          clientType: payload.bean?.type?.map(v =>
+            v == 1 ? '托管' : '非托管',
+          ),
           // team_headman: payload.bean.customer_admin.map((v) => v.nickname).join(','),
           tel: payload.bean.customer_admin.map(v => v.phone).join(','),
           team_headman: payload.bean.team
@@ -263,15 +299,50 @@ export default {
         },
       };
     },
-    getHouseNo(state, { payload, type }) {
-      console.log(' getHouseNo 修改  ： ', state, payload, type); //
-      const { houseNoSearchInfo } = state;
+    getClientItem(state, { payload, type }) {
+      console.log(' getClientItem 修改  ： ', state, payload, type); //
+      const { electricity_user } = payload.bean;
       return {
         ...state,
-        houseNoList: formatSelectList(payload.list, 'id', 'number'),
-        houseNoCount: payload.rest.count,
-        houseNoSearchInfo: {
-          ...houseNoSearchInfo,
+        // clientItem: payload.bean,
+        clientItem: {
+          ...payload.bean,
+          // type: customerTypeMap[payload.bean.type],
+          // type: payload.bean.type.split(',').map((v) => clientTypeMap[v]).join(','),
+          type: payload.bean.type
+            .split(',')
+            .map(v => (v == 1 ? '托管' : '非托管'))
+            .join(','),
+          // electricity_user: electricity_user.map((v) => voltageLevelMap[v.voltage_level]).join(','),
+        },
+        // clientItem: {
+        //   trasformer_capacity: payload.payload.record?.trasformer_capacity,
+        //   trasformer_count: payload.payload.record?.trasformer_count,
+        //   real_capacity: payload.payload.real_capacity,
+        //   houseNo: payload.payload.record?.number,
+        //   ...payload.bean,
+        //   // clientType: payload.bean.type.map(v => customerTypeMap[v]).join(','),
+        //   clientType: payload.bean?.type?.map(v => v == 1 ? '托管' : '非托管'),
+        //   // team_headman: payload.bean.customer_admin.map((v) => v.nickname).join(','),
+        //   tel: payload.bean.customer_admin.map(v => v.phone).join(','),
+        //   team_headman: payload.bean.team
+        //     ? `${payload.bean.team[0].team_headman}`
+        //     : null,
+        //   // phone: payload.bean.contract,
+        //   person: customer_admin[0]?.nickname,
+        //   team_id: payload.bean.team ? `${payload.bean.team[0].id}` : null,
+        // },
+      };
+    },
+    getHouseNo(state, { payload, type }) {
+      console.log(' getHouseNo 修改  ： ', state, payload, type); //
+      const { clientSearchInfo } = state;
+      return {
+        ...state,
+        clientNo: formatSelectList(payload.list, 'id', 'number'),
+        clientCount: payload.rest.count,
+        clientSearchInfo: {
+          ...clientSearchInfo,
           ...payload.payload,
         },
       };
@@ -366,7 +437,7 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      // yield put(action(res));
+      yield put(action(res));
       yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
@@ -399,21 +470,39 @@ export default {
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
+    *getClientDetailAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getMissionClientAsync({ payload, action, type }, { call, put, select }) {
+      const { clientSearchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...clientSearchInfo,
+        ...payload,
+      };
+      const res = yield call(services.getMissionClient, params);
+      yield put(action({ ...res, payload }));
+    },
+    *getClientItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getClientItemAsync ： ', payload); //
+      const res = yield call(services.getClientItem, payload);
+      yield put(action({ ...res, payload }));
+    },
     *getContractAsync({ payload, action, type }, { call, put }) {
       const res = yield call(contractServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getHouseNoAsync({ payload, action, type }, { call, put, select }) {
-      const { houseNoSearchInfo } = yield select(state => state[namespace]);
+      const { clientSearchInfo } = yield select(state => state[namespace]);
       const params = {
-        ...houseNoSearchInfo,
+        ...clientSearchInfo,
         ...payload,
       };
       const res = yield call(houseNoServices.getList, params);
       yield put(action({ ...res, payload }));
     },
-    *getClientDetailAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(clientServices.getItem, payload);
+    *getServiceStaffAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(userServices.getServiceStaff, payload);
       yield put(action({ ...res, payload }));
     },
 

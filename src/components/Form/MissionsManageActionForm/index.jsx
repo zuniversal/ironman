@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
-import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
+import {
+  missionsTypeConfig,
+  fullFormLayouts,
+  voltageLevelConfig,
+  clientTypeConfig,
+} from '@/configs';
 import { Tabs } from 'antd';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 import SmartImg from '@/common/SmartImg';
@@ -180,10 +185,14 @@ MissionsManageConfirmScheduleForm.defaultProps = {};
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData } = props; //
+  const { tabData, activeKey } = props; //
   return (
     <div className="w100">
-      <Tabs defaultActiveKey="0" onChange={props.onChange}>
+      <Tabs
+        defaultActiveKey="0"
+        onChange={props.onChange}
+        activeKey={activeKey}
+      >
         {tabData.map((v, i) => (
           <TabPane tab={`工单-${i + 1}`} key={i}></TabPane>
         ))}
@@ -220,6 +229,8 @@ const formLayouts = {
 
 export const MissionsManageOrderInfoForm = props => {
   console.log(' MissionsManageOrderInfoForm ： ', props); //
+  const [tabIndex, setTabIndex] = useState(0);
+  console.log(' tabIndex ： ', tabIndex); //
 
   const { extra } = props.init;
   const { task = {}, file } = props.init;
@@ -230,10 +241,11 @@ export const MissionsManageOrderInfoForm = props => {
     console.log(' onChange   index,   ： ', index, extra.order_list);
     props.showItemAsync({
       action: 'workOrderDetailAsync',
-      // d_id: extra.order_list[index],
-      d_id: [0, 1, 2, 3][index],
+      d_id: extra.order_list[index],
+      // d_id: [0, 1, 2, 3][index],
       extra: extra,
     });
+    setTabIndex(index);
     // props.init.powerData = extra[index];
   };
 
@@ -241,11 +253,17 @@ export const MissionsManageOrderInfoForm = props => {
     {
       formType: 'CustomCom',
       CustomCom: (
-        <TabPanes onChange={onChange} tabData={extra.order_list}></TabPanes>
+        <TabPanes
+          onChange={onChange}
+          tabData={extra.order_list}
+          activeKey={tabIndex}
+          key={tabIndex}
+        ></TabPanes>
       ),
       itemProps: {
         label: '',
         className: 'w100',
+        ...fullFormLayouts,
       },
     },
     {
@@ -439,6 +457,7 @@ export const MissionsManageOrderInfoForm = props => {
       itemProps: {
         label: '工单日志:',
         name: 'task_log',
+        className: 'ant-col ant-col-12 ',
       },
     },
   ];
@@ -455,8 +474,8 @@ export const MissionsManageOrderInfoForm = props => {
         noRuleAll
         isDisabledAll
         formLayouts={formLayouts}
-
         // {...props}
+        key={props.init?.id}
       ></SmartForm>
     </div>
   );
@@ -475,27 +494,62 @@ export const MissionsClientForm = props => {
       },
     },
     {
+      formType: 'plainText',
+      plainText: <div className="textInput">{props.init?.name}</div>,
       itemProps: {
         label: '所属客户',
         name: 'name',
       },
     },
     {
+      noRule: true,
+      formType: 'CustomCom',
+      CustomCom: (
+        <div>
+          {props.init?.contacts?.map((v, i) => (
+            <div
+              className="adminBox"
+              key={i}
+              onClick={() => props.setContacter(v)}
+            >
+              {v.name}-{v.tag}
+            </div>
+          ))}
+        </div>
+      ),
       itemProps: {
-        label: '详细地址',
-        name: 'address',
+        label: '客户联系人',
+        name: '',
+      },
+    },
+    {
+      itemProps: {
+        label: '户号地址',
+        name: ['electricity_user', 0, 'addr'],
       },
     },
     {
       itemProps: {
         label: '客户代表',
-        name: ['service_staff', 'nickname'],
+        // name: ['service_staff', 'nickname'],
+        name: 'nickname',
       },
     },
     {
       itemProps: {
-        label: '电话',
+        label: '客户代表电话',
+        name: ['service_staff', 'phone'],
         name: 'phone',
+      },
+    },
+    {
+      // formType: 'Search',
+      // selectData: clientTypeConfig,
+      itemProps: {
+        label: '客户类型',
+        // name: ['electricityuser', 'type'],
+        // name: 'clientType',
+        name: 'type',
       },
     },
     {
@@ -503,27 +557,53 @@ export const MissionsClientForm = props => {
         label: '户号',
         // name: ['electricityuser', 'number'],
         name: 'houseNo',
+        name: ['electricity_user', 0, 'number'],
       },
     },
     {
+      formType: 'Search',
+      selectData: voltageLevelConfig,
       itemProps: {
-        label: '客户类型',
-        // name: ['electricityuser', 'type'],
-        name: 'clientType',
+        label: '电压等级',
+        name: ['electricity_user', 0, 'voltage_level'],
       },
     },
-    {
-      itemProps: {
-        label: '变压器台数',
-        name: 'trasformer_count',
-      },
-    },
+    // {
+    //   formType: 'plainText',
+    //   plainText: <div className="textInput">
+    //     {props.init?.address}
+    //   </div>,
+    //   itemProps: {
+    //     label: '详细地址',
+    //     name: 'address',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '电话',
+    //     name: 'phone',
+    //   },
+    // },
     {
       itemProps: {
         label: '变压器容量',
         name: 'trasformer_capacity',
+        name: ['electricity_user', 0, 'transformer_capacity'],
       },
     },
+    {
+      itemProps: {
+        label: '实际使用容量',
+        name: 'trasformer_count',
+        name: ['electricity_user', 0, 'real_capacity'],
+      },
+    },
+    // {
+    //   itemProps: {
+    //     label: '变压器台数',
+    //     name: 'trasformer_count',
+    //   },
+    // },
 
     // props.showFormModal({
     //   action: 'showPDF',
@@ -559,8 +639,8 @@ export const MissionsClientForm = props => {
                   action: 'showPDF',
                   // extraData: {path: "2020/12/D042-WDW-2020-0001"},
                   extraData: {
-                    path: `${v.entry_date.split('-')[0]}/${
-                      v.entry_date.split('-')[1]
+                    path: `${v?.entry_date.split('-')[0]}/${
+                      v?.entry_date.split('-')[1]
                     }/${v.code}`,
                   },
                 })
@@ -573,6 +653,7 @@ export const MissionsClientForm = props => {
       ),
       itemProps: {
         label: '关联合同',
+        label: '客户合同列表',
         name: 'contract',
       },
     },
@@ -580,14 +661,15 @@ export const MissionsClientForm = props => {
       itemProps: {
         label: '服务班组组长',
         // name: ['team', 'team_headman'],
-        name: 'team_headman',
+        name: ['team', 0, 'nickname'],
+        // name: 'team_headman',
       },
     },
     {
       itemProps: {
         label: '班组组长电话',
-        // name: ['team', 'phone'],
-        name: 'tel',
+        name: ['team', 0, 'phone'],
+        // name: 'tel',
       },
     },
   ].map(v => ({
@@ -603,3 +685,62 @@ export const MissionsClientForm = props => {
 };
 
 MissionsClientForm.defaultProps = {};
+
+export const MissionsSimpleClientForm = props => {
+  console.log(' MissionsSimpleClientForm       ： ', props);
+
+  const config = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户信息',
+      },
+    },
+    {
+      itemProps: {
+        label: '所属客户',
+        name: 'name',
+      },
+    },
+    // {
+    //   formType: 'plainText',
+    //   plainText: <div className="textInput">
+    //     {props.init?.address}
+    //   </div>,
+    //   itemProps: {
+    //     label: '详细地址',
+    //     name: 'address',
+    //   },
+    // },
+    {
+      noRule: true,
+      itemProps: {
+        label: '详细地址',
+        name: 'address',
+      },
+    },
+    {
+      itemProps: {
+        label: '客户代表',
+        name: ['service_staff', 'nickname'],
+      },
+    },
+    {
+      itemProps: {
+        label: '客户代表电话',
+        name: ['service_staff', 'phone'],
+      },
+    },
+  ].map(v => ({
+    ...v,
+    comProps: { className: 'w-240', ...v.comProps },
+  }));
+
+  return (
+    <div className={' missionsSimpleClientForm '}>
+      <SmartForm config={config} {...props}></SmartForm>
+    </div>
+  );
+};
+
+MissionsSimpleClientForm.defaultProps = {};

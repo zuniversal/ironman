@@ -57,6 +57,7 @@ import {
   missionsStatusMap,
   missionsTypeMap,
   inspectMissionsStatusMap,
+  customerTypeMap,
 } from '@/configs';
 
 const namespace = 'common';
@@ -187,6 +188,10 @@ export default {
         last_service_staff,
         electricityuser,
         file,
+        contact,
+        service_staff_name,
+        last_service_staff_name,
+        service_organization_name,
       } = payload.bean; //
       return {
         ...state,
@@ -195,13 +200,25 @@ export default {
         itemDetail: {
           ...payload.bean,
           customer_admin:
-            customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
-          service_staff: `${service_staff.nickname}`,
+            customer_admin && customer_admin.length > 0
+              ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
+              : [{}],
+          service_staff: service_staff?.nickname,
           last_service_staff: last_service_staff
-            ? `${last_service_staff.nickname}`
+            ? `${last_service_staff?.nickname}`
             : '',
-          electricityuser: electricityuser.map(v => v.number).join(','),
+          // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
+
+          contact: contact.map(v => ({
+            ...v,
+            is_urge: [v.is_urge],
+            is_quit: [v.is_quit],
+            tags: v.tags.map(v => `${v.id}`) ?? [],
+          })),
+          service_staff: `${service_staff_name}`,
+          last_service_staff: `${last_service_staff_name}`,
+          service_organization_id: service_organization_name ?? '',
         },
       };
     },
@@ -326,7 +343,9 @@ export default {
             ...payload.bean,
             ...customer,
             address: payload.bean.addr,
-            clientType: customer.type,
+            // clientType: customer.type,
+            // clientType: customer.type?.map(v => v == 1 ? '托管' : '非托管'),
+            type: customerTypeMap[customer.type],
           },
         },
       };
@@ -384,28 +403,32 @@ export default {
     },
     workOrderDetail(state, { payload, type }) {
       console.log(' workOrderDetail ： ', payload); //
+      const {
+        status,
+        created_time,
+        commencement_date,
+        finish_time,
+        receiving_time,
+      } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowCommonModal: true,
         itemDetail: {
           ...payload.bean,
-          status: missionsStatusMap[payload.bean.status],
+          status: missionsStatusMap[status],
           type: missionsTypeMap[payload.bean.type],
-          receiving_time: `${payload.bean.receiving_time}`.split('T')[0],
-          created_time: moment(payload.bean.created_time).format(
+          // receiving_time: `${receiving_time}`.split('T')[0],
+          created_time: moment(created_time).format('YYYY-MM-DD HH:mm:ss'),
+          receiving_time: receiving_time
+            ? moment(receiving_time).format('YYYY-MM-DD HH:mm:ss')
+            : '',
+          commencement_date: moment(commencement_date).format(
             'YYYY-MM-DD HH:mm:ss',
           ),
-          receiving_time: moment(payload.bean.receiving_time).format(
-            'YYYY-MM-DD HH:mm:ss',
-          ),
-          commencement_date: moment(payload.bean.commencement_date).format(
-            'YYYY-MM-DD HH:mm:ss',
-          ),
-          finish_time: moment(payload.bean.finish_time).format(
-            'YYYY-MM-DD HH:mm:ss',
-          ),
-          // customer_id: payload.bean.customer.name,
+          finish_time: moment(finish_time).format('YYYY-MM-DD HH:mm:ss'),
+          // customer_id: customer.name,
           extra: payload.payload.extra,
         },
       };

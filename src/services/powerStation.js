@@ -16,6 +16,7 @@ export const editItem = p => put(`console/OMS/powerstation/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/powerstation/${p.d_id}`, p);
 export const removeItems = p => remove(`console/OMS/powerstation/`, p);
 
+export const getPowerInfo = p => noTipsGet(`console/OMS/electricalinfo`, p);
 export const addPowerInfo = p => post(`console/OMS/electricalinfo`, p);
 export const editPowerInfo = p =>
   put(`console/OMS/electricalinfo/${p.d_id}`, p);

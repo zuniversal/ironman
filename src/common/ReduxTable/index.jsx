@@ -7,39 +7,193 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import './style.less';
-import { Input, Button } from 'antd';
+import { Input, Button, Select, InputNumber } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
-import { tips } from '@/utils';
+import { tips, renderSelectOp } from '@/utils';
+import debounce from 'lodash/debounce';
+import { INPUT_TXT, SELECT_TXT } from '@/constants';
+
+export const InputCom = props => {
+  const {
+    text,
+    record,
+    config,
+    // formType = 'Input',
+  } = props; //
+  const {
+    formType = 'Input',
+    itemProps = {},
+    comProps = {},
+    selectData,
+    ph,
+    placeholder,
+  } = config;
+
+  const realComProps = {
+    defaultValue: text,
+    placeholder: itemProps?.label ? INPUT_TXT + itemProps?.label : placeholder,
+    onChange: e =>
+      props.modifyTableItem({
+        action: 'edit',
+        value: e.target.value,
+        // keys: 'outline_number',
+        keys: keys,
+        text,
+        ...record,
+        index,
+      }),
+  };
+
+  return <Input {...realComProps} />;
+};
+
+export const SelectCom = props => {
+  const {
+    text,
+    record,
+    config,
+    // formType = 'Input',
+  } = props; //
+  const {
+    formType = 'Input',
+    itemProps = {},
+    comProps = {},
+    selectData,
+    ph,
+    placeholder,
+  } = config;
+
+  const selectProps = {
+    allowClear: true,
+    ...comProps,
+    filterOption: true,
+    showSearch: true,
+    optionFilterProp: 'children',
+    defaultValue: text,
+    placeholder: itemProps?.label ? SELECT_TXT + itemProps?.label : placeholder,
+    onChange: value =>
+      props.modifyTableItem({
+        action: 'edit',
+        value: value,
+        // keys: 'outline_number',
+        ...props,
+        ...record,
+      }),
+  };
+
+  if (formType === 'Search') {
+    // selectProps.optionFilterProp = 'children';
+    if (config.selectSearch) {
+      selectProps.onSearch = debounce(config.selectSearch, 1500);
+    }
+  }
+
+  return <Select {...selectProps}>{renderSelectOp(selectData)}</Select>;
+};
+
+SelectCom.defaultProps = {
+  ph: '关键字',
+  placeholder: '',
+};
+
+SelectCom.propTypes = {
+  ph: PropTypes.string,
+  placeholder: PropTypes.string,
+};
+
+export const getWidget = props => {
+  console.log(' ReduxTable  getWidget   props,   ： ', props);
+  const {
+    // comProps,
+    label,
+    LabelCom,
+    CustomCom,
+    text,
+    plainText,
+    keys,
+    record,
+    index,
+  } = props; //
+
+  const { formType = 'Input', itemProps = {}, comProps = {} } = props.config;
+
+  const formItemMap = {
+    rowText: label,
+    Label: LabelCom,
+    CustomCom: CustomCom,
+    plainText: (
+      <span className={`plainText`} {...comProps}>
+        {plainText}
+      </span>
+    ),
+    // Input: (
+    //   <Input
+    //     defaultValue={text}
+    //     onChange={e =>
+    //       props.modifyTableItem({
+    //         action: 'edit',
+    //         value: e.target.value,
+    //         // keys: 'outline_number',
+    //         keys: keys,
+    //         text,
+    //         ...record,
+    //         index,
+    //       })
+    //     }
+    //   />
+    // ),
+    Input: <InputCom {...props}></InputCom>,
+    InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
+    // Select: selectCom(props),
+    // Search: selectCom(props),
+    Select: <SelectCom {...props}></SelectCom>,
+    Search: <SelectCom {...props}></SelectCom>,
+  };
+
+  const formItemCom = formItemMap[formType];
+  return formItemCom;
+};
 
 export const TableInput = props => {
-  const { text, record, index, keys, config } = props; //
+  const { text, record, index, keys } = props; //
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
   // ); //
-  // return props.record.isEdit && config.noEdit ? (
-  return props.record.isEdit && keys !== 'id' ? (
-    <Input
-      allowClear
-      defaultValue={text}
-      onChange={e =>
-        props.modifyTableItem({
-          action: 'edit',
-          value: e.target.value,
-          keys: keys,
-          text,
-          ...record,
-          index,
-        })
-      }
-    ></Input>
-  ) : (
-    text
-  );
+  return props.record.isEdit ? getWidget(props) : text;
 };
+
+// export const TableInput = props => {
+//   const { text, record, index, keys, config } = props; //
+//   // console.log(
+//   //   ' %c TableInput 组件 ： ',
+//   //   `color: #333; font-weight: bold`,
+//   //   props,
+//   // ); //
+//   // return props.record.isEdit && config.noEdit ? (
+//   return props.record.isEdit && keys !== 'id' ? (
+//     <Input
+//       allowClear
+//       defaultValue={text}
+//       onChange={e =>
+//         props.modifyTableItem({
+//           action: 'edit',
+//           value: e.target.value,
+//           keys: keys,
+//           text,
+//           ...record,
+//           index,
+//         })
+//       }
+//     ></Input>
+//   ) : (
+//     text
+//   );
+// };
 
 const ReduxTable = props => {
   const { edit, remove, config, isDisabledAll } = props; //
@@ -60,7 +214,8 @@ const ReduxTable = props => {
           index={index}
           {...props}
           keys={v.name}
-          config={config}
+          // config={config}
+          config={v}
         ></TableInput>
       </div>
     ),

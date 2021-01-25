@@ -27,6 +27,12 @@ const AssetsSearchForm = props => {
         name: 'powerStation',
       },
     },
+    // {
+    //   itemProps: {
+    //     label: '资产名称',
+    //     name: '',
+    //   },
+    // },
 
     // {
     //   formType: 'Divider',

@@ -1,9 +1,16 @@
 .reduxTable {
+  width: 100%;
   .add {
     // margin-right: 10px;
   }
-  .ant-table-cell {
-    text-align: center;
+  .ant-table-thead {
+    .ant-table-cell {
+      text-align: center;
+    }
+  }
+  .tableItem {
+    display: flex;
+    justify-content: center;
   }
 
   .ant-table-thead > tr > th {
@@ -19,7 +26,10 @@
   }
   .ant-table-title {
     .ant-btn {
-      margin-top: 10px;
+      // margin-top: 10px;
     }
+  }
+  .ant-select {
+    min-width: 100%;
   }
 }

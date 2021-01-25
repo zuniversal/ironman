@@ -10,12 +10,15 @@
   }
   .adminBox {
     // height: 32px;
+    max-width: 240px !important;
     padding: 4px 8px;
     width: fit-content;
     background: #f4f4f4;
     border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
     opacity: 1;
     border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 10px;
     &:not(:last-child) {
       margin-right: 10px;
     }
@@ -55,5 +58,8 @@
     margin-bottom: 10px;
     &:not(:last-child) {
     }
+  }
+  .uploadFormItem {
+    margin-bottom: 10px;
   }
 }

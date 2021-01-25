@@ -21,7 +21,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 // import SearchForm from '@/common/SearchForm'; //
 import ProvinceForm, { config } from '@/components/Form/ProvinceForm'; //
-import { regoins } from '@/configs'; //
+import { regoins, clientTypeSearchConfig } from '@/configs'; //
 
 console.log(' config ： ', config); //
 
@@ -33,12 +33,31 @@ const ClientSearchForm = props => {
   const { formBtn, ...rest } = props; //
 
   const configs = [
-    ...config(props),
+    // ...config(props),
+    // {
+    //   noLabel: true,
+    //   itemProps: {
+    //     label: '客户名称',
+    //     name: 'name',
+    //   },
+    //   comProps: {
+    //     className: 'lastFormItem',
+    //   },
+    //   searchSuffix: true,
+    // },
+    {
+      formType: 'Search',
+      selectData: clientTypeSearchConfig,
+      itemProps: {
+        label: '客户类型',
+        name: 'type',
+      },
+    },
     {
       noLabel: true,
       itemProps: {
-        label: '客户名称',
-        name: 'name',
+        label: '客户名称/地址',
+        name: 'keyword',
       },
       comProps: {
         className: 'lastFormItem',

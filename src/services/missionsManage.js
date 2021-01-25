@@ -16,6 +16,9 @@ export const addItem = p => post('console/OMS/task', p);
 export const editItem = p => put(`console/OMS/task/${p.d_id}`, p);
 export const removeItem = p => remove(`console/OMS/task/${p.d_id}`, p);
 
+export const getMissionClient = p => noTipsGet(`console/OMS/task/customers`, p);
+export const getClientItem = p =>
+  noTipsGet(`console/OMS/task/customer/${p.d_id}`, p);
 export const closeMission = p => put(`console/OMS/task/${p.d_id}`, p);
 export const startWorkOrder = p => post(`console/OMS/task/order`, p);
 export const linkContract = p => put(`console/OMS/task/${p.id}/contract`, p);

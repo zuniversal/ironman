@@ -3,25 +3,63 @@ import './style.less';
 import {
   Form,
   Input,
-  Tooltip,
   Cascader,
   Select,
   Row,
-  Col,
   Checkbox,
   Button,
   AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
+  Collapse,
 } from 'antd';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
-import { regoins, customerTypeConfig } from '@/configs'; //
-import { formatConfig, reportRadioOp, tips } from '@/utils'; //
+import {
+  regoins,
+  clientLevelConfig,
+  customerTypeConfig,
+  repairSourceConfig,
+  enterpriseScaleConfig,
+  enterpriseNatureConfig,
+  industryConfig,
+  assetScaleConfig,
+  corverAreaConfig,
+  voltageLevelConfig,
+  electricTypeConfig,
+} from '@/configs'; //
+import { tips, renderCheckboxOp, renderSelectOp } from '@/utils'; //
 import SmartFormTable from '@/common/SmartFormTable';
 import ReduxTable from '@/common/ReduxTable';
+
+import {
+  SettingOutlined,
+  PlusOutlined,
+  MinusOutlined,
+} from '@ant-design/icons';
+import { getLabel } from '@/common/SmartForm';
+import { REQUIRE } from '@/constants';
+
+const { Panel } = Collapse;
+const { Option } = Select;
+
+function callback(key) {
+  console.log(key);
+}
+
+const genExtra = () => (
+  <SettingOutlined
+    onClick={event => {
+      // If you don't want click extra trigger collapse, you can prevent this:
+      event.stopPropagation();
+    }}
+  />
+);
+
+const checkboxData = [
+  { label: '', value: 1 },
+  // { label: '是否', value: false,  },
+];
+// const checkboxData = { label: '是', value: true,  }
 
 const rowLayout = {
   labelCol: {
@@ -34,6 +72,80 @@ const rowLayout = {
   },
 };
 
+const addrLayout = {
+  labelCol: {
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    sm: { span: 20 },
+  },
+};
+
+const addrLayout1 = {
+  labelCol: {
+    sm: { span: 12 },
+  },
+  wrapperCol: {
+    sm: { span: 12 },
+  },
+};
+
+const addrLayout2 = {
+  labelCol: {
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    sm: { span: 18 },
+  },
+};
+
+const formLayouts = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 }, //
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 }, //
+  },
+};
+
+const CollapseCom = props => {
+  const { com, header = '', extra } = props; //
+  console.log(' CollapseCom   props,   ： ', props);
+  return (
+    <Collapse
+      defaultActiveKey={['1']}
+      onChange={callback}
+      expandIconPosition={'left'}
+      className={`collapseCom`}
+    >
+      <Panel header={header} key="1" extra={extra}>
+        {com}
+      </Panel>
+    </Collapse>
+  );
+};
+
+// const collapseCom = (
+//   <Collapse
+//     defaultActiveKey={['1']}
+//     onChange={callback}
+//     expandIconPosition={'left'}
+//   >
+//     <Panel header="This is panel header 1" key="1" extra={genExtra()}>
+//       <div>text</div>
+//     </Panel>
+//     <Panel header="This is panel header 2" key="2">
+//       <div>text</div>
+//     </Panel>
+//     <Panel header="This is panel header 3" key="3">
+//       <div>text</div>
+//     </Panel>
+//   </Collapse>
+// );
+// config.push(collapseCom);
+
 export const AdminForm = props => {
   console.log(' AdminForm ： ', props); //
   const { action, getCapture, addUserAsync } = props; //
@@ -43,7 +155,6 @@ export const AdminForm = props => {
   const config = [
     {
       formType: 'rowText',
-      noRule: true,
       itemProps: {
         label: '管理员信息',
       },
@@ -172,8 +283,164 @@ export const AdminForm = props => {
   );
 };
 
+const formListLayout = {
+  labelCol: {
+    sm: { span: 10 }, //
+  },
+  wrapperCol: {
+    sm: { span: 14 }, //
+  },
+};
+
+const rules = (params, extra) => {
+  const { items, label, formType } = params;
+  const message = getLabel(label, formType);
+  // console.log(' rules   params, extra,  ,   ： ', params, extra, message, label, formType,  );
+  return [
+    {
+      required: true,
+      message: label + REQUIRE,
+    },
+  ];
+};
+
+export const getWidget = props => {
+  console.log(' ReduxTable  getWidget   props,   ： ', props);
+  const { label, LabelCom, CustomCom, plainText } = props; //
+
+  const { formType = 'Input', itemProps = {}, comProps = {} } = props;
+
+  const formItemMap = {
+    rowText: label,
+    Label: LabelCom,
+    CustomCom: CustomCom,
+    plainText: (
+      <span className={`plainText`} {...comProps}>
+        {plainText}
+      </span>
+    ),
+    Checkbox: renderCheckboxOp(props.checkboxData, {
+      opType: props.opType,
+      isDisabledAll: props.isDisabledAll,
+      comProps: comProps,
+    }),
+    // Checkbox: <Checkbox>是1</Checkbox>,
+    // Input: <Input className={'w-200'} disabled={props.isDisabledAll} {...comProps} />,
+    Input: <Input disabled={props.isDisabledAll} {...comProps} />,
+    // InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
+    Select: (
+      <Select {...comProps} disabled={props.isDisabledAll}>
+        {renderSelectOp(props.selectData)}
+      </Select>
+    ),
+    Search: (
+      <Select {...comProps} disabled={props.isDisabledAll}>
+        {renderSelectOp(props.selectData)}
+      </Select>
+    ),
+  };
+
+  const formItemCom = formItemMap[formType];
+  return formItemCom;
+};
+
+const FormListCom = props => {
+  const { config = [], name, ...rest } = props; //
+  console.log(' FormListCom   props,   ： ', props);
+  const formListCom = (
+    <Form.List name={name} key={name}>
+      {(fields, { add, remove }) => {
+        console.log(' dataInit  fieldsfields ： ', fields); //
+        return (
+          <Row gutter={24} className={`formRow`}>
+            {fields.map((field, index) => {
+              const actionBtn = props.isDisabledAll ? null : (
+                <div className="btnWrapper">
+                  {/* <Button shape="circle" icon={<PlusOutlined />} type="primary" onClick={add} >新增</Button>
+                <Button shape="circle" icon={<PlusOutlined />} onClick={remove}>删除</Button> */}
+                  {props.extra
+                    ? props.extra({
+                        add,
+                        remove: () => remove(field.name),
+                        fields,
+                        field,
+                        index,
+                      })
+                    : null}
+                  <Button
+                    shape="circle"
+                    icon={<PlusOutlined />}
+                    type="primary"
+                    onClick={() => add()}
+                  ></Button>
+                  {fields.length > 1 && (
+                    <Button
+                      shape="circle"
+                      icon={<MinusOutlined />}
+                      onClick={() => remove(field.name)}
+                    ></Button>
+                  )}
+                </div>
+              );
+              const formItem = config.map((v, i) => {
+                const { comProps = {} } = v;
+                return v.type !== 'rowText' && !v.rowTitle ? (
+                  <Form.Item
+                    {...field}
+                    key={`${index}-${i}`}
+                    label={v.label}
+                    colon={false}
+                    name={[field.name, v.name]}
+                    fieldKey={[field.fieldKey, v.name]}
+                    className={`formItems listFormItem  ${
+                      v.type !== 'rowText' ? 'ant-col ant-col-12' : ''
+                    }`}
+                    rules={
+                      v.noRule || v.noRuleAll
+                        ? undefined
+                        : rules({ items: v, ...v })
+                    }
+                    {...(v.type !== 'rowText' ? formListLayout : {})}
+                  >
+                    {/* <Input className={'w-200'} {...comProps} /> */}
+                    {getWidget({ ...v, ...rest })}
+                  </Form.Item>
+                ) : (
+                  <div
+                    className={`rowHeader fsb w100  ${
+                      v.label ? 'formItems' : ''
+                    } ${v.rowTitle ? 'rowTitle' : 'rowItem'}`}
+                    key={`${index}-${i}`}
+                  >
+                    <div className={``}>
+                      {v.label ? v.label + (index + 1) : ''}
+                    </div>
+
+                    {props.renderHeaderRight
+                      ? props.renderHeaderRight({
+                          add,
+                          remove: () => remove(field.name),
+                        })
+                      : actionBtn}
+                  </div>
+                );
+              });
+              return formItem;
+            })}
+          </Row>
+        );
+      }}
+    </Form.List>
+  );
+  return formListCom;
+};
+
+FormListCom.defaultProps = {
+  // renderHeaderRight: () => {},
+};
+
 const ClientForm = props => {
-  console.log(' ClientForm ： ', props); //
+  console.log(' ClientForm ： ', props, props.init); //
 
   const { action, getCapture, addUserAsync } = props; //
 
@@ -235,6 +502,54 @@ const ClientForm = props => {
     },
   };
 
+  const regionConfig = [
+    {
+      // noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.provinceList,
+      itemProps: {
+        label: '省',
+        // name: 'province',
+        name: ['enterprise', 'province'],
+        ...addrLayout1,
+      },
+      comProps: {
+        className: 'w-135',
+      },
+    },
+    {
+      // noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.citytList,
+      itemProps: {
+        label: '市',
+        // name: 'city',
+        name: ['enterprise', 'city'],
+        ...addrLayout2,
+      },
+      comProps: {
+        className: 'w-135',
+      },
+    },
+    {
+      // noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.countryList,
+      itemProps: {
+        label: '县',
+        // name: 'area',
+        name: ['enterprise', 'area'],
+        ...addrLayout2,
+      },
+      comProps: {
+        className: 'w-135',
+      },
+    },
+  ];
+
   const areaConfig = [
     // {
     //   formType: 'Cascader',
@@ -257,7 +572,75 @@ const ClientForm = props => {
     //   },
     // },
     {
-      noRule: true,
+      // noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '行政区域编码',
+        // name: 'adcode',
+        name: ['enterprise', 'adcode'],
+        ...addrLayout1,
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-135',
+      },
+    },
+    {
+      // noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '经度',
+        // name: 'longitude',
+        name: ['enterprise', 'longitude'],
+        ...addrLayout2,
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-135',
+      },
+    },
+    {
+      // noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '纬度',
+        // name: 'latitude',
+        name: ['enterprise', 'latitude'],
+        ...addrLayout2,
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-135',
+      },
+    },
+  ];
+
+  const houseNoConfig = [
+    {
+      itemProps: {
+        label: '户号',
+        name: 'number',
+      },
+    },
+    {
+      itemProps: {
+        label: '区域编码',
+        name: 'ad_code',
+      },
+    },
+    {
+      itemProps: {
+        label: '城市编码',
+        name: 'city_code',
+      },
+    },
+    {
+      itemProps: {
+        label: '地址',
+        name: 'addr',
+      },
+    },
+    {
       itemProps: {
         label: '经度',
         name: 'longitude',
@@ -267,7 +650,6 @@ const ClientForm = props => {
       },
     },
     {
-      noRule: true,
       itemProps: {
         label: '纬度',
         name: 'latitude',
@@ -276,23 +658,115 @@ const ClientForm = props => {
         disabled: true,
       },
     },
+    {
+      noRule: true,
+      itemProps: {
+        label: '变压器容量',
+        name: 'transformer_capacity',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '实际容量',
+        name: 'real_capacity',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Search',
+      selectData: voltageLevelConfig,
+      itemProps: {
+        label: '电压等级',
+        name: 'voltage_level',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '用电类型',
+        name: 'type',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '电功率考核因素',
+        name: 'ep_factor',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '托管电站数',
+        name: 'trusteeship_num',
+      },
+    },
   ];
 
   const config = [
     {
       formType: 'rowText',
-      // noRule: true,
       itemProps: {
         label: '基本信息',
+        className: 'w100',
       },
     },
     {
+      flexRow: 1,
       itemProps: {
         label: '客户名称',
         name: 'name',
+        ...addrLayout,
+      },
+      comProps: {
+        className: 'address ',
+      },
+    },
+    // {
+    //   formType: 'Checkbox',
+    //   opType: 'option',
+    //   checkboxData: checkboxData,
+    //   itemProps: {
+    //     label: '是否离职',
+    //     name: 'is_quit',
+    //     valuePropName: "checked",
+    //   },
+    // },
+    {
+      flexRow: 1,
+      formType: 'Search',
+      selectData: props.enterpriseList,
+      itemProps: {
+        label: '服务企业',
+        name: 'service_enterprise_id',
+        ...addrLayout,
+      },
+      comProps: {
+        className: 'address ',
+      },
+    },
+    ...(props.action === 'detail'
+      ? [
+          {
+            noRule: true,
+            itemProps: {
+              label: '客户编码',
+              name: 'code',
+            },
+          },
+        ]
+      : []),
+    {
+      formType: 'Select',
+      selectData: clientLevelConfig,
+      itemProps: {
+        label: '客户等级',
+        name: 'level',
       },
     },
     {
+      // noRule: true,
       formType: 'Search',
       selectData: customerTypeConfig,
       itemProps: {
@@ -304,16 +778,6 @@ const ClientForm = props => {
       },
     },
     {
-      formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
-      itemProps: {
-        label: '客户代表',
-        name: 'service_staff',
-      },
-    },
-
-    {
       noRule: true,
       formType: 'Search',
       // selectSearch: props.getUserAsync,
@@ -321,49 +785,176 @@ const ClientForm = props => {
       itemProps: {
         label: '上一任客户代表',
         name: 'last_service_staff',
+        name: 'last_service_staff_id',
       },
       comProps: {
         disabled: action !== 'add',
       },
     },
     {
-      // formType: 'Select',
+      noRule: true,
+      formType: 'Search',
+      selectSearch: props.getUserAsync,
+      selectData: props.userList,
       itemProps: {
-        label: '客户编码',
-        name: 'code',
+        label: '客户代表',
+        name: 'service_staff',
+        name: 'service_staff_id',
+      },
+    },
+
+    // {
+    //   noRule: true,
+    //   formType: 'Search',
+    //   // selectSearch: props.getOrganizeAsync,
+    //   selectData: props.organizeList,
+    //   itemProps: {
+    //     label: '组织',
+    //     name: 'service_organization_id',
+    //   },
+    // },
+    {
+      noRule: true,
+      formType: 'TreeSelect',
+      itemProps: {
+        label: '组织',
+        name: 'service_organization_id',
+      },
+      comProps: {
+        treeData: props.organizeList,
       },
     },
 
     {
-      // formType: 'Select',
+      formType: 'rowText',
       itemProps: {
-        label: '客户等级',
-        name: 'level',
+        label: '公司基本信息',
+        className: 'w100',
       },
     },
 
     {
-      // formType: 'Select',
+      flexRow: 1,
+      itemProps: {
+        label: '公司名字',
+        name: ['enterprise', 'name'],
+        ...addrLayout,
+      },
+      comProps: {
+        className: 'address ',
+      },
+    },
+    // {
+    //   formType: 'Select',
+    //   selectData: clientLevelConfig,
+    //   itemProps: {
+    //     label: '客户等级',
+    //     name: ['enterprise', 'level'],
+    //   },
+    // },
+    {
+      flexRow: 1,
+      // formType: 'Search',
+      // selectSearch: props.getGeoAsync,
+      // selectData: props.geoList,
+      itemProps: {
+        label: '详细地址',
+        name: ['enterprise', 'address'],
+        ...addrLayout,
+      },
+      comProps: {
+        className: 'address ',
+        // onChange: props.onAddressChange,
+      },
+    },
+    ...(action === 'detail' ? [] : regionConfig),
+    ...areaConfig,
+    {
+      formType: 'rowText',
+      itemProps: {
+        label:
+          'Tips: 选择省市区后自动填写行政区域编码，输入地址后自动填写经纬度！',
+        className: 'w100 textCenter',
+      },
+    },
+
+    {
       noRule: true,
       itemProps: {
-        label: '所属行业',
-        name: 'industry',
+        label: '法人',
+        name: ['enterprise', 'legal_person'],
       },
     },
     {
-      // formType: 'Select',
       noRule: true,
+      itemProps: {
+        label: '法人联系方式',
+        name: ['enterprise', 'legal_person_phone'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '税号',
+        name: ['enterprise', 'tax_num'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '银行开户名',
+        name: ['enterprise', 'bank_account_name'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '银行',
+        name: ['enterprise', 'bank_name'],
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '邮编',
+        name: ['enterprise', 'postcode'],
+      },
+    },
+
+    {
+      noRule: true,
+      formType: 'Select',
+      selectData: enterpriseScaleConfig,
       itemProps: {
         label: '企业规模',
-        name: 'scale',
+        name: ['enterprise', 'scale'],
       },
     },
     {
-      // formType: 'Select',
       noRule: true,
+      formType: 'Select',
+      selectData: enterpriseNatureConfig,
+      itemProps: {
+        label: '企业性质',
+        name: ['enterprise', 'nature'],
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Select',
+      selectData: industryConfig,
+      itemProps: {
+        label: '所属行业',
+        name: ['enterprise', 'industry'],
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Select',
+      selectData: assetScaleConfig,
       itemProps: {
         label: '资产规模',
-        name: 'asset',
+        name: ['enterprise', 'asset'],
       },
     },
     // {
@@ -375,11 +966,21 @@ const ClientForm = props => {
     //
     // },
     {
-      // formType: 'Select',
       noRule: true,
+      formType: 'Select',
+      selectData: corverAreaConfig,
       itemProps: {
         label: '占地面积',
-        name: 'covered_area',
+        name: ['enterprise', 'covered_area'],
+      },
+    },
+    {
+      // formType: 'Select',
+      // selectData: ,
+      noRule: true,
+      itemProps: {
+        label: '父级企业',
+        name: ['enterprise', 'parent_enterprise_id'],
       },
     },
     // {
@@ -402,23 +1003,18 @@ const ClientForm = props => {
       init={props.init}
       formAction={props.action}
       noRule
+      formItemCls={'ant-col-12'}
     ></UploadCom>,
 
-    {
-      formType: 'rowText',
-      // noRule: true,
-      itemProps: {
-        label: '位置信息',
-      },
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '详细地址',
-        name: 'address',
-      },
-    },
-    ...(action !== 'add' ? areaConfig : []),
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '位置信息',
+    //     className: 'w100',
+    //   },
+    // },
+
+    // ...(action !== 'add' ? areaConfig : []),
     // adminItem,
 
     // {
@@ -490,14 +1086,16 @@ const ClientForm = props => {
     //   CustomCom: <AdminForm {...props}></AdminForm>,
     // },
 
-    {
-      formType: 'rowText',
-      noRule: true,
-      itemProps: {
-        label: '其他信息',
-      },
-    },
-  ];
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '其他信息',
+    //   },
+    // },
+  ].map(v => ({
+    ...v,
+    comProps: { className: `w-200 ${v.comProps?.className}`, ...v.comProps },
+  }));
 
   const attach = [
     // {
@@ -538,12 +1136,33 @@ const ClientForm = props => {
         rules: null,
       }}
       formAction={props.action}
+      formItemCls={'w100'}
     ></UploadCom>,
   ];
 
   const userCaptureInfo = [
     {
       noRule: true,
+      formType: 'plainText',
+      plainText: (
+        <div className="textInput w-320 linking">
+          {/* {props.init?.electricityuser} */}
+          {props.init?.electricityuser?.map((v, i) => (
+            <div
+              className="linking"
+              key={i}
+              onClick={() => {
+                props.showItemAsync({
+                  action: 'houseNoDetailAsync',
+                  d_id: v.id,
+                });
+              }}
+            >
+              {v.number}
+            </div>
+          ))}
+        </div>
+      ),
       itemProps: {
         label: '下属户号',
         name: 'electricityuser',
@@ -575,19 +1194,20 @@ const ClientForm = props => {
     // } else if (action === '') {
     // } else if (action === 'edit' || action === 'detail') {
   } else if (action === 'detail') {
-    config.push(...userCaptureInfo);
+    // config.push(...userCaptureInfo);
   }
 
   const adminConfig = [
+    // {
+    //   itemProps: {
+    //     label: 'id',
+    //     name: 'id',
+    //     hidden: true,
+    //     noEdit: false,
+    //   },
+    // },
     {
-      itemProps: {
-        label: 'id',
-        name: 'id',
-        hidden: true,
-        noEdit: false,
-      },
-    },
-    {
+      // noRule: true,
       itemProps: {
         label: '姓名',
         name: 'nickname',
@@ -607,40 +1227,340 @@ const ClientForm = props => {
       },
     },
     {
+      // noRule: true,
       itemProps: {
         label: '手机号',
         name: 'phone',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '邮箱',
+        name: 'email',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '微信',
+        name: 'wechat',
+      },
+    },
+  ];
+
+  const clientContactConfig = [
+    {
+      itemProps: {
+        label: '联系人名字',
+        name: 'name',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Checkbox',
+      // opType: 'option',
+      checkboxData: checkboxData,
+      itemProps: {
+        label: '催款联系人',
+        name: 'is_urge',
+        valuePropName: 'checked',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Checkbox',
+      // opType: 'option',
+      checkboxData: checkboxData,
+      itemProps: {
+        label: '离职',
+        name: 'is_quit',
+        valuePropName: 'checked',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '联系人手机',
+        name: 'phone',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '联系人电话',
+        name: 'tel',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '邮箱',
+        name: 'email',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'qq',
+        name: 'qq',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '微信',
+        name: 'wechat',
+      },
+    },
+    // action === 'detail' ? {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '职位',
+    //     name: 'tags',
+    //   },
+    // } : {
+    //   // noRule: true,
+    //   formType: 'Select',
+    //   selectSearch: props.getTagsAsync,
+    //   selectData: props.tagsList,
+    //   itemProps: {
+    //     label: '职位',
+    //     name: 'tags',
+    //   },
+    //   comProps: {
+    //     mode: 'multiple',
+    //   },
+    // },
+    {
+      // noRule: true,
+      formType: 'Select',
+      selectSearch: props.getTagsAsync,
+      selectData: props.tagsList,
+      itemProps: {
+        label: '职位',
+        name: 'tags',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '备注',
+        name: 'comments',
       },
     },
   ];
 
   const dataSource =
     action === 'detail' ? props.init.customer_admin : props.tableData;
-  const adminFormTable = [
-    {
-      formType: 'rowText',
-      noRule: true,
-      itemProps: {
-        label: '管理员信息',
-      },
-    },
-    <ReduxTable
-      key={'adminFormTable'}
-      config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
-      addTableItemAsync={props.addTableItemAsync}
-      editTableItemAsync={props.editTableItemAsync}
-      removeTableItemAsync={props.removeTableItemAsync}
-      modifyTableItem={props.modifyTableItem}
-      dataSource={dataSource}
-      isDisabledAll={!['add', 'edit'].includes(action)}
-      noLimitAdd
-      // hideSaveEdit={['add'].includes(action)}
-    ></ReduxTable>,
-  ];
 
-  config.push(...adminFormTable);
+  const contactDataSource =
+    action === 'detail' ? props.init.customer_admin : props.contactTableData;
 
+  // const adminFormTable = [
+  //   {
+  //     formType: 'rowText',
+  //     itemProps: {
+  //       label: '管理员信息',
+  //       className: 'w100',
+  //     },
+  //   },
+  //   <ReduxTable
+  //     key={'adminFormTable'}
+  //     config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+  //     addTableItemAsync={props.addTableItemAsync}
+  //     editTableItemAsync={props.editTableItemAsync}
+  //     removeTableItemAsync={props.removeTableItemAsync}
+  //     modifyTableItem={props.modifyTableItem}
+  //     dataSource={dataSource}
+  //     isDisabledAll={!['add', 'edit'].includes(action)}
+  //     noLimitAdd
+  //     // hideSaveEdit={['add'].includes(action)}
+  //   ></ReduxTable>,
+  // ];
+
+  // const clientContactFormTable = [
+  //   {
+  //     formType: 'rowText',
+  //     itemProps: {
+  //       label: '客户联系人信息',
+  //       className: 'w100',
+  //     },
+  //   },
+  //   <ReduxTable
+  //     key={'clientContactFormTable'}
+  //     config={clientContactConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
+  //     addTableItemAsync={props.addTableItemAsync}
+  //     editTableItemAsync={props.editTableItemAsync}
+  //     removeTableItemAsync={props.removeTableItemAsync}
+  //     modifyTableItem={props.modifyTableItem}
+  //     dataSource={contactDataSource}
+  //     isDisabledAll={!['add', 'edit'].includes(action)}
+  //     noLimitAdd
+  //     // hideSaveEdit={['add'].includes(action)}
+  //   ></ReduxTable>,
+  // ];
+
+  // config.push(...adminFormTable);
+  // config.push(...clientContactFormTable);
+
+  const formCom = (
+    <SmartForm
+      config={config}
+      isDisabledAll={action === 'detail'}
+      {...props}
+      init={{
+        customer_admin: [{}],
+        contact: [{}],
+        electricity_user: [{}],
+        ...props.init,
+        // customer_admin: [
+        //   {
+        //     nickname: 'nickname1',
+        //     username: 'username1',
+        //     password: 'password1',
+        //     phone: 'phone1',
+        //     email: 'email1',
+        //     wechat: 'wechat1',
+        //   },
+        //   {
+        //     nickname: 'nickname2',
+        //     username: 'username2',
+        //     password: 'password2',
+        //     phone: 'phone2',
+        //     email: 'email2',
+        //     wechat: 'wechat2',
+        //   },
+        // ],
+        // contact: [
+        //   {
+        //     is_urge: [true],
+        //     is_quit: [true],
+        //   },
+        // ],
+        // electricity_user: [
+        //   {},
+        // ],
+        // customer_admin: [{}],
+      }}
+      formLayouts={formLayouts}
+      flexRow={2}
+    ></SmartForm>
+  );
+
+  const formCollapseCom = (
+    <Collapse
+      defaultActiveKey={['1']}
+      onChange={callback}
+      expandIconPosition={'left'}
+    >
+      <Panel header={'客户信息'} key="1" extra={genExtra()}>
+        {formCom}
+      </Panel>
+    </Collapse>
+  );
   console.log(' configconfig ： ', config); //
+
+  const copy2Admin = params => {
+    const { index } = params;
+    const res = props.propsForm.getFieldsValue();
+    console.log(' copy2Admin   params,   ： ', params, res);
+    const { contact, customer_admin } = res;
+    const copyItem = contact[index];
+    if (Object.keys(copyItem).length > 0) {
+      const newAdminData = [
+        ...customer_admin,
+        {
+          username: copyItem.name,
+          phone: copyItem.phone,
+          email: copyItem.email,
+        },
+      ];
+      console.log('  res ：', res, copyItem, newAdminData); //
+      props.propsForm.setFieldsValue({
+        customer_admin: newAdminData,
+      });
+    }
+  };
+  const ContactExtra = params => {
+    console.log(' ContactExtra   params,   ： ', params);
+    return (
+      <Button type="primary" onClick={() => copy2Admin(params)}>
+        生成管理员
+      </Button>
+    );
+  };
+
+  const clientContactFormConfig = [
+    { label: '联系人', name: '', rowTitle: true },
+    ...clientContactConfig.map(v => ({ ...v.itemProps, ...v })),
+  ];
+  const ClientContactItem = (
+    <FormListCom
+      {...{
+        config: clientContactFormConfig,
+        name: 'contact',
+        extra: ContactExtra,
+        isDisabledAll: action === 'detail',
+      }}
+    ></FormListCom>
+  );
+  const ClientContactCollapseCom = (
+    <CollapseCom
+      com={ClientContactItem}
+      header={'联系人列表'}
+      key={'ContactCollapseCom'}
+    ></CollapseCom>
+  );
+  config.push(ClientContactCollapseCom);
+
+  const adminFormConfig = [
+    { label: '客户管理员', name: '', rowTitle: true },
+    ...adminConfig.map(v => ({ ...v.itemProps, ...v })),
+  ];
+  const AdminItem = (
+    <FormListCom
+      {...{
+        config: adminFormConfig,
+        name: 'customer_admin',
+        isDisabledAll: action === 'detail',
+      }}
+    ></FormListCom>
+  );
+  const AdminCollapseCom = (
+    <CollapseCom
+      com={AdminItem}
+      header={'客户管理员列表'}
+      key={'AdminCollapseCom'}
+    ></CollapseCom>
+  );
+  if (action !== 'detail') config.push(AdminCollapseCom);
+
+  const houseNoFormConfig = [
+    { label: '户号', name: '', rowTitle: true },
+    // { label: '电压表', name: '', type: 'rowText' },
+    ...houseNoConfig.map(v => ({ ...v.itemProps, ...v })),
+  ];
+  const HouseNoItem = (
+    <FormListCom
+      {...{
+        config: houseNoFormConfig,
+        name: 'electricity_user',
+        isDisabledAll: action === 'detail',
+      }}
+    ></FormListCom>
+  );
+  const HouseNoCollapseCom = (
+    <CollapseCom
+      com={HouseNoItem}
+      header={'户号列表'}
+      key={'HouseNoCollapseCom'}
+    ></CollapseCom>
+  );
+  if (action !== 'detail') config.push(HouseNoCollapseCom);
 
   const { propsForm, ...restProps } = props;
 
@@ -651,15 +1571,8 @@ const ClientForm = props => {
           console.log(' name, values, forms ： ', name, values, forms); //
         }}
       >
-        <SmartForm
-          config={config}
-          isDisabledAll={action === 'detail'}
-          {...props}
-          // init={{
-          //   ...props.init,
-          //   // customer_admin: [{}],
-          // }}
-        ></SmartForm>
+        {/* {formCollapseCom} */}
+        {formCom}
 
         {/* <Form
           name={'customer_admin'}
@@ -693,7 +1606,7 @@ const ClientForm = props => {
   );
 };
 
-ClientForm.defaultProps = {};
+FormListCom.defaultProps = {};
 
 export default ClientForm;
 // export default React.memo(ClientForm,

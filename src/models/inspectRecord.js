@@ -44,6 +44,7 @@ export default {
     powerList: [],
     isEdit: false,
     itemDetailCopy: {},
+    formData: {},
     formKey: 0,
   },
 
@@ -93,6 +94,7 @@ export default {
         end_time = '',
         power_data = [],
         inspection_task,
+        spect_out = [],
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload); //
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
@@ -120,6 +122,14 @@ export default {
         powerData: power_data && power_data[0],
         spectInData,
       };
+
+      const formData = {
+        ...payload.bean,
+        spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
+        spectOut: spect_out.length > 0 ? spect_out[0] : {},
+        index: 0,
+      };
+
       return {
         ...state,
         action: payload.payload.action,
@@ -129,6 +139,7 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: itemDetail,
         itemDetailCopy: itemDetail,
+        formData: formData,
       };
     },
     addItem(state, { payload, type }) {
@@ -226,30 +237,48 @@ export default {
       console.log(' onFieldChange ： ', payload); //
       // const {powerData,  } = payload.formData
       // // const {powerData,  } = payload.value
-      const { itemDetailCopy, itemDetail, formKey } = state;
+      const { itemDetailCopy, itemDetail, formData, formKey } = state;
       const newState = {
         ...itemDetailCopy,
       };
-      const { aimFor, index, formData } = payload;
-      const { powerData } = formData;
+      const { aimFor, keys, index, formVal, form, value } = payload;
 
+      form.setFieldsValue({
+        powerData: { id: '999' },
+      });
       if (aimFor === 'maxMd') {
         // if (payload.value.powerData) {
+        const { powerData } = formVal;
+        console.log(' powerData ： ', powerData); //
         const maxMDKeys = ['peak_md', 'flat_1_md', 'flat_2_md', 'valley_md'];
         const maxMDArr = maxMDKeys.map(v => powerData[v]).filter(v => v);
-        const maxMD = Math.max(...maxMDArr) * powerData.multiplying_power;
+        const maxMDVal = Math.max(...maxMDArr);
+        const maxMD = maxMDVal * powerData.multiplying_power;
         console.log(
           ' maxMDArr  maxMDKeys.map v ： ',
+          maxMDVal,
+          formVal,
+          powerData.multiplying_power,
+          maxMD,
           formData,
           maxMDArr,
-          maxMD,
           newState,
           formKey,
           itemDetailCopy,
         );
         itemDetailCopy.power_data[index].maxMD = maxMD;
-        itemDetail.power_data[index].maxMD = maxMD;
+        formData.power_data[index].maxMD = maxMD;
         newState.maxMD = maxMD;
+        form.setFieldsValue({
+          // battery_voltage: maxMD,
+          powerData: {
+            ...powerData,
+            max_md: maxMD,
+            [keys]: value,
+          },
+        });
+
+        console.log(' form.getFieldsValue() ： ', form.getFieldsValue()); //
       }
       // const {powerData,  } = payload.formData
       // // const {powerData,  } = payload.value
@@ -257,9 +286,10 @@ export default {
       return {
         ...state,
         // formKey: formKey++,
-        // itemDetailCopy: {
-        //   ...newState
-        // },
+        itemDetailCopy: {
+          ...newState,
+        },
+        formData,
         // itemDetail: {
         //   ...itemDetail,
         // },

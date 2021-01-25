@@ -43,9 +43,11 @@ const titleMap = {
   contractDetail: '合同详情',
   orderInfoDetail: '发起工单详情',
   workOrderDetailAsync: '工单详情',
+  missionsManageDetailAsync: '任务详情',
 };
 
 const detailFormMap = {
+  missionsManageDetailAsync: MissionsManageForm,
   workOrderDetailAsync: MissionsManageOrderInfoForm,
 };
 
@@ -130,10 +132,28 @@ class MissionsManage extends PureComponent {
             init={this.props.common.itemDetail}
             action={'detail'}
             showItemAsync={this.props.showItemAsync}
+            {...this.props.common.extraData}
           ></DetailForm>
         )}
       </SmartFormModal>
     );
+  };
+
+  formatData = data => {
+    console.log(' formatData,  , ： ', data);
+    const validateConfig = [
+      'power_number',
+      'meter_number',
+      'incoming_line_name',
+      'magnification',
+      'transformer_capacity',
+      'real_capacity',
+      // 'outline_number',
+      'voltage_level',
+    ];
+    validateConfig.forEach(v => {
+      data[v];
+    });
   };
 
   onOk = async props => {
@@ -199,18 +219,27 @@ class MissionsManage extends PureComponent {
         }
       }
 
+      const customer_id = res.customer ? null : this.props.clientItem.id;
+
+      const repair_time = res.repair_time
+        ? res.repair_time.format('YYYY-MM-DD HH:mm:ss')
+        : null;
+      console.log(' repair_time ： ', res, repair_time); //
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
-          customer_id: this.props.clientItem.id,
+          // customer_id: this.props.clientItem.id,
+          customer_id,
+          repair_time,
         });
       }
-      if (action === 'edit') {
-        this.props.editItemAsync({
-          ...res,
-          customer_id: this.props.clientItem.id,
-        });
-      }
+      // if (action === 'edit') {
+      //   this.props.editItemAsync({
+      //     ...res,
+      //     customer_id,
+      //   });
+      // }
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -237,6 +266,12 @@ class MissionsManage extends PureComponent {
       getContractAsync: params =>
         this.props.getContractAsync({ keyword: params }),
       contractList: this.props.contractList,
+      getTeamLeaderAsync: params =>
+        this.props.getTeamLeaderAsync({ value: params }),
+      teamLeaderList: this.props.teamLeaderList,
+      getServiceStaffAsync: params =>
+        this.props.getServiceStaffAsync({ name: params }),
+      serviceStaffList: this.props.serviceStaffList,
       clientData: this.props.clientData,
       selectClient: this.props.selectClient,
       clientItem: this.props.clientItem,
@@ -303,28 +338,34 @@ class MissionsManage extends PureComponent {
         ></MissionsManageOrderInfoForm>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps, this.props); //
 
     const tableProps = {
-      dataSource: this.props.houseNoList,
-      count: this.props.houseNoCount,
-      getListAsync: this.props.getHouseNoAsync,
+      // dataSource: this.props.houseNoList,
+      // count: this.props.houseNoCount,
+      // getListAsync: this.props.getHouseNoAsync,
+      // searchInfo: this.props.houseNoSearchInfo,
+      dataSource: this.props.missionClientList,
+      count: this.props.clientCount,
+      getListAsync: this.props.getMissionClientAsync,
       selectClient: this.props.selectClient,
-      getClientDetailAsync: this.props.getClientDetailAsync,
-      searchInfo: this.props.houseNoSearchInfo,
+      getClientDetailAsync: this.props.getClientItemAsync,
+      // getClientDetailAsync: params => this.props.getClientItemAsync({ ...params, }),
+      searchInfo: this.props.clientSearchInfo,
       // showDetail: this.props.getItemAsync,
       // edit: this.props.getItemAsync,
       // remove: this.onRemove,
       // showFormModal: this.props.showFormModal,
       // showItemAsync: this.props.showItemAsync,
     };
-    console.log(' tableProps ： ', tableProps); //
+    console.log(' tableProps ： ', tableProps, this.props.clientItem); //
 
     const {
       customer_admin = [],
       person,
       team_id,
-      team,
+      team = [],
+      electricity_user = [],
     } = this.props.clientItem;
 
     const formInfo =
@@ -332,14 +373,19 @@ class MissionsManage extends PureComponent {
         ? this.props.itemDetail
         : {
             // station_id: this.props.clientItem.,
-            addr: this.props.clientItem.address,
+            // addr: this.props.clientItem.address,
+            addr:
+              electricity_user && electricity_user.length > 0
+                ? `${electricity_user[0]?.addr}`
+                : null,
             customer_admin: customer_admin,
             // team: this.props.clientItem.team,
             // person: customer_admin[0]?.nickname,
-            // team_id: this.props.clientItem.team? `${this.props.clientItem.team[0].id}` : null,
+            team_id: team && team.length > 0 ? `${team[0]?.id}` : null,
+            repair_time: moment(),
             team,
             person,
-            team_id,
+            // team_id,
           };
 
     return (
@@ -351,44 +397,45 @@ class MissionsManage extends PureComponent {
         onOk={this.onOk}
         init={formInfo}
         clientItem={this.props.clientItem}
-        // onChange={this.onChange}
-        onChange={(e, rest) => {
-          console.log(' e ： ', e, e.target.value); //
-          this.props.getHouseNoAsync({ keyword: e.target.value });
-        }}
+        onChange={this.onClientChange}
+        // onChange={(e, rest) => {
+        //   console.log(' e ： ', e, e.target.value); //
+        //   this.props.getHouseNoAsync({ keyword: e.target.value });
+        // }}
         tableProps={tableProps}
       ></MissionsManageForm>
     );
   };
-  onChange = params => {
-    console.log(' onChange,  , ： ', params);
-  };
-  renderHouseNoTable = e => {
-    const tableProps = {
-      dataSource: this.props.houseNoList,
-      count: this.props.houseNoCount,
-      getListAsync: this.props.getHouseNoAsync,
-      selectClient: this.props.selectClient,
-      getClientDetailAsync: this.props.getClientDetailAsync,
-      // showDetail: this.props.getItemAsync,
-      // edit: this.props.getItemAsync,
-      // remove: this.onRemove,
-      // showFormModal: this.props.showFormModal,
-      // showItemAsync: this.props.showItemAsync,
-    };
-    return (
-      <>
-        <SmartInput onChange={this.onChange}></SmartInput>
-        <MissionsHouseNoTable {...tableProps}></MissionsHouseNoTable>
-      </>
-    );
-  };
-  renderMissionsClientForm = e => {
-    const formProps = {
-      init: this.props.clientItem,
-    };
-    return <MissionsClientForm {...formProps}></MissionsClientForm>;
-  };
+  // onChange = params => this.props.getHouseNoAsync({ keyword: e.target.value })
+  // onClientChange = params => this.props.getClientAsync({ keyword: e.target.value })
+  onClientChange = e =>
+    this.props.getMissionClientAsync({ keyword: e.target.value });
+  // renderHouseNoTable = e => {
+  //   const tableProps = {
+  //     dataSource: this.props.houseNoList,
+  //     count: this.props.houseNoCount,
+  //     getListAsync: this.props.getHouseNoAsync,
+  //     selectClient: this.props.selectClient,
+  //     getClientDetailAsync: this.props.getClientDetailAsync,
+  //     // showDetail: this.props.getItemAsync,
+  //     // edit: this.props.getItemAsync,
+  //     // remove: this.onRemove,
+  //     // showFormModal: this.props.showFormModal,
+  //     // showItemAsync: this.props.showItemAsync,
+  //   };
+  //   return (
+  //     <>
+  //       <SmartInput onChange={this.onChange}></SmartInput>
+  //       <MissionsHouseNoTable {...tableProps}></MissionsHouseNoTable>
+  //     </>
+  //   );
+  // };
+  // renderMissionsClientForm = e => {
+  //   const formProps = {
+  //     init: this.props.clientItem,
+  //   };
+  //   return <MissionsClientForm {...formProps}></MissionsClientForm>;
+  // };
   onFormFieldChange = params => {
     console.log(' onFormFieldChange,  , ： ', params);
     if (params.value.customer_id) {
@@ -456,12 +503,13 @@ class MissionsManage extends PureComponent {
     //   model: '任务管理',
     //   name: '工单类型',
     // });
-    this.props.getClientAsync();
+    this.props.getMissionClientAsync();
     // this.props.getPowerAsync();
     // this.props.getAssetsAsync();
     this.props.getTeamAsync();
     this.props.getContractAsync(); //
     this.props.getHouseNoAsync(); //
+    this.props.getServiceStaffAsync(); //
   }
 
   render() {

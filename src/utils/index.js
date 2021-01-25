@@ -190,23 +190,39 @@ export const renderRadioOp = (
 
 export const renderCheckboxOp = (
   configs = [],
-  { opType = 'option', isDisabledAll },
+  { opType = 'group', isDisabledAll },
 ) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
-  const CheckboxItems = configs.map(v =>
-    v.CustomCom ? (
-      v.CustomCom
-    ) : (
-      <Checkbox key={v.value} value={v.value}>
-        {v.label}
-      </Checkbox>
-    ),
-  );
-  return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
+  const CheckboxItems = Array.isArray(configs)
+    ? configs.map(v =>
+        v.CustomCom ? (
+          v.CustomCom
+        ) : (
+          <Checkbox key={v.value} value={v.value} disabled={isDisabledAll}>
+            {v.label}
+          </Checkbox>
+        ),
+      )
+    : [];
+  // return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
   return opType === 'group' ? (
-    <CheckboxGroup>{CheckboxItems}</CheckboxGroup>
+    <CheckboxGroup>
+      {Array.isArray(configs)
+        ? configs.map(v =>
+            v.CustomCom ? (
+              v.CustomCom
+            ) : (
+              <Checkbox key={v.value} value={v.value} disabled={isDisabledAll}>
+                {v.label}
+              </Checkbox>
+            ),
+          )
+        : []}
+    </CheckboxGroup>
   ) : (
-    CheckboxItems
+    <Checkbox key={configs.value} value={configs.value}>
+      {configs.label}
+    </Checkbox>
   );
 };
 

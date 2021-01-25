@@ -5,9 +5,13 @@
 
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/client';
-import * as userServices from '@/services/user';
+import * as userServices from '@/services/userManage';
+import * as tagsServices from '@/services/tags';
+import * as organizeServices from '@/services/organize';
+import * as commonServices from '@/services/common';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { customerTypeMap } from '@/configs';
+import { recursiveHandle } from '@/models/organize';
 
 const namespace = 'client';
 const { createActions } = init(namespace);
@@ -24,6 +28,11 @@ const otherActions = [
   'addTableItemAsync',
   'editTableItemAsync',
   'removeTableItemAsync',
+
+  'getTagsAsync',
+  'getOrganizeAsync',
+  'getGeoAsync',
+  'getRegionAsync',
 ];
 const batchTurnActions = ['onAdminChange', 'modifyTableItem'];
 
@@ -39,6 +48,21 @@ const initItem = {
   password: '',
   phone: '',
   isEdit: true,
+};
+
+const contactInitItem = {
+  key: Math.random(),
+  isEdit: true,
+  name: '',
+  phone: '',
+  tel: '',
+  email: '',
+  qq: '',
+  wechat: '',
+  is_urge: '',
+  is_quit: '',
+  comments: '',
+  tags: '',
 };
 
 export default {
@@ -67,6 +91,11 @@ export default {
     countryList: [],
 
     tableData: [initItem],
+    contactTableData: [contactInitItem],
+    tagsList: [],
+    organizeList: [],
+    geoList: [],
+    regionList: [],
   },
 
   reducers: {
@@ -96,6 +125,7 @@ export default {
           ...v,
           admin: v.customer_admin.map(v => v.nickname),
           // type: customerTypeMap[v.type],
+          // type: v.type.split(',').map(v => customerTypeMap[v]),
           type: v.type.map(v => customerTypeMap[v]),
         })),
         count: payload.rest.count,
@@ -111,6 +141,10 @@ export default {
         last_service_staff,
         electricityuser,
         file,
+        contact,
+        service_staff_name,
+        last_service_staff_name,
+        service_organization_name,
       } = payload.bean; //
       const { userList, adminList } = state;
       const serviceStaff = {
@@ -136,16 +170,27 @@ export default {
         itemDetail: {
           ...payload.bean,
           customer_admin:
-            customer_admin && customer_admin.length > 0 ? customer_admin : [{}],
+            customer_admin && customer_admin.length > 0
+              ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
+              : [{}],
           d_id: payload.payload.d_id,
-          service_staff: `${service_staff?.id}`,
+          service_staff: service_staff?.id,
           last_service_staff:
             last_service_staff && last_service_staff?.id
-              ? `${last_service_staff?.id}`
+              ? last_service_staff?.id
               : null,
-          electricityuser: electricityuser.map(v => v.number).join(','),
+          // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
-          // service_staff: 'zybxxx',
+
+          contact: contact.map(v => ({
+            ...v,
+            is_urge: [v.is_urge],
+            is_quit: [v.is_quit],
+            tags: v.tags.map(v => `${v.id}`) ?? [],
+          })),
+          service_staff: `${service_staff_name}`,
+          last_service_staff: `${last_service_staff_name}`,
+          service_organization_id: service_organization_name ?? '',
         },
         // adminList: [payload.bean.customer_admin],
         adminList: payload.bean.customer_admin,
@@ -309,6 +354,33 @@ export default {
           label: v,
           value: v,
         })),
+      };
+    },
+
+    getTags(state, { payload, type }) {
+      return {
+        ...state,
+        tagsList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getOrganize(state, { payload, type }) {
+      console.log(' getOrganize ： ', state, payload); //
+      const organizeList = recursiveHandle(payload.list);
+      return {
+        ...state,
+        organizeList,
+      };
+    },
+    getGeo(state, { payload, type }) {
+      return {
+        ...state,
+        geoList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    getRegion(state, { payload, type }) {
+      return {
+        ...state,
+        regionList: formatSelectList(payload.list, 'name'),
       };
     },
 
@@ -545,6 +617,7 @@ export default {
       console.log('  getDistrictAsync res ：', res); //
       yield put(action({ ...res, payload }));
       // yield put({ type: 'getListAsync' });
+      return res;
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
@@ -610,6 +683,29 @@ export default {
         });
       }
       yield put(action({ payload }));
+    },
+
+    *getTagsAsync({ payload, action, type }, { call, put }) {
+      console.log(' getTagsAsync ： ', payload); //
+      const res = yield call(tagsServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getOrganizeAsync({ payload, action, type }, { call, put }) {
+      console.log(' getOrganizeAsync ： ', payload); //
+      const res = yield call(organizeServices.getList, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getGeoAsync({ payload, action, type }, { call, put }) {
+      console.log(' getGeoAsync ： ', payload); //
+      const res = yield call(commonServices.getGeo, payload);
+      yield put(action({ ...res, payload }));
+      return res.data ? res.data : {};
+    },
+    *getRegionAsync({ payload, action, type }, { call, put }) {
+      console.log(' getRegionAsync ： ', payload); //
+      const res = yield call(commonServices.getRegion, payload);
+      // yield put(action({ ...res, payload }));
+      return res.list;
     },
   },
 };

@@ -315,14 +315,13 @@ class SmartTable extends PureComponent {
       //     <a onClick={detailFn}>{txt}</a>
       //   );
     } else if (render) {
-      console.log(
-        ' texttext || render ： ',
-        text,
-        record,
-        text !== undefined,
-        undefined !== undefined,
-        content,
-      ); //
+      // console.log(
+      //   ' texttext || render ： ',
+      //   text,
+      //   record,
+      //   text !== undefined,
+      //   content,
+      // ); //
       content = render(text, record, index, config);
       // return content;
     } else if (detailFn) {
@@ -643,7 +642,7 @@ class SmartTable extends PureComponent {
     // console.log('  realData ：', realData); //
 
     return (
-      <div className="">
+      <>
         <Table
           // bordered
           // size={'small'}
@@ -685,7 +684,7 @@ class SmartTable extends PureComponent {
         {this.renderRemoveModal()}
 
         {this.renderQRCodeModal()}
-      </div>
+      </>
     );
   }
 }

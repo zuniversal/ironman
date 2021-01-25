@@ -56,6 +56,8 @@ const ShiftsArrangeDetailCalendar = props => {
   };
   const select = params => {
     console.log(' select   ,   ： ', params);
+    params.jsEvent.stopPropagation();
+    props.onCheck(params);
   };
   const eventsSet = params => {
     console.log(' eventsSet   ,   ： ', params);
@@ -97,7 +99,11 @@ const ShiftsArrangeDetailCalendar = props => {
                 }
                 day={formatDay(params)}
                 isWeekend={isWeekend(params.date)}
-                onChange={props.onCheck}
+                // onChange={(e) => {
+                //   console.log(' onChange ： ', e   )//
+                //   e.stopPropagation()
+                //   props.onCheck(e)
+                // }}
               ></Checkbox>
             </div>
           );

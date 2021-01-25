@@ -11,8 +11,9 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 import { actions, mapStateToProps } from '@/models/client'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips, format2Null } from '@/utils';
+import { tips, format2Null, getItem, formatSelectList } from '@/utils';
 import HouseNoForm from '@/components/Form/HouseNoForm';
+import { formatClientFormData } from '@/format';
 
 export const TITLE = '客户';
 
@@ -31,12 +32,12 @@ const detailFormMap = {
 };
 
 // const mapStateToProps = ({ client }) => client;
-
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
   modalForm: ClientForm,
+  // noMountFetch: true,
 })
 class Client extends PureComponent {
   constructor(props) {
@@ -170,10 +171,10 @@ class Client extends PureComponent {
     // const adminIdLen = tableData.filter(v => v.id).length;
     const adminIdLen = tableData.length;
     console.log('  adminIdLen ：', adminIdLen); //
-    if (adminIdLen === 0) {
-      tips('必须添加管理员信息！', 2);
-      return;
-    }
+    // if (adminIdLen === 0) {
+    //   tips('必须添加管理员信息！', 2);
+    //   return;
+    // }
 
     if (['detail'].includes(action)) {
       this.props.onCancel({});
@@ -202,7 +203,12 @@ class Client extends PureComponent {
       const params = {
         ...init,
         ...res,
-        customer_admin: tableData,
+        // customer_admin: tableData,
+        contact: res.contact.map(v => ({
+          ...v,
+          is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
+          is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+        })),
       };
       // if (typeof res.file !== 'string') {
       // if (res.file && res.file.length > 0) {
@@ -233,13 +239,18 @@ class Client extends PureComponent {
           params.logo = null;
         }
       }
-      const datas = format2Null(params, [
-        'last_service_staff',
-        'industry',
-        'scale',
-        'asset',
-        'covered_area',
-      ]);
+      params.enterprise.file = params.file;
+      params.enterprise.logo = params.logo;
+
+      const datas = formatClientFormData(params);
+
+      // const datas = format2Null(params, [
+      //   'last_service_staff',
+      //   'industry',
+      //   'scale',
+      //   'asset',
+      //   'covered_area',
+      // ]);
       console.log(' params ： ', params, datas); //
       actionFn(datas);
       // const { dispatch } = this.props; //
@@ -248,6 +259,7 @@ class Client extends PureComponent {
       // );
     } catch (error) {
       console.log(' error ： ', error); //
+      console.log(' errorerrorerror ： ', error, error?.values); //
     }
   };
   onCancel = e => {
@@ -332,33 +344,33 @@ class Client extends PureComponent {
       this.props,
     );
     const { form } = params;
-    if (params.value.province) {
-      console.log(' onFieldChange 清空 province ： '); //
-      const resetParams = {
-        city: null,
-        area: null,
-      };
-      form.setFieldsValue(resetParams);
-      const { city, area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
-      this.props.getDistrictAsync(data);
-      // this.props.getDistrictAsync({province: params.value.province});
-      this.props.getListAsync({ ...params.formData, ...resetParams });
-      return;
-    }
-    if (params.value.city) {
-      console.log(' onFieldChange 清空 city ： '); //
-      const resetParams = {
-        area: null,
-      };
-      form.setFieldsValue(resetParams);
-      const { area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
-      this.props.getDistrictAsync(data);
-      // this.props.getDistrictAsync({city: params.value.city});
-      this.props.getListAsync({ ...params.formData, ...resetParams });
-      return;
-    }
+    // if (params.value.province) {
+    //   console.log(' onFieldChange 清空 province ： '); //
+    //   const resetParams = {
+    //     city: null,
+    //     area: null,
+    //   };
+    //   form.setFieldsValue(resetParams);
+    //   const { city, area, ...data } = params.formData;
+    //   console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+    //   this.props.getDistrictAsync(data);
+    //   // this.props.getDistrictAsync({province: params.value.province});
+    //   this.props.getListAsync({ ...params.formData, ...resetParams });
+    //   return;
+    // }
+    // if (params.value.city) {
+    //   console.log(' onFieldChange 清空 city ： '); //
+    //   const resetParams = {
+    //     area: null,
+    //   };
+    //   form.setFieldsValue(resetParams);
+    //   const { area, ...data } = params.formData;
+    //   console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+    //   this.props.getDistrictAsync(data);
+    //   // this.props.getDistrictAsync({city: params.value.city});
+    //   this.props.getListAsync({ ...params.formData, ...resetParams });
+    //   return;
+    // }
     console.log(' onFieldChange 列表搜索 ： '); //
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
@@ -454,6 +466,96 @@ class Client extends PureComponent {
     // this.props.addUserAsync({ customer_admin_list: [params.data] });
     this.props.addUserAsync(params.data);
   };
+
+  getDistrictAsync = async params => {
+    console.log('    getDistrictAsync ： ', params);
+    const { form } = params;
+    if (params.value.enterprise?.province) {
+      console.log(' onFieldChange 清空 province ： '); //
+      const resetParams = {
+        city: null,
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { city, area, ...data } = params.formData.enterprise;
+      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      this.props.getDistrictAsync(data);
+      return;
+    }
+    if (params.value.enterprise?.city) {
+      console.log(' onFieldChange 清空 city ： '); //
+      const resetParams = {
+        area: null,
+      };
+      form.setFieldsValue(resetParams);
+      const { area, ...data } = params.formData.enterprise;
+      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+      const res = await this.props.getDistrictAsync(data);
+      console.log('  res await 结果  ：', res); //
+      if (params.isFormChange) {
+        // form.setFieldsValue({
+        //   adcode: ,
+        // });
+      }
+      return;
+    }
+    if (params.value.enterprise?.area) {
+      console.log(' onFieldChange 清空 area ： '); //
+      const res = await this.props.getRegionAsync({
+        subdistrict: '1',
+        keywords: params.value?.enterprise?.area,
+      });
+      // const res = await this.props.getGeoAsync({ address: params.value?.area, })
+      const adcode = res[0]?.adcode;
+      console.log('  res await 结果  ：', res, adcode); //
+      if (params.isFormChange) {
+        form.setFieldsValue({
+          enterprise: { adcode },
+        });
+      }
+      return;
+    }
+  };
+  checkOne = params => {
+    console.log(' checkOne,  , ： ', params);
+    const { form, formData } = params;
+    if (params.value?.contact) {
+      const isUrge = params.value?.contact[0]?.is_urge;
+      console.log(' isUrge ： ', isUrge); //
+      if (isUrge) {
+        const { contact } = formData;
+        console.log('  formData ：', formData, contact); //
+        form.setFieldsValue(formData);
+      }
+    }
+  };
+  onClientFormChange = async params => {
+    console.log(
+      ' onClientFormChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { form } = params;
+    console.log(' params.value?.enterprise ： ', params.value?.enterprise); //
+    if (params.value?.enterprise?.address) {
+      console.log(' onFieldChange 清空 address ： '); //
+      const { address } = params.value.enterprise;
+      const res = await this.props.getGeoAsync({ address });
+      // const res = await this.props.getGeoAsync({ address: '南山区' })
+      const setFields = {
+        enterprise: res,
+      };
+      console.log(' address res ：', res, setFields); //
+      form.setFieldsValue(setFields);
+    }
+    // this.checkOne(params)
+    this.getDistrictAsync({
+      ...params,
+      isFormChange: true,
+    });
+  };
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
@@ -471,6 +573,40 @@ class Client extends PureComponent {
       removeAdmin: this.props.removeUserAsync,
       onAdminChange: (changedFields, allFields) =>
         this.props.onAdminChange({ changedFields, allFields }),
+
+      addTableItemAsync: this.props.addTableItemAsync,
+      editTableItemAsync: this.props.editTableItemAsync,
+      removeTableItemAsync: this.props.removeTableItemAsync,
+      modifyTableItem: this.props.modifyTableItem,
+      tableData: this.props.tableData,
+      showItemAsync: this.props.showItemAsync,
+
+      contactTableData: this.props.contactTableData,
+
+      getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),
+      tagsList: this.props.tagsList,
+      getOrganizeAsync: params =>
+        this.props.getOrganizeAsync({ keyword: params }),
+      organizeList: this.props.organizeList,
+      getGeoAsync: params => this.props.getGeoAsync({ address: params }),
+      geoList: this.props.geoList,
+      onFieldChange: this.onClientFormChange,
+      // getDistrictAsync: this.props.getDistrictAsync,
+      provinceList: this.props.provinceList,
+      // provinceList: [
+      //   {
+      //     label: '福建省',
+      //     value: '福建省',
+      //   }
+      // ],
+      citytList: this.props.citytList,
+      countryList: this.props.countryList,
+      // countryList: [
+      //   {
+      //     label: '泉港区',
+      //     value: '泉港区',
+      //   }
+      // ],
     };
 
     if (action !== 'add') {
@@ -485,6 +621,15 @@ class Client extends PureComponent {
         ...this.props.itemDetail,
         customer_admin: this.props.adminList,
       };
+    } else {
+      const { enterprises = [] } = getItem('userInfo');
+      const serviceEnterpriseId = `${enterprises[0]?.id}`;
+      console.log('  serviceEnterpriseId ：', enterprises, serviceEnterpriseId); //
+      formComProps.enterpriseList = formatSelectList(enterprises);
+      formComProps.init = {
+        service_enterprise_id: serviceEnterpriseId,
+        // trusteeship_num: 0,
+      };
     }
 
     // formComProps.init = {
@@ -492,16 +637,7 @@ class Client extends PureComponent {
     //   customer_admin: this.props.adminList,
     // };
     console.log(' formComProps ： ', formComProps); //
-    return (
-      <ClientForm
-        {...formComProps}
-        addTableItemAsync={this.props.addTableItemAsync}
-        editTableItemAsync={this.props.editTableItemAsync}
-        removeTableItemAsync={this.props.removeTableItemAsync}
-        modifyTableItem={this.props.modifyTableItem}
-        tableData={this.props.tableData}
-      ></ClientForm>
-    );
+    return <ClientForm {...formComProps}></ClientForm>;
   };
   renderSmartFormModal = params => {
     return (
@@ -527,8 +663,47 @@ class Client extends PureComponent {
     ); //
 
     // this.getList()
+    this.props.getTagsAsync();
     this.props.getUserAsync();
     this.props.getDistrictAsync({});
+    this.props.getOrganizeAsync({ page_size: 1000 }); //
+    // this.props.getGeoAsync({ address: '上海浦东' });
+    // this.props.getRegionAsync({
+    //   subdistrict: '0',
+    //   // subdistrict: '2',
+    //   keywords: '泉州市',
+    // });
+    // this.props.getRegionAsync({
+    //   subdistrict: '1',
+    //   // subdistrict: '2',
+    //   keywords: '泉州市',
+    // });
+    // this.props.getRegionAsync({
+    //   // subdistrict: '1',
+    //   subdistrict: '2',
+    //   keywords: '福建省',
+    // });
+    // this.props.getRegionAsync({
+    //   // subdistrict: '1',
+    //   subdistrict: '2',
+    //   keywords: '泉州市',
+    // });
+    // this.props.getRegionAsync({
+    //   // subdistrict: '1',
+    //   subdistrict: '2',
+    //   keywords: '泉港区',
+    // });
+    // this.props.getRegionAsync({
+    //   // subdistrict: '1',
+    //   subdistrict: '3',
+    //   keywords: '泉州市',
+    // });
+    // setTimeout(() => {
+    //   console.log('  延时器 ： ');
+    //   this.props.showFormModal({
+    //     action: 'add',
+    //   });
+    // }, 2000);
   }
 
   render() {

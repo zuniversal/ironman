@@ -205,9 +205,10 @@ class InspectRecord extends PureComponent {
         editItem={this.props.editItem}
         toggleEdit={this.props.toggleEdit}
         isEdit={this.props.isEdit}
-        // onFieldChange={this.props.onFieldChange}
+        onFieldChange={this.props.onFieldChange}
         onMaxChange={this.props.onFieldChange}
         formKey={this.props.formKey}
+        formData={this.props.formData}
         // key={this.props.formKey}
       ></InspectRecordForm>
     );
@@ -341,16 +342,20 @@ class InspectRecord extends PureComponent {
   };
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    // setTimeout(() => {
-    //   console.log('  延时器 ： ');
-    //   this.props.getListAsync({
-    //     page: 38,
-    //     page_size: 10,
-    //   });
-    //   // this.props.showFormModal({
-    //   //   action: 'detail', d_id: 31
-    //   // });
-    // }, 1000);
+    setTimeout(() => {
+      console.log('  延时器 ： ');
+      // this.props.getListAsync({
+      //   page: 38,
+      //   page_size: 10,
+      // });
+      // this.props.showFormModal({
+      //   action: 'detail', d_id: 10601
+      // });
+      this.props.getItemAsync({
+        action: 'detail',
+        d_id: 754,
+      });
+    }, 1000);
   }
 
   render() {
@@ -378,7 +383,7 @@ class InspectRecord extends PureComponent {
       <div className="inspectRecord">
         {this.renderSearchForm()}
 
-        {this.renderTable()}
+        {/* {this.renderTable()} */}
 
         {this.renderSmartFormModal()}
 

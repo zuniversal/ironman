@@ -10,7 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { contractTypeConfigMap } from '@/configs';
+import { contractTypeMap } from '@/configs';
 
 const ContractTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
@@ -52,7 +52,7 @@ const ContractTable = props => {
     {
       title: '合同类型',
       dataIndex: 'type',
-      dataMap: contractTypeConfigMap,
+      dataMap: contractTypeMap,
     },
     // {
     //   title: '生效日期',
