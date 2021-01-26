@@ -45,6 +45,12 @@ const WorkOrderTable = props => {
         props.showItemAsync({
           action: 'workOrderDetailAsync',
           d_id: record.id,
+          extraReq: {
+            url: 'getConsume',
+            params: {
+              order_id: record.id,
+            },
+          },
         }),
     },
     // {

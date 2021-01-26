@@ -42,11 +42,13 @@ const titleMap = {
   clientDetail: '客户详情',
   contractDetail: '合同详情',
   orderInfoDetail: '发起工单详情',
+  clientDetailAsync: '客户详情',
   workOrderDetailAsync: '工单详情',
   missionsManageDetailAsync: '任务详情',
 };
 
 const detailFormMap = {
+  clientDetailAsync: ClientForm,
   missionsManageDetailAsync: MissionsManageForm,
   workOrderDetailAsync: MissionsManageOrderInfoForm,
 };
@@ -224,7 +226,7 @@ class MissionsManage extends PureComponent {
       const repair_time = res.repair_time
         ? res.repair_time.format('YYYY-MM-DD HH:mm:ss')
         : null;
-      console.log(' repair_time ： ', res, repair_time); //
+      console.log(' repair_time ： ', res, repair_time, this.props); //
 
       if (action === 'add') {
         this.props.addItemAsync({
@@ -232,6 +234,7 @@ class MissionsManage extends PureComponent {
           // customer_id: this.props.clientItem.id,
           customer_id,
           repair_time,
+          ele_user_id: this.props.ele_user_id,
         });
       }
       // if (action === 'edit') {

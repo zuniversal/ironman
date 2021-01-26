@@ -3,9 +3,10 @@ import './style.less';
 
 import SmartForm from '@/common/SmartForm'; //
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
-import { regoins, workOrderStatusConfig } from '@/configs'; //
+import { fullFormLayouts, workOrderStatusConfig } from '@/configs'; //
 import { formatConfig, createArr } from '@/utils'; //
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
+import OrderConsumeTable from '@/components/Table/OrderConsumeTable';
 import SmartImg from '@/common/SmartImg';
 
 const choiceRadios = [
@@ -167,43 +168,21 @@ const WorkOrderTicketForm = props => {
       },
     },
 
-    {
-      itemProps: {
-        label: '事故描述',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '事故排查',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '事故处理',
-        name: '',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '事故措施与建议',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '是否完成任务',
-        name: '',
-      },
-    },
-    {
-      itemProps: {
-        label: '使用耗材',
-        name: '',
-      },
-    },
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: (
+    //     <>
+    //       {buildFile.map((v, i) => (
+    //         // <img src={v} className={`detailImg`} key={i} />
+    //         <SmartImg src={v} key={i} />
+    //       ))}
+    //     </>
+    //   ),
+    //   itemProps: {
+    //     label: '使用耗材',
+    //     name: '',
+    //   },
+    // },
 
     {
       // formType: 'Search',
@@ -243,6 +222,58 @@ const WorkOrderTicketForm = props => {
       itemProps: {
         label: '施工图片',
         name: 'file',
+      },
+    },
+    {
+      itemProps: {
+        label: '事故描述',
+        name: ['order_record', 0, 'describe'],
+      },
+    },
+    {
+      itemProps: {
+        label: '事故排查',
+        name: ['order_record', 0, 'investigation'],
+      },
+    },
+    {
+      itemProps: {
+        label: '事故处理',
+        name: ['order_record', 0, 'handle'],
+      },
+    },
+
+    {
+      itemProps: {
+        label: '事故措施与建议',
+        name: ['order_record', 0, 'proposal'],
+      },
+    },
+    {
+      itemProps: {
+        label: '是否完成任务',
+        name: ['order_record', 0, 'is_finish'],
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '使用耗材',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <OrderConsumeTable
+          dataSource={props.extraReqData}
+          rowSelection={null}
+          noActionCol
+        ></OrderConsumeTable>
+      ),
+      itemProps: {
+        label: '',
+        name: 'file',
+        ...fullFormLayouts,
       },
     },
     // ...  ? clientConfig : [],

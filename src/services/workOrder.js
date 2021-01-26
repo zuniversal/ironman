@@ -19,6 +19,8 @@ export const dispatchOrder = p =>
   put(`console/OMS/order/${p.d_id}/assignment`, p);
 export const addTicket = p =>
   post(`console/OMS/order/${p.d_id}/work_ticket`, p);
+export const getConsume = p =>
+  noTipsGet(`console/OMS/order/consumable_materials`, p);
 
 export const exportData = p => post('console/OMS/order/export', p);
 // export const exportData = p => get('console/OMS/order/export', p);

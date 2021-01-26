@@ -145,6 +145,7 @@ export default {
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
+        enterprise,
       } = payload.bean; //
       const { userList, adminList } = state;
       const serviceStaff = {
@@ -181,6 +182,11 @@ export default {
               : null,
           // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
+          enterprise: {
+            ...enterprise,
+            file: enterprise?.file ? enterprise?.file.split(',') : [],
+            logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
+          },
 
           contact: contact.map(v => ({
             ...v,

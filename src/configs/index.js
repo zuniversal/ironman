@@ -216,19 +216,19 @@ export const onDutyTypeMap = {
 
 export const customerTypeConfig = [
   {
-    value: 0,
+    value: '0',
     label: '普通客户',
   },
   {
-    value: 1,
+    value: '1',
     label: '托管客户',
   },
+  // {
+  //   value: 2,
+  //   label: 'VIP客户',
+  // },
   {
-    value: 2,
-    label: 'VIP客户',
-  },
-  {
-    value: 10,
+    value: '10',
     label: '监控客户',
   },
 ];

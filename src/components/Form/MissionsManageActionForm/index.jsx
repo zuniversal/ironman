@@ -557,7 +557,8 @@ export const MissionsClientForm = props => {
         label: '户号',
         // name: ['electricityuser', 'number'],
         name: 'houseNo',
-        name: ['electricity_user', 0, 'number'],
+        // name: ['electricity_user', 0, 'number'],
+        // name: 'number',
       },
     },
     {

@@ -313,8 +313,10 @@ export default {
             .split(',')
             .map(v => (v == 1 ? '托管' : '非托管'))
             .join(','),
+          houseNo: electricity_user[0]?.number,
           // electricity_user: electricity_user.map((v) => voltageLevelMap[v.voltage_level]).join(','),
         },
+        ele_user_id: payload.payload.ele_user_id,
         // clientItem: {
         //   trasformer_capacity: payload.payload.record?.trasformer_capacity,
         //   trasformer_count: payload.payload.record?.trasformer_count,

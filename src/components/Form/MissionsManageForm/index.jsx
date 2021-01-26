@@ -331,7 +331,7 @@ const MissionsManageForm = props => {
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       formType: 'Search',
       selectSearch: props.getTeamAsync,
       selectData: props.teamList,

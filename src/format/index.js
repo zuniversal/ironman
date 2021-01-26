@@ -45,9 +45,9 @@ export const formatClientFormData = data => {
 
   const {
     enterprise,
-    electricity_user,
-    customer_admin,
-    contact,
+    electricity_user = [],
+    customer_admin = [],
+    contact = [],
     ...rest
   } = data;
   console.log(

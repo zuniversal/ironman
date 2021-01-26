@@ -192,6 +192,7 @@ export default {
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
+        enterprise,
       } = payload.bean; //
       return {
         ...state,
@@ -209,6 +210,11 @@ export default {
             : '',
           // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
+          enterprise: {
+            ...enterprise,
+            file: enterprise?.file ? enterprise?.file.split(',') : [],
+            logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
+          },
 
           contact: contact.map(v => ({
             ...v,
@@ -322,7 +328,15 @@ export default {
     },
     missionsManageDetail(state, { payload, type }) {
       console.log(' missionsManageDetail ： ', state, payload); //
-      const { customer, person, contacts_phone, work_log, team } = payload.bean;
+      const {
+        customer,
+        person,
+        contacts_phone,
+        work_log,
+        team,
+        electricity_user,
+        created_time,
+      } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -337,6 +351,7 @@ export default {
             created_time: moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
           })),
           team_id: team?.name,
+          repair_time: moment(created_time).format('YYYY-MM-DD HH:mm:ss'),
         },
         extraData: {
           clientItem: {
@@ -346,6 +361,11 @@ export default {
             // clientType: customer.type,
             // clientType: customer.type?.map(v => v == 1 ? '托管' : '非托管'),
             type: customerTypeMap[customer.type],
+            houseNo:
+              customer?.electricity_user &&
+              customer?.electricity_user.length > 0
+                ? customer?.electricity_user[0].number
+                : '',
           },
         },
       };
@@ -409,6 +429,7 @@ export default {
         commencement_date,
         finish_time,
         receiving_time,
+        order_record,
       } = payload.bean;
 
       return {
@@ -427,9 +448,18 @@ export default {
           commencement_date: moment(commencement_date).format(
             'YYYY-MM-DD HH:mm:ss',
           ),
-          finish_time: moment(finish_time).format('YYYY-MM-DD HH:mm:ss'),
+          finish_time: finish_time
+            ? moment(finish_time).format('YYYY-MM-DD HH:mm:ss')
+            : '',
           // customer_id: customer.name,
           extra: payload.payload.extra,
+          order_record: order_record.map(v => ({
+            ...v,
+            is_finish: v.is_finish ? '是' : '否',
+          })),
+        },
+        extraData: {
+          extraReqData: payload.extraReqData?.list ?? [],
         },
       };
     },
@@ -470,11 +500,20 @@ export default {
       }
       const res = yield call(service.getItem, payload);
       console.log(' showItemAsync service ： ', res, payload);
+      let extraReqData;
+      if (payload.extraReq) {
+        extraReqData = yield call(
+          service[payload.extraReq.url],
+          payload.extraReq.params,
+        );
+      }
+
       yield put({
         type: `${payload.action.split('Async')[0]}`,
         payload: {
           ...res,
           payload,
+          extraReqData,
         },
       });
     },

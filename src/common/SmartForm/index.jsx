@@ -608,7 +608,7 @@ const SmartForm = (props, state) => {
       const colForm = (
         <Col
           span={24 / Number(flexRows)}
-          className={`flexRowsCls`}
+          className={`flexRowsCls ${items.colCls ?? ''}`}
           key={itemProps.key}
         >
           <Form.Item

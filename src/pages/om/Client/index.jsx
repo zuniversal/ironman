@@ -227,17 +227,32 @@ class Client extends PureComponent {
       } else {
         params.file = null;
       }
-      if (typeof res.logo !== 'string') {
-        console.log(' logologo ： ', res.logo); //
-        if (res.logo && res.logo.fileList.length > 0) {
+      // if (typeof res.logo !== 'string') {
+      //   console.log(' logologo ： ', res.logo); //
+      //   if (res.logo && res.logo.fileList.length > 0) {
+      //     const fileList = res.logo.fileList;
+      //     params.logo = fileList[fileList.length - 1].response.url;
+      //   } else {
+      //     // tips('logo不能为空！', 2);
+      //     // return;
+      //     console.log(' paramsparamsparams ： ', params); //
+      //     params.logo = null;
+      //   }
+      // }
+      if (res.file) {
+        if (res.logo && res.logo.fileList && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
-          params.logo = fileList[fileList.length - 1].response.url;
+          // params.file = fileList[fileList.length - 1].response.url;
+          console.log(' fileList ： ', fileList); //
+          params.logo = fileList.map(v => v.response.url).join(',');
+          // } else {
+          //   tips('文件不能为空！', 2);
+          //   return;
         } else {
-          // tips('logo不能为空！', 2);
-          // return;
-          console.log(' paramsparamsparams ： ', params); //
           params.logo = null;
         }
+      } else {
+        params.logo = null;
       }
       params.enterprise.file = params.file;
       params.enterprise.logo = params.logo;
@@ -507,10 +522,13 @@ class Client extends PureComponent {
       });
       // const res = await this.props.getGeoAsync({ address: params.value?.area, })
       const adcode = res[0]?.adcode;
-      console.log('  res await 结果  ：', res, adcode); //
-      if (params.isFormChange) {
+      const city_code = res[0]?.citycode;
+      const { province, city, area } = params.formData.enterprise;
+      const address = province + city + area;
+      console.log('  res await 结果  ：', res, adcode, city_code, address); //
+      if (params.isFormChange && adcode) {
         form.setFieldsValue({
-          enterprise: { adcode },
+          enterprise: { adcode, city_code, address },
         });
       }
       return;
@@ -556,6 +574,93 @@ class Client extends PureComponent {
       isFormChange: true,
     });
   };
+  onHouseNoRegionChange = async (value, rest, params) => {
+    console.log(' onHouseNoRegionChange,  , ： ', value, rest, params);
+    const { name } = params;
+
+    const formVal = params.form.getFieldsValue();
+    const { index } = params;
+    const { electricity_user } = formVal;
+    const item = electricity_user[index];
+    const reqParams = {
+      province: item?.province,
+      city: item?.city,
+      area: item?.area,
+      [name]: value,
+    };
+    console.log(
+      ' onHouseNoRegionChange res ：',
+      reqParams,
+      item,
+      index,
+      formVal,
+      electricity_user,
+    ); //
+    let res;
+    if (name === 'area') {
+      res = await this.props.getRegionAsync({
+        subdistrict: '1',
+        keywords: value,
+      });
+    } else {
+      res = await this.props.getDistrictAsync(reqParams);
+    }
+    // const res = await this.props.getDistrictAsync(reqParams);
+    console.log(' onHouseNoRegionChange res ： ', res); //
+    let matchItem = {
+      ...item,
+      [name]: value,
+    };
+    if (name === 'province') {
+      matchItem.city = null;
+      matchItem.area = null;
+    }
+    if (name === 'city') {
+      matchItem.area = null;
+    }
+    if (name === 'area') {
+      matchItem.ad_code = res[0]?.adcode;
+      matchItem.city_code = res[0]?.citycode;
+    }
+
+    console.log(
+      ' onHouseNoRegionChange item ： ',
+      name,
+      item,
+      index,
+      matchItem,
+    ); //
+    const setFields = {
+      electricity_user: electricity_user.map((v, i) =>
+        index === i ? matchItem : v,
+      ),
+    };
+    console.log(' onHouseNoRegionChange setFields ： ', setFields); //
+    params.form.setFieldsValue(setFields);
+  };
+  onAddrChange = async (e, params) => {
+    console.log(' onAddrChange,  , ： ', e, params, e.target.value);
+    const res = await this.props.getGeoAsync({ address: e.target.value });
+    const formVal = params.form.getFieldsValue();
+    const { index } = params;
+    const { electricity_user } = formVal;
+    const item = electricity_user[index];
+    console.log('  res ：', res, index, formVal, electricity_user); //
+    const matchItem = {
+      ...item,
+      latitude: res.latitude,
+      longitude: res.longitude,
+    };
+    console.log(' item ： ', item, index, matchItem); //
+    const setFields = {
+      electricity_user: electricity_user.map((v, i) =>
+        index === i ? matchItem : v,
+      ),
+    };
+    console.log(' setFields ： ', setFields); //
+    // console.log(' address res ：', res, setFields); //
+    params.form.setFieldsValue(setFields);
+  };
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
@@ -583,6 +688,8 @@ class Client extends PureComponent {
 
       contactTableData: this.props.contactTableData,
 
+      onAddrChange: this.onAddrChange,
+      onHouseNoRegionChange: this.onHouseNoRegionChange,
       getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),
       tagsList: this.props.tagsList,
       getOrganizeAsync: params =>

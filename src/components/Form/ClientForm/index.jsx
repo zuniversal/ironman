@@ -37,7 +37,8 @@ import {
   MinusOutlined,
 } from '@ant-design/icons';
 import { getLabel } from '@/common/SmartForm';
-import { REQUIRE } from '@/constants';
+import { REQUIRE, SELECT_TXT } from '@/constants';
+import debounce from 'lodash/debounce';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -304,11 +305,62 @@ const rules = (params, extra) => {
   ];
 };
 
+export const SelectCom = props => {
+  console.log(' SelectCom ： ', props); //
+  const {
+    formType = 'Input',
+    itemProps = {},
+    comProps = {},
+    selectData,
+  } = props; //
+  const selectProps = {
+    allowClear: true,
+    filterOption: true,
+    showSearch: true,
+    optionFilterProp: 'children',
+    ...comProps,
+  };
+
+  if (formType === 'Search') {
+    // selectProps.optionFilterProp = 'children';
+    if (props.selectSearch) {
+      // 注意 不要对 onSelect 方法 修改 否则会导致 字段无法设置值
+      // selectProps.onChange = debounce(props.selectSearch, 1500);
+    }
+  }
+
+  return <Select {...selectProps}>{renderSelectOp(selectData)}</Select>;
+};
+
 export const getWidget = props => {
-  console.log(' ReduxTable  getWidget   props,   ： ', props);
-  const { label, LabelCom, CustomCom, plainText } = props; //
+  const { label, LabelCom, CustomCom, plainText, index } = props; //
 
   const { formType = 'Input', itemProps = {}, comProps = {} } = props;
+
+  if (props.onComChange) {
+    comProps.onChange = (...e) =>
+      props.onComChange(...e, { index, ...props.extraParams });
+    // if (formType === 'Search') {
+    //   comProps.onSelect = (...e) => props.onComChange(...e, {index, ...props.extraParams})
+    // }
+  }
+  console.log(' ReduxTable  getWidget   props,   ： ', props, comProps);
+
+  const selectProps = {
+    allowClear: true,
+    filterOption: true,
+    showSearch: true,
+    optionFilterProp: 'children',
+    ...comProps,
+  };
+
+  if (formType === 'Search') {
+    // selectProps.optionFilterProp = 'children';
+    if (props.selectSearch) {
+      // 注意 不要对 onSelect 方法 修改 否则会导致 字段无法设置值
+      // selectProps.onChange = debounce(props.selectSearch, 1500);
+    }
+  }
 
   const formItemMap = {
     rowText: label,
@@ -329,15 +381,17 @@ export const getWidget = props => {
     Input: <Input disabled={props.isDisabledAll} {...comProps} />,
     // InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
     Select: (
-      <Select {...comProps} disabled={props.isDisabledAll}>
+      <Select {...selectProps} disabled={props.isDisabledAll}>
         {renderSelectOp(props.selectData)}
       </Select>
     ),
     Search: (
-      <Select {...comProps} disabled={props.isDisabledAll}>
+      <Select {...selectProps} disabled={props.isDisabledAll}>
         {renderSelectOp(props.selectData)}
       </Select>
     ),
+    // Select: <SelectCom {...props} comProps={comProps} disabled={props.isDisabledAll}></SelectCom>,
+    // Search: <SelectCom {...props} comProps={comProps} disabled={props.isDisabledAll}></SelectCom>,
   };
 
   const formItemCom = formItemMap[formType];
@@ -345,7 +399,7 @@ export const getWidget = props => {
 };
 
 const FormListCom = props => {
-  const { config = [], name, ...rest } = props; //
+  const { config = [], name, rowText, ...rest } = props; //
   console.log(' FormListCom   props,   ： ', props);
   const formListCom = (
     <Form.List name={name} key={name}>
@@ -353,6 +407,22 @@ const FormListCom = props => {
         console.log(' dataInit  fieldsfields ： ', fields); //
         return (
           <Row gutter={24} className={`formRow`}>
+            {rowText && !props.isDisabledAll && (
+              <div
+                className={`rowHeader fsb w100  ${
+                  rowText.label ? 'formItems' : ''
+                } ${rowText.rowTitle ? 'rowTitle' : 'rowItem'}`}
+              >
+                <div className={``}>{rowText.label ? rowText.label : ''}</div>
+                {/* {props.renderHeaderRight && props.renderHeaderRight({ add, remove, })} */}
+                <Button
+                  shape="circle"
+                  icon={<PlusOutlined />}
+                  type="primary"
+                  onClick={() => add()}
+                ></Button>
+              </div>
+            )}
             {fields.map((field, index) => {
               const actionBtn = props.isDisabledAll ? null : (
                 <div className="btnWrapper">
@@ -367,12 +437,12 @@ const FormListCom = props => {
                         index,
                       })
                     : null}
-                  <Button
+                  {/* <Button
                     shape="circle"
                     icon={<PlusOutlined />}
                     type="primary"
                     onClick={() => add()}
-                  ></Button>
+                  ></Button> */}
                   {fields.length > 1 && (
                     <Button
                       shape="circle"
@@ -403,7 +473,7 @@ const FormListCom = props => {
                     {...(v.type !== 'rowText' ? formListLayout : {})}
                   >
                     {/* <Input className={'w-200'} {...comProps} /> */}
-                    {getWidget({ ...v, ...rest })}
+                    {getWidget({ ...v, ...rest, index })}
                   </Form.Item>
                 ) : (
                   <div
@@ -504,7 +574,7 @@ const ClientForm = props => {
 
   const regionConfig = [
     {
-      // noRule: true,
+      noRule: true,
       flexRow: 3,
       formType: 'Search',
       selectData: props.provinceList,
@@ -519,7 +589,7 @@ const ClientForm = props => {
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       flexRow: 3,
       formType: 'Search',
       selectData: props.citytList,
@@ -534,7 +604,7 @@ const ClientForm = props => {
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       flexRow: 3,
       formType: 'Search',
       selectData: props.countryList,
@@ -546,6 +616,65 @@ const ClientForm = props => {
       },
       comProps: {
         className: 'w-135',
+      },
+    },
+  ];
+
+  const onRegionChange = params => {
+    console.log(
+      ' %c onRegionChange 组件 params ： ',
+      `color: #333; font-weight: bold`,
+      params,
+    );
+  };
+
+  const houseNoRegionConfig = [
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.provinceList,
+      itemProps: {
+        label: '省1',
+        name: 'province',
+        // ...addrLayout1,
+      },
+      onComChange: props.onHouseNoRegionChange,
+      extraParams: {
+        form: props.propsForm,
+        name: 'province',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.citytList,
+      itemProps: {
+        label: '市',
+        name: 'city',
+        // ...addrLayout2,
+      },
+      onComChange: props.onHouseNoRegionChange,
+      extraParams: {
+        form: props.propsForm,
+        name: 'city',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'Search',
+      selectData: props.countryList,
+      itemProps: {
+        label: '县',
+        name: 'area',
+        // ...addrLayout2,
+      },
+      onComChange: props.onHouseNoRegionChange,
+      extraParams: {
+        form: props.propsForm,
+        name: 'area',
       },
     },
   ];
@@ -571,6 +700,21 @@ const ClientForm = props => {
     //     disabled: true,
     //   },
     // },
+    {
+      colCls: 'hidden',
+      noRule: true,
+      flexRow: 3,
+      itemProps: {
+        label: '城市编码',
+        name: ['enterprise', 'city_code'],
+        ...addrLayout1,
+        // hidden: true,
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-135',
+      },
+    },
     {
       // noRule: true,
       flexRow: 3,
@@ -623,9 +767,30 @@ const ClientForm = props => {
       },
     },
     {
+      flexRow: 1,
+      itemProps: {
+        label: '地址',
+        name: 'addr',
+        ...addrLayout,
+      },
+      // comProps: {
+      //   onChange: props.onAddrChange,
+      // },
+      // onComChange: (e) => props.onAddrChange({e, propsForm: props.propsForm, }),
+      onComChange: props.onAddrChange,
+      extraParams: {
+        form: props.propsForm,
+      },
+    },
+    ...(action === 'detail' ? [] : houseNoRegionConfig),
+    // ...houseNoRegionConfig,
+    {
       itemProps: {
         label: '区域编码',
         name: 'ad_code',
+      },
+      comProps: {
+        disabled: true,
       },
     },
     {
@@ -633,11 +798,8 @@ const ClientForm = props => {
         label: '城市编码',
         name: 'city_code',
       },
-    },
-    {
-      itemProps: {
-        label: '地址',
-        name: 'addr',
+      comProps: {
+        disabled: true,
       },
     },
     {
@@ -704,7 +866,7 @@ const ClientForm = props => {
     },
   ];
 
-  const config = [
+  const clientInfoConfig = [
     {
       formType: 'rowText',
       itemProps: {
@@ -824,7 +986,9 @@ const ClientForm = props => {
         treeData: props.organizeList,
       },
     },
+  ];
 
+  const enterpriseConfig = [
     {
       formType: 'rowText',
       itemProps: {
@@ -852,6 +1016,7 @@ const ClientForm = props => {
     //     name: ['enterprise', 'level'],
     //   },
     // },
+    ...(action === 'detail' ? [] : regionConfig),
     {
       flexRow: 1,
       // formType: 'Search',
@@ -867,7 +1032,6 @@ const ClientForm = props => {
         // onChange: props.onAddressChange,
       },
     },
-    ...(action === 'detail' ? [] : regionConfig),
     ...areaConfig,
     {
       formType: 'rowText',
@@ -983,6 +1147,12 @@ const ClientForm = props => {
         name: ['enterprise', 'parent_enterprise_id'],
       },
     },
+  ];
+
+  const config = [
+    ...clientInfoConfig,
+    ...enterpriseConfig,
+
     // {
     //   itemProps: {
     //     label: '企业Logo',
@@ -999,6 +1169,7 @@ const ClientForm = props => {
       uploadProps={{
         disabled: props.isDisabledAll || props.action === 'detail',
         accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+        multiple: true,
       }}
       init={props.init}
       formAction={props.action}
@@ -1334,8 +1505,8 @@ const ClientForm = props => {
     // },
     {
       // noRule: true,
-      formType: 'Select',
-      selectSearch: props.getTagsAsync,
+      formType: 'Search',
+      // selectSearch: props.getTagsAsync,
       selectData: props.tagsList,
       itemProps: {
         label: '职位',
@@ -1413,9 +1584,10 @@ const ClientForm = props => {
       isDisabledAll={action === 'detail'}
       {...props}
       init={{
-        customer_admin: [{}],
-        contact: [{}],
-        electricity_user: [{}],
+        // customer_admin: [{}],
+        // contact: [{}],
+        // electricity_user: [{}],
+        // enterprise: { address: '泉港区' },
         ...props.init,
         // customer_admin: [
         //   {
@@ -1474,12 +1646,13 @@ const ClientForm = props => {
       const newAdminData = [
         ...customer_admin,
         {
-          username: copyItem.name,
+          nickname: copyItem.name,
           phone: copyItem.phone,
           email: copyItem.email,
         },
       ];
       console.log('  res ：', res, copyItem, newAdminData); //
+      tips('信息复制成功！');
       props.propsForm.setFieldsValue({
         customer_admin: newAdminData,
       });
@@ -1493,14 +1666,46 @@ const ClientForm = props => {
       </Button>
     );
   };
+  const copy2HouseNo = params => {
+    const { index } = params;
+    const res = props.propsForm.getFieldsValue();
+    console.log(' copy2HouseNo   params,   ： ', params, res);
+    const { enterprise, electricity_user } = res;
+    const item = electricity_user[index];
+    const matchItem = {
+      ...item,
+      city_code: enterprise.city_code,
+      ad_code: enterprise.adcode,
+      latitude: enterprise.latitude,
+      longitude: enterprise.longitude,
+    };
+    console.log(' item ： ', item, enterprise, matchItem); //
+    const setFields = {
+      electricity_user: electricity_user.map((v, i) =>
+        index === i ? matchItem : v,
+      ),
+    };
+    console.log('  res ：', res, item, setFields); //
+    tips('地址信息复制成功！');
+    props.propsForm.setFieldsValue(setFields);
+  };
+  const HouseNoExtra = params => {
+    console.log(' HouseNoExtra   params,   ： ', params);
+    return (
+      <Button type="primary" onClick={() => copy2HouseNo(params)}>
+        复制公司地址信息
+      </Button>
+    );
+  };
 
   const clientContactFormConfig = [
-    { label: '联系人', name: '', rowTitle: true },
+    { label: '', name: '', rowTitle: true },
     ...clientContactConfig.map(v => ({ ...v.itemProps, ...v })),
   ];
   const ClientContactItem = (
     <FormListCom
       {...{
+        rowText: { label: '联系人', name: '', rowTitle: true },
         config: clientContactFormConfig,
         name: 'contact',
         extra: ContactExtra,
@@ -1518,12 +1723,13 @@ const ClientForm = props => {
   config.push(ClientContactCollapseCom);
 
   const adminFormConfig = [
-    { label: '客户管理员', name: '', rowTitle: true },
+    { label: '', name: '', rowTitle: true },
     ...adminConfig.map(v => ({ ...v.itemProps, ...v })),
   ];
   const AdminItem = (
     <FormListCom
       {...{
+        rowText: { label: '客户管理员', name: '', rowTitle: true },
         config: adminFormConfig,
         name: 'customer_admin',
         isDisabledAll: action === 'detail',
@@ -1540,15 +1746,17 @@ const ClientForm = props => {
   if (action !== 'detail') config.push(AdminCollapseCom);
 
   const houseNoFormConfig = [
-    { label: '户号', name: '', rowTitle: true },
+    { label: '', name: '', rowTitle: true },
     // { label: '电压表', name: '', type: 'rowText' },
     ...houseNoConfig.map(v => ({ ...v.itemProps, ...v })),
   ];
   const HouseNoItem = (
     <FormListCom
       {...{
+        rowText: { label: '户号', name: '', rowTitle: true },
         config: houseNoFormConfig,
         name: 'electricity_user',
+        extra: HouseNoExtra,
         isDisabledAll: action === 'detail',
       }}
     ></FormListCom>
@@ -1571,9 +1779,6 @@ const ClientForm = props => {
           console.log(' name, values, forms ： ', name, values, forms); //
         }}
       >
-        {/* {formCollapseCom} */}
-        {formCom}
-
         {/* <Form
           name={'customer_admin'}
           init={{
@@ -1601,6 +1806,9 @@ const ClientForm = props => {
           />
         </Form> */}
         {/* <AdminForm {...restProps}></AdminForm> */}
+
+        {/* {formCollapseCom} */}
+        {formCom}
       </Form.Provider>
     </div>
   );

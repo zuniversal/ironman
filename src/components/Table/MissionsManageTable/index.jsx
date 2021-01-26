@@ -183,7 +183,7 @@ const MissionsManageTable = props => {
             props.edit({
               action: 'schedule',
               d_id: record.id,
-              itemDetail: record,
+              // itemDetail: record,
             })
           }
         >
@@ -196,7 +196,7 @@ const MissionsManageTable = props => {
             props.edit({
               action: 'confirmSchedule',
               d_id: record.id,
-              itemDetail: record,
+              // itemDetail: record,
             })
           }
         >
@@ -209,7 +209,7 @@ const MissionsManageTable = props => {
             props.showFormModal({
               action: 'closeMission',
               d_id: record.id,
-              itemDetail: record,
+              // itemDetail: record,
             })
           }
         >
@@ -221,7 +221,7 @@ const MissionsManageTable = props => {
           props.edit({
             action: 'linkContract',
             d_id: record.id,
-            itemDetail: record,
+            // itemDetail: record,
           })
         }
       >
