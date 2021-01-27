@@ -885,16 +885,6 @@ const ClientForm = props => {
         className: 'address ',
       },
     },
-    // {
-    //   formType: 'Checkbox',
-    //   opType: 'option',
-    //   checkboxData: checkboxData,
-    //   itemProps: {
-    //     label: '是否离职',
-    //     name: 'is_quit',
-    //     valuePropName: "checked",
-    //   },
-    // },
     {
       flexRow: 1,
       formType: 'Search',
@@ -1437,6 +1427,10 @@ const ClientForm = props => {
         name: 'is_urge',
         valuePropName: 'checked',
       },
+      onComChange: props.onCollectorChange,
+      extraParams: {
+        form: props.propsForm,
+      },
     },
     {
       noRule: true,
@@ -1585,7 +1579,7 @@ const ClientForm = props => {
       {...props}
       init={{
         // customer_admin: [{}],
-        // contact: [{}],
+        contact: [{}],
         // electricity_user: [{}],
         // enterprise: { address: '泉港区' },
         ...props.init,

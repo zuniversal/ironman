@@ -547,6 +547,36 @@ class Client extends PureComponent {
       }
     }
   };
+  onCollectorChange = async (e, params, rest) => {
+    console.log(
+      ' onCollectorChange,  , ： ',
+      e,
+      rest,
+      params,
+      e.target.value,
+      params.form.getFieldsValue(),
+      this.props,
+    );
+    // const { form } = params;
+    // const formVal = params
+    // console.log(' params.value?.enterprise ： ', params.value?.enterprise); //
+    // if (params.value?.enterprise?.address) {
+    //   console.log(' onFieldChange 清空 address ： '); //
+    //   const { address } = params.value.enterprise;
+    //   const res = await this.props.getGeoAsync({ address });
+    //   // const res = await this.props.getGeoAsync({ address: '南山区' })
+    //   const setFields = {
+    //     enterprise: res,
+    //   };
+    //   console.log(' address res ：', res, setFields); //
+    //   form.setFieldsValue(setFields);
+    // }
+    // // this.checkOne(params)
+    // this.getDistrictAsync({
+    //   ...params,
+    //   isFormChange: true,
+    // });
+  };
   onClientFormChange = async params => {
     console.log(
       ' onClientFormChange,  , ： ',
@@ -688,6 +718,7 @@ class Client extends PureComponent {
 
       contactTableData: this.props.contactTableData,
 
+      onCollectorChange: this.onCollectorChange,
       onAddrChange: this.onAddrChange,
       onHouseNoRegionChange: this.onHouseNoRegionChange,
       getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),

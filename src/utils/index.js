@@ -190,7 +190,7 @@ export const renderRadioOp = (
 
 export const renderCheckboxOp = (
   configs = [],
-  { opType = 'group', isDisabledAll },
+  { opType = 'group', isDisabledAll, comProps = {} },
 ) => {
   // console.log(' configs, opType ： ', configs, opType,  )//
   const CheckboxItems = Array.isArray(configs)
@@ -212,7 +212,12 @@ export const renderCheckboxOp = (
             v.CustomCom ? (
               v.CustomCom
             ) : (
-              <Checkbox key={v.value} value={v.value} disabled={isDisabledAll}>
+              <Checkbox
+                key={v.value}
+                value={v.value}
+                disabled={isDisabledAll}
+                {...comProps}
+              >
                 {v.label}
               </Checkbox>
             ),

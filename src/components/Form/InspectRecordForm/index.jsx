@@ -217,7 +217,8 @@ const InspectRecordForm = props => {
     // spectOut: spect_out.length > 0 ? [spect_out[0]] : [],
     // spectOut: spect_out.length > 0 ? spect_out[0] : {},
     // spectOut: props.init?.spect_out[0],
-    spectOut: spect_out.length > 0 ? spect_out[0] : {},
+    // spectOut: spect_out.length > 0 ? spect_out[0] : {},
+    spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
     index: 0,
   });
   console.log(' dataInit ： ', file, dataInit, power_data); //
@@ -279,7 +280,8 @@ const InspectRecordForm = props => {
       ...dataInit,
       // spectOut: power_data[index].spect_out,
       // spectOut: [dataInit.spect_out[index]],
-      spectOut: dataInit.spect_out[index],
+      // spectOut: dataInit.spect_out[index],
+      spectOut: powerData.spect_out,
     });
   };
 
