@@ -225,6 +225,8 @@ export default {
           service_staff: `${service_staff_name}`,
           last_service_staff: `${last_service_staff_name}`,
           service_organization_id: service_organization_name ?? '',
+          service_staff_id: service_staff_name,
+          last_service_staff_id: `${last_service_staff_name}`,
         },
       };
     },

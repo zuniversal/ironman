@@ -443,13 +443,13 @@ const FormListCom = props => {
                     type="primary"
                     onClick={() => add()}
                   ></Button> */}
-                  {fields.length > 1 && (
-                    <Button
-                      shape="circle"
-                      icon={<MinusOutlined />}
-                      onClick={() => remove(field.name)}
-                    ></Button>
-                  )}
+                  {/* {(!props.isLimitOne && fields.length > 1) && (
+                  )} */}
+                  <Button
+                    shape="circle"
+                    icon={<MinusOutlined />}
+                    onClick={() => remove(field.name)}
+                  ></Button>
                 </div>
               );
               const formItem = config.map((v, i) => {

@@ -32,14 +32,14 @@ const ClientTable = props => {
       noFilter: true,
       className: 'linkTd',
       detailFn: record =>
-        props.showDetail({
-          action: 'detail',
+        // props.showDetail({
+        //   action: 'detail',
+        //   d_id: record.id,
+        // }),
+        props.showItemAsync({
+          action: 'clientDetailAsync',
           d_id: record.id,
         }),
-      // props.showItemAsync({
-      //   action: 'clientDetailAsync',
-      //   d_id: record.id,
-      // }),
       // detailFn: record =>
       // props.showDetail({ action: 'detail', d_id: record.id }),
       // detailFn: (text, record, index) => {

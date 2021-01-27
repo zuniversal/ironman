@@ -819,27 +819,27 @@ export const assetScaleConfig = [
 export const corverAreaConfig = [
   {
     label: '100平米以下',
-    value: 0,
+    value: '0',
   },
   {
     label: '100平米-1000平米',
-    value: 1,
+    value: '1',
   },
   {
     label: '1000平米-5000平米',
-    value: 2,
+    value: '2',
   },
   {
     label: '5000平米-1万平米',
-    value: 3,
+    value: '3',
   },
   {
     label: '1万平米-10万平米',
-    value: 4,
+    value: '4',
   },
   {
     label: '10万平米以上',
-    value: 5,
+    value: '5',
   },
 ];
 
