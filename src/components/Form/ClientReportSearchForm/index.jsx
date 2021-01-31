@@ -12,45 +12,62 @@ const ClientReportSearchForm = props => {
 
   const config = [
     {
-      formType: 'DatePicker',
+      formType: 'MonthPicker',
       itemProps: {
         label: '选择月份',
+        name: 'year_month',
       },
-      //
     },
     {
-      formType: 'Select',
+      noLabel: true,
       itemProps: {
-        label: '是否加急',
+        label: '户号/客户名称/客户代表/巡检组长',
+        name: 'filter',
       },
-      //
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '客户',
+      comProps: {
+        className: 'keywordInput',
       },
-      //
     },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: ' 户号',
-      },
-      //
-    },
-    {
-      // formType: 'Select',
-      itemProps: {
-        label: '巡检组长',
-      },
-      //
-    },
+    // {
+    //   itemProps: {
+    //     label: ' 户号',
+    //     name: 'number',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '客户名称',
+    //     name: 'name',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '客户代表',
+    //     name: 'service_staff_name',
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '巡检组长',
+    //     name: 'service_team_name',
+    //   },
+    // },
+    // {
+    //   formType: 'Select',
+    //   itemProps: {
+    //     label: '是否加急',
+    //     name: '',
+    //   },
+    // },
   ];
 
   return (
     <div className={''}>
-      <SearchForm config={config}></SearchForm>
+      <SearchForm
+        config={config}
+        className={'clientReportSearchForm'}
+        {...props}
+      ></SearchForm>
     </div>
   );
 };

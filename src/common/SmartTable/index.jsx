@@ -372,10 +372,13 @@ class SmartTable extends PureComponent {
       this.state,
       this.props,
     );
-    this.props.getListAsync({
-      page,
-      page_size,
-    });
+    if (!this.props.noRequest) {
+      this.props.getListAsync({
+        page,
+        page_size,
+      });
+    }
+
     const { pagination } = this.state; //
     const paginationObj = {
       ...pagination,
@@ -679,6 +682,9 @@ class SmartTable extends PureComponent {
           columns={cols}
           // className={`smartTable ${className} ${animation || slideInUp} `}
           className={`smartTable ${className}  `}
+          scroll={{
+            y: 700,
+          }}
         />
 
         {this.renderRemoveModal()}
@@ -713,6 +719,7 @@ SmartTable.defaultProps = {
   isQRCode: false, // 是否显示默认的二维码按钮
   count: 0,
   animation: '',
+  noRequest: false,
 };
 
 SmartTable.propTypes = {
@@ -733,6 +740,7 @@ SmartTable.propTypes = {
   isQRCode: PropTypes.bool,
   count: PropTypes.number,
   animation: PropTypes.string,
+  noRequest: PropTypes.bool,
 };
 
 export default SmartTable; //

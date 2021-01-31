@@ -389,17 +389,17 @@ const InspectPlanCalendar = props => {
         eventContent={eventInfo => {
           // console.log(' eventInfo ： ', eventInfo); //
           return (
-            <PopoverCom>
-              <div
-                className={`eventWrapper ellipsis`}
-                onClick={e => {
-                  console.log(' eventWrappereventWrapper ： '); //
-                }}
-              >
-                {eventInfo.event.title?.split('客户')[0]}
-                {/* <CloseOutlined onClick={props.remove} /> */}
-              </div>
-            </PopoverCom>
+            // <PopoverCom>
+            <div
+              className={`eventWrapper ellipsis`}
+              onClick={e => {
+                console.log(' eventWrappereventWrapper ： '); //
+              }}
+            >
+              {eventInfo.event.title?.split('客户')[0]}
+              {/* <CloseOutlined onClick={props.remove} /> */}
+            </div>
+            // </PopoverCom>
           );
         }}
         // eventOverlap={false}

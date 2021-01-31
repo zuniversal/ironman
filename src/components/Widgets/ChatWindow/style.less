@@ -1,0 +1,58 @@
+.chatWindow {
+  display: flex;
+  height: 600px;
+  .userList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    .rowItem {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+      justify-content: space-evenly;
+      .item {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+  .rowItem {
+    display: flex;
+    border: 1px solid black;
+  }
+  .right {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    .msgBox {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      .msgRow {
+        display: flex;
+      }
+      .userInfo {
+        flex: 1;
+      }
+
+      .self {
+        // float: right;
+        text-align: right;
+      }
+    }
+    .inputBox {
+      height: 150px;
+    }
+  }
+  .avatar {
+    width: 24px;
+    height: 24px;
+    background: #42604a;
+    border-radius: 50%;
+    margin: 0 10px;
+    display: inline-block;
+  }
+}

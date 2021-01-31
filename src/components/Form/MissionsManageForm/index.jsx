@@ -46,6 +46,8 @@ CommonModal.defaultProps = {
   extraData: {},
 };
 
+const editKey = ['describe', 'contacts', 'contacts_phone', 'remarks'];
+
 const MissionsManageForm = props => {
   console.log(' MissionsManageForm ： ', props); //
   const [isShow, setIsShow] = useState(false);
@@ -75,7 +77,8 @@ const MissionsManageForm = props => {
   const file = props.init.file ?? [];
 
   const isDetail = props.action === 'detail';
-  console.log(' isDetail ： ', isDetail); //
+  const isEdit = props.action === 'edit';
+  console.log(' isDetail ： ', isDetail, isEdit); //
 
   const setContacter = params => {
     console.log(' setContacter   params,   ： ', params, props);
@@ -140,7 +143,7 @@ const MissionsManageForm = props => {
       name={'file'}
       extra={'支持扩展名:jpg、png'}
       uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
+        disabled: props.isDisabledAll || props.action !== 'add',
         accept: 'image/png,image/jpeg,image/pdf,application/pdf',
         multiple: true,
       }}
@@ -292,13 +295,13 @@ const MissionsManageForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: '任务描述',
-        name: isDetail ? 'describe' : 'content',
+        name: isDetail || isEdit ? 'describe' : 'content',
       },
     },
     {
       itemProps: {
         label: '联系人',
-        name: isDetail ? 'contacts' : 'person',
+        name: isDetail || isEdit ? 'contacts' : 'person',
       },
     },
     // ...simpleMission ? [] : [
@@ -321,7 +324,7 @@ const MissionsManageForm = props => {
     {
       itemProps: {
         label: '电话',
-        name: isDetail ? 'contacts_phone' : 'phone',
+        name: isDetail || isEdit ? 'contacts_phone' : 'phone',
       },
     },
     {
@@ -408,14 +411,27 @@ const MissionsManageForm = props => {
       : []),
 
     // ...simpleMission ? clientConfig : [],
-  ].map(v => ({
-    ...v,
-    // comProps: isDetail ? v.comProps : { className: 'w-240', ...v.comProps },
-    // comProps: { className: 'w-240', ...v.comProps },
-    comProps: simpleMission
+  ].map(v => {
+    const comProps = simpleMission
       ? v.comProps
-      : { className: 'w-240', ...v.comProps },
-  }));
+      : { className: 'w-240', ...v.comProps };
+
+    if (isEdit) {
+      const isEditAble = editKey.includes(v?.itemProps?.name);
+      if (isEditAble) {
+        comProps.disabled = false;
+      } else {
+        comProps.disabled = comProps.disabled ?? true;
+      }
+    }
+
+    return {
+      ...v,
+      // comProps: isDetail ? v.comProps : { className: 'w-240', ...v.comProps },
+      // comProps: { className: 'w-240', ...v.comProps },
+      comProps,
+    };
+  });
 
   const onChange = goIndex => {
     console.log('onChange:', goIndex, completeIndex.current);
@@ -560,7 +576,7 @@ const MissionsManageForm = props => {
       <div className="missionsManageFormWrapper">
         <div className="left f1">
           {/* {current == 0 ? props.houseNotable : <SmartForm config={config} {...props}></SmartForm>} */}
-          {current == 0 && !isDetail ? (
+          {current == 0 && !isDetail && !isEdit ? (
             houseNotable
           ) : (
             <SmartForm
@@ -597,7 +613,9 @@ const MissionsManageForm = props => {
             <MissionsClientFormCom
               key={props.clientItem?.id}
               // init={props.clientItem}
-              init={simpleMission && !isDetail ? {} : props.clientItem}
+              init={
+                simpleMission && !isDetail && !isEdit ? {} : props.clientItem
+              }
               showFormModal={showFormModal}
               setContacter={setContacter}
             ></MissionsClientFormCom>
@@ -605,7 +623,7 @@ const MissionsManageForm = props => {
           </div>
         )}
       </div>
-      {!isDetail && footerCom}
+      {!isDetail && !isEdit && footerCom}
 
       <CommonModal
         title={'合同报告'}

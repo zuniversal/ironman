@@ -9,6 +9,10 @@
   width: 100%;
   font-family: KaiTi;
   padding: 10px;
+  .bgw {
+    background-color: #fff !important;
+  }
+
   .ant-descriptions-bordered {
     .ant-descriptions-item-label {
       background: #f3f3f4;
@@ -22,6 +26,7 @@
     // padding: 11cm 4cm 0 6cm;
     // padding: 11cm 10cm 0 10cm;
     font-size: 20px;
+    font-size: 18px;
     .infoWrapper {
       flex-direction: column;
     }
@@ -72,20 +77,21 @@
 }
 
 .descWrapper {
-  &.monthPowerReport {
-    .ant-descriptions-item-label,
-    .ant-descriptions-item-content {
-      padding: 5px;
-      padding: 12px;
-      text-align: center;
-      font-size: 12px;
-    }
-    .ant-descriptions-item-label.label {
-      width: 36px;
-      padding: 0 8px;
-      line-height: 1.3;
-    }
+  // &.monthPowerReport {
+  .ant-descriptions-item-label,
+  .ant-descriptions-item-content {
+    padding: 5px;
+    padding: 12px;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
   }
+  .ant-descriptions-item-label.label {
+    width: 36px;
+    padding: 0 8px;
+    line-height: 1.3;
+  }
+  // }
   &.monthStationReport {
     .ant-descriptions-item-label,
     .ant-descriptions-item-content {
@@ -163,15 +169,24 @@
   }
   .footerWrapper {
     margin-top: 10px;
+    .ant-descriptions-item {
+      padding: 0;
+    }
+
     .ant-descriptions-item-label,
     .ant-descriptions-item-content {
       padding: 10px;
     }
+    // .ant-descriptions-item-content {
+    //   border-bottom: 1px solid #000;
+    //   width: 200px;
+    // }
     .ant-descriptions-item-label {
       min-width: 150px;
     }
 
     .signLine {
+      height: 100%;
       border-bottom: 1px solid #000;
       min-width: 200px;
     }

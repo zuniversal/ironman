@@ -27,7 +27,7 @@ import { isDev } from '@/constants';
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData, tab } = props; //
+  const { tabData, tab, index = 'index' } = props; //
   console.log(
     ' %c tabData 组件 this.state, this.props ： ',
     `color: #333; font-weight: bold`,
@@ -136,17 +136,31 @@ const inputBefore = (
 
 const createFormList = props => {
   const { config = [], name } = props; //
-  console.log(' createFormList   config,   ： ', config);
+  console.log(' createFormList   config,   ： ', props, config);
   const spectOutItem = (
-    <Form.List name={name} key={name}>
+    // <Form.List name={name} key={props.name + props.key}>
+    <Form.List name={name} key={props.listKey || props.name}>
       {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', fields); //
+        console.log(
+          ' inspectRecordform  dataInit  fieldsfields ： ',
+          props,
+          props.dataInit,
+          props.dataInit?.spectOut,
+          fields,
+        ); //
 
         return (
           <>
             {fields.map((field, index) => {
-              const formItem = config.map((v, i) =>
-                v.type !== 'rowText' && !v.rowTitle ? (
+              const formItem = config.map((v, i) => {
+                const layouts =
+                  v.type !== 'rowText'
+                    ? v.layouts
+                      ? v.layouts
+                      : electricFormLayouts
+                    : {};
+
+                const formCom = (
                   <Form.Item
                     {...field}
                     key={`${index}-${i}`}
@@ -157,11 +171,13 @@ const createFormList = props => {
                     className={`formItems listFormItem  ${
                       v.type !== 'rowText' ? 'ant-col ant-col-8' : ''
                     }`}
-                    {...(v.type !== 'rowText' ? electricFormLayouts : {})}
+                    {...layouts}
                   >
                     <Input className={'w-78'} disabled />
                   </Form.Item>
-                ) : (
+                );
+
+                const rowTitleCom = (
                   <div
                     className={`w100  ${v.label ? 'formItems' : ''} ${
                       v.rowTitle ? 'rowTitle' : 'rowItem'
@@ -170,8 +186,34 @@ const createFormList = props => {
                   >
                     {v.label ? v.label + (index + 1) : ''}
                   </div>
-                ),
-              );
+                );
+
+                // return v.type !== 'rowText' && v.type !== 'rowTitle' && v.type !== 'rowDivider' ? (
+                //   formCom
+                // ) : (
+                //   rowTitleCom
+                // )
+                const formComMap = {
+                  rowText: rowTitleCom,
+                  rowTitle: rowTitleCom,
+                  // rowDivider: <Divider>{[v.titleKey]}</Divider>,
+                  // rowDivider: <Divider className={'rowDivider'} key={`${index}-${i}`}>{v.label}</Divider>,
+                  rowDivider: (
+                    <Divider className={'rowDivider'} key={`${index}-${i}`}>
+                      {props?.dataInit?.spect_out[index]?.outlineName}
+                    </Divider>
+                  ),
+                  // rowDivider: <Divider className={'rowDivider'} key={`${index}-${i}`}>{props.rowCom}</Divider>,
+                  // rowDivider: v.rowCom,
+                };
+                const matchItem = formComMap[v.type];
+                return matchItem ?? formCom;
+                // return v.type !== 'rowText' && !v.rowTitle && !v.rowDivider ? (
+                //   formCom
+                // ) : (
+                //   rowTitleCom
+                // )
+              });
               return formItem;
             })}
           </>
@@ -190,6 +232,8 @@ const InspectRecordForm = props => {
 
   // const [ modalExport, setModalExport ] = useState(true)
   const [modalExport, setModalExport] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
+
   console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport); //
 
   // const isExport = isExportPDF || !modalExport
@@ -221,7 +265,7 @@ const InspectRecordForm = props => {
     spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
     index: 0,
   });
-  console.log(' dataInit ： ', file, dataInit, power_data); //
+  console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data); //
 
   const onChange = index => {
     console.log(
@@ -239,16 +283,35 @@ const InspectRecordForm = props => {
     //   ...dataInit,
     //   powerData: power_data[index],
     //   spectIn: power_data[index].spect_in,
-    //   // spectOut: power_data[index].spect_out,
+    //   spectOut: power_data[index].spect_out,
     // });
-
     props.propsForm.setFieldsValue({
-      index,
-      ...formData,
-      powerData: power_data[index],
-      spectIn: power_data[index].spect_in,
-      // spectOut: power_data[index].spect_out,
+      spectIn: [],
+      spectOut: [],
     });
+    const setFields = {
+      // ...dataInit,
+      index,
+      powerData: dataInit.power_data[index],
+      spectIn: dataInit.power_data[index].spect_in,
+      spectOut: [...dataInit.power_data[index].spect_out],
+      // spectOut: index == 0 ? [] : [
+      //   ...dataInit.power_data[index].spect_out,
+      // ],
+      // spectOut: [],
+    };
+    console.log(
+      ' inspectRecordform setFields ：',
+      setFields,
+      setFields.index,
+      dataInit,
+      setFields.spectOut,
+    ); //
+    // setDataInit(setFields);
+    props.propsForm.setFieldsValue({
+      ...setFields,
+    });
+    setTabIndex(index);
   };
 
   const onInLineChange = index => {
@@ -261,7 +324,7 @@ const InspectRecordForm = props => {
     );
     setDataInit({
       ...dataInit,
-      spectIn: powerData.spect_in,
+      spectIn: [...powerData.spect_in, ...powerData.spect_in],
     });
   };
 
@@ -367,7 +430,7 @@ const InspectRecordForm = props => {
   );
 
   const spectInConfig = [
-    { label: '高压进侧线', name: '', rowTitle: true },
+    { label: '高压进侧线', name: '', type: 'rowDivider' },
     { label: '电压表', name: '', type: 'rowText' },
     ...spectInVoltageConfig,
     { label: '电流表', name: '', type: 'rowText' },
@@ -379,13 +442,34 @@ const InspectRecordForm = props => {
   const spectInItem = createFormList({
     config: spectInConfig,
     name: 'spectInData',
+    name: 'spectIn',
+    key: dataInit?.powerData?.id,
   });
 
+  const rowCom = (
+    <Divider className={'rowDivider'}>
+      {dataInit?.spectOut[0]?.outlineName}
+    </Divider>
+  );
+  // const rowCom = <Divider className={'rowDivider'} >{'2222'}</Divider>
+
   const spectOutConfig = [
-    { label: '高压出线侧设备', name: '', rowTitle: true },
-    { label: '电流表A', name: 'switch_ia' },
-    { label: '电流表B', name: 'switch_ib' },
-    { label: '电流表C', name: 'switch_ic' },
+    // { label: '高压出线侧', name: '', type: 'rowDivider' },
+    // { label: '高压进侧线', name: ['outline', 'name'], type: 'rowTitle' },
+    // { label: '', name: ['outline', 'name'], layouts: fullFormLayouts, },
+
+    {
+      label: '',
+      name: '',
+      layouts: fullFormLayouts,
+      type: 'rowDivider',
+      rowCom,
+    },
+    { label: '高压出线侧', name: '', type: 'rowText' },
+    { label: '电流表A', name: 'id' },
+    // { label: '电流表A', name: 'o_ia' },
+    { label: '电流表B', name: 'o_ib' },
+    { label: '电流表C', name: 'o_ic' },
     { label: '显示器A', name: 'monitor_a' },
     { label: '显示器B', name: 'monitor_b' },
     { label: '显示器C', name: 'monitor_c' },
@@ -396,45 +480,57 @@ const InspectRecordForm = props => {
     { label: '油位及渗漏油', name: 'oil_leak' },
     { label: '干燥剂', name: 'dry' },
     { label: '有无异常', name: 'abnormal' },
+    { label: 'A相温度', name: 'temperature_a' },
+    { label: 'B相温度', name: 'temperature_b' },
+    { label: 'C相温度', name: 'temperature_c' },
     { label: '0.4KV总开关', name: '', type: 'rowText' },
     { label: '电压表AB', name: 'switch_v_ab' },
     { label: '电压表BC', name: 'switch_v_bc' },
     { label: '电压表CA', name: 'switch_v_ca' },
-    { label: '电流表A', name: 'o_ia' },
-    { label: '电流表B', name: 'o_ib' },
-    { label: '电流表C', name: 'o_ic' },
+    { label: '电流表A', name: 'switch_ia' },
+    { label: '电流表B', name: 'switch_ib' },
+    { label: '电流表C', name: 'switch_ic' },
+    { label: '有功kWh', name: 'power' },
+    { label: 'cosΦ', name: 'cos' },
     { label: '电容柜', name: '', type: 'rowText' },
     { label: '电容柜', name: 'GGJ' },
     { label: '', name: '', type: 'rowText' },
   ];
   const spectOutItem = createFormList({
     config: spectOutConfig,
-    name: 'spect_out',
+    // name: 'spect_out',
+    name: 'spectOut',
+    key: dataInit?.powerData?.id,
+    // listKey: dataInit?.index,
+    listKey: tabIndex,
+    // name: ['powerData', 'spectOut',],
+    dataInit: dataInit?.power_data[tabIndex],
   });
 
   const powerDataConfig = [
-    { label: '电源编号', name: '', rowTitle: true },
+    { label: '电源编号', name: '', type: 'rowDivider' },
+    { label: '电源编号', name: '', type: 'rowTitle' },
     { label: '电压等级', name: 'voltage_level' },
     { label: '总容量', name: 'total_capacity' },
     { label: '实际总容量', name: 'real_capacity' },
     { label: '电表读数', name: '', type: 'rowText' },
     { label: '表号', name: 'meter_number' },
     { label: '倍率', name: 'multiplying_power' },
-    { label: '考核功率因数', name: 'power_factor' },
-    { label: '总有功(02)', name: 'total_active_power' },
-    { label: '峰(03)', name: 'peak' },
-    { label: '平1 (41)', name: 'flat_1' },
-    { label: '平2 (42)', name: 'flat_2' },
-    { label: '谷(05)', name: 'valley' },
-    { label: '峰MD1(61)', name: 'peak_md' },
-    { label: '平1MD(62)', name: 'flat_1_md' },
-    { label: '平2MD(63)', name: 'flat_2_md' },
-    { label: '谷MD(64)', name: 'valley_md' },
-    { label: '最大MD', name: 'max_md' },
-    { label: '本月申报MD', name: 'declare_md' },
-    { label: '无功1(07)', name: 'reactive_power_1' },
-    { label: '无功2(07)', name: 'reactive_power_2' },
-    { label: '实际功率因素', name: 'real_power_factor' },
+    // { label: '考核功率因数', name: 'power_factor' },
+    // { label: '总有功(02)', name: 'total_active_power' },
+    // { label: '峰(03)', name: 'peak' },
+    // { label: '平1 (41)', name: 'flat_1' },
+    // { label: '平2 (42)', name: 'flat_2' },
+    // { label: '谷(05)', name: 'valley' },
+    // { label: '峰MD1(61)', name: 'peak_md' },
+    // { label: '平1MD(62)', name: 'flat_1_md' },
+    // { label: '平2MD(63)', name: 'flat_2_md' },
+    // { label: '谷MD(64)', name: 'valley_md' },
+    // { label: '最大MD', name: 'max_md' },
+    // { label: '本月申报MD', name: 'declare_md' },
+    // { label: '无功1(07)', name: 'reactive_power_1' },
+    // { label: '无功2(07)', name: 'reactive_power_2' },
+    // { label: '实际功率因素', name: 'real_power_factor' },
     { label: '', name: '', type: 'rowText' },
   ];
 
@@ -488,6 +584,9 @@ const InspectRecordForm = props => {
           tabPrefix={'电源编号'}
           onChange={onChange}
           tabData={power_data}
+          // index={dataInit?.index}
+          // index={tabIndex}
+          // key={tabIndex}
         ></TabPanes>
       ),
       itemProps: {
@@ -736,7 +835,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表A',
-        name: ['spectOut', 'switch_ia'],
+        name: ['spectOut', 'o_ia'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -748,7 +847,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表B',
-        name: ['spectOut', 'switch_ib'],
+        name: ['spectOut', 'o_ib'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -760,7 +859,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表C',
-        name: ['spectOut', 'switch_ic'],
+        name: ['spectOut', 'o_ic'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -935,7 +1034,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表A',
-        name: ['spectOut', 'o_ia'],
+        name: ['spectOut', 'switch_ia'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -947,7 +1046,7 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表B',
-        name: ['spectOut', 'o_ib'],
+        name: ['spectOut', 'switch_ib'],
         ...electricFormLayouts,
       },
       comProps: {
@@ -959,13 +1058,14 @@ const InspectRecordForm = props => {
       flexRow: 3,
       itemProps: {
         label: '电流表C',
-        name: ['spectOut', 'o_ic'],
+        name: ['spectOut', 'switch_ic'],
         ...electricFormLayouts,
       },
       comProps: {
         className: 'w-96',
       },
     },
+
     {
       noRule: true,
       flexRow: 3,
@@ -1336,30 +1436,31 @@ const InspectRecordForm = props => {
     //     ...fullFormLayouts,
     //   },
     // },
-    // spectInItem,
-    ...(isExport
-      ? [spectInItem]
-      : [
-          {
-            formType: 'CustomCom',
-            CustomCom: (
-              <TabPanes
-                useIndex
-                tabPrefix={'高压进侧线'}
-                onChange={onInLineChange}
-                tabData={dataInit.spectIn}
-              ></TabPanes>
-            ),
-            itemProps: {
-              label: '',
-              className: 'w100',
-              ...fullFormLayouts,
-            },
-          },
-          spectInDetail,
-        ]),
-
-    ...(isExport ? [spectOutItem] : spectOutDetail),
+    spectInItem,
+    spectOutItem,
+    // ...(isExport
+    //   ? [spectInItem]
+    //   : [
+    //       {
+    //         formType: 'CustomCom',
+    //         CustomCom: (
+    //           <TabPanes
+    //             useIndex
+    //             tabPrefix={'高压进侧线'}
+    //             onChange={onInLineChange}
+    //             tabData={dataInit.spectIn}
+    //           ></TabPanes>
+    //         ),
+    //         itemProps: {
+    //           label: '',
+    //           className: 'w100',
+    //           ...fullFormLayouts,
+    //         },
+    //       },
+    //       spectInDetail,
+    //     ]),
+    // ...(isExport ? [spectOutItem] : spectOutDetail),
+    // ...(isExport ? [spectOutItem] : [spectOutItem]),
 
     // // 新增
 
@@ -1402,15 +1503,16 @@ const InspectRecordForm = props => {
   const actionBtn = (
     <div className="btnWrapper fje ">
       {/* <Button type="primary" onClick={() => setIsEdit(!isEdit)}> */}
-      {isEdit ? (
-        <Button type="primary" onClick={props.editItem}>
-          保存
-        </Button>
-      ) : (
-        <Button type="primary" onClick={props.toggleEdit}>
-          编辑
-        </Button>
-      )}
+      {false &&
+        (isEdit ? (
+          <Button type="primary" onClick={props.editItem}>
+            保存
+          </Button>
+        ) : (
+          <Button type="primary" onClick={props.toggleEdit}>
+            编辑
+          </Button>
+        ))}
       <Button type="primary" onClick={() => setModalExport(!modalExport)}>
         导出pdf
       </Button>
@@ -1441,6 +1543,7 @@ const InspectRecordForm = props => {
     <div
       className={`inspectRecordForm ${isExport ? 'exportPdf' : ''}`}
       ref={counterRef}
+      // key={tabIndex}
     >
       {/* {props.showActionBtn && modalExport ? actionBtn : null} */}
       {props.showActionBtn ? actionBtn : null}
@@ -1454,11 +1557,14 @@ const InspectRecordForm = props => {
           noRuleAll
           // isDisabledAll
           {...rest}
-          init={{
-            ...dataInit,
-            // spectIn: power_data[0].spect_in[0],
-            // spectOut: power_data[0].spect_out[0],
-          }}
+          // init={{
+          //   ...dataInit,
+          //   // spectIn: power_data[0].spect_in[0],
+          //   // spectOut: power_data[0].spect_out[0],
+          //   spectIn: power_data[tabIndex].spect_in,
+          //   spectOut: power_data[tabIndex].spect_out,
+          // }}
+          init={dataInit}
           className={'inspectRecordForm'}
           // formProps={
           //   {
@@ -1468,8 +1574,10 @@ const InspectRecordForm = props => {
           action={isEdit ? 'edit' : 'detail'}
           // key={props.formKey}
           // key={dataInit?.powerData?.id}
+          // key={dataInit?.index}
           // key={dataInit}
-          setInit
+          // key={tabIndex}
+          // setInit
         ></SmartForm>
       </div>
     </div>

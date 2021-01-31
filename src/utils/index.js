@@ -75,7 +75,11 @@ export const getDataMap = (text, dataMap) => {
   return val ? val : text;
 };
 
-export const formatSelectList = (data, labelKey = 'name', idKey = 'id') => {
+export const formatSelectList = (
+  data = [],
+  labelKey = 'name',
+  idKey = 'id',
+) => {
   const res = data.map(v => ({
     ...v,
     label: v[labelKey],
@@ -355,7 +359,7 @@ export const formatConfig = (
       // items.comProps.onPressEnter = (params) => console.log(' onPressEnter params ： ', params,  )// ;
     }
     if (isSearchForm || v.formType === 'Dynamic') {
-      items.noRule = true;
+      items.noRule = v.noRule ?? true;
     }
     if (action === 'detail') {
       if (['DatePicker', 'MonthPicker', 'RangePicker'].includes(v.formType)) {
@@ -647,6 +651,9 @@ export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
   // console.log(' prefix, k ： ', prefix, k, token); //
   return prefix + token;
 };
+
+export const getUserInfo = (k = 'userInfo') => getItem(k);
+
 // export const getToken = (k = 'user_info') =>
 //   getItem(k) != undefined ? getItem(k).token : '';
 

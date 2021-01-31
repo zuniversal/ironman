@@ -489,6 +489,22 @@ export default {
         },
       };
     },
+    clientReportDetail(state, { payload }) {
+      console.log(' clientReportDetail ： ', state, payload); //
+      const { team_headman, leader = {}, type, member } = payload.bean; //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          // team_headman: `${team_headman.nickname}`,
+          // leader: `${leader.nickname}`,
+          // type: `${type.name}`,
+          // member: member.map(v => v.name),
+        },
+      };
+    },
   },
 
   effects: {

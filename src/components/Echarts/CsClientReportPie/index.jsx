@@ -27,13 +27,13 @@ const option = props => {
         radius: '55%',
         center: ['55%', '60%'],
         data,
-        data: [
-          { value: 335, name: '访问直接' },
-          { value: 310, name: '邮件营销' },
-          { value: 234, name: '联盟广告' },
-          { value: 135, name: '视频广告' },
-          { value: 1548, name: '搜索引擎' },
-        ],
+        // data: [
+        //   { value: 335, name: '访问直接' },
+        //   { value: 310, name: '邮件营销' },
+        //   { value: 234, name: '联盟广告' },
+        //   { value: 135, name: '视频广告' },
+        //   { value: 1548, name: '搜索引擎' },
+        // ],
       },
     ],
   };
@@ -41,7 +41,7 @@ const option = props => {
 
 const CsClientReportPie = props => {
   // const domRef = useRef()
-  // console.log(' domRef ： ', domRef,  )//
+  console.log(' CsClientReportPie ： ', props); //
   return (
     <SmartEchart
       {...props}

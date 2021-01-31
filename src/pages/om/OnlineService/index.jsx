@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Radio } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal'; //
-import ChatBox from '@/components/Widgets/ChatBox'; //
+import ChatWindow from '@/components/Widgets/ChatWindow'; //
 import { actions, mapStateToProps } from '@/models/onlineService'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -55,7 +55,7 @@ class OnlineService extends PureComponent {
     ); //
     return (
       <div className="OnlineService">
-        <ChatBox></ChatBox>
+        <ChatWindow></ChatWindow>
         OnlineService
         {/* {this.renderSmartFormModal()} */}
       </div>

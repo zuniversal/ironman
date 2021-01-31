@@ -481,19 +481,21 @@ export default {
       const { searchInfo, dayInfo } = yield select(state => state[namespace]);
       console.log(' getScheduledDetailListAsync  ： ', payload, searchInfo); //
       // const date = payload.event ? dayInfo : payload
-      const params = {
-        // leader: payload.event.extendedProps.id,
-        ...dayInfo,
-        leader: searchInfo.leader,
-        date: payload.event
-          ? payload.event.extendedProps.plan_date
-          : dayInfo.date,
-        page_size: payload.event.title,
-        // date: payload.event ? payload.event.extendedProps.plan_date.split('T')[0] : dayInfo.date,
-      };
-      console.log(' paramsparams ： ', params, payload, dayInfo); //
-      const res = yield call(services.getScheduledDetailList, params);
-      yield put(action({ ...res, payload: params }));
+      if (payload.event.extendedProps?.plan_date) {
+        const params = {
+          // leader: payload.event.extendedProps.id,
+          ...dayInfo,
+          leader: searchInfo.leader,
+          date: payload.event
+            ? payload.event.extendedProps.plan_date
+            : dayInfo.date,
+          page_size: payload.event.title,
+          // date: payload.event ? payload.event.extendedProps.plan_date.split('T')[0] : dayInfo.date,
+        };
+        console.log(' paramsparams ： ', params, payload, dayInfo); //
+        const res = yield call(services.getScheduledDetailList, params);
+        yield put(action({ ...res, payload: params }));
+      }
     },
 
     *getTagUserAsync({ payload, action, type }, { call, put }) {

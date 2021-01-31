@@ -9,18 +9,48 @@ const CsClientReportSearchForm = props => {
   const { formBtn, ...rest } = props; //
 
   const config = [
+    // {
+    //   noLabel: true,
+    //   itemProps: {
+    //     label: '报告名称',
+    //     name: 'keyword',
+    //   },
+    // },
+    // {
+    //   formType: 'RangePicker',
+    //   itemProps: {
+    //     label: '日期',
+    //     name: '',
+    //   },
+    // },
+
     {
-      noLabel: true,
+      noRule: false,
+      formType: 'Search',
+      selectData: props.clientList,
       itemProps: {
-        label: '报告名称',
-        name: 'keyword',
+        label: '客户',
+        name: 'customer_id',
+      },
+      comProps: {
+        mode: 'multiple',
       },
     },
     {
-      formType: 'RangePicker',
+      formType: 'MonthPicker',
       itemProps: {
-        label: '日期',
-        name: '',
+        label: '选择月份',
+        name: 'year_month',
+      },
+    },
+    {
+      noLabel: true,
+      itemProps: {
+        label: '户号/客户名称/客户代表/巡检组长',
+        name: 'filter',
+      },
+      comProps: {
+        className: 'keywordInput',
       },
     },
   ];
@@ -29,7 +59,7 @@ const CsClientReportSearchForm = props => {
     <div className={' CsClientReportSearchForm '}>
       <SearchForm
         config={config}
-        noRuleAll
+        noRule={false}
         // {...rest}
         {...props}
       ></SearchForm>

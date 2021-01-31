@@ -287,12 +287,12 @@ class InspectPlan extends PureComponent {
     //   leader: 79612,
     //   month: moment('2021-01'),
     // });
-    this.props.getListAsync({
-      leader: `${this.props.userInfo.id}`,
-      // leader: 119,
-      // month: nowYearMonthDay,
-      month: moment(),
-    });
+    // this.props.getListAsync({
+    //   leader: `${this.props.userInfo.id}`,
+    //   // leader: 119,
+    //   // month: nowYearMonthDay,
+    //   month: moment(),
+    // });
   }
 
   render() {

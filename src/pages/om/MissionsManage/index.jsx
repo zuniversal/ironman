@@ -70,6 +70,16 @@ class MissionsManage extends PureComponent {
     };
   }
 
+  exportDataAsync = e => {
+    console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.exportData({
+        task_id: this.props.selectedRowKeys,
+      });
+    } else {
+      tips('请勾选导出项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -79,6 +89,9 @@ class MissionsManage extends PureComponent {
           disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={this.exportDataAsync}>
+          导出
         </Button>
       </div>
     );
@@ -115,6 +128,7 @@ class MissionsManage extends PureComponent {
       closeMissionAsync: this.props.closeMissionAsync,
       showClientAsync: this.props.showClientAsync,
       showContractAsync: this.props.showContractAsync,
+      exportDataAsync: this.props.exportData,
     };
 
     return <MissionsManageTable {...tableProps}></MissionsManageTable>;
@@ -237,12 +251,13 @@ class MissionsManage extends PureComponent {
           ele_user_id: this.props.ele_user_id,
         });
       }
-      // if (action === 'edit') {
-      //   this.props.editItemAsync({
-      //     ...res,
-      //     customer_id,
-      //   });
-      // }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          d_id: d_id,
+          // customer_id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -371,25 +386,24 @@ class MissionsManage extends PureComponent {
       electricity_user = [],
     } = this.props.clientItem;
 
-    const formInfo =
-      this.props.action === 'detail'
-        ? this.props.itemDetail
-        : {
-            // station_id: this.props.clientItem.,
-            // addr: this.props.clientItem.address,
-            addr:
-              electricity_user && electricity_user.length > 0
-                ? `${electricity_user[0]?.addr}`
-                : null,
-            customer_admin: customer_admin,
-            // team: this.props.clientItem.team,
-            // person: customer_admin[0]?.nickname,
-            team_id: team && team.length > 0 ? `${team[0]?.id}` : null,
-            repair_time: moment(),
-            team,
-            person,
-            // team_id,
-          };
+    const formInfo = ['detail', 'edit'].includes(this.props.action)
+      ? this.props.itemDetail
+      : {
+          // station_id: this.props.clientItem.,
+          // addr: this.props.clientItem.address,
+          addr:
+            electricity_user && electricity_user.length > 0
+              ? `${electricity_user[0]?.addr}`
+              : null,
+          customer_admin: customer_admin,
+          // team: this.props.clientItem.team,
+          // person: customer_admin[0]?.nickname,
+          team_id: team && team.length > 0 ? `${team[0]?.id}` : null,
+          repair_time: moment(),
+          team,
+          person,
+          // team_id,
+        };
 
     return (
       <MissionsManageForm
@@ -475,7 +489,7 @@ class MissionsManage extends PureComponent {
     return ['closeMission'].some(v => v === this.props.action);
   }
   renderSmartFormModal = params => {
-    const isMission = ['add', 'edit'].includes(this.props.action);
+    const isMission = ['add'].includes(this.props.action);
     const detailProps = isMission
       ? {
           footer: null,

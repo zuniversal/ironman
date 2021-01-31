@@ -99,8 +99,8 @@ export default {
       console.log(' getItemgetItem ： ', payload); //
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
       const spectInData = [];
-      power_data.forEach(v =>
-        v.spect_in.forEach(item => spectInData.push(item)),
+      power_data?.forEach(v =>
+        v?.spect_in.forEach(item => spectInData.push(item)),
       );
       // const powerDataFormat = power_data.map((v, index) => {
       //   v.spect_in.forEach(item => spectInData.push(item))
@@ -120,6 +120,13 @@ export default {
             ? inspection_task.work_date.split('T')[0]
             : '',
         powerData: power_data && power_data[0],
+        power_data: power_data.map(v => ({
+          ...v,
+          spect_out: v.spect_out.map(v => ({
+            ...v,
+            outlineName: v?.outline?.name,
+          })),
+        })),
         spectInData,
       };
 

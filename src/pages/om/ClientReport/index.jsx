@@ -6,6 +6,10 @@ import ClientReportForm from '@/components/Form/ClientReportForm'; //
 import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
+import CsClientReportDescription from '@/components/Description/CsClientReportDescription'; //
+import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf'; //
+import ClientForm from '@/components/Form/ClientForm';
+import HouseNoForm from '@/components/Form/HouseNoForm';
 
 import { actions, mapStateToProps } from '@/models/clientReport'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -20,6 +24,14 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   pdf: `月报`,
+  clientReportDetailPdf: `月报`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
 };
 
 // const mapStateToProps = ({ clientReport, }) => clientReport;
@@ -29,7 +41,7 @@ const titleMap = {
   actions,
   titleMap,
   modalForm: ClientReportForm,
-  noMountFetch: true,
+  // noMountFetch: true,
 })
 class ClientReport extends PureComponent {
   constructor(props) {
@@ -42,7 +54,10 @@ class ClientReport extends PureComponent {
   renderSearchForm = params => {
     return (
       <div className={'fsb '}>
-        <ClientReportSearchForm></ClientReportSearchForm>
+        <ClientReportSearchForm
+          init={this.props.searchInfo}
+          onFieldChange={this.onFieldChange}
+        ></ClientReportSearchForm>
         {/* <div className={'btnWrapper'}>
           <Button
             type="primary"
@@ -58,6 +73,22 @@ class ClientReport extends PureComponent {
     );
   };
 
+  onFieldChange = params => {
+    console.log(
+      ' onFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { value } = params;
+    if (value.filter) {
+      this.props.getListFilter({ ...params.value });
+    } else {
+      this.props.getListAsync(params.formData);
+    }
+  };
+
   renderTable = params => {
     const tableProps = {
       onSelectChange: this.props.onSelectChange,
@@ -71,8 +102,10 @@ class ClientReport extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
 
-      add: this.props.showFormModal,
+      noRequest: true,
+      count: this.props.dataList.length,
     };
 
     return <ClientReportTable {...tableProps}></ClientReportTable>;
@@ -117,9 +150,11 @@ class ClientReport extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     if (action === 'pdf') {
-      return <ClientReportPdf></ClientReportPdf>;
+      // return <ClientReportPdf></ClientReportPdf>;
+      return this.renderExportPdf;
     }
     console.log(' formComProps ： ', formComProps); //
+    return this.renderExportPdf;
     return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
@@ -142,6 +177,75 @@ class ClientReport extends PureComponent {
     );
   };
 
+  get renderExportPdf() {
+    console.log(' ExportPdf this.ref ： ', this.ref); //
+    return (
+      <div className={`pdfDetail `} ref={ref => (this.ref = ref)}>
+        <CsClientReportDescription
+          data={this.props.itemDetail}
+          closeExportPdf={this.closeExportPdf}
+          toggleExportPDF={this.props.toggleExportPDF}
+          isExportPDF
+          // className={this.props.isShowExportPdf ? '' : 'hide'}
+          className={this.state.isExportPdf ? 'posAbs' : ''}
+          top={
+            <div className={'fje noPrint '}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+                  this.props.toggleExportPDF();
+                }}
+              >
+                导出PDF
+              </Button>
+            </div>
+          }
+        ></CsClientReportDescription>
+      </div>
+    );
+  }
+
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
+
+  componentDidMount() {
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    setTimeout(() => {
+      console.log('  延时器 ： ');
+      // this.props.getListAsync({
+      //   page: 38,
+      //   page_size: 10,
+      // });
+      // this.props.getItemAsync({
+      //   action: 'pdf',
+      //   d_id: 5977,
+      //   d_id: 6358,
+      //   year_month: '2020-12',
+      // });
+      // this.props.getListAsync({
+      //   year_month: '2020-12',
+      // });
+    }, 2000);
+  }
+
   render() {
     return (
       <div className="ClientReport">
@@ -150,6 +254,16 @@ class ClientReport extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
+
+        {/* {this.renderExportPdf} */}
+
+        <ExportPdf
+          onClose={this.props.closePdf}
+          com={this.ref}
+          isPrintPdf={this.props.isShowExportPdf}
+        ></ExportPdf>
       </div>
     );
   }

@@ -248,6 +248,27 @@ const MissionsManageTable = props => {
           已关闭
         </a>
       )}
+      <a
+        onClick={() =>
+          props.edit({
+            action: 'edit',
+            ...record,
+            d_id: record.id,
+          })
+        }
+      >
+        编辑
+      </a>
+      <a
+        onClick={() =>
+          props.exportDataAsync({
+            action: 'exportData',
+            task_id: [record.id],
+          })
+        }
+      >
+        导出
+      </a>
     </>
   );
 

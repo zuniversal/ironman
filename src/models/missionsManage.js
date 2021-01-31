@@ -34,6 +34,7 @@ const otherActions = [
   'getServiceStaffAsync',
   'getMissionClientAsync',
   'getClientItemAsync',
+  'exportDataAsync',
 ];
 
 const batchTurnActions = ['selectClient'];
@@ -159,6 +160,9 @@ export default {
       }
       if (payload.payload.action === 'startWorkOrder') {
         itemDetail.client = customer ? customer.name : customer;
+      }
+      if (payload.payload.action === 'edit') {
+        itemDetail.team_id = payload.bean.team?.name ?? null;
       }
 
       return {
@@ -548,6 +552,10 @@ export default {
       const res = yield call(services.confirmSchedule, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
     *getEnumListAsync({ payload, action, type }, { call, put }) {
       console.log(' getEnumListAsync ： ', payload, type); //

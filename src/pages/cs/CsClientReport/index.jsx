@@ -13,6 +13,7 @@ import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf'; //
 import { actions, mapStateToProps } from '@/models/csClientReport'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '客户';
 
@@ -23,6 +24,7 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   pdf: `月报`,
+  csClientReportDetailPdf: `月报`,
 };
 
 // const mapStateToProps = ({ clientReport, }) => clientReport;
@@ -32,7 +34,7 @@ const titleMap = {
   actions,
   titleMap,
   modalForm: ClientReportForm,
-  noMountFetch: true,
+  // noMountFetch: true,
 })
 class ClientReport extends PureComponent {
   constructor(props) {
@@ -46,13 +48,13 @@ class ClientReport extends PureComponent {
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button
+        {/* <Button
           type="primary"
           // onClick={this.exportDataAsync}
         >
           查询
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           type="primary"
           onClick={() => {
             console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
@@ -62,8 +64,8 @@ class ClientReport extends PureComponent {
           }}
         >
           导出PDF
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           type="primary"
           onClick={() => {
             console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
@@ -71,7 +73,7 @@ class ClientReport extends PureComponent {
           }}
         >
           导出PDF
-        </Button>
+        </Button> */}
       </div>
     );
   };
@@ -81,12 +83,30 @@ class ClientReport extends PureComponent {
         formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
+        clientList={this.props.clientList}
       ></CsClientReportSearchForm>
     );
   };
+
   onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    console.log(
+      ' onFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      this.props,
+    );
+    const { value } = params;
+    if (value.filter) {
+      this.props.getListFilter({ ...params.value });
+    } else {
+      console.log('  对吗  params.value.length ', params.value.length);
+      if (params.value.customer_id.length) {
+        this.props.getListAsync(params.formData);
+      } else {
+        tips('请至少选择一个客户！', 2);
+      }
+    }
   };
 
   renderTable = params => {
@@ -102,8 +122,10 @@ class ClientReport extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
 
-      add: this.props.showFormModal,
+      noRequest: true,
+      count: this.props.dataList.length,
     };
 
     return <CsClientReportTable {...tableProps}></CsClientReportTable>;
@@ -179,7 +201,7 @@ class ClientReport extends PureComponent {
     return (
       <div className={`pdfDetail `} ref={ref => (this.ref = ref)}>
         <CsClientReportDescription
-          init={this.props.itemDetail}
+          data={this.props.itemDetail}
           closeExportPdf={this.closeExportPdf}
           toggleExportPDF={this.props.toggleExportPDF}
           isExportPDF
@@ -235,20 +257,20 @@ class ClientReport extends PureComponent {
       <div className="ClientReport">
         {this.renderSearchForm()}
 
-        {this.renderExportPdf}
+        {this.renderTable()}
+
+        {this.renderSmartFormModal()}
+
+        {/* {this.renderCommonModal()} */}
+
+        {/* {this.renderExportPdf} */}
+
         {/* {this.props.isShowExportPdf && <ExportPdf onClose={this.props.closePdf} com={this.ref}></ExportPdf>} */}
         <ExportPdf
           onClose={this.props.closePdf}
           com={this.ref}
           isPrintPdf={this.props.isShowExportPdf}
         ></ExportPdf>
-        {/* <CsClientReportDescription></CsClientReportDescription> */}
-
-        {this.renderSmartFormModal()}
-
-        {/* {this.renderTable()}
-
-        {this.renderSmartFormModal()} */}
       </div>
     );
   }
