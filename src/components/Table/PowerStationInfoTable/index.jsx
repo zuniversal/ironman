@@ -12,7 +12,7 @@ import { Input, Button, Select, InputNumber } from 'antd';
 
 import SmartTable from '@/common/SmartTable'; //
 import { tips, renderSelectOp } from '@/utils';
-import { voltageLevelConfig } from '@/configs';
+import { voltageLevelConfig, voltageLevelMap } from '@/configs';
 import PowerStationTable from '../PowerStationTable';
 
 export const DeviceInfoTable = props => {
@@ -161,12 +161,17 @@ export const getWidget = props => {
 };
 
 export const TableInput = props => {
-  const { text, record, index, keys } = props; //
+  const { text, record, index, keys, dataMap } = props; //
+  console.log(' TableInput ： ', props); //
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
   // ); //
+  if (dataMap && text) {
+    return dataMap[text];
+  }
+
   return props.record.isEdit ? getWidget(props) : text;
 };
 
@@ -315,6 +320,7 @@ export const PowerStationDetailTable = props => {
           keys={'voltage_level'}
           formType={'Select'}
           selectData={voltageLevelConfig}
+          dataMap={voltageLevelMap}
         ></TableInput>
       ),
     },

@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { electricTypeMap } from '@/configs'; //
 
 const HouseNoTable = props => {
   const { tdClick } = props; //
@@ -54,6 +55,7 @@ const HouseNoTable = props => {
     {
       title: '用电类型',
       dataIndex: 'type',
+      dataMap: electricTypeMap,
     },
     {
       title: '托管电站数',

@@ -98,6 +98,18 @@ const PowerStationTable = props => {
       >
         生成二维码
       </a>
+      <a
+        onClick={() => {
+          // props.showFormModal({ action: 'inspectReport' })
+          // props.showExportPdf({ action: 'showExportPdf', d_id: record.id });
+          props.showFormModal({
+            action: 'exportDutyData',
+            d_id: record.id,
+          });
+        }}
+      >
+        导出巡检报告
+      </a>
     </>
   );
 

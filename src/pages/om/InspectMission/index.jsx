@@ -117,7 +117,9 @@ class InspectMission extends PureComponent {
           })
         }
         userList={this.props.userList}
-        getClientAsync={params => this.props.getClientAsync({ name: params })}
+        getClientAsync={params =>
+          this.props.getClientAsync({ keyword: params })
+        }
         clientList={this.props.clientList}
         getPowerAsync={params => this.props.getPowerAsync({ name: params })}
         powerList={this.props.powerList}
@@ -214,18 +216,65 @@ class InspectMission extends PureComponent {
     }
   };
 
+  onFormFieldChange = params => {
+    console.log('    onFormFieldChange ： ', params, this.state, this.props);
+    // if (params.value.customer_id === undefined) {
+    //   console.log(' onFormFieldChange  customer_id 无值 ： '); //
+    //   params.form.setFieldsValue({
+    //     station_id: null,
+    //   });
+    // }
+    if (params.value.customer_id) {
+      console.log(' onFormFieldChange  customer_id 有值 ： '); //
+      params.form.setFieldsValue({
+        station_id: null,
+      });
+      this.props.getPowerAsync({ customer: params.value.customer_id });
+    }
+    if (params.value.station_id === undefined) {
+      console.log(' onFormFieldChange  station_id 无值 ： '); //
+      this.props.getPowerAsync();
+    }
+    if (params.value.station_id) {
+      console.log(
+        ' onFormFieldChange  station_id 有值 ： ',
+        params.value.station_id,
+      ); //
+      const customer = this.props.powerList.find(
+        v => v.id == params.value.station_id,
+      );
+      console.log(' customer ： ', customer); //
+      const customer_id = customer?.customer?.id;
+      const name = customer?.customer?.name;
+      console.log(' customer_id ： ', customer_id, name); //
+      this.props.getClient({
+        list: [
+          ...this.props.powerList,
+          {
+            id: customer_id,
+            name,
+          },
+        ],
+      });
+      params.form.setFieldsValue({
+        customer_id: `${customer_id}`,
+      });
+    }
+  };
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
       action,
       getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ name: params }),
+      getClientAsync: params => this.props.getClientAsync({ keyword: params }),
       clientList: this.props.clientList,
       getTeamAsync: params => this.props.getTeamAsync({ name: params }),
       teamList: this.props.teamList,
       getPowerAsync: params => this.props.getPowerAsync({ name: params }),
       powerList: this.props.powerList,
+
+      onFieldChange: this.onFormFieldChange,
     };
     if (action !== 'add') {
       formComProps.init = {

@@ -30,7 +30,7 @@ const WeakForm = props => {
     {
       itemProps: {
         label: '登记日期',
-        name: '',
+        name: 'created_time',
       },
     },
     {

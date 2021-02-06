@@ -6,7 +6,7 @@ import moment from 'moment'; //
 const namespace = 'csClientReport';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getClientReportUpgradeAsync'];
 
 const batchTurnActions = ['closePdf', 'toggleExportPDF', 'getListFilter'];
 
@@ -17,7 +17,7 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
-
+console.log(' clientList ： ', clientList); //
 export const formatSearch = data => {
   console.log(' formatSearch ： ', data); //
   return {
@@ -69,6 +69,7 @@ export default {
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
         originData: payload.list,
       };
     },
@@ -246,9 +247,11 @@ export default {
         // customer_id: 2,
       };
       console.log(' getListAsync ： ', searchInfo, payload, params); //
-      params.query = params.customer_id.map(v => `customer_id=${v}`).join('&');
+      const { customer_id, ...rest } = params;
 
-      const res = yield call(services.getList, formatSearch(params));
+      rest.query = customer_id.map(v => `customer_id=${v}`).join('&');
+      console.log(' getListgetList rest ： ', rest, customer_id); //
+      const res = yield call(services.getList, formatSearch(rest));
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
@@ -267,5 +270,11 @@ export default {
     //   const res = yield call(services.removeItem, payload);
     //   yield put(action({ ...res, payload }));
     // },
+
+    *getClientReportUpgradeAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getClientReportUpgrade, payload);
+      yield put(action({ ...res, payload }));
+      return res;
+    },
   },
 };

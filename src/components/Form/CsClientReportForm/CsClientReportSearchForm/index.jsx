@@ -24,18 +24,18 @@ const CsClientReportSearchForm = props => {
     //   },
     // },
 
-    {
-      noRule: false,
-      formType: 'Search',
-      selectData: props.clientList,
-      itemProps: {
-        label: '客户',
-        name: 'customer_id',
-      },
-      comProps: {
-        mode: 'multiple',
-      },
-    },
+    // {
+    //   noRule: false,
+    //   formType: 'Search',
+    //   selectData: props.clientList,
+    //   itemProps: {
+    //     label: '客户',
+    //     name: 'customer_id',
+    //   },
+    //   comProps: {
+    //     mode: 'multiple',
+    //   },
+    // },
     {
       formType: 'MonthPicker',
       itemProps: {
@@ -43,16 +43,16 @@ const CsClientReportSearchForm = props => {
         name: 'year_month',
       },
     },
-    {
-      noLabel: true,
-      itemProps: {
-        label: '户号/客户名称/客户代表/巡检组长',
-        name: 'filter',
-      },
-      comProps: {
-        className: 'keywordInput',
-      },
-    },
+    // {
+    //   noLabel: true,
+    //   itemProps: {
+    //     label: '户号/客户名称/客户代表/巡检组长',
+    //     name: 'filter',
+    //   },
+    //   comProps: {
+    //     className: 'keywordInput',
+    //   },
+    // },
   ];
 
   return (

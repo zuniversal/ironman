@@ -106,6 +106,7 @@ class ClientReport extends PureComponent {
 
       noRequest: true,
       count: this.props.dataList.length,
+      exportData: this.props.exportData,
     };
 
     return <ClientReportTable {...tableProps}></ClientReportTable>;
@@ -115,7 +116,7 @@ class ClientReport extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (action === 'pdf') {
+    if (['pdf', 'clientReportDetailPdf'].includes(this.props.action)) {
       this.props.onCancel({});
       return;
     }
@@ -149,7 +150,7 @@ class ClientReport extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    if (action === 'pdf') {
+    if (['add', 'edit'].includes(action)) {
       // return <ClientReportPdf></ClientReportPdf>;
       return this.renderExportPdf;
     }
@@ -197,7 +198,7 @@ class ClientReport extends PureComponent {
                   this.props.toggleExportPDF();
                 }}
               >
-                导出PDF
+                打印/导出PDF
               </Button>
             </div>
           }

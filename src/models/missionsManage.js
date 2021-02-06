@@ -120,6 +120,8 @@ export default {
           ...v,
           confirm: v.confirm ? '已确认' : '未确认',
           created_time: v.created_time.split('T')[0],
+          finish_time: v.finish_time?.split('T')[0],
+          clientType: v.customer?.type?.map(v => customerTypeMap[v]).join(', '),
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -139,7 +141,7 @@ export default {
         //   label: 'label-2',
         // },
       ];
-      const { customer, person, contacts_phone, team } = payload.bean;
+      const { customer, person, contacts_phone, team, source } = payload.bean;
 
       const itemDetail = {
         ...payload.bean,
@@ -148,6 +150,7 @@ export default {
         //   label: 'label-999',
         //   value: payload.bean.customer.name,
         // },
+        source: source.split(','),
       };
       if (payload.payload.action === 'detail') {
         itemDetail.customer_id = customer.name;
@@ -313,10 +316,13 @@ export default {
           ...payload.bean,
           // type: customerTypeMap[payload.bean.type],
           // type: payload.bean.type.split(',').map((v) => clientTypeMap[v]).join(','),
-          type: payload.bean.type
-            .split(',')
-            .map(v => (v == 1 ? '托管' : '非托管'))
-            .join(','),
+          // type: payload.bean.type
+          // .split(',')
+          // .map(v => (v == 1 ? '托管' : '非托管'))
+          // .join(','),
+          type: payload.bean.type.split(',').some(v => v == 1)
+            ? '托管'
+            : '非托管',
           houseNo: electricity_user[0]?.number,
           // electricity_user: electricity_user.map((v) => voltageLevelMap[v.voltage_level]).join(','),
         },

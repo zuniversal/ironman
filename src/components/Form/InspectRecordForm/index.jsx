@@ -23,6 +23,7 @@ import InputCom from '@/components/Widgets/InputCom'; //
 // import SmartExportPdf from '@/common/SmartExportPdf'; //
 import useExportPdf from '@/hooks/useExportPdf'; //
 import { isDev } from '@/constants';
+import { voltageLevelConfig } from '@/configs';
 
 const { TabPane } = Tabs;
 
@@ -255,14 +256,16 @@ const InspectRecordForm = props => {
 
   const [dataInit, setDataInit] = useState({
     ...props.init,
-    spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
+    spectIn:
+      power_data[0] && power_data[0].spect_in ? power_data[0]?.spect_in : [],
     // spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
     // spectOut: [props.init.spect_out[0]],
     // spectOut: spect_out.length > 0 ? [spect_out[0]] : [],
     // spectOut: spect_out.length > 0 ? spect_out[0] : {},
     // spectOut: props.init?.spect_out[0],
     // spectOut: spect_out.length > 0 ? spect_out[0] : {},
-    spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
+    spectOut:
+      power_data[0] && power_data[0].spect_out ? power_data[0]?.spect_out : [],
     index: 0,
   });
   console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data); //
@@ -466,8 +469,7 @@ const InspectRecordForm = props => {
       rowCom,
     },
     { label: '高压出线侧', name: '', type: 'rowText' },
-    { label: '电流表A', name: 'id' },
-    // { label: '电流表A', name: 'o_ia' },
+    { label: '电流表A', name: 'o_ia' },
     { label: '电流表B', name: 'o_ib' },
     { label: '电流表C', name: 'o_ic' },
     { label: '显示器A', name: 'monitor_a' },
@@ -529,7 +531,7 @@ const InspectRecordForm = props => {
     // { label: '最大MD', name: 'max_md' },
     // { label: '本月申报MD', name: 'declare_md' },
     // { label: '无功1(07)', name: 'reactive_power_1' },
-    // { label: '无功2(07)', name: 'reactive_power_2' },
+    // { label: '无功(08)', name: 'reactive_power_2' },
     // { label: '实际功率因素', name: 'real_power_factor' },
     { label: '', name: '', type: 'rowText' },
   ];
@@ -597,11 +599,13 @@ const InspectRecordForm = props => {
 
     {
       noRule: true,
+      formType: 'Search',
+      selectData: voltageLevelConfig,
       itemProps: {
         label: '电压等级',
         // name: ['powerData', 'power_number'],
-        // name: ['powerData', 'voltage_level'],
-        name: ['powerData', 'id'],
+        name: ['powerData', 'voltage_level'],
+        // name: ['powerData', 'id'],
       },
     },
     {
@@ -741,14 +745,14 @@ const InspectRecordForm = props => {
       noRule: true,
       itemProps: {
         label: '无功1(07)',
-        name: ['powerData', 'reactive_power_1'],
+        name: ['powerData', 'reactive_power_2'],
       },
     },
     {
       noRule: true,
       itemProps: {
-        label: '无功2(07)',
-        name: ['powerData', 'reactive_power_2'],
+        label: '无功(08)',
+        name: ['powerData', 'reactive_power_1'],
       },
     },
     {
@@ -1197,6 +1201,7 @@ const InspectRecordForm = props => {
       itemProps: {
         label: '巡检人员：',
         name: ['team', 'member'],
+        name: 'inspector',
       },
     },
     {
@@ -1416,7 +1421,8 @@ const InspectRecordForm = props => {
   ];
 
   const config = [
-    ...(isDev ? [] : topConfig),
+    // ...(isDev ? [] : topConfig),
+    ...topConfig,
 
     ...(isExport ? [powerDataItem] : powerDataDetail),
 

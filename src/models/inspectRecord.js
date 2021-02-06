@@ -132,7 +132,8 @@ export default {
 
       const formData = {
         ...payload.bean,
-        spectIn: power_data[0].spect_in ? power_data[0].spect_in : [],
+        spectIn:
+          power_data[0] && power_data[0].spect_in ? power_data[0].spect_in : [],
         spectOut: spect_out.length > 0 ? spect_out[0] : {},
         index: 0,
       };
@@ -231,6 +232,7 @@ export default {
         ...state,
         isExportPDF: !state.isExportPDF,
         isShowExportPdf: !state.isShowExportPdf,
+        isShowPdfDetail: !state.isShowPdfDetail,
       };
     },
     toggleEdit(state, { payload, type }) {

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import SmartTim from '@/common/SmartTim'; //
-import { Form, Input } from 'antd';
+// import SmartTim from '@/common/SmartTim'; //
+import { Badge, Input } from 'antd';
+
+const { TextArea } = Input;
 
 const config = [
   {
@@ -69,14 +71,16 @@ const UserList = props => {
   return (
     <div className="userList">
       {config.map((v, i) => (
-        <div className={`rowItem`} key={i}>
-          <div className={`item`}>
-            <div className={`name`}>{v.name}</div>
-            <div className={`time`}>{v.time}</div>
+        <Badge dot={true} key={i}>
+          <div className={`rowItem`}>
+            <div className={`info sbInfo`}>
+              <div className={`user`}>{v.name}</div>
+              <div className={`time`}>{v.time}</div>
+            </div>
+            <div className={`info`}>{v.verb} </div>
+            <div className={`info`}>{v.verb} </div>
           </div>
-          <div className={`item`}>{v.verb} </div>
-          <div className={`item`}>{v.verb} </div>
-        </div>
+        </Badge>
       ))}
     </div>
   );
@@ -94,7 +98,9 @@ const MsgBox = props => {
           <div className="userInfo">
             {/* <div className="chatTime">{v.time}</div> */}
             <div className="username">{v.name}</div>
-            <div className="username">{v.desc}</div>
+            <div className="msgWrapper">
+              <div className="msg">{v.desc}</div>
+            </div>
           </div>
         );
         return (
@@ -111,7 +117,23 @@ const MsgBox = props => {
 const InputBox = props => {
   // console.log(' InputBox   ,   ： ', props,  )
   const { data = {}, config = [], ...rest } = props;
-  return <div className="inputBox"></div>;
+  return (
+    <div className="inputBox">
+      <div className="toolbox">
+        <div className="avatar avatar2"></div>
+        <div className="avatar avatar2"></div>
+      </div>
+      <div className="contents">
+        <TextArea
+          showCount
+          bordered={false}
+          placeholder={'请输入聊天内容'}
+          autoSize={{ minRows: 5, maxRows: 8 }}
+          maxLength={100}
+        />
+      </div>
+    </div>
+  );
 };
 
 const ChatWindow = props => {
@@ -123,7 +145,7 @@ const ChatWindow = props => {
         <MsgBox config={[...config, ...config, ...config]}></MsgBox>
         <InputBox></InputBox>
       </div>
-      <SmartTim></SmartTim>
+      {/* <SmartTim></SmartTim> */}
     </div>
   );
 };

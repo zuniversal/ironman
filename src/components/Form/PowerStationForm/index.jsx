@@ -430,6 +430,7 @@ const PowerStationForm = props => {
       formType: 'Search',
       selectSearch: props.getPowerInfoAsync,
       selectData: props.powerInfoList,
+      dataMap: props.powerInfoList,
       itemProps: {
         label: '电源编号',
         name: 'power_number',

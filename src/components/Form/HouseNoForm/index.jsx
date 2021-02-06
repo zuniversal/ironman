@@ -20,7 +20,11 @@ import {
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm'; //
 import HouseNoFormTable from '@/components/Table/HouseNoFormTable'; //
-import { regoins } from '@/configs'; //
+import {
+  voltageLevelConfig,
+  electricTypeConfig,
+  billTypeConfig,
+} from '@/configs'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 
 const HouseNoForm = props => {
@@ -163,7 +167,8 @@ const HouseNoForm = props => {
     ...(action === 'detail' ? capacityConfig : []),
 
     {
-      // formType: 'Select',
+      formType: 'Select',
+      selectData: voltageLevelConfig,
       itemProps: {
         label: '电压等级',
         name: 'voltage_level',
@@ -171,7 +176,8 @@ const HouseNoForm = props => {
     },
 
     {
-      formType: 'InputNumber',
+      formType: 'Select',
+      selectData: electricTypeConfig,
       itemProps: {
         label: '电价类型',
         name: 'type',
@@ -193,6 +199,8 @@ const HouseNoForm = props => {
       },
     },
     {
+      formType: 'Select',
+      selectData: billTypeConfig,
       itemProps: {
         label: '计费方式',
         name: 'billing_method',

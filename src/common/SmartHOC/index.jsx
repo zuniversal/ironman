@@ -458,19 +458,27 @@ export default ({
       //   return
       // }
       const { dispatch } = this.props; //
-      const url = (
-        await dispatch(
-          actions.exportDataAsync({
-            page: 1,
-            // page_size: 100,
-            ...params,
-          }),
-        )
-      ).bean;
-      const urlArr = `${url}`.split('/');
-      const name = urlArr[urlArr.length - 1];
-      console.log(' DOWN_URL +  url ：', url, name); //
-      downLoad(url, { name });
+      const reqMethod = params?.reqMethod
+        ? actions[params?.reqMethod]
+        : actions.exportDataAsync; //
+      const res = await dispatch(
+        reqMethod({
+          page: 1,
+          // page_size: 100,
+          ...params,
+        }),
+      );
+      console.log('  res ：', res); //
+      const url = res.bean;
+      if (url && typeof url === 'string') {
+        const urlArr = `${url}`.split('/');
+        const name = urlArr[urlArr.length - 1];
+        console.log(' DOWN_URL +  url ：', url, name); //
+        downLoad(url, { name });
+      } else {
+        tips('没有文件可以导出！', 2);
+      }
+
       // tips('模拟导出成功！');
     };
     syncOAAsync = params => {

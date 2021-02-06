@@ -5,6 +5,7 @@ import PowerStationTable from '@/components/Table/PowerStationTable'; //
 import PowerStationForm from '@/components/Form/PowerStationForm'; //
 import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import { PowerstationMonthForm } from '@/components/Form/PowerStationActionForm'; //
 
 import { commonActions } from '@/models/common'; //
 import { actions, mapStateToProps } from '@/models/powerStation'; //
@@ -23,6 +24,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  exportDutyData: `导出巡检报告`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
@@ -219,6 +221,16 @@ class PowerStation extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
+      if (action === 'exportDutyData') {
+        this.props.exportData({
+          reqMethod: 'exportDutyDataAsync',
+          // type: 'month',
+          station_id: this.props.d_id,
+          year_month: res.month.format('YYYY-MM'),
+        });
+        return;
+      }
+
       if (typeof res.file !== 'string') {
         if (res.file && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
@@ -271,6 +283,11 @@ class PowerStation extends PureComponent {
       // dataSource: this.props.powerInfoData,
       // removePowerInfoAsync: this.props.removePowerInfoAsync,
     };
+
+    if (action === 'exportDutyData') {
+      return <PowerstationMonthForm></PowerstationMonthForm>;
+    }
+
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
@@ -309,7 +326,9 @@ class PowerStation extends PureComponent {
   getPowerInfoAsync = params =>
     this.props.getPowerInfoAsync({ power_number: params });
   get size() {
-    return ['removeStation'].some(v => v === this.props.action)
+    return ['removeStation', 'exportDutyData'].some(
+      v => v === this.props.action,
+    )
       ? 'small'
       : 'default';
   }
@@ -339,7 +358,11 @@ class PowerStation extends PureComponent {
     this.props.getHouseNoAsync();
     this.props.getTeamAsync();
     this.props.getDistrictAsync({});
-    // this.props.getPowerInfoAsync({});
+
+    // this.props.showFormModal({
+    //   action: 'exportDutyData',
+    // });
+    this.props.getPowerInfoAsync({});
     // setTimeout(() => {
     //   console.log('  延时器 ： ');
     //   this.props.getListAsync({

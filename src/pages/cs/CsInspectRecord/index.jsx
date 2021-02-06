@@ -156,7 +156,23 @@ class CsInspectRecord extends PureComponent {
       );
     }
     console.log(' formComProps ： ', formComProps); //
-    return <CsInspectRecordForm {...formComProps}></CsInspectRecordForm>;
+    // return <CsInspectRecordForm {...formComProps}></CsInspectRecordForm>;
+    return (
+      <InspectRecordForm
+        {...formComProps}
+        // action={'edit'}
+        showActionBtn
+        type={'comExportPdf'}
+        editItem={this.props.editItem}
+        toggleEdit={this.props.toggleEdit}
+        isEdit={this.props.isEdit}
+        onFieldChange={this.props.onFieldChange}
+        onMaxChange={this.props.onFieldChange}
+        formKey={this.props.formKey}
+        formData={this.props.formData}
+        // key={this.props.formKey}
+      ></InspectRecordForm>
+    );
   };
   renderSmartFormModal = params => {
     return (
@@ -215,6 +231,28 @@ class CsInspectRecord extends PureComponent {
     );
   };
 
+  get renderInspectRecordForm() {
+    console.log(' renderInspectRecordForm ： ', this.props); //
+    return (
+      <div className={`pdfDetail`}>
+        {/* {!this.state.isShowExportPdf && (
+          <ExportHeader
+            // goBack={this.showExportPdf}
+            goBack={this.closeExportPdf}
+            print={this.exportPdf}
+          ></ExportHeader>
+        )} */}
+        <InspectRecordForm
+          init={this.props.itemDetail}
+          closeExportPdf={this.closeExportPdf}
+          toggleExportPDF={this.props.toggleExportPDF}
+          // isExportPDF={this.props.isExportPDF}
+          isExportPDF
+        ></InspectRecordForm>
+      </div>
+    );
+  }
+
   render() {
     console.log(
       ' %c CsInspectRecord 组件 this.state, this.props ： ',
@@ -223,16 +261,20 @@ class CsInspectRecord extends PureComponent {
       this.props,
     ); //
 
-    if (this.props.isShowExportPdf) {
-      return (
-        <ExportPdf onClose={this.props.closePdf}>
-          {this.renderCsInspectRecordForm}
-        </ExportPdf>
-      );
-    }
+    // if (this.props.isShowExportPdf) {
+    //   return (
+    //     <ExportPdf onClose={this.props.closePdf}>
+    //       {this.renderCsInspectRecordForm}
+    //     </ExportPdf>
+    //   );
+    // }
     // if (this.state.isShowPdfDetail) {
     //   return this.renderCsInspectRecordForm;
     // }
+    if (this.props.isShowPdfDetail) {
+      // if (this.props.isExportPDF) {
+      return this.renderInspectRecordForm;
+    }
 
     return (
       <div className="CsInspectRecord">

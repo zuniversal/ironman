@@ -6,7 +6,7 @@ import moment from 'moment'; //
 const namespace = 'clientReport';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getClientReportUpgradeAsync'];
 
 const batchTurnActions = ['closePdf', 'toggleExportPDF', 'getListFilter'];
 
@@ -68,6 +68,7 @@ export default {
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
         originData: payload.list,
       };
     },
@@ -280,6 +281,12 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
+    },
+
+    *getClientReportUpgradeAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getClientReportUpgrade, payload);
+      yield put(action({ ...res, payload }));
+      return res;
     },
   },
 };

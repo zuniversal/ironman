@@ -19,7 +19,7 @@ const otherActions = [
   'batchDispatchAsync',
 ];
 
-const batchTurnActions = ['batchDispatch'];
+const batchTurnActions = ['batchDispatch', 'getClient'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -54,6 +54,7 @@ export default {
     teamList: [],
     clientList: [],
     powerList: [],
+    clientId: '',
   },
 
   reducers: {
@@ -71,6 +72,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        clientId: '',
       };
     },
     getList(state, { payload, type }) {

@@ -28,6 +28,7 @@ export const editOutLine = p =>
 export const removeOutLine = p => remove(`console/OMS/powerstation/outline`, p);
 
 export const exportData = p => get('console/OMS/powerstation/file', p);
+export const exportDutyData = p => get('console/OMS/spect/export_report', p);
 export const syncOA = p => noTipsGet(`console/OMS/powerstation/oa`, p);
 export const createQRCode = p =>
   noTipsGet(`console/OMS/powerstation/qrcode/${p.d_id}`, p);

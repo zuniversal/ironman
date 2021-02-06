@@ -7,7 +7,12 @@ const { createActions } = init(namespace);
 
 const otherActions = ['getMissionItemAsync', 'confirmInspectAsync'];
 
-const batchTurnActions = ['closePdf'];
+const batchTurnActions = [
+  'closePdf',
+  'toggleExportPDF',
+  'toggleEdit',
+  'onFieldChange',
+];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -28,6 +33,7 @@ export default {
     d_id: '',
     searchInfo: {},
     isShowExportPdf: false,
+    isShowPdfDetail: false,
   },
 
   reducers: {
@@ -70,14 +76,66 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const {
+        created_time = '',
+        start_time = '',
+        end_time = '',
+        power_data = [],
+        inspection_task,
+        spect_out = [],
+      } = payload.bean;
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
+      const spectInData = [];
+      power_data?.forEach(v =>
+        v?.spect_in.forEach(item => spectInData.push(item)),
+      );
+      // const powerDataFormat = power_data.map((v, index) => {
+      //   v.spect_in.forEach(item => spectInData.push(item))
+      //   return {
+      //     ...v,
+      //     index,
+      //   }
+      // });
+
+      const itemDetail = {
+        ...payload.bean,
+        // created_time: created_time ? created_time.split('T')[0] : '',
+        // start_time: start_time ? start_time.split('T')[0] : '',
+        // end_time: end_time ? end_time.split('T')[0] : '',
+        workDate:
+          inspection_task && inspection_task.work_date
+            ? inspection_task.work_date.split('T')[0]
+            : '',
+        powerData: power_data && power_data[0],
+        power_data: power_data.map(v => ({
+          ...v,
+          spect_out: v.spect_out.map(v => ({
+            ...v,
+            outlineName: v?.outline?.name,
+          })),
+        })),
+        spectInData,
+      };
+      console.log(' getItemgetItem ： ', payload, itemDetail, power_data); //
+
+      const formData = {
+        ...payload.bean,
+        spectIn:
+          power_data[0] && power_data[0].spect_in ? power_data[0].spect_in : [],
+        spectOut: spect_out.length > 0 ? spect_out[0] : {},
+        index: 0,
+      };
+
       return {
         ...state,
         action: payload.payload.action,
+        isShowPdfDetail: isExportPdf,
         isShowExportPdf: isExportPdf,
         isShowModal: isExportPdf ? false : true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: itemDetail,
+        itemDetailCopy: itemDetail,
+        formData: formData,
       };
     },
     addItem(state, { payload, type }) {
@@ -111,6 +169,16 @@ export default {
       return {
         ...state,
         isShowExportPdf: false,
+        isShowPdfDetail: false,
+      };
+    },
+    toggleExportPDF(state, { payload, type }) {
+      console.log(' toggleExportPDF ： ', payload); //
+      return {
+        ...state,
+        isExportPDF: !state.isExportPDF,
+        isShowExportPdf: !state.isShowExportPdf,
+        isShowPdfDetail: !state.isShowPdfDetail,
       };
     },
   },

@@ -846,27 +846,27 @@ export const corverAreaConfig = [
 export const voltageLevelConfig = [
   {
     label: '0.4KV',
-    value: 1,
+    value: '1',
   },
   {
     label: '10KV',
-    value: 2,
+    value: '2',
   },
   {
     label: '20KV',
-    value: 6,
+    value: '6',
   },
   {
     label: '35KV',
-    value: 3,
+    value: '3',
   },
   {
     label: '110KV',
-    value: 4,
+    value: '4',
   },
   {
     label: '220KV',
-    value: 5,
+    value: '5',
   },
 ];
 
@@ -940,5 +940,30 @@ export const electricTypeConfig = [
   {
     label: '光伏发电',
     value: 50,
+  },
+];
+
+export const electricTypeMap = arrMapObj(electricTypeConfig);
+
+export const billTypeConfig = [
+  {
+    label: '未知',
+    value: '0',
+  },
+  {
+    label: '单一制 无基本电费',
+    value: '1',
+  },
+  {
+    label: '两部制 按变压器容量收费',
+    value: '2',
+  },
+  {
+    label: '两部制 按实际最大需量计费',
+    value: '3',
+  },
+  {
+    label: '两部制 按合同最大需量计',
+    value: '4',
   },
 ];

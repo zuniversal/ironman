@@ -117,7 +117,28 @@ const CsClientReportTable = props => {
             })
           }
         >
-          查看
+          基本版月报
+        </a>
+      )}
+      {record.finish == 1 && (
+        <a
+          onClick={() => {
+            console.log(
+              ' 1111111 ： ',
+              props.searchInfo.year_month,
+              props.searchInfo.year_month.format('YYYY-MM'),
+            ); //
+            props.exportData({
+              action: 'getClientReportUpgradeAsync',
+              reqMethod: 'getClientReportUpgradeAsync',
+              ele_number: record.number,
+              year_month: props.searchInfo.year_month
+                ? props.searchInfo.year_month.format('YYYY-MM')
+                : '',
+            });
+          }}
+        >
+          升级版月报
         </a>
       )}
       {record.finish == 0 && <a disabled>未录入电费账单</a>}

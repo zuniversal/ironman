@@ -47,7 +47,7 @@ const CsInspectRecordTable = props => {
   const extra = (text, record, index, props) => (
     <>
       {/* <a onClick={() => props.showFormModal({ action: 'detail' })}>查看详情</a> */}
-      <a
+      {/* <a
         onClick={() =>
           props.showItemAsync({
             action: 'inspectRecordDetailAsync',
@@ -56,8 +56,10 @@ const CsInspectRecordTable = props => {
         }
       >
         查看详情
+      </a> */}
+      <a onClick={() => props.edit({ action: 'detail', d_id: record.id })}>
+        巡检报告
       </a>
-
       <a
         onClick={() => {
           props.showExportPdf({

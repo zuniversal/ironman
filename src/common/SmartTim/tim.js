@@ -1,9 +1,11 @@
 import TIM from 'tim-js-sdk';
 import COSSDK from 'cos-js-sdk-v5';
 
+console.log(' window ： ', window); //
+
 // 初始化 SDK 实例
 const tim = TIM.create({
-  SDKAppID: window.genTestUserSig('').SDKAppID,
+  SDKAppID: genTestUserSig('').SDKAppID,
 });
 
 window.setLogLevel = tim.setLogLevel;

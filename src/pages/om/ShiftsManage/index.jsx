@@ -202,10 +202,10 @@ class ShiftsManage extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
       console.log('  对吗  .length ', res.member);
-      if (res.member.length > 5) {
-        tips('最多添加5个组员！', 2);
-        return;
-      }
+      // if (res.member.length > 5) {
+      //   tips('最多添加5个组员！', 2);
+      //   return;
+      // }
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

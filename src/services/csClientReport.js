@@ -19,3 +19,6 @@ export const addItem = p => post('custom_info', p);
 export const editItem = p => put(`custom_info/${p.d_id}`, p);
 export const removeItem = p => remove(`custom_info/${p.d_id}`, p);
 export const removeItems = p => remove(`custom_info/`, p);
+
+export const getClientReportUpgrade = p =>
+  noTipsGet(`console/OMS/spect/report`, p);

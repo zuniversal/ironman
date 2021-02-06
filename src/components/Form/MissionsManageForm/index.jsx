@@ -371,6 +371,9 @@ const MissionsManageForm = props => {
         label: '报修来源',
         name: 'source',
       },
+      comProps: {
+        mode: 'tags',
+      },
     },
     {
       noRule: true,

@@ -26,24 +26,24 @@ const MissionsManageTable = props => {
   } = props; //
 
   const columns = [
-    {
-      title: 'id',
-      dataIndex: 'id',
-      className: 'textCenter',
-    },
-    {
-      title: '编码',
-      dataIndex: 'name',
-      detailFn: record =>
-        // props.showDetail({ action: 'detail', d_id: record.id }),
-        props.showItemAsync({
-          action: 'missionsManageDetailAsync',
-          d_id: record.id,
-        }),
-    },
+    // {
+    //   title: 'id',
+    //   dataIndex: 'id',
+    //   className: 'textCenter',
+    // },
+    // {
+    //   title: '编码',
+    //   dataIndex: 'name',
+    //   detailFn: record =>
+    //     // props.showDetail({ action: 'detail', d_id: record.id }),
+    //     props.showItemAsync({
+    //       action: 'missionsManageDetailAsync',
+    //       d_id: record.id,
+    //     }),
+    // },
     {
       title: '客户',
-      // dataIndex: 'customer',
+      // dataIndex: 'clientType',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
         // props.showClientAsync({
@@ -54,6 +54,15 @@ const MissionsManageTable = props => {
           action: 'clientDetailAsync',
           d_id: record.customer.id,
         }),
+    },
+    {
+      title: '客户类型',
+      dataIndex: ['customer', 'type'],
+      dataIndex: 'clientType',
+    },
+    {
+      title: '客户代表',
+      dataIndex: ['customer', 'server_staff'],
     },
     {
       title: '任务类型',
@@ -77,6 +86,10 @@ const MissionsManageTable = props => {
       dataMap: missionsStatusMap,
     },
     {
+      title: '现场负责人',
+      dataIndex: 'contacts',
+    },
+    {
       title: '发起工单数',
       dataIndex: ['order_num', 'count'],
       detailFn: record =>
@@ -92,6 +105,10 @@ const MissionsManageTable = props => {
     {
       title: '创建时间',
       dataIndex: 'created_time',
+    },
+    {
+      title: '完成时间',
+      dataIndex: 'finish_time',
     },
     {
       title: '客户确认',

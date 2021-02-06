@@ -234,7 +234,7 @@ class InspectRecord extends PureComponent {
   };
 
   get renderInspectRecordForm() {
-    console.log(' renderInspectRecordForm ： ', this.props.itemDetail); //
+    console.log(' renderInspectRecordForm ： ', this.props); //
     return (
       <div className={`pdfDetail`}>
         {/* {!this.state.isShowExportPdf && (
@@ -248,6 +248,7 @@ class InspectRecord extends PureComponent {
           init={this.props.itemDetail}
           closeExportPdf={this.closeExportPdf}
           toggleExportPDF={this.props.toggleExportPDF}
+          // isExportPDF={this.props.isExportPDF}
           isExportPDF
         ></InspectRecordForm>
       </div>
@@ -375,9 +376,10 @@ class InspectRecord extends PureComponent {
     //   );
     // }
 
-    // if (this.props.isShowPdfDetail) {
-    //   return this.renderInspectRecordForm;
-    // }
+    if (this.props.isShowPdfDetail) {
+      // if (this.props.isExportPDF) {
+      return this.renderInspectRecordForm;
+    }
 
     return (
       <div className="inspectRecord">

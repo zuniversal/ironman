@@ -21,6 +21,8 @@ export const InputCom = props => {
     text,
     record,
     config,
+    keys,
+    index,
     // formType = 'Input',
   } = props; //
   const {

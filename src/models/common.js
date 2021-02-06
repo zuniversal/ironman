@@ -420,6 +420,7 @@ export default {
             work_date: inspection_task?.work_date?.split('T')[0],
           },
           status: missionsStatusMap[payload.bean.status],
+          created_time: payload.bean?.created_time?.split('T')[0],
         },
       };
     },

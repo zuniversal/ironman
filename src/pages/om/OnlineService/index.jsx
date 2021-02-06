@@ -56,7 +56,6 @@ class OnlineService extends PureComponent {
     return (
       <div className="OnlineService">
         <ChatWindow></ChatWindow>
-        OnlineService
         {/* {this.renderSmartFormModal()} */}
       </div>
     );

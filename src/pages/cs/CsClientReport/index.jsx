@@ -101,11 +101,11 @@ class ClientReport extends PureComponent {
       this.props.getListFilter({ ...params.value });
     } else {
       console.log('  对吗  params.value.length ', params.value.length);
-      if (params.value.customer_id.length) {
-        this.props.getListAsync(params.formData);
-      } else {
-        tips('请至少选择一个客户！', 2);
-      }
+      // if (params.value?.customer_id?.length) {
+      this.props.getListAsync(params.formData);
+      // } else {
+      //   tips('请至少选择一个客户！', 2);
+      // }
     }
   };
 
@@ -126,6 +126,7 @@ class ClientReport extends PureComponent {
 
       noRequest: true,
       count: this.props.dataList.length,
+      exportData: this.props.exportData,
     };
 
     return <CsClientReportTable {...tableProps}></CsClientReportTable>;
@@ -135,7 +136,7 @@ class ClientReport extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (action === 'pdf') {
+    if (['pdf', 'clientReportDetailPdf'].includes(this.props.action)) {
       this.props.onCancel({});
       return;
     }
@@ -229,7 +230,7 @@ class ClientReport extends PureComponent {
                   this.props.toggleExportPDF();
                 }}
               >
-                导出PDF
+                打印/导出PDF
               </Button>
             </div>
           }

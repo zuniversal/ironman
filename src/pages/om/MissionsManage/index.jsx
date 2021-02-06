@@ -70,6 +70,12 @@ class MissionsManage extends PureComponent {
     };
   }
 
+  exportAllDataAsync = e => {
+    console.log('    exportAllDataAsync ： ', e, this.props.selectedRowKeys);
+    this.props.exportData({
+      task_id: [],
+    });
+  };
   exportDataAsync = e => {
     console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
     if (this.props.selectedRowKeys.length > 0) {
@@ -89,6 +95,9 @@ class MissionsManage extends PureComponent {
           disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
+        </Button>
+        <Button type="primary" onClick={this.exportAllDataAsync}>
+          全部导出
         </Button>
         <Button type="primary" onClick={this.exportDataAsync}>
           导出
@@ -249,6 +258,7 @@ class MissionsManage extends PureComponent {
           customer_id,
           repair_time,
           ele_user_id: this.props.ele_user_id,
+          source: res.source ? res.source.join(',') : null,
         });
       }
       if (action === 'edit') {
@@ -281,8 +291,7 @@ class MissionsManage extends PureComponent {
       powerList: this.props.powerList,
       getTeamAsync: params => this.props.getTeamAsync({ keyword: params }),
       teamList: this.props.teamList,
-      getContractAsync: params =>
-        this.props.getContractAsync({ keyword: params }),
+      getContractAsync: params => this.props.getContractAsync({ code: params }),
       contractList: this.props.contractList,
       getTeamLeaderAsync: params =>
         this.props.getTeamLeaderAsync({ value: params }),
@@ -521,7 +530,7 @@ class MissionsManage extends PureComponent {
     //   name: '工单类型',
     // });
     this.props.getMissionClientAsync();
-    // this.props.getPowerAsync();
+    this.props.getPowerAsync();
     // this.props.getAssetsAsync();
     this.props.getTeamAsync();
     this.props.getContractAsync(); //

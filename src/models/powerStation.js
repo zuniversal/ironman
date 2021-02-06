@@ -15,6 +15,7 @@ const namespace = 'powerStation';
 const { createActions } = init(namespace);
 
 const otherActions = [
+  'exportDutyDataAsync',
   'exportDataAsync',
   'getPowerAsync',
   'getHouseNoAsync',
@@ -144,6 +145,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        d_id: payload.d_id,
       };
     },
     onCancel(state, { payload, type }) {
@@ -248,6 +250,7 @@ export default {
         powerInfoData: datas,
         outLineTableData: outline_set.map(v => ({
           ...v,
+          power_number: v.power_number.split(','),
           key: Math.random(),
         })),
         houseNoList: houseNoListData,
@@ -780,6 +783,11 @@ export default {
       const res = yield call(services.exportData, payload);
       return res;
     },
+    *exportDutyDataAsync({ payload, action, type }, { call, put }) {
+      console.log(' exportDutyDataAsync ： ', payload, type); //
+      const res = yield call(services.exportDutyData, payload);
+      return res;
+    },
 
     // *addPowerInfoAsync({ payload, action, type }, { call, put, select }) {
     //   const { powerInfoData } = yield select(state => state[namespace]);
@@ -954,11 +962,15 @@ export default {
     ) {
       const { itemDetail } = yield select(state => state[namespace]);
       console.log(' editOutLineTableItemAsync ： ', payload, itemDetail);
+      // const params = {
+      //   outline_set: payload,
+      //   // powerstation: itemDetail.id,
+      // };
       const params = {
-        outline_set: payload,
-        // powerstation: itemDetail.id,
+        ...payload,
+        power_number: payload.power_number.join(','),
       };
-      const res = yield call(services.editOutLine, payload);
+      const res = yield call(services.editOutLine, params);
       yield put(
         action({
           ...res,
