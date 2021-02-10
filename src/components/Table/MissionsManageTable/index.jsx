@@ -26,20 +26,20 @@ const MissionsManageTable = props => {
   } = props; //
 
   const columns = [
-    // {
-    //   title: 'id',
-    //   dataIndex: 'id',
-    //   className: 'textCenter',
-    // },
+    {
+      title: 'id',
+      dataIndex: 'id',
+      className: 'textCenter',
+      detailFn: record =>
+        // props.showDetail({ action: 'detail', d_id: record.id }),
+        props.showItemAsync({
+          action: 'missionsManageDetailAsync',
+          d_id: record.id,
+        }),
+    },
     // {
     //   title: '编码',
     //   dataIndex: 'name',
-    //   detailFn: record =>
-    //     // props.showDetail({ action: 'detail', d_id: record.id }),
-    //     props.showItemAsync({
-    //       action: 'missionsManageDetailAsync',
-    //       d_id: record.id,
-    //     }),
     // },
     {
       title: '客户',

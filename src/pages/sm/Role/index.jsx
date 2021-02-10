@@ -108,14 +108,25 @@ class Role extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    const filterData = this.props.permsData.filter(v => v !== 'all');
     const permsCodesMain = filterArr(
-      this.props.permsData
-        .filter(v => v !== 'all')
-        .map(v => `${v}`.slice(0, 4))
-        .map(v => Number(v + '00')),
+      filterData.map(v => `${v}`.slice(0, 4)).map(v => Number(v + '00')),
     );
-    const permsCodes = filterArr([...this.props.permsData, ...permsCodesMain]);
-    console.log(' permsCodes0 ： ', permsCodesMain, permsCodes); //
+    const permsCodesRoot = filterArr(
+      filterData.map(v => `${v}`.slice(0, 3)).map(v => Number(v + '000')),
+    );
+    const permsCodes = filterArr([
+      ...this.props.permsData,
+      ...permsCodesMain,
+      ...permsCodesRoot,
+    ]);
+    console.log(
+      ' permsCodes0 ： ',
+      filterData,
+      permsCodesMain,
+      permsCodesRoot,
+      permsCodes,
+    ); //
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //

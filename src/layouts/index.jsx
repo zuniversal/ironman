@@ -26,6 +26,8 @@ import { actions } from '@/models/layout'; //
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
 
+// import '@/static/font/iconfont.css'
+
 // // import { login,  } from '@/services/user'//
 // import axios from 'axios'; //
 // const haveToken = localStorage.getItem('token');

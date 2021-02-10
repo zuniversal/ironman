@@ -67,7 +67,14 @@ export default defineConfig({
         // ...cs,
         // ...om,
         // ...sm,
-        ...routes,
+
+        {
+          path: '/om/assessment',
+          authKey: 'assessmentConfig',
+          component: '@/pages/om/Assessment',
+          title: '考核配置',
+        },
+        // ...routes,
       ],
     },
 

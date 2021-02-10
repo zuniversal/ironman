@@ -150,7 +150,7 @@ export default {
         //   label: 'label-999',
         //   value: payload.bean.customer.name,
         // },
-        source: source.split(','),
+        source: source?.split(','),
       };
       if (payload.payload.action === 'detail') {
         itemDetail.customer_id = customer.name;

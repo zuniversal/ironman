@@ -33,8 +33,8 @@ import { connect } from 'umi';
 const getAuth = (authInfo = {}, authKey = '') => {
   const authData = authInfo[authKey];
   if (authData && Object.keys(authData).length) {
-    // if (false) {
-    if (isDev) {
+    if (false) {
+      // if (isDev) {
       const devAuth = {};
       Object.keys(authData).forEach(v => (devAuth[v] = true));
       return devAuth;
