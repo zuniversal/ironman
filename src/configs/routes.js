@@ -34,6 +34,14 @@ export const managerRoutes = [
     component: '../Home',
   },
 
+  {
+    noAuth: true,
+    path: '/om/drawPanel',
+    name: '一次线路图',
+    icon: <Icon icon={'home'} />,
+    component: '../pages/om/DrawPanel',
+  },
+
   // {
   //   path: '/om/userCenter',
   //   name: '个人中心',
