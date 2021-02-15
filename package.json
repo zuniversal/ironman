@@ -32,6 +32,7 @@
     "@topology/class-diagram": "^0.3.0",
     "@topology/core": "^0.3.28",
     "@topology/flow-diagram": "^0.3.0",
+    "@topology/iot-diagram": "0.0.1",
     "@topology/layout": "^0.3.0",
     "@topology/sequence-diagram": "^0.3.0",
     "@umijs/preset-react": "1.x",

@@ -5,12 +5,24 @@
   display: flex;
   flex-direction: column;
   border: 1px solid #d9d9d9;
+
+  height: 600px;
 }
 
 .drawPanel {
   flex: 1;
   display: flex;
-  // height: 100%;
+
+  height: 100%;
+
+  .iconImg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .toolWrapper {
+    padding: 0 0.1rem;
+  }
 
   .sideBar {
     background: #f8f8f8;
@@ -19,11 +31,16 @@
     border-right: 1px solid #d9d9d9;
 
     width: 200px;
+    width: 13rem;
+    height: 100%;
+    overflow-y: auto;
+    height: 500px;
+    // padding: 0.05rem 0.6rem;
 
     .title {
       font-weight: 600;
       font-size: 0.6rem;
-      padding: 0.05rem 0.1rem;
+      padding: 0.05rem 0.6rem;
       border-bottom: 1px solid #ddd;
 
       // &:first-child {
@@ -35,17 +52,20 @@
       display: flex;
       flex-wrap: wrap;
       // padding: 7px;
+      padding: 0.05rem 0.6rem;
       a {
         display: inline-block;
 
         flex: 1;
         margin-right: 5px;
+        margin-bottom: 5px;
         width: 20px;
         height: 20px;
         color: #595959;
 
-        .iconfont {
-          font-size: 1rem;
+        .iconfont,
+        .icons {
+          font-size: 1.3rem;
         }
       }
     }
@@ -54,12 +74,31 @@
     border-left: 1px solid #d9d9d9;
 
     width: 200px;
+    overflow-y: auto;
+    height: 500px;
+    padding: 5px;
+
+    .tipsWrapper {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: inherit;
+    }
 
     .tips {
       border-bottom: 1px solid #ccc;
+      padding-left: 10px;
+    }
+    .intro {
+      padding-left: 25px;
+      padding: 0 30px;
     }
   }
   .canvas {
     flex: 1;
+  }
+
+  .bgLayout {
+    text-align: center;
   }
 }

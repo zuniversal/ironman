@@ -1,7 +1,9 @@
-import { Menu, Avatar } from 'antd';
+import { Menu, Button, Tag, Popover } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import './style.less';
+import { FileOutlined, EditOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 const { SubMenu } = Menu;
 
@@ -48,18 +50,119 @@ const Headers = props => {
   };
 
   const { data = {} } = props.canvas;
+  const { lineName = 'curve' } = data;
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
+  console.log(' Headers ： ', props, data); //
+
+  const [isLock, setIsLock] = useState(false); // 是否处于锁定状态
+
+  const [scaleNumber, setScaleNumber] = useState(1); // 缩放的基数
+
+  const [lineStyle, setLineStyle] = useState('直线');
+
+  const [fromArrowType, setFromArrowType] = useState('无箭头');
+
+  const [toArrowType, setToArrowType] = useState('实心三角形');
+  const scaleZoomOut = () => {
+    if (scaleNumber < 5) {
+      setScaleNumber(scaleNumber + 0.5);
+      canvas.scaleTo(scaleNumber + 0.5);
+    }
+  };
+
+  const scaleZoomIn = () => {
+    if (scaleNumber > 0.5) {
+      setScaleNumber(scaleNumber - 0.5);
+      canvas.scaleTo(scaleNumber - 0.5);
+    }
+  };
+
+  const onHandleSelectMenu = data => {
+    setLineStyle(data.item.props.children);
+    canvas.data.lineName = data.key;
+    canvas.render();
+  };
+
+  const onHandleSelectMenu1 = data => {
+    setFromArrowType(data.item.props.children);
+    canvas.data.fromArrowType = data.key;
+    canvas.render();
+  };
+
+  const onHandleSelectMenu2 = data => {
+    setToArrowType(data.item.props.children);
+    canvas.data.toArrowType = data.key;
+    canvas.render();
+  };
+
+  /**
+   * 元素连线之间的选项
+   */
+
+  const menu2 = (
+    <Menu onClick={data => onHandleSelectMenu2(data)} style={{ border: 0 }}>
+      <Menu.Item key="空">无箭头</Menu.Item>
+      <Menu.Item key="triangleSolid">实心三角形</Menu.Item>
+      <Menu.Item key="triangle">空心三角形</Menu.Item>
+      <Menu.Item key="diamondSolid">实心菱形</Menu.Item>
+      <Menu.Item key="diamond">空心菱形</Menu.Item>
+      <Menu.Item key="circleSolid">实心圆</Menu.Item>
+      <Menu.Item key="circle">空心圆</Menu.Item>
+      <Menu.Item key="line">线型箭头</Menu.Item>
+      <Menu.Item key="lineUp">上单边线箭头</Menu.Item>
+      <Menu.Item key="lineDown">下单边线箭头</Menu.Item>
+    </Menu>
+  );
+
+  /**
+   * 元素连线之间的选项
+   */
+
+  const menu1 = (
+    <Menu onClick={data => onHandleSelectMenu1(data)} style={{ border: 0 }}>
+      <Menu.Item key="空">无箭头</Menu.Item>
+      <Menu.Item key="triangleSolid">实心三角形</Menu.Item>
+      <Menu.Item key="triangle">空心三角形</Menu.Item>
+      <Menu.Item key="diamondSolid">实心菱形</Menu.Item>
+      <Menu.Item key="diamond">空心菱形</Menu.Item>
+      <Menu.Item key="circleSolid">实心圆</Menu.Item>
+      <Menu.Item key="circle">空心圆</Menu.Item>
+      <Menu.Item key="line">线型箭头</Menu.Item>
+      <Menu.Item key="lineUp">上单边线箭头</Menu.Item>
+      <Menu.Item key="lineDown">下单边线箭头</Menu.Item>
+    </Menu>
+  );
+
+  /**
+   * 连线起始箭头
+   */
+
+  const menu = (
+    <Menu onClick={data => onHandleSelectMenu(data)} style={{ border: 0 }}>
+      <Menu.Item key="line">直线</Menu.Item>
+      <Menu.Item key="polyline">折线</Menu.Item>
+      <Menu.Item key="curve">曲线</Menu.Item>
+    </Menu>
+  );
 
   return (
-    <div>
+    <div className={`headerWrapper`}>
       <Menu
         className={''}
         selectedKeys={[]}
         mode="horizontal"
         onClick={onMenuClick}
       >
-        <SubMenu title="文件" className={''}>
+        <SubMenu
+          title={
+            <span className="submenu-title-wrapper">
+              {/* <FileOutlined className={`icons`}  /> */}
+              文件
+            </span>
+          }
+          className={''}
+        >
           <Menu.Item key="new" className={''}>
             新建文件
           </Menu.Item>
@@ -80,7 +183,15 @@ const Headers = props => {
             下载为SVG
           </Menu.Item>
         </SubMenu>
-        <SubMenu title="编辑" className={''}>
+        <SubMenu
+          title={
+            <span className="submenu-title-wrapper">
+              {/* <EditOutlined className={`icons`}  /> */}
+              编辑
+            </span>
+          }
+          className={''}
+        >
           <Menu.Item key="undo" className={''}>
             撤消
           </Menu.Item>
@@ -94,17 +205,14 @@ const Headers = props => {
           <Menu.Item key="cut" className={''}>
             剪切
           </Menu.Item>
-          <Menu.Item key="parse" className={''}>
+          <Menu.Item key="paste" className={''}>
             粘贴
           </Menu.Item>
         </SubMenu>
         <Menu.Item className={''}>
           <div>视图：{scale}%</div>
         </Menu.Item>
-        <SubMenu
-          title={`默认连线类型：${lineNames[data.lineName]}`}
-          className={''}
-        >
+        <SubMenu title={`默认连线类型：${lineNames[lineName]}`} className={''}>
           <Menu.Item className={''} key="curve">
             曲线
           </Menu.Item>
@@ -115,6 +223,20 @@ const Headers = props => {
             直线
           </Menu.Item>
         </SubMenu>
+
+        {/* <Button.Group  >
+          <Popover content={menu} title="默认连线类型" trigger="hover">
+            <Button>{lineStyle}</Button>
+          </Popover>
+
+          <Popover content={menu1} title="默认起点箭头" trigger="hover">
+            <Button>{fromArrowType}</Button>
+          </Popover>
+
+          <Popover content={menu2} title="默认终点箭头" trigger="hover">
+            <Button>{toArrowType}</Button>
+          </Popover>
+        </Button.Group> */}
       </Menu>
     </div>
   );

@@ -52,7 +52,7 @@ class Assessment extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return this.renderFormBtn();
+    // return this.renderFormBtn();
     return (
       <SearchKwForm
         formBtn={this.renderFormBtn}
@@ -150,13 +150,13 @@ class Assessment extends PureComponent {
   render() {
     return (
       <div className="assessment">
-        {/* {this.renderSearchForm()}
+        {/* {this.renderSearchForm()} */}
 
         {this.renderTable()}
 
-        {this.renderSmartFormModal()} */}
+        {this.renderSmartFormModal()}
 
-        {this.renderDrawPanel()}
+        {/* {this.renderDrawPanel()} */}
       </div>
     );
   }

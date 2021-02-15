@@ -1,5 +1,12 @@
 export default [
   {
+    path: '/om/drawPanel',
+    authKey: 'drawPanelConfig',
+    component: '@/pages/om/DrawPanel',
+    title: '一次线路图',
+  },
+
+  {
     path: '/om/appraise',
     authKey: 'assessmentEvaluate',
     component: '@/pages/om/Appraise',

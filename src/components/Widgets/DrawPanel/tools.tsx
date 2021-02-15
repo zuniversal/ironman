@@ -1,3 +1,5 @@
+import customIcons from './font/iconfont.json';
+
 const columns = [
   {
     title: 'Name',
@@ -19,10 +21,73 @@ const data = [
   },
 ];
 
+export const customIcon = {
+  name: 'rectangle',
+  icon: 'icon-rect',
+  data: {
+    rect: {
+      width: 50,
+      height: 50,
+    },
+    strokeStyle: 'transparent',
+    // paddingLeft: 10,
+    // paddingRight: 10,
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    name: 'rectangle',
+    // icon: String.fromCharCode(+'58899'),
+    iconFamily: 'topology',
+    iconColor: '#2f54eb',
+  },
+};
+
+export const CustomTools = {
+  group: '自定义组件',
+  children: customIcons.glyphs.map(v => ({
+    name: 'rectangle',
+    icon: `zybs icon-${v.font_class}`,
+    data: {
+      rect: {
+        width: 50,
+        height: 50,
+      },
+      strokeStyle: 'transparent',
+      name: 'rectangle',
+      icon: String.fromCharCode(+v.unicode_decimal),
+      iconFamily: 'zyb',
+    },
+  })),
+};
+
+// export const Tools = []
+// export const Tools = [CustomTools]
+
 export const Tools = [
+  // CustomTools,
   {
     group: '基本形状',
     children: [
+      {
+        name: 'rectangle',
+        icon: 'icon-rect',
+        data: {
+          text: '',
+          rect: {
+            width: 50,
+            height: 50,
+          },
+          strokeStyle: 'transparent',
+          paddingLeft: 5,
+          paddingRight: 5,
+          paddingTop: 5,
+          paddingBottom: 5,
+          name: 'rectangle',
+          // icon: String.fromCharCode(+'58984'),
+          // iconFamily: 'zyb',
+          iconFamily: 'topology',
+          // iconSize: '30',
+        },
+      },
       {
         name: 'rectangle',
         icon: 'icon-rect',
@@ -73,15 +138,15 @@ export const Tools = [
         },
       },
       {
-        name: 'triangle',
-        icon: 'icon-triangle',
+        name: 'share2',
+        icon: 'icon-share2',
         data: {
           text: '三角形',
           rect: {
             width: 100,
             height: 100,
           },
-          name: 'triangle',
+          name: 'share2',
         },
       },
       {
@@ -354,7 +419,7 @@ export const Tools = [
       },
       {
         name: '准备',
-        icon: 'icon---ready',
+        icon: 'icon-flow-ready',
         data: {
           text: '准备',
           rect: {
@@ -390,7 +455,7 @@ export const Tools = [
       },
       {
         name: '文档',
-        icon: 'icon-flow-document',
+        icon: 'icon-pause',
         data: {
           text: '文档',
           rect: {
@@ -491,7 +556,7 @@ export const Tools = [
     children: [
       {
         name: '开始',
-        icon: 'icon-inital',
+        icon: 'icon-flow-start',
         data: {
           text: '',
           rect: {
@@ -938,11 +1003,46 @@ export const Tools = [
   },
 
   {
+    group: '电气元器件',
+    children: [
+      {
+        name: 'image',
+        icon: 'icon-image',
+        type: 'img',
+        data: {
+          text: '',
+          rect: {
+            width: 50,
+            height: 50,
+          },
+          name: 'image',
+          // image: require('./machine.jpg')
+          image: '/img/switch.png',
+        },
+      },
+      {
+        name: 'image',
+        icon: 'icon-image',
+        type: 'img',
+        data: {
+          text: '',
+          rect: {
+            width: 50,
+            height: 50,
+          },
+          name: 'image',
+          // image: require('./machine.jpg')
+          image: '/img/switch2.png',
+        },
+      },
+    ],
+  },
+  {
     group: 'react组件',
     children: [
       {
         text: '按钮',
-        icon: 'icon-anniu',
+        icon: 'te-dianqi--anniu',
         name: 'button',
         color: '#f50',
         data: {
@@ -981,6 +1081,8 @@ export const Tools = [
               name: 'onClick',
             },
           ],
+          icon: String.fromCharCode(+'58883'),
+          iconFamily: 'zybs',
         },
       },
       {
@@ -1011,6 +1113,8 @@ export const Tools = [
               name: 'onChange',
             },
           ],
+          icon: String.fromCharCode(+'58909'),
+          iconFamily: 'zybs',
         },
       },
       {
@@ -1042,6 +1146,8 @@ export const Tools = [
               name: 'onChange',
             },
           ],
+          icon: String.fromCharCode(+'58901'),
+          iconFamily: 'zybs',
         },
       },
       {
@@ -1085,6 +1191,8 @@ export const Tools = [
               name: 'onClick',
             },
           ],
+          icon: String.fromCharCode(+'58926'),
+          iconFamily: 'zybs',
         },
       },
     ],

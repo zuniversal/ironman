@@ -65,15 +65,15 @@ export default defineConfig({
       routes: [
         { path: '/om/test', component: '@/pages/Test' },
         // ...cs,
-        // ...om,
+        ...om,
         // ...sm,
 
-        {
-          path: '/om/assessment',
-          authKey: 'assessmentConfig',
-          component: '@/pages/om/Assessment',
-          title: '考核配置',
-        },
+        // {
+        //   path: '/om/assessment',
+        //   authKey: 'assessmentConfig',
+        //   component: '@/pages/om/Assessment',
+        //   title: '考核配置',
+        // },
         // ...routes,
       ],
     },
