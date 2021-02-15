@@ -64,9 +64,9 @@ export default defineConfig({
       component: '@/layouts/index',
       routes: [
         { path: '/om/test', component: '@/pages/Test' },
-        // ...cs,
+        ...cs,
         ...om,
-        // ...sm,
+        ...sm,
 
         // {
         //   path: '/om/assessment',
