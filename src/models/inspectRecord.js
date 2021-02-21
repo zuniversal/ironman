@@ -3,7 +3,8 @@ import * as services from '@/services/inspectRecord';
 import * as clientServices from '@/services/client';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import { missionsStatusMap } from '@/configs';
+import { missionsStatusMap, inspectRecordDateConfig } from '@/configs';
+import moment from 'moment'; //
 
 const namespace = 'inspectRecord';
 const { createActions } = init(namespace);
@@ -95,6 +96,7 @@ export default {
         power_data = [],
         inspection_task,
         spect_out = [],
+        safety_equirpment,
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload); //
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
@@ -109,6 +111,15 @@ export default {
       //     index,
       //   }
       // });
+
+      const safetyEquirpment = {
+        ...safety_equirpment,
+      };
+      inspectRecordDateConfig.forEach((v, i) => {
+        console.log(' inspectRecordDateConfig v ： ', v, i);
+        safetyEquirpment[v] = moment(safety_equirpment[v]);
+      });
+      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment); //
 
       const itemDetail = {
         ...payload.bean,
@@ -128,6 +139,8 @@ export default {
           })),
         })),
         spectInData,
+
+        safety_equirpment: safetyEquirpment,
       };
 
       const formData = {
@@ -165,6 +178,7 @@ export default {
           ...(v.id !== payload.payload.d_id ? payload : v),
         })),
         isShowModal: false,
+        isEdit: false,
       };
     },
     removeItem(state, { payload, type }) {
@@ -252,9 +266,9 @@ export default {
       };
       const { aimFor, keys, index, formVal, form, value } = payload;
 
-      form.setFieldsValue({
-        powerData: { id: '999' },
-      });
+      // form.setFieldsValue({
+      //   powerData: { id: '999' },
+      // });
       if (aimFor === 'maxMd') {
         // if (payload.value.powerData) {
         const { powerData } = formVal;

@@ -18,6 +18,7 @@ import {
   DatePicker,
   Divider,
   TreeSelect,
+  Switch,
 } from 'antd';
 import moment from 'moment';
 
@@ -283,7 +284,11 @@ const SmartForm = (props, state) => {
   }
 
   const isInline = {
-    layout: isSearchForm ? 'inline' : 'horizontal',
+    layout: props.layout
+      ? props.layout
+      : isSearchForm
+      ? 'inline'
+      : 'horizontal',
   };
 
   const [componentSize, setComponentSize] = useState('default');
@@ -533,7 +538,14 @@ const SmartForm = (props, state) => {
         isDisabledAll,
         comProps: realComProps,
       }),
-      DatePicker: <DatePicker {...realComProps} />,
+      Switch: <Switch {...realComProps} />,
+      DatePicker: (
+        <div>
+          {item.addonBefore}
+          <DatePicker {...realComProps} />
+          {item.addonAfter}
+        </div>
+      ),
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
       RangePicker: (
         <RangePicker
@@ -604,7 +616,12 @@ const SmartForm = (props, state) => {
 
     // Warning: [antd: Form.Item] `name` is only used for validate React element. If you are using Form.Item as layout display, please remove `name` instead.
     // 注意 自定义的不带 name 的展示型 Form.Item 项不要带 name 属性 不然报错
-    if (flexRows && formType !== 'rowText' && formType !== 'CustomCom') {
+    if (
+      flexRows &&
+      formType !== 'rowText' &&
+      (formType !== 'CustomCom' || item.withFlex)
+    ) {
+      // if (flexRows && formType !== 'rowText') {
       const colForm = (
         <Col
           span={24 / Number(flexRows)}

@@ -661,6 +661,15 @@ export const fullFormLayouts = {
   },
 };
 
+export const halfFormLayouts = {
+  labelCol: {
+    sm: { span: 12 }, //
+  },
+  wrapperCol: {
+    sm: { span: 12 }, //
+  },
+};
+
 export const repairSourceConfig = [
   {
     label: '客户',
@@ -966,4 +975,24 @@ export const billTypeConfig = [
     label: '两部制 按合同最大需量计',
     value: '4',
   },
+];
+
+export const normalConfig = [
+  {
+    label: '正常',
+    value: '正常',
+  },
+  {
+    label: '异常',
+    value: '异常',
+  },
+];
+
+export const inspectRecordDateConfig = [
+  'es_check_date',
+  'gw_check_date',
+  'im_check_date',
+  'ig_check_date',
+  'is_check_date',
+  'ex_check_date',
 ];

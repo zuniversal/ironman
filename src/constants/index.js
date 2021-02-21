@@ -70,6 +70,7 @@ export const homeMap = {
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
+export const DRAW_PANEL = '/om/drawPanel';
 
 const animations = [
   'bounce',

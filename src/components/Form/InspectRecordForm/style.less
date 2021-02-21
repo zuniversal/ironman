@@ -10,6 +10,14 @@
   padding-bottom: 200px;
 }
 
+.modalBtn {
+  text-align: center;
+  padding: 20px 16px;
+  .ant-btn {
+    width: 120px;
+  }
+}
+
 .formWrapper {
   page-break-inside: avoid;
   margin-top: 10px;
@@ -89,8 +97,16 @@
   }
 
   .withBefore {
-    .ant-input-affix-wrapper {
+    .ant-input-affix-wrapper,
+    .ant-picker {
       width: 130px !important;
+    }
+    .ant-select {
+      width: 70px;
+    }
+    .ant-select-selection-item {
+      // display: none;
+      padding: 0;
     }
   }
 

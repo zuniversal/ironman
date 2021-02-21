@@ -32,3 +32,12 @@ export const exportDutyData = p => get('console/OMS/spect/export_report', p);
 export const syncOA = p => noTipsGet(`console/OMS/powerstation/oa`, p);
 export const createQRCode = p =>
   noTipsGet(`console/OMS/powerstation/qrcode/${p.d_id}`, p);
+
+export const getCircuitItem = p =>
+  noTipsGet(`console/OMS/powerstation/${p.d_id}/circuit`, p);
+export const addCircuitItem = p =>
+  post(`console/OMS/powerstation/${p.power_station_id}/circuit`, p);
+export const editCircuitItem = p =>
+  put(`console/OMS/powerstation/${p.d_id}/circuit/${p.circuit_id}`, p);
+export const removeCircuitItem = p =>
+  remove(`console/OMS/powerstation/${p.d_id}/circuit/${p.circuit_id}`, p);

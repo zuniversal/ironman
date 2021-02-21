@@ -140,6 +140,7 @@ const ClientReportTable = props => {
         </a>
       )}
       {record.finish == 0 && <a disabled>未录入电费账单</a>}
+      <a onClick={() => props.showFormModal({ action: 'add' })}>录入</a>
       {/* <a onClick={() => showDetail({ action: 'detail' })}>查看</a> */}
       {/* <a onClick={() => showDetail({ action: 'detail' })}>查看加急账单</a> */}
       {/* <a onClick={() => add({ action: 'add' })}>录入</a>

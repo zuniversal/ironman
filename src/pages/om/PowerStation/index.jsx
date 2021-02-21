@@ -320,8 +320,21 @@ class PowerStation extends PureComponent {
         removeOutLineTableItemAsync={this.props.removeOutLineTableItemAsync}
         modifyOutLineTableItem={this.props.modifyOutLineTableItem}
         outLineTableData={this.props.outLineTableData}
+        removeCircuitItemAsync={this.removeCircuitItemAsync}
       ></PowerStationForm>
     );
+  };
+  removeCircuitItemAsync = params => {
+    console.log(
+      ' removeCircuitItemAsync ： ',
+      params,
+      this.props,
+      this.props.location.query.powerstation_id,
+    ); //
+    this.props.removeCircuitItemAsync({
+      power_station_id: this.props.location.query.powerstation_id,
+      circuit_id: params.circuit_id,
+    });
   };
   getPowerInfoAsync = params =>
     this.props.getPowerInfoAsync({ power_number: params });

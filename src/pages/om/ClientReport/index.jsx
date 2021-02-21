@@ -18,7 +18,7 @@ import { connect } from 'umi';
 const TITLE = '客户';
 
 const titleMap = {
-  add: `新建${TITLE}`,
+  add: `新建电费账单`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,
@@ -107,6 +107,7 @@ class ClientReport extends PureComponent {
       noRequest: true,
       count: this.props.dataList.length,
       exportData: this.props.exportData,
+      add: this.props.addItemAsync,
     };
 
     return <ClientReportTable {...tableProps}></ClientReportTable>;
@@ -150,13 +151,15 @@ class ClientReport extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
+    if (action === 'add') {
+      return <ClientReportForm {...formComProps}></ClientReportForm>;
+    }
     if (['add', 'edit'].includes(action)) {
       // return <ClientReportPdf></ClientReportPdf>;
       return this.renderExportPdf;
     }
     console.log(' formComProps ： ', formComProps); //
     return this.renderExportPdf;
-    return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
     return ['uploadFile'].some(v => v === this.props.action)

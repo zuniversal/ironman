@@ -32,6 +32,11 @@ const otherActions = [
   'addOutLineTableItemAsync',
   'editOutLineTableItemAsync',
   'removeOutLineTableItemAsync',
+
+  'getCircuitItemAsync',
+  'addCircuitItemAsync',
+  'editCircuitItemAsync',
+  'removeCircuitItemAsync',
 ];
 
 const batchTurnActions = ['modifyPowerInfo', 'modifyOutLineTableItem'];
@@ -594,6 +599,25 @@ export default {
         outLineTableData: newData,
       };
     },
+
+    addCircuitItem(state, { payload, type }) {
+      console.log(' addCircuitItem ： ', state, payload); //
+      return {
+        ...state,
+      };
+    },
+    editCircuitItem(state, { payload, type }) {
+      console.log(' editCircuitItem ： ', state, payload); //
+      return {
+        ...state,
+      };
+    },
+    removeCircuitItem(state, { payload, type }) {
+      console.log(' removeCircuitItem ： ', state, payload); //
+      return {
+        ...state,
+      };
+    },
   },
 
   effects: {
@@ -995,6 +1019,19 @@ export default {
           payload,
         }),
       );
+    },
+
+    *addCircuitItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.addCircuitItem, payload);
+      yield put({ type: 'addCircuitItem' });
+    },
+    *editCircuitItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.editCircuitItem, payload);
+      yield put({ type: 'editCircuitItem' });
+    },
+    *removeCircuitItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.removeCircuitItem, payload);
+      yield put({ type: 'removeCircuitItem' });
     },
   },
   // subscriptions: {

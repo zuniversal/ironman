@@ -16,6 +16,7 @@ import {
   InputNumber,
   Tabs,
   Divider,
+  DatePicker,
 } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
 import SmartImg from '@/common/SmartImg'; //
@@ -23,7 +24,11 @@ import InputCom from '@/components/Widgets/InputCom'; //
 // import SmartExportPdf from '@/common/SmartExportPdf'; //
 import useExportPdf from '@/hooks/useExportPdf'; //
 import { isDev } from '@/constants';
-import { voltageLevelConfig } from '@/configs';
+import {
+  voltageLevelConfig,
+  normalConfig,
+  inspectRecordDateConfig,
+} from '@/configs';
 
 const { TabPane } = Tabs;
 
@@ -127,6 +132,21 @@ const electricFormLayouts = {
   },
 };
 
+const StatusSelect = props => {
+  const { selectData = normalConfig, comProps = {} } = props; //
+  return (
+    <Form.Item name={props.name} noStyle>
+      <Select className="select-before" {...comProps}>
+        {selectData.map(v => (
+          <Option value={v.value} key={v.value} title={v.label} {...v}>
+            {v.label}
+          </Option>
+        ))}
+      </Select>
+    </Form.Item>
+  );
+};
+
 const formRef = React.createRef();
 
 const inputBefore = (
@@ -174,7 +194,7 @@ const createFormList = props => {
                     }`}
                     {...layouts}
                   >
-                    <Input className={'w-78'} disabled />
+                    <Input className={'w-78'} disabled={props.disabled} />
                   </Form.Item>
                 );
 
@@ -200,7 +220,10 @@ const createFormList = props => {
                   // rowDivider: <Divider>{[v.titleKey]}</Divider>,
                   // rowDivider: <Divider className={'rowDivider'} key={`${index}-${i}`}>{v.label}</Divider>,
                   rowDivider: (
-                    <Divider className={'rowDivider'} key={`${index}-${i}`}>
+                    <Divider
+                      className={'rowDivider'}
+                      key={`${props?.dataInit?.spect_out[index]?.outlineName}-${i}`}
+                    >
                       {props?.dataInit?.spect_out[index]?.outlineName}
                     </Divider>
                   ),
@@ -225,11 +248,73 @@ const createFormList = props => {
   return spectOutItem;
 };
 
+const mergeData = params => {
+  const { dataInit, formValues, tabIndex } = params;
+  console.log(' mergeData   ,   ： ', params, dataInit, formValues);
+  const setData = {
+    ...dataInit,
+    ...formValues,
+    safety_equirpment: {
+      ...dataInit.safety_equirpment,
+      ...formValues.safety_equirpment,
+    },
+    building: {
+      ...dataInit.building,
+      ...formValues.building,
+    },
+    customer: {
+      ...dataInit.customer,
+      ...formValues.customer,
+    },
+    power_data: dataInit.power_data.map((item, idx) => {
+      console.log(' item ： ', item, formValues); //
+      const matchItem = idx == tabIndex;
+      return {
+        ...item,
+        ...(matchItem ? formValues?.powerData : {}),
+        spect_in: matchItem
+          ? item.spect_in?.map((v, i) => ({
+              ...v,
+              ...(formValues.spectIn ? formValues.spectIn[i] : {}),
+            }))
+          : item.spect_in,
+        spect_out: matchItem
+          ? item.spect_out?.map((v, i) => ({
+              ...v,
+              ...(formValues.spectOut ? formValues.spectOut[i] : {}),
+            }))
+          : item.spect_out,
+      };
+    }),
+  };
+  console.log(' setData ： ', setData); //
+  return setData;
+};
+
+const handleMaxChange = payload => {
+  console.log(' handleMaxChange   payload,   ： ', payload);
+  const { aimFor, keys, index, formVal, form, value } = payload;
+  const { powerData } = formVal;
+  console.log(' powerData ： ', powerData); //
+  const maxMDKeys = ['peak_md', 'flat_1_md', 'flat_2_md', 'valley_md'];
+  const maxMDArr = maxMDKeys.map(v => powerData[v]).filter(v => v);
+  const maxMDVal = Math.max(...maxMDArr);
+  const maxMD = maxMDVal * powerData.multiplying_power;
+  form.setFieldsValue({
+    powerData: {
+      ...powerData,
+      max_md: maxMD,
+      [keys]: value,
+    },
+  });
+};
+
 const InspectRecordForm = props => {
   const { formBtn, init, isExportPDF, formData, ...rest } = props; //
   // const [isEdit, setIsEdit] = useState(false);
   // const {isEdit,  } = props//
-  const isEdit = isDev ? true : props.isEdit;
+  // const isEdit = isDev ? true : props.isEdit;
+  const isEdit = props.isEdit;
 
   // const [ modalExport, setModalExport ] = useState(true)
   const [modalExport, setModalExport] = useState(false);
@@ -268,15 +353,24 @@ const InspectRecordForm = props => {
       power_data[0] && power_data[0].spect_out ? power_data[0]?.spect_out : [],
     index: 0,
   });
-  console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data); //
+  console.log(
+    ' inspectRecordform dataInit ： ',
+    file,
+    props.propsForm.getFieldsValue(),
+    dataInit,
+    power_data,
+  ); //
 
   const onChange = index => {
+    const formValues = props.propsForm.getFieldsValue();
     console.log(
       ' onChange   index,   ： ',
+      tabIndex,
       index,
       dataInit,
       power_data,
       power_data[index],
+      formValues,
     );
     // props.init.powerData = {
     //   ...power_data[index],
@@ -288,6 +382,10 @@ const InspectRecordForm = props => {
     //   spectIn: power_data[index].spect_in,
     //   spectOut: power_data[index].spect_out,
     // });
+
+    const setData = mergeData({ dataInit, formValues, tabIndex });
+    console.log('  setData ：', setData); //
+
     props.propsForm.setFieldsValue({
       spectIn: [],
       spectOut: [],
@@ -296,7 +394,7 @@ const InspectRecordForm = props => {
       // ...dataInit,
       index,
       powerData: dataInit.power_data[index],
-      spectIn: dataInit.power_data[index].spect_in,
+      spectIn: [...dataInit.power_data[index].spect_in],
       spectOut: [...dataInit.power_data[index].spect_out],
       // spectOut: index == 0 ? [] : [
       //   ...dataInit.power_data[index].spect_out,
@@ -305,7 +403,9 @@ const InspectRecordForm = props => {
     };
     console.log(
       ' inspectRecordform setFields ：',
+      props.propsForm.getFieldsValue(),
       setFields,
+      setData,
       setFields.index,
       dataInit,
       setFields.spectOut,
@@ -314,6 +414,7 @@ const InspectRecordForm = props => {
     props.propsForm.setFieldsValue({
       ...setFields,
     });
+    setDataInit(setData);
     setTabIndex(index);
   };
 
@@ -351,11 +452,12 @@ const InspectRecordForm = props => {
     });
   };
 
-  const counterRef = React.useRef();
-  const htmlRef = React.useRef();
+  // const counterRef = React.useRef();
+  // const htmlRef = React.useRef();
 
   const spectInVoltageConfig = [
     { name: 'v_ab', label: 'AB' },
+    // { label: '电流表A', name: 'id' },
     { name: 'v_bc', label: 'BC' },
     { name: 'v_ca', label: 'CA' },
   ];
@@ -434,6 +536,7 @@ const InspectRecordForm = props => {
 
   const spectInConfig = [
     { label: '高压进侧线', name: '', type: 'rowDivider' },
+    { label: '高压进侧线', name: '', type: 'rowText' },
     { label: '电压表', name: '', type: 'rowText' },
     ...spectInVoltageConfig,
     { label: '电流表', name: '', type: 'rowText' },
@@ -443,17 +546,19 @@ const InspectRecordForm = props => {
     { label: '', name: '', type: 'rowText' },
   ];
   const spectInItem = createFormList({
+    disabled: !isEdit,
     config: spectInConfig,
     name: 'spectInData',
     name: 'spectIn',
+    // name: ['power_data', 'spect_in',],
     key: dataInit?.powerData?.id,
   });
 
-  const rowCom = (
-    <Divider className={'rowDivider'}>
-      {dataInit?.spectOut[0]?.outlineName}
-    </Divider>
-  );
+  // const rowCom = (
+  //   <Divider className={'rowDivider'}>
+  //     {dataInit?.spectOut[tabIndex]?.outlineName}
+  //   </Divider>
+  // );
   // const rowCom = <Divider className={'rowDivider'} >{'2222'}</Divider>
 
   const spectOutConfig = [
@@ -466,10 +571,11 @@ const InspectRecordForm = props => {
       name: '',
       layouts: fullFormLayouts,
       type: 'rowDivider',
-      rowCom,
+      // rowCom,
     },
     { label: '高压出线侧', name: '', type: 'rowText' },
     { label: '电流表A', name: 'o_ia' },
+    // { label: '电流表A', name: ['outline', 'id'] },
     { label: '电流表B', name: 'o_ib' },
     { label: '电流表C', name: 'o_ic' },
     { label: '显示器A', name: 'monitor_a' },
@@ -499,6 +605,7 @@ const InspectRecordForm = props => {
     { label: '', name: '', type: 'rowText' },
   ];
   const spectOutItem = createFormList({
+    disabled: !isEdit,
     config: spectOutConfig,
     // name: 'spect_out',
     name: 'spectOut',
@@ -537,6 +644,7 @@ const InspectRecordForm = props => {
   ];
 
   const powerDataItem = createFormList({
+    disabled: !isEdit,
     config: powerDataConfig,
     name: 'power_data',
   });
@@ -565,8 +673,13 @@ const InspectRecordForm = props => {
     //   },
     //   electricity_user: '',
     // })
+
+    // const value = e.target.value
+    // const formVal = props.propsForm.getFieldsValue()
+
     // return
-    props.onMaxChange({
+    // props.onMaxChange({
+    handleMaxChange({
       keys,
       aimFor: 'maxMd',
       value: e.target.value,
@@ -823,7 +936,7 @@ const InspectRecordForm = props => {
           useIndex
           // tabItemKey={'power_number'}
           tabPrefix={'电压出线侧设备'}
-          onChange={onOutLineChange}
+          // onChange={onOutLineChange}
           tabData={dataInit.spect_out}
         ></TabPanes>
       ),
@@ -1314,83 +1427,166 @@ const InspectRecordForm = props => {
       },
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '高压试电笔(1年)',
         // name: ['safety_equirpment', 'electroprobe_status'],
-        name: ['safety_equirpment', 'es_check_date'],
+        // name: ['safety_equirpment', 'es_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore:
-          props.init.safety_equirpment?.electroprobe_status || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.electroprobe_status || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'electroprobe_status']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'electroprobe_status']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'es_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '接地线(4年)',
         // name: ['safety_equirpment', 'ground_wire'],
-        name: ['safety_equirpment', 'gw_check_date'],
+        // name: ['safety_equirpment', 'gw_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.ground_wire || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.ground_wire || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'ground_wire']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'ground_wire']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'gw_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '绝缘毯(4年)',
         // name: ['safety_equirpment', 'insulating_mat'],
-        name: ['safety_equirpment', 'im_check_date'],
+        // name: ['safety_equirpment', 'im_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_mat || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.insulating_mat || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'insulating_mat']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'insulating_mat']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'im_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '绝缘手套(半年)',
         // name: ['safety_equirpment', 'insulating_gloves'],
-        name: ['safety_equirpment', 'ig_check_date'],
+        // name: ['safety_equirpment', 'ig_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_gloves || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.insulating_gloves || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'insulating_gloves']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'insulating_gloves']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'ig_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '绝缘鞋(半年)',
         // name: ['safety_equirpment', 'insulating_shoes'],
-        name: ['safety_equirpment', 'is_check_date'],
+        // name: ['safety_equirpment', 'is_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.insulating_shoes || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.insulating_shoes || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'insulating_shoes']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'insulating_shoes']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'is_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
     {
-      // formType: 'DatePicker',
+      formType: 'DatePicker',
+      formType: 'CustomCom',
       itemProps: {
         label: '灭火器压力(半年)',
         // name: ['safety_equirpment', 'extinguisher'],
-        name: ['safety_equirpment', 'ex_check_date'],
+        // name: ['safety_equirpment', 'ex_check_date'],
         className: 'withBefore',
       },
       comProps: {
-        addonBefore: props.init.safety_equirpment?.extinguisher || '正常',
-        // className: 'w-130',
+        // addonBefore: props.init.safety_equirpment?.extinguisher || '正常',
+        // addonBefore: <StatusSelect name={['safety_equirpment', 'extinguisher']}></StatusSelect>,
+        className: 'w-130',
       },
+      withFlex: true,
+      CustomCom: (
+        <div>
+          <StatusSelect
+            name={['safety_equirpment', 'extinguisher']}
+            comProps={{ disabled: !isEdit }}
+          ></StatusSelect>
+          <Form.Item name={['safety_equirpment', 'ex_check_date']} noStyle>
+            <DatePicker disabled={!isEdit} />
+          </Form.Item>
+        </div>
+      ),
     },
 
     {
@@ -1509,16 +1705,43 @@ const InspectRecordForm = props => {
   const actionBtn = (
     <div className="btnWrapper fje ">
       {/* <Button type="primary" onClick={() => setIsEdit(!isEdit)}> */}
-      {false &&
-        (isEdit ? (
-          <Button type="primary" onClick={props.editItem}>
-            保存
-          </Button>
-        ) : (
-          <Button type="primary" onClick={props.toggleEdit}>
-            编辑
-          </Button>
-        ))}
+      {/* {false && */}
+      {isEdit ? (
+        <Button
+          type="primary"
+          onClick={() => {
+            const formValues = props.propsForm.getFieldsValue();
+            console.log(' confirmBtn ： ', props, formValues); //
+            const { safety_equirpment } = formValues;
+            const safetyEquirpment = {
+              ...safety_equirpment,
+            };
+            inspectRecordDateConfig.forEach((v, i) => {
+              console.log(' inspectRecordDateConfig v ： ', v, i);
+              safetyEquirpment[v] = safety_equirpment[v].format('YYYY-MM-DD');
+            });
+            const setData = mergeData({ dataInit, formValues, tabIndex });
+            const {
+              spectIn,
+              spectOut,
+              spectInData,
+              powerData,
+              ...rest
+            } = setData;
+            props.editItemAsync({
+              action: 'edit',
+              ...rest,
+              safety_equirpment: safetyEquirpment,
+            });
+          }}
+        >
+          保存
+        </Button>
+      ) : (
+        <Button type="primary" onClick={props.toggleEdit}>
+          编辑
+        </Button>
+      )}
       <Button type="primary" onClick={() => setModalExport(!modalExport)}>
         导出pdf
       </Button>
@@ -1545,10 +1768,34 @@ const InspectRecordForm = props => {
     filename: formTitle,
   });
 
+  const confirmBtn = (
+    <Button
+      className={'m-r-10 '}
+      type="primary"
+      onClick={e => {
+        if (!isEdit) {
+          props.onCancel();
+          return;
+        }
+      }}
+    >
+      确认
+    </Button>
+  );
+
+  const footerCom = (
+    <div className="btnWrapper modalBtn">
+      <Button className={'m-r-10 '} onClick={props.onCancel}>
+        取消
+      </Button>
+      {confirmBtn}
+    </div>
+  );
+
   return (
     <div
       className={`inspectRecordForm ${isExport ? 'exportPdf' : ''}`}
-      ref={counterRef}
+      // ref={counterRef}
       // key={tabIndex}
     >
       {/* {props.showActionBtn && modalExport ? actionBtn : null} */}
@@ -1586,6 +1833,9 @@ const InspectRecordForm = props => {
           // setInit
         ></SmartForm>
       </div>
+
+      {/* {!props.action === 'detail' ? footerCom} */}
+      {/* {footerCom} */}
     </div>
   );
 };

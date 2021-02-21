@@ -135,6 +135,11 @@ class InspectRecord extends PureComponent {
           ...res,
         });
       }
+      // if (action === 'detail') {
+      //   // this.props.editItemAsync({
+      //   //   ...res,
+      //   // });
+      // }
       if (action === 'inspectReport') {
         // this.props.inspectReportAsync({
         //   ...res,
@@ -205,10 +210,12 @@ class InspectRecord extends PureComponent {
         editItem={this.props.editItem}
         toggleEdit={this.props.toggleEdit}
         isEdit={this.props.isEdit}
-        onFieldChange={this.props.onFieldChange}
+        // onFieldChange={this.props.onFieldChange}
         onMaxChange={this.props.onFieldChange}
         formKey={this.props.formKey}
         formData={this.props.formData}
+        editItemAsync={this.props.editItemAsync}
+        onCancel={this.props.onCancel}
         // key={this.props.formKey}
       ></InspectRecordForm>
     );
@@ -220,6 +227,12 @@ class InspectRecord extends PureComponent {
     // );
   };
   renderSmartFormModal = params => {
+    const isNoFooter = ['detail'].includes(this.props.action);
+    const detailProps = isNoFooter
+      ? {
+          footer: null,
+        }
+      : {}; //
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -227,6 +240,7 @@ class InspectRecord extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        // {...detailProps}
       >
         {this.renderModalContent()}
       </SmartFormModal>

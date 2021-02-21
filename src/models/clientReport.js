@@ -95,20 +95,21 @@ export default {
             ? (
                 (v.volume - Number(v.old_volume)) /
                 Number(v.old_volume)
-              ).toFixed(4) * 100
+              ).toFixed(2) * 100
             : 0;
           const amountRate = v.old_amount
             ? (
-                (v.amount - Number(v.old_amount)) /
-                Number(v.old_amount)
-              ).toFixed(4) * 100
+                (((v.amount - Number(v.old_amount)) * 100) /
+                  Number(v.old_amount)) *
+                100
+              ).toFixed(2) / 100
             : 0;
 
           // const rateAvg = (v.rate - v.old_rate) / v.old_rate
           // const rateAvg = v.amount / v.old_amount
-
+          // console.log(' volumeRate amountRate ： ', volumeRate, amountRate, v.amount - Number(v.old_amount), v.amount, Number(v.old_amount), Number(v.old_amount),   )//
           const rate = oldAvg ? (nowAvg / oldAvg).toFixed(3) * 100 : 0;
-
+          // console.log(' (v.volume - Number(v.old_volume) ： ', v.volume - Number(v.old_volume), v.volume, Number(v.old_volume), volumeRate,  )//
           // console.log(' volumeAll ： ', v, v.valley_volume, volumeAll, priceAll, calcAll, v.volume - v.old_volume, v.amount - v.old_amount, volumeRate, amountRate, nowAvg, oldAvg, rate, )//
 
           return {

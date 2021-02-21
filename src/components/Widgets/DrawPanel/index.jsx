@@ -16,6 +16,7 @@ import reactNodes from './Plugin/React-nodes';
 
 import * as FileSaver from 'file-saver';
 var C2S;
+// import 'canvas2svg'//
 
 // import { Topology } from 'topology-core';
 // import { Options } from 'topology-core/options';
@@ -49,6 +50,7 @@ import ltdxIcons from './ltdx.json';
 import lteeIcons from './ltee.json';
 import './styles/ltdx.css';
 import './styles/ltee.css';
+// import './Plugin/canvas2svg';
 
 // console.log(' customIcons ： ', customIcons,  )//
 
@@ -84,7 +86,7 @@ const CustomTools = props => (
 
 const { TabPane } = Tabs;
 
-const CanvasProps = props => {
+const CanvasProps = React.memo(props => {
   console.log(' CanvasProps   props, ,   ： ', props);
   return (
     <div className="tipsWrapper">
@@ -99,7 +101,7 @@ const CanvasProps = props => {
       </ul>
     </div>
   );
-};
+});
 
 const DrawTool = React.memo(
   btn => {
@@ -404,12 +406,18 @@ const DrawPanel = props => {
   };
 
   const handle_save = data => {
-    FileSaver.saveAs(
-      new Blob([JSON.stringify(canvas.data)], {
-        type: 'text/plain;charset=utf-8',
-      }),
-      `le5le.topology.json`,
-    );
+    // FileSaver.saveAs(
+    //   new Blob([JSON.stringify(canvas.data)], {
+    //     type: 'text/plain;charset=utf-8',
+    //   }),
+    // );
+
+    const res = new Blob([JSON.stringify(canvas.data)], {
+      type: 'text/plain;charset=utf-8',
+    });
+    console.log('  res ：', res); //
+    const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
+    console.log('  res2 ：', res2); //
   };
 
   const handle_savePng = data => {
@@ -417,6 +425,8 @@ const DrawPanel = props => {
   };
 
   const handle_saveSvg = data => {
+    const C2S = window.C2S;
+    console.log(' C2S ： ', window, C2S); //
     const ctx = new C2S(canvas.canvas.width + 200, canvas.canvas.height + 200);
     for (const item of canvas.data.nodes) {
       item.render(ctx);

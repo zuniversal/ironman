@@ -28,10 +28,12 @@ import {
 } from '@/components/Table/PowerStationInfoTable'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
 import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs'; //
+import { DRAW_PANEL } from '@/constants'; //
 import { formatConfig, reportRadioOp } from '@/utils'; //
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
 import ReduxTable from '@/common/ReduxTable';
+import { history } from 'umi';
 
 const selectData = [
   { label: '正常', value: true, key: 'yes' },
@@ -289,11 +291,48 @@ const PowerStationForm = props => {
 
     <UploadCom
       label={'上传电气图'}
+      label={'一次电气图'}
       action={'file'}
       action={'/api/v1/upload'}
       name={'file'}
       key={'file'}
-      // extra={'支持扩展名:pdf、jpg、png'}
+      extra={
+        <div className={`extraWrapper`}>
+          {/* <Button
+            type="primary"
+            onClick={() => {
+              console.log(' xxxx ： ',    )// 
+              history.push(DRAW_PANEL)
+            }}
+            size={'small'}
+          >
+            编辑
+          </Button>
+          <Button
+            type="wa"
+            onClick={() => props.removeCircuitItem()}
+            size={'small'}
+          >
+            删除
+          </Button> */}
+
+          <a
+            className={`actionBtn`}
+            onClick={() => {
+              console.log(' xxxx ： '); //
+              history.push(`${DRAW_PANEL}?powerstation_id=${props.init.id}`);
+            }}
+          >
+            编辑
+          </a>
+          <a
+            className={`actionBtn removeBtn`}
+            onClick={() => props.removeCircuitItemAsync()}
+          >
+            删除
+          </a>
+        </div>
+      }
       init={props.init}
       formAction={props.action}
       formItemProps={{
