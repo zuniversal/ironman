@@ -50,6 +50,7 @@ import * as weakServices from '@/services/weak';
 import * as workOrderServices from '@/services/workOrder';
 import * as newsKnowServices from '@/services/newsKnow';
 import * as knowledgeCateServices from '@/services/knowledgeCate';
+import * as electricBillServices from '@/services/electricBill';
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
@@ -58,6 +59,7 @@ import {
   missionsTypeMap,
   inspectMissionsStatusMap,
   customerTypeMap,
+  inspectRecordDateConfig,
 } from '@/configs';
 
 const namespace = 'common';
@@ -127,6 +129,7 @@ const serviceConfigMap = {
 
   newsKnowServices,
   knowledgeCateServices,
+  electricBillServices,
 };
 
 const getService = action => {
@@ -395,14 +398,51 @@ export default {
     },
     inspectRecordDetail(state, { payload, type }) {
       console.log(' inspectRecordDetail ： ', payload); //
+      const {
+        created_time = '',
+        start_time = '',
+        end_time = '',
+        power_data = [],
+        inspection_task,
+        spect_out = [],
+        safety_equirpment,
+      } = payload.bean;
+      console.log(' getItemgetItem ： ', payload); //
+      const safetyEquirpment = {
+        ...safety_equirpment,
+      };
+      inspectRecordDateConfig.forEach((v, i) => {
+        console.log(' inspectRecordDateConfig v ： ', v, i);
+        safetyEquirpment[v] = moment(safety_equirpment[v]);
+      });
+      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment); //
+
+      const itemDetail = {
+        ...payload.bean,
+        workDate:
+          inspection_task && inspection_task.work_date
+            ? inspection_task.work_date.split('T')[0]
+            : '',
+        powerData: power_data && power_data[0],
+        power_data: power_data.map(v => ({
+          ...v,
+          spect_out: v.spect_out.map(v => ({
+            ...v,
+            outlineName: v?.outline?.name,
+          })),
+        })),
+        safety_equirpment: safetyEquirpment,
+      };
+
       return {
         ...state,
         action: payload.payload.action,
         isShowCommonModal: true,
-        itemDetail: {
-          ...payload.bean,
-          powerData: payload.bean.power_data && payload.bean.power_data[0],
-        },
+        // itemDetail: {
+        //   ...payload.bean,
+        //   powerData: payload.bean.power_data && payload.bean.power_data[0],
+        // },
+        itemDetail,
       };
     },
     weakDetail(state, { payload, type }) {

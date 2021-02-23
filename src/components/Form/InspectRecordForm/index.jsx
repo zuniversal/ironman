@@ -28,6 +28,7 @@ import {
   voltageLevelConfig,
   normalConfig,
   inspectRecordDateConfig,
+  pressureCheckConfig,
 } from '@/configs';
 
 const { TabPane } = Tabs;
@@ -134,6 +135,7 @@ const electricFormLayouts = {
 
 const StatusSelect = props => {
   const { selectData = normalConfig, comProps = {} } = props; //
+  console.log(' StatusSelect   config,   ： ', props);
   return (
     <Form.Item name={props.name} noStyle>
       <Select className="select-before" {...comProps}>
@@ -462,9 +464,12 @@ const InspectRecordForm = props => {
     { name: 'v_ca', label: 'CA' },
   ];
   const spectInElectricConfig = [
-    { name: 'i_ab', label: 'A' },
-    { name: 'i_bc', label: 'B' },
-    { name: 'i_ca', label: 'C' },
+    // { name: 'i_ab', label: 'A' },
+    // { name: 'i_bc', label: 'B' },
+    // { name: 'i_ca', label: 'C' },
+    { name: 'i_a', label: 'A' },
+    { name: 'i_b', label: 'B' },
+    { name: 'i_c', label: 'C' },
   ];
   const spectInMonitorConfig = [
     { name: 'monitor_a', label: 'A' },
@@ -690,6 +695,20 @@ const InspectRecordForm = props => {
     }); //
   };
 
+  const onActivePowerChange = (e, keys) => {
+    console.log(' onActivePowerChange   e, keys,   ： ', e, keys);
+    console.log(' onChange ： ', keys, e.target.value, props, dataInit); //
+    const { powerData } = props.propsForm.getFieldsValue();
+    const cos = powerData.total_active_power / powerData.reactive_power_1;
+    console.log('  cos ：', cos); //
+    // props.propsForm.setFieldsValue({
+    //   powerData: {
+    //     ...powerData,
+    //     cos,
+    //   },
+    // });
+  };
+
   const powerDataDetail = [
     {
       formType: 'CustomCom',
@@ -770,6 +789,9 @@ const InspectRecordForm = props => {
       itemProps: {
         label: '总有功(02)',
         name: ['powerData', 'total_active_power'],
+      },
+      comProps: {
+        onChange: e => onActivePowerChange(e, 'total_active_power'),
       },
     },
     {
@@ -867,12 +889,24 @@ const InspectRecordForm = props => {
         label: '无功(08)',
         name: ['powerData', 'reactive_power_1'],
       },
+      comProps: {
+        onChange: e => onActivePowerChange(e, 'reactive_power_1'),
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '实际功率因素',
         name: ['powerData', 'real_power_factor'],
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Search',
+      selectData: pressureCheckConfig,
+      itemProps: {
+        label: '失压检测',
+        name: ['powerData', 'pressure_check'],
       },
     },
   ];
@@ -1711,7 +1745,7 @@ const InspectRecordForm = props => {
           type="primary"
           onClick={() => {
             const formValues = props.propsForm.getFieldsValue();
-            console.log(' confirmBtn ： ', props, formValues); //
+            console.log(' confirmBtn ： ', props, dataInit, formValues); //
             const { safety_equirpment } = formValues;
             const safetyEquirpment = {
               ...safety_equirpment,
@@ -1720,7 +1754,12 @@ const InspectRecordForm = props => {
               console.log(' inspectRecordDateConfig v ： ', v, i);
               safetyEquirpment[v] = safety_equirpment[v].format('YYYY-MM-DD');
             });
-            const setData = mergeData({ dataInit, formValues, tabIndex });
+            const setData = mergeData({
+              dataInit,
+              formValues,
+              tabIndex,
+              isSave: true,
+            });
             const {
               spectIn,
               spectOut,
@@ -1728,11 +1767,42 @@ const InspectRecordForm = props => {
               powerData,
               ...rest
             } = setData;
-            props.editItemAsync({
+
+            const powerDatas = setData.power_data.map(v => {
+              const { id, ...restPower } = v;
+              return {
+                ...restPower,
+                spect_in: v.spect_in.map(item => {
+                  const { id, ...rest } = item;
+                  return rest;
+                }),
+                spect_out: v.spect_out.map(item => {
+                  const { id, outline, outlineName, ...rest } = item;
+                  return {
+                    ...rest,
+                    // outline: outline.id,
+                    outline,
+                    name: outline.name,
+                  };
+                }),
+              };
+            });
+            console.log('  powerDatas ：', powerDatas); //
+
+            const params = {
               action: 'edit',
               ...rest,
-              safety_equirpment: safetyEquirpment,
-            });
+              safety_equirpment: {
+                ...dataInit.safety_equirpment,
+                ...safetyEquirpment,
+              },
+              inspection_task: dataInit.inspection_task.id,
+              power_data: powerDatas,
+              // station: dataInit.station.id,
+            };
+            console.log(' params ： ', params); //
+
+            props.editItemAsync(params);
           }}
         >
           保存

@@ -64,6 +64,53 @@ export const CustomTools = {
 
 export const Tools = [
   // CustomTools,
+
+  {
+    group: '绑定监测点',
+    children: [
+      {
+        name: '监测点',
+        icon: 'icon-final',
+        data: {
+          isPoint: true,
+          text: '监测点',
+          rect: {
+            width: 200,
+            height: 80,
+          },
+          name: 'text',
+        },
+      },
+      {
+        name: '带图标监测点',
+        icon: 'icon-final',
+        data: {
+          isPoint: true,
+          text: '带图标监测点',
+          rect: {
+            width: 200,
+            height: 80,
+          },
+          name: 'text',
+          icon: '\ue61d',
+          iconFamily: 'topology',
+          iconSize: 10,
+          iconColor: 'red',
+          iconRect: {
+            width: 20,
+            height: 20,
+          },
+          fullIconRect: {
+            width: 20,
+            height: 20,
+          },
+          strokeStyle: 'transparent',
+          name: 'rectangle',
+        },
+      },
+    ],
+  },
+
   {
     group: '基本形状',
     children: [
@@ -1128,212 +1175,212 @@ export const Tools = [
       },
     ],
   },
-  {
-    group: 'react组件',
-    children: [
-      {
-        text: '按钮',
-        icon: 'icon-rect',
-        name: 'button',
-        color: '#f50',
-        data: {
-          autoRect: true,
-          strokeStyle: '#ccc',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          hideAnchor: true,
-          name: 'block',
-          data: {
-            // 组件属性配置
-            props: {
-              type: 'primary',
-              children: '查询xx',
-            },
-            // 异步请求配置
-            http: {
-              api: '/api/topologies?',
-              type: 'get',
-              paramsGetStyle: 'subscribe',
-              paramsArr: [],
-            },
-            // 绑定如图表图例id
-            bind: [],
-          },
-          events: [
-            {
-              type: 'doFn',
-              action: 'Function',
-              value: `console.log(' xxxx ： ',  )//  `,
-              params: 123,
-              name: 'onClick',
-            },
-          ],
-          // icon: String.fromCharCode(+'58883'),
-          // iconFamily: 'zybs',
-        },
-      },
+  // {
+  //   group: 'react组件',
+  //   children: [
+  //     {
+  //       text: '按钮',
+  //       icon: 'icon-rect',
+  //       name: 'button',
+  //       color: '#f50',
+  //       data: {
+  //         autoRect: true,
+  //         strokeStyle: '#ccc',
+  //         rect: {
+  //           width: 50,
+  //           height: 50,
+  //         },
+  //         hideAnchor: true,
+  //         name: 'block',
+  //         data: {
+  //           // 组件属性配置
+  //           props: {
+  //             type: 'primary',
+  //             children: '查询xx',
+  //           },
+  //           // 异步请求配置
+  //           http: {
+  //             api: '/api/topologies?',
+  //             type: 'get',
+  //             paramsGetStyle: 'subscribe',
+  //             paramsArr: [],
+  //           },
+  //           // 绑定如图表图例id
+  //           bind: [],
+  //         },
+  //         events: [
+  //           {
+  //             type: 'doFn',
+  //             action: 'Function',
+  //             value: `console.log(' xxxx ： ',  )//  `,
+  //             params: 123,
+  //             name: 'onClick',
+  //           },
+  //         ],
+  //         // icon: String.fromCharCode(+'58883'),
+  //         // iconFamily: 'zybs',
+  //       },
+  //     },
 
-      {
-        text: '按钮',
-        icon: 'icon-rect',
-        name: 'button',
-        color: '#f50',
-        data: {
-          autoRect: true,
-          strokeStyle: '#fff',
-          rect: {
-            x: 100,
-            y: 200,
-            width: 100,
-            height: 35,
-          },
-          hideAnchor: true,
-          name: 'button',
-          data: {
-            // 组件属性配置
-            props: {
-              type: 'primary',
-              children: '查询',
-              onClick: () => {
-                console.log(' onClickonClick ： '); //
-              },
-            },
-            // 异步请求配置
-            http: {
-              api: '/api/topologies?',
-              type: 'get',
-              paramsGetStyle: 'subscribe',
-              paramsArr: [],
-            },
-            // 绑定如图表图例id
-            bind: [],
-          },
-          events: [
-            {
-              type: 'doFn',
-              action: 'Function',
-              value: `let fun = (a) =>  params + a; fun(123); return 1231;  `,
-              params: 123,
-              name: 'onClick',
-            },
-          ],
-          icon: String.fromCharCode(+'58883'),
-          iconFamily: 'zybs',
-        },
-      },
-      {
-        text: '日期组件',
-        icon: 'icon-rect',
-        name: 'datePicker',
-        data: {
-          strokeStyle: '#fff',
-          hideAnchor: true,
-          rect: {
-            x: 100,
-            y: 200,
-            width: 300,
-            height: 30,
-          },
-          name: 'datePicker',
-          data: {
-            props: {
-              allowClear: true,
-            },
-          },
-          events: [
-            {
-              type: 'doFn',
-              action: 'Function',
-              value: `let fun = (a) =>  console.log(params + a); fun(123);`,
-              params: 123,
-              name: 'onChange',
-            },
-          ],
-          icon: String.fromCharCode(+'58909'),
-          iconFamily: 'zybs',
-        },
-      },
-      {
-        text: '输入框文本',
-        icon: 'icon-rect',
-        name: 'input',
-        data: {
-          strokeStyle: '#fff',
-          hideAnchor: true,
-          rect: {
-            x: 100,
-            y: 200,
-            width: 200,
-            height: 100,
-          },
-          name: 'input',
-          data: {
-            props: {
-              allowClear: true,
-              placeholder: '请输入...',
-            },
-          },
-          events: [
-            {
-              type: 'doFn',
-              action: 'Function',
-              value: `let fun = (a) =>  console.log(params + a); fun(123);`,
-              params: 123,
-              name: 'onChange',
-            },
-          ],
-          icon: String.fromCharCode(+'58901'),
-          iconFamily: 'zybs',
-        },
-      },
-      {
-        text: '表格',
-        icon: 'icon-rect',
-        name: 'table',
-        data: {
-          strokeStyle: '#fff',
-          hideAnchor: true,
-          rect: {
-            x: 100,
-            y: 200,
-            width: 600,
-            height: 400,
-          },
-          name: 'table',
-          data: {
-            props: {
-              columns: columns,
-              dataSource: data,
-              bordered: true,
-              pagination: false,
-              className: 'simpleTable',
-            },
-            // 异步请求配置
-            http: {
-              api: '/api/topologies?',
-              type: 'get',
-              paramsGetStyle: 'subscribe',
-              paramsArr: [
-                { key: 'pageIndex', value: 1 },
-                { key: 'pageCount', value: 10 },
-              ],
-            },
-          },
-          events: [
-            {
-              type: 'doFn',
-              action: 'Function',
-              value: `let fun = (a) =>  console.log(params + a); fun(123);`,
-              params: 123,
-              name: 'onClick',
-            },
-          ],
-          icon: String.fromCharCode(+'58926'),
-          iconFamily: 'zybs',
-        },
-      },
-    ],
-  },
+  //     {
+  //       text: '按钮',
+  //       icon: 'icon-rect',
+  //       name: 'button',
+  //       color: '#f50',
+  //       data: {
+  //         autoRect: true,
+  //         strokeStyle: '#fff',
+  //         rect: {
+  //           x: 100,
+  //           y: 200,
+  //           width: 100,
+  //           height: 35,
+  //         },
+  //         hideAnchor: true,
+  //         name: 'button',
+  //         data: {
+  //           // 组件属性配置
+  //           props: {
+  //             type: 'primary',
+  //             children: '查询',
+  //             onClick: () => {
+  //               console.log(' onClickonClick ： '); //
+  //             },
+  //           },
+  //           // 异步请求配置
+  //           http: {
+  //             api: '/api/topologies?',
+  //             type: 'get',
+  //             paramsGetStyle: 'subscribe',
+  //             paramsArr: [],
+  //           },
+  //           // 绑定如图表图例id
+  //           bind: [],
+  //         },
+  //         events: [
+  //           {
+  //             type: 'doFn',
+  //             action: 'Function',
+  //             value: `let fun = (a) =>  params + a; fun(123); return 1231;  `,
+  //             params: 123,
+  //             name: 'onClick',
+  //           },
+  //         ],
+  //         icon: String.fromCharCode(+'58883'),
+  //         iconFamily: 'zybs',
+  //       },
+  //     },
+  //     {
+  //       text: '日期组件',
+  //       icon: 'icon-rect',
+  //       name: 'datePicker',
+  //       data: {
+  //         strokeStyle: '#fff',
+  //         hideAnchor: true,
+  //         rect: {
+  //           x: 100,
+  //           y: 200,
+  //           width: 300,
+  //           height: 30,
+  //         },
+  //         name: 'datePicker',
+  //         data: {
+  //           props: {
+  //             allowClear: true,
+  //           },
+  //         },
+  //         events: [
+  //           {
+  //             type: 'doFn',
+  //             action: 'Function',
+  //             value: `let fun = (a) =>  console.log(params + a); fun(123);`,
+  //             params: 123,
+  //             name: 'onChange',
+  //           },
+  //         ],
+  //         icon: String.fromCharCode(+'58909'),
+  //         iconFamily: 'zybs',
+  //       },
+  //     },
+  //     {
+  //       text: '输入框文本',
+  //       icon: 'icon-rect',
+  //       name: 'input',
+  //       data: {
+  //         strokeStyle: '#fff',
+  //         hideAnchor: true,
+  //         rect: {
+  //           x: 100,
+  //           y: 200,
+  //           width: 200,
+  //           height: 100,
+  //         },
+  //         name: 'input',
+  //         data: {
+  //           props: {
+  //             allowClear: true,
+  //             placeholder: '请输入...',
+  //           },
+  //         },
+  //         events: [
+  //           {
+  //             type: 'doFn',
+  //             action: 'Function',
+  //             value: `let fun = (a) =>  console.log(params + a); fun(123);`,
+  //             params: 123,
+  //             name: 'onChange',
+  //           },
+  //         ],
+  //         icon: String.fromCharCode(+'58901'),
+  //         iconFamily: 'zybs',
+  //       },
+  //     },
+  //     {
+  //       text: '表格',
+  //       icon: 'icon-rect',
+  //       name: 'table',
+  //       data: {
+  //         strokeStyle: '#fff',
+  //         hideAnchor: true,
+  //         rect: {
+  //           x: 100,
+  //           y: 200,
+  //           width: 600,
+  //           height: 400,
+  //         },
+  //         name: 'table',
+  //         data: {
+  //           props: {
+  //             columns: columns,
+  //             dataSource: data,
+  //             bordered: true,
+  //             pagination: false,
+  //             className: 'simpleTable',
+  //           },
+  //           // 异步请求配置
+  //           http: {
+  //             api: '/api/topologies?',
+  //             type: 'get',
+  //             paramsGetStyle: 'subscribe',
+  //             paramsArr: [
+  //               { key: 'pageIndex', value: 1 },
+  //               { key: 'pageCount', value: 10 },
+  //             ],
+  //           },
+  //         },
+  //         events: [
+  //           {
+  //             type: 'doFn',
+  //             action: 'Function',
+  //             value: `let fun = (a) =>  console.log(params + a); fun(123);`,
+  //             params: 123,
+  //             name: 'onClick',
+  //           },
+  //         ],
+  //         icon: String.fromCharCode(+'58926'),
+  //         iconFamily: 'zybs',
+  //       },
+  //     },
+  //   ],
+  // },
 ];

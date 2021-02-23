@@ -1,8 +1,8 @@
-import { Menu, Button, Tag, Popover } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import './style.less';
-import { FileOutlined, EditOutlined } from '@ant-design/icons';
+import { FileOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Menu, Button, Popover, Select } from 'antd';
 import { useState } from 'react';
 
 const { SubMenu } = Menu;
@@ -11,6 +11,26 @@ const lineNames = {
   curve: '曲线',
   polyline: '折线',
   line: '直线',
+};
+
+const CircuitSelect = props => {
+  const { selectData = [], comProps = {} } = props; //
+  console.log(' CircuitSelect   config,   ： ', props);
+  return (
+    <Select
+      className="circuitSelect"
+      {...comProps}
+      onSelect={props.onSelect}
+      defaultValue={props.drawId}
+      key={props.drawId}
+    >
+      {selectData.map(v => (
+        <Select.Option value={v.value} key={v.value} title={v.label} {...v}>
+          {v.label}
+        </Select.Option>
+      ))}
+    </Select>
+  );
 };
 
 const Headers = props => {
@@ -256,7 +276,40 @@ const Headers = props => {
       </Menu>
 
       <div className="right">
+        <Popover content={<div>操作提示</div>} title="Title">
+          <InfoCircleOutlined />
+        </Popover>
         <div className={`headerItem`}>视图：{scale}%</div>
+        <CircuitSelect
+          selectData={props.circuitList}
+          onSelect={props.circuitSelectChange}
+          drawId={props.drawId}
+        ></CircuitSelect>
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(' props.toggleIsPreview ： '); //
+            props.toggleIsPreview();
+          }}
+          size={'small'}
+        >
+          预览
+        </Button>
+        <Button
+          // type="primary"
+          onClick={() => {
+            console.log(' props.new ： '); //
+            props.dispatch({
+              type: 'event/emit',
+              payload: {
+                event: 'new',
+              },
+            });
+          }}
+          size={'small'}
+        >
+          新建
+        </Button>
         <Button
           type="primary"
           onClick={() => {
@@ -272,6 +325,16 @@ const Headers = props => {
           size={'small'}
         >
           保存
+        </Button>
+        <Button
+          danger
+          onClick={() => {
+            console.log(' props.save ： '); //
+            props.removeDraw();
+          }}
+          size={'small'}
+        >
+          删除
         </Button>
       </div>
     </div>

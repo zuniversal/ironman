@@ -1,20 +1,11 @@
 import { init, action } from '@/utils/createAction'; //
-import * as services from '@/services/powerStation';
-import * as screenServices from '@/services/screen';
+import * as services from '@/services/electricBill';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import { history } from 'umi';
 
-const namespace = 'drawPanel';
+const namespace = 'electricBill';
 const { createActions } = init(namespace);
 
-const otherActions = [
-  'getCircuitItemAsync',
-  'addCircuitItemAsync',
-  'editCircuitItemAsync',
-  'removeCircuitItemAsync',
-  'getPowerPointListAsync',
-  'getPowerPointRealListAsync',
-];
+const otherActions = [];
 
 const batchTurnActions = [];
 
@@ -37,10 +28,6 @@ export default {
     d_id: '',
 
     searchInfo: {},
-    canvasData: {},
-    powerPointList: [],
-    powerPointRealList: [],
-    circuitList: [],
   },
 
   reducers: {
@@ -50,7 +37,6 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
-        canvasData: payload.canvasData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -59,7 +45,6 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
-        canvasData: {},
       };
     },
     getList(state, { payload, type }) {
@@ -107,55 +92,6 @@ export default {
         ),
       };
     },
-
-    getCircuitItem(state, { payload, type }) {
-      console.log(' getCircuitItem ： ', state, payload); //
-      return {
-        ...state,
-        circuitList: formatSelectList(
-          payload.list.map((v, index) => {
-            console.log(' v, index ： ', v, index, {
-              ...v,
-              label: `线路图-${index + 1}`,
-            }); //
-            const { deleted, ...rest } = v;
-            return { ...rest, label: `线路图-${index + 1}`, id: `${v.id}` };
-          }),
-          'label',
-        ),
-      };
-    },
-    addCircuitItem(state, { payload, type }) {
-      console.log(' addCircuitItem ： ', state, payload); //
-      return {
-        ...state,
-      };
-    },
-    editCircuitItem(state, { payload, type }) {
-      console.log(' editCircuitItem ： ', state, payload); //
-      return {
-        ...state,
-      };
-    },
-    removeCircuitItem(state, { payload, type }) {
-      console.log(' removeCircuitItem ： ', state, payload); //
-      return {
-        ...state,
-      };
-    },
-
-    getPowerPointList(state, { payload, type }) {
-      return {
-        ...state,
-        powerPointList: formatSelectList(payload.list, 'name', 'line'),
-      };
-    },
-    getPowerPointRealList(state, { payload, type }) {
-      return {
-        ...state,
-        powerPointRealList: formatSelectList(payload.list, 'name'),
-      };
-    },
   },
 
   effects: {
@@ -171,7 +107,6 @@ export default {
         searchInfo,
         action,
         params,
-        history,
       ); //
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
@@ -191,37 +126,6 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
-    },
-
-    *getCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const { powerstation_id, number } = history.location.query;
-      const res = yield call(services.getCircuitItem, {
-        power_station_id: powerstation_id,
-      });
-      yield put({ type: 'getCircuitItem', payload: { ...res } });
-    },
-    *addCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addCircuitItem, payload);
-      yield put({ type: 'getCircuitItemAsync' });
-    },
-    *editCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editCircuitItem, payload);
-      yield put({ type: 'getCircuitItemAsync' });
-    },
-    *removeCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeCircuitItem, payload);
-      yield put({ type: 'getCircuitItemAsync' });
-    },
-
-    *getPowerPointListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPowerPointListAsync ： ', payload); //
-      const res = yield call(screenServices.getPowerPointList, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *getPowerPointRealListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPowerPointRealListAsync ： ', payload); //
-      const res = yield call(screenServices.getPowerPointRealList, payload);
-      yield put(action({ ...res, payload }));
     },
   },
 };

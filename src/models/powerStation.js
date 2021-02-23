@@ -200,7 +200,8 @@ export default {
       //   itemDetail.service_team = itemDetail.service_team.split(',')
       // }
       if (
-        itemDetail.inspection_type === 0 &&
+        // itemDetail.inspection_type === 0 &&
+        itemDetail.inspection_type !== 1 &&
         Array.isArray(itemDetail.service_team)
       ) {
         console.log(' itemDetail.service_team 0 ： ', itemDetail.service_team); //

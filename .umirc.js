@@ -64,10 +64,6 @@ export default defineConfig({
       component: '@/layouts/index',
       routes: [
         // { path: '/om/test', component: '@/pages/Test' },
-        // ...cs,
-        // ...om,
-        // ...sm,
-
         {
           path: '/om/inspectRecord',
           authKey: 'inspectionRecord',
@@ -86,6 +82,10 @@ export default defineConfig({
           component: '@/pages/om/DrawPanel',
           title: '一次线路图',
         },
+
+        // ...cs,
+        ...om,
+        // ...sm,
 
         // ...routes,
       ],

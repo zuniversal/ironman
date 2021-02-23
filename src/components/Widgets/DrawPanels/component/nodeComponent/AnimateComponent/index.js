@@ -12,6 +12,7 @@ const Page = ({ canvasData }) => {
     node.fillStyle = '';
     node.rotate = '';
     const state = Node.cloneState(node);
+    console.log(' onHandleStyleSelectChange ： ', node, canvas, state); //
     switch (e) {
       case 'upDown':
         state.rect.y -= 10;
@@ -114,6 +115,7 @@ const Page = ({ canvasData }) => {
   };
 
   const onHandleSwitchChange = e => {
+    console.log(' onHandleSwitchChange ： ', node, canvas); //
     if (e) {
       node.animateStart = Date.now();
       canvas.animate();

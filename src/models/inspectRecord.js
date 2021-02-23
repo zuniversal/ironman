@@ -349,7 +349,8 @@ export default {
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);

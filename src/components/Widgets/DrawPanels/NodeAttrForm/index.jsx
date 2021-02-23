@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
-import { halfFormLayouts } from '@/configs'; //
+import { halfFormLayouts, powerPointItemConfig } from '@/configs'; //
 import { Node } from '@topology/core';
 import { canvas } from '../index';
 import {
@@ -18,6 +18,43 @@ import {
 const NodeAttrForm = props => {
   console.log(' NodeAttrForm   props, ,   ： ', props);
   const { node } = props.data;
+
+  const pointConfig = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '绑定监测点',
+      },
+    },
+    {
+      formType: 'Select',
+      selectData: props.powerPointList,
+      itemProps: {
+        label: '检测点',
+        name: 'powerPoint',
+      },
+      comProps: {
+        // onSelect: ,
+        // mode: 'multiple',
+        className: 'powerPoint',
+      },
+      flexRow: 1,
+    },
+    {
+      formType: 'Select',
+      selectData: powerPointItemConfig,
+      itemProps: {
+        label: '检测字段',
+        name: 'powerPointKey',
+      },
+      comProps: {
+        // onSelect: ,
+        mode: 'multiple',
+        className: 'powerPoint',
+      },
+      flexRow: 1,
+    },
+  ];
 
   const onHandleStyleSelectChange = e => {
     console.log(' onHandleStyleSelectChange ： ', node, canvas); //
@@ -138,20 +175,20 @@ const NodeAttrForm = props => {
   };
 
   const animateConfig = [
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '动画时长',
-        name: 'animateDuration',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '循环次数',
-        name: 'animateCycle',
-      },
-    },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '动画时长',
+    //     name: 'animateDuration',
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '循环次数',
+    //     name: 'animateCycle',
+    //   },
+    // },
     // {
     //   label: '下个动画',
     //   name: 'nextAnimate',
@@ -161,7 +198,7 @@ const NodeAttrForm = props => {
       selectData: animateTypeConfig,
       itemProps: {
         label: '特效',
-        name: 'style',
+        name: 'animateStyle',
       },
       comProps: {
         onSelect: onHandleStyleSelectChange,
@@ -447,6 +484,12 @@ const NodeAttrForm = props => {
         name: 'icon',
       },
     },
+    {
+      itemProps: {
+        label: '图标大小',
+        name: 'iconSize',
+      },
+    },
 
     {
       itemProps: {
@@ -511,6 +554,7 @@ const NodeAttrForm = props => {
   ];
 
   const formItemConfig = [
+    ...pointConfig,
     {
       formType: 'rowText',
       itemProps: {
@@ -571,7 +615,7 @@ const NodeAttrForm = props => {
     // onFormValueChange(params.formData);
     onFormValueChange({
       ...params.formData,
-      text: 'zzzzzz\nsssss\n' + `aaa\n`,
+      // text: 'zzzzzz\nsssss\n' + `aaa\n`,
     });
   };
 
@@ -611,12 +655,14 @@ const NodeAttrForm = props => {
             ...v,
             itemProps: {
               ...v.itemProps,
-              className: v.formType === 'rowText' ? 'w100' : 'w-90',
+              className: `${v.formType === 'rowText' ? 'w100' : 'w-90'} ${
+                v.itemProps ? v.itemProps.className : ''
+              } `,
             },
             comProps: {
               ...(v.comProps ?? {}),
               size: 'small',
-              className: 'w-90',
+              className: `w-90 ${v.comProps ? v.comProps.className : ''} `,
             },
           }))}
           noRuleAll
@@ -625,6 +671,7 @@ const NodeAttrForm = props => {
           formLayouts={halfFormLayouts}
           init={props.data?.node}
           onFieldChange={onFormLayoutChange}
+          key={props.data.node?.id}
         ></SmartForm>
       </div>
 

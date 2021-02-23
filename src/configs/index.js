@@ -996,3 +996,135 @@ export const inspectRecordDateConfig = [
   'is_check_date',
   'ex_check_date',
 ];
+
+export const powerPointItemConfig = [
+  {
+    label: '线路号',
+    value: 'line',
+  },
+  {
+    label: 'A相电流',
+    value: 'ua',
+  },
+  {
+    label: 'B相电流',
+    value: 'ub',
+  },
+  {
+    label: 'C相电流',
+    value: 'uc',
+  },
+  {
+    label: 'A相电压',
+    value: 'ia',
+  },
+  {
+    label: 'B相电压',
+    value: 'ib',
+  },
+  {
+    label: 'C相电压',
+    value: 'ic',
+  },
+  {
+    label: 'A相功率',
+    value: 'pa',
+  },
+  {
+    label: 'B相功率',
+    value: 'pb',
+  },
+  {
+    label: 'C相功率',
+    value: 'pc',
+  },
+  {
+    label: '总功率',
+    value: 'psum',
+  },
+  {
+    label: 'A相无功功率',
+    value: 'qa',
+  },
+  {
+    label: 'B相无功功率',
+    value: 'qb',
+  },
+  {
+    label: 'C相无功功率',
+    value: 'qc',
+  },
+  {
+    label: '总无功功率',
+    value: 'qsum',
+  },
+  {
+    label: 'A相功率因数',
+    value: 'pfa',
+  },
+  {
+    label: 'B相功率因数',
+    value: 'pfb',
+  },
+  {
+    label: 'C相功率因数',
+    value: 'pfc',
+  },
+  {
+    label: '总功率因数',
+    value: 'pfsum',
+  },
+  {
+    label: '频率',
+    value: 'fr',
+  },
+  {
+    label: '有功需量',
+    value: 'px',
+  },
+  {
+    label: '感性无功',
+    value: 'eq1',
+  },
+  {
+    label: '容性无功',
+    value: 'eq2',
+  },
+  {
+    label: '总有功',
+    value: 'ep',
+  },
+  {
+    label: '线路温度',
+    value: 'tc',
+  },
+  {
+    label: '环境温度',
+    value: 't',
+  },
+  {
+    label: '环境湿度',
+    value: 's',
+  },
+  {
+    label: '时间',
+    value: 'tm',
+  },
+];
+
+export const powerPointItemMap = arrMapObj(powerPointItemConfig);
+
+export const pressureCheckConfig = [
+  {
+    label: '正常',
+    value: '正常',
+  },
+  {
+    label: '异常',
+    value: '异常',
+  },
+  {
+    label: '无',
+    value: '无',
+  },
+];

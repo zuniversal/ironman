@@ -539,13 +539,14 @@ const SmartForm = (props, state) => {
         comProps: realComProps,
       }),
       Switch: <Switch {...realComProps} />,
-      DatePicker: (
-        <div>
-          {item.addonBefore}
-          <DatePicker {...realComProps} />
-          {item.addonAfter}
-        </div>
-      ),
+      // DatePicker: (
+      //   <div>
+      //     {item.addonBefore}
+      //     <DatePicker {...realComProps} />
+      //     {item.addonAfter}
+      //   </div>
+      // ),
+      DatePicker: <DatePicker {...realComProps} />,
       MonthPicker: <DatePicker {...realComProps} picker="month" />,
       RangePicker: (
         <RangePicker

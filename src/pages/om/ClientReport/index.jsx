@@ -147,6 +147,7 @@ class ClientReport extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
+      electricBillList: this.props.electricBillList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -232,6 +233,7 @@ class ClientReport extends PureComponent {
 
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    this.props.getElectricBillAsync();
     setTimeout(() => {
       console.log('  延时器 ： ');
       // this.props.getListAsync({

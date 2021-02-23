@@ -8,6 +8,7 @@ import React, {
 import './style.less';
 import { Modal, Tabs, Button, DatePicker, Table, Input } from 'antd';
 import { connect } from 'umi';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 var C2S;
 // import 'canvas2svg'//
@@ -30,10 +31,10 @@ import reactNodes from './Plugin/React-nodes';
 import Header from './Header';
 import CanvasContextMenu from './canvasContextMenu';
 
-import NodeComponent from './component/nodeComponent';
-import BackgroundComponent from './component/backgroundComponent';
-import LineComponent from './component/lineComponent';
-import MyComponent from './MyComponent';
+// import NodeComponent from './component/nodeComponent';
+// import BackgroundComponent from './component/backgroundComponent';
+// import LineComponent from './component/lineComponent';
+// import MyComponent from './MyComponent';
 
 // import '@/static/fonts/libs/iconfont.css';
 // import customIcons from '@/static/font/iconfont.json';
@@ -55,7 +56,24 @@ import './Plugin/canvas2svg';
 import NodeAttrForm from './NodeAttrForm';
 import CanvasAttrForm from './CanvasAttrForm';
 import LineAttrForm from './LineAttrForm';
-import Preview from './Preview'; //
+import { isDev } from '@/constants';
+// import Preview from './Preview'; //
+
+import './fonts/iconfont.css';
+import './fonts/libs/iconfont.css';
+// import ltdxIcons from './fonts/iconfont.json';
+// import lteeIcons from './fonts/libs/iconfont.json';
+
+const { confirm } = Modal;
+
+function showConfirm(props) {
+  confirm({
+    title: '删除提示',
+    icon: <ExclamationCircleOutlined />,
+    content: '确认删除吗？',
+    onOk: props.onOk,
+  });
+}
 
 const CustomTools = props => (
   <div>
@@ -140,6 +158,19 @@ const DrawTool = React.memo(props => {
   });
 });
 
+export const blob2JSON = props => {
+  const res = new Blob([JSON.stringify(props.data)], {
+    type: 'text/plain;charset=utf-8',
+  });
+  let reader = new FileReader(); // 创建读取文件对象
+  reader.readAsText(res, 'utf-8'); // 设置读取的数据以及返回的数据类型为utf-8
+  reader.onload = e => {
+    const drawRes = JSON.parse(reader.result);
+    console.log(' blob2JSON drawRes ： ', drawRes); //
+    props.cb(drawRes);
+  };
+};
+
 const canvasRegister = () => {
   registerFlow();
   registerActivity();
@@ -170,8 +201,22 @@ const canvasOptions = {
 const DrawPanel = props => {
   const [data, setData] = useState(null);
   const [event, setEvent] = useState(props.event);
+  const [isPreview, setIsPreview] = useState(false);
+  const [previewData, setPreviewData] = useState(null);
+  const [drawId, setDrawId] = useState(props.circuitList[0]?.id);
+  const [drawData, setDrawData] = useState(props.circuitList[0]?.draw);
 
-  return <Preview></Preview>;
+  useEffect(() => {
+    console.log('  对吗  props.circuitList.length ', props.circuitList);
+    if (props.circuitList.length > 0) {
+      if (!drawId) {
+        setDrawId(props.circuitList[0]?.id);
+        setDrawData(props.circuitList[0]?.draw);
+        canvas.open(props.circuitList[0]?.draw);
+      }
+    }
+  }, [props.circuitList]);
+
   const [selected, setState] = useState({
     node: null,
     line: null,
@@ -197,6 +242,8 @@ const DrawPanel = props => {
     selected,
     contextmenu,
     canvasOptions,
+    drawId,
+    drawData,
   );
 
   const onMessage = (event, data) => {
@@ -402,6 +449,7 @@ const DrawPanel = props => {
 
   const handle_new = data => {
     console.log(' handle_new ： ', data); //
+    setDrawId(null);
     canvas.open({ nodes: [], lines: [] });
   };
 
@@ -476,22 +524,26 @@ const DrawPanel = props => {
     const res = new Blob([JSON.stringify(canvas.data)], {
       type: 'text/plain;charset=utf-8',
     });
-    console.log('  res ：', res); //
+    console.log('  handle_upload res ：', res); //
     let reader = new FileReader(); // 创建读取文件对象
-    reader.addEventListener('loadend', function() {
-      //
-      let res = JSON.parse(reader.result); // 返回的数据
-      console.log(res, '返回结果数据'); // { name: "小明" }
-    });
+    // reader.addEventListener('loadend', function() {
+    //   //
+    //   let res = JSON.parse(reader.result); // 返回的数据
+    //   console.log(res, '返回结果数据'); // { name: "小明" }
+    // });
     reader.readAsText(res, 'utf-8'); // 设置读取的数据以及返回的数据类型为utf-8
     reader.onload = e => {
       const drawRes = JSON.parse(reader.result);
       console.log(' handle_upload drawRes ： ', drawRes); //
-      props.saveDraw(drawRes);
+      props.saveDraw({
+        draw: drawRes,
+        circuit_id: drawId,
+      });
     };
 
-    const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
-    console.log('  res2 ：', res2); //
+    console.log('  res2 22：', reader.result); //
+    // const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
+    // console.log(' res2 ： ', res2,  )//
   };
 
   const handle_savePng = data => {
@@ -658,6 +710,8 @@ const DrawPanel = props => {
     canvas.grid = true;
     canvas.rule = true;
 
+    canvas.open(drawData);
+
     document.onclick = event => {
       console.log(' document ： ', event); //
       setContextmenu({
@@ -716,6 +770,7 @@ const DrawPanel = props => {
         // 遍历查找修改的属性，赋值给原始Node
         for (const key in changedValues.node) {
           if (Array.isArray(changedValues.node[key])) {
+            selected.node[key] = changedValues.node[key];
           } else if (typeof changedValues.node[key] === 'object') {
             for (const k in changedValues.node[key]) {
               selected.node[key][k] = changedValues.node[key][k];
@@ -859,16 +914,16 @@ const DrawPanel = props => {
     // return <NodeAttrForm></NodeAttrForm>
 
     return {
-      node: selected && (
-        <NodeComponent
-          data={selected}
-          onFormValueChange={onHandleFormValueChange}
-          onEventValueChange={onEventValueChange}
-          onUpdateComponentProps={value => onUpdateComponentProps(value)}
-          onUpdateHttpProps={value => onUpdateHttpProps(value)}
-          // ref={nodeFormRef}
-        />
-      ), // 渲染Node节点类型的组件
+      // node: selected && (
+      //   <NodeComponent
+      //     data={selected}
+      //     onFormValueChange={onHandleFormValueChange}
+      //     onEventValueChange={onEventValueChange}
+      //     onUpdateComponentProps={value => onUpdateComponentProps(value)}
+      //     onUpdateHttpProps={value => onUpdateHttpProps(value)}
+      //     // ref={nodeFormRef}
+      //   />
+      // ), // 渲染Node节点类型的组件
       node: selected && (
         <NodeAttrForm
           data={selected}
@@ -876,21 +931,22 @@ const DrawPanel = props => {
           onEventValueChange={onEventValueChange}
           onUpdateComponentProps={value => onUpdateComponentProps(value)}
           onUpdateHttpProps={value => onUpdateHttpProps(value)}
+          powerPointList={props.powerPointList}
         ></NodeAttrForm>
       ),
-      line: selected && (
-        <LineComponent
-          data={selected}
-          onFormValueChange={onHandleLineFormValueChange}
-        />
-      ), // 渲染线条类型的组件
+      // line: selected && (
+      //   <LineComponent
+      //     data={selected}
+      //     onFormValueChange={onHandleLineFormValueChange}
+      //   />
+      // ), // 渲染线条类型的组件
       line: selected && (
         <LineAttrForm
           data={selected}
           onFormValueChange={onHandleLineFormValueChange}
         />
       ),
-      default: canvas && <BackgroundComponent data={canvas} />, // 渲染画布背景的组件
+      // default: canvas && <BackgroundComponent data={canvas} />, // 渲染画布背景的组件
       default: canvas && <CanvasAttrForm data={canvas} canvas={canvas} />,
     };
   }, [
@@ -922,18 +978,22 @@ const DrawPanel = props => {
       <TabPane tab="系统组件" key="1"  > */}
       <div className={`toolWrapper`}>
         <DrawTool onDrag={onDrag}></DrawTool>
-        {/* <CustomTools
-        onCustomDrag={onCustomDrag}
-        font_family={lteeIcons.font_family}
-        css_prefix_text={lteeIcons.css_prefix_text}
-        glyphs={lteeIcons.glyphs}
-      ></CustomTools>
-      <CustomTools
-        onCustomDrag={onCustomDrag}
-        font_family={ltdxIcons.font_family}
-        css_prefix_text={ltdxIcons.css_prefix_text}
-        glyphs={ltdxIcons.glyphs}
-      ></CustomTools> */}
+        {!isDev && (
+          <>
+            <CustomTools
+              onCustomDrag={onCustomDrag}
+              font_family={lteeIcons.font_family}
+              css_prefix_text={lteeIcons.css_prefix_text}
+              glyphs={lteeIcons.glyphs}
+            ></CustomTools>
+            <CustomTools
+              onCustomDrag={onCustomDrag}
+              font_family={ltdxIcons.font_family}
+              css_prefix_text={ltdxIcons.css_prefix_text}
+              glyphs={ltdxIcons.glyphs}
+            ></CustomTools>
+          </>
+        )}
         {/* <CustomTools onCustomDrag={onCustomDrag} font_family={customIcons.font_family} glyphs={customIcons.glyphs} ></CustomTools> */}
       </div>
       {/* </TabPane>
@@ -962,9 +1022,56 @@ const DrawPanel = props => {
     </div>
   );
 
-  return (
+  // const toggleIsPreview = () => {
+  //   console.log(' toggleIsPreview   ,   ： ', isPreview,  )
+  //   setIsPreview(!isPreview)
+  // }
+
+  const toggleIsPreview = () => {
+    console.log(' toggleIsPreview   ,   ： ', isPreview);
+    const cb = drawRes => {
+      console.log('  drawResdrawRes  ,   ： ', drawRes);
+      // setPreviewData(drawRes);
+      // setIsPreview(!isPreview)
+
+      props.showFormModal({
+        action: 'preview',
+        canvasData: drawRes,
+      });
+    };
+    blob2JSON({
+      data: canvas.data,
+      cb,
+    });
+  };
+  const removeDraw = () => {
+    showConfirm({
+      onOk: () => {
+        console.log(' removeDraw   ,   ： ');
+        props.removeDraw(drawId);
+        setDrawId(props.circuitList[0]?.id);
+        canvas.open(props.circuitList[0]?.draw);
+      },
+    });
+  };
+  const circuitSelectChange = circuitId => {
+    console.log(' circuitSelectChange   circuitId,   ： ', circuitId);
+    const item = props.circuitList.find(v => v.id === circuitId);
+    console.log(' item  ： ', item);
+    setDrawId(circuitId);
+    // setDrawData(item.item)
+    canvas.open(item.draw);
+  };
+
+  const drawPanel = (
     <div className="drawContainer">
-      <Header></Header>
+      <Header
+        toggleIsPreview={toggleIsPreview}
+        circuitList={props.circuitList}
+        circuitSelectChange={circuitSelectChange}
+        drawId={drawId}
+        removeDraw={removeDraw}
+      ></Header>
 
       <div className="drawPanel">
         {sideBarLeft}
@@ -981,6 +1088,9 @@ const DrawPanel = props => {
       </div>
     </div>
   );
+
+  return drawPanel;
+  // return isPreview ? <Preview toggleIsPreview={() => setIsPreview(!isPreview)} data={previewData} ></Preview> : drawPanel;
 };
 
 // export default DrawPanel;

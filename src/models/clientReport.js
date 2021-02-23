@@ -1,12 +1,13 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/clientReport';
+import * as electricBillServices from '@/services/electricBill';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import moment from 'moment'; //
 
 const namespace = 'clientReport';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientReportUpgradeAsync'];
+const otherActions = ['getClientReportUpgradeAsync', 'getElectricBillAsync'];
 
 const batchTurnActions = ['closePdf', 'toggleExportPDF', 'getListFilter'];
 
@@ -43,6 +44,7 @@ export default {
     missionItemDetail: {},
     isShowExportPdf: false,
     originData: [],
+    electricBillList: [],
   },
 
   reducers: {
@@ -99,10 +101,11 @@ export default {
             : 0;
           const amountRate = v.old_amount
             ? (
-                (((v.amount - Number(v.old_amount)) * 100) /
+                ((((v.amount - Number(v.old_amount)) * 100) /
                   Number(v.old_amount)) *
+                  100) /
                 100
-              ).toFixed(2) / 100
+              ).toFixed(2)
             : 0;
 
           // const rateAvg = (v.rate - v.old_rate) / v.old_rate
@@ -235,6 +238,19 @@ export default {
         isShowExportPdf: !state.isShowExportPdf,
       };
     },
+
+    getElectricBill(state, { payload, type }) {
+      return {
+        ...state,
+        electricBillList: formatSelectList(
+          payload.list.map(v => {
+            const { deleted, is_summer, ...rest } = v;
+            return rest;
+          }),
+          'name',
+        ),
+      };
+    },
   },
 
   effects: {
@@ -281,6 +297,12 @@ export default {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put(action({ ...res, payload }));
+    },
+
+    *getElectricBillAsync({ payload, action, type }, { call, put }) {
+      console.log(' getElectricBillAsync ： ', payload); //
+      const res = yield call(electricBillServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
 

@@ -316,7 +316,7 @@ const PowerStationForm = props => {
             删除
           </Button> */}
 
-          <a
+          {/* <a
             className={`actionBtn`}
             onClick={() => {
               console.log(' xxxx ： '); //
@@ -330,7 +330,7 @@ const PowerStationForm = props => {
             onClick={() => props.removeCircuitItemAsync()}
           >
             删除
-          </a>
+          </a> */}
         </div>
       }
       init={props.init}

@@ -10,6 +10,8 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { history } from 'umi';
+import { DRAW_PANEL } from '@/constants';
 
 const PowerStationTable = props => {
   const { showModal, edit, remove, tdClick } = props; //
@@ -86,6 +88,15 @@ const PowerStationTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
+      <a
+        onClick={() =>
+          history.push(
+            `${DRAW_PANEL}?powerstation_id=${record.id}&number=${record.electricity_user.id}`,
+          )
+        }
+      >
+        一次电气图
+      </a>
       <a
         onClick={() => {
           console.log('Received values of form: ', props);
