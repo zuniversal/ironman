@@ -4,6 +4,7 @@ import './style.less';
 import { FileOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Menu, Button, Popover, Select } from 'antd';
 import { useState } from 'react';
+import OperationTips from '../OperationTips';
 
 const { SubMenu } = Menu;
 
@@ -183,9 +184,9 @@ const Headers = props => {
           }
           className={''}
         >
-          <Menu.Item key="new" className={''}>
+          {/* <Menu.Item key="new" className={''}>
             新建文件
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item key="open" className={''}>
             打开本地文件（新建）
           </Menu.Item>
@@ -276,7 +277,7 @@ const Headers = props => {
       </Menu>
 
       <div className="right">
-        <Popover content={<div>操作提示</div>} title="Title">
+        <Popover content={<OperationTips></OperationTips>} title="操作提示">
           <InfoCircleOutlined />
         </Popover>
         <div className={`headerItem`}>视图：{scale}%</div>
@@ -286,14 +287,13 @@ const Headers = props => {
           drawId={props.drawId}
         ></CircuitSelect>
         <Button
-          type="primary"
           onClick={() => {
-            console.log(' props.toggleIsPreview ： '); //
-            props.toggleIsPreview();
+            props.clearCircurt();
+            history.back();
           }}
           size={'small'}
         >
-          预览
+          返回
         </Button>
         <Button
           // type="primary"
@@ -309,6 +309,16 @@ const Headers = props => {
           size={'small'}
         >
           新建
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(' props.toggleIsPreview ： '); //
+            props.toggleIsPreview();
+          }}
+          size={'small'}
+        >
+          预览
         </Button>
         <Button
           type="primary"

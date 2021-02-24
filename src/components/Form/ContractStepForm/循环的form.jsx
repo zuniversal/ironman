@@ -32,10 +32,9 @@ import ContractRelativeForm, {
   houseNoConfig,
   stationConfig,
 } from '@/components/Form/ContractRelativeForm'; //
-import { formatConfig,  } from '@/utils'//
+import { formatConfig } from '@/utils'; //
 
 const { Step } = Steps;
-
 
 const ContractStepForm = props => {
   const [form, formform] = Form.useForm();
@@ -47,90 +46,98 @@ const ContractStepForm = props => {
   const [form5] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const completeIndex = useRef(0);
-  
 
-  console.log(' ContractStepForm ： ', props, form, formform, ); //
+  console.log(' ContractStepForm ： ', props, form, formform); //
 
-  const config1 = formatConfig(clientConfig)
-  const config2 = formatConfig(contractConfig)
-  const config3 = formatConfig(houseNoConfig)
-  const config4 = formatConfig(stationConfig)
+  const config1 = formatConfig(clientConfig);
+  const config2 = formatConfig(contractConfig);
+  const config3 = formatConfig(houseNoConfig);
+  const config4 = formatConfig(stationConfig);
 
   const contractStepConfig = [
-    { key: 'client', title: '客户信息', config: config1, 
-      // formCom: ClientInfoForm, 
-      // form: Form.useForm()[0],   
+    {
+      key: 'client',
+      title: '客户信息',
+      config: config1,
+      // formCom: ClientInfoForm,
+      // form: Form.useForm()[0],
       form: form1,
     },
-    { key: 'contract', title: '合同信息', config: config2, 
-      // formCom: ContractInfoForm, 
-      // form: Form.useForm()[0],   
+    {
+      key: 'contract',
+      title: '合同信息',
+      config: config2,
+      // formCom: ContractInfoForm,
+      // form: Form.useForm()[0],
       form: form2,
     },
-    { key: 'houseNo', title: '户号信息', config: config3, 
-      // formCom: HouseNoInfoForm, 
-      // form: Form.useForm()[0],   
+    {
+      key: 'houseNo',
+      title: '户号信息',
+      config: config3,
+      // formCom: HouseNoInfoForm,
+      // form: Form.useForm()[0],
       form: form3,
     },
-    { key: 'station', title: '电站信息', config: config4, 
-      // formCom: PowerStationInfoForm, 
-      // form: Form.useForm()[0],   
+    {
+      key: 'station',
+      title: '电站信息',
+      config: config4,
+      // formCom: PowerStationInfoForm,
+      // form: Form.useForm()[0],
       form: form4,
     },
     // { key: 'complete', title: '完成', Form.useForm()[0]: form5,   },
   ];
 
-
   const onChange = goIndex => {
-    console.log('onChange:', goIndex, completeIndex.current,   );
+    console.log('onChange:', goIndex, completeIndex.current);
     // if (current > -1 && current < contractStepConfig.length) {
     if (goIndex < completeIndex.current) {
-      setCurrent(goIndex);  
+      setCurrent(goIndex);
     }
   };
 
   const next = async () => {
-    console.log(' next ： ', current,    )// 
-    const indexs = current + 1
-    setCurrent(indexs);  
+    console.log(' next ： ', current); //
+    const indexs = current + 1;
+    setCurrent(indexs);
     if (indexs > completeIndex.current) {
-      completeIndex.current = indexs
-      
+      completeIndex.current = indexs;
     }
-    
+
     // try {
     //   const res = await propsForm.validateFields();
     //   console.log('  next res await 结果  ：', res); //
-    //   setCurrent(current + 1);  
+    //   setCurrent(current + 1);
     // } catch (error) {
     //   console.log(' next error ： ', error); //
     // }
   };
 
   const prev = () => {
-    console.log(' prev ： ', current,    )// 
-    
+    console.log(' prev ： ', current); //
+
     if (current > 0) {
-      setCurrent(current - 1);  
+      setCurrent(current - 1);
     }
   };
 
-  const propsForm = contractStepConfig[current].form
-  console.log('  propsForm ：', propsForm, contractStepConfig, Form.useForm(),  )// 
+  const propsForm = contractStepConfig[current].form;
+  console.log('  propsForm ：', propsForm, contractStepConfig, Form.useForm()); //
 
-  const stepAction = <div className='fje'  >
-    <div className=' '  >
-      <Button className={'actionBtn m-r-10 '}  type="primary" onClick={prev}>
-        上一步
-      </Button>
-      <Button className={'actionBtn m-r-10 '}  type="primary" onClick={next}>
-        下一步
-      </Button>
+  const stepAction = (
+    <div className="fje">
+      <div className=" ">
+        <Button className={'actionBtn m-r-10 '} type="primary" onClick={prev}>
+          上一步
+        </Button>
+        <Button className={'actionBtn m-r-10 '} type="primary" onClick={next}>
+          下一步
+        </Button>
+      </div>
     </div>
-  </div>
-
-
-
+  );
 
   return (
     <div className="contractStepForm  ">
@@ -138,7 +145,7 @@ const ContractStepForm = props => {
         current={current}
         onChange={onChange}
         // type="navigation"
-        className={`stepWrapper`} 
+        className={`stepWrapper`}
       >
         {contractStepConfig.map((v, i) => (
           <Step
@@ -149,7 +156,6 @@ const ContractStepForm = props => {
           />
         ))}
       </Steps>
-
 
       {/* {contractStepConfig.map((v, i) => (
         <ContractRelativeForm
@@ -163,7 +169,6 @@ const ContractStepForm = props => {
         // propsForm={propsForm}
         formConfig={contractStepConfig}
       ></ContractRelativeForm>
-
 
       {/* <div className={0 === current ? `${0}` : `${0} hide `}   >
         <SmartForm
@@ -193,7 +198,7 @@ const ContractStepForm = props => {
           {...props}
         ></SmartForm>
       </div> */}
-            
+
       {/* {contractStepConfig.map((v, i) => <div key={i} className={i === current ? `${i}` : `${i}  `}   >
         <SmartForm
           // config={config}
@@ -211,7 +216,6 @@ const ContractStepForm = props => {
       </div>)} */}
 
       {current < 4 && stepAction}
-
     </div>
   );
 };

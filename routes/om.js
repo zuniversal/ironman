@@ -74,6 +74,12 @@ export default [
     title: '电站管理',
   },
   {
+    path: '/om/powerStation/smartMonitor/:stationId',
+    authKey: 'powerStation',
+    component: '@/pages/om/SmartMonitor',
+    title: '智能监控',
+  },
+  {
     path: '/om/clientReport',
     authKey: 'report',
     component: '@/pages/om/ClientReport',

@@ -16,7 +16,7 @@ const otherActions = [
   'getPowerPointRealListAsync',
 ];
 
-const batchTurnActions = [];
+const batchTurnActions = ['clearCircurt'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -154,6 +154,13 @@ export default {
       return {
         ...state,
         powerPointRealList: formatSelectList(payload.list, 'name'),
+      };
+    },
+    clearCircurt(state, { payload, type }) {
+      console.log(' clearCircurt ： ', state, payload); //
+      return {
+        ...state,
+        circuitList: [],
       };
     },
   },

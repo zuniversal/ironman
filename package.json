@@ -38,7 +38,6 @@
     "@umijs/test": "^3.2.19",
     "antd": "^4.9.3",
     "axios": "^0.20.0",
-    "canvas2svg": "^1.0.16",
     "cos-js-sdk-v5": "^1.1.8",
     "dayjs": "^1.9.6",
     "echarts": "^4.9.0",

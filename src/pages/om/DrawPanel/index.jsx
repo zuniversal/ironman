@@ -106,6 +106,7 @@ class DrawPanel extends PureComponent {
         showFormModal={this.props.showFormModal}
         circuitList={this.props.circuitList}
         powerPointList={this.props.powerPointList}
+        clearCircurt={this.props.clearCircurt}
         removeDraw={this.removeDraw}
       ></DrawPanels>
     );
@@ -125,10 +126,10 @@ class DrawPanel extends PureComponent {
       powerstation_id,
       number,
     });
-    this.props.getPowerPointListAsync({
-      powerstation_id,
-      number,
-    });
+    // this.props.getPowerPointListAsync({
+    //   powerstation_id,
+    //   number,
+    // });
   }
 
   render() {

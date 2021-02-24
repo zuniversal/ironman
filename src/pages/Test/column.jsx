@@ -1,26 +1,12 @@
-import React, { Component } from 'react'
-import Task from './task'
-import { Droppable } from 'react-beautiful-dnd'
+import React, { Component } from 'react';
+import Task from './task';
+import { Droppable } from 'react-beautiful-dnd';
 
-const Container = <div className={'columnCntainer'}>
+const Container = <div className={'columnCntainer'}></div>;
 
-</div>
+const Title = <div className={'columnCntainer'}></div>;
 
-
-
-
-const Title = <div className={'columnCntainer'}>
-
-</div>
-
-
-const TaskList = <div className={'TaskList'}>
-
-</div>
-
-
-
-
+const TaskList = <div className={'TaskList'}></div>;
 
 export default class Column extends Component {
   render() {
@@ -42,6 +28,6 @@ export default class Column extends Component {
           )}
         </Droppable>
       </Container>
-    )
+    );
   }
 }

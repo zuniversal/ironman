@@ -1140,41 +1140,42 @@ export const Tools = [
     ],
   },
 
-  {
-    group: '电气元器件',
-    children: [
-      {
-        name: 'image',
-        icon: 'icon-image',
-        type: 'img',
-        data: {
-          text: '',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          name: 'image',
-          // image: require('./machine.jpg')
-          image: '/img/switch.png',
-        },
-      },
-      {
-        name: 'image',
-        icon: 'icon-image',
-        type: 'img',
-        data: {
-          text: '',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          name: 'image',
-          // image: require('./machine.jpg')
-          image: '/img/switch2.png',
-        },
-      },
-    ],
-  },
+  // {
+  //   group: '电气元器件',
+  //   children: [
+  //     {
+  //       name: 'image',
+  //       icon: 'icon-image',
+  //       type: 'img',
+  //       data: {
+  //         text: '',
+  //         rect: {
+  //           width: 50,
+  //           height: 50,
+  //         },
+  //         name: 'image',
+  //         // image: require('./machine.jpg')
+  //         image: '/img/switch.png',
+  //       },
+  //     },
+  //     {
+  //       name: 'image',
+  //       icon: 'icon-image',
+  //       type: 'img',
+  //       data: {
+  //         text: '',
+  //         rect: {
+  //           width: 50,
+  //           height: 50,
+  //         },
+  //         name: 'image',
+  //         // image: require('./machine.jpg')
+  //         image: '/img/switch2.png',
+  //       },
+  //     },
+  //   ],
+  // },
+
   // {
   //   group: 'react组件',
   //   children: [

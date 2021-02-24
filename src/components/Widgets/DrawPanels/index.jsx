@@ -107,23 +107,6 @@ const CustomTools = props => (
 
 const { TabPane } = Tabs;
 
-const CanvasProps = React.memo(props => {
-  console.log(' CanvasProps   props, ,   ： ', props);
-  return (
-    <div className="tipsWrapper">
-      <div className={'tips'}>小提示</div>
-      <ul className={'intro'}>
-        <li>方向键：控制节点移动5个像素</li>
-        <li>Ctrl + 方向键：控制图形移动1个像素</li>
-        <li>Ctrl + 鼠标移动：移动整个画布</li>
-        <li>鼠标滚轮：缩放</li>
-        <li>选中图形一起拖拽</li>
-        {/* <li>添加或选中节点，右侧属性支持上传各种图片哦</li> */}
-      </ul>
-    </div>
-  );
-});
-
 const DrawTool = React.memo(props => {
   console.log(' DrawTool   props,   ： ', props);
   return Tools.map((item, index) => {
@@ -1045,14 +1028,16 @@ const DrawPanel = props => {
     });
   };
   const removeDraw = () => {
-    showConfirm({
-      onOk: () => {
-        console.log(' removeDraw   ,   ： ');
-        props.removeDraw(drawId);
-        setDrawId(props.circuitList[0]?.id);
-        canvas.open(props.circuitList[0]?.draw);
-      },
-    });
+    if (drawId) {
+      showConfirm({
+        onOk: () => {
+          console.log(' removeDraw   ,   ： ');
+          props.removeDraw(drawId);
+          setDrawId(props.circuitList[0]?.id);
+          canvas.open(props.circuitList[0]?.draw);
+        },
+      });
+    }
   };
   const circuitSelectChange = circuitId => {
     console.log(' circuitSelectChange   circuitId,   ： ', circuitId);
@@ -1071,6 +1056,7 @@ const DrawPanel = props => {
         circuitSelectChange={circuitSelectChange}
         drawId={drawId}
         removeDraw={removeDraw}
+        clearCircurt={props.clearCircurt}
       ></Header>
 
       <div className="drawPanel">

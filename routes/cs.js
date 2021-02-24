@@ -19,6 +19,18 @@ export default [
     title: '首页',
   },
   {
+    path: '/cs/powerStation',
+    authKey: '',
+    component: '@/pages/cs/PowerStation',
+    title: '我的电站',
+  },
+  {
+    path: '/cs/powerStation/smartMonitor/:stationId',
+    authKey: 'powerStation',
+    component: '@/pages/om/SmartMonitor',
+    title: '智能监控',
+  },
+  {
     path: '/cs/userCenter',
     authKey: '',
     component: '@/pages/cs/CsUserCenter',

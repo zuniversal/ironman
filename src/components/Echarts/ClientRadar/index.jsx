@@ -1,5 +1,5 @@
-import React from 'react'
-import './style.less'
+import React from 'react';
+import './style.less';
 import {
   Form,
   Input,
@@ -16,45 +16,21 @@ import {
   InputNumber,
   Upload,
   Result,
+} from 'antd';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-} from 'antd'
-import {
-  UploadOutlined,
-  PlusOutlined,
-  
-} from '@ant-design/icons'
-
-import SmartEcharts from '@/common/SmartEcharts' //
-
-
-
-
-
-
+import SmartEcharts from '@/common/SmartEcharts'; //
 
 const ClientRadar = props => {
-  console.log(' ClientRadar ： ', props,  )//
-    
-
-
-
+  console.log(' ClientRadar ： ', props); //
 
   return (
     <div className={''}>
-      <SmartEcharts
-        data={[]} 
-        type="radar" 
-        radar={[]}
-
-        {...props}
-      ></SmartEcharts>
-
-
-
+      <SmartEcharts data={[]} type="radar" radar={[]} {...props}></SmartEcharts>
     </div>
-  )
-}
+  );
+};
 
-ClientRadar.defaultProps = {}
+ClientRadar.defaultProps = {};
 
-export default ClientRadar
+export default ClientRadar;

@@ -63,31 +63,11 @@ export default defineConfig({
       path: '/',
       component: '@/layouts/index',
       routes: [
-        // { path: '/om/test', component: '@/pages/Test' },
-        {
-          path: '/om/inspectRecord',
-          authKey: 'inspectionRecord',
-          component: '@/pages/om/InspectRecord',
-          title: '巡检记录',
-        },
-        {
-          path: '/om/powerStation',
-          authKey: 'powerStation',
-          component: '@/pages/om/PowerStation',
-          title: '电站管理',
-        },
-        {
-          path: '/om/drawPanel',
-          authKey: 'drawPanelConfig',
-          component: '@/pages/om/DrawPanel',
-          title: '一次线路图',
-        },
-
+        { path: '/om/test', component: '@/pages/Test' },
         // ...cs,
-        ...om,
+        // ...om,
         // ...sm,
-
-        // ...routes,
+        ...routes,
       ],
     },
 

@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
-import { Draggable } from 'react-beautiful-dnd'
+import React, { Component } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 
-const Container = <div className={'taskContainer'}>
-
-</div>
-
-
+const Container = <div className={'taskContainer'}></div>;
 
 export default class Task extends Component {
   render() {
@@ -27,6 +23,6 @@ export default class Task extends Component {
           </Container>
         )}
       </Draggable>
-    )
+    );
   }
 }

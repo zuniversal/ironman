@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 // import styled from '@emotion/styled';
 // import { Global, css } from '@emotion/core';
@@ -11,7 +10,7 @@ import React, { Component } from 'react';
 // import type { QuoteMap, Quote } from '../types';
 import Column from './column';
 // import reorder, { reorderQuoteMap } from '../reorder';
-import { DragDropContext, Droppable, Draggable,   } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // const ParentContainer = styled.div`
 //   height: ${({ height }) => height};
@@ -61,7 +60,6 @@ export default class Board extends Component<Props, State> {
     //     this.setState({ ordered: shallow });
     //     return;
     //   }
-
     //   const column: Quote[] = this.state.columns[result.source.droppableId];
     //   const withQuoteRemoved: Quote[] = [...column];
     //   withQuoteRemoved.splice(result.source.index, 1);
@@ -72,15 +70,12 @@ export default class Board extends Component<Props, State> {
     //   this.setState({ columns });
     //   return;
     // }
-
     // // dropped nowhere
     // if (!result.destination) {
     //   return;
     // }
-
     // const source: DraggableLocation = result.source;
     // const destination: DraggableLocation = result.destination;
-
     // // did not move anywhere - can bail early
     // if (
     //   source.droppableId === destination.droppableId &&
@@ -88,7 +83,6 @@ export default class Board extends Component<Props, State> {
     // ) {
     //   return;
     // }
-
     // // reordering column
     // if (result.type === 'COLUMN') {
     //   const ordered: string[] = reorder(
@@ -96,20 +90,16 @@ export default class Board extends Component<Props, State> {
     //     source.index,
     //     destination.index,
     //   );
-
     //   this.setState({
     //     ordered,
     //   });
-
     //   return;
     // }
-
     // const data = reorderQuoteMap({
     //   quoteMap: this.state.columns,
     //   source,
     //   destination,
     // });
-
     // this.setState({
     //   columns: data.quoteMap,
     // });
@@ -155,7 +145,7 @@ export default class Board extends Component<Props, State> {
     return (
       <React.Fragment>
         <DragDropContext onDragEnd={this.onDragEnd}>
-            <div >board</div>
+          <div>board</div>
         </DragDropContext>
         {/* <Global
           styles={css`

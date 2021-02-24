@@ -450,6 +450,13 @@ export const customerRoutes = [
   },
   {
     noAuth: true,
+    path: '/cs/powerStation',
+    name: '我的电站',
+    icon: <Icon icon="powerStation" />,
+    component: '../Home',
+  },
+  {
+    noAuth: true,
     path: '/cs/msgList',
     authKey: '',
     name: '消息列表',

@@ -64,7 +64,7 @@ import csMonitorNetwork from '@/static/assets/csMonitorNetwork.png';
 // import contract from '@/static/sideBarIcon/contract.png';
 // import client from '@/static/sideBarIcon/client.png';
 // import houseNo from '@/static/sideBarIcon/houseNo.png';
-// import powerStation from '@/static/sideBarIcon/powerStation.png';
+import powerStation from '@/static/sideBarIcon/powerStation.png';
 // import assets from '@/static/sideBarIcon/assets.png';
 // // import monitorManage from '@/static/sideBarIcon/monitorManage.png'
 // import goods from '@/static/sideBarIcon/goods.png';
@@ -124,7 +124,7 @@ const iconMap = {
   // contract,
   // client,
   // houseNo,
-  // powerStation,
+  powerStation,
   // assets,
   // // monitorManage,
   // goods,

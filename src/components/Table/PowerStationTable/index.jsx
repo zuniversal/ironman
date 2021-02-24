@@ -91,11 +91,19 @@ const PowerStationTable = props => {
       <a
         onClick={() =>
           history.push(
-            `${DRAW_PANEL}?powerstation_id=${record.id}&number=${record.electricity_user.id}`,
+            `${DRAW_PANEL}?powerstation_id=${record.id}&number=${record.electricity_user.number}`,
           )
         }
       >
         一次电气图
+      </a>
+      <a
+        onClick={() => {
+          console.log('Received values of form: ', props);
+          history.push(`/om/powerStation/smartMonitor/${record.id}`);
+        }}
+      >
+        智能监控
       </a>
       <a
         onClick={() => {

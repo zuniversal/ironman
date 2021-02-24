@@ -13,9 +13,6 @@ import { Alert, Badge, Tag, Calendar } from 'antd';
 
 import moment from 'moment';
 
-
-
-
 function getListData(value) {
   let listData;
   switch (value.date()) {
@@ -50,7 +47,7 @@ function getListData(value) {
 function dateCellRender(value) {
   const listData = getListData(value);
 
-  return <Tag color="#18B263">班组</Tag> 
+  return <Tag color="#18B263">班组</Tag>;
 
   return (
     <ul className="events">
@@ -79,9 +76,6 @@ function monthCellRender(value) {
   ) : null;
 }
 
-
-
-
 class CalendarCom extends React.Component {
   state = {
     value: moment('2017-01-25'),
@@ -89,7 +83,7 @@ class CalendarCom extends React.Component {
   };
 
   onSelect = value => {
-    console.log(' onSelect ： ', value,   )// 
+    console.log(' onSelect ： ', value); //
     this.setState({
       value,
       selectedValue: value,
@@ -97,7 +91,7 @@ class CalendarCom extends React.Component {
   };
 
   onPanelChange = value => {
-    console.log(' onPanelChange ： ', value,   )// 
+    console.log(' onPanelChange ： ', value); //
     this.setState({ value });
   };
 
@@ -106,19 +100,20 @@ class CalendarCom extends React.Component {
     return (
       <>
         <Alert
-          message={`You selected date: ${selectedValue && selectedValue.format('YYYY-MM-DD')}`}
+          message={`You selected date: ${selectedValue &&
+            selectedValue.format('YYYY-MM-DD')}`}
         />
-        <Calendar 
-          dateCellRender={dateCellRender} 
-          // monthCellRender={monthCellRender} 
-          
-          value={value} onSelect={this.onSelect} onPanelChange={this.onPanelChange} 
-        
+        <Calendar
+          dateCellRender={dateCellRender}
+          // monthCellRender={monthCellRender}
+
+          value={value}
+          onSelect={this.onSelect}
+          onPanelChange={this.onPanelChange}
         />
       </>
     );
   }
 }
-
 
 export default CalendarCom;

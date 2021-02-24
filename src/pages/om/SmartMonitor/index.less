@@ -1,0 +1,130 @@
+// @import '../../vars.less';
+// @import '../../mixins.less';
+
+.box {
+  width: 980px !important;
+  height: 560px;
+}
+.table {
+  width: 820px !important;
+  height: 560px;
+  overflow: hidden;
+  :global {
+    .ant-modal-body {
+      position: relative;
+    }
+    .ant-empty,
+    .ant-spin {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 120px;
+      margin: auto;
+    }
+    .ant-tabs-tabpane {
+      height: 380px;
+      overflow: auto;
+    }
+    .echarts-for-react {
+      height: 380px;
+    }
+  }
+}
+
+.select {
+  min-width: 180px;
+  margin-left: 6px;
+}
+.subtitleBox {
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+}
+.subtitle {
+  // color: #999999;
+  font-size: 14px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 766px;
+  margin-top: 14px;
+  padding-top: 2px;
+  padding-bottom: 20px;
+}
+.item {
+  width: 16.66%;
+  margin-top: -2px;
+  // color: #ffffff;
+  padding-right: 20px;
+  font-size: 12px;
+  border-top: solid 2px @primary-color;
+  border-bottom: solid 2px @primary-color;
+}
+.itemLabel {
+  padding: 8px 0;
+  color: #999999;
+  border-bottom: solid 1px @primary-color;
+}
+.itemValue {
+  padding: 8px 0;
+}
+:global {
+  .echarts-icon {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border: solid 2px red;
+    border-radius: 50%;
+  }
+}
+
+.date {
+  display: flex;
+  align-items: center;
+}
+.datepicker {
+  :global {
+    .ant-picker-cell-in-view,
+    .ant-picker-cell,
+    .ant-picker-content th,
+    .ant-picker-cell-inner {
+      color: rgba(0, 0, 0, 0.85);
+    }
+    .ant-picker-cell-disabled .ant-picker-cell-inner {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+// 峰平谷
+.peak {
+  display: flex;
+
+  > div {
+    flex: 1;
+    padding-left: 20px;
+    &:first-child {
+      border-right: solid 2px @primary-color;
+    }
+    div {
+      // color: @color-active;
+      font-size: 14px;
+    }
+  }
+}
+.peakText {
+  padding: 0 25px 30px 25px;
+  text-align: right;
+  > span:first-child {
+    float: left;
+  }
+}
+
+.loading {
+  display: block;
+  margin: 150px auto 0;
+}

@@ -268,7 +268,7 @@ export default configs => Com =>
           {this.renderModalContent()}
         </SmartFormModal>
       );
-    }
+    };
 
     componentDidMount() {
       console.log(

@@ -12,17 +12,15 @@
     "strict": true,
     "paths": {
       "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"]
-      ,"smartTb/*": ["src/components/Table/*"],
+      "@@/*": ["src/.umi/*"],
+      "smartTb/*": ["src/components/Table/*"],
       "smartForm/*": ["src/components/Form/*"],
       "widgets/*": ["src/components/Widgets/*"],
-      "_Widgets/*": ["src/components/Widgets/*"]
+      "_Widgets/*": ["src/components/Widgets/*"],
 
-      ,"@smartTb/*": ["src/components/Table/*"],
+      "@smartTb/*": ["src/components/Table/*"],
       "@smartForm/*": ["src/components/Form/*"],
       "@Widgets/*": ["src/components/Widgets/*"]
-
-
     },
     "allowSyntheticDefaultImports": true
   },

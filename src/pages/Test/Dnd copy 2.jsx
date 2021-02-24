@@ -1,10 +1,7 @@
-
 import React, { Component } from 'react';
-import { DragDropContext, Droppable, Draggable,   } from 'react-beautiful-dnd';
-
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 export default class Board extends Component {
-  
   onBeforeCapture = () => {
     /*...*/
   };
@@ -24,7 +21,6 @@ export default class Board extends Component {
   };
 
   render() {
-
     return (
       <React.Fragment>
         <DragDropContext
