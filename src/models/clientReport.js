@@ -7,7 +7,14 @@ import moment from 'moment'; //
 const namespace = 'clientReport';
 const { createActions } = init(namespace);
 
-const otherActions = ['getClientReportUpgradeAsync', 'getElectricBillAsync'];
+const otherActions = [
+  'getClientReportUpgradeAsync',
+  'getBillTypeListAsync',
+  'getElectricBillItemAsync',
+  'addElectricBillItemAsync',
+  'editElectricBillItemAsync',
+  'removeElectricBillItemAsync',
+];
 
 const batchTurnActions = ['closePdf', 'toggleExportPDF', 'getListFilter'];
 
@@ -50,10 +57,22 @@ export default {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type); //
+      const extraData = {};
+      if (payload.action === 'addElectricBillItemAsync') {
+        extraData.itemDetail = {
+          ...payload.record,
+          capacity: payload.record.real_capacity,
+          customer: payload.record.name,
+          electrical_id: payload.record.id,
+          year_month: moment(),
+        };
+      }
+
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
+        ...extraData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -239,7 +258,7 @@ export default {
       };
     },
 
-    getElectricBill(state, { payload, type }) {
+    getBillTypeList(state, { payload, type }) {
       return {
         ...state,
         electricBillList: formatSelectList(
@@ -249,6 +268,22 @@ export default {
           }),
           'name',
         ),
+      };
+    },
+    getElectricBillItem(state, { payload, type }) {
+      console.log(' getElectricBillItem ： ', payload); //
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: {
+          ...payload.bean,
+          ...payload.bean?.electrical_info,
+          year_month: moment(payload.bean.year_month),
+          // electrical_id: payload.payload.d_id,
+          electrical_id: payload.payload?.electrical_info?.power_number,
+        },
       };
     },
   },
@@ -283,25 +318,24 @@ export default {
       // const res = yield call(services.getList, params);
       // yield put(action({ ...res, payload }));
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
+    *getElectricBillItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(electricBillServices.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
+    *addElectricBillItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(electricBillServices.addItem, payload);
+      yield put({ type: 'getListAsync' });
     },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+    *editElectricBillItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(electricBillServices.editItem, payload);
+      yield put({ type: 'getListAsync' });
     },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
+    *removeElectricBillItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(electricBillServices.removeItem, payload);
+      yield put({ type: 'getListAsync' });
     },
 
-    *getElectricBillAsync({ payload, action, type }, { call, put }) {
-      console.log(' getElectricBillAsync ： ', payload); //
+    *getBillTypeListAsync({ payload, action, type }, { call, put }) {
       const res = yield call(electricBillServices.getList, payload);
       yield put(action({ ...res, payload }));
     },

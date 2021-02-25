@@ -31,7 +31,7 @@ const NodeAttrForm = props => {
       selectData: props.powerPointList,
       itemProps: {
         label: '检测点',
-        name: 'powerPoint',
+        name: ['data', 'powerPoint'],
       },
       comProps: {
         // onSelect: ,
@@ -45,7 +45,7 @@ const NodeAttrForm = props => {
       selectData: powerPointItemConfig,
       itemProps: {
         label: '检测字段',
-        name: 'powerPointKey',
+        name: ['data', 'powerPointKey'],
       },
       comProps: {
         // onSelect: ,

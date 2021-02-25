@@ -145,7 +145,7 @@ class Home extends PureComponent {
           // chartData={this.props.chartData}
           // barData={this.props.chartData.order_data}
           // barData={this.props.chartData.inspection_task_data}
-          rankData={this.props.chartData.rank_data}
+          rankData={this.props.chartData.rank_data?.slice(0, 8)}
           getEchartData={this.getEchartData}
           onOptionChange={this.onOptionChange}
           homeSettings={this.props.homeSettings}

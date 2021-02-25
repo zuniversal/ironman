@@ -172,14 +172,14 @@ const CanvasContextMenu = props => {
         </a>
       </div>
       <div className="line"></div>
-      <div>
+      {/* <div>
         <a
           className={props.data.node || props.data.image ? '' : 'disabled'}
           onClick={onCopyImage}
         >
           <span className="full">复制节点图片地址</span>
         </a>
-      </div>
+      </div> */}
 
       <div>
         <a

@@ -27,6 +27,8 @@ const titleMap = {
   clientReportDetailPdf: `月报`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
+  addElectricBillItemAsync: `新建电费账单`,
+  editElectricBillItemAsync: `编辑电费账单`,
 };
 
 const detailFormMap = {
@@ -99,7 +101,6 @@ class ClientReport extends PureComponent {
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
       showDetail: this.props.getItemAsync,
-      edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
@@ -107,7 +108,7 @@ class ClientReport extends PureComponent {
       noRequest: true,
       count: this.props.dataList.length,
       exportData: this.props.exportData,
-      add: this.props.addItemAsync,
+      edit: this.props.getElectricBillItemAsync,
     };
 
     return <ClientReportTable {...tableProps}></ClientReportTable>;
@@ -124,14 +125,18 @@ class ClientReport extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
-      if (action === 'add') {
-        this.props.addItemAsync({
+      if (action === 'addElectricBillItemAsync') {
+        this.props.addElectricBillItemAsync({
           ...res,
+          year_month: res.year_month.format('YYYY-MM'),
         });
       }
-      if (action === 'edit') {
-        this.props.editItemAsync({
+      if (action === 'editElectricBillItemAsync') {
+        this.props.editElectricBillItemAsync({
           ...res,
+          electrical_id: this.props.d_id,
+          d_id: this.props.d_id,
+          year_month: res.year_month.format('YYYY-MM'),
         });
       }
     } catch (error) {
@@ -148,19 +153,22 @@ class ClientReport extends PureComponent {
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       electricBillList: this.props.electricBillList,
+      init: this.props.itemDetail,
     };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
-    if (action === 'add') {
-      return <ClientReportForm {...formComProps}></ClientReportForm>;
-    }
-    if (['add', 'edit'].includes(action)) {
+    // if (action !== 'add') {
+    //   formComProps.init = this.props.itemDetail;
+    // }
+    // if (['add', 'edit'].includes(action)) {
+    //   // return <ClientReportPdf></ClientReportPdf>;
+    //   return this.renderExportPdf;
+    // }
+    if (['clientReportDetailPdf'].includes(action)) {
       // return <ClientReportPdf></ClientReportPdf>;
       return this.renderExportPdf;
     }
     console.log(' formComProps ： ', formComProps); //
-    return this.renderExportPdf;
+    return <ClientReportForm {...formComProps}></ClientReportForm>;
+    // return this.renderExportPdf;
   };
   get size() {
     return ['uploadFile'].some(v => v === this.props.action)
@@ -233,7 +241,7 @@ class ClientReport extends PureComponent {
 
   componentDidMount() {
     console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
-    this.props.getElectricBillAsync();
+    this.props.getBillTypeListAsync();
     setTimeout(() => {
       console.log('  延时器 ： ');
       // this.props.getListAsync({

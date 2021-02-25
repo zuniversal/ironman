@@ -16,7 +16,7 @@ const lineNames = {
 
 const CircuitSelect = props => {
   const { selectData = [], comProps = {} } = props; //
-  console.log(' CircuitSelect   config,   ： ', props);
+  // console.log(' CircuitSelect   config,   ： ', props);
   return (
     <Select
       className="circuitSelect"
@@ -74,7 +74,7 @@ const Headers = props => {
   const { lineName = 'curve' } = data;
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
-  console.log(' HeadersHeaders ： ', props, data); //
+  // console.log(' HeadersHeaders ： ', props, data); //
 
   const [isLock, setIsLock] = useState(false); // 是否处于锁定状态
 

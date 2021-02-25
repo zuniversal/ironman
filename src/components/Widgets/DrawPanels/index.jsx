@@ -696,7 +696,7 @@ const DrawPanel = props => {
     canvas.open(drawData);
 
     document.onclick = event => {
-      console.log(' document ： ', event); //
+      // console.log(' document ： ', event); //
       setContextmenu({
         display: 'none',
         left: '',
@@ -716,11 +716,11 @@ const DrawPanel = props => {
 
   const onHandleFormValueChange = useCallback(
     value => {
+      console.log(' onHandleFormValueChange ： ', value); //
       if (selected.node.name === 'echarts') {
         canvas.updateProps(selected.node);
         return;
       }
-
       const {
         color,
         fontSize,
@@ -754,7 +754,10 @@ const DrawPanel = props => {
         for (const key in changedValues.node) {
           if (Array.isArray(changedValues.node[key])) {
             selected.node[key] = changedValues.node[key];
-          } else if (typeof changedValues.node[key] === 'object') {
+          } else if (
+            typeof changedValues.node[key] === 'object' &&
+            key !== 'data'
+          ) {
             for (const k in changedValues.node[key]) {
               selected.node[key][k] = changedValues.node[key][k];
             }
@@ -1070,7 +1073,7 @@ const DrawPanel = props => {
           {/* <CanvasProps data={selected} onValuesChange={handlePropsChange} /> */}
         </div>
 
-        {/* {contextMenu} */}
+        {contextMenu}
       </div>
     </div>
   );

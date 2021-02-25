@@ -16,7 +16,7 @@ const getPowerPoint = data => {
   //   // [v.id]: 1,
   // }))
   const res = data
-    .map(v => [v.id, v.powerPoint])
+    .map(v => [v.id, v.data.powerPoint])
     // [v.id, 1,]
     // [v.id]: 1,
     .filter(v => {
@@ -47,7 +47,7 @@ const showPowerPointData = (data, powerPoints) => {
     // v.text = 'zzzzzz\nsssss\n' + `aaa\n`
     penIdList.forEach((penId, index) => {
       if (v.id == penId) {
-        const { powerPointKey = [] } = v;
+        const { powerPointKey = [] } = v.data;
         const dataKey = powerPointKey;
         if (powerPointKey.length > 0) {
           // const powerPointsStr = dataKey.map((key) => `${powerPointItemMap[key]}`.padEnd(10, ' ') + `${Math.random()}`).join(`\n`)
@@ -55,7 +55,7 @@ const showPowerPointData = (data, powerPoints) => {
             .map(
               key =>
                 `${powerPointItemMap[key]}`.padEnd(10, ' ') +
-                `${powerPointsData[index][key]}`,
+                `${powerPointsData[index][key] ?? '无'}`,
             )
             .join(`\n`);
           v.text = powerPointsStr;
@@ -97,11 +97,12 @@ const Preview = props => {
     console.log('  powerPoint ：', powerPoint); //
     const getPowerPointRealList = async params => {
       console.log(' getPowerPointRealList ： ', params);
-      const [penId, point_id = 1] = params;
+      const [penId, point_id] = params;
       const res = await screenServices.getPowerPointRealList({
-        powerstation_id: '11238',
-        number: '0061859369',
-        // ...props.realParams,
+        // powerstation_id: '11238',
+        // number: '0061859369',
+        power_station_id: props.realParams.powerstation_id,
+        number: props.realParams.number,
         point_id,
       });
       console.log('  res await 结果  ：', res, params, penId, point_id); //
