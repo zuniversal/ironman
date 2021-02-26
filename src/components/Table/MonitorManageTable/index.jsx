@@ -17,30 +17,39 @@ const MonitorManageTable = props => {
   const columns = [
     {
       title: '所属客户',
+      // dataIndex: '',
     },
     {
       title: '户号',
+      // dataIndex: '',
     },
     {
       title: '电站',
+      // dataIndex: '',
     },
     {
       title: '设备名称',
+      // dataIndex: '',
     },
     {
       title: '关联设备',
+      // dataIndex: '',
     },
     {
       title: '监测点',
+      // dataIndex: '',
     },
     {
       title: '设备类型',
+      // dataIndex: '',
     },
     {
       title: 'IEMI号',
+      // dataIndex: '',
     },
     {
       title: '状态',
+      // dataIndex: '',
     },
   ];
 
@@ -51,6 +60,7 @@ const MonitorManageTable = props => {
           console.log('Received values of form: ', props);
           props.showQRCode({
             title: `${record.name}`,
+            // dataIndex: '',
             record,
             d_id: record.id,
           });

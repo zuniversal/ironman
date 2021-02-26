@@ -194,8 +194,24 @@ const DrawPanel = props => {
     if (props.circuitList.length > 0) {
       if (!drawId) {
         setDrawId(props.circuitList[0]?.id);
-        setDrawData(props.circuitList[0]?.draw);
-        canvas.open(props.circuitList[0]?.draw);
+        const draw = props.circuitList[0]?.draw;
+        // const draw = {
+        //   ...props.circuitList[0]?.draw,
+        //   pens: props.circuitList[0]?.draw.pens.map(v => ({
+        //     ...v,
+        //     rect: {
+        //       ...v.rect,
+        //       x: v.rect.x / 10,
+        //       y: v.rect.y / 10,
+        //       width: v.rect.width / 10,
+        //       height: v.rect.height / 10,
+        //       ex: v.rect.ex / 10,
+        //       ey: v.rect.ey / 10,
+        //     }
+        //   }))
+        // }
+        setDrawData(draw);
+        canvas.open(draw);
       }
     }
   }, [props.circuitList]);

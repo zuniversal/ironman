@@ -119,13 +119,16 @@ class DrawPanel extends PureComponent {
       this.props,
     ); //
     const { powerstation_id, number } = this.props.location.query;
-    this.props.getCircuitItemAsync({
-      power_station_id: powerstation_id,
-    });
-    this.props.getPowerPointListAsync({
-      powerstation_id,
-      number,
-    });
+    if (powerstation_id) {
+      this.props.getCircuitItemAsync({
+        power_station_id: powerstation_id,
+      });
+      this.props.getPowerPointListAsync({
+        powerstation_id,
+        number,
+      });
+    }
+
     // this.props.getPowerPointListAsync({
     //   powerstation_id,
     //   number,

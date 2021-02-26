@@ -23,6 +23,18 @@ const AlarmTemplateTable = props => {
       title: '名称',
     },
     {
+      title: '电压过高',
+    },
+    {
+      title: '电压过低',
+    },
+    {
+      title: '电流过高',
+    },
+    {
+      title: '负载过高',
+    },
+    {
       title: '通知方式',
     },
   ];

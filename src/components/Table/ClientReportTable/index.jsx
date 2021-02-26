@@ -155,6 +155,8 @@ const ClientReportTable = props => {
             props.edit({
               action: 'editElectricBillItemAsync',
               d_id: record.d_id,
+              billing_method: record.billing_method,
+              year_month: record.year_month,
             })
           }
         >

@@ -977,6 +977,8 @@ export const billTypeConfig = [
   },
 ];
 
+export const billTypeMap = arrMapObj(billTypeConfig);
+
 export const normalConfig = [
   {
     label: '正常',
@@ -1261,3 +1263,64 @@ export const powerRateMap = {
     '0.80': '+2.50',
   },
 };
+
+// 网络类型
+export const networkTypeConfig = [
+  {
+    value: '1',
+    label: '3G',
+  },
+  {
+    value: '2',
+    label: '4G',
+  },
+  {
+    value: '3',
+    label: '5G',
+  },
+  {
+    value: '4',
+    label: 'WIFI',
+  },
+];
+
+export const monitorDeviceStatusConfig = [
+  {
+    value: '0',
+    label: '正常',
+  },
+  {
+    value: '1',
+    label: '断电',
+  },
+];
+
+export const manufacturerConfig = [
+  {
+    value: '1',
+    label: '安科瑞',
+    models: [
+      {
+        value: '1',
+        label: 'ADW300-HJ-4G',
+      },
+    ],
+  },
+  {
+    value: '2',
+    label: '中电',
+    models: [
+      {
+        value: '2',
+        label: '350-E',
+      },
+    ],
+  },
+];
+
+export const deviceFrequencyConfig = [
+  {
+    value: '300',
+    label: '5分钟',
+  },
+];

@@ -261,6 +261,12 @@ class ClientReport extends PureComponent {
   }
 
   render() {
+    console.log(
+      ' %c ClientReport 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="ClientReport">
         {this.renderSearchForm()}
@@ -273,11 +279,13 @@ class ClientReport extends PureComponent {
 
         {/* {this.renderExportPdf} */}
 
-        <ExportPdf
-          onClose={this.props.closePdf}
-          com={this.ref}
-          isPrintPdf={this.props.isShowExportPdf}
-        ></ExportPdf>
+        {this.props.isShowExportPdf && (
+          <ExportPdf
+            onClose={this.props.closePdf}
+            com={this.ref}
+            isPrintPdf={this.props.isShowExportPdf}
+          ></ExportPdf>
+        )}
       </div>
     );
   }

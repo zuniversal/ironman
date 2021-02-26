@@ -104,34 +104,34 @@ const LineAttrForm = props => {
         label: '位置',
       },
     },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '起点x',
-        name: ['from', 'x'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '起点y',
-        name: ['from', 'y'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '终点x',
-        name: ['to', 'x'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '终点y',
-        name: ['to', 'y'],
-      },
-    },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '起点x',
+    //     name: ['from', 'x'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '起点y',
+    //     name: ['from', 'y'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '终点x',
+    //     name: ['to', 'x'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '终点y',
+    //     name: ['to', 'y'],
+    //   },
+    // },
     {
       formType: 'Select',
       selectData: fromArrowConfig,

@@ -154,9 +154,11 @@ class MonitorManage extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps); //
-    return (
-      <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
-    );
+    if (action === 'detail') {
+      return (
+        <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
+      );
+    }
     return <MonitorManageForm {...formComProps}></MonitorManageForm>;
   };
   renderSmartFormModal = params => {
@@ -174,6 +176,7 @@ class MonitorManage extends PureComponent {
   };
 
   render() {
+    // return <MonitorManageForm ></MonitorManageForm>;
     return (
       <div className="MonitorManage">
         {this.renderSearchForm()}

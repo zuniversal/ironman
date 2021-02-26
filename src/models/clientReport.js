@@ -45,7 +45,8 @@ export default {
     d_id: '',
     searchInfo: {},
     searchInfo: {
-      year_month: moment().subtract(1, 'months'),
+      // year_month: moment().subtract(1, 'months'),
+      year_month: moment(),
     },
     isShowPdfDetail: false,
     missionItemDetail: {},
@@ -81,6 +82,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        isShowExportPdf: false,
       };
     },
     getList(state, { payload, type }) {
@@ -253,7 +255,7 @@ export default {
       console.log(' toggleExportPDF ： ', payload); //
       return {
         ...state,
-        isExportPDF: !state.isExportPDF,
+        // isExportPDF: !state.isExportPDF,
         isShowExportPdf: !state.isShowExportPdf,
       };
     },
@@ -283,6 +285,7 @@ export default {
           year_month: moment(payload.bean.year_month),
           // electrical_id: payload.payload.d_id,
           electrical_id: payload.payload?.electrical_info?.power_number,
+          billing_method: payload.payload.billing_method,
         },
       };
     },
@@ -317,6 +320,10 @@ export default {
       // }
       // const res = yield call(services.getList, params);
       // yield put(action({ ...res, payload }));
+    },
+    *getItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getItem, payload);
+      yield put(action({ ...res, payload }));
     },
     *getElectricBillItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(electricBillServices.getItem, payload);

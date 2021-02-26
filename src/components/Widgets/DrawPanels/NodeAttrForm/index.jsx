@@ -217,20 +217,20 @@ const NodeAttrForm = props => {
   ];
 
   const styleConfig = [
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: 'X(px)',
-        name: ['rect', 'x'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: 'Y(px)',
-        name: ['rect', 'y'],
-      },
-    },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: 'X(px)',
+    //     name: ['rect', 'x'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: 'Y(px)',
+    //     name: ['rect', 'y'],
+    //   },
+    // },
     {
       formType: 'InputNumber',
       itemProps: {

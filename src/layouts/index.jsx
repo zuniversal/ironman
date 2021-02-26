@@ -73,16 +73,16 @@ const Layouts = props => {
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
-  console.log(
-    ' settings, pathname ： ',
-    location.query.type,
-    '1111',
-    settings,
-    pathname,
-    props,
-    defaultProps,
-    getRoutes,
-  ); //
+  // console.log(
+  //   ' settings, pathname ： ',
+  //   location.query.type,
+  //   '1111',
+  //   settings,
+  //   pathname,
+  //   props,
+  //   defaultProps,
+  //   getRoutes,
+  // ); //
   // return <div >{ props.children }</div>
 
   const goPage = path => {

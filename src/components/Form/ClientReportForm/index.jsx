@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm'; //
-import { electricTypeConfig, powerRateMap } from '@/configs'; //
+import { electricTypeConfig, powerRateMap, billTypeConfig } from '@/configs'; //
 
 // 小计金额=所有的电量*电价的和
 // 总有功=峰平谷尖+其他电量的和
 // 实际考核功率因素=总有功 / 开根号（ 无功电量 绝对值的平方 + 总有功的平方 ）
-// 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100
-// 总金额 - 应付账款  = 小计金额 + 力率调整
+// 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100  +  基本电费
+// 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
+
+// 根据返回的 billing_method  这个 就是 基本电价计费方式 0和1不需要计算基本电费
+// 基本电费 =
+//   按变压器容量收费：
+//     变压器实际总容量 * 基本电价；
+//   按实际最大需量计费：
+//     最大md （实际md） * 基本电价；
+//   按合同最大需量计：
+//     if 最大md - 申报md * 1.05 > 0:
+//       基本电费 =（ 最大md - 申报md * 1.05 ） * 基本电价 * 2 + 申报md * 1.05 * 基本电价
+//     else:
+//       基本电费 = 申报md * 基本电价
 
 // 力率就是调整电费那一栏 分为3档
 // 然后计算出实际考核功率因素之后，根据容量 考核功率因数  取对应的调整电费值就是力率    功率因数考核值 （固定值 ） 匹配 调整电费 栏  三档对应的列就是 力率
@@ -16,7 +28,7 @@ import { electricTypeConfig, powerRateMap } from '@/configs'; //
 // 然后计算出实际考核功率因素之后  用这个值  去匹配  那个表格对应的   功率因素这一列 找到对应行
 // 然后 用 考核功率因数   考核功率因素是0.85就取0.85的标准，是0.9就取0.9的标准    电费这一行去拿到对应的  力率 值
 
-const calcMoeny = props => {
+const calcMoenyVal = props => {
   const {
     tip_volume,
     tip_price,
@@ -48,7 +60,7 @@ const calcMoeny = props => {
     usual_volume2 * usual_price2 +
     valley_volume2 * valley_price2 +
     other_volume * other_price;
-  console.log(' calcMoeny   props,   ： ', props, calcRes);
+  console.log(' calcMoenyVal   props,   ： ', props, calcRes);
   return calcRes;
 };
 
@@ -101,6 +113,13 @@ const ClientReportForm = props => {
     valley_price2: 0,
     other_volume: 0,
     other_price: 0,
+
+    idle_volume: 0,
+    levy_fee: 0,
+    max_md: 0,
+    report_md: 0,
+    basic_price: 0,
+    power_factor_adjust: 0,
     ...props.init,
   });
 
@@ -124,6 +143,10 @@ const ClientReportForm = props => {
       setFields.peak_price = item.peak_prise;
       setFields.usual_price = item.flat_prise;
       setFields.valley_price = item.valley_prise;
+      setFields.tip_price2 = item.tip_prise;
+      setFields.peak_price2 = item.peak_prise;
+      setFields.usual_price2 = item.flat_prise;
+      setFields.valley_price2 = item.valley_prise;
       setFields.bill_type = item.name;
     } else {
       setFields.basic_price = 0;
@@ -131,6 +154,10 @@ const ClientReportForm = props => {
       setFields.peak_price = 0;
       setFields.usual_price = 0;
       setFields.valley_price = 0;
+      setFields.tip_price2 = 0;
+      setFields.peak_price2 = 0;
+      setFields.usual_price2 = 0;
+      setFields.valley_price2 = 0;
       setFields.bill_type = '';
     }
     console.log(' setFields ： ', setFields); //
@@ -141,7 +168,7 @@ const ClientReportForm = props => {
     {
       noRule: true,
       formType: 'Select',
-      // selectData: electricTypeConfig,
+      // selectData: billTypeConfig,
       selectData: props.electricBillList,
       itemProps: {
         label: '电价类型',
@@ -158,34 +185,64 @@ const ClientReportForm = props => {
   const factor = factorRow['0.90'];
   console.log(' factor ： ', factorRow, factor); //
 
-  const onFormFieldChange = params => {
-    console.log(
-      ' onFormFieldChange,  , ： ',
-      params,
-      params.value,
-      params.formData,
-      props,
-    );
+  const autoCalc = changeKey => {
+    console.log(' autoCalc   ,   ： ', changeKey);
     const formValues = props.propsForm.getFieldsValue();
-    const { power_factor, levy_fee, idle_volume = 0 } = formValues;
+    const {
+      power_factor,
+      levy_fee,
+      calcMoeny,
+      power_factor_real,
+      power_factor_adjust,
+      amount_adjust,
+      amount,
+      billing_method,
+      max_md,
+      report_md,
+      idle_volume = 0,
+    } = formValues;
 
     // 小计金额=所有的电量*电价的和
-    const calcRes = calcMoeny(formValues);
+    const calcRes = calcMoenyVal(formValues).toFixed(2);
     // 总有功=峰平谷尖+其他电量的和
     const calcTotalPowerRes = calcTotalPower(formValues);
     // 实际考核功率因素=总有功/开根号（ 无功电量 绝对值的平方+总有功的平方）
     const capcitySum =
       idle_volume * idle_volume + calcTotalPowerRes * calcTotalPowerRes;
-    const calcRealFactorRes = (
-      calcTotalPowerRes / Math.sqrt(capcitySum)
+    const calcRealFactorValue = calcTotalPowerRes / Math.sqrt(capcitySum);
+    const calcRealFactorRes = (isNaN(calcRealFactorValue)
+      ? 0
+      : calcRealFactorValue
     ).toFixed(2);
     // 拿到对应的  力率 栏 和 值
     // const factorRow = powerRateMap['0.90']
     const factorRow = powerRateMap[calcRealFactorRes];
     const setFields = {
-      calcMoeny: calcRes,
-      power_factor_real: calcRealFactorRes,
+      calcMoeny: changeKey === 'calcMoeny' ? calcMoeny : calcRes,
+      power_factor_real:
+        changeKey === 'power_factor_real'
+          ? power_factor_real
+          : calcRealFactorRes,
     };
+
+    const isCalcBillingMethod = billing_method != '0' && billing_method != '1';
+    let basePriceRes = 0;
+    if (billing_method == '2') {
+      basePriceRes = capacity * basic_price;
+    } else if (billing_method == '3') {
+      basePriceRes = max_md * basic_price;
+    } else if (billing_method == '4') {
+      const subVal = max_md - report_md * 1.05;
+      console.log(' subVal ： ', subVal); //
+      if (subVal > 0) {
+        basePriceRes = subVal * basic_price * 2 + max_md * 1.05 * basic_price;
+      } else {
+        basePriceRes = report_md * 1.05;
+      }
+    } else {
+      basePriceRes = 0;
+    }
+
     console.log(
       ' calcRes, , , ,  ： ',
       formValues,
@@ -194,29 +251,68 @@ const ClientReportForm = props => {
       capcitySum,
       calcRealFactorRes,
       factorRow,
+      basePriceRes,
     ); //
-    if (power_factor && factorRow) {
-      const factor = factorRow[`${power_factor}`];
-      setFields.power_factor_adjust = factor;
-      if (factor) {
-        // 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100
-        const amountAdjust = (((calcRes - levy_fee) / 100) * factor).toFixed(2);
-        // 总金额 - 应付账款  = 小计金额 + 力率调整
-        const amount = calcRes + amountAdjust;
-        setFields.amount_adjust = amountAdjust;
-        setFields.amount = amount;
-        console.log(
-          ' power_factor, levy_fee, idle_volume ： ',
-          power_factor,
-          levy_fee,
-          idle_volume,
-          amountAdjust,
-          amount,
-          factor,
-        ); //
-      }
-    }
+    // if (power_factor && factorRow) {
+    const factorRes =
+      (factorRow && factorRow[`${power_factor}`]) || power_factor_adjust;
+    setFields.power_factor_adjust =
+      changeKey === 'power_factor_adjust' ? power_factor_adjust : factorRes;
+    // if (factorRes) {
+    // 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100  +  基本电费
+    const amountAdjust = (
+      ((Number(calcRes) - levy_fee) / 100) * factorRes +
+      basePriceRes
+    ).toFixed(2);
+    // 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
+    const amountRes = (
+      Number(calcRes) +
+      Number(amountAdjust) +
+      basePriceRes
+    ).toFixed(2);
+    setFields.amount_adjust =
+      changeKey === 'amount_adjust' ? amount_adjust : amountAdjust;
+    setFields.amount = changeKey === 'amount' ? amount : amountRes;
+    console.log(
+      ' power_factor, levy_fee, idle_volume ： ',
+      Number(calcRes),
+      Number(amountAdjust),
+      basePriceRes,
+      power_factor,
+      levy_fee,
+      idle_volume,
+      amountAdjust,
+      amountRes,
+      factorRes,
+    ); //
+    // }
+    // }
     props.propsForm.setFieldsValue(setFields);
+  };
+
+  useEffect(() => {
+    console.log(
+      ' ClientReportForm ： ',
+      props,
+      dataInit,
+      props.propsForm.getFieldsValue(),
+    ); //
+    autoCalc();
+  }, []);
+
+  const onFormFieldChange = params => {
+    console.log(
+      ' onFormFieldChange,  , ： ',
+      params,
+      params.value,
+      params.formData,
+      props,
+    );
+    const changeKey = Object.keys(params.value)[0];
+    console.log('  changeKey ：', changeKey); //
+    autoCalc(changeKey);
+    // if (['amount_adjust'].includes(changeKey)) {
+    // }
   };
 
   const config = [
@@ -562,6 +658,18 @@ const ClientReportForm = props => {
       itemProps: {
         label: '年月',
         name: 'year_month',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Select',
+      selectData: billTypeConfig,
+      itemProps: {
+        label: '基本电价计费方式',
+        name: 'billing_method',
+      },
+      comProps: {
+        disabled: true,
       },
     },
   ].map(v => ({

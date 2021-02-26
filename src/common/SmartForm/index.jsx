@@ -644,13 +644,13 @@ const SmartForm = (props, state) => {
 
       return colForm;
     }
-    console.log(
-      ' formItemProps ： ',
-      formItemProps,
-      noRule,
-      noRuleAll,
-      configs,
-    ); //
+    // console.log(
+    //   ' formItemProps ： ',
+    //   formItemProps,
+    //   noRule,
+    //   noRuleAll,
+    //   configs,
+    // ); //
     const normalItem = (
       <Form.Item
         // name={key}
