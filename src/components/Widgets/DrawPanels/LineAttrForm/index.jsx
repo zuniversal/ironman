@@ -188,6 +188,56 @@ const LineAttrForm = props => {
       },
     },
     {
+      formType: 'Select',
+      selectData: linkAnimateConfig,
+      itemProps: {
+        label: '动画类型',
+        name: 'animateType',
+      },
+    },
+    {
+      itemProps: {
+        label: '颜色',
+        name: 'animateColor',
+      },
+      comProps: {
+        type: 'color',
+      },
+    },
+    {
+      itemProps: {
+        label: '快慢',
+        name: 'animateSpan',
+      },
+    },
+    {
+      itemProps: {
+        label: '圆点大小',
+        name: 'animateDotSize',
+      },
+    },
+    {
+      itemProps: {
+        label: '循环次数',
+        name: 'animateCycle',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <Button
+          type="primary"
+          onClick={() => {
+            data.line.animateStart = Date.now();
+            canvas.animate();
+          }}
+        >
+          开始
+        </Button>
+      ),
+    },
+
+    {
       formType: 'rowText',
       itemProps: {
         label: '文字',
@@ -292,62 +342,6 @@ const LineAttrForm = props => {
         label: '内容',
         name: 'text',
       },
-    },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '动效',
-      },
-    },
-    {
-      formType: 'Select',
-      selectData: linkAnimateConfig,
-      itemProps: {
-        label: '动画类型',
-        name: 'animateType',
-      },
-    },
-    {
-      itemProps: {
-        label: '颜色',
-        name: 'animateColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      itemProps: {
-        label: '快慢',
-        name: 'animateSpan',
-      },
-    },
-    {
-      itemProps: {
-        label: '圆点大小',
-        name: 'animateDotSize',
-      },
-    },
-    {
-      itemProps: {
-        label: '循环次数',
-        name: 'animateCycle',
-      },
-    },
-    {
-      formType: 'CustomCom',
-      CustomCom: (
-        <Button
-          type="primary"
-          onClick={() => {
-            data.line.animateStart = Date.now();
-            canvas.animate();
-          }}
-        >
-          开始
-        </Button>
-      ),
     },
 
     {

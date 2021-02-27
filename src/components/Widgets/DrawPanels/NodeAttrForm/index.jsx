@@ -162,6 +162,8 @@ const NodeAttrForm = props => {
     for (const item of node.animateFrames) {
       node.animateDuration += item.duration;
     }
+    node.animatePlay = true;
+    // node.startAnimate();
   };
 
   const onHandleSwitchChange = e => {
@@ -171,6 +173,18 @@ const NodeAttrForm = props => {
       canvas.animate();
     } else {
       node.animateStart = 0;
+    }
+  };
+  const onHandlePlayChange = e => {
+    console.log(' onHandlePlayChange ： ', e, node, canvas); //
+    if (e) {
+      node.animateStart = Date.now();
+      node.animatePlay = true;
+      canvas.animate();
+    } else {
+      node.initAnimate();
+      node.animateStart = 0;
+      node.animatePlay = false;
     }
   };
 
@@ -198,7 +212,7 @@ const NodeAttrForm = props => {
       selectData: animateTypeConfig,
       itemProps: {
         label: '特效',
-        name: 'animateStyle',
+        name: 'animateType',
       },
       comProps: {
         onSelect: onHandleStyleSelectChange,
@@ -212,6 +226,16 @@ const NodeAttrForm = props => {
       },
       comProps: {
         onChange: onHandleSwitchChange,
+      },
+    },
+    {
+      formType: 'Switch',
+      itemProps: {
+        label: '自动播放',
+        name: 'animatePlay',
+      },
+      comProps: {
+        onChange: onHandlePlayChange,
       },
     },
   ];

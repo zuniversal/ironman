@@ -1295,6 +1295,8 @@ export const monitorDeviceStatusConfig = [
   },
 ];
 
+export const monitorDeviceStatusMap = arrMapObj(monitorDeviceStatusConfig);
+
 export const manufacturerConfig = [
   {
     value: '1',

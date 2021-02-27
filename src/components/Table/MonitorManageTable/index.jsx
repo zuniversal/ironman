@@ -10,46 +10,76 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
+import { monitorDeviceStatusMap } from '@/configs';
 
 const MonitorManageTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
-
   const columns = [
     {
       title: '所属客户',
-      // dataIndex: '',
+      dataIndex: 'customer_name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer_id,
+        }),
     },
     {
       title: '户号',
-      // dataIndex: '',
+      dataIndex: 'number',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          d_id: record.electricity_user_id,
+        }),
     },
     {
       title: '电站',
-      // dataIndex: '',
+      dataIndex: 'power_station_name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.station_id,
+        }),
     },
     {
       title: '设备名称',
-      // dataIndex: '',
+      dataIndex: 'equipment_name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'assetsDetailAsync',
+          d_id: record.equipment_id,
+          id: record.device_id,
+        }),
     },
     {
       title: '关联设备',
-      // dataIndex: '',
+      dataIndex: 'device_id',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'monitorDeviceDetailAsync',
+      //     d_id: record.device_id,
+      //   }),
     },
     {
       title: '监测点',
-      // dataIndex: '',
+      dataIndex: 'name',
     },
-    {
-      title: '设备类型',
-      // dataIndex: '',
-    },
+    // {
+    //   title: '设备类型',
+    //   dataIndex: '',
+    // },
     {
       title: 'IEMI号',
-      // dataIndex: '',
+      dataIndex: 'imei',
+    },
+    {
+      title: '上传频率',
+      dataIndex: 'frequency',
     },
     {
       title: '状态',
-      // dataIndex: '',
+      dataIndex: 'status',
+      dataMap: monitorDeviceStatusMap,
     },
   ];
 
@@ -60,7 +90,7 @@ const MonitorManageTable = props => {
           console.log('Received values of form: ', props);
           props.showQRCode({
             title: `${record.name}`,
-            // dataIndex: '',
+            dataIndex: '',
             record,
             d_id: record.id,
           });
@@ -81,8 +111,6 @@ const MonitorManageTable = props => {
   );
 };
 
-MonitorManageTable.defaultProps = {
-  tdClick: () => {},
-};
+MonitorManageTable.defaultProps = {};
 
 export default MonitorManageTable;

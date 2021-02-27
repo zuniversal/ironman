@@ -7,6 +7,11 @@ import MonitorManageForm from '@/components/Form/MonitorManageForm'; //
 import MonitorManageTable from '@/components/Table/MonitorManageTable'; //
 import MonitorManageSearchForm from '@/components/Form/MonitorManageForm/MonitorManageSearchForm'; //
 import MonitorManageDetailForm from '@/components/Form/MonitorManageForm/MonitorManageDetailForm'; //
+import ClientForm from '@/components/Form/ClientForm';
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import MonitorDeviceForm from '@/components/Form/MonitorDeviceForm'; //
+import AssetsForm from '@/components/Form/AssetsForm'; //
 
 import { actions, mapStateToProps } from '@/models/monitorManage'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -21,10 +26,20 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   monitorManageAsync: `${TITLE}详情`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+  assetsDetailAsync: `设备详情`,
+  monitorDeviceDetailAsync: `监测设备详情`,
 };
 
 const detailFormMap = {
   monitorManageAsync: MonitorManageDetailForm,
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
+  assetsDetailAsync: AssetsForm,
+  monitorDeviceDetailAsync: MonitorDeviceForm,
 };
 
 // const mapStateToProps = ({ monitorManage, }) => monitorManage;
@@ -98,9 +113,18 @@ class MonitorManage extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <MonitorManageTable {...tableProps}></MonitorManageTable>;
+  };
+
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    // this.props.removeItemAsync({ d_id: `${params.record.id}` });
+    this.props.onRemove({
+      d_id: `${params.record.id}`,
+    });
   };
 
   renderCommonModal = params => {
@@ -138,6 +162,8 @@ class MonitorManage extends PureComponent {
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
+          id: itemDetail.id,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {

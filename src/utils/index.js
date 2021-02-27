@@ -163,7 +163,12 @@ export const renderSelectOp = (config = [], opType = 'option') => {
         );
       })
     : configs.map(v => (
-        <Option value={v.value} key={v.key || v.value} title={v.label} {...v}>
+        <Option
+          value={v.value}
+          key={v.key || v.value}
+          title={v.label}
+          // {...v}
+        >
           {v.label}
         </Option>
       ));

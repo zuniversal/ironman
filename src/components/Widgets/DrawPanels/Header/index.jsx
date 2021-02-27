@@ -4,6 +4,7 @@ import './style.less';
 import { FileOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Menu, Button, Popover, Select } from 'antd';
 import { useState } from 'react';
+import { canvas } from '../index';
 import OperationTips from '../OperationTips';
 
 const { SubMenu } = Menu;
@@ -74,7 +75,7 @@ const Headers = props => {
   const { lineName = 'curve' } = data;
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
-  // console.log(' HeadersHeaders ： ', props, data); //
+  console.log(' HeadersHeaders ： ', props, data); //
 
   const [isLock, setIsLock] = useState(false); // 是否处于锁定状态
 
@@ -114,6 +115,12 @@ const Headers = props => {
   const onHandleSelectMenu2 = data => {
     setToArrowType(data.item.props.children);
     canvas.data.toArrowType = data.key;
+    canvas.render();
+  };
+
+  const toggleLocked = data => {
+    console.log(' toggleLocked ： ', canvas); //
+    canvas.data.locked = !canvas.data.locked;
     canvas.render();
   };
 
@@ -286,6 +293,14 @@ const Headers = props => {
           onSelect={props.circuitSelectChange}
           drawId={props.drawId}
         ></CircuitSelect>
+        <Button
+          onClick={() => {
+            toggleLocked();
+          }}
+          size={'small'}
+        >
+          {canvas.data?.locked ? '解锁' : '锁定'}
+        </Button>
         <Button
           onClick={() => {
             props.clearCircurt();

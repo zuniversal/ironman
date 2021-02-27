@@ -33,7 +33,7 @@ const animateTypeconfig = [
 ];
 
 const CanvasAttrForm = props => {
-  console.log(' CanvasAttrForm   props, ,   ： ', props);
+  console.log(' CanvasAttrForm   props, ,   ： ', props, canvas);
   // const {canvas,  } = props
 
   const onFormLayoutChange = params => {
@@ -49,6 +49,15 @@ const CanvasAttrForm = props => {
     if (keys === 'scaleTo') {
       console.log('  keys  scaleTo  ：', value[keys] / 100);
       canvas.scaleTo(value[keys] / 100);
+    } else if (keys === 'allColor') {
+      console.log('  keys  allColor  ：', value[keys]);
+      canvas.data.pens.forEach((v, i) => {
+        v.animatePlay = false;
+        v.strokeStyle = value[keys];
+        v.iconColor = value[keys];
+        canvas.render();
+        // v.animatePlay = true
+      });
     } else {
       canvas.data[keys] = value[keys];
     }
@@ -184,11 +193,20 @@ const CanvasAttrForm = props => {
         name: 'rule',
       },
     },
+    {
+      itemProps: {
+        label: '整体颜色',
+        name: 'allColor',
+      },
+      comProps: {
+        type: 'color',
+      },
+    },
 
     {
       formType: 'Switch',
       itemProps: {
-        label: '禁添图形',
+        label: '锁定拖动',
         name: 'locked',
       },
     },

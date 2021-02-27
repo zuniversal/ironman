@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.less';
-import { Topology } from '@topology/core';
+import { Topology, Node } from '@topology/core';
 import { PageHeader, Button } from 'antd';
 // import datas from './data.json'; //
 import * as screenServices from '@/services/screen';
+import CreatePortal from '@/components/Portal/CreatePortal';
 import { powerPointItemMap } from '@/configs';
 
 let canvas;
@@ -74,6 +75,7 @@ const showPowerPointData = (data, powerPoints) => {
 const Preview = props => {
   const { history } = props; //
   console.log(' Preview ： ', props); //
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     console.log(' Preview  useEffect  ： ', props); //
@@ -84,6 +86,42 @@ const Preview = props => {
     canvas = new Topology('topology-canvas-preview', canvasOptions);
     props.data.locked = 1;
     canvas.open(props.data);
+    setTimeout(() => {
+      console.log('  animateanimate 延时器 ： ');
+      props.data.pens.forEach((v, i) => {
+        console.log(' animateanimate v ： ', v, i, v.animateType);
+        // if (v.animateType) {
+        //   v.animatePlay()
+        //   console.log(' animateanimate v22 ： ', v, i, v.animateType, )
+        // }
+        // v.animatePlay = false
+        return;
+        v.animateFrames = [];
+        v.fillStyle = '';
+        v.rotate = '';
+        const state = Node.cloneState(v);
+        if (v.animateType) {
+          state.rect.x -= 5;
+          state.rect.ex += 5;
+          state.rect.y -= 5;
+          state.rect.ey += 5;
+          state.rect.width += 5;
+          state.rect.height += 10;
+          v.animateFrames.push({
+            duration: 100,
+            linear: true,
+            state: Node.cloneState(state),
+          });
+          v.animateDuration = 0;
+          for (const item of v.animateFrames) {
+            v.animateDuration += item.duration;
+          }
+          v.animatePlay = true;
+          console.log(' animateanimate v22 ： ', v, i, v.animateType);
+          // canvas.animate();
+        }
+      });
+    }, 2000);
 
     // props.data.locked = 1;
     // canvas.open(props.data);
@@ -173,6 +211,12 @@ const Preview = props => {
     props.toggleIsPreview();
   };
 
+  return (
+    <CreatePortal show={show}>
+      {props.children}
+      <div id="topology-canvas-preview" className={'previewContainer'}></div>
+    </CreatePortal>
+  );
   return (
     <div id="topology-canvas-preview" className={'previewContainer'}></div>
   );

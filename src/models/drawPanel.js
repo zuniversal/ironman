@@ -16,7 +16,7 @@ const otherActions = [
   'getPowerPointRealListAsync',
 ];
 
-const batchTurnActions = ['clearCircurt'];
+const batchTurnActions = ['clearCircurt', 'togglePreview'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -41,6 +41,7 @@ export default {
     powerPointList: [],
     powerPointRealList: [],
     circuitList: [],
+    isPreview: false,
   },
 
   reducers: {
@@ -50,7 +51,6 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
-        canvasData: payload.canvasData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -108,6 +108,14 @@ export default {
       };
     },
 
+    togglePreview(state, { payload, type }) {
+      console.log(' togglePreview ： ', state, payload); //
+      return {
+        ...state,
+        isPreview: !state.isPreview,
+        canvasData: payload.canvasData,
+      };
+    },
     getCircuitItem(state, { payload, type }) {
       console.log(' getCircuitItem ： ', state, payload); //
       return {

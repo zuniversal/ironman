@@ -52,6 +52,8 @@ import * as newsKnowServices from '@/services/newsKnow';
 import * as knowledgeCateServices from '@/services/knowledgeCate';
 import * as electricBillServices from '@/services/electricBill';
 
+import * as monitorDeviceServices from '@/services/monitorDevice'; // 同一份请求
+
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment'; //
 import {
@@ -130,6 +132,7 @@ const serviceConfigMap = {
   newsKnowServices,
   knowledgeCateServices,
   electricBillServices,
+  monitorDeviceServices,
 };
 
 const getService = action => {
@@ -292,7 +295,7 @@ export default {
           // production_date: moment(),
           // operation_date: moment(),
           list: payload.list,
-          station: payload.bean.station.name,
+          station: payload.bean.station?.name,
         },
       };
     },

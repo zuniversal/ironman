@@ -5,7 +5,7 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 // import DrawPanels from '@/components/Widgets/DrawPanel'; //
 import DrawPanels from '@/components/Widgets/DrawPanels'; //
 import Preview from '@/components/Widgets/DrawPanels/Preview'; //
-
+import { CloseCircleOutlined } from '@ant-design/icons';
 import { actions, mapStateToProps } from '@/models/drawPanel'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -37,6 +37,26 @@ class DrawPanel extends PureComponent {
     };
   }
 
+  renderPreview = e => {
+    const { action } = this.props; //
+    const formComProps = {
+      action,
+      data: this.props.canvasData,
+      show: this.props.isPreview,
+      realParams: this.props.location.query,
+    };
+    console.log(' formComProps ： ', formComProps, this.props); //
+
+    if (this.props.isPreview) {
+      return (
+        <Preview {...formComProps}>
+          <div className="btnBlock">
+            <CloseCircleOutlined onClick={this.props.togglePreview} />
+          </div>
+        </Preview>
+      );
+    }
+  };
   renderModalContent = e => {
     const { action } = this.props; //
     const formComProps = {
@@ -103,7 +123,7 @@ class DrawPanel extends PureComponent {
         //   this.saveDraw(params)
         // }}
         saveDraw={this.saveDraw}
-        showFormModal={this.props.showFormModal}
+        showFormModal={this.props.togglePreview}
         circuitList={this.props.circuitList}
         powerPointList={this.props.powerPointList}
         clearCircurt={this.props.clearCircurt}
@@ -142,7 +162,9 @@ class DrawPanel extends PureComponent {
 
         {this.renderTable()} */}
 
-        {this.renderSmartFormModal()}
+        {this.renderPreview()}
+
+        {/* {this.renderSmartFormModal()} */}
 
         {this.renderDrawPanel()}
       </div>

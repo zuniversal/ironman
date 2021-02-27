@@ -12,7 +12,7 @@ const option = params => {
   const { data } = params;
   return {
     legend: {
-      data: ['数据源1', '数据源2'],
+      data: ['能耗（kWh）', '数据源2'],
     },
     xAxis: [
       {
@@ -26,7 +26,7 @@ const option = params => {
     yAxis: [
       {
         type: 'value',
-        name: '数据源1',
+        name: '能耗（kWh）',
         axisLabel: {
           formatter: '{value}',
         },
@@ -34,7 +34,7 @@ const option = params => {
     ],
     series: [
       {
-        name: '数据源1',
+        name: '能耗（kWh）',
         type: 'line',
         yAxisIndex: 0,
         symbol: 'circle',
