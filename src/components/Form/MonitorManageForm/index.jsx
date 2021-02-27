@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './style.less';
 import { getList as getAssetsList } from '@/services/assets';
-import { getList as getClientList } from '@/services/client';
+import { getList as getClientList, getRelatived } from '@/services/client';
 import { getList as getHouseNoList } from '@/services/houseNo';
 import { getList as getPowerStationList } from '@/services/powerStation';
 import { getManufacturerList } from '@/services/monitorManage';
 import { getList as getMonitorDeviceList } from '@/services/monitorDevice';
+import { getList as getAlarmTemplateList } from '@/services/alarmTemplate';
 
 import SmartForm from '@/common/SmartForm';
 import useHttp from '@/hooks/useHttp';
@@ -14,15 +15,16 @@ import {
   monitorDeviceStatusConfig,
   deviceFrequencyConfig,
 } from '@/configs';
-import { formatSelectList } from '@/utils';
+import { formatSelectList, filterObjSame } from '@/utils';
 
 // 下拉项关系  户号跟客户 电站跟户号 设备跟户号 请求数据
 
 const MonitorManageForm = props => {
   console.log(' MonitorManageForm ： ', props);
   // const [ clientList, setClientList ] = useState([])
-  // const [ houseNoList, setHouseNoList ] = useState()
-  // const [ assetsList, setAssetsList ] = useState()
+  const [houseNoList, setHouseNoList] = useState([]);
+  const [powerStationList, setPowerStationList] = useState([]);
+  // const [ assetsList, setAssetsList ] = useState([])
 
   // const getClientAsync = async (params, ) => {
   //   const res = await getClientList({params: params})
@@ -54,55 +56,87 @@ const MonitorManageForm = props => {
       ...commonParams,
     },
   );
-  const { data: clientList, req: getClientAsync } = useHttp(getClientList, {
-    ...commonParams,
-    withArr: noAdd
-      ? [
-          {
-            value: props.init.customer_id,
-            label: props.init.customer_name,
-          },
-        ]
-      : [],
-  });
-  const {
-    data: powerStationList,
-    setData: setPowerStationList,
-    req: getPowerStationAsync,
-  } = useHttp(getPowerStationList, {
-    ...commonParams,
-    withArr: noAdd
-      ? [
-          {
-            value: props.init.station_id,
-            label: props.init.station_name,
-          },
-        ]
-      : [],
-    // noMountFetch: true,
-  });
-  console.log(' powerStationList ： ', powerStationList); //
-  const {
-    data: houseNoList,
-    setData: setHouseNoList,
-    req: getHouseNoAsync,
-  } = useHttp(getHouseNoList, {
-    ...commonParams,
-    withArr: noAdd
-      ? [
-          {
-            value: props.init.electricity_user_id,
-            label: props.init.number,
-          },
-        ]
-      : [],
-    format: res => formatSelectList(res, 'number'),
-    // noMountFetch: true,
-  });
+  const { data: alarmTemplateList, req: getalarmTemplateAsync } = useHttp(
+    getAlarmTemplateList,
+    {
+      ...commonParams,
+    },
+  );
+  const { data: monitorDeviceList, req: getMonitorDeviceAsync } = useHttp(
+    () =>
+      getMonitorDeviceList({
+        unbound: '1',
+        // get all: '1',
+      }),
+    {
+      ...commonParams,
+      format: res => formatSelectList(res, 'imei', 'id'),
+    },
+  );
+  const { data: clientList, req: getClientAsync } = useHttp(
+    () => getRelatived({ get_all: '1' }),
+    {
+      ...commonParams,
+      withArr: noAdd
+        ? [
+            {
+              value: props.init.customer_id,
+              label: props.init.customer_name,
+            },
+          ]
+        : [],
+    },
+  );
+  // const { data: clientList, req: getClientAsync, } = useHttp(getClientList, {
+  //   ...commonParams,
+  //   withArr: noAdd
+  //     ? [
+  //         {
+  //           value: props.init.customer_id,
+  //           label: props.init.customer_name,
+  //         },
+  //       ]
+  //     : [],
+  // });
+  // const {
+  //   data: powerStationList,
+  //   setData: setPowerStationList,
+  //   http: getPowerStationAsync, req,
+  // } = useHttp(getPowerStationList, {
+  //   ...commonParams,
+  //   withArr: noAdd
+  //     ? [
+  //         {
+  //           value: props.init.station_id,
+  //           label: props.init.station_name,
+  //         },
+  //       ]
+  //     : [],
+  //   // noMountFetch: true,
+  // });
+  // console.log(' powerStationList ： ', powerStationList); //
+  // const {
+  //   data: houseNoList,
+  //   setData: setHouseNoList,
+  //   http: getHouseNoAsync, req,
+  // } = useHttp(getHouseNoList, {
+  //   ...commonParams,
+  //   withArr: noAdd
+  //     ? [
+  //         {
+  //           value: props.init.electricity_user_id,
+  //           label: props.init.number,
+  //         },
+  //       ]
+  //     : [],
+  //   format: res => formatSelectList(res, 'number'),
+  //   // noMountFetch: true,
+  // });
   const {
     data: assetsList,
     setData: setAssetsList,
-    req: getAssetsAsync,
+    http: getAssetsAsync,
+    req,
   } = useHttp(getAssetsList, {
     ...commonParams,
     withArr: noAdd
@@ -115,69 +149,119 @@ const MonitorManageForm = props => {
       : [],
     // noMountFetch: true,
   });
-  // console.log(' houseNoList, getHouseNoAsync,  ： ', houseNoList, getHouseNoAsync,   )//
+  // // console.log(' houseNoList, getHouseNoAsync,  ： ', houseNoList, getHouseNoAsync,   )//
 
   const onFieldChange = params => {
     console.log(' onFieldChange  ： ', params);
     const changeKey = Object.keys(params.value)[0];
     console.log('  changeKey ：', changeKey); //
-    // if (changeKey === 'electricity_user_id') {
-    //   getHouseNoAsync({ customer: formVals.customer_id, params })
-    // } else if (changeKey === 'station_id') {
-    //   getPowerStationAsync({ name: params, })
-    // } else if (changeKey === 'equipment_id') {
-    //   // getAssetsAsync({ station, name: params, })
-    // }
+    if (changeKey === 'electricity_user_id') {
+      getHouseNoAsync({ customer: formVals.customer_id, params });
+    } else if (changeKey === 'station_id') {
+      getPowerStationAsync({ name: params });
+    } else if (changeKey === 'equipment_id') {
+      // getAssetsAsync({ station, name: params, })
+    }
   };
   const onManufacturerChange = params => {
     console.log(' onManufacturerChange  ： ', params);
   };
-  const onClientChange = params => {
-    console.log(' onClientChange  ： ', params);
-    setHouseNoList([]);
+  const onClientChange = (params, rest) => {
+    console.log(' onClientChange  ： ', params, rest);
+    const res = clientList.find(v => v.value == params);
+    const formatRes = formatSelectList(res.electricity_users, 'number');
+    console.log(' res  clientList.filter v ： ', res, formatRes);
+    setHouseNoList(formatRes);
     setPowerStationList([]);
-    setAssetsList([]);
-    getClientAsync({ name: params });
+    // setAssetsList([]);
+    // getClientAsync({ name: params });
   };
   const onHouseNoChange = params => {
     console.log(
       ' onHouseNoChange  ： ',
       params,
-      formVals,
+      houseNoList,
       props.propsForm.getFieldsValue(),
     );
-    setPowerStationList([]);
-    setAssetsList([]);
-    getHouseNoAsync({ customer: params });
+    // sethouseNoList(setPowerStationList);
+    // setAssetsList([]);
+    // getHouseNoAsync({ customer: params });
+    const res = houseNoList.find(v => v.value == params);
+    console.log(' res  houseNoList.filter v ： ', res);
+    const formatRes = formatSelectList(res.stations, 'name');
+    console.log(' res  houseNoList.filter v ： ', res, formatRes);
+    setPowerStationList(formatRes);
   };
   const onPowerStationChange = params => {
     console.log(' onPowerStationChange  ： ', params);
-    getPowerStationAsync(params);
+    // getPowerStationAsync(params);
   };
 
   const config = [
     {
       formType: 'Search',
-      selectSearch: onClientChange,
-      selectData: clientList,
+      // selectSearch: onClientChange,
+      // selectData: clientList,
+      selectData: filterObjSame(
+        [
+          ...clientList,
+          {
+            value: props.init.customer_id,
+            label: props.init.customer_name,
+          },
+        ],
+        'value',
+      ),
       itemProps: {
         label: '客户',
         name: 'customer_id',
       },
-    },
-    {
-      formType: 'Search',
-      selectSearch: onHouseNoChange,
-      selectData: houseNoList,
-      itemProps: {
-        label: '户号',
-        name: 'electricity_user_id',
+      comProps: {
+        onSelect: onClientChange,
       },
     },
     {
       formType: 'Search',
-      selectSearch: onPowerStationChange,
-      selectData: powerStationList,
+      // selectSearch: onHouseNoChange,
+      // selectData: [
+      //   ...houseNoList,
+      //   ...noAdd ? [{
+      //     value: props.init.customer_id,
+      //     label: props.init.customer_name,
+      //   }] : [],
+      // ],
+      selectData: filterObjSame(
+        [
+          ...houseNoList,
+          {
+            value: props.init.electricity_user_id,
+            label: props.init.number,
+          },
+        ],
+        'value',
+      ),
+      itemProps: {
+        label: '户号',
+        name: 'electricity_user_id',
+      },
+      comProps: {
+        onSelect: onHouseNoChange,
+      },
+    },
+    {
+      formType: 'Search',
+      // selectSearch: onPowerStationChange,
+      // selectData: powerStationList,
+      selectData: filterObjSame(
+        [
+          ...powerStationList,
+          {
+            value: props.init.station_id,
+            label: props.init.station_name,
+          },
+        ],
+        'value',
+      ),
       itemProps: {
         label: '电站',
         name: 'station_id',
@@ -186,8 +270,18 @@ const MonitorManageForm = props => {
     {
       noRule: true,
       formType: 'Search',
-      selectSearch: getAssetsAsync,
-      selectData: assetsList,
+      // selectSearch: getAssetsAsync,
+      // selectData: assetsList,
+      selectData: filterObjSame(
+        [
+          ...assetsList,
+          {
+            value: props.init.equipment_id,
+            label: props.init.equipment_name,
+          },
+        ],
+        'value',
+      ),
       itemProps: {
         label: '关联客户设备',
         name: 'equipment_id',
@@ -199,17 +293,17 @@ const MonitorManageForm = props => {
         name: 'name',
       },
     },
-    // {
-    //   noRule: true,
-    //   formType: 'Search',
-    //   selectSearch: getAssetsAsync,
-    //   selectData: assetsList,
-    //   itemProps: {
-    //     label: '设备编码',
-    //     label: '监控设备',
-    //     name: 'device_id',
-    //   },
-    // },
+    {
+      noRule: true,
+      formType: 'Select',
+      // selectSearch: getMonitorDeviceAsync,
+      selectData: monitorDeviceList,
+      itemProps: {
+        label: '设备编码',
+        label: '监控设备',
+        name: 'device_id',
+      },
+    },
     // {
     //   noRule: true,
     //   itemProps: {
@@ -246,15 +340,6 @@ const MonitorManageForm = props => {
     //   },
     // },
     // {
-    //   formType: 'Search',
-    //   // selectSearch: props.getPowerStationList,
-    //   selectData: props.serviceStaffList,
-    //   itemProps: {
-    //     label: '告警策略',
-    //     name: '',
-    //   },
-    // },
-    // {
     //   formType: 'Select',
     //   selectData: monitorDeviceStatusConfig,
     //   itemProps: {
@@ -262,6 +347,17 @@ const MonitorManageForm = props => {
     //     name: 'status',
     //   },
     // },
+    {
+      noRule: true,
+      formType: 'Search',
+      // selectSearch: getalarmTemplateAsync,
+      selectData: alarmTemplateList,
+      itemProps: {
+        label: '告警策略',
+        label: '告警模板',
+        name: 'template_id',
+      },
+    },
     {
       formType: 'Select',
       selectData: deviceFrequencyConfig,
@@ -271,6 +367,7 @@ const MonitorManageForm = props => {
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '说明',
         name: 'comments',
@@ -291,10 +388,12 @@ const MonitorManageForm = props => {
         config={configs}
         {...props}
         init={{
+          template_id: null,
+          comments: null,
           ...props.init,
           frequency: deviceFrequencyConfig[0].value,
         }}
-        onFieldChange={onFieldChange}
+        // onFieldChange={onFieldChange}
       ></SmartForm>
     </div>
   );

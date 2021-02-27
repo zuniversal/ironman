@@ -106,6 +106,7 @@ const MonitorManageTable = props => {
       columns={columns}
       extra={extra}
       isQRCode
+      // noDefault
       {...props}
     ></SmartTable>
   );

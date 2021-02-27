@@ -42,7 +42,7 @@ export const filterObjSame = (data, key = 'id') => {
   });
   // return data;
   // console.log(' temp ： ', data, temp,  )//
-  return temp;
+  return temp.filter(v => v.value != undefined);
   // }
 };
 
@@ -324,6 +324,7 @@ export const formatConfig = (
         v.formType === 'rowText' ||
         v.formType === 'plainText' ||
         v.formType === 'CustomCom' ||
+        v.formType === 'Checkbox' ||
         v.formType === 'PropsCom'
           ? {
               ...v.itemProps,

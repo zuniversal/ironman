@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { tips } from '@/utils';
 
 const useHttp = (
-  // http: () => {},
   http = () => {},
   { init, params, attr = 'list', format, withArr, withObj, noMountFetch },
 ) => {
   const [data, setData] = useState(init);
   const [isLoading, setIsLoading] = useState(false);
 
-  const request = async data => {
-    setIsLoading(true);
-    const res = await http(data);
+  const handleRes = res => {
+    console.log(' handleRes   res,   ： ', res);
     const attrRes = attr ? res[attr] : res;
     let datas = format ? format(attrRes) : attrRes;
     if (withArr) {
@@ -28,10 +26,20 @@ const useHttp = (
     setIsLoading(false);
   };
 
+  const req = async request => {
+    setIsLoading(true);
+    const res = await request();
+    handleRes(res);
+  };
+
   useEffect(() => {
     console.log(' useHttp useEffect  ： ', params); //
     if (!noMountFetch) {
-      request(params);
+      const asyncFn = async () => {
+        const res = await http();
+        handleRes(res);
+      };
+      asyncFn();
     }
   }, []);
 
@@ -40,8 +48,8 @@ const useHttp = (
     setData,
     isLoading,
     loading: isLoading,
-    request,
-    req: request,
+    req,
+    request: req,
   };
 };
 

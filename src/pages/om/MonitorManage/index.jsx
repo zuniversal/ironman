@@ -83,16 +83,29 @@ class MonitorManage extends PureComponent {
       </div>
     );
   };
+  // renderSearchForm = params => {
+  //   return (
+  //     <MonitorManageSearchForm
+  //       formBtn={this.renderFormBtn}
+  //       // getClientAsync={this.props.getClientAsync}
+  //       // clientList={this.props.clientList}
+  //       init={this.props.searchInfo}
+  //       onFieldChange={this.onFieldChange}
+  //       init={this.props.searchInfo}
+  //     ></MonitorManageSearchForm>
+  //   );
+  // };
   renderSearchForm = params => {
     return (
-      <MonitorManageSearchForm
+      <SearchKwForm
         formBtn={this.renderFormBtn}
-        // getClientAsync={this.props.getClientAsync}
-        // clientList={this.props.clientList}
+        className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        init={this.props.searchInfo}
-      ></MonitorManageSearchForm>
+        // label={'检测点、客户、户号、电站、设备'}
+        label={'关键字'}
+        keyword={'keyword'}
+      ></SearchKwForm>
     );
   };
   onFieldChange = params => {
@@ -175,10 +188,11 @@ class MonitorManage extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
+      init: this.props.itemDetail,
     };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
+    // if (action !== 'add') {
+    //   formComProps.init = this.props.itemDetail;
+    // }
     console.log(' formComProps ： ', formComProps); //
     if (action === 'detail') {
       return (

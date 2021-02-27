@@ -42,6 +42,11 @@ export const editCircuitItem = p =>
     `console/OMS/powerstation/${p.power_station_id}/circuit/${p.circuit_id}`,
     p,
   );
+// export const editCircuitItem = ({power_station_id, circuit_id, ...p}) =>
+//   put(
+//     `console/OMS/powerstation/${power_station_id}/circuit/${circuit_id}`,
+//     p,
+//   );
 export const removeCircuitItem = p =>
   remove(
     `console/OMS/powerstation/${p.power_station_id}/circuit/${p.circuit_id}`,

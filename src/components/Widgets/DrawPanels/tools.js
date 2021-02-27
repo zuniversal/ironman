@@ -114,62 +114,62 @@ export const Tools = [
   {
     group: '基本形状',
     children: [
-      {
-        name: 'rectangle',
-        icon: 'icon-rect',
-        data: {
-          text: 'xxxx',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          strokeStyle: 'transparent',
-          name: 'text',
-          // icon: String.fromCharCode(+'58984'),
-          // iconFamily: 'zyb',
-          iconFamily: 'topology',
-          // iconSize: '30',
-        },
-      },
-      {
-        name: 'rectangle',
-        icon: 'icon-rect',
-        data: {
-          text: 'xxxx',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          strokeStyle: 'transparent',
-          name: 'rectangle',
-          // icon: String.fromCharCode(+'58984'),
-          // iconFamily: 'zyb',
-          iconFamily: 'topology',
-          // iconSize: '30',
-        },
-      },
+      // {
+      //   name: 'rectangle',
+      //   icon: 'icon-rect',
+      //   data: {
+      //     text: 'xxxx',
+      //     rect: {
+      //       width: 50,
+      //       height: 50,
+      //     },
+      //     strokeStyle: 'transparent',
+      //     name: 'text',
+      //     // icon: String.fromCharCode(+'58984'),
+      //     // iconFamily: 'zyb',
+      //     iconFamily: 'topology',
+      //     // iconSize: '30',
+      //   },
+      // },
+      // {
+      //   name: 'rectangle',
+      //   icon: 'icon-rect',
+      //   data: {
+      //     text: 'xxxx',
+      //     rect: {
+      //       width: 50,
+      //       height: 50,
+      //     },
+      //     strokeStyle: 'transparent',
+      //     name: 'rectangle',
+      //     // icon: String.fromCharCode(+'58984'),
+      //     // iconFamily: 'zyb',
+      //     iconFamily: 'topology',
+      //     // iconSize: '30',
+      //   },
+      // },
 
-      {
-        name: 'rectangle',
-        icon: 'icon-rect',
-        data: {
-          text: '',
-          rect: {
-            width: 50,
-            height: 50,
-          },
-          strokeStyle: 'transparent',
-          paddingLeft: 5,
-          paddingRight: 5,
-          paddingTop: 5,
-          paddingBottom: 5,
-          name: 'rectangle',
-          // icon: String.fromCharCode(+'58984'),
-          // iconFamily: 'zyb',
-          iconFamily: 'topology',
-          // iconSize: '30',
-        },
-      },
+      // {
+      //   name: 'rectangle',
+      //   icon: 'icon-rect',
+      //   data: {
+      //     text: '',
+      //     rect: {
+      //       width: 50,
+      //       height: 50,
+      //     },
+      //     strokeStyle: 'transparent',
+      //     paddingLeft: 5,
+      //     paddingRight: 5,
+      //     paddingTop: 5,
+      //     paddingBottom: 5,
+      //     name: 'rectangle',
+      //     // icon: String.fromCharCode(+'58984'),
+      //     // iconFamily: 'zyb',
+      //     iconFamily: 'topology',
+      //     // iconSize: '30',
+      //   },
+      // },
       {
         name: 'rectangle',
         icon: 'icon-rect',

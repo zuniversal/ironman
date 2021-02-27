@@ -5,7 +5,6 @@ import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import AssessmentTable from '@/components/Table/AssessmentTable'; //
 import AssessmentForm from '@/components/Form/AssessmentForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import DrawPanel from '@/components/Widgets/DrawPanel'; //
 
 import { actions, mapStateToProps } from '@/models/assessment'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -142,11 +141,6 @@ class Assessment extends PureComponent {
     );
   };
 
-  renderDrawPanel = params => {
-    console.log(' renderDrawPanel,  , ： ', params);
-    return <DrawPanel {...this.props}></DrawPanel>;
-  };
-
   render() {
     return (
       <div className="assessment">
@@ -155,8 +149,6 @@ class Assessment extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
-
-        {/* {this.renderDrawPanel()} */}
       </div>
     );
   }

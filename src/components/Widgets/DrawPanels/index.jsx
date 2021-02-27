@@ -56,6 +56,7 @@ import './Plugin/canvas2svg';
 import NodeAttrForm from './NodeAttrForm';
 import CanvasAttrForm from './CanvasAttrForm';
 import LineAttrForm from './LineAttrForm';
+import CustomImg from './CustomImg';
 import { isDev } from '@/constants';
 // import Preview from './Preview'; //
 
@@ -104,8 +105,6 @@ const CustomTools = props => (
     </div>
   </div>
 );
-
-const { TabPane } = Tabs;
 
 const DrawTool = React.memo(props => {
   console.log(' DrawTool   props,   ： ', props);
@@ -454,11 +453,13 @@ const DrawPanel = props => {
 
   const handle_open = data => {
     console.log(' handle_open ： ', data); //
+    setDrawId(null);
     handle_replace(data);
   };
 
   const handle_replace = data => {
     console.log(' handle_replace ： ', data); //
+    setDrawId(null);
     const input = document.createElement('input');
     input.type = 'file';
     input.onchange = event => {
@@ -949,7 +950,9 @@ const DrawPanel = props => {
         />
       ),
       // default: canvas && <BackgroundComponent data={canvas} />, // 渲染画布背景的组件
-      default: canvas && <CanvasAttrForm data={canvas} canvas={canvas} />,
+      default: canvas && (
+        <CanvasAttrForm data={canvas} canvas={canvas} selected={selected} />
+      ),
     };
   }, [
     selected,
@@ -976,33 +979,33 @@ const DrawPanel = props => {
 
   const sideBarLeft = (
     <div className={'styles.props sideBar sideBarLeft'}>
-      {/* <Tabs defaultActiveKey="1">
-      <TabPane tab="系统组件" key="1"  > */}
-      <div className={`toolWrapper`}>
-        <DrawTool onDrag={onDrag}></DrawTool>
-        {!isDev && (
-          <>
-            <CustomTools
-              onCustomDrag={onCustomDrag}
-              font_family={lteeIcons.font_family}
-              css_prefix_text={lteeIcons.css_prefix_text}
-              glyphs={lteeIcons.glyphs}
-            ></CustomTools>
-            <CustomTools
-              onCustomDrag={onCustomDrag}
-              font_family={ltdxIcons.font_family}
-              css_prefix_text={ltdxIcons.css_prefix_text}
-              glyphs={ltdxIcons.glyphs}
-            ></CustomTools>
-          </>
-        )}
-        {/* <CustomTools onCustomDrag={onCustomDrag} font_family={customIcons.font_family} glyphs={customIcons.glyphs} ></CustomTools> */}
-      </div>
-      {/* </TabPane>
-      <TabPane tab="自定义图片" key="2"  >
-        <MyComponent />
-      </TabPane>
-    </Tabs> */}
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane tab="系统组件" key="1">
+          <div className={`toolWrapper`}>
+            <DrawTool onDrag={onDrag}></DrawTool>
+            {!isDev && (
+              <>
+                <CustomTools
+                  onCustomDrag={onCustomDrag}
+                  font_family={lteeIcons.font_family}
+                  css_prefix_text={lteeIcons.css_prefix_text}
+                  glyphs={lteeIcons.glyphs}
+                ></CustomTools>
+                <CustomTools
+                  onCustomDrag={onCustomDrag}
+                  font_family={ltdxIcons.font_family}
+                  css_prefix_text={ltdxIcons.css_prefix_text}
+                  glyphs={ltdxIcons.glyphs}
+                ></CustomTools>
+              </>
+            )}
+            {/* <CustomTools onCustomDrag={onCustomDrag} font_family={customIcons.font_family} glyphs={customIcons.glyphs} ></CustomTools> */}
+          </div>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="自定义图片" key="2">
+          <CustomImg />
+        </Tabs.TabPane>
+      </Tabs>
     </div>
   );
 

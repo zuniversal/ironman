@@ -24,6 +24,7 @@ export const removeItem = p => remove(`console/OMS/customer/${p.d_id}`, p);
 // export const removeItem = p => remove(`console/OMS/customer/${p}`, p);
 export const removeItems = p => remove(`console/OMS/customer/`, p);
 
+export const getRelatived = p => noTipsGet('console/OMS/customer/map', p);
 export const getDistrict = p => noTipsGet('console/OMS/customer/district', p);
 export const exportData = p => get('console/OMS/customer/file', p);
 export const syncOA = p => noTipsGet(`console/OMS/customer/OA`, p);

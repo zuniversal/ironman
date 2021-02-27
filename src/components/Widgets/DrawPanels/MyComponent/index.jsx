@@ -5,7 +5,7 @@ import './index.less';
 
 const { Search } = Input;
 
-const Layout = () => {
+const CustomImg = () => {
   const [visible, setVisible] = useState(false);
   const [url, setUrl] = useState(
     // 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2957705046,1654500225&fm=26&gp=0.jpg'
@@ -145,4 +145,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default CustomImg;
