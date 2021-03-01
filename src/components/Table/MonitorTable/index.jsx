@@ -31,7 +31,7 @@ const MonitorTable = props => {
       title: '关联设备',
     },
     {
-      title: '监测点',
+      title: '监控点',
     },
     {
       title: '设备类型',

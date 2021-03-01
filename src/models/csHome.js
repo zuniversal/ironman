@@ -38,6 +38,8 @@ export default {
     stationStatusList: [],
     stationStatusCount: 0,
     deviceStatus: {},
+    chartData: [],
+    chartTimeData: [],
   },
 
   reducers: {
@@ -122,14 +124,24 @@ export default {
     },
     getPowerInfo(state, { payload, type }) {
       const { chartSearchInfo } = state;
+      const timeData =
+        payload.payload.type && payload.payload.type != 'day'
+          ? payload.bean.time
+          : payload.bean.time[0];
       console.log(
         ' getPowerInfogetPowerInfo ： ',
         chartSearchInfo,
-        payload.payload,
+        payload,
+        timeData,
       ); //
       return {
         ...state,
         chartData: payload.bean.data,
+        chartTimeData: timeData.map(v => {
+          console.log(' v ： ', v); //
+          const [year, month, day] = v.split('T')[0].split('-');
+          return `${month}-${day}`;
+        }),
         chartSearchInfo: {
           ...chartSearchInfo,
           ...payload.payload,

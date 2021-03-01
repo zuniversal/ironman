@@ -37,7 +37,7 @@ const TimeChoice = props => {
   return (
     <div className={'extraWrapper dfc '}>
       <div className={'timeChoice'}>
-        {timeChoices.map((v, i) => (
+        {props.config.map((v, i) => (
           <a
             key={i}
             onClick={() => timeClick(v, i)}
@@ -57,8 +57,12 @@ const TimeChoice = props => {
   );
 };
 
-TimeChoice.defaultProps = {};
+TimeChoice.defaultProps = {
+  config: timeChoices,
+};
 
-TimeChoice.propTypes = {};
+TimeChoice.propTypes = {
+  config: PropTypes.array,
+};
 
 export default TimeChoice;

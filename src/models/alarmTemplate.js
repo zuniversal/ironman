@@ -59,12 +59,35 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const [one, two, three] = payload.bean.role;
+      const role = {
+        one: {
+          ...one,
+          range: {
+            0: one.range['0'],
+            1: one.range['1'],
+          },
+        },
+        two: {
+          ...two,
+          range: {
+            0: two.range['0'],
+            1: two.range['1'],
+          },
+        },
+        three,
+      };
+      const itemDetail = {
+        ...payload.bean,
+        role,
+      };
+      console.log(' itemDetail ： ', itemDetail); //
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail,
       };
     },
     addItem(state, { payload, type }) {

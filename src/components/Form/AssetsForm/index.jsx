@@ -39,6 +39,7 @@ const AssetsForm = props => {
     //   },
     // },
     {
+      noRule: true,
       formType: 'Search',
       selectSearch: props.getPowerAsync,
       selectData: props.powerList,

@@ -1,20 +1,190 @@
 import React from 'react';
 import './style.less';
+import { Form, InputNumber } from 'antd';
 import SmartForm from '@/common/SmartForm'; //
-import { notifyTypeConfig } from '@/configs';
+import { notifyTypeConfig, fullFormLayouts } from '@/configs';
+
+const defRule = {
+  role: {
+    // 0: {fields: 'current', range: {0: null, 1: null}, duration: null},
+    // 1: {fields: 'voltage', range: {0: null, 1: null}, duration: null},
+    // 2: {fields: 'load', threshold: null, duration: null},
+    one: { fields: 'current', range: { 0: null, 1: null }, duration: null },
+    two: { fields: 'voltage', range: { 0: null, 1: null }, duration: null },
+    three: { fields: 'load', threshold: null, duration: null },
+  },
+};
+
+const layoutObj = {
+  labelCol: {
+    sm: { span: 7 }, //
+  },
+  wrapperCol: {
+    sm: { span: 17 }, //
+  },
+};
 
 const AlarmTemplateForm = props => {
   console.log(' AlarmTemplateForm ： ', props); //
   const { formBtn, ...rest } = props; //
 
-  const config = [
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '基本信息',
-    //   },
-    // },
+  const ruleConfig = [
     {
+      formType: 'rowText',
+      itemProps: {
+        label: '电流阈值',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '字段',
+        name: ['role', 'one', 'fields'],
+        className: 'hidden',
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '电流过低',
+        name: ['role', 'one', 'range', '0'],
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '电流过高',
+        name: ['role', 'one', 'range', '1'],
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '持续',
+        name: ['role', 'one', 'duration'],
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电压阈值',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '字段',
+        name: ['role', 'two', 'fields'],
+        className: 'hidden',
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '电压过低',
+        name: ['role', 'two', 'range', '0'],
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '电压过高',
+        name: ['role', 'two', 'range', '1'],
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '持续',
+        name: ['role', 'two', 'duration'],
+      },
+    },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '负载',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '字段',
+        name: ['role', 'three', 'fields'],
+        className: 'hidden',
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '阈值',
+        name: ['role', 'three', 'threshold'],
+        extra: '范围 0 ~ 1',
+      },
+      comProps: {
+        min: 0,
+        max: 1,
+        step: 0.01,
+        precision: 2,
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '持续时间',
+        name: ['role', 'three', 'duration'],
+      },
+    },
+  ];
+  //
+
+  // const formList = (
+  //   <Form.List name="spect_out" key={'spectIn'}>
+  //     {(fields, { add, remove }) => {
+  //       console.log(' dataInit  fieldsfields ： ', fields); //
+  //       return (
+  //         <>
+  //           {fields.map(field => {
+  //             const formItem = ruleConfig.map(v => ({...v, comProps: v.comProps ?? {},})).map((v, i) => (
+  //               <Form.Item
+  //                 {...field}
+  //                 {...v.itemProps}
+  //                 colon={false}
+  //                 name={[field.name, ...v.itemProps.name]}
+  //                 fieldKey={[field.fieldKey, v.itemProps.name]}
+  //                 className={'formItems '}
+  //                 {...layoutObj}
+  //               >
+  //                 <InputNumber className={'w-320'} {...v.comProps}  />
+  //               </Form.Item>
+  //             ));
+  //             return formItem
+  //             return (
+  //               <Form.Item
+  //                 colon={false}
+  //                 key={index + field.key}
+  //                 className={'formItems labelItem'}
+  //                 {...v.comProps}
+  //               ></Form.Item>
+  //             );
+  //           })}
+  //         </>
+  //       );
+  //     }}
+  //   </Form.List>
+  // );
+
+  const config = [
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '基本信息',
+      },
+    },
+    {
+      // noRule: true,
       itemProps: {
         label: '名称',
         name: 'name',
@@ -29,44 +199,63 @@ const AlarmTemplateForm = props => {
     //   },
     // },
     {
-      formType: 'Checkbox',
+      formType: 'Select',
+      selectData: notifyTypeConfig,
+      // formType: 'Checkbox',
+      // checkboxData: notifyTypeConfig,
       itemProps: {
         label: '通知方式',
         name: 'notification_type',
       },
-      checkboxData: notifyTypeConfig,
+      comProps: {
+        mode: 'multiple',
+      },
     },
     {
+      noRule: true,
       itemProps: {
         label: '备注',
         name: 'comments',
       },
     },
+    ...ruleConfig,
 
-    {
-      itemProps: {
-        label: '字段',
-        name: ['role', 'fields'],
-      },
-    },
-    {
-      itemProps: {
-        label: '区间',
-        name: ['role', 'range'],
-      },
-    },
-    {
-      itemProps: {
-        label: '持续时间',
-        name: ['role', 'duration'],
-      },
-    },
-    {
-      itemProps: {
-        label: '阈值',
-        name: ['role', 'threshold'],
-      },
-    },
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: (
+    //     formList
+    //   ),
+    //   itemProps: {
+    //     label: '',
+    //     className: 'w100',
+    //     ...fullFormLayouts,
+    //   },
+    // },
+
+    // {
+    //   itemProps: {
+    //     label: '字段',
+    //     name: ['role', 'fields'],
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '区间',
+    //     name: ['role', 'range'],
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '持续时间',
+    //     name: ['role', 'duration'],
+    //   },
+    // },
+    // {
+    //   itemProps: {
+    //     label: '阈值',
+    //     name: ['role', 'threshold'],
+    //   },
+    // },
 
     // {
     //   formType: 'rowText',
@@ -110,54 +299,7 @@ const AlarmTemplateForm = props => {
     //     name: '',
     //   },
     // },
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '电流阈值',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电流过低',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电流过高',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '持续',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '电压阈值',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电压过低',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '电压过高',
-    //     name: '',
-    //   },
-    // },
-    // {
-    //   itemProps: {
-    //     label: '持续',
-    //     name: '',
-    //   },
-    // },
+
     // {
     //   formType: 'rowText',
     //   itemProps: {
@@ -209,10 +351,19 @@ const AlarmTemplateForm = props => {
   ];
 
   return (
-    <div className={' AlarmTemplateForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
+    <div className={'alarmTemplateForm '}>
+      <SmartForm
+        config={config}
+        {...props}
+        init={{
+          ...defRule,
+          comments: null,
+          ...props.init,
+          // spect_out: [
+          //   {}
+          // ],
+        }}
+      ></SmartForm>
     </div>
   );
 };

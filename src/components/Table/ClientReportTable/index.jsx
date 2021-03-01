@@ -31,6 +31,7 @@ const ClientReportTable = props => {
     {
       title: '客户名称',
       dataIndex: 'name',
+      noCutText: true,
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',

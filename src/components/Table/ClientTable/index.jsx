@@ -27,10 +27,11 @@ const ClientTable = props => {
       // linkUrlFn: linkUrlFn(['code', 'id', 'ids'], HOUSENO),
     },
     {
+      noFilter: true,
+      noCutText: true,
+      width: 300,
       title: '客户名称',
       dataIndex: 'name',
-      noFilter: true,
-      className: 'linkTd',
       detailFn: record =>
         // props.showDetail({
         //   action: 'detail',
@@ -86,7 +87,7 @@ const ClientTable = props => {
     // },
     {
       title: '户号数',
-      dataIndex: 'electricityuser_num',
+      dataIndex: 'electricity_user_count',
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'houseNoDetailAsync',
@@ -104,7 +105,7 @@ const ClientTable = props => {
     },
     {
       title: '客户地址',
-      dataIndex: 'address',
+      dataIndex: ['enterprise', 'address'],
     },
   ];
 

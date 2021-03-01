@@ -8,8 +8,17 @@ const dayHoursArr = createIndexArr(24).map(
   v => `${v}`.padStart(2, '0') + ':00',
 );
 
+const weekArr = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
 const option = params => {
-  const { data } = params;
+  const { data, chartSearchInfo, chartTimeData } = params;
+  const xAxisMap = {
+    day: dayHoursArr,
+    // week: weekArr,
+    week: chartTimeData,
+    month: chartTimeData,
+  };
+  const xAxis = xAxisMap[chartSearchInfo.type] ?? dayHoursArr;
   return {
     legend: {
       data: ['能耗（kWh）', '数据源2'],
@@ -20,7 +29,7 @@ const option = params => {
         axisPointer: {
           type: 'shadow',
         },
-        data: dayHoursArr,
+        data: xAxis,
       },
     ],
     yAxis: [
@@ -34,7 +43,7 @@ const option = params => {
     ],
     series: [
       {
-        name: '能耗（kWh）',
+        name: '',
         type: 'line',
         yAxisIndex: 0,
         symbol: 'circle',
@@ -53,6 +62,7 @@ const option = params => {
 };
 
 const CsHomeLine = props => {
+  console.log(' CsHomeLine ： ', props); //
   return <SmartEchart {...props} option={option(props)}></SmartEchart>;
 };
 

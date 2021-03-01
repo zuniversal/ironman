@@ -16,8 +16,9 @@ import AssetsForm from '@/components/Form/AssetsForm'; //
 import { actions, mapStateToProps } from '@/models/monitorManage'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 
-const TITLE = '监测';
+const TITLE = '监控';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -26,11 +27,12 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   monitorManageAsync: `${TITLE}详情`,
+  getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
   assetsDetailAsync: `设备详情`,
-  monitorDeviceDetailAsync: `监测设备详情`,
+  monitorDeviceDetailAsync: `监控设备详情`,
 };
 
 const detailFormMap = {
@@ -105,6 +107,7 @@ class MonitorManage extends PureComponent {
         // label={'检测点、客户、户号、电站、设备'}
         label={'关键字'}
         keyword={'keyword'}
+        noLabel
       ></SearchKwForm>
     );
   };
@@ -127,6 +130,8 @@ class MonitorManage extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+
+      getRealDataAsync: this.props.getRealDataAsync,
     };
 
     return <MonitorManageTable {...tableProps}></MonitorManageTable>;
@@ -134,7 +139,6 @@ class MonitorManage extends PureComponent {
 
   onRemove = params => {
     console.log(' onRemove    ： ', params);
-    // this.props.removeItemAsync({ d_id: `${params.record.id}` });
     this.props.onRemove({
       d_id: `${params.record.id}`,
     });
@@ -164,6 +168,10 @@ class MonitorManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
+    if (['getRealDataAsync'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action); //
@@ -193,11 +201,21 @@ class MonitorManage extends PureComponent {
     // if (action !== 'add') {
     //   formComProps.init = this.props.itemDetail;
     // }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps, this.props); //
     if (action === 'detail') {
       return (
         <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
       );
+    }
+    if (action === 'getRealDataAsync') {
+      const paramProps = {
+        // number,
+        // stationId,
+        // point,
+        // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
+        // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+      };
+      return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
     }
     return <MonitorManageForm {...formComProps}></MonitorManageForm>;
   };

@@ -26,6 +26,7 @@ const AssetsTable = props => {
     {
       title: '户号',
       dataIndex: 'code',
+      dataIndex: ['electricity_user', 'number'],
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
       // ),

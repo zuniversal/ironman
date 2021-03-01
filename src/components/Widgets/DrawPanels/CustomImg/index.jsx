@@ -75,12 +75,13 @@ const CustomImg = () => {
     <div className="customComponent">
       <Form.Item label="回车添加网络图片地址">
         <Input
-          placeholder="请输入图片的地址"
+          placeholder="请输入图片地址"
           // defaultValue="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2957705046,1654500225&fm=26&gp=0.jpg"
           defaultValue={defImg}
           onChange={e => setUrl(e.target.value)}
           onPressEnter={onSave}
           colon={false}
+          allowClear
           // enterButton={
           //   <Button type="primary" className="btn" onClick={onSave}>
           //     保存

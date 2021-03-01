@@ -23,7 +23,7 @@ const NodeAttrForm = props => {
     {
       formType: 'rowText',
       itemProps: {
-        label: '绑定监测点',
+        label: '绑定监控点',
       },
     },
     {

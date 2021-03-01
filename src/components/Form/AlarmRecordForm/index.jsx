@@ -25,7 +25,7 @@ const AlarmRecordForm = props => {
     },
     {
       itemProps: {
-        label: '监测点',
+        label: '监控点',
       },
     },
     {

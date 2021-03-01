@@ -576,17 +576,17 @@ export const contractTypeMap = arrMapObj(contractTypeConfig);
 export const notifyTypeConfig = [
   {
     label: '应用内通知',
-    value: 2,
+    value: '2',
     key: 2,
   },
   {
     label: '短信',
-    value: 0,
+    value: '0',
     key: 0,
   },
   {
     label: '邮件',
-    value: 1,
+    value: '1',
     key: 1,
   },
 ];
@@ -1007,27 +1007,27 @@ export const powerPointItemConfig = [
     value: 'line',
   },
   {
-    label: 'A相电流',
+    label: 'A相电压',
     value: 'ua',
   },
   {
-    label: 'B相电流',
+    label: 'B相电压',
     value: 'ub',
   },
   {
-    label: 'C相电流',
+    label: 'C相电压',
     value: 'uc',
   },
   {
-    label: 'A相电压',
+    label: 'A相电流',
     value: 'ia',
   },
   {
-    label: 'B相电压',
+    label: 'B相电流',
     value: 'ib',
   },
   {
-    label: 'C相电压',
+    label: 'C相电流',
     value: 'ic',
   },
   {
@@ -1328,3 +1328,48 @@ export const deviceFrequencyConfig = [
     label: '5分钟',
   },
 ];
+
+export const deviceFrequencyMap = arrMapObj(deviceFrequencyConfig);
+
+export const alarmRecordStatusConfig = [
+  {
+    value: '0',
+    label: '未处理',
+  },
+  {
+    value: '1',
+    label: '已处理',
+  },
+];
+
+export const alarmRecordStatusMap = arrMapObj(alarmRecordStatusConfig);
+
+export const alarmRecordLevelConfig = [
+  {
+    value: '1',
+    label: '黄色告警',
+  },
+  {
+    value: '2',
+    label: '红色告警',
+  },
+];
+
+export const alarmRecordLevelMap = arrMapObj(alarmRecordLevelConfig);
+
+export const alarmRecordTypeConfig = [
+  {
+    value: '1',
+    label: '电压',
+  },
+  {
+    value: '2',
+    label: '电流',
+  },
+  {
+    value: '3',
+    label: '负载',
+  },
+];
+
+export const alarmRecordTypeMap = arrMapObj(alarmRecordTypeConfig);

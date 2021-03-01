@@ -3,7 +3,7 @@ export default [
     path: '/om/drawPanel',
     authKey: 'drawPanelConfig',
     component: '@/pages/om/DrawPanel',
-    title: '一次线路图',
+    title: '一次系统图',
   },
 
   {
@@ -121,7 +121,7 @@ export default [
     path: '/om/monitorManage',
     authKey: 'monitorEquipment',
     component: '@/pages/om/MonitorManage',
-    title: '监测管理',
+    title: '监控管理',
   },
   {
     path: '/om/goods',

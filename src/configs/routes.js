@@ -37,7 +37,7 @@ export const managerRoutes = [
   // {
   //   noAuth: true,
   //   path: '/om/drawPanel',
-  //   name: '一次线路图',
+  //   name: '一次系统图',
   //   icon: <Icon icon={'home'} />,
   //   component: '../pages/om/DrawPanel',
   // },
@@ -256,7 +256,7 @@ export const managerRoutes = [
   {
     path: '/om/alarm',
     authKey: 'alarm',
-    name: '告警管理',
+    name: '监控管理',
     icon: <ScheduleFilled />,
     icon: <Icon icon={'alarmManage'} />,
     component: '../Alarm',
@@ -272,7 +272,7 @@ export const managerRoutes = [
       {
         path: '/om/monitorManage',
         authKey: 'monitorEquipment',
-        name: '监测设备管理',
+        name: '监控设备管理',
         // icon: <ScheduleFilled />,
         // icon: <Icon icon={'monitorManage'} />,
         // icon: placeIcon,

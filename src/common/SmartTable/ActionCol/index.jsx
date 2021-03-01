@@ -36,7 +36,7 @@ const ActionCol = props => {
                 props.dataSource.length > 0
                   ? edit({
                       action: 'edit',
-                      ...record,
+                      // ...record,
                       d_id: record[props.rowKey],
                     })
                   : props.showFormModal({

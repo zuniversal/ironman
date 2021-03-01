@@ -156,6 +156,8 @@ class CsHome extends PureComponent {
       <CsHomeStatEcharts
         data={this.props.chartData}
         onOptionChange={this.onOptionChange}
+        chartTimeData={this.props.chartTimeData}
+        chartSearchInfo={this.props.chartSearchInfo}
       ></CsHomeStatEcharts>
     );
   };

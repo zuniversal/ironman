@@ -42,8 +42,6 @@ import CanvasContextMenu from './canvasContextMenu';
 
 // import '@/static/fonts/iconfont.css';
 // import './font/iconfont.css';
-import './fonts/iconfont.css';
-import './fonts/libs/iconfont.css';
 
 import { Tools } from './tools';
 

@@ -31,6 +31,8 @@ const PowerStationTable = props => {
         }),
     },
     {
+      noCutText: true,
+      width: 300,
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
@@ -77,7 +79,7 @@ const PowerStationTable = props => {
     //   className: 'textCenter',
     // },
     // {
-    //   title: '一次电气图',
+    //   title: '一次系统图',
     //   dataIndex: 'file',
     //   render: (text, record, index) => {
     //     // console.log(' text, record ： ', text, record,  )//
@@ -95,7 +97,7 @@ const PowerStationTable = props => {
           )
         }
       >
-        一次电气图
+        一次系统图
       </a>
       <a
         onClick={() => {

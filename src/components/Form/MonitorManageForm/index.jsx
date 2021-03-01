@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.less';
+import { Button } from 'antd';
 import { getList as getAssetsList } from '@/services/assets';
 import { getList as getClientList, getRelatived } from '@/services/client';
 import { getList as getHouseNoList } from '@/services/houseNo';
@@ -57,7 +58,10 @@ const MonitorManageForm = props => {
     },
   );
   const { data: alarmTemplateList, req: getalarmTemplateAsync } = useHttp(
-    getAlarmTemplateList,
+    () =>
+      getAlarmTemplateList({
+        // get_all: '1',
+      }),
     {
       ...commonParams,
     },
@@ -66,7 +70,7 @@ const MonitorManageForm = props => {
     () =>
       getMonitorDeviceList({
         unbound: '1',
-        // get all: '1',
+        // get_all: '1',
       }),
     {
       ...commonParams,
@@ -292,12 +296,28 @@ const MonitorManageForm = props => {
         label: '监控点名称',
         name: 'name',
       },
+      // extra: (
+      //   <Button
+      //     type="primary"
+      //     onClick={() => {
+      //     }}
+      //     className="m-l-5"
+      //   >
+      //     新增
+      //   </Button>
+      // ),
     },
     {
       noRule: true,
       formType: 'Select',
       // selectSearch: getMonitorDeviceAsync,
-      selectData: monitorDeviceList,
+      selectData: [
+        ...monitorDeviceList,
+        {
+          value: props.init.device_id,
+          label: props.init.imei,
+        },
+      ],
       itemProps: {
         label: '设备编码',
         label: '监控设备',

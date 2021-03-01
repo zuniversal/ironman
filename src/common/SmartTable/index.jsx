@@ -23,6 +23,7 @@ import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi'; //
 import noData from '@/static/assets/noData.png'; //
 import ExportPdf from '@/components/Pdf/ExportPdf';
+import dayjs from 'dayjs'; //
 
 const { slideInUp } = ANIMATE;
 
@@ -258,6 +259,9 @@ class SmartTable extends PureComponent {
       isMoment,
       detailFn,
       notTooltip,
+      noCutText,
+      day,
+      dayFn,
     } = config;
 
     const { showDetail, rowKey } = this.props;
@@ -270,7 +274,14 @@ class SmartTable extends PureComponent {
     if (dataMap) {
       mapText = getDataMap(mapText, dataMap);
     }
-    let txt = foramtText(mapText);
+    if (dayFn) {
+      // mapText = dayFn(dayjs, text, record, index,  )
+      // mapText = dayjs.duration(text).asSeconds()
+    }
+    if (day) {
+      mapText = dayjs(mapText).format(day || 'YYYY-MM-DD');
+    }
+    let txt = !noCutText ? foramtText(mapText) : mapText;
 
     // const txt = textLength > lengthLimit ? `${text}`.slice(0, lengthLimit) + '...' : text
 
@@ -326,7 +337,12 @@ class SmartTable extends PureComponent {
       // return content;
     } else if (detailFn) {
       content = (
-        <a onClick={() => detailFn(record, text, index, config)}>{txt}</a>
+        <a
+          onClick={() => detailFn(record, text, index, config)}
+          className={`w-300`}
+        >
+          {txt}
+        </a>
       );
     } else {
       content = <span className={``}>{txt}</span>;
@@ -365,13 +381,6 @@ class SmartTable extends PureComponent {
     });
   };
   onPageChange = (page, page_size) => {
-    console.log(
-      ' onPageChange,  , ： ',
-      page,
-      page_size,
-      this.state,
-      this.props,
-    );
     if (!this.props.noRequest) {
       this.props.getListAsync({
         page,
@@ -385,6 +394,15 @@ class SmartTable extends PureComponent {
       current: page,
       pageSize: page_size,
     };
+    console.log(
+      ' onPageChange,  , ： ',
+      page,
+      page_size,
+      this.state,
+      this.props,
+      pagination,
+      paginationObj,
+    );
     this.setState({
       pagination: paginationObj,
     });
@@ -597,6 +615,7 @@ class SmartTable extends PureComponent {
       searchInfo,
       animation,
       pageConfig,
+      noRequest,
     } = this.props;
     const { page_size: pageSize, page: current } = searchInfo;
 
@@ -606,7 +625,7 @@ class SmartTable extends PureComponent {
       total: count,
       // ...searchInfo,
       pageSize,
-      current,
+      current: noRequest ? pagination.current : current,
     };
     const col = columns.map((v, i) => ({
       // render: v.render ? v.render : this.renderCol,

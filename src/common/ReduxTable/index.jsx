@@ -107,7 +107,7 @@ SelectCom.propTypes = {
 };
 
 export const getWidget = props => {
-  console.log(' ReduxTable  getWidget   props,   ： ', props);
+  // console.log(' ReduxTable  getWidget   props,   ： ', props);
   const {
     // comProps,
     label,

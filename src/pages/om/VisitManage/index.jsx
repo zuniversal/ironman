@@ -32,6 +32,7 @@ const titleMap = {
   actions,
   titleMap,
   modalForm: VisitManageForm,
+  noMountFetch: true,
 })
 class VisitManage extends PureComponent {
   constructor(props) {

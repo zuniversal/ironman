@@ -27,6 +27,7 @@ const useHttp = (
   };
 
   const req = async request => {
+    console.log(' req request ： '); //
     setIsLoading(true);
     const res = await request();
     handleRes(res);

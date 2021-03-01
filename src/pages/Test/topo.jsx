@@ -3,12 +3,10 @@ import './style.less';
 // import Typology from './Typology';
 // import Typology from './Visio/pages';
 // import Typology from './Visio/pages/workspace';
-import Fb from './Fb';
 
 const Topogy = props => {
-  console.log(' Topogy ： ', props); //
+  console.log(' Topogy ： ', props, window, window.topologyTools); //
   const { formBtn, ...rest } = props; //
-  return <Fb {...props}></Fb>;
   return <div></div>;
   // return <Typology {...props}></Typology>;
   // return (

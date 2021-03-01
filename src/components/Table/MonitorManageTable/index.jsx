@@ -10,7 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable'; //
-import { monitorDeviceStatusMap } from '@/configs';
+import { monitorDeviceStatusMap, deviceFrequencyMap } from '@/configs';
 
 const MonitorManageTable = props => {
   const columns = [
@@ -42,7 +42,7 @@ const MonitorManageTable = props => {
         }),
     },
     {
-      title: '设备名称',
+      title: '关联设备名称',
       dataIndex: 'equipment_name',
       detailFn: record =>
         props.showItemAsync({
@@ -52,16 +52,7 @@ const MonitorManageTable = props => {
         }),
     },
     {
-      title: '关联设备',
-      dataIndex: 'device_id',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'monitorDeviceDetailAsync',
-      //     d_id: record.device_id,
-      //   }),
-    },
-    {
-      title: '监测点',
+      title: '监控点',
       dataIndex: 'name',
     },
     // {
@@ -75,6 +66,7 @@ const MonitorManageTable = props => {
     {
       title: '上传频率',
       dataIndex: 'frequency',
+      dataMap: deviceFrequencyMap,
     },
     {
       title: '状态',
@@ -85,6 +77,19 @@ const MonitorManageTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
+      <a
+        onClick={() => {
+          props.showFormModal({
+            // props.getRealDataAsync({
+            action: 'getRealDataAsync',
+            realDataParams: {
+              imei: record.imei,
+            },
+          });
+        }}
+      >
+        监控数据
+      </a>
       <a
         onClick={() => {
           console.log('Received values of form: ', props);

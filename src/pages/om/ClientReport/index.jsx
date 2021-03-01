@@ -14,6 +14,7 @@ import HouseNoForm from '@/components/Form/HouseNoForm';
 import { actions, mapStateToProps } from '@/models/clientReport'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { tips } from '@/utils';
 
 const TITLE = '客户';
 
@@ -83,7 +84,12 @@ class ClientReport extends PureComponent {
       params.formData,
       this.props,
     );
-    const { value } = params;
+    const { value, formData } = params;
+    if (!formData.year_month) {
+      tips('请选择月份！', 1);
+      return;
+    }
+
     if (value.filter) {
       this.props.getListFilter({ ...params.value });
     } else {

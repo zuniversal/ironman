@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
+import SearchKwForm from '@/components/Form/SearchKwForm'; //
 import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
 import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
 import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm'; //
 import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import ClientForm from '@/components/Form/ClientForm';
 
 import { actions, mapStateToProps } from '@/models/alarmRecord'; //
 import SmartHOC from '@/common/SmartHOC';
@@ -21,6 +24,13 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   handleAlarm: `确认处理`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
 };
 
 // const mapStateToProps = ({ alarmRecord, }) => alarmRecord;
@@ -75,6 +85,19 @@ class AlarmRecord extends PureComponent {
       ></AlarmRecordSearchForm>
     );
   };
+  renderSearchForm = params => {
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        className={'fje'}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+        label={'监控点名称、告警名，户号，客户名，imei'}
+        keyword={'keyword'}
+        noLabel
+      ></SearchKwForm>
+    );
+  };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);
@@ -93,9 +116,30 @@ class AlarmRecord extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
     };
 
     return <AlarmRecordTable {...tableProps}></AlarmRecordTable>;
+  };
+
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
   };
 
   onOk = async props => {
@@ -171,6 +215,8 @@ class AlarmRecord extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

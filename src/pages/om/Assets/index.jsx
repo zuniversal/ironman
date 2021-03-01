@@ -74,6 +74,7 @@ const detailFormMap = {
   actions,
   titleMap,
   modalForm: AssetsForm,
+  noMountFetch: true,
 })
 class Assets extends PureComponent {
   constructor(props) {
@@ -375,6 +376,10 @@ class Assets extends PureComponent {
   };
   componentDidMount() {
     this.props.getPowerAsync();
+    this.props.getListAsync({
+      page: 1,
+      page_size: 10,
+    });
   }
 
   render() {

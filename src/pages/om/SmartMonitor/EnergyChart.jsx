@@ -207,7 +207,10 @@ export default React.memo(function EnergyChart(props) {
         echarts={echarts}
         notMerge={true}
         lazyUpdate={true}
-        style={{ width: '766px', height: '365px' }}
+        style={{
+          // width: '766px',
+          height: '365px',
+        }}
       />
     </Container>
   );

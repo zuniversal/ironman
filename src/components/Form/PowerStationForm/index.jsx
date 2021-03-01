@@ -291,7 +291,7 @@ const PowerStationForm = props => {
 
     <UploadCom
       label={'上传电气图'}
-      label={'一次电气图'}
+      label={'一次系统图'}
       action={'file'}
       action={'/api/v1/upload'}
       name={'file'}
@@ -346,7 +346,7 @@ const PowerStationForm = props => {
     //   },
     // },
     // <UploadCom
-    //   label={'上传一次电气图'}
+    //   label={'上传一次系统图'}
     //   text={'上传文件'}
     //   text={'上传文件'}
     //   extra={'支持上传.DWG文件'}
@@ -438,7 +438,7 @@ const PowerStationForm = props => {
       // CustomCom: <img src={props.init?.file} className={`imgBlock`} />,
       CustomCom: <SmartImg src={props.init?.file} />,
       itemProps: {
-        label: '一次电气图',
+        label: '一次系统图',
       },
     },
     {

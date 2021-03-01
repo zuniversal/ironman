@@ -89,8 +89,8 @@ export default {
       const { station } = payload.bean; //
       const stationItem = {
         ...station,
-        value: `${station.id}`,
-        label: station.name,
+        value: `${station?.id}`,
+        label: station?.name,
       };
       return {
         ...state,
@@ -101,7 +101,7 @@ export default {
           production_date: moment(),
           operation_date: moment(),
           list: payload.list,
-          station: `${station.id}`,
+          station: `${station?.id}`,
         },
         action: payload.payload.action,
         isShowModal: true,

@@ -19,6 +19,8 @@ const ContractTable = props => {
     {
       title: '所属客户',
       dataIndex: ['customer', 'name'],
+      noCutText: true,
+      width: 300,
       detailFn: record =>
         props.showItemAsync({
           action: 'clientDetailAsync',

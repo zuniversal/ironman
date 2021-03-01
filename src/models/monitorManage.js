@@ -5,7 +5,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 const namespace = 'monitorManage';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getRealDataAsync'];
 
 const batchTurnActions = [];
 
@@ -26,6 +26,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    realDataParams: {},
   },
 
   reducers: {
@@ -35,6 +36,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        realDataParams: payload.realDataParams,
       };
     },
     onCancel(state, { payload, type }) {
@@ -43,6 +45,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        realDataParams: {},
       };
     },
     getList(state, { payload, type }) {
@@ -61,6 +64,8 @@ export default {
         station_id,
         electricity_user_id,
         equipment_id,
+        device_id,
+        template_id,
       } = payload.bean;
 
       return {
@@ -74,6 +79,8 @@ export default {
           electricity_user_id: `${electricity_user_id}`,
           station_id: `${station_id}`,
           equipment_id: `${equipment_id}`,
+          device_id: `${device_id}`,
+          template_id: `${template_id}`,
         },
       };
     },
@@ -101,6 +108,24 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    getRealData(state, { payload, type }) {
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        realDataParams: payload.payload.realDataParams,
+        itemDetail: {
+          ...payload.bean,
+          // customer_id: `${customer_id}`,
+          // electricity_user_id: `${electricity_user_id}`,
+          // station_id: `${station_id}`,
+          // equipment_id: `${equipment_id}`,
+          // device_id: `${device_id}`,
+          // template_id: `${template_id}`,
+        },
       };
     },
   },
@@ -137,6 +162,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
+    },
+
+    *getRealDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getRealData, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

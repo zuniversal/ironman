@@ -28,6 +28,8 @@ const HouseNoTable = props => {
         }),
     },
     {
+      noCutText: true,
+      width: 300,
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       // className: 'textCenter',

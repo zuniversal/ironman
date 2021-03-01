@@ -311,6 +311,7 @@ export const formatConfig = (
   const configs = config.map((v, i) => {
     // console.log(' formatConfig ：v.itemProps?.name  ', v, v.itemProps, v.formType, v.rowText, v.formType === 'Dynamic', v.formType === 'rowText'  )//
     const isPlainText = v.formType === 'plainText';
+    const noWidth = ['Switch', 'Checkbox'].includes(v.formType);
     const items = {
       ...v,
       // itemProps: { ...v.itemProps, key: `key${i}`, name: `name${i}` },
@@ -324,7 +325,6 @@ export const formatConfig = (
         v.formType === 'rowText' ||
         v.formType === 'plainText' ||
         v.formType === 'CustomCom' ||
-        v.formType === 'Checkbox' ||
         v.formType === 'PropsCom'
           ? {
               ...v.itemProps,
@@ -350,9 +350,9 @@ export const formatConfig = (
       // : { ...v.itemProps, initialValue: `field${i}`, key: `field${i}`, name: `field${i}` },
       comProps: {
         ...v.comProps,
-        className: `${isSearchForm ? w240 : w320} ${v.comProps?.className} ${
-          isPlainText ? 'plainText' : ''
-        }`,
+        className: `${!noWidth ? (isSearchForm ? w240 : w320) : ''} ${
+          v.comProps?.className
+        } ${isPlainText ? 'plainText' : ''}`,
       },
     };
     // console.log(' items ： ', items); //

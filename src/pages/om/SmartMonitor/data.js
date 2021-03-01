@@ -5,39 +5,39 @@ export const getShowRealData = data => {
   const mapping = [
     {
       label: 'AB线电压V',
-      value: () => transNumber(get(data, 'ia') * Math.sqrt(3)),
+      value: () => transNumber(get(data, 'ua') * Math.sqrt(3)),
     },
     {
       label: 'BC线电压V',
-      value: () => transNumber(get(data, 'ib') * Math.sqrt(3)),
+      value: () => transNumber(get(data, 'ub') * Math.sqrt(3)),
     },
     {
       label: 'CA线电压V',
-      value: () => transNumber(get(data, 'ic') * Math.sqrt(3)),
+      value: () => transNumber(get(data, 'uc') * Math.sqrt(3)),
     },
     {
       label: 'A相电压V',
-      value: 'ia',
-    },
-    {
-      label: 'B相电压V',
-      value: 'ib',
-    },
-    {
-      label: 'C相电压V',
-      value: 'ic',
-    },
-    {
-      label: 'A相电流A',
       value: 'ua',
     },
     {
-      label: 'B相电流A',
+      label: 'B相电压V',
       value: 'ub',
     },
     {
-      label: 'C相电流A',
+      label: 'C相电压V',
       value: 'uc',
+    },
+    {
+      label: 'A相电流A',
+      value: 'ia',
+    },
+    {
+      label: 'B相电流A',
+      value: 'ib',
+    },
+    {
+      label: 'C相电流A',
+      value: 'ic',
     },
     {
       label: 'A相有功功率kW',

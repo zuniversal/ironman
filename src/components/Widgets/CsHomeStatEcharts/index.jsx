@@ -13,6 +13,12 @@ const dayHoursArr = createIndexArr(24).map(
   v => `${v}`.padStart(2, '0') + ':00',
 );
 
+const timeChoices = [
+  { text: '当日', type: 'day' },
+  { text: '本周', type: 'week' },
+  { text: '本月', type: 'month' },
+];
+
 const option = params => {
   const { data } = params;
   return {
@@ -62,7 +68,10 @@ const CsHomeStatEcharts = props => {
     <div className={`${ANIMATE.flipInX} `}>
       <div className={`fsb csHomeStatEcharts `}>
         <div className={'homeTitle'}>电站实时信息</div>
-        <TimeChoice onOptionChange={props.onOptionChange}></TimeChoice>
+        <TimeChoice
+          onOptionChange={props.onOptionChange}
+          config={timeChoices}
+        ></TimeChoice>
       </div>
 
       <CsHomeLine {...props}></CsHomeLine>
