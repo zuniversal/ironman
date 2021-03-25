@@ -64,26 +64,24 @@ export const priceConfig2 = [
 ];
 
 const calcMoenyVal = props => {
-  const {
-    tip_volume,
-    tip_price,
-    peak_volume,
-    peak_price,
-    usual_volume,
-    usual_price,
-    valley_volume,
-    valley_price,
-    tip_volume2,
-    tip_price2,
-    peak_volume2,
-    peak_price2,
-    usual_volume2,
-    usual_price2,
-    valley_volume2,
-    valley_price2,
-    other_volume,
-    other_price,
-  } = props;
+  const tip_volume = props.tip_volume ? props.tip_volume : 0;
+  const tip_price = props.tip_price ? props.tip_price : 0;
+  const peak_volume = props.peak_volume ? props.peak_volume : 0;
+  const peak_price = props.peak_price ? props.peak_price : 0;
+  const usual_volume = props.usual_volume ? props.usual_volume : 0;
+  const usual_price = props.usual_price ? props.usual_price : 0;
+  const valley_volume = props.valley_volume ? props.valley_volume : 0;
+  const valley_price = props.valley_price ? props.valley_price : 0;
+  const tip_volume2 = props.tip_volume2 ? props.tip_volume2 : 0;
+  const tip_price2 = props.tip_price2 ? props.tip_price2 : 0;
+  const peak_volume2 = props.peak_volume2 ? props.peak_volume2 : 0;
+  const peak_price2 = props.peak_price2 ? props.peak_price2 : 0;
+  const usual_volume2 = props.usual_volume2 ? props.usual_volume2 : 0;
+  const usual_price2 = props.usual_price2 ? props.usual_price2 : 0;
+  const valley_volume2 = props.valley_volume2 ? props.valley_volume2 : 0;
+  const valley_price2 = props.valley_price2 ? props.valley_price2 : 0;
+  const other_volume = props.other_volume ? props.other_volume : 0;
+  const other_price = props.other_price ? props.other_price : 0;
 
   const calcRes =
     tip_volume * tip_price +
@@ -138,24 +136,24 @@ const ClientReportForm = props => {
   console.log(' ClientReportForm ： ', props); //
 
   const [dataInit, setDataInit] = useState({
-    tip_volume: 0,
-    tip_price: 0,
-    peak_volume: 0,
-    peak_price: 0,
-    usual_volume: 0,
-    usual_price: 0,
-    valley_volume: 0,
-    valley_price: 0,
-    tip_volume2: 0,
-    tip_price2: 0,
-    peak_volume2: 0,
-    peak_price2: 0,
-    usual_volume2: 0,
-    usual_price2: 0,
-    valley_volume2: 0,
-    valley_price2: 0,
-    other_volume: 0,
-    other_price: 0,
+    // tip_volume: 0,
+    // tip_price: 0,
+    // peak_volume: 0,
+    // peak_price: 0,
+    // usual_volume: 0,
+    // usual_price: 0,
+    // valley_volume: 0,
+    // valley_price: 0,
+    // tip_volume2: 0,
+    // tip_price2: 0,
+    // peak_volume2: 0,
+    // peak_price2: 0,
+    // usual_volume2: 0,
+    // usual_price2: 0,
+    // valley_volume2: 0,
+    // valley_price2: 0,
+    // other_volume: 0,
+    // other_price: 0,
 
     idle_volume: 0,
     levy_fee: 0,
@@ -164,6 +162,7 @@ const ClientReportForm = props => {
     basic_price: 0,
     power_factor_adjust: 0,
     ...props.init,
+    amount_adjust: props.init.amount_adjust ? props.init.amount_adjust : 0,
   });
 
   const onFieldChange = params => {
@@ -388,6 +387,7 @@ const ClientReportForm = props => {
       props.propsForm.getFieldsValue(),
     ); //
     autoCalc();
+    onFieldChange({ value: { type: '16' } });
   }, []);
 
   const onFormFieldChange = params => {
@@ -492,6 +492,7 @@ const ClientReportForm = props => {
       comProps: {},
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '尖电量1',
@@ -512,6 +513,7 @@ const ClientReportForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '峰电量1',
@@ -532,6 +534,7 @@ const ClientReportForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '平电量1',
@@ -552,6 +555,7 @@ const ClientReportForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '谷电量1',
@@ -572,6 +576,7 @@ const ClientReportForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '尖电量2',
@@ -593,6 +598,7 @@ const ClientReportForm = props => {
       // },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '峰电量2',
@@ -614,6 +620,7 @@ const ClientReportForm = props => {
       // },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '平电量2',
@@ -635,6 +642,7 @@ const ClientReportForm = props => {
       // },
     },
     {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '谷电量2',
@@ -702,6 +710,14 @@ const ClientReportForm = props => {
       noRule: true,
       formType: 'InputNumber',
       itemProps: {
+        label: '力率调整',
+        name: 'amount_adjust',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
         label: '无功电量',
         name: 'idle_volume',
       },
@@ -731,14 +747,6 @@ const ClientReportForm = props => {
       itemProps: {
         label: '力率（%）',
         name: 'power_factor_adjust',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '力率调整',
-        name: 'amount_adjust',
       },
     },
     {
@@ -780,6 +788,9 @@ const ClientReportForm = props => {
         config={selectConfig}
         onFieldChange={onFieldChange}
         className={`billForm`}
+        init={{
+          type: '16',
+        }}
       ></SmartForm>
 
       <SmartForm
@@ -788,6 +799,7 @@ const ClientReportForm = props => {
         config={config}
         init={dataInit}
         init={{
+          bill_type: '16',
           ...dataInit,
 
           // power_factor: '0.85',
