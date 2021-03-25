@@ -29,10 +29,18 @@ import {
 import UploadCom from '@/components/Widgets/UploadCom'; //
 import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs'; //
 import { DRAW_PANEL } from '@/constants'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import {
+  formatConfig,
+  reportRadioOp,
+  arrMapObj,
+  formatSelectList,
+  filterObjSame,
+} from '@/utils';
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
 import ReduxTable from '@/common/ReduxTable';
+import useHttp from '@/hooks/useHttp';
+import { getPowerInfo } from '@/services/powerStation';
 import { history } from 'umi';
 
 const selectData = [
@@ -47,6 +55,19 @@ const PowerStationForm = props => {
   const { inspection_type = 0 } = props.init;
 
   const [inspectMode, setInspectMode] = useState(inspection_type);
+  // const [powerInfoList, setPowerInfoList] = useState([]);
+  const commonParams = {
+    init: [],
+    format: res => formatSelectList(res),
+  };
+  const { data: powerInfoList, req: getPowerInfoAsync } = useHttp(
+    getPowerInfo,
+    {
+      ...commonParams,
+      format: res => formatSelectList(res, 'power_number'),
+    },
+  );
+
   console.log(
     ' PowerStationForm  inspectModeinspectModeinspectMode ： ',
     inspection_type,
@@ -288,6 +309,13 @@ const PowerStationForm = props => {
         name: 'addr',
       },
     },
+    {
+      formType: 'DatePicker',
+      itemProps: {
+        label: '过期时间',
+        name: 'end_time',
+      },
+    },
 
     <UploadCom
       label={'上传电气图'}
@@ -431,6 +459,13 @@ const PowerStationForm = props => {
         name: 'addr',
       },
     },
+    {
+      formType: 'DatePicker',
+      itemProps: {
+        label: '过期时间',
+        className: 'end_time',
+      },
+    },
     ...typeCols,
     {
       formType: 'CustomCom',
@@ -450,7 +485,6 @@ const PowerStationForm = props => {
   ];
 
   const config = action !== 'detail' ? actionConfig : detailConfig; //
-  console.log('  config ：', config); //
 
   const outLineConfig = [
     {
@@ -469,7 +503,8 @@ const PowerStationForm = props => {
       formType: 'Search',
       selectSearch: props.getPowerInfoAsync,
       selectData: props.powerInfoList,
-      dataMap: props.powerInfoList,
+      // dataMap: arrMapObj(props.powerInfoList),
+      dataMap: arrMapObj(powerInfoList),
       itemProps: {
         label: '电源编号',
         name: 'power_number',
@@ -479,6 +514,18 @@ const PowerStationForm = props => {
       },
     },
   ];
+
+  const powerInfoData =
+    action === 'detail' ? props.init.powerInfoData : props.powerInfoData;
+  const outLineTableData =
+    action === 'detail' ? props.init.outLineTableData : props.outLineTableData;
+  console.log(
+    '  outLineTableData ：',
+    powerInfoData,
+    outLineTableData,
+    arrMapObj(props.powerInfoList),
+    props.powerInfoList,
+  ); //
 
   return (
     <div className={`powerStationForm`}>
@@ -496,12 +543,13 @@ const PowerStationForm = props => {
       ></SmartForm>
 
       {extra}
+
       <PowerStationDetailTable
         addPowerInfoAsync={props.addPowerInfoAsync}
         editPowerInfoAsync={props.editPowerInfoAsync}
         removePowerInfoAsync={props.removePowerInfoAsync}
         modifyPowerInfo={props.modifyPowerInfo}
-        dataSource={props.powerInfoData}
+        dataSource={powerInfoData}
         init={props.init}
         isDisabledAll={!['add', 'edit'].includes(action)}
       ></PowerStationDetailTable>
@@ -517,7 +565,7 @@ const PowerStationForm = props => {
         editTableItemAsync={props.editOutLineTableItemAsync}
         removeTableItemAsync={props.removeOutLineTableItemAsync}
         modifyTableItem={props.modifyOutLineTableItem}
-        dataSource={props.outLineTableData}
+        dataSource={outLineTableData}
         isDisabledAll={!['add', 'edit'].includes(action)}
         noLimitAdd
         // hideSaveEdit={['add'].includes(action)}

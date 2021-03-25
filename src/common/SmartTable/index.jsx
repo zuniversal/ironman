@@ -272,6 +272,7 @@ class SmartTable extends PureComponent {
     // const txt = foramtText(`${text}`)
     let mapText = text;
     if (dataMap) {
+      // console.log('  mapText, dataMap ：', mapText, dataMap ); //
       mapText = getDataMap(mapText, dataMap);
     }
     if (dayFn) {

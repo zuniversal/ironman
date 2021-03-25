@@ -24,6 +24,13 @@ const AssetsTable = props => {
     //   // ),
     // },
     {
+      noFilter: true,
+      noCutText: true,
+      width: 300,
+      title: '客户名称',
+      dataIndex: ['electricity_user', 'customer'],
+    },
+    {
       title: '户号',
       dataIndex: 'code',
       dataIndex: ['electricity_user', 'number'],

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.less';
 import {
   Form,
@@ -21,12 +21,45 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm'; //
 // import AssetsFormTable from 'smartTb/AssetsFormTable'; //
 import UploadCom from '@/components/Widgets/UploadCom'; //
+import useHttp from '@/hooks/useHttp';
+import { formatSelectList, filterObjSame } from '@/utils';
+import { getList as getPowerStationList } from '@/services/powerStation';
 
 const AssetsForm = props => {
   console.log(' AssetsForm ： ', props, config); //
   const { action } = props; //
 
+  const [houseNoList, setHouseNoList] = useState([]);
+
   // const formConfig = formatConfig(config);
+  const commonParams = {
+    format: res => formatSelectList(res, 'name'),
+  };
+  const { data: powerStationList, req: getPowerStationAsync } = useHttp(
+    () => getPowerStationList({}),
+    {
+      ...commonParams,
+    },
+  );
+
+  const onFieldChange = params => {
+    console.log(' onFieldChange  ： ', params);
+    const changeKey = Object.keys(params.value)[0];
+    console.log('  changeKey ：', changeKey); //
+    if (changeKey === 'station_id' || changeKey === 'station') {
+      const res = powerStationList.find(
+        v => v.id == params.value.station || v.id == params.value.station_id,
+      );
+      console.log(' res  powerStationList.find v ： ', res);
+      // console.log(' res  powerStationList.find v ： ', formatSelectList(res ?? [], 'name'),   )
+      // setHouseNoList(res.map(v => formatSelectList(v, 'name')))
+      // setHouseNoList(formatSelectList(res ?? [], 'name'))
+      props.propsForm.setFieldsValue({
+        electricity_user: res?.electricity_user?.id,
+      });
+      // setHouseNoList(res && res.electricity_user ? [{value: `${res.electricity_user.id}`, label: res.electricity_user.number, }] : [])
+    }
+  };
 
   const config = [
     // {
@@ -43,9 +76,22 @@ const AssetsForm = props => {
       formType: 'Search',
       selectSearch: props.getPowerAsync,
       selectData: props.powerList,
+      selectSearch: e =>
+        getPowerStationAsync(() => getPowerStationList({ name: e })),
+      selectData: powerStationList,
       itemProps: {
         label: '电站',
-        name: 'station',
+        name: props.action === 'add' ? 'station_id' : 'station',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Select',
+      selectData: houseNoList,
+      itemProps: {
+        label: '户号',
+        name: 'electricity_user',
+        className: 'hidden',
       },
     },
     // {
@@ -161,6 +207,13 @@ const AssetsForm = props => {
         // config={configs}
 
         {...props}
+        init={{
+          electricity_user: null,
+          station: null,
+          station_id: null,
+          ...props.init,
+        }}
+        onFieldChange={onFieldChange}
       ></SmartForm>
     </div>
   );

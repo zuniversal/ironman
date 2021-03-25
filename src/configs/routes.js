@@ -279,6 +279,11 @@ export const managerRoutes = [
         component: '../pages/om/MonitorManage',
       },
       {
+        path: '/om/monitorDevice',
+        authKey: 'monitorEquipment',
+        name: '监控设备',
+      },
+      {
         path: '/om/alarmRecord',
         authKey: 'alarmRecord',
         name: '告警记录',

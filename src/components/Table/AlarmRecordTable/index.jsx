@@ -75,10 +75,7 @@ const AlarmRecordTable = props => {
     {
       title: '持续时长',
       dataIndex: 'duration',
-      render: (text, record, index) => {
-        console.log(' text, record, index,   ： ', text, record, index); //
-        return `${text / 60} 分钟`;
-      },
+      render: (text, record, index) => `${text / 60} 分钟`,
     },
     {
       title: '开始时间',
@@ -107,7 +104,7 @@ const AlarmRecordTable = props => {
   return (
     <SmartTable
       columns={columns}
-      extra={extra}
+      // extra={extra}
       noDefault
       {...props}
     ></SmartTable>

@@ -31,6 +31,12 @@ export const openNotification = (
   });
 };
 
+export const arrMapObj = (arr = []) => {
+  const obj = {};
+  arr.forEach(v => (obj[v.value] = v.label));
+  return obj;
+};
+
 export const filterObjSame = (data, key = 'id') => {
   const temp = [];
   // const deWeightTwo = () => {

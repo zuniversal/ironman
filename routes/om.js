@@ -124,6 +124,12 @@ export default [
     title: '监控管理',
   },
   {
+    path: '/om/monitorDevice',
+    authKey: 'monitorEquipment',
+    component: '@/pages/om/MonitorDevice',
+    title: '监控设备',
+  },
+  {
     path: '/om/goods',
     authKey: 'materiel',
     component: '@/pages/om/Goods',

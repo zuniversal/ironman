@@ -249,10 +249,6 @@ export default {
       };
     },
     powerStationDetail(state, { payload, type }) {
-      const datas = payload.bean.electricalinfromation_set.map(v => ({
-        ...v,
-        key: Math.random(),
-      }));
       const itemDetail = {
         ...payload.bean,
         customer: payload.bean.customer?.name,
@@ -270,7 +266,7 @@ export default {
       ) {
         itemDetail.service_team = itemDetail.service_team.map(v => v.name);
       }
-      console.log(' powerStationDetail ： ', state, payload, datas); //
+      console.log(' powerStationDetail ： ', state, payload); //
       return {
         ...state,
         action: payload.payload.action,
@@ -279,8 +275,16 @@ export default {
           ...itemDetail,
           electricity_user: `${payload.bean.electricity_user.number}`,
           status: payload.bean.status ? '正常' : '异常',
+          powerInfoData: payload.bean.electricalinfromation_set.map(v => ({
+            ...v,
+            key: Math.random(),
+          })),
+          outLineTableData: payload.bean.outline_set.map(v => ({
+            ...v,
+            power_number: v.power_number.split(','),
+            key: Math.random(),
+          })),
         },
-        powerInfoData: datas,
       };
     },
     assetsDetail(state, { payload, type }) {

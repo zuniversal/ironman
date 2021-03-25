@@ -355,13 +355,7 @@ const InspectRecordForm = props => {
       power_data[0] && power_data[0].spect_out ? power_data[0]?.spect_out : [],
     index: 0,
   });
-  console.log(
-    ' inspectRecordform dataInit ： ',
-    file,
-    props.propsForm.getFieldsValue(),
-    dataInit,
-    power_data,
-  ); //
+  console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data); //
 
   const onChange = index => {
     const formValues = props.propsForm.getFieldsValue();
@@ -405,7 +399,6 @@ const InspectRecordForm = props => {
     };
     console.log(
       ' inspectRecordform setFields ：',
-      props.propsForm.getFieldsValue(),
       setFields,
       setData,
       setFields.index,

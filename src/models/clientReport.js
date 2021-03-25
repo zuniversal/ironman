@@ -14,9 +14,15 @@ const otherActions = [
   'addElectricBillItemAsync',
   'editElectricBillItemAsync',
   'removeElectricBillItemAsync',
+  'batchExportPDFAsync',
 ];
 
-const batchTurnActions = ['closePdf', 'toggleExportPDF', 'getListFilter'];
+const batchTurnActions = [
+  'closePdf',
+  'toggleExportPDF',
+  'getListFilter',
+  'batchExportPDF',
+];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -53,6 +59,7 @@ export default {
     isShowExportPdf: false,
     originData: [],
     electricBillList: [],
+    pdfDataList: [],
   },
 
   reducers: {
@@ -64,7 +71,7 @@ export default {
           ...payload.record,
           capacity: payload.record.real_capacity,
           customer: payload.record.name,
-          electrical_id: payload.record.id,
+          electrical_id: `${payload.record.id}`,
           year_month: moment(),
         };
       }
@@ -83,6 +90,7 @@ export default {
         isShowModal: false,
         itemDetail: {},
         isShowExportPdf: false,
+        pdfDataList: [],
       };
     },
     getList(state, { payload, type }) {
@@ -116,9 +124,9 @@ export default {
 
           const volumeRate = v.old_volume
             ? (
-                (v.volume - Number(v.old_volume)) /
-                Number(v.old_volume)
-              ).toFixed(2) * 100
+                ((v.volume - Number(v.old_volume)) / Number(v.old_volume)) *
+                100
+              ).toFixed(2)
             : 0;
           const amountRate = v.old_amount
             ? (
@@ -128,16 +136,19 @@ export default {
                 100
               ).toFixed(2)
             : 0;
-
+          // console.log(' volumeAll ： ', volumeRate, v.old_volume, (v.volume - Number(v.old_volume)), Number(v.old_volume), ((v.volume - Number(v.old_volume)) / Number(v.old_volume)), ((v.volume - Number(v.old_volume)) / Number(v.old_volume) * 100).toFixed(2),   )
           // const rateAvg = (v.rate - v.old_rate) / v.old_rate
           // const rateAvg = v.amount / v.old_amount
           // console.log(' volumeRate amountRate ： ', volumeRate, amountRate, v.amount - Number(v.old_amount), v.amount, Number(v.old_amount), Number(v.old_amount),   )//
-          const rate = oldAvg ? (nowAvg / oldAvg).toFixed(3) * 100 : 0;
+          const rate = oldAvg
+            ? ((Number(nowAvg) / Number(oldAvg) - 1) * 100).toFixed(2)
+            : 0;
           // console.log(' (v.volume - Number(v.old_volume) ： ', v.volume - Number(v.old_volume), v.volume, Number(v.old_volume), volumeRate,  )//
-          // console.log(' volumeAll ： ', v, v.valley_volume, volumeAll, priceAll, calcAll, v.volume - v.old_volume, v.amount - v.old_amount, volumeRate, amountRate, nowAvg, oldAvg, rate, )//
+          // console.log(' volumeAll ： ', volumeRate, nowAvg, oldAvg,  (Number(nowAvg) / Number(oldAvg) - 1), (nowAvg / oldAvg - 1).toFixed(4), v, v.valley_volume, volumeAll, priceAll, calcAll, v.volume - v.old_volume, v.amount - v.old_amount, volumeRate, amountRate, nowAvg, oldAvg, rate, )//
 
           return {
             ...v,
+            fixed: '基本电价1',
             peak_volume_b: volumeAll
               ? ((v.peak_volume / volumeAll) * 100).toFixed(2)
               : 0,
@@ -175,16 +186,39 @@ export default {
             rate,
           };
         }),
-        inspect: inspect.map(v => ({
-          ...v,
-          // inspect_in: v?.inspect_in.map((v) => ({...v, })),
-          spectOut: v?.inspect_in.map(v => v?.outline),
-          humidityTemp: v.temperature + '℃ / ' + v.humidity + ' %',
-          number: payload.bean.number,
-          capacityRate: v?.inspect_in[0]
-            ? `${v?.inspect_in[0]?.capacity} / ${v?.inspect_in[0]?.real_capacity} （KVA)`
-            : '',
-        })),
+        inspect: inspect.map(v => {
+          console.log(
+            ' itemDetail ： ',
+            v,
+            v.temperature,
+            v.humidity,
+            (v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %',
+          ); //
+          return {
+            ...v,
+            // inspect_in: v?.inspect_in.map((v) => ({...v, })),
+            // spectOut: v?.inspect_in.map(v => v?.outline)?.map(v => ({...v, temperature3: v[0]?.temperature_a + ' ' + v[0]?.temperature_b + ' ' + v[0]?.temperature_c,})),
+            spectOut: v?.inspect_in
+              .map(v => v?.outline)
+              ?.map(v =>
+                v?.map(v => ({
+                  ...v,
+                  temperature3:
+                    (v.temperature_a || '') +
+                    ' ' +
+                    (v.temperature_b || '') +
+                    ' ' +
+                    (v.temperature_c || ''),
+                })),
+              ),
+            humidityTemp:
+              (v.temperature || '') + '℃/' + (v.humidity || '') + '%',
+            number: payload.bean.number,
+            capacityRate: v?.inspect_in[0]
+              ? `${v?.inspect_in[0]?.capacity}/${v?.inspect_in[0]?.real_capacity}（KVA)`
+              : '',
+          };
+        }),
       };
       console.log(' itemDetail ： ', itemDetail); //
       return {
@@ -289,6 +323,127 @@ export default {
         },
       };
     },
+    batchExportPDF(state, { payload, type }) {
+      return {
+        ...state,
+        action: payload.action,
+        isShowModal: true,
+        pdfDataList: payload.payload.map(payload => {
+          const { bill, inspect } = payload;
+          const itemDetail = {
+            ...payload,
+            bill: bill.map(v => {
+              const volumeAll =
+                v.peak_volume +
+                v.usual_volume +
+                v.valley_volume +
+                v.other_volume;
+              const priceAll =
+                v.peak_price + v.usual_price + v.valley_price + v.other_price;
+              const calcAll = v.basic_price
+                ? (v.max_md * v.basic_price).toFixed(2)
+                : 0;
+              const nowAvg = v.volume ? (v.amount / v.volume).toFixed(2) : 0;
+              const oldAvg = v.old_volume
+                ? (Number(v.old_amount) / Number(v.old_volume)).toFixed(2)
+                : 0;
+
+              const volumeRate = v.old_volume
+                ? (
+                    ((v.volume - Number(v.old_volume)) / Number(v.old_volume)) *
+                    100
+                  ).toFixed(2)
+                : 0;
+              const amountRate = v.old_amount
+                ? (
+                    ((((v.amount - Number(v.old_amount)) * 100) /
+                      Number(v.old_amount)) *
+                      100) /
+                    100
+                  ).toFixed(2)
+                : 0;
+              // console.log(' volumeAll ： ', volumeRate, v.old_volume, (v.volume - Number(v.old_volume)), Number(v.old_volume), ((v.volume - Number(v.old_volume)) / Number(v.old_volume)), ((v.volume - Number(v.old_volume)) / Number(v.old_volume) * 100).toFixed(2),   )
+              // const rateAvg = (v.rate - v.old_rate) / v.old_rate
+              // const rateAvg = v.amount / v.old_amount
+              // console.log(' volumeRate amountRate ： ', volumeRate, amountRate, v.amount - Number(v.old_amount), v.amount, Number(v.old_amount), Number(v.old_amount),   )//
+              const rate = oldAvg
+                ? ((Number(nowAvg) / Number(oldAvg) - 1) * 100).toFixed(2)
+                : 0;
+              // console.log(' (v.volume - Number(v.old_volume) ： ', v.volume - Number(v.old_volume), v.volume, Number(v.old_volume), volumeRate,  )//
+              // console.log(' volumeAll ： ', volumeRate, nowAvg, oldAvg,  (Number(nowAvg) / Number(oldAvg) - 1), (nowAvg / oldAvg - 1).toFixed(4), v, v.valley_volume, volumeAll, priceAll, calcAll, v.volume - v.old_volume, v.amount - v.old_amount, volumeRate, amountRate, nowAvg, oldAvg, rate, )//
+
+              return {
+                ...v,
+                fixed: '基本电价1',
+                peak_volume_b: volumeAll
+                  ? ((v.peak_volume / volumeAll) * 100).toFixed(2)
+                  : 0,
+                usual_volume_b: volumeAll
+                  ? ((v.usual_volume / volumeAll) * 100).toFixed(2)
+                  : 0,
+                valley_volume_b: volumeAll
+                  ? ((v.valley_volume / volumeAll) * 100).toFixed(2)
+                  : 0,
+                other_volume_b: volumeAll
+                  ? ((v.other_volume / volumeAll) * 100).toFixed(2)
+                  : 0,
+
+                peak_price_b: priceAll
+                  ? ((v.peak_price / priceAll) * 100).toFixed(2)
+                  : 0,
+                usual_price_b: priceAll
+                  ? ((v.usual_price / priceAll) * 100).toFixed(2)
+                  : 0,
+                valley_price_b: priceAll
+                  ? ((v.valley_price / priceAll) * 100).toFixed(2)
+                  : 0,
+                other_price_b: priceAll
+                  ? ((v.other_price / priceAll) * 100).toFixed(2)
+                  : 0,
+
+                volumeAll,
+                priceAll,
+                calcAll,
+
+                oldAvg: oldAvg ?? 0,
+                nowAvg: nowAvg ?? 0,
+                volumeRate,
+                amountRate,
+                rate,
+              };
+            }),
+            inspect: inspect.map(v => {
+              // console.log(' itemDetail ： ', v, v.temperature, v.humidity, ((v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %'),  ); //
+              return {
+                ...v,
+                // inspect_in: v?.inspect_in.map((v) => ({...v, })),
+                // spectOut: v?.inspect_in.map(v => v?.outline)?.map(v => ({...v, temperature3: v[0]?.temperature_a + ' ' + v[0]?.temperature_b + ' ' + v[0]?.temperature_c,})),
+                spectOut: v?.inspect_in
+                  .map(v => v?.outline)
+                  ?.map(v =>
+                    v?.map(v => ({
+                      ...v,
+                      temperature3:
+                        (v.temperature_a || '') +
+                        ' ' +
+                        (v.temperature_b || '') +
+                        ' ' +
+                        (v.temperature_c || ''),
+                    })),
+                  ),
+                humidityTemp:
+                  (v.temperature || '') + '℃/' + (v.humidity || '') + '%',
+                number: payload.number,
+                capacityRate: v?.inspect_in[0]
+                  ? `${v?.inspect_in[0]?.capacity}/${v?.inspect_in[0]?.real_capacity}（KVA)`
+                  : '',
+              };
+            }),
+          };
+          return itemDetail;
+        }),
+      };
+    },
   },
 
   effects: {
@@ -351,6 +506,10 @@ export default {
       const res = yield call(services.getClientReportUpgrade, payload);
       yield put(action({ ...res, payload }));
       return res;
+    },
+    *batchExportPDFAsync({ payload, action, type }, { call, put, all }) {
+      const res = yield all(services.getItem, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

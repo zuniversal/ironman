@@ -60,7 +60,7 @@ const MonitorManageTable = props => {
     //   dataIndex: '',
     // },
     {
-      title: 'IEMI号',
+      title: 'IMEI号',
       dataIndex: 'imei',
     },
     {

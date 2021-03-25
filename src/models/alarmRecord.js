@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction'; //
 import * as services from '@/services/alarmRecord';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList } from '@/utils';
 
 const namespace = 'alarmRecord';
 const { createActions } = init(namespace);

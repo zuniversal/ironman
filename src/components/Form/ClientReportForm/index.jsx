@@ -28,6 +28,41 @@ import { electricTypeConfig, powerRateMap, billTypeConfig } from '@/configs'; //
 // 然后计算出实际考核功率因素之后  用这个值  去匹配  那个表格对应的   功率因素这一列 找到对应行
 // 然后 用 考核功率因数   考核功率因素是0.85就取0.85的标准，是0.9就取0.9的标准    电费这一行去拿到对应的  力率 值
 
+const billFormLayouts = {
+  labelCol: {
+    sm: { span: 4 }, //
+  },
+  wrapperCol: {
+    sm: { span: 20 }, //
+  },
+};
+
+export const priceConfig1 = [
+  {
+    label: '峰电价1',
+    value: 'peak_prise',
+  },
+  {
+    label: '平电价1',
+    value: 'flat_prise',
+  },
+  {
+    label: '基本电价单价',
+    value: 'base_prise',
+  },
+];
+
+export const priceConfig2 = [
+  {
+    label: '尖电价1',
+    value: 'tip_prise',
+  },
+  {
+    label: '谷电价1',
+    value: 'valley_prise',
+  },
+];
+
 const calcMoenyVal = props => {
   const {
     tip_volume,
@@ -90,6 +125,14 @@ const calcTotalPower = props => {
   console.log(' calcTotalPower   props,   ： ', props, calcRes);
   return calcRes;
 };
+
+const OptionsItem = props =>
+  props.config.map((item, i) => (
+    <div className={'row'} key={i}>
+      <div className={'item opLabel'}>{item.label}：</div>
+      <div className={'item opValue'}>{props.val[item.value]}</div>
+    </div>
+  ));
 
 const ClientReportForm = props => {
   console.log(' ClientReportForm ： ', props); //
@@ -170,9 +213,55 @@ const ClientReportForm = props => {
       formType: 'Select',
       // selectData: billTypeConfig,
       selectData: props.electricBillList,
+      selectData: props.electricBillList.map(v => ({
+        ...v,
+        label: (
+          <div className={'optionWrapper'}>
+            <div className={'label'}>{v.label}</div>
+            <div className={'opInfo'}>
+              <div className={'left'}>
+                <OptionsItem val={v} config={priceConfig1}></OptionsItem>
+                {/* {priceConfig1.map((item, i) => <div className={'row'} key={i}>
+                <div className={'item opLabel'}>
+                  {item.label}：
+                </div>
+                <div className={'item opValue'}>
+                  {v[item.value]}
+                </div>
+              </div>)} */}
+              </div>
+              <div className={'right'}>
+                <OptionsItem val={v} config={priceConfig2}></OptionsItem>
+                {/* {priceConfig2.map((item, i) => <div className={'row'} key={i}>
+                <div className={'item opLabel'}>
+                  {item.label}：
+                </div>
+                <div className={'item opValue'}>
+                  {v[item.value]}
+                </div>
+              </div>)} */}
+              </div>
+            </div>
+          </div>
+        ),
+      })),
       itemProps: {
         label: '电价类型',
         name: 'type',
+        className: 'priceTypeForm',
+        ...billFormLayouts,
+      },
+      comProps: {
+        className: 'priceType',
+        optionFilterProp: 'label',
+        filterOption: (input, option) => {
+          // console.log('input, option ：', input, option, props,   )
+          const res = option.children.props.children[0].props.children
+            .toLowerCase()
+            .includes(input.toLowerCase());
+          console.log('  res ：', res); //
+          return res;
+        },
       },
     },
   ];
@@ -199,6 +288,7 @@ const ClientReportForm = props => {
       billing_method,
       max_md,
       report_md,
+      basic_price,
       idle_volume = 0,
     } = formValues;
 
@@ -338,6 +428,13 @@ const ClientReportForm = props => {
     },
     {
       noRule: true,
+      formType: 'Select',
+      selectData: [
+        {
+          value: `${props.init.electrical_id}`,
+          label: props.init.power_number,
+        },
+      ],
       itemProps: {
         label: '电源编号',
         name: 'electrical_id',

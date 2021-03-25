@@ -1,3 +1,46 @@
 .billForm {
   margin-bottom: 10px;
+  .priceType {
+    width: 550px !important;
+    .ant-select-selector {
+      height: 125px;
+    }
+  }
+}
+
+.optionWrapper {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  .opInfo {
+    flex: 1;
+    display: flex;
+    // flex-direction: column;
+    border-left: 1px solid #ccc;
+    .left,
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .row {
+      display: flex;
+      padding: 5px;
+    }
+  }
+  .label {
+    flex: 1;
+    max-width: 300px;
+    max-width: 250px;
+    white-space: pre-wrap;
+  }
+  // .opLabel{
+  //   flex: 1;
+  //   max-width: 300px;
+  //   max-width: 250px;
+  //   white-space: pre-wrap;
+  // }
+  .item {
+    flex: 1;
+    display: flex;
+  }
 }

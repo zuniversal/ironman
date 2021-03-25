@@ -56,6 +56,8 @@ const InspectRecordTable = props => {
     },
 
     {
+      noCutText: true,
+      width: 300,
       title: '客户名称',
       // dataIndex: 'plan.customer',
       dataIndex: ['plan', 'customer'],

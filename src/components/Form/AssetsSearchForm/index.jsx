@@ -7,26 +7,28 @@ const AssetsSearchForm = props => {
   console.log(' AssetsSearchForm ： ', props);
 
   const config = [
-    // {
-    //   formType: 'Search',
-    //   selectSearch: props.getClientAsync,
-    //   selectData: props.clientList,
-    //   itemProps: {
-    //     label: '客户',
-    //     name: 'customer',
-    //   },
-    //
-    // },
     {
-      formType: 'Search',
-      selectSearch: props.getPowerAsync,
-      selectData: props.powerList,
       itemProps: {
-        label: '电站',
-        // name: 'station',
-        name: 'powerStation',
+        label: '客户',
+        name: 'customer',
       },
     },
+    {
+      itemProps: {
+        label: '户号',
+        name: 'power_number',
+      },
+    },
+    // {
+    //   formType: 'Search',
+    //   selectSearch: props.getPowerAsync,
+    //   selectData: props.powerList,
+    //   itemProps: {
+    //     label: '电站',
+    //     // name: 'station',
+    //     name: 'powerStation',
+    //   },
+    // },
     // {
     //   itemProps: {
     //     label: '资产名称',

@@ -86,10 +86,10 @@ export default {
     getItem(state, { payload, type }) {
       console.log(' getItem 修改  ： ', state, payload, type); //
       const { powerList } = state;
-      const { station } = payload.bean; //
+      const { station, electricity_user } = payload.bean; //
       const stationItem = {
         ...station,
-        value: `${station?.id}`,
+        value: station.id ? `${station.id}` : null,
         label: station?.name,
       };
       return {
@@ -101,7 +101,10 @@ export default {
           production_date: moment(),
           operation_date: moment(),
           list: payload.list,
-          station: `${station?.id}`,
+          station: station.id ? `${station.id}` : null,
+          electricity_user: electricity_user.id
+            ? `${electricity_user.id}`
+            : null,
         },
         action: payload.payload.action,
         isShowModal: true,

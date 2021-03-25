@@ -280,6 +280,7 @@ class Assets extends PureComponent {
         this.props.editItemAsync({
           ...itemDetail,
           ...res,
+          // electricity_user: itemDetail.electricity_user?.id,
         });
       }
     } catch (error) {

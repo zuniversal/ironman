@@ -1,23 +1,22 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm'; //
-import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm'; //
-import AlarmNotifyTable from '@/components/Table/AlarmNotifyTable'; //
-import AlarmNotifyInfo from '@/components/Widgets/AlarmNotifyInfo'; //
 import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
-import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
-import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm'; //
-import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm'; //
 import SmartFormModal from '@/common/SmartFormModal'; //
-import HouseNoForm from '@/components/Form/HouseNoForm';
+import MonitorDeviceForm from '@/components/Form/MonitorDeviceForm'; //
+import MonitorDeviceSearchForm from '@/components/Form/MonitorDeviceForm/MonitorDeviceSearchForm'; //
+import MonitorDeviceTable from '@/components/Table/MonitorDeviceTable'; //
 import ClientForm from '@/components/Form/ClientForm';
-import { actions, mapStateToProps } from '@/models/alarmNotify'; //
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import AssetsForm from '@/components/Form/AssetsForm'; //
+
+import { actions, mapStateToProps } from '@/models/monitorDevice'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 
-const TITLE = '告警通知';
+const TITLE = '监控';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -25,57 +24,74 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
-  handleAlarm: `确认处理`,
+  monitorManageAsync: `${TITLE}详情`,
+  getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+  assetsDetailAsync: `设备详情`,
+  // monitorDeviceDetailAsync: `监控设备详情`,
 };
 
 const detailFormMap = {
+  // monitorManageAsync: MonitorManageDetailForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
+  assetsDetailAsync: AssetsForm,
+  monitorDeviceDetailAsync: MonitorDeviceForm,
 };
 
-// const mapStateToProps = ({ houseNo, }) => houseNo;
+// const mapStateToProps = ({ monitorManage, }) => monitorManage;
 
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
   titleMap,
+  modalForm: MonitorDeviceForm,
 })
-class AlarmNotify extends PureComponent {
+class MonitorManage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       titleMap,
     };
   }
+
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          查询
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增{TITLE}
         </Button>
       </div>
     );
   };
   renderSearchForm = params => {
     return (
-      <AlarmNotifySearchForm
+      <SearchKwForm
         formBtn={this.renderFormBtn}
-      ></AlarmNotifySearchForm>
+        className={'fje'}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+        label={'IMEI号、sim号'}
+        keyword={'keyword'}
+        noLabel
+      ></SearchKwForm>
     );
   };
   renderSearchForm = params => {
     return (
-      <SearchKwForm
-        // formBtn={this.renderFormBtn}
-        className={'fje'}
+      <MonitorDeviceSearchForm
+        formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        label={'监控点名称、告警名，户号，客户名，imei'}
-        keyword={'keyword'}
-        noLabel
-      ></SearchKwForm>
+        init={this.props.searchInfo}
+      ></MonitorDeviceSearchForm>
     );
   };
   onFieldChange = params => {
@@ -99,7 +115,14 @@ class AlarmNotify extends PureComponent {
       showItemAsync: this.props.showItemAsync,
     };
 
-    return <AlarmRecordTable {...tableProps}></AlarmRecordTable>;
+    return <MonitorDeviceTable {...tableProps}></MonitorDeviceTable>;
+  };
+
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    this.props.onRemove({
+      d_id: `${params.record.id}`,
+    });
   };
 
   renderCommonModal = params => {
@@ -126,7 +149,7 @@ class AlarmNotify extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props); //
     const { action, itemDetail } = this.props; //
     const { form, init } = props; //
-    if (['handleAlarm', 'notifyClient'].includes(action)) {
+    if (['getRealDataAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -138,6 +161,13 @@ class AlarmNotify extends PureComponent {
           ...res,
         });
       }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          id: itemDetail.id,
+          d_id: itemDetail.id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error); //
     }
@@ -147,31 +177,29 @@ class AlarmNotify extends PureComponent {
     const { action } = this.props; //
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ name: params }),
-      clientList: this.props.clientList,
+      init: this.props.itemDetail,
     };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
+    // if (action !== 'add') {
+    //   formComProps.init = this.props.itemDetail;
+    // }
+    console.log(' formComProps ： ', formComProps, this.props); //
+    if (action === 'detail') {
+      return (
+        <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
+      );
     }
-    if (action === 'handleAlarm') {
-      return <AlarmRecordHandleForm {...formComProps}></AlarmRecordHandleForm>;
+    if (action === 'getRealDataAsync') {
+      const paramProps = {
+        // number,
+        // stationId,
+        // point,
+        // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
+        // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+      };
+      return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
     }
-    if (action === 'notifyClient') {
-      return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
-    }
-    console.log(' formComProps ： ', formComProps); //
-    return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
+    return <MonitorDeviceForm {...formComProps}></MonitorDeviceForm>;
   };
-  get size() {
-    return [
-      'handleAlarm',
-      // 'notifyClient'
-    ].some(v => v === this.props.action)
-      ? 'small'
-      : 'default';
-  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -180,7 +208,6 @@ class AlarmNotify extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
-        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
@@ -189,7 +216,7 @@ class AlarmNotify extends PureComponent {
 
   render() {
     return (
-      <div className="alarmNotify">
+      <div className="monitorDevice">
         {this.renderSearchForm()}
 
         {this.renderTable()}
@@ -202,4 +229,4 @@ class AlarmNotify extends PureComponent {
   }
 }
 
-export default AlarmNotify;
+export default MonitorManage;

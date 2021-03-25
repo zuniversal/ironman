@@ -20,6 +20,13 @@ import { formatSelectList, filterObjSame } from '@/utils';
 
 // 下拉项关系  户号跟客户 电站跟户号 设备跟户号 请求数据
 
+const numberComProps = {
+  min: 0,
+  // max: 1,
+  step: 0.01,
+  precision: 2,
+};
+
 const MonitorManageForm = props => {
   console.log(' MonitorManageForm ： ', props);
   // const [ clientList, setClientList ] = useState([])
@@ -55,6 +62,7 @@ const MonitorManageForm = props => {
     getManufacturerList,
     {
       ...commonParams,
+      format: res => formatSelectList(res, 'manufacturer'),
     },
   );
   const { data: alarmTemplateList, req: getalarmTemplateAsync } = useHttp(
@@ -384,6 +392,28 @@ const MonitorManageForm = props => {
       itemProps: {
         label: '上传频率',
         name: 'frequency',
+      },
+    },
+    {
+      // noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '压变',
+        name: 'voltage_ratio',
+      },
+      comProps: {
+        ...numberComProps,
+      },
+    },
+    {
+      // noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '流变',
+        name: 'current_ratio',
+      },
+      comProps: {
+        ...numberComProps,
       },
     },
     {

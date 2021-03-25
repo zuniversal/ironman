@@ -10,6 +10,7 @@ import CsClientReportDescription from '@/components/Description/CsClientReportDe
 // import ExportPdf from '@/components/Pdf/ExportPdf'; //
 import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf'; //
 
+import * as services from '@/services/clientReport';
 import { actions, mapStateToProps } from '@/models/csClientReport'; //
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -24,7 +25,8 @@ const titleMap = {
   upload: `文件上传`,
   down: `文件下载`,
   pdf: `月报`,
-  csClientReportDetailPdf: `月报`,
+  clientReportDetailPdf: `月报`,
+  batchClientReportDetailPdf: `月报`,
 };
 
 // const mapStateToProps = ({ clientReport, }) => clientReport;
@@ -79,13 +81,54 @@ class ClientReport extends PureComponent {
   };
   renderSearchForm = params => {
     return (
-      <CsClientReportSearchForm
-        formBtn={this.renderFormBtn}
-        init={this.props.searchInfo}
-        onFieldChange={this.onFieldChange}
-        clientList={this.props.clientList}
-      ></CsClientReportSearchForm>
+      <div className={'fsb '}>
+        <CsClientReportSearchForm
+          formBtn={this.renderFormBtn}
+          init={this.props.searchInfo}
+          onFieldChange={this.onFieldChange}
+          clientList={this.props.clientList}
+        ></CsClientReportSearchForm>
+        <div className={'btnWrapper'}>
+          <Button type="primary" onClick={this.batchExportPDF}>
+            批量导出PDF
+          </Button>
+        </div>
+      </div>
     );
+  };
+
+  batchExportPDF = async props => {
+    console.log(
+      ' batchExportPDF ： ',
+      props,
+      this.state,
+      this.props,
+      this.props.selectedRows,
+    ); //
+    // if (this.props.selectedRowKeys.length > 0) {
+    const res = await Promise.allSettled(
+      (this.props.selectedRows.length > 0
+        ? this.props.selectedRows
+        : this.props.dataList
+      )
+        // .filter(v => v.finish == 1)
+        .map(v =>
+          services.getItem({
+            d_id: v.electricity_user_id,
+            year_month: this.props.searchInfo.year_month
+              ? this.props.searchInfo.year_month.format('YYYY-MM')
+              : '',
+          }),
+        ),
+    );
+    console.log(' res ： ', res); //
+    this.props.batchExportPDF({
+      action: 'batchClientReportDetailPdf',
+      payload: res.filter(v => v.status === 'fulfilled').map(v => v.value.bean),
+    });
+    // } else {
+    //   tips('请勾选打印项！', 2);
+    // }
   };
 
   onFieldChange = params => {
@@ -174,7 +217,52 @@ class ClientReport extends PureComponent {
       return <ClientReportPdf></ClientReportPdf>;
     }
     console.log(' formComProps ： ', formComProps); //
-    return this.renderExportPdf;
+    // return this.renderExportPdf;
+    if (['clientReportDetailPdf'].includes(action)) {
+      // return <ClientReportPdf></ClientReportPdf>;
+      return this.renderExportPdf(this.props.itemDetail);
+      // return <div ref={ref => (this.ref = ref)} >
+      //   {this.renderExportPdf(this.props.itemDetail)}
+      // </div>;
+    }
+    if (['batchClientReportDetailPdf'].includes(action)) {
+      // const com = this.props.pdfDataList.map(this.renderExportPdf)
+      // console.log(' com ： ', com,  )//
+      return this.renderExportPdf(this.props.itemDetail);
+      return (
+        <div className={`pdfDetail `} ref={ref => (this.ref = ref)}>
+          {this.props.pdfDataList.map(v => (
+            <CsClientReportDescription
+              key={Math.random()}
+              data={this.props.itemDetail}
+              data={v}
+              closeExportPdf={this.closeExportPdf}
+              toggleExportPDF={this.props.toggleExportPDF}
+              isExportPDF
+              // className={this.props.isShowExportPdf ? '' : 'hide'}
+              className={this.state.isExportPdf ? 'posAbs' : ''}
+              top={
+                <div className={'fje noPrint '}>
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      console.log(
+                        ' xxxxx ： ',
+                        this.props.itemDetail,
+                        this.props,
+                      ); //
+                      this.props.toggleExportPDF();
+                    }}
+                  >
+                    打印/导出PDF
+                  </Button>
+                </div>
+              }
+            ></CsClientReportDescription>
+          ))}
+        </div>
+      );
+    }
     return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
@@ -197,47 +285,75 @@ class ClientReport extends PureComponent {
     );
   };
 
-  get renderExportPdf() {
-    console.log(' ExportPdf this.ref ： ', this.ref); //
+  renderExportPdf = data => {
+    console.log(' ExportPdf this.ref ： ', data, this.ref); //
     return (
-      <div className={`pdfDetail `} ref={ref => (this.ref = ref)}>
-        <CsClientReportDescription
-          data={this.props.itemDetail}
-          closeExportPdf={this.closeExportPdf}
-          toggleExportPDF={this.props.toggleExportPDF}
-          isExportPDF
-          // className={this.props.isShowExportPdf ? '' : 'hide'}
-          className={this.state.isExportPdf ? 'posAbs' : ''}
-          top={
-            <div className={'fje noPrint '}>
-              {/* <Button
-              type="primary"
-              onClick={() => {
-                this.setState({
-                  isExportPdf: true,
-                }, () => {
-                  console.log(' xxxxx ： ', ); //
-                  window.print();
-                })
-              }}
-            >
-              导出PDFx
-            </Button> */}
-              <Button
-                type="primary"
-                onClick={() => {
-                  console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
-                  this.props.toggleExportPDF();
-                }}
-              >
-                打印/导出PDF
-              </Button>
-            </div>
-          }
-        ></CsClientReportDescription>
+      <div
+        className={`pdfDetail `}
+        ref={ref => (this.ref = ref)}
+        key={Math.random()}
+      >
+        {this.props.pdfDataList.length == 0 ? (
+          <CsClientReportDescription
+            data={this.props.itemDetail}
+            data={data}
+            closeExportPdf={this.closeExportPdf}
+            toggleExportPDF={this.props.toggleExportPDF}
+            isExportPDF
+            // className={this.props.isShowExportPdf ? '' : 'hide'}
+            className={this.state.isExportPdf ? 'posAbs' : ''}
+            top={
+              <div className={'fje noPrint '}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    console.log(
+                      ' xxxxx ： ',
+                      this.props.itemDetail,
+                      this.props,
+                    ); //
+                    this.props.toggleExportPDF();
+                  }}
+                >
+                  打印/导出PDF
+                </Button>
+              </div>
+            }
+          ></CsClientReportDescription>
+        ) : (
+          this.props.pdfDataList.map(v => (
+            <CsClientReportDescription
+              data={this.props.itemDetail}
+              data={v}
+              key={Math.random()}
+              closeExportPdf={this.closeExportPdf}
+              toggleExportPDF={this.props.toggleExportPDF}
+              isExportPDF
+              // className={this.props.isShowExportPdf ? '' : 'hide'}
+              className={this.state.isExportPdf ? 'posAbs' : ''}
+              top={
+                <div className={'fje noPrint '}>
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      console.log(
+                        ' xxxxx ： ',
+                        this.props.itemDetail,
+                        this.props,
+                      ); //
+                      this.props.toggleExportPDF();
+                    }}
+                  >
+                    打印/导出PDF
+                  </Button>
+                </div>
+              }
+            ></CsClientReportDescription>
+          ))
+        )}
       </div>
     );
-  }
+  };
 
   render() {
     // const com = this.renderExportPdf

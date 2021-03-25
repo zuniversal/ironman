@@ -1,20 +1,33 @@
 import React from 'react';
 import './style.less';
-import { getManufacturerList } from '@/services/monitorManage';
-import { getList as getMonitorPointList } from '@/services/monitorManage';
+import useHttp from '@/hooks/useHttp';
+import {
+  getManufacturerList,
+  getList as getMonitorPointList,
+} from '@/services/monitorManage';
 import SmartForm from '@/common/SmartForm'; //
-import { networkTypeConfig } from '@/configs'; //
+import { monitorDeviceStatusConfig, networkTypeConfig } from '@/configs'; //
+import { formatSelectList, filterObjSame } from '@/utils';
 
 const MonitorDeviceForm = props => {
   console.log(' MonitorDeviceForm ： ', props); //
 
   const commonParams = {
     init: [],
-    format: res => formatSelectList(res, 'name'),
+    format: res => formatSelectList(res),
   };
-
   const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(
     getManufacturerList,
+    {
+      ...commonParams,
+      format: res => formatSelectList(res, 'manufacturer'),
+    },
+  );
+  const { data: monitorPointList, req: getMonitorPointListAsync } = useHttp(
+    () =>
+      getMonitorPointList({
+        get_all: '1',
+      }),
     {
       ...commonParams,
     },
@@ -22,7 +35,7 @@ const MonitorDeviceForm = props => {
 
   const config = [
     {
-      noRule: true,
+      // noRule: true,
       formType: 'Search',
       selectSearch: getManufacturerListAsync,
       selectData: manufacturerList,
@@ -32,14 +45,14 @@ const MonitorDeviceForm = props => {
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '型号',
         name: 'model',
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       formType: 'Select',
       selectData: networkTypeConfig,
       itemProps: {
@@ -48,35 +61,21 @@ const MonitorDeviceForm = props => {
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: 'IEMI号',
         name: 'imei',
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: 'SIM',
         name: 'sim',
       },
     },
     {
-      noRule: true,
-      itemProps: {
-        label: '压变',
-        name: 'voltage_ratio',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '流变',
-        name: 'current_ratio',
-      },
-    },
-    {
-      noRule: true,
+      // noRule: true,
       formType: 'Select',
       selectData: monitorDeviceStatusConfig,
       itemProps: {
@@ -85,17 +84,37 @@ const MonitorDeviceForm = props => {
       },
     },
     {
-      noRule: true,
+      // noRule: true,
+      // formType: 'Select',
+      formType: 'Search',
+      // selectSearch: getMonitorPointListAsync,
+      selectData: monitorPointList,
       itemProps: {
         label: '检测点',
         name: 'monitor_point_id',
       },
     },
   ];
+  // model
+  // imei
+  // network_type
+  // sim
+  // monitor_point_id
+
+  const { manufacturer, network_type, monitor_point_id } = props.init;
 
   return (
     <div className={'monitorDeviceForm '}>
-      <SmartForm config={config} {...props}></SmartForm>
+      <SmartForm
+        config={config}
+        {...props}
+        init={{
+          ...props.init,
+          manufacturer: manufacturer ? `${manufacturer}` : null,
+          network_type: network_type ? `${manufacturer}` : null,
+          monitor_point_id: monitor_point_id ? `${monitor_point_id}` : null,
+        }}
+      ></SmartForm>
     </div>
   );
 };

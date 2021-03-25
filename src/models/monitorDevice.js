@@ -1,11 +1,11 @@
 import { init, action } from '@/utils/createAction'; //
-import * as services from '@/services/alarmNotify';
-import { formatSelectList } from '@/utils';
+import * as services from '@/services/monitorDevice';
+import { formatSelectList, nowYearMonth } from '@/utils';
 
-const namespace = 'alarmNotify';
+const namespace = 'monitorDevice';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['getRealDataAsync'];
 
 const batchTurnActions = [];
 
@@ -14,6 +14,7 @@ export const actions = {
 };
 
 // console.log(' actions ： ', actions,  )//
+
 export const mapStateToProps = state => state[namespace];
 
 export default {
@@ -25,6 +26,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    realDataParams: {},
   },
 
   reducers: {
@@ -34,6 +36,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        realDataParams: payload.realDataParams,
       };
     },
     onCancel(state, { payload, type }) {
@@ -42,6 +45,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        realDataParams: {},
       };
     },
     getList(state, { payload, type }) {
@@ -50,16 +54,34 @@ export default {
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload); //
+      const {
+        customer_id,
+        station_id,
+        electricity_user_id,
+        equipment_id,
+        device_id,
+        template_id,
+      } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          customer_id: `${customer_id}`,
+          electricity_user_id: `${electricity_user_id}`,
+          station_id: `${station_id}`,
+          equipment_id: `${equipment_id}`,
+          device_id: `${device_id}`,
+          template_id: `${template_id}`,
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -88,13 +110,42 @@ export default {
         ),
       };
     },
+
+    getRealData(state, { payload, type }) {
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        realDataParams: payload.payload.realDataParams,
+        itemDetail: {
+          ...payload.bean,
+          // customer_id: `${customer_id}`,
+          // electricity_user_id: `${electricity_user_id}`,
+          // station_id: `${station_id}`,
+          // equipment_id: `${equipment_id}`,
+          // device_id: `${device_id}`,
+          // template_id: `${template_id}`,
+        },
+      };
+    },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      ); //
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
@@ -102,14 +153,19 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put({ type: 'getListAsync' });
+    },
+
+    *getRealDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getRealData, payload);
       yield put(action({ ...res, payload }));
     },
   },

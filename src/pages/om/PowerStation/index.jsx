@@ -243,8 +243,8 @@ class PowerStation extends PureComponent {
       }
 
       const params = {
-        ...init,
         ...res,
+        end_time: res.end_time ? res.end_time.format('YYYY-MM-DD') : null,
       };
       if (res.inspection_type === 1) {
         res.service_team = res.service_team.join(',');
@@ -252,12 +252,12 @@ class PowerStation extends PureComponent {
 
       if (action === 'add') {
         this.props.addItemAsync({
-          ...res,
+          ...params,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...res,
+          ...params,
           id: d_id,
           d_id,
         });

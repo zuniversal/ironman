@@ -166,7 +166,17 @@ export const TableInput = props => {
   //   `color: #333; font-weight: bold`,
   //   props,
   // ); //
-  return props.record.isEdit ? getWidget(props) : text;
+  // console.log(' TableInput mapText, dataMap ：', props ); //
+  let txt = text;
+  if (props.config.dataMap) {
+    if (Array.isArray(text)) {
+      txt = text.map(v => props.config.dataMap[v]).join(' , ');
+    } else {
+      txt = props.config.dataMap[text];
+    }
+  }
+
+  return props.record.isEdit ? getWidget(props) : txt;
 };
 
 // export const TableInput = props => {

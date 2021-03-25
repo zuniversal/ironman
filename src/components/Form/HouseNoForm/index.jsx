@@ -33,12 +33,14 @@ const HouseNoForm = props => {
 
   const capacityConfig = [
     {
+      noRule: true,
       itemProps: {
         label: '变压器容量',
         name: 'transformer_capacity',
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '实际容量',
         name: 'real_capacity',
@@ -164,7 +166,8 @@ const HouseNoForm = props => {
         label: '电气信息',
       },
     },
-    ...(action === 'detail' ? capacityConfig : []),
+    // ...(action === 'detail' ? capacityConfig : []),
+    ...capacityConfig,
 
     {
       formType: 'Select',

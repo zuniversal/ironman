@@ -2,7 +2,7 @@
 // console.log(' regions ： ', regions,  )//
 // export const regoins = regions
 
-import { createIndexArr } from '@/utils';
+import { arrMapObj, createIndexArr } from '@/utils';
 
 export const expandLoadTreeList = [
   {
@@ -157,12 +157,6 @@ export const province = [
     label: '南山区',
   },
 ];
-
-export const arrMapObj = arr => {
-  const obj = {};
-  arr.forEach(v => (obj[v.value] = v.label));
-  return obj;
-};
 
 export const teamTypeConfig = [
   {
@@ -1286,6 +1280,8 @@ export const networkTypeConfig = [
   },
 ];
 
+export const networkTypeMap = arrMapObj(networkTypeConfig);
+
 export const monitorDeviceStatusConfig = [
   {
     value: '0',
@@ -1369,6 +1365,10 @@ export const alarmRecordTypeConfig = [
   {
     value: '3',
     label: '负载',
+  },
+  {
+    value: '4',
+    label: '失电',
   },
 ];
 

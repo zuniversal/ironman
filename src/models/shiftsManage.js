@@ -86,7 +86,7 @@ export default {
       };
       const leaderItem = {
         ...leader,
-        value: `${leader ? leader?.id : null}`,
+        value: leader ? `${leader?.id}` : null,
         label: leader ? leader.nickname : '',
       };
       const typeItem = {
@@ -117,7 +117,7 @@ export default {
           ...payload.bean,
           d_id: payload.payload.d_id,
           team_headman: `${team_headman.id}`,
-          leader: `${leader ? leader?.id : null}`,
+          leader: leader ? `${leader?.id}` : null,
           type: `${type.id}`,
           member: memberIdList,
         },

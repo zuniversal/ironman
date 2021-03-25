@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { tips } from '@/utils';
+import { tips, formatSelectList, filterObjSame } from '@/utils';
 
 const useHttp = (
   http = () => {},
-  { init, params, attr = 'list', format, withArr, withObj, noMountFetch },
+  {
+    init = [],
+    params,
+    attr = 'list',
+    format = formatSelectList,
+    withArr,
+    withObj,
+    noMountFetch,
+  },
 ) => {
   const [data, setData] = useState(init);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +35,7 @@ const useHttp = (
   };
 
   const req = async request => {
-    console.log(' req request ： '); //
+    console.log(' req request ： ', request); //
     setIsLoading(true);
     const res = await request();
     handleRes(res);

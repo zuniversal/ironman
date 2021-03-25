@@ -80,7 +80,7 @@ export default {
           station_id: `${station_id}`,
           equipment_id: `${equipment_id}`,
           device_id: `${device_id}`,
-          template_id: `${template_id}`,
+          template_id: template_id ? `${template_id}` : template_id,
         },
       };
     },

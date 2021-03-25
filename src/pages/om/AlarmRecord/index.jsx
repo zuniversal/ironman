@@ -75,7 +75,7 @@ class AlarmRecord extends PureComponent {
   renderSearchForm = params => {
     return (
       <AlarmRecordSearchForm
-        formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
         // getUser={this.props.getUserAsync}
         // getPower={this.props.getPowerAsync}
         // userList={this.props.userList}
@@ -209,7 +209,7 @@ class AlarmRecord extends PureComponent {
 
   render() {
     return (
-      <div className="AlarmRecord">
+      <div className="alarmRecord">
         {this.renderSearchForm()}
 
         {this.renderTable()}

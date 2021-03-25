@@ -114,6 +114,7 @@ const mdConfig2 = [
   {
     label: '电价分类',
     key: 'basic_price',
+    key: 'fixed',
   },
   {
     label: '计费(千瓦)',
@@ -169,19 +170,26 @@ const anaysisConfig = [
   {
     label: '户 号',
     key: 'number',
+    column: 1,
   },
   {
     label: '装接/实际容量',
     key: 'capacityRate',
+    className: 'capacityRate',
+    column: 2,
+    colspan: 2,
+    span: 2,
   },
   {
     label: '天 气',
     key: 'weather',
+    column: 1,
   },
   {
     label: '温/湿度',
     // key: 'humidity',
     key: 'humidityTemp',
+    column: 2,
   },
 ];
 
@@ -197,7 +205,7 @@ const deviceStatusConfig = [
     key: 'power_number',
   },
   {
-    label: '容量：',
+    label: '容量（KVA）：',
     key: 'real_capacity',
   },
   {
@@ -239,7 +247,7 @@ const DescBlock = props => {
   return (
     <Descriptions title="" bordered layout="vertical" {...rest}>
       {config.map((v, i) => (
-        <DescItem label={v.label} key={i}>
+        <DescItem label={v.label} key={i} {...v}>
           {v.dataMap ? v.dataMap[data[v.key]] : data[v.key]}
           {/* {v.label} */}
           {/* {v.key} */}
@@ -437,6 +445,7 @@ const MonthPowerReport = props => {
   const [pieUrl1, setPieUrl1] = useState('');
   const [pieUrl2, setPieUrl2] = useState('');
   // console.log(' ExportPdf pieUrl ： ', pieUrl,  )//
+  // console.log(' ExportPdf pieUrl ： ', pieUrl1, pieUrl2,  )//
   const pieCom1 = (
     <CsClientReportPieCom
       pieUrl={pieUrl1}
@@ -494,6 +503,7 @@ const MonthPowerReport = props => {
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{billFooterData[v.key]}</div>
+          <img src={stamp} className="stamp " />
         </DescItem>
       ))}
     </Descriptions>
@@ -589,11 +599,11 @@ const MonthPowerReport = props => {
                 <DescItem label={'用电总容量'}>
                   {data['old_volume']} 千瓦时
                 </DescItem>
-                <DescItem label={data['volume']} className={'bgw'}>
+                <DescItem label={`${data['volume']}千瓦时`} className={'bgw'}>
                   {data['volumeRate']} %
                 </DescItem>
                 <DescItem label={'平均单位电价'}>
-                  {data['oldAvg']} 元/千瓦
+                  {data['oldAvg']} 千瓦时
                 </DescItem>
                 <DescItem
                   label={`${data['nowAvg']} 元/千瓦时`}
@@ -626,7 +636,6 @@ const MonthPowerReport = props => {
       {basePowerCom}
       {appraisalCom}
       {footerCom}
-      <img src={stamp} className="stamp " />
     </div>
   );
 };
@@ -641,7 +650,7 @@ const MonthStationReport = props => {
       <DescBlock
         data={data}
         config={anaysisConfig}
-        column={4}
+        column={5}
         bordered={false}
         layout={'horizontal'}
       ></DescBlock>
@@ -675,6 +684,7 @@ const MonthStationReport = props => {
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{v.val ?? data[v.key]}</div>
+          <img src={stamp} className="stamp " />
         </DescItem>
       ))}
     </Descriptions>
@@ -810,7 +820,7 @@ const MonthStationReport = props => {
     },
     {
       label: '温度',
-      key: 'o_temperature',
+      key: 'temperature3',
     },
     {
       label: '干燥剂',
@@ -872,7 +882,12 @@ const MonthStationReport = props => {
               ></DescBlock>
               {/* {data?.inspect.map((v, i) => (<DescBlock data={v} config={deviceStatusConfig} column={4} ></DescBlock>))} */}
             </DescItem>
-            <Descriptions title="" bordered className=" " column={1}>
+            <Descriptions
+              title=""
+              bordered
+              className="inspectRowTitle "
+              column={1}
+            >
               <DescItem label={'电表读数'} className="label noPadding ">
                 <Descriptions title="" bordered layout="vertical" column={7}>
                   {renderDescItem(v, config1)}
@@ -887,25 +902,34 @@ const MonthStationReport = props => {
               <Descriptions
                 title=""
                 bordered
-                className=" "
+                className="inspectRowTitle "
                 column={1}
                 key={index}
               >
-                <DescItem label={'高压出线侧'} className="label noPadding ">
+                <DescItem
+                  label={`高压出线侧${index + 1}`}
+                  className="label noPadding "
+                >
                   <DescBlock
                     data={item}
                     config={config4}
                     column={6}
                   ></DescBlock>
                 </DescItem>
-                <DescItem label={'变压器编号'} className="label noPadding ">
+                <DescItem
+                  label={`变压器编号${index + 1}`}
+                  className="label noPadding "
+                >
                   <DescBlock
                     data={item}
                     config={config5}
                     column={6}
                   ></DescBlock>
                 </DescItem>
-                <DescItem label={'0.4KV总开关'} className="label noPadding ">
+                <DescItem
+                  label={`0.4KV总开关${index + 1}`}
+                  className="label noPadding "
+                >
                   <DescBlock
                     data={item}
                     config={config6}
@@ -1013,7 +1037,6 @@ const MonthStationReport = props => {
         {facilityCom}
         {footerCom}
       </div>
-      <img src={stamp} className="stamp " />
     </div>
   );
 };
@@ -1060,7 +1083,7 @@ const CsClientReportDescription = props => {
     <MonthStationReport
       data={v}
       key={i}
-      reportTime={props.data?.year_month}
+      reportTime={v.work_date.split(' ')[0]}
     ></MonthStationReport>
   ));
 
