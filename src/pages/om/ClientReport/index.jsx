@@ -98,7 +98,7 @@ class ClientReport extends PureComponent {
         ? this.props.selectedRows
         : this.props.dataList
       )
-        // .filter(v => v.finish == 1)
+        .filter(v => v.finish == 1)
         .map(v =>
           services.getItem({
             d_id: v.electricity_user_id,
