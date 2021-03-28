@@ -318,7 +318,7 @@ const ClientReportForm = props => {
     let basePriceRes = 0;
     if (billing_method == '2') {
       basePriceRes = capacity * basic_price;
-    } else if (billing_method == '3') {
+    } else if (billing_method == '3' || billing_method == '0') {
       basePriceRes = max_md * basic_price;
     } else if (billing_method == '4') {
       const subVal = max_md - report_md * 1.05;
