@@ -18,16 +18,16 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-// import AssetsFormTable from 'smartTb/AssetsFormTable'; //
-import UploadCom from '@/components/Widgets/UploadCom'; //
+import SmartForm from '@/common/SmartForm';
+// import AssetsFormTable from 'smartTb/AssetsFormTable';
+import UploadCom from '@/components/Widgets/UploadCom';
 import useHttp from '@/hooks/useHttp';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { getList as getPowerStationList } from '@/services/powerStation';
 
 const AssetsForm = props => {
-  console.log(' AssetsForm ： ', props, config); //
-  const { action } = props; //
+  console.log(' AssetsForm ： ', props, config);
+  const { action } = props;
 
   const [houseNoList, setHouseNoList] = useState([]);
 
@@ -45,7 +45,7 @@ const AssetsForm = props => {
   const onFieldChange = params => {
     console.log(' onFieldChange  ： ', params);
     const changeKey = Object.keys(params.value)[0];
-    console.log('  changeKey ：', changeKey); //
+    console.log('  changeKey ：', changeKey);
     if (changeKey === 'station_id' || changeKey === 'station') {
       const res = powerStationList.find(
         v => v.id == params.value.station || v.id == params.value.station_id,

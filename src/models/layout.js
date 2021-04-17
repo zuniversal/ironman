@@ -1,5 +1,5 @@
 import { history } from 'umi';
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 
 const namespace = 'layout';
 const { createAction, createCRUD, batchTurn } = init(namespace);
@@ -32,7 +32,7 @@ export default {
         state.pathname != payload,
         state.pathname,
         payload,
-      ); //
+      );
       // if (state.pathname != payload) {
       //   setTimeout(() => {
       //     console.log(' setPathname 延时器 ： ',  )
@@ -51,7 +51,7 @@ export default {
         state.pathname != payload,
         state.pathname,
         payload,
-      ); //
+      );
       return {
         title: payload,
       };

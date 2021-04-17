@@ -1,11 +1,11 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm';
 import { Button } from 'antd';
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const billFormLayouts = {
   labelCol: {
@@ -40,7 +40,7 @@ export const priceConfig1 = [
 ];
 
 const ClientReportSearchForm = props => {
-  console.log(' ClientReportSearchForm ： ', props); //
+  console.log(' ClientReportSearchForm ： ', props);
 
   const config = [
     {
@@ -53,7 +53,7 @@ const ClientReportSearchForm = props => {
     {
       noLabel: true,
       itemProps: {
-        label: '户号/客户名称/客户代表/巡检组长',
+        label: '户号/客户名称/客户代表/巡检组长/电源编号',
         name: 'filter',
       },
       comProps: {
@@ -112,7 +112,7 @@ const ClientReportSearchForm = props => {
     //     // filterOption: (input, option) => {
     //     //   // console.log('input, option ：', input, option, props,   )
     //     //   const res = option.children.props.children[0].props.children.toLowerCase().includes(input.toLowerCase())
-    //     //   console.log('  res ：', res); //
+    //     //   console.log('  res ：', res);
     //     //   return res
     //     // }
     //   },

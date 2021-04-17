@@ -1,9 +1,9 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/inspectPlan';
 import * as tagsServices from '@/services/tags';
 import * as userServices from '@/services/userManage';
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'inspectPlan';
 const { createActions } = init(namespace);
@@ -61,7 +61,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -69,7 +69,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -85,7 +85,7 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      console.log(' getList ： ', state, payload, payload.searchInfo); //
+      console.log(' getList ： ', state, payload, payload.searchInfo);
       // const dataList = payload.list.map((v) => ({...v, station_name: `电站-${v.station.name}`, Tags: `客户`, start: v.plan_date,   }))
       // console.log(' dataList  dataList.map v ： ', dataList,   )
       const unScheduleListData = payload.unScheduleList.map((v, i) => {
@@ -133,7 +133,7 @@ export default {
         ' unScheduleListData, scheduleListData,  ： ',
         unScheduleListData,
         scheduleListData,
-      ); //
+      );
       return {
         ...state,
         // dataList: payload.list,
@@ -151,7 +151,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -194,7 +194,7 @@ export default {
         payload,
         type,
         payload.rest.users,
-      ); //
+      );
       return {
         ...state,
         tagUserList: formatSelectList(payload.rest.users, 'nickname'),
@@ -231,9 +231,9 @@ export default {
         scheduleList,
         dragList,
         payload,
-      ); //
+      );
       const latestDrag = payload[payload.length - 1]; // 当前拖动的最新的一个电站
-      console.log(' latestDrag ： ', latestDrag, latestDrag.textColor); //
+      console.log(' latestDrag ： ', latestDrag, latestDrag.textColor);
       const unScheduleListFilter = unScheduleList.map(v => {
         return latestDrag && v.id != latestDrag.id
           ? v
@@ -261,7 +261,7 @@ export default {
       const scheduleListData =
         latestDrag && latestDrag.id
           ? scheduleList.map(v => {
-              console.log(' latestDrag scheduleList ： ', v, latestDrag); //
+              console.log(' latestDrag scheduleList ： ', v, latestDrag);
               return v.start != latestDrag.startStr
                 ? v
                 : {
@@ -270,12 +270,12 @@ export default {
                     title: v.count + 1,
                   };
             })
-          : scheduleList; //
+          : scheduleList;
       console.log(
         '  latestDrag scheduleListData ：',
         unScheduleListFilter,
         scheduleListData,
-      ); //
+      );
       return {
         ...state,
         dragList: dragList,
@@ -319,12 +319,12 @@ export default {
       };
     },
     removePlan(state, { payload, type }) {
-      console.log(' removePlan ： ', state, payload); //
+      console.log(' removePlan ： ', state, payload);
       const { planDetailList } = state;
       const planDetailListRes = planDetailList.filter(
         v => v.id != payload.payload.data[0],
       );
-      console.log(' planDetailListRes ： ', planDetailListRes); //
+      console.log(' planDetailListRes ： ', planDetailListRes);
       return {
         ...state,
         planDetailList: planDetailListRes,
@@ -340,7 +340,7 @@ export default {
         ' onUnScheduleListChange ： ',
         payload.target.value,
         unScheduleFilter,
-      ); //
+      );
       return {
         ...state,
         unScheduleFilter,
@@ -351,9 +351,9 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
-      console.log(' getListAsync ： ', payload, searchInfo, type); //
-      const payloads = payload ? payload : searchInfo; //
-      console.log('  payloads ：', payloads); //
+      console.log(' getListAsync ： ', payload, searchInfo, type);
+      const payloads = payload ? payload : searchInfo;
+      console.log('  payloads ：', payloads);
       const params = {
         ...payloads,
         month:
@@ -379,7 +379,7 @@ export default {
         unScheduleList,
         scheduleList,
         params,
-      ); //
+      );
       yield put(
         // action({
         //   unScheduleList: unScheduleList.list,
@@ -399,21 +399,21 @@ export default {
           },
         },
       );
-      // const { form,  } = payload; //
+      // const { form,  } = payload;
       // try {
       //   const res = yield form.validateFields();
-      //   console.log('  res await 结果  ：', res, action); //
+      //   console.log('  res await 结果  ：', res, action);
       //   const data = yield call(services.getList, {
       //     ...res,
       //     month: res.month.format('YYYY-MM'),
       //   });
       //   yield put(action({ ...data, payload }));
       // } catch (error) {
-      //   console.log(' error ： ', error); //
+      //   console.log(' error ： ', error);
       // }
     },
     // *getScheduledListAsync({ payload, action, type }, { call, put }) {
-    //   console.log(' getScheduledListAsync ： ', payload, action, type); //
+    //   console.log(' getScheduledListAsync ： ', payload, action, type);
     //   const res = yield call(services.getList, {
     //     ...payload,
     //     month: payload.month ? payload.month.format('YYYY-MM') : nowYearMonth,
@@ -426,7 +426,7 @@ export default {
     },
     *addItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' addItemAsync dragList ： ', dragList); //
+      console.log(' addItemAsync dragList ： ', dragList);
       console.log('  对吗  dragList.length ', dragList.length);
       if (dragList.length > 0) {
         const planData = dragList
@@ -443,7 +443,7 @@ export default {
 
             return items;
           });
-        console.log(' planData ： ', planData); //
+        console.log(' planData ： ', planData);
         // return
         const res = yield call(services.addItem, {
           // data: planData,
@@ -455,7 +455,7 @@ export default {
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' editItemAsync dragList ： ', dragList); //
+      console.log(' editItemAsync dragList ： ', dragList);
       const res = yield call(services.changePlan, {
         data: dragList.filter(v => v.plan_date != v.extendedProps.plan_date),
       });
@@ -468,7 +468,7 @@ export default {
     },
     *changePlanAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' changePlanAsync dragList ： ', dragList); //
+      console.log(' changePlanAsync dragList ： ', dragList);
       // const res = yield call(services.changePlan, {
       //   data: dragList,
       // });
@@ -479,7 +479,7 @@ export default {
       { call, put, select },
     ) {
       const { searchInfo, dayInfo } = yield select(state => state[namespace]);
-      console.log(' getScheduledDetailListAsync  ： ', payload, searchInfo); //
+      console.log(' getScheduledDetailListAsync  ： ', payload, searchInfo);
       // const date = payload.event ? dayInfo : payload
       if (payload.event.extendedProps?.plan_date) {
         const params = {
@@ -492,7 +492,7 @@ export default {
           page_size: payload.event.title,
           // date: payload.event ? payload.event.extendedProps.plan_date.split('T')[0] : dayInfo.date,
         };
-        console.log(' paramsparams ： ', params, payload, dayInfo); //
+        console.log(' paramsparams ： ', params, payload, dayInfo);
         const res = yield call(services.getScheduledDetailList, params);
         yield put(action({ ...res, payload: params }));
       }
@@ -511,7 +511,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *removePlanAsync({ payload, action, type }, { call, put }) {
-      console.log(' removePlanAsync  ： ', payload); //
+      console.log(' removePlanAsync  ： ', payload);
       const params = {
         data: [payload.id],
       };

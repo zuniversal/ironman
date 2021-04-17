@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import AppraiseTable from '@/components/Table/AppraiseTable'; //
-import AppraiseForm from '@/components/Form/AppraiseForm'; //
-import AppraiseSearchForm from '@/components/Form/AppraiseSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import AppraiseTable from '@/components/Table/AppraiseTable';
+import AppraiseForm from '@/components/Form/AppraiseForm';
+import AppraiseSearchForm from '@/components/Form/AppraiseSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/appraise'; //
+import { actions, mapStateToProps } from '@/models/appraise';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -89,12 +89,12 @@ class Appraise extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -107,19 +107,19 @@ class Appraise extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <AppraiseForm {...formComProps}></AppraiseForm>;
   };
   renderSmartFormModal = params => {

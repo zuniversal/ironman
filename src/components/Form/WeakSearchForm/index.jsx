@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { weakStatusConfig } from '@/configs';
 
 const WeakSearchForm = props => {
-  console.log(' WeakSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' WeakSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

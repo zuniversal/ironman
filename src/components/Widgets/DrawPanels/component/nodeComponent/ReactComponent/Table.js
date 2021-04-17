@@ -3,7 +3,7 @@ import { Form, Col, Select, Input, Button } from 'antd';
 let id = 0;
 const Table = props => {
   // getFieldDecorator('keys', { initialValue: [] });
-  console.log(' Table props ： ', props); //
+  console.log(' Table props ： ', props);
   const { getFieldDecorator, getFieldValue, data, form } = props;
   const renderForm = () => {
     // getFieldDecorator('keys', { initialValue: data.columns });

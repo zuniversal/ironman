@@ -18,9 +18,9 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp, mockFormData } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp, mockFormData } from '@/utils';
 import UploadCom from '@/components/Widgets/UploadCom';
 
 const normFile = e => {
@@ -177,9 +177,9 @@ const init = {
 };
 
 const ContractForm = props => {
-  console.log(' ContractForm ： ', props); //
+  console.log(' ContractForm ： ', props);
 
-  const { index } = props; //
+  const { index } = props;
 
   // const formConfig = formatConfig(config);
 

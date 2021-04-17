@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import {
   // notifyTypeConfig,
   expandLoadTreeList,
-} from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+} from '@/configs';
+import { formatConfig } from '@/utils';
 import { splitLine } from '@/common/SmartEcharts/charts/common';
 
 const selectData = [
@@ -80,8 +80,8 @@ const choiceRadios = [
 ];
 
 const MsgForm = props => {
-  console.log(' MsgForm ： ', props); //
-  const { formBtn, organizeList, flatOrganizeList, ...rest } = props; //
+  console.log(' MsgForm ： ', props);
+  const { formBtn, organizeList, flatOrganizeList, ...rest } = props;
   // const [ treeData, setTreeData ] = useState(expandLoadTreeList)
   const [treeData, setTreeData] = useState(organizeList);
   // const [treeData, setTreeData] = useState(flatOrganizeList);
@@ -102,10 +102,10 @@ const MsgForm = props => {
         // treeData: expandLoadTreeList,
         treeData: treeData,
         onChange: e => {
-          console.log(' onChange ： ', e); //
+          console.log(' onChange ： ', e);
         },
         onTreeExpand: organizationIds => {
-          console.log(' onTreeExpand ： ', organizationIds, props, treeData); //
+          console.log(' onTreeExpand ： ', organizationIds, props, treeData);
           // if (organizationIds.length > 0) {
           //   props.getUserManageAsync({
           //     organization_id: organizationIds[organizationIds.length - 1],
@@ -113,17 +113,17 @@ const MsgForm = props => {
           // }
         },
         onSelect: e => {
-          console.log(' onSelect ： ', e); //
+          console.log(' onSelect ： ', e);
         },
         onSearch: e => {
-          console.log(' onChange ： ', e); //
+          console.log(' onChange ： ', e);
         },
         // loadData: treeNode => {
-        //   console.log(' loadData ： ', treeNode); //
+        //   console.log(' loadData ： ', treeNode);
         //   const { id } = treeNode.props;
         //   const item = id.split('-');
         //   const paramId = item[item.length - 1];
-        //   console.log(' paramId ： ', item, paramId); //
+        //   console.log(' paramId ： ', item, paramId);
         //   return props
         //     .getUserManageAsync({
         //       organization_id: paramId,
@@ -146,7 +146,7 @@ const MsgForm = props => {
         //         //   ...res.map((v) => createTreeNode(id, v))
         //         // ]
         //       );
-        //       console.log(' treeDatatreeData ： ', treeData, res); //
+        //       console.log(' treeDatatreeData ： ', treeData, res);
         //       // return treeData
         //     });
         //   return new Promise((resolve, reject) => {
@@ -201,7 +201,7 @@ const MsgForm = props => {
   // const msgType = props.propsForm.getFieldValue('type');
   const notifyCol = msgType == 0 ? msgDeptCol : msgClientCol;
   const methodItem = msgType == 0 ? innerItem : clientItem;
-  console.log(' msgType ： ', msgType, methodItem); //
+  console.log(' msgType ： ', msgType, methodItem);
 
   const config = [
     {

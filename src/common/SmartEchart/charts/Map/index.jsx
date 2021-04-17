@@ -1,8 +1,8 @@
 import { toolbox } from '../common';
-import { PRIMARY } from '@/constants'; //
+import { PRIMARY } from '@/constants';
 
 const option = (radar = [], data = []) => {
-  console.log(' Map option radar, data ： ', radar, data); //
+  console.log(' Map option radar, data ： ', radar, data);
 
   return {
     color: [

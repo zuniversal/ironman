@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins, treeList } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins, treeList } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const OrganizeForm = props => {
-  console.log(' OrganizeForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' OrganizeForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

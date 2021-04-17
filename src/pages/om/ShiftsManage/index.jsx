@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ShiftsManageTable from '@/components/Table/ShiftsManageTable'; //
-import ShiftsManageForm from '@/components/Form/ShiftsManageForm'; //
-import ShiftsManageSearchForm from '@/components/Form/ShiftsManageSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import ShiftsManageTable from '@/components/Table/ShiftsManageTable';
+import ShiftsManageForm from '@/components/Form/ShiftsManageForm';
+import ShiftsManageSearchForm from '@/components/Form/ShiftsManageSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/shiftsManage'; //
+import { actions, mapStateToProps } from '@/models/shiftsManage';
 import SmartHOC from '@/common/SmartHOC';
 import { history, connect } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';
@@ -59,7 +59,7 @@ class ShiftsManage extends PureComponent {
           //       userList: this.props.userList,
           //       getUser: params => this.props.getUserAsync({ keyword: params }),
           //       // getUser: params => {
-          //       //   console.log(' params ： ', params); //
+          //       //   console.log(' params ： ', params);
           //       //   this.props.dispatch(actions.getUserAsync(params));
           //       // },
           //     },
@@ -107,7 +107,7 @@ class ShiftsManage extends PureComponent {
         userList: this.props.userList,
         getUser: params => this.props.getUserAsync({ keyword: params }),
         // getUser: params => {
-        //   console.log(' params ： ', params); //
+        //   console.log(' params ： ', params);
         //   this.props.dispatch(actions.getUserAsync(params));
         // },
       },
@@ -195,12 +195,12 @@ class ShiftsManage extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       console.log('  对吗  .length ', res.member);
       // if (res.member.length > 5) {
       //   tips('最多添加5个组员！', 2);
@@ -218,11 +218,11 @@ class ShiftsManage extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -231,7 +231,7 @@ class ShiftsManage extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <ShiftsManageForm {...formComProps}></ShiftsManageForm>;
   };
   renderSmartFormModal = params => {
@@ -254,12 +254,12 @@ class ShiftsManage extends PureComponent {
       this.state,
       this.props,
       this.props.authInfo,
-    ); //
+    );
     // this.props.dispatch(actions.getUserAsync());
-    // this.props.getUserAsync({ page_size: 1000 }); //
-    this.props.getUserAsync(); //
-    // this.props.getTeamAsync({}); //
-    // this.props.getUserAsync({ page: 1, page_size: 50 }); //
+    // this.props.getUserAsync({ page_size: 1000 });
+    this.props.getUserAsync();
+    // this.props.getTeamAsync({});
+    // this.props.getUserAsync({ page: 1, page_size: 50 });
   }
 
   render() {

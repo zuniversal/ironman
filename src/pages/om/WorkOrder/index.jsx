@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
-import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm'; //
-import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm'; //
-import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm'; //
-import WorkOrderTable from '@/components/Table/WorkOrderTable'; //
-import ExportPdf from '@/components/Pdf/ExportPdf'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import WorkOrderForm from '@/components/Form/WorkOrderForm';
+import WorkOrderSearchForm from '@/components/Form/WorkOrderSearchForm';
+import WorkOrderTicketForm from '@/components/Form/WorkOrderTicketForm';
+import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm';
+import WorkOrderTable from '@/components/Table/WorkOrderTable';
+import ExportPdf from '@/components/Pdf/ExportPdf';
 
-import { actions, mapStateToProps } from '@/models/workOrder'; //
+import { actions, mapStateToProps } from '@/models/workOrder';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import MissionsManageForm from '@/components/Form/MissionsManageForm';
@@ -163,9 +163,9 @@ class WorkOrder extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail, d_id } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail, d_id } = this.props;
+    const { form, init } = props;
     // return
     if (action === 'detail') {
       this.props.onCancel({});
@@ -173,7 +173,7 @@ class WorkOrder extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -197,11 +197,11 @@ class WorkOrder extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUserAsync: params => this.props.getUserAsync({ value: params }),
@@ -228,7 +228,7 @@ class WorkOrder extends PureComponent {
       return <WorkOrderTicketForm {...formComProps}></WorkOrderTicketForm>;
     }
 
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <WorkOrderForm {...formComProps}></WorkOrderForm>;
   };
   get size() {
@@ -262,7 +262,7 @@ class WorkOrder extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     const formComProps = {
       getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,

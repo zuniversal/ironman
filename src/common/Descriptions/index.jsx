@@ -14,8 +14,8 @@ import { Descriptions, Input, Button, Spin } from 'antd';
 
 // 通用的描详情内容的 描述性组件 传入配置 自动生成相应内容
 const DescriptionsCom = props => {
-  console.log(' DescriptionsCom ： ', props); //
-  const { config, size, column } = props; //
+  console.log(' DescriptionsCom ： ', props);
+  const { config, size, column } = props;
 
   return (
     <Descriptions size={size} column={column}>

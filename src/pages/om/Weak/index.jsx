@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import WeakForm from '@/components/Form/WeakForm'; //
-import WeakSearchForm from '@/components/Form/WeakSearchForm'; //
-import WeakTable from '@/components/Table/WeakTable'; //
-import ExportPdf from '@/components/Pdf/ExportPdf'; //
-import WeakFormPdf from '@/components/Pdf/WeakFormPdf'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import WeakForm from '@/components/Form/WeakForm';
+import WeakSearchForm from '@/components/Form/WeakSearchForm';
+import WeakTable from '@/components/Table/WeakTable';
+import ExportPdf from '@/components/Pdf/ExportPdf';
+import WeakFormPdf from '@/components/Pdf/WeakFormPdf';
 
-import { actions, mapStateToProps } from '@/models/weak'; //
+import { actions, mapStateToProps } from '@/models/weak';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import ClientForm from '@/components/Form/ClientForm';
@@ -87,7 +87,7 @@ class Weak extends PureComponent {
         removeTitle: '提示',
         removeContent: '是否确认处理',
         okFn: e => {
-          console.log(' okFnokFnokFnokFn ： ', e, params); //
+          console.log(' okFnokFnokFnokFn ： ', e, params);
           this.props.handleWeakAsync(params);
           this.props.onResultModalCancel();
         },
@@ -167,28 +167,28 @@ class Weak extends PureComponent {
   }
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (action === 'handleWeak' || action === 'detail') {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };
@@ -198,7 +198,7 @@ class Weak extends PureComponent {
     // if (action === 'handleWeak') {
     //   return <InspectMissionDetailForm {...formComProps} ></InspectMissionDetailForm>
     // }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <WeakForm {...formComProps}></WeakForm>;
   };
   renderSmartFormModal = params => {
@@ -218,7 +218,7 @@ class Weak extends PureComponent {
   render() {
     if (this.props.isShowExportPdf) {
       // if (this.state.isShowExportPdf) {
-      console.log(' 111111111 ： ', this.props.itemDetail); //
+      console.log(' 111111111 ： ', this.props.itemDetail);
       return (
         <ExportPdf onClose={this.props.closePdf}>
           {this.renderWeakForm}

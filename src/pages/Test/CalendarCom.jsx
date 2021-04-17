@@ -83,7 +83,7 @@ class CalendarCom extends React.Component {
   };
 
   onSelect = value => {
-    console.log(' onSelect ： ', value); //
+    console.log(' onSelect ： ', value);
     this.setState({
       value,
       selectedValue: value,
@@ -91,7 +91,7 @@ class CalendarCom extends React.Component {
   };
 
   onPanelChange = value => {
-    console.log(' onPanelChange ： ', value); //
+    console.log(' onPanelChange ： ', value);
     this.setState({ value });
   };
 

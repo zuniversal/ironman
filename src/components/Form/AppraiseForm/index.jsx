@@ -1,9 +1,9 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const AppraiseForm = props => {
-  console.log(' AppraiseForm ： ', props); //
+  console.log(' AppraiseForm ： ', props);
 
   const config = [
     {

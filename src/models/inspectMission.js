@@ -1,11 +1,11 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/inspectMission';
 import * as userServices from '@/services/userManage';
 import * as teamServices from '@/services/shiftsManage';
 import * as clientServices from '@/services/client';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'inspectMission';
 const { createActions } = init(namespace);
@@ -29,7 +29,7 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 const formatParams = data => {
-  console.log(' formatParams data ： ', data); //
+  console.log(' formatParams data ： ', data);
   const params = {
     ...data,
     work_date: data.work_date.format('YYYY-MM-DD'),
@@ -59,7 +59,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -67,7 +67,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -100,7 +100,7 @@ export default {
         created_time,
         start_time,
         end_time,
-      ); //
+      );
       return {
         ...state,
         action: payload.payload.action,
@@ -142,43 +142,43 @@ export default {
     },
 
     getUser(state, { payload, type }) {
-      console.log(' getUserAsync 修改 1 ： ', state, payload); //
+      console.log(' getUserAsync 修改 1 ： ', state, payload);
       const userList = payload.list.map(v => {
-        // console.log(' getUserAsync 修改 22 ： ', state, payload, v.team); //
+        // console.log(' getUserAsync 修改 22 ： ', state, payload, v.team);
         return { ...v, id: `${v.team[0]?.id}`, teamId: `${v.team[0]?.id}` };
       });
-      console.log(' getUserAsync 修改  ： ', state, payload, userList); //
+      console.log(' getUserAsync 修改  ： ', state, payload, userList);
       return {
         ...state,
         userList: formatSelectList(userList, 'nickname'),
       };
     },
     // getTeam(state, { payload, type }) {
-    //   console.log(' getTeam 修改 1 ： ', state, payload, ); //
+    //   console.log(' getTeam 修改 1 ： ', state, payload, );
     //   const teamList = payload.list
     //   // .map(v => ({...v, teamId: v.team[0].id}))
-    //   console.log(' getTeam 修改  ： ', state, payload, teamList); //
+    //   console.log(' getTeam 修改  ： ', state, payload, teamList);
     //   return {
     //     ...state,
     //     teamList: formatSelectList(teamList, 'team_headman', 'teamId'),
     //   };
     // },
     getTeam(state, { payload, type }) {
-      console.log(' getTeam 修改  ： ', state, payload, type); //
+      console.log(' getTeam 修改  ： ', state, payload, type);
       return {
         ...state,
         teamList: formatSelectList(payload.list, 'team_headman'),
       };
     },
     getPower(state, { payload, type }) {
-      console.log(' getPower 修改  ： ', state, payload, type); //
+      console.log(' getPower 修改  ： ', state, payload, type);
       return {
         ...state,
         powerList: formatSelectList(payload.list, 'name'),
       };
     },
     getClient(state, { payload, type }) {
-      console.log(' getClient 修改  ： ', state, payload, type); //
+      console.log(' getClient 修改  ： ', state, payload, type);
       return {
         ...state,
         clientList: formatSelectList(payload.list, 'name'),
@@ -199,22 +199,22 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload); //
+      console.log(' getItemAsync ： ', payload);
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' addItemAsync ： ', payload); //
+      console.log(' addItemAsync ： ', payload);
       const res = yield call(services.addItem, formatParams(payload));
       yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' editItemAsync ： ', payload); //
+      console.log(' editItemAsync ： ', payload);
       // if (payload.action === 'assignMission') {
       //    res = yield call(services.assignMission, payload);
       // } else if (payload.action === 'editDate') {
@@ -237,7 +237,7 @@ export default {
     },
 
     *getUserAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserAsync ： ', payload); //
+      console.log(' getUserAsync ： ', payload);
       const res = yield call(userServices.getSearchList, {
         ...payload,
         team_headman: 1,
@@ -263,7 +263,7 @@ export default {
     },
 
     *batchDispatchAsync({ payload, action, type }, { call, put }) {
-      console.log(' batchDispatchAsync ： ', payload); //
+      console.log(' batchDispatchAsync ： ', payload);
       const res = yield call(services.batchDispatch, payload);
       yield put({ type: 'getListAsync' });
     },

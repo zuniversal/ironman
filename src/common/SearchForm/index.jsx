@@ -27,7 +27,7 @@ import {
 } from 'antd';
 // import debounce from 'lodash/debounce'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons';
-import { INPUT_TXT, WORD } from '@/constants'; //
+import { INPUT_TXT, WORD } from '@/constants';
 
 const { Option } = Select;
 
@@ -63,7 +63,7 @@ class SearchForm extends PureComponent {
     //   return 111
     // })
     // const data = new Array(20).fill(obj)
-    console.log(' data ： ', data); //
+    console.log(' data ： ', data);
 
     this.setState({
       // value,
@@ -73,7 +73,7 @@ class SearchForm extends PureComponent {
   };
 
   handleChange = value => {
-    console.log(' handleChange ： ', value); //
+    console.log(' handleChange ： ', value);
     this.props.onChange();
 
     this.setState({
@@ -100,7 +100,7 @@ class SearchForm extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     const prop = {
       placeholder: defPh ? placeholder + word : placeholder,
     };

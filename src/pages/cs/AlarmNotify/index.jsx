@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm'; //
-import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm'; //
-import AlarmNotifyTable from '@/components/Table/AlarmNotifyTable'; //
-import AlarmNotifyInfo from '@/components/Widgets/AlarmNotifyInfo'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import AlarmRecordTable from '@/components/Table/AlarmRecordTable'; //
-import AlarmRecordForm from '@/components/Form/AlarmRecordForm'; //
-import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm'; //
-import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm';
+import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm';
+import AlarmNotifyTable from '@/components/Table/AlarmNotifyTable';
+import AlarmNotifyInfo from '@/components/Widgets/AlarmNotifyInfo';
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import AlarmRecordTable from '@/components/Table/AlarmRecordTable';
+import AlarmRecordForm from '@/components/Form/AlarmRecordForm';
+import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm';
+import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm';
+import SmartFormModal from '@/common/SmartFormModal';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
-import { actions, mapStateToProps } from '@/models/alarmNotify'; //
+import { actions, mapStateToProps } from '@/models/alarmNotify';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -123,28 +123,28 @@ class AlarmNotify extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (['handleAlarm', 'notifyClient'].includes(action)) {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -161,7 +161,7 @@ class AlarmNotify extends PureComponent {
     if (action === 'notifyClient') {
       return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
   };
   get size() {

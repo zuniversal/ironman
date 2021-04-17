@@ -20,7 +20,7 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
 import { tips } from '@/utils';
-import { REQUIRE } from '@/constants'; //
+import { REQUIRE } from '@/constants';
 import SmartImg from '@/common/SmartImg';
 
 const formatFile = data =>
@@ -73,7 +73,7 @@ const UploadCom = props => {
     formItemLayout,
     isHide,
     formAction,
-  } = props; //
+  } = props;
 
   const [state, setState] = useState({});
 
@@ -103,7 +103,7 @@ const UploadCom = props => {
 
   const onChange = e => {
     console.log(' onChange   e,   ： ', e);
-    const { onUploadChange, noTips, uploadSucc } = props; //
+    const { onUploadChange, noTips, uploadSucc } = props;
     // const {fileList,  } = e
     // if (uploadProps.multiple) {
     //   setFileData(e.fileList);
@@ -119,10 +119,10 @@ const UploadCom = props => {
     }
     // if (!noTips) {
     //   const item = e.fileList[e.fileList.length - 1];
-    //   console.log('  item ：', item, item.response); //
+    //   console.log('  item ：', item, item.response);
     //   if (item.response) {
     //     const { failedMsg, successExpense, message } = item.response;
-    //     console.log(' failedMsg ： ', failedMsg, message); //
+    //     console.log(' failedMsg ： ', failedMsg, message);
     //     if (message) {
     //       confirms(message, 2);
     //     }
@@ -139,7 +139,7 @@ const UploadCom = props => {
     //     //   });
     //     // }
     //     if (successExpense && successExpense.length > 0) {
-    //       console.log(' itemitem successExpense 22222 ： ', successExpense); //
+    //       console.log(' itemitem successExpense 22222 ： ', successExpense);
     //       confirms('文件上传成功！');
     //       // uploadSucc(successExpense)
     //     }

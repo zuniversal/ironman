@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import PowerStationForm from '@/components/Form/PowerStationForm';
 
-import { actions, mapStateToProps } from '@/models/powerStation'; //
+import { actions, mapStateToProps } from '@/models/powerStation';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { getItem } from '@/utils';
 
 const PowerStationTable = props => {
@@ -119,7 +119,7 @@ class PowerStation extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return <div className="PowerStation">{this.renderTable()}</div>;
   }
 }

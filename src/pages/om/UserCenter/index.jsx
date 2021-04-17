@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import UserCenterForm from '@/components/Form/UserCenterForm'; //
+import UserCenterForm from '@/components/Form/UserCenterForm';
 
 import {
   actions,
   // mapStateToProps,
-} from '@/models/userCenter'; //
+} from '@/models/userCenter';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -39,13 +39,13 @@ class UserCenter extends PureComponent {
 
   renderForm = params => {
     console.log(' renderForm ： ', params, this.state, this.props);
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       // init: this.props.userInfo.user,
       init: this.props.itemDetail,
     };
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return (
       <UserCenterForm
         {...formComProps}
@@ -55,17 +55,17 @@ class UserCenter extends PureComponent {
   };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
-    const { form, action } = props; //
+    const { form, action } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'edit') {
         this.props.editItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -83,7 +83,7 @@ class UserCenter extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return <div className="UserCenter">{this.renderForm()}</div>;
   }
 }

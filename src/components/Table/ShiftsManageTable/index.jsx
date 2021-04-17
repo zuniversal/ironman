@@ -9,12 +9,12 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { onDutyTypeMap } from '@/configs'; //
-import SmartTable from '@/common/SmartTable'; //
-import { Link } from 'umi'; //
+import { onDutyTypeMap } from '@/configs';
+import SmartTable from '@/common/SmartTable';
+import { Link } from 'umi';
 
 const ShiftsManageTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {

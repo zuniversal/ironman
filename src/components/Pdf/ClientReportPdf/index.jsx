@@ -3,7 +3,7 @@ import './style.less';
 import { Button } from 'antd';
 
 const ClientReportPdf = props => {
-  console.log(' InspectPlanForm ： ', props); //
+  console.log(' InspectPlanForm ： ', props);
 
   return (
     <div className={'clientReportPdf dfc '}>

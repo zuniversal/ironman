@@ -5,8 +5,8 @@ import './style.less';
 // import Typology from './Visio/pages/workspace';
 
 const Topogy = props => {
-  console.log(' Topogy ： ', props, window, window.topologyTools); //
-  const { formBtn, ...rest } = props; //
+  console.log(' Topogy ： ', props, window, window.topologyTools);
+  const { formBtn, ...rest } = props;
   return <div></div>;
   // return <Typology {...props}></Typology>;
   // return (

@@ -9,13 +9,13 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 const MissionsHouseNoTable = props => {
   console.log(
     ' %c MissionsHouseNoTable 组件 this.state, this.props ： ',
     props,
-  ); //
+  );
 
   const columns = [
     {
@@ -68,7 +68,7 @@ const MissionsHouseNoTable = props => {
       onRow={record => {
         return {
           onClick: (event, rest) => {
-            console.log(' event, rest, recordrecord ,： ', event, rest, record); //
+            console.log(' event, rest, recordrecord ,： ', event, rest, record);
             props.getClientDetailAsync({
               // props.getClientItemAsync({
               action: 'clientDetailAsync',

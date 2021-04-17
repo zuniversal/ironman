@@ -19,8 +19,8 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartForm from '@/common/SmartForm';
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 import { INPUT_TXT } from '@/utils';
 
 const formLayouts = {
@@ -33,12 +33,12 @@ const formLayouts = {
 };
 
 const CsUserCenterForm = props => {
-  console.log(' CsUserCenterForm ： ', props); //
+  console.log(' CsUserCenterForm ： ', props);
   const [form] = Form.useForm();
   const [noRule, setNoRule] = useState(false);
 
-  const res = form.getFieldValue('password'); //
-  console.log('  resresres ：', res, noRule); //
+  const res = form.getFieldValue('password');
+  console.log('  resresres ：', res, noRule);
 
   const config = [
     {

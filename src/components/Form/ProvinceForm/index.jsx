@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins, province, site, city } from '@/configs'; //
-// import regoins from '@/configs/regions.js'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { regoins, province, site, city } from '@/configs';
+// import regoins from '@/configs/regions.js';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 export const config = props => [
   {
@@ -101,8 +101,8 @@ const init = {
 };
 
 const ProvinceForm = props => {
-  console.log(' ProvinceForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' ProvinceForm ： ', props);
+  const { formBtn, ...rest } = props;
   const formProps = {
     // layout: 'vertical',
     layout: 'inline',

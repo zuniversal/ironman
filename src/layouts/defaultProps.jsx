@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
-import Icon from '@/components/Widgets/Icons'; //
+import Icon from '@/components/Widgets/Icons';
 
 export const managerRoutes = [
   // {
@@ -317,7 +317,7 @@ export const managerRoutes = [
       },
     ],
   },
-]; //
+];
 
 export const customerRoutes = [
   {
@@ -382,7 +382,7 @@ export const customerRoutes = [
     icon: <Icon icon={'csOrganize'} />,
     component: '../pages/cs/csOrganize',
   },
-]; //
+];
 
 export default {
   route: {

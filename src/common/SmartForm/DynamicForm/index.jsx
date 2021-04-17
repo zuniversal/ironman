@@ -24,7 +24,7 @@ import {
   PlusOutlined,
   MinusOutlined,
 } from '@ant-design/icons';
-import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants';
 import {
   mockFormData,
   renderSelectOp,
@@ -32,7 +32,7 @@ import {
   formatConfig,
   renderCheckboxOp,
   tips,
-} from '@/utils'; //
+} from '@/utils';
 
 const animates = ANIMATE.bounceIn;
 
@@ -192,7 +192,7 @@ const ActionBtn = ({
 );
 
 const DynamicForm = props => {
-  console.log(' DynamicForm ： ', props); //
+  console.log(' DynamicForm ： ', props);
   const {
     key,
     itemProps,
@@ -223,7 +223,7 @@ const DynamicForm = props => {
     extraChildren,
     noPh,
     action,
-  } = props; //
+  } = props;
 
   return (
     <Form.List
@@ -263,7 +263,7 @@ const DynamicForm = props => {
         // console.log('  formLabel ：', formLabel,  )//
 
         const placeholder =
-          noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
+          noPh || action === 'detail' || isDisabledAll ? '' : formLabel;
 
         if (isDisabledAll) {
           comProps.disabled = true;
@@ -285,7 +285,7 @@ const DynamicForm = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          // console.log(' selectSearch ： ', props.selectSearch); //
+          // console.log(' selectSearch ： ', props.selectSearch);
           selectProps.showArrow = false;
           selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {
@@ -344,7 +344,7 @@ const DynamicForm = props => {
         // }
 
         return fieldsData.map((field, index) => {
-          const fieldKey = name ? name : field.name; //
+          const fieldKey = name ? name : field.name;
           console.log(
             ' 动态表单 fieldKey ：',
             formItemLayout,
@@ -353,7 +353,7 @@ const DynamicForm = props => {
             name,
             fieldKey,
             props,
-          ); //
+          );
 
           // if (init) {
           //   init.forEach((v, i) => {
@@ -408,7 +408,7 @@ const DynamicForm = props => {
           );
 
           const extraItem = config.map((v, i) => {
-            // console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
+            // console.log(' extraItem v ： ', v.itemProps.name, field, field.key);
             const { itemProps, noRule } = v;
             const { label, className } = itemProps;
 
@@ -531,4 +531,4 @@ DynamicForm.defaultProps = {
   rowExtra: false,
 };
 
-export default DynamicForm; //
+export default DynamicForm;

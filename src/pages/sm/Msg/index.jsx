@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import MsgForm from '@/components/Form/MsgForm'; //
-import MsgTable from '@/components/Table/MsgTable'; //
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import MsgForm from '@/components/Form/MsgForm';
+import MsgTable from '@/components/Table/MsgTable';
 
-import { actions, mapStateToProps } from '@/models/msg'; //
+import { actions, mapStateToProps } from '@/models/msg';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -85,14 +85,14 @@ class Msg extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
       const send_type = res.send_type.join(',');
       // const reciever = res.reciever.filter(v => typeof v !== 'string');
-      console.log('  res await 结果  ：', res, send_type, reciever, action); //
+      console.log('  res await 结果  ：', res, send_type, reciever, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -109,12 +109,12 @@ class Msg extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
@@ -134,7 +134,7 @@ class Msg extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <MsgForm {...formComProps}></MsgForm>;
   };
   renderSmartFormModal = params => {
@@ -151,7 +151,7 @@ class Msg extends PureComponent {
     );
   };
   async componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getOrganizeAsync();
     // const  = () => new Promise((resolve, reject) => {
     //   console.log('  Promise ： ',  )
@@ -160,7 +160,7 @@ class Msg extends PureComponent {
     const res = await this.props.getUserManageAsync({
       organization_id: 1,
     });
-    console.log('  msgmsg res ：', res); //
+    console.log('  msgmsg res ：', res);
 
     this.props.getClientAsync();
     // this.props.addItemAsync({

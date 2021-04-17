@@ -8,7 +8,7 @@ const CalendarDraggable = props => {
   useEffect(() => {
     // Cannot read property 'addEventListener' of null 如果没有该容器节点 会导致监听失败
     let draggableEl = document.getElementById('dataListWrapper');
-    console.log(' CalendarDraggable eventEleventEl 2： ', draggableEl, domRef); //
+    console.log(' CalendarDraggable eventEleventEl 2： ', draggableEl, domRef);
     new Draggable(draggableEl, {
       itemSelector: props.itemSelector,
       eventData(eventEl) {
@@ -26,7 +26,7 @@ const CalendarDraggable = props => {
           color,
           display,
           eventEl.getAttribute,
-        ); //
+        );
         return {
           title: eventEl.innerText,
           id: id,
@@ -41,7 +41,7 @@ const CalendarDraggable = props => {
   }, []);
   console.log(' CalendarDraggable   props, ,   ： ', props);
 
-  const { className } = props; //
+  const { className } = props;
 
   return (
     <div id="dataListWrapper" className={`${className} `} ref={domRef}>

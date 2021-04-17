@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/shiftsManage';
 import * as userServices from '@/services/userManage';
 import { formatSelectList, filterObjSame } from '@/utils';
@@ -26,7 +26,7 @@ const formatUserList = data => {
     label: v.nickname,
     value: v.id,
   }));
-  console.log(' formatUserList res ： ', res); //
+  console.log(' formatUserList res ： ', res);
   return res;
 };
 
@@ -50,7 +50,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -58,7 +58,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -66,7 +66,7 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      console.log(' getListgetList ： ', payload); //
+      console.log(' getListgetList ： ', payload);
       return {
         ...state,
         dataList: payload.list,
@@ -76,8 +76,8 @@ export default {
       };
     },
     getItem(state, { payload }) {
-      const { team_headman, leader = {}, type, member } = payload.bean; //
-      console.log(' getItem ： ', payload, leader); //
+      const { team_headman, leader = {}, type, member } = payload.bean;
+      console.log(' getItem ： ', payload, leader);
       const { userList } = state;
       const teamHeadmanItem = {
         ...team_headman,
@@ -105,9 +105,9 @@ export default {
         member,
         teamHeadmanItem,
         type,
-      ); //
+      );
       const res = userList.some(v => v.id == memberList.value);
-      console.log('  resresres ：', res, userList, memberList); //
+      console.log('  resresres ：', res, userList, memberList);
       return {
         ...state,
         action: payload.payload.action,
@@ -138,7 +138,7 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      console.log(' editItem ： ', state, payload); //
+      console.log(' editItem ： ', state, payload);
       return {
         ...state,
         // d_id: payload.payload.d_id,
@@ -149,16 +149,16 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type); //
+      console.log(' removeItem 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type); //
+      console.log(' removeItems 修改  ： ', state, payload, type);
       const removeList = payload.payload.id.split(',');
-      console.log(' removeList ： ', removeList); //
+      console.log(' removeList ： ', removeList);
       return {
         ...state,
         dataList: state.dataList.filter(v =>
@@ -194,38 +194,38 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync  payload ： ', payload); //
+      console.log(' getItemAsync  payload ： ', payload);
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' addItemAsync  payload ： ', payload); //
+      console.log(' addItemAsync  payload ： ', payload);
       const res = yield call(services.addItem, payload);
       // yield put(action(res));
       yield put({ type: 'getListAsync' });
       // yield put(action());
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' editItemAsync  payload ： ', payload); //
+      console.log(' editItemAsync  payload ： ', payload);
       const res = yield call(services.editItem, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
       // yield put(action());
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemAsync  payload ： ', payload); //
+      console.log(' removeItemAsync  payload ： ', payload);
       const res = yield call(services.removeItem, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
       // yield put(action());
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemsAsync ： ', payload, type); //
+      console.log(' removeItemsAsync ： ', payload, type);
       const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));

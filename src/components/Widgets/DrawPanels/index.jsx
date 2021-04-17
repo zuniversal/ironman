@@ -56,7 +56,7 @@ import CanvasAttrForm from './CanvasAttrForm';
 import LineAttrForm from './LineAttrForm';
 import CustomImg from './CustomImg';
 import { isDev } from '@/constants';
-// import Preview from './Preview'; //
+// import Preview from './Preview';
 
 import './fonts/iconfont.css';
 import './fonts/libs/iconfont.css';
@@ -146,7 +146,7 @@ export const blob2JSON = props => {
   reader.readAsText(res, 'utf-8'); // 设置读取的数据以及返回的数据类型为utf-8
   reader.onload = e => {
     const drawRes = JSON.parse(reader.result);
-    console.log(' blob2JSON drawRes ： ', drawRes); //
+    console.log(' blob2JSON drawRes ： ', drawRes);
     props.cb(drawRes);
   };
 };
@@ -243,7 +243,7 @@ const DrawPanel = props => {
   );
 
   const onMessage = (event, data) => {
-    // console.log(' onMessage ： ', event, data); //
+    // console.log(' onMessage ： ', event, data);
     switch (event) {
       case 'move':
         setState({
@@ -316,7 +316,7 @@ const DrawPanel = props => {
         break;
       case 'moveNodes':
       case 'resizeNodes':
-        console.log(' onMessage onMessage resizeNodesresizeNodes  ： '); //
+        console.log(' onMessage onMessage resizeNodesresizeNodes  ： ');
         if (data.length > 1) {
           setState({
             node: null,
@@ -338,7 +338,7 @@ const DrawPanel = props => {
       case 'resize':
       case 'scale':
       case 'locked':
-        console.log(' onMessage onMessage resize  ： '); //
+        console.log(' onMessage onMessage resize  ： ');
         if (canvas) {
           props.dispatch({
             type: 'canvas/update',
@@ -354,7 +354,7 @@ const DrawPanel = props => {
   };
 
   const onDrag = (event, node) => {
-    console.log(' event ： ', event, node); //
+    console.log(' event ： ', event, node);
     // event.dataTransfer.setData('Text', JSON.stringify(node.data));
     event.dataTransfer.setData(
       'Topology',
@@ -362,7 +362,7 @@ const DrawPanel = props => {
     );
   };
   const onCustomDrag = (event, node) => {
-    console.log(' onCustomDrag event ： ', event, node); //
+    console.log(' onCustomDrag event ： ', event, node);
     // event.dataTransfer.setData('Text', JSON.stringify(node.data));
     const { iconFamily = 'topology' } = node;
 
@@ -383,7 +383,7 @@ const DrawPanel = props => {
   };
 
   const handlePropsChange = (props, changedValues, allValues) => {
-    console.log(' handlePropsChange ： ', props, changedValues, allValues); //
+    console.log(' handlePropsChange ： ', props, changedValues, allValues);
     if (changedValues.node) {
       // 遍历查找修改的属性，赋值给原始Node
 
@@ -444,31 +444,31 @@ const DrawPanel = props => {
   };
 
   const handle_new = data => {
-    console.log(' handle_new ： ', data); //
+    console.log(' handle_new ： ', data);
     setDrawId(null);
     canvas.open({ nodes: [], lines: [] });
   };
 
   const handle_open = data => {
-    console.log(' handle_open ： ', data); //
+    console.log(' handle_open ： ', data);
     setDrawId(null);
     handle_replace(data);
   };
 
   const handle_replace = data => {
-    console.log(' handle_replace ： ', data); //
+    console.log(' handle_replace ： ', data);
     setDrawId(null);
     const input = document.createElement('input');
     input.type = 'file';
     input.onchange = event => {
-      console.log(' onchange ： ', event); //
+      console.log(' onchange ： ', event);
       const elem = event.srcElement || event.target;
       if (elem.files && elem.files[0]) {
         const name = elem.files[0].name.replace('.json', '');
         const reader = new FileReader();
         reader.onload = e => {
           const text = e.target.result + '';
-          console.log(' onload ： ', text); //
+          console.log(' onload ： ', text);
           try {
             const data = JSON.parse(text);
             console.log(
@@ -476,7 +476,7 @@ const DrawPanel = props => {
               data,
               Array.isArray(data.nodes),
               Array.isArray(data.lines),
-            ); //
+            );
             // if (data && Array.isArray(data.nodes) && Array.isArray(data.lines)) {
             if (data) {
               canvas.open(data);
@@ -485,7 +485,7 @@ const DrawPanel = props => {
             return false;
           }
         };
-        console.log(' elem ： ', elem.files[0]); //
+        console.log(' elem ： ', elem.files[0]);
         reader.readAsText(elem.files[0]);
       }
     };
@@ -502,7 +502,7 @@ const DrawPanel = props => {
     const res = new Blob([JSON.stringify(canvas.data)], {
       type: 'text/plain;charset=utf-8',
     });
-    console.log('  res ：', res); //
+    console.log('  res ：', res);
     let reader = new FileReader(); // 创建读取文件对象
     reader.addEventListener('loadend', function() {
       //
@@ -511,18 +511,18 @@ const DrawPanel = props => {
     });
     reader.readAsText(res, 'utf-8'); // 设置读取的数据以及返回的数据类型为utf-8
     reader.onload = e => {
-      console.log(' JSON.parse(reader.result) ： ', JSON.parse(reader.result)); //
+      console.log(' JSON.parse(reader.result) ： ', JSON.parse(reader.result));
     };
 
     const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
-    console.log('  res2 ：', res2); //
+    console.log('  res2 ：', res2);
   };
 
   const handle_upload = data => {
     const res = new Blob([JSON.stringify(canvas.data)], {
       type: 'text/plain;charset=utf-8',
     });
-    console.log('  handle_upload res ：', res); //
+    console.log('  handle_upload res ：', res);
     let reader = new FileReader(); // 创建读取文件对象
     // reader.addEventListener('loadend', function() {
     //   //
@@ -532,14 +532,14 @@ const DrawPanel = props => {
     reader.readAsText(res, 'utf-8'); // 设置读取的数据以及返回的数据类型为utf-8
     reader.onload = e => {
       const drawRes = JSON.parse(reader.result);
-      console.log(' handle_upload drawRes ： ', drawRes); //
+      console.log(' handle_upload drawRes ： ', drawRes);
       props.saveDraw({
         draw: drawRes,
         circuit_id: drawId,
       });
     };
 
-    console.log('  res2 22：', reader.result); //
+    console.log('  res2 22：', reader.result);
     // const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
     // console.log(' res2 ： ', res2,  )//
   };
@@ -551,7 +551,7 @@ const DrawPanel = props => {
   const handle_saveSvg = data => {
     const C2S = window.C2S;
     const ctx = new C2S(canvas.canvas.width + 200, canvas.canvas.height + 200);
-    console.log(' C2S ： ', window, C2S, canvas.data, ctx); //
+    console.log(' C2S ： ', window, C2S, canvas.data, ctx);
     if (canvas.data.pens) {
       for (const item of canvas.data.pens) {
         item.render(ctx);
@@ -559,7 +559,7 @@ const DrawPanel = props => {
     }
 
     let mySerializedSVG = ctx.getSerializedSvg();
-    console.log(' mySerializedSVG ： ', mySerializedSVG); //
+    console.log(' mySerializedSVG ： ', mySerializedSVG);
     mySerializedSVG = mySerializedSVG.replace(
       '<defs/>',
       `<defs>
@@ -682,9 +682,9 @@ const DrawPanel = props => {
       selected,
       contextmenu,
       canvasOptions,
-    ); //
+    );
     if (props.event !== event) {
-      console.log(' 不相等 更新 ： '); //
+      console.log(' 不相等 更新 ： ');
       setEvent(props.event);
       if (handleEvent['handle_' + props.event.event]) {
         handleEvent['handle_' + props.event.event](props.event.data);
@@ -700,7 +700,7 @@ const DrawPanel = props => {
       selected,
       contextmenu,
       canvasOptions,
-    ); //
+    );
     canvasRegister();
     // return
     canvasOptions.on = onMessage;
@@ -711,7 +711,7 @@ const DrawPanel = props => {
     canvas.open(drawData);
 
     document.onclick = event => {
-      // console.log(' document ： ', event); //
+      // console.log(' document ： ', event);
       setContextmenu({
         display: 'none',
         left: '',
@@ -731,7 +731,7 @@ const DrawPanel = props => {
 
   const onHandleFormValueChange = useCallback(
     value => {
-      console.log(' onHandleFormValueChange ： ', value); //
+      console.log(' onHandleFormValueChange ： ', value);
       if (selected.node.name === 'echarts') {
         canvas.updateProps(selected.node);
         return;
@@ -792,7 +792,7 @@ const DrawPanel = props => {
         value,
         changedValues,
         canvas,
-      ); //
+      );
       canvas.updateProps(selected.node);
     },
     [selected],
@@ -823,13 +823,13 @@ const DrawPanel = props => {
         idx,
         selected.node,
         canvas.data.pens[idx].data,
-      ); //
+      );
       let reader = new FileReader();
       const result = new Blob([JSON.stringify(canvas.data)], {
         type: 'text/plain;charset=utf-8',
       });
       reader.readAsText(result, 'text/plain;charset=utf-8');
-      console.log(' reader ： ', reader, reader.result); //
+      console.log(' reader ： ', reader, reader.result);
       reader.onload = e => {
         canvas.open(JSON.parse(reader.result));
       };
@@ -884,7 +884,7 @@ const DrawPanel = props => {
           ...value,
         },
       };
-      console.log(' onHandleLineFormValueChange ： ', selected.line, value); //
+      console.log(' onHandleLineFormValueChange ： ', selected.line, value);
       if (changedValues.line) {
         // 遍历查找修改的属性，赋值给原始line
         for (const key in changedValues.line) {
@@ -911,7 +911,7 @@ const DrawPanel = props => {
   const nodeFormRef = React.createRef();
 
   const rightAreaConfig = useMemo(() => {
-    console.log(' rightAreaConfig selected ： ', selected); //
+    console.log(' rightAreaConfig selected ： ', selected);
     // return <NodeAttrForm></NodeAttrForm>
 
     return {

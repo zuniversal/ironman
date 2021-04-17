@@ -7,12 +7,12 @@ const formLayout = {
   wrapperCol: { span: 15 },
 };
 const Layout = props => {
-  console.log(' Layoutprops  ： ', props); //
+  console.log(' Layoutprops  ： ', props);
   const [form] = Form.useForm();
   const { validateFields } = form;
 
   const startLayout = () => {
-    console.log(' startLayout ： ', validateFields); //
+    console.log(' startLayout ： ', validateFields);
     validateFields()
       .then(value => {
         console.log(
@@ -21,9 +21,9 @@ const Layout = props => {
           layout,
           canvas.updateProps,
           canvas.updateProps,
-        ); //
+        );
         if (canvas) {
-          console.log(' value ： ', value, canvas.data); //
+          console.log(' value ： ', value, canvas.data);
           layout(canvas.data.pens, value);
           canvas.updateProps(true, canvas.data.pens);
         }

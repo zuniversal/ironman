@@ -19,7 +19,7 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import { INPUT_TXT } from '@/utils';
 
 const formLayouts = {
@@ -32,12 +32,12 @@ const formLayouts = {
 };
 
 const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props); //
+  console.log(' UserCenterForm ： ', props);
   const [form] = Form.useForm();
   const [noRule, setNoRule] = useState(false);
 
-  const res = form.getFieldValue('password'); //
-  console.log('  resresres ：', res, noRule); //
+  const res = form.getFieldValue('password');
+  console.log('  resresres ：', res, noRule);
 
   const config = [
     {
@@ -90,7 +90,7 @@ const UserCenterForm = props => {
       },
       comProps: {
         onChange: e => {
-          console.log('  resresres onChange ：', e, e.target.value); //
+          console.log('  resresres onChange ：', e, e.target.value);
           setNoRule(e.target.value);
         },
       },

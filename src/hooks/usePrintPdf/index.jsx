@@ -3,12 +3,12 @@ import './style.less';
 import { tips } from '@/utils';
 
 const usePrintPdf = props => {
-  const { goBack, onClose, noPrint, isPrintPdf, com } = props; //
+  const { goBack, onClose, noPrint, isPrintPdf, com } = props;
 
-  console.log(' ExportPdf usePrintPdf  ： ', props); //
+  console.log(' ExportPdf usePrintPdf  ： ', props);
   const iframeCom = <iframe id="iframe" className={`hide`}></iframe>;
   useEffect(() => {
-    console.log(' ExportPdf useEffect  append ： ', props, isPrintPdf, noPrint); //
+    console.log(' ExportPdf useEffect  append ： ', props, isPrintPdf, noPrint);
     // window.document.body.appendChild(`${<iframe id="iframe" className={`hide`} ></iframe>}`)
     let ele = document.createElement('iframe');
     ele.id = 'iframe';
@@ -31,11 +31,11 @@ const usePrintPdf = props => {
 
   let timer;
   useEffect(() => {
-    console.log(' ExportPdf useEffect ： ', props, isPrintPdf, noPrint); //
+    console.log(' ExportPdf useEffect ： ', props, isPrintPdf, noPrint);
     if (!noPrint && isPrintPdf) {
       const document = window.document;
       const iframe = window.frames[0];
-      // console.log(' ExportPdf document.head ： ', iframe, com); //
+      // console.log(' ExportPdf document.head ： ', iframe, com);
       iframe.document.head.innerHTML = document.head.innerHTML; // 获取当前文档的头部给iframe
       iframe.document.body.innerHTML = com?.innerHTML; // 把传过来的html给iframe <body>
       timer = setTimeout(() => {
@@ -44,7 +44,7 @@ const usePrintPdf = props => {
       }, 2000);
     }
     return () => {
-      console.log(' getPowerPointRealList 清楚副作用 ： ', timer, props); //
+      console.log(' getPowerPointRealList 清楚副作用 ： ', timer, props);
       clearInterval(timer);
     };
   }, [isPrintPdf]);
@@ -65,7 +65,7 @@ export const ExportPdf = props => {
     ' %c ExportPdf 组件 this.state, this.props ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
   usePrintPdf(props);
   return <div className=""></div>;
 };

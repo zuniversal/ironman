@@ -9,10 +9,10 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 const CsHomeInspectTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {
@@ -43,7 +43,7 @@ const CsHomeInspectTable = props => {
       <div>处理</div>
       <a
         onClick={() => {
-          console.log(' propsprops ： ', props); //
+          console.log(' propsprops ： ', props);
           showTransferDetail({
             action: 'detail',
             d_id: record[props.rowKey],

@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import KnowledgeCateTable from '@/components/Table/KnowledgeCateTable'; //
-import KnowledgeCateForm from '@/components/Form/KnowledgeCateForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import KnowledgeCateTable from '@/components/Table/KnowledgeCateTable';
+import KnowledgeCateForm from '@/components/Form/KnowledgeCateForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/knowledgeCate'; //
+import { actions, mapStateToProps } from '@/models/knowledgeCate';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -118,12 +118,12 @@ class KnowledgeCate extends PureComponent {
     );
   };
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -137,19 +137,19 @@ class KnowledgeCate extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <KnowledgeCateForm {...formComProps}></KnowledgeCateForm>;
   };
   renderSmartFormModal = params => {

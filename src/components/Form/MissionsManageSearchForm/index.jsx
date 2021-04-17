@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { missionsStatusConfig, missionsTypeConfig } from '@/configs';
 
 const MissionsManageSearchForm = props => {
-  console.log(' MissionsManageSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsManageSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

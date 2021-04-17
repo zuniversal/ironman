@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.less';
-import SmartEchart from '@/common/SmartEchart'; //
+import SmartEchart from '@/common/SmartEchart';
 
 import { createIndexArr } from '@/utils';
 
@@ -62,7 +62,7 @@ const option = params => {
 };
 
 const CsHomeLine = props => {
-  console.log(' CsHomeLine ： ', props); //
+  console.log(' CsHomeLine ： ', props);
   return <SmartEchart {...props} option={option(props)}></SmartEchart>;
 };
 

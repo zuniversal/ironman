@@ -92,7 +92,7 @@ export const formatSelectList = (
     value: `${v[idKey]}`,
     // title: v[labelKey] + '2222222222',
   }));
-  console.log(' formatSelectList res ： ', res); //
+  console.log(' formatSelectList res ： ', res);
   return res;
 };
 
@@ -307,8 +307,8 @@ export const mockFormData = (config, init) => {
   return mockData;
 };
 
-export const w320 = 'w-320'; //
-export const w240 = 'w-240'; //
+export const w320 = 'w-320';
+export const w240 = 'w-240';
 
 export const formatConfig = (
   config,
@@ -361,7 +361,7 @@ export const formatConfig = (
         } ${isPlainText ? 'plainText' : ''}`,
       },
     };
-    // console.log(' items ： ', items); //
+    // console.log(' items ： ', items);
     if (!React.isValidElement(v)) {
       items.formType = v.formType || 'Input';
     }
@@ -419,18 +419,18 @@ export const createArr = (length = 6) => {
     (_, index) => {},
     // console.log(_, index)
   );
-  // console.log('  res ：', res); //
+  // console.log('  res ：', res);
   return res;
 };
 
 export const createObj = (length = 6) => {
   const res = Array.from({ length }, () => ({}));
-  console.log('  res ：', res); //
+  console.log('  res ：', res);
   return res;
 };
 
 export const mockTbData = (params = {}) => {
-  console.log(' paramsparams ： ', params); //
+  console.log(' paramsparams ： ', params);
   const mockDataSource = new Array(20).fill(0);
   const { columns = mockDataSource } = params;
   // Array.from({ length: end }, (_, index) => index); // undefined 0
@@ -506,7 +506,7 @@ export const getLengthLimit = text => {
     // return 15;
     return 20;
   }
-  console.log(' 默认长度 ： ', isNaN(text), text, textLength); //
+  console.log(' 默认长度 ： ', isNaN(text), text, textLength);
   return textLength;
 };
 
@@ -533,7 +533,7 @@ export const linkUrlFn = (params = [], path = '') => (text, record, index) => {
     .map(key => `${key}=${record[key] != undefined ? record[key] : ''}`)
     .join('&');
   linkUrl += paramsStr;
-  // console.log(' linkUrl ： ', linkUrl, paramsStr); //
+  // console.log(' linkUrl ： ', linkUrl, paramsStr);
   return linkUrl;
 };
 
@@ -618,7 +618,7 @@ export const removeItems = k => sessionStorage.removeItem(k);
 
 let t;
 export const debounce = (cb, ...v) => {
-  console.log(' debounce cb, v ： ', cb, v); //
+  console.log(' debounce cb, v ： ', cb, v);
   if (t) clearTimeout(t);
   t = setTimeout(() => cb(...v), 300);
 };
@@ -660,7 +660,7 @@ export const createProperty = (arr, f) => {
 export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
   const token =
     localStorage.getItem(k) != undefined ? localStorage.getItem(k) : 'no_token';
-  // console.log(' prefix, k ： ', prefix, k, token); //
+  // console.log(' prefix, k ： ', prefix, k, token);
   return prefix + token;
 };
 
@@ -694,6 +694,18 @@ export const createRow = l => {
 export const filterArr = keys =>
   keys.filter((v, i, arr) => arr.indexOf(v) === i);
 
+export const filterObjArr = (arr, key) => {
+  let newArr = [];
+  let obj = {};
+  for (let i = 0; i < arr.length; i++) {
+    if (!obj[arr[i][key]]) {
+      newArr.push(arr[i]);
+      obj[arr[i][key]] = true;
+    }
+  }
+  return newArr
+}
+
 export const filterArrOForm = (arr, k, e = 'data') =>
   arr
     .filter((v, i, arr) => arr.indexOf(v) === i)
@@ -722,7 +734,7 @@ export const findDOMNode = (d, c) => d.findDOMNode(c);
 // redux
 
 const extension = window.devToolsExtension;
-// console.log(' extension ： ', extension, extension ? '111' : 222); //
+// console.log(' extension ： ', extension, extension ? '111' : 222);
 export const tools = extension ? extension() : undefined;
 
 export const showTotal = total => `總共 ${total} 條`;

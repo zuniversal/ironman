@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import AssetsTable from '@/components/Table/AssetsTable'; //
-import AssetsDetailTable from '@/components/Table/AssetsDetailTable'; //
-import AssetsForm from '@/components/Form/AssetsForm'; //
-import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import AssetsTable from '@/components/Table/AssetsTable';
+import AssetsDetailTable from '@/components/Table/AssetsDetailTable';
+import AssetsForm from '@/components/Form/AssetsForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
-import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
-import AssetsSearchForm from '@/components/Form/AssetsSearchForm'; //
-import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
+import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm';
+import AssetsSearchForm from '@/components/Form/AssetsSearchForm';
+import ResultModal from '@/components/Modal/ResultModal';
+import SmartFormModal from '@/common/SmartFormModal';
+import DropDownBtn from '@/common/DropDownBtn';
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadCom from '@/components/Widgets/UploadCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
+import UploadCom from '@/components/Widgets/UploadCom';
+import SuccResult from '@/components/Widgets/SuccResult';
 
-import { actions, mapStateToProps } from '@/models/assets'; //
+import { actions, mapStateToProps } from '@/models/assets';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips, downLoad } from '@/utils';
@@ -252,16 +252,16 @@ class Assets extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (['uploadFile'].includes(action)) {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (typeof res.file !== 'string') {
         if (res.file && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
@@ -284,11 +284,11 @@ class Assets extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderModalContent = e => {
-    const { action, itemDetail } = this.props; //
+    const { action, itemDetail } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -325,7 +325,7 @@ class Assets extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <AssetsForm {...formComProps}></AssetsForm>;
   };
   get size() {
@@ -351,7 +351,7 @@ class Assets extends PureComponent {
 
   renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap, showResultModal } = this.state; //
+    const { show, title, action, titleMap, showResultModal } = this.state;
 
     const modalProps = {
       title: title,

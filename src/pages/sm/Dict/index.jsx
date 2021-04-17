@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DictForm from '@/components/Form/DictForm'; //
-import DictTable from '@/components/Table/DictTable'; //
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import DictForm from '@/components/Form/DictForm';
+import DictTable from '@/components/Table/DictTable';
 
-import { actions, mapStateToProps } from '@/models/dict'; //
+import { actions, mapStateToProps } from '@/models/dict';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -89,24 +89,24 @@ class Dict extends PureComponent {
     this.props.removeItemAsync({ d_id: `${params.record.id}` });
   };
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -117,7 +117,7 @@ class Dict extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <DictForm {...formComProps}></DictForm>;
   };
   renderSmartFormModal = params => {

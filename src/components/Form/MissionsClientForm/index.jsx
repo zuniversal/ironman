@@ -1,14 +1,14 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import { missionsTypeConfig, missionsStatusConfig } from '@/configs';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 import SmartImg from '@/common/SmartImg';
 import UploadCom from '@/components/Widgets/UploadCom';
 
 const MissionsManageForm = props => {
-  console.log(' MissionsManageForm ： ', props); //
-  const { formBtn, action, ...rest } = props; //
+  console.log(' MissionsManageForm ： ', props);
+  const { formBtn, action, ...rest } = props;
   // const { file = [] } = props.init;
   const file = props.init.file ?? [];
 

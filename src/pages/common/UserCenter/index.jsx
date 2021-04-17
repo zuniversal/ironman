@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import UserCenterForm from '@/components/Form/UserCenterForm'; //
+import UserCenterForm from '@/components/Form/UserCenterForm';
 
-import { actions, mapStateToProps } from '@/models/userCenter'; //
+import { actions, mapStateToProps } from '@/models/userCenter';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -34,18 +34,18 @@ class UserCenter extends PureComponent {
 
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
-    const { action } = this.props; //
-    const { form } = props; //
+    const { action } = this.props;
+    const { form } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'setting') {
         // this.props.editItemAsync({
         //   ...res,
         // });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -54,7 +54,7 @@ class UserCenter extends PureComponent {
       ' UserCenter 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
     // this.props.getItemAsync()
   }
 

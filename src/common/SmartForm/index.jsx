@@ -29,17 +29,17 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 
-import DynamicForm from './DynamicForm/index.jsx'; //
-import DynamicItem from './DynamicItem/index.jsx'; //
-import DynamicFormTable from './DynamicFormTable/index.jsx'; //
-import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
+import DynamicForm from './DynamicForm/index.jsx';
+import DynamicItem from './DynamicItem/index.jsx';
+import DynamicFormTable from './DynamicFormTable/index.jsx';
+import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants';
 import {
   mockFormData,
   renderSelectOp,
   renderRadioOp,
   formatConfig,
   renderCheckboxOp,
-} from '@/utils'; //
+} from '@/utils';
 import debounce from 'lodash/debounce';
 
 // const { bounceIn, slideInDown } = ANIMATE;
@@ -162,15 +162,15 @@ const SmartForm = (props, state) => {
     noRuleAll,
     size,
     noLabelLayout,
-  } = props; //
+  } = props;
   console.log(
     ' %c SmartForm 组件 this.state, this.props ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
   const configs = isFormat
     ? formatConfig(config, { isSearchForm, isDisabledAll, action })
-    : config; //
+    : config;
 
   const [initData, setInitData] = useState(() => {
     const dynamicFields = configs.filter(
@@ -217,11 +217,11 @@ const SmartForm = (props, state) => {
 
   // const [form] = Form.useForm(initialValues, );// 不行
   const [form] = Form.useForm();
-  const formControl = propsForm ? propsForm : form; //
-  // const formControl = form; //
+  const formControl = propsForm ? propsForm : form;
+  // const formControl = form;
 
   // useEffect(() => {
-  //   console.log(' useEffect 更新 ： ', props, init, formControl); //
+  //   console.log(' useEffect 更新 ： ', props, init, formControl);
   //   // updateInit(init)
   //   if (props.setInit) {
   //     formControl.setFieldsValue(init);
@@ -299,7 +299,7 @@ const SmartForm = (props, state) => {
       props,
       value,
       formData,
-    ); //
+    );
     const { layout, size } = value;
     if (isSearchForm) formData.page = 1;
     onFieldChange && onFieldChange({ value, formData, form: formControl });
@@ -351,7 +351,7 @@ const SmartForm = (props, state) => {
       plainText,
     } = items;
 
-    const flexRows = items.flexRow ? items.flexRow : flexRow; //
+    const flexRows = items.flexRow ? items.flexRow : flexRow;
 
     // if (typeof type === 'function') {
     if (isValidElement(items)) {
@@ -359,7 +359,7 @@ const SmartForm = (props, state) => {
     }
 
     if ((!formType || formType === 'Input') && isSearchForm) {
-      items.comProps.onPressEnter = props.getList; // ;
+      items.comProps.onPressEnter = props.getList; ;
     }
 
     const { label } = itemProps;
@@ -383,7 +383,7 @@ const SmartForm = (props, state) => {
     //   console.log(
     //     ' formItemCommonPropsformItemCommonPropsformItemCommonProps ： ',
     //     formType,
-    //   ); //
+    //   );
     //   // formItemCommonProps.valuePropName = `checked`;
     // }
 
@@ -410,13 +410,13 @@ const SmartForm = (props, state) => {
     // console.log('  formLabel ：', formLabel,  )//
 
     const placeholder =
-      noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
+      noPh || action === 'detail' || isDisabledAll ? '' : formLabel;
     // conso
     if (searchSuffix) {
       comProps.suffix = <SearchOutlined className="searchIcon" />;
     }
     if (noLabel) {
-      console.log(' noLabel ： '); //
+      console.log(' noLabel ： ');
       // comProps.wrapperCol = {
       //   sm: { span: 10 },
       // };
@@ -446,7 +446,7 @@ const SmartForm = (props, state) => {
     //   comProps,
     //   initialValues,
     //   formItemLayout,
-    // ); //
+    // );
 
     // const renderRadioOptions = renderRadioOp(radioData, opType, )
     // const renderSelectOptions = renderSelectOp(selectData, opType, )
@@ -474,7 +474,7 @@ const SmartForm = (props, state) => {
       // selectProps.showArrow = false;
       // selectProps.labelInValue = true;
       selectProps.optionFilterProp = selectProps.optionFilterProp || 'children';
-      // console.log(' selectSearch ： ', selectProps, item.selectSearch); //
+      // console.log(' selectSearch ： ', selectProps, item.selectSearch);
       if (item.selectSearch) {
         // Select 添加 showSearch 属性可以实现搜索功能，但是这个搜索是搜的Select的value值的,但是value值在页面上是看不到的
         selectProps.onSearch = debounce(item.selectSearch, 1500);
@@ -500,7 +500,7 @@ const SmartForm = (props, state) => {
           allowClear
           maxLength={32}
           onPressEnter={e => {
-            console.log(' onPressEnter ： ', e); //
+            console.log(' onPressEnter ： ', e);
           }}
           {...realComProps}
         />
@@ -650,7 +650,7 @@ const SmartForm = (props, state) => {
     //   noRule,
     //   noRuleAll,
     //   configs,
-    // ); //
+    // );
     const normalItem = (
       <Form.Item
         // name={key}
@@ -812,6 +812,6 @@ export default SmartForm;
 //   ...props,
 // })
 export const SearchForm = props => {
-  console.log(' SearchFormSearchForm ：', props); //
+  console.log(' SearchFormSearchForm ：', props);
   return <SmartForm noRule isSearchForm {...props}></SmartForm>;
 };

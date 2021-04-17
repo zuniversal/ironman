@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.less';
 import PropTypes from 'prop-types';
-import { CloseOutlined } from '@ant-design/icons'; //
+import { CloseOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, notification, Divider } from 'antd';
 import { history, connect } from 'umi';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import useWebsocket from '@/hooks/useWebsocket';
 import { notifyWs } from '@/services/common';
 import { openNotification } from '@/utils';
@@ -37,7 +37,7 @@ const menuConfig = [
 ];
 
 const DropdownNotice = props => {
-  // console.log(' DropdownNotice ： ', props); //
+  // console.log(' DropdownNotice ： ', props);
 
   const {
     handleClick,
@@ -49,7 +49,7 @@ const DropdownNotice = props => {
     avatar,
     userInfo,
     userMsg,
-  } = props; //
+  } = props;
 
   const handleMenuClick = (item, rest) => {
     console.log(' handleMenuClick   item, ,   ： ', item, rest, props);
@@ -73,7 +73,7 @@ const DropdownNotice = props => {
   //   init: [],
   //   // url: 'ws://119.3.123.144:8008/websocket',
   // });
-  // console.log(' useWebsocket wsData ： ', url, wsData); //
+  // console.log(' useWebsocket wsData ： ', url, wsData);
 
   const menuCom = menu ? (
     menu

@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm'; //
+import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm';
 import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';
 
 import {
   actions,
   // mapStateToProps
-} from '@/models/shiftsArrange'; //
+} from '@/models/shiftsArrange';
 import SmartHOC from '@/common/SmartHOC';
 import { tips } from '@/utils';
 import { connect } from 'umi';
@@ -44,8 +44,8 @@ class ShiftsArrange extends PureComponent {
 
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
-    const { history, searchInfo } = this.props; //
-    console.log(' searchInfo ： ', searchInfo); //
+    const { history, searchInfo } = this.props;
+    console.log(' searchInfo ： ', searchInfo);
     if (searchInfo.team && searchInfo.schedule_date) {
       const path = `${page}?team=${
         searchInfo.team
@@ -63,17 +63,17 @@ class ShiftsArrange extends PureComponent {
     const { form } = params;
     try {
       const res = await form.validateFields();
-      console.log('  search res await 结果  ：', res); //
+      console.log('  search res await 结果  ：', res);
       if (!res.schedule_date) {
         tips('搜索月份不能为空！', 2);
         return;
       }
       const searchParams = this.formatParams(res);
-      console.log(' searchParams ： ', searchParams); //
+      console.log(' searchParams ： ', searchParams);
       // this.props.dispatch(actions.getListAsync(searchParams));
       this.props.getListAsync(searchParams);
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -166,7 +166,7 @@ class ShiftsArrange extends PureComponent {
       this.state,
       this.props,
       this.props.loading,
-    ); //
+    );
     return (
       <div className="ShiftsArrange">
         {this.renderSearchForm()}

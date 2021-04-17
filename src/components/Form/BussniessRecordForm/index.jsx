@@ -1,14 +1,14 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 import SmartImg from '@/common/SmartImg';
 
 const BussniessRecordForm = props => {
-  console.log(' BussniessRecordForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' BussniessRecordForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const { file = [] } = props.init;
 

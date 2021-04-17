@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import OrganizeForm from '@/components/Form/OrganizeForm'; //
-import OrganizeTable from '@/components/Table/OrganizeTable'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import OrganizeForm from '@/components/Form/OrganizeForm';
+import OrganizeTable from '@/components/Table/OrganizeTable';
 
-import { actions, mapStateToProps } from '@/models/organize'; //
+import { actions, mapStateToProps } from '@/models/organize';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -78,12 +78,12 @@ class Organize extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -97,12 +97,12 @@ class Organize extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getOrganizeAsync: params =>
@@ -112,7 +112,7 @@ class Organize extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <OrganizeForm {...formComProps}></OrganizeForm>;
   };
   renderSmartFormModal = params => {

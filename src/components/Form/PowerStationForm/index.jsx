@@ -20,15 +20,15 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import {
   DeviceInfoTable,
   WatchInfoTable,
   PowerStationDetailTable,
-} from '@/components/Table/PowerStationInfoTable'; //
-import UploadCom from '@/components/Widgets/UploadCom'; //
-import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs'; //
-import { DRAW_PANEL } from '@/constants'; //
+} from '@/components/Table/PowerStationInfoTable';
+import UploadCom from '@/components/Widgets/UploadCom';
+import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs';
+import { DRAW_PANEL } from '@/constants';
 import {
   formatConfig,
   reportRadioOp,
@@ -49,8 +49,8 @@ const selectData = [
 ];
 
 const PowerStationForm = props => {
-  console.log(' PowerStationForm 挂载 ： ', props, config); //
-  const { action, extra } = props; //
+  console.log(' PowerStationForm 挂载 ： ', props, config);
+  const { action, extra } = props;
   // const [inspectMode, setInspectMode] = useState(0);
   const { inspection_type = 0 } = props.init;
 
@@ -73,7 +73,7 @@ const PowerStationForm = props => {
     inspection_type,
     props,
     inspectMode,
-  ); //
+  );
   const onInspectModeChange = e => {
     console.log(
       ' PowerStationForm onInspectModeChange   e, 改变设置  ： ',
@@ -82,7 +82,7 @@ const PowerStationForm = props => {
       inspectMode,
     );
     const inspectMode = props.propsForm.getFieldValue('inspectMode');
-    // console.log(' PowerStationForm inspectMode 设置 ： ', inspectMode, ); //
+    // console.log(' PowerStationForm inspectMode 设置 ： ', inspectMode, );
     setInspectMode(e.target.value);
     props.propsForm.setFieldsValue({
       service_team: undefined,
@@ -251,7 +251,7 @@ const PowerStationForm = props => {
     inspectMode,
     props.propsForm.getFieldValue('inspection_type'),
     inspectCol,
-  ); //
+  );
 
   const actionConfig = [
     {
@@ -347,7 +347,7 @@ const PowerStationForm = props => {
           {/* <a
             className={`actionBtn`}
             onClick={() => {
-              console.log(' xxxx ： '); //
+              console.log(' xxxx ： ');
               history.push(`${DRAW_PANEL}?powerstation_id=${props.init.id}`);
             }}
           >
@@ -484,7 +484,7 @@ const PowerStationForm = props => {
     },
   ];
 
-  const config = action !== 'detail' ? actionConfig : detailConfig; //
+  const config = action !== 'detail' ? actionConfig : detailConfig;
 
   const outLineConfig = [
     {
@@ -525,7 +525,7 @@ const PowerStationForm = props => {
     outLineTableData,
     arrMapObj(props.powerInfoList),
     props.powerInfoList,
-  ); //
+  );
 
   return (
     <div className={`powerStationForm`}>

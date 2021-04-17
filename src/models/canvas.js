@@ -13,7 +13,7 @@ const CanvasDataModel = {
 
   reducers: {
     update(state, action) {
-      console.log(' emit update ： ', state, action); //
+      console.log(' emit update ： ', state, action);
       return {
         ...state,
         data: action.payload.data,

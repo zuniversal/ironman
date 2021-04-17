@@ -9,10 +9,10 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 const HouseNoFormTable = props => {
-  const { tdClick } = props; //
+  const { tdClick } = props;
 
   const columns = [
     {

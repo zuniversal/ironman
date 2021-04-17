@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import { halfFormLayouts, powerPointItemConfig } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import { halfFormLayouts, powerPointItemConfig } from '@/configs';
 import { Node } from '@topology/core';
 import { canvas } from '../index';
 import {
@@ -57,7 +57,7 @@ const NodeAttrForm = props => {
   ];
 
   const onHandleStyleSelectChange = e => {
-    console.log(' onHandleStyleSelectChange ： ', node, canvas); //
+    console.log(' onHandleStyleSelectChange ： ', node, canvas);
     // node.initAnimate()
     node.animateFrames = [];
     node.fillStyle = '';
@@ -167,7 +167,7 @@ const NodeAttrForm = props => {
   };
 
   const onHandleSwitchChange = e => {
-    console.log(' onHandleSwitchChange ： ', node, canvas); //
+    console.log(' onHandleSwitchChange ： ', node, canvas);
     if (e) {
       node.animateStart = Date.now();
       canvas.animate();
@@ -176,7 +176,7 @@ const NodeAttrForm = props => {
     }
   };
   const onHandlePlayChange = e => {
-    console.log(' onHandlePlayChange ： ', e, node, canvas); //
+    console.log(' onHandlePlayChange ： ', e, node, canvas);
     if (e) {
       node.animateStart = Date.now();
       node.animatePlay = true;
@@ -629,7 +629,7 @@ const NodeAttrForm = props => {
   ];
 
   const onFormLayoutChange = params => {
-    console.log(' onFormLayoutChange params,  ： ', props, params); //
+    console.log(' onFormLayoutChange params,  ： ', props, params);
     const { onFormValueChange } = props;
     if (props.data.node.name === 'echarts') {
       props.data.node.data.echarts.option.seriesFunction = params.data;

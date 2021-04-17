@@ -13,17 +13,17 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
-import SmartModal from '@/common/SmartModal'; //
-import ActionCol from './ActionCol'; //
-import QRCodeContent from '@/components/Widgets/QRCodeContent'; //
+import SmartModal from '@/common/SmartModal';
+import ActionCol from './ActionCol';
+import QRCodeContent from '@/components/Widgets/QRCodeContent';
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { SIZE, ANIMATE, INPUT_TXT, PRIMARY } from '@/constants'; //
-import { tips, mockTbData, foramtText, getDataMap } from '@/utils'; //
+import { SIZE, ANIMATE, INPUT_TXT, PRIMARY } from '@/constants';
+import { tips, mockTbData, foramtText, getDataMap } from '@/utils';
 import { isLoading } from '@/utils/createAction';
-import { Link, history, connect } from 'umi'; //
-import noData from '@/static/assets/noData.png'; //
+import { Link, history, connect } from 'umi';
+import noData from '@/static/assets/noData.png';
 import ExportPdf from '@/components/Pdf/ExportPdf';
-import dayjs from 'dayjs'; //
+import dayjs from 'dayjs';
 
 const { slideInUp } = ANIMATE;
 
@@ -57,7 +57,7 @@ class SmartTable extends PureComponent {
       size: 'default',
       onChange: this.onPageChange,
     };
-    console.log(' SmartTableSmartTable ： ', this.state, this.props); //
+    console.log(' SmartTableSmartTable ： ', this.state, this.props);
     this.state = {
       pagination,
 
@@ -86,7 +86,7 @@ class SmartTable extends PureComponent {
 
   // 自动过滤相关方法
   onInputChange = (searchKey, e) => {
-    console.log(' searchKey, e ： ', searchKey, e); //
+    console.log(' searchKey, e ： ', searchKey, e);
     this.setState({ searchText: e.target.value, searchKey: searchKey });
   };
   blur = k => this.setState({ [`${k}Visible`]: false });
@@ -101,7 +101,7 @@ class SmartTable extends PureComponent {
         <div className="custom-filter-dropdown">
           <Input
             ref={ele => {
-              console.log(' searchInput this ： ', this); //
+              console.log(' searchInput this ： ', this);
               this.searchInput = ele;
             }}
             placeholder={`${INPUT_TXT}`}
@@ -135,7 +135,7 @@ class SmartTable extends PureComponent {
             // searchText: '', searchKey: '',
           },
           () => {
-            console.log(' focusfocus ： ', this); //
+            console.log(' focusfocus ： ', this);
             // this.searchInput.focus()
             // this.setState({
             //     searchText: '',
@@ -151,8 +151,8 @@ class SmartTable extends PureComponent {
   // 得到表格的真实数据源 支持单元格相关字段的自动过滤
   // 可关闭相关 mock 模拟数据
   dataFilter = () => {
-    const { searchKey, searchText } = this.state; //
-    const { dataSource, noMock, rowLength, newTbData, rowKey } = this.props; //
+    const { searchKey, searchText } = this.state;
+    const { dataSource, noMock, rowLength, newTbData, rowKey } = this.props;
 
     // const mpckAddData = newTbData.filter((v) => typeof v !== 'object')
     const mpckAddData = {};
@@ -219,7 +219,7 @@ class SmartTable extends PureComponent {
     } else {
       if (rowLength) {
         const sliceData = data.slice(0, rowLength);
-        console.log('  sliceData ：', sliceData); //
+        console.log('  sliceData ：', sliceData);
 
         return sliceData;
       }
@@ -233,7 +233,7 @@ class SmartTable extends PureComponent {
       //   this.state.mockTbData,
       //   this.state,
       //   this.props,
-      // ); //
+      // );
       if (Object.keys(mpckAddData).length && isMockData) {
         return [mpckAddData, ...data];
       } else {
@@ -272,7 +272,7 @@ class SmartTable extends PureComponent {
     // const txt = foramtText(`${text}`)
     let mapText = text;
     if (dataMap) {
-      // console.log('  mapText, dataMap ：', mapText, dataMap ); //
+      // console.log('  mapText, dataMap ：', mapText, dataMap );
       mapText = getDataMap(mapText, dataMap);
     }
     if (dayFn) {
@@ -333,7 +333,7 @@ class SmartTable extends PureComponent {
       //   record,
       //   text !== undefined,
       //   content,
-      // ); //
+      // );
       content = render(text, record, index, config);
       // return content;
     } else if (detailFn) {
@@ -375,7 +375,7 @@ class SmartTable extends PureComponent {
 
   onRemove = removeParams => {
     console.log('    onRemove ： ', removeParams, this.state, this.props);
-    const { remove } = this.props; //
+    const { remove } = this.props;
     this.setState({
       removeParams,
       isShowResultModal: true,
@@ -389,7 +389,7 @@ class SmartTable extends PureComponent {
       });
     }
 
-    const { pagination } = this.state; //
+    const { pagination } = this.state;
     const paginationObj = {
       ...pagination,
       current: page,
@@ -415,8 +415,8 @@ class SmartTable extends PureComponent {
       selectedRows,
       this.state,
       this.props,
-    ); //
-    const { onSelectChange } = this.props; //
+    );
+    const { onSelectChange } = this.props;
     if (onSelectChange) {
       onSelectChange(selectedRowKeys, selectedRows);
     }
@@ -434,7 +434,7 @@ class SmartTable extends PureComponent {
   onResultModalOk = e => {
     console.log(' onResultModalOk   e,  ,   ： ', e);
     tips('删除成功！');
-    const { removeParams } = this.state; //
+    const { removeParams } = this.state;
     this.props.remove(removeParams);
     this.setState({
       isShowResultModal: false,
@@ -478,14 +478,14 @@ class SmartTable extends PureComponent {
         return <ActionCol {...props}></ActionCol>;
         // return <ActionCol text={text} record={record} index={index} edit={edit} remove={remove}  ></ActionCol>
       },
-    }; //
+    };
 
     return actionCol;
   };
 
   renderRemoveModal = params => {
     // console.log(' renderRemoveModal ： ', params);
-    const { isShowResultModal } = this.state; //
+    const { isShowResultModal } = this.state;
 
     const modalProps = {
       title: '删除电站',
@@ -553,9 +553,9 @@ class SmartTable extends PureComponent {
   };
   renderQRCodeModal = params => {
     // console.log(' renderQRCodeModal ： ', params);
-    const { title, show } = this.state; //
+    const { title, show } = this.state;
     if (this.state.isShowExportPdf) {
-      console.log(' 2222222222 ： ', this.state.QRCodeContent); //
+      console.log(' 2222222222 ： ', this.state.QRCodeContent);
       return (
         <ExportPdf onClose={this.onCancel}>{this.state.modalContent}</ExportPdf>
       );
@@ -575,7 +575,7 @@ class SmartTable extends PureComponent {
     );
   };
   get isShowLoading() {
-    const { loadingData, extraLoading, pathMap } = this.props; //
+    const { loadingData, extraLoading, pathMap } = this.props;
     const pathArr = history.location.pathname.split('/');
     const path = pathMap || pathArr[pathArr.length - 1];
     // console.log(' get 取属 isShowLoading ： ', this.state, this.props, history, history.location, pathArr, path, pathMap, isLoading, );
@@ -659,10 +659,10 @@ class SmartTable extends PureComponent {
       history,
       this.isShowLoading,
       this.props.animation,
-    ); //
+    );
 
     const realData = this.dataFilter();
-    // console.log('  realData ：', realData); //
+    // console.log('  realData ：', realData);
 
     return (
       <>
@@ -763,4 +763,4 @@ SmartTable.propTypes = {
   noRequest: PropTypes.bool,
 };
 
-export default SmartTable; //
+export default SmartTable;

@@ -19,14 +19,14 @@ const QRCodeCom = props => {
     width = 260,
     height = 260,
     size = 260,
-  } = props; //
-  console.log(' QRCodeCom ： ', props); //
+  } = props;
+  console.log(' QRCodeCom ： ', props);
   let str = value;
   if (typeof value === 'object') {
     str = JSON.stringify(value);
     // str = JSON.stringify(`http://zuniversal.gitee.io/ep/#/om/contract`);
   }
-  console.log(' str ： ', str); //
+  console.log(' str ： ', str);
   return (
     <div className={'qrCode'}>
       <QRCode

@@ -27,7 +27,7 @@ import { DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { BASE_URL } from '@/constants';
 
 const DropDownBtn = props => {
-  console.log(' DropDownBtn ： ', props); //
+  console.log(' DropDownBtn ： ', props);
 
   const {
     handleClick,
@@ -37,7 +37,7 @@ const DropDownBtn = props => {
     menuConfig,
     menuClick,
     noEllipsis,
-  } = props; //
+  } = props;
 
   const handleMenuClick = item => {
     console.log(' handleMenuClick   item, ,   ： ', item, props);

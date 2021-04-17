@@ -243,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeakFormPdf; //
+export default WeakFormPdf;

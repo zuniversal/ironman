@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import SystemNotifyForm from '@/components/Form/SystemNotifyForm'; //
-import SystemNotifySearchForm from '@/components/Form/SystemNotifySearchForm'; //
-import SystemNotifyTable from '@/components/Table/SystemNotifyTable'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import SystemNotifyForm from '@/components/Form/SystemNotifyForm';
+import SystemNotifySearchForm from '@/components/Form/SystemNotifySearchForm';
+import SystemNotifyTable from '@/components/Table/SystemNotifyTable';
 
-import { actions, mapStateToProps } from '@/models/systemNotify'; //
+import { actions, mapStateToProps } from '@/models/systemNotify';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -70,24 +70,24 @@ class SystemNotify extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -106,7 +106,7 @@ class SystemNotify extends PureComponent {
         关联工单ID: '关联工单ID',
       };
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <SystemNotifyForm {...formComProps}></SystemNotifyForm>;
   };
   get size() {

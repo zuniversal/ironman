@@ -39,7 +39,7 @@ const CustomImg = () => {
 
   const onHandleSubmitForm = () => {
     getBase64(url, data => {
-      console.log(' data ： ', data); //
+      console.log(' data ： ', data);
       const _data = [...list];
       _data.push(data);
       setList(_data);
@@ -48,7 +48,7 @@ const CustomImg = () => {
   };
 
   const onDrag = (event, image) => {
-    console.log(' onDrag ： ', event, image); //
+    console.log(' onDrag ： ', event, image);
     event.dataTransfer.setData(
       'Text',
       JSON.stringify({
@@ -94,15 +94,15 @@ const CustomImg = () => {
         className={`fileImg`}
         defaultValue="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2957705046,1654500225&fm=26&gp=0.jpg"
         onChange={e => {
-          console.log(' onChangeonChange e ： ', e); //
+          console.log(' onChangeonChange e ： ', e);
           const reader = new FileReader();
           reader.readAsDataURL(e.file.originFileObj);
           reader.onload = () => {
-            console.log(' onChangeonChange e 22  ： ', e, reader.result); //
+            console.log(' onChangeonChange e 22  ： ', e, reader.result);
             setUrl(reader.result);
             setList([...list, reader.result]);
           };
-          console.log(' onChangeonChange e 2： ', e, reader.result); //
+          console.log(' onChangeonChange e 2： ', e, reader.result);
           // setUrl(reader.result)
           // var imgURL = window.URL.createObjectURL(e.file.originFileObj);
           // console.log(' imgURL ： ', imgURL,  )//

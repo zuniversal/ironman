@@ -20,7 +20,7 @@ export default React.memo(function RealData(props) {
     () => services.getRealData({ imei }),
     commonParams,
   );
-  console.log(' list ： ', list); //
+  console.log(' list ： ', list);
   useEffect(() => {
     let timer = null;
     timer = setInterval(

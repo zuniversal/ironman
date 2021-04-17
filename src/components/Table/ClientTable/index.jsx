@@ -9,13 +9,13 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
-import { HOUSENO } from '@/constants'; //
-import { linkUrlFn } from '@/utils'; //
-import { industryTypeMap, clientLevelMap } from '@/configs'; //
+import SmartTable from '@/common/SmartTable';
+import { HOUSENO } from '@/constants';
+import { linkUrlFn } from '@/utils';
+import { industryTypeMap, clientLevelMap } from '@/configs';
 
 const ClientTable = props => {
-  const { tdClick, showDetail } = props; //
+  const { tdClick, showDetail } = props;
 
   const columns = [
     {

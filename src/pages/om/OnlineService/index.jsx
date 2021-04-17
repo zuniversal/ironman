@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Radio } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import ChatWindow from '@/components/Widgets/ChatWindow'; //
-import { actions, mapStateToProps } from '@/models/onlineService'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import ChatWindow from '@/components/Widgets/ChatWindow';
+import { actions, mapStateToProps } from '@/models/onlineService';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -52,7 +52,7 @@ class OnlineService extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div className="OnlineService">
         <ChatWindow></ChatWindow>

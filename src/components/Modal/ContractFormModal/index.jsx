@@ -22,11 +22,11 @@ import {
 } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import ContractStepForm from '@/components/Form/ContractStepForm'; //
-import { regoins } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import SmartModal from '@/common/SmartModal';
+import SmartFormModal from '@/common/SmartFormModal';
+import ContractStepForm from '@/components/Form/ContractStepForm';
+import { regoins } from '@/configs';
 
 export const config = [
   {
@@ -235,7 +235,7 @@ class ContractFormModal extends Component {
       this.props,
     );
 
-    const { show, onOk, onCancel } = this.props; //
+    const { show, onOk, onCancel } = this.props;
 
     return (
       <SmartModal

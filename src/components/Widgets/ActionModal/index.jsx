@@ -1,10 +1,10 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import SmartModal from '@/common/SmartModal'; //
+import SmartModal from '@/common/SmartModal';
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { SIZE, ANIMATE, INPUT_TXT } from '@/constants'; //
-import { tips, mockTbData, foramtText } from '@/utils'; //
+import { SIZE, ANIMATE, INPUT_TXT } from '@/constants';
+import { tips, mockTbData, foramtText } from '@/utils';
 
 class SmartTable extends PureComponent {
   constructor(props) {
@@ -34,8 +34,8 @@ class SmartTable extends PureComponent {
 
   renderRemoveModal = params => {
     console.log(' renderRemoveModal ： ', params);
-    const { isShowResultModal } = this.state; //
-    const { title } = this.props; //
+    const { isShowResultModal } = this.state;
+    const { title } = this.props;
 
     const modalProps = {
       title,
@@ -73,4 +73,4 @@ SmartTable.propTypes = {
   title: PropTypes.string,
 };
 
-export default SmartTable; //
+export default SmartTable;

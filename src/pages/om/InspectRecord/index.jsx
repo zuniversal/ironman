@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import InspectRecordForm from '@/components/Form/InspectRecordForm'; //
-import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
-import InspectRecordTable from '@/components/Table/InspectRecordTable'; //
-import ExportPdf from '@/components/Pdf/ExportPdf'; //
-import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import InspectRecordForm from '@/components/Form/InspectRecordForm';
+import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
+import InspectRecordTable from '@/components/Table/InspectRecordTable';
+import ExportPdf from '@/components/Pdf/ExportPdf';
+import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader';
 
-import { actions, mapStateToProps } from '@/models/inspectRecord'; //
+import { actions, mapStateToProps } from '@/models/inspectRecord';
 import ReactDOM from 'react-dom';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -116,9 +116,9 @@ class InspectRecord extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (
       action === 'detail' ||
       action === 'inspectReport' ||
@@ -129,7 +129,7 @@ class InspectRecord extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -146,7 +146,7 @@ class InspectRecord extends PureComponent {
         // });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -157,7 +157,7 @@ class InspectRecord extends PureComponent {
           type="primary"
           // onClick={this.exportDataAsync}
           onClick={() => {
-            console.log(' xxxxx ： ', this.props.itemDetail, this.props); //
+            console.log(' xxxxx ： ', this.props.itemDetail, this.props);
             this.props.toggleExportPDF();
             return;
             this.showExportPdf({
@@ -174,7 +174,7 @@ class InspectRecord extends PureComponent {
     return btnCom;
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
 
     const formComProps = {
       action,
@@ -199,7 +199,7 @@ class InspectRecord extends PureComponent {
         <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     // {this.renderExportBtn()}
     return (
       <InspectRecordForm
@@ -232,7 +232,7 @@ class InspectRecord extends PureComponent {
       ? {
           footer: null,
         }
-      : {}; //
+      : {};
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -248,7 +248,7 @@ class InspectRecord extends PureComponent {
   };
 
   get renderInspectRecordForm() {
-    console.log(' renderInspectRecordForm ： ', this.props); //
+    console.log(' renderInspectRecordForm ： ', this.props);
     return (
       <div className={`pdfDetail`}>
         {/* {!this.state.isShowExportPdf && (
@@ -301,7 +301,7 @@ class InspectRecord extends PureComponent {
     );
   };
   renderExportPdf = params => {
-    console.log(' renderExportPdf ： '); //
+    console.log(' renderExportPdf ： ');
     const formComProps = {
       init: {
         ...this.props.itemDetail,
@@ -356,7 +356,7 @@ class InspectRecord extends PureComponent {
     // }, 2000)
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     setTimeout(() => {
       console.log('  延时器 ： ');
       // this.props.getListAsync({
@@ -379,10 +379,10 @@ class InspectRecord extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
 
     // if (this.props.isShowExportPdf) {
-    //   console.log(' 111111111 ： '); //
+    //   console.log(' 111111111 ： ');
     //   return (
     //     <ExportPdf onClose={this.props.closePdf} noPrint>
     //       {this.renderInspectRecordForm}

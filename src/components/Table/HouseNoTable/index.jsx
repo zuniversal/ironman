@@ -9,11 +9,11 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
-import { electricTypeMap } from '@/configs'; //
+import SmartTable from '@/common/SmartTable';
+import { electricTypeMap } from '@/configs';
 
 const HouseNoTable = props => {
-  const { tdClick } = props; //
+  const { tdClick } = props;
 
   const columns = [
     {

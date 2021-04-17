@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Tag } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import CsOrganizeForm from '@/components/Form/CsOrganizeForm'; //
-import CsOrganizeTable from '@/components/Table/CsOrganizeTable'; //
-import { actions, mapStateToProps } from '@/models/csOrganize'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import CsOrganizeForm from '@/components/Form/CsOrganizeForm';
+import CsOrganizeTable from '@/components/Table/CsOrganizeTable';
+import { actions, mapStateToProps } from '@/models/csOrganize';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { PRIMARY } from '@/constants';
@@ -89,12 +89,12 @@ class CsOrganize extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -108,12 +108,12 @@ class CsOrganize extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       userHouseNoList: this.props.userHouseNoList,

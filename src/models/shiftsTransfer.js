@@ -1,10 +1,10 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/shiftsTransfer';
 import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/user';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonthDay } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'shiftsTransfer';
 const { createActions } = init(namespace);
@@ -24,7 +24,7 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 export const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
+  console.log(' formatSearch ： ', data);
   return {
     ...data,
     // page_size: 40,
@@ -38,7 +38,7 @@ export const formatSearch = data => {
 };
 
 export const formatDetail = data => {
-  console.log(' formatDetail ： ', data); //
+  console.log(' formatDetail ： ', data);
   const { work_situation = '', work_ticket = '' } = data;
 
   return {
@@ -77,7 +77,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -85,7 +85,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -105,7 +105,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -173,7 +173,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       // const res = yield call(services.getList, params);
       const res = yield call(services.getList, formatSearch(params));
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });

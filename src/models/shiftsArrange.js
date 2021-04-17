@@ -1,7 +1,7 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/shiftsArrange';
 import * as teamServices from '@/services/shiftsManage';
-import moment from 'moment'; //
+import moment from 'moment';
 import { history } from 'umi';
 import { SHIFTSARRANGE } from '@/constants';
 import {
@@ -35,7 +35,7 @@ export const mapStateToProps = state => state[namespace];
 const formartDataList = (data, { id, teamList }) => {
   // const label = teamList.find(v => v.value == id).label;
   const label = 'label';
-  console.log(' label ： ,', data, label, id, teamList); //
+  console.log(' label ： ,', data, label, id, teamList);
   return data.map(v => ({
     ...v,
     title: v.team,
@@ -51,12 +51,12 @@ const formatTeamList = data => {
     label: v.name,
     value: v.id,
   }));
-  console.log(' formatTeamList res ： ', res); //
+  console.log(' formatTeamList res ： ', res);
   return res;
 };
 
 const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
+  console.log(' formatSearch ： ', data);
   return {
     ...data,
     page_size: 40,
@@ -94,7 +94,7 @@ export default {
 
   reducers: {
     getList(state, { payload, type }) {
-      console.log(' formartDataList(payload) ： ', payload, state); //
+      console.log(' formartDataList(payload) ： ', payload, state);
       const dataList = formartDataList(payload.list, {
         // id: payload.payload.team,
         id: state.team,
@@ -153,8 +153,8 @@ export default {
       };
     },
     getTeam(state, { payload, type }) {
-      console.log(' getTeamgetTeam ： ', payload, state); //
-      const { searchInfo } = state; //
+      console.log(' getTeamgetTeam ： ', payload, state);
+      const { searchInfo } = state;
       const teamList = payload.list;
       if (searchInfo.team) {
         teamList.push({ id: searchInfo.team, name: searchInfo.teamName });
@@ -167,8 +167,8 @@ export default {
       };
     },
     onChoiceRadio(state, { payload, type }) {
-      console.log(' onChoiceRadio ： ', state, payload); //
-      const { dayList } = state; //
+      console.log(' onChoiceRadio ： ', state, payload);
+      const { dayList } = state;
       return {
         ...state,
         isQuickArrange: !state.isQuickArrange,
@@ -179,31 +179,31 @@ export default {
       };
     },
     onCheck(state, { payload, type }) {
-      console.log(' onCheck ： ', state, payload); //
-      const { dayList } = state; //
+      console.log(' onCheck ： ', state, payload);
+      const { dayList } = state;
       let datas = [];
       // 点击日期切换选中
       if (payload.startStr) {
-        console.log(' 点击日期切换选中 ： '); //
+        console.log(' 点击日期切换选中 ： ');
         const day = payload.startStr.split('-')[2] * 1;
         const checked = dayList.includes(day);
-        console.log('  day ：', day, checked, dayList); //
+        console.log('  day ：', day, checked, dayList);
         datas = !checked ? [...dayList, day] : dayList.filter(v => v != day);
       } else {
         // 勾选切换选中
-        console.log(' 勾选切换选中 ： '); //
+        console.log(' 勾选切换选中 ： ');
         const { checked, day } = payload.target;
         datas = checked ? [...dayList, day] : dayList.filter(v => v != day);
       }
       // const datas = dayList.includes(day) ? [...dayList, day] : dayList.filter(v => v != day);
-      console.log('  datas ：', datas); //
+      console.log('  datas ：', datas);
       return {
         ...state,
         dayList: datas,
       };
     },
     setSearchInfo(state, { payload, type }) {
-      console.log(' setSearchInfo ： ', state, payload); //
+      console.log(' setSearchInfo ： ', state, payload);
       return {
         ...state,
         searchInfo: {
@@ -216,7 +216,7 @@ export default {
       };
     },
     setSearch(state, { payload, type }) {
-      console.log(' setSearch ： ', payload); //
+      console.log(' setSearch ： ', payload);
       const dataList = formartDataList(payload.list, {
         id: state.team,
         teamList: state.teamList,
@@ -235,7 +235,7 @@ export default {
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsyncgetListAsync ： ', payload); //
+      console.log(' getListAsyncgetListAsync ： ', payload);
       const res = yield call(services.getList, formatSearch(payload));
       yield put(action({ ...res, payload }));
     },
@@ -261,7 +261,7 @@ export default {
         }));
       };
       const params = formatArrangeData();
-      console.log('  params ：', params); //
+      console.log('  params ：', params);
       const res = yield call(services.addItem, { teamschedule_list: params });
       yield put(action(res));
       history.push(SHIFTSARRANGE);
@@ -279,12 +279,12 @@ export default {
       return res;
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload); //
+      console.log(' getTeamAsync ： ', payload);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     // *setSearchAsync({ payload, type }, { call, put }) {
-    //   console.log(' setSearchAsync ： ', payload); //
+    //   console.log(' setSearchAsync ： ', payload);
     //   const res = yield call(services.getList, formatSearch(payload));
     //   yield put(action({ ...res, payload }));
     //   // yield put(({
@@ -293,7 +293,7 @@ export default {
     //   // }));
     // },
     *setSearchAsync({ payload, type }, { call, put }) {
-      console.log(' setSearchAsync ： ', payload); //
+      console.log(' setSearchAsync ： ', payload);
       const res = yield call(services.getList, formatSearch(payload));
       yield put({
         type: 'setSearchInfo',

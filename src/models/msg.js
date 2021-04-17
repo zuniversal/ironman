@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/msg';
 import * as clientServices from '@/services/client';
 import * as organizeServices from '@/services/organize';
@@ -81,7 +81,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -89,7 +89,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -110,7 +110,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const { sender, reciever } = payload.bean;
       return {
         ...state,
@@ -152,7 +152,7 @@ export default {
     },
 
     getOrganize(state, { payload, type }) {
-      console.log(' getOrganize ： ', state, payload); //
+      console.log(' getOrganize ： ', state, payload);
       // const organizeList = recursiveHandle(payload.list);
       const organizeList = recursiveHandle([
         {
@@ -167,7 +167,7 @@ export default {
         null,
         [],
       ).map(({ children, ...v }) => ({ ...v }));
-      console.log(' flatOrganizeList ： ', organizeList, flatOrganizeList); //
+      console.log(' flatOrganizeList ： ', organizeList, flatOrganizeList);
       return {
         ...state,
         organizeList,
@@ -226,7 +226,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -248,17 +248,17 @@ export default {
     },
 
     *getClientAsync({ payload, action, type }, { call, put }) {
-      console.log(' getClientAsync ： ', payload); //
+      console.log(' getClientAsync ： ', payload);
       const res = yield call(clientServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
-      console.log(' getOrganizeAsync ： ', payload); //
+      console.log(' getOrganizeAsync ： ', payload);
       const res = yield call(organizeServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getUserManageAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserManageAsync ： ', payload); //
+      console.log(' getUserManageAsync ： ', payload);
       const res = yield call(userManageServices.getSearchList, payload);
       // yield put(action({ ...res, payload }));
       return res.list;

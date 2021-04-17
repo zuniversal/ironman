@@ -16,10 +16,10 @@ import defaultProps from './defaultProps';
 import { history, connect } from 'umi';
 import './index.less';
 import './style.less';
-import { ANIMATE } from '@/constants'; //
-import Icon from '@/components/Widgets/Icons'; //
-import PageTitle from '@/components/Widgets/PageTitle'; //
-import LogoCom from '@/components/Widgets/LogoCom'; //
+import { ANIMATE } from '@/constants';
+import Icon from '@/components/Widgets/Icons';
+import PageTitle from '@/components/Widgets/PageTitle';
+import LogoCom from '@/components/Widgets/LogoCom';
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
@@ -37,11 +37,11 @@ const Layouts = props => {
   const [title, setTitle] = useState('');
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
-  const { children, location, loading } = props; //
+  const { children, location, loading } = props;
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
-  console.log(' settings, pathname ： ', settings, pathname, props); //
+  console.log(' settings, pathname ： ', settings, pathname, props);
   // return <div >{ props.children }</div>
 
   const goPage = path => {
@@ -50,7 +50,7 @@ const Layouts = props => {
   };
 
   const getShowTitle = props => {
-    const { location } = props; //
+    const { location } = props;
     const { pathname } = location;
     const noTitlePath = ['/om/home'];
     const isInclude = noTitlePath.every(v => v !== pathname);
@@ -67,7 +67,7 @@ const Layouts = props => {
           pathname,
         }}
         onMenuHeaderClick={e => {
-          console.log(' onMenuHeaderClick ： ', e); //
+          console.log(' onMenuHeaderClick ： ', e);
 
           // return
         }}
@@ -89,7 +89,7 @@ const Layouts = props => {
             <a
               className={'navItem'}
               onClick={() => {
-                console.log(' onClickonClick ： ', item, pathname); //
+                console.log(' onClickonClick ： ', item, pathname);
                 // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
                 // const com = React.lazy(() => import(item.component))
                 // console.log(' com ： ', com, comRef.current, )//

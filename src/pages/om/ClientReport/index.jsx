@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ClientReportTable from '@/components/Table/ClientReportTable'; //
-import ClientReportForm from '@/components/Form/ClientReportForm'; //
-import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import ClientReportPdf from '@/components/Pdf/ClientReportPdf'; //
-import CsClientReportDescription from '@/components/Description/CsClientReportDescription'; //
-import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf'; //
+import ClientReportTable from '@/components/Table/ClientReportTable';
+import ClientReportForm from '@/components/Form/ClientReportForm';
+import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import ClientReportPdf from '@/components/Pdf/ClientReportPdf';
+import CsClientReportDescription from '@/components/Description/CsClientReportDescription';
+import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf';
 import ClientForm from '@/components/Form/ClientForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import * as services from '@/services/clientReport';
 
-import { actions, mapStateToProps } from '@/models/clientReport'; //
+import { actions, mapStateToProps } from '@/models/clientReport';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
+import { tips, filterObjArr, } from '@/utils';
 
 const TITLE = '客户';
 
@@ -91,15 +91,19 @@ class ClientReport extends PureComponent {
       this.state,
       this.props,
       this.props.selectedRows,
-    ); //
+    );
     // if (this.props.selectedRowKeys.length > 0) {
+      
+    const datas = (this.props.selectedRows.length > 0
+      ? this.props.selectedRows
+      : this.props.dataList
+    )
+      .filter(v => v.finish == 1)
+    const filterData = filterObjArr(datas, 'number', )
+    console.log(' datas ： ', datas, filterData,  );
+      
     const res = await Promise.allSettled(
-      (this.props.selectedRows.length > 0
-        ? this.props.selectedRows
-        : this.props.dataList
-      )
-        .filter(v => v.finish == 1)
-        .map(v =>
+      filterData.map(v =>
           services.getItem({
             d_id: v.electricity_user_id,
             year_month: this.props.searchInfo.year_month
@@ -108,7 +112,7 @@ class ClientReport extends PureComponent {
           }),
         ),
     );
-    console.log(' res ： ', res); //
+    console.log(' res ： ', res);
     this.props.batchExportPDF({
       action: 'batchClientReportDetailPdf',
       payload: res.filter(v => v.status === 'fulfilled').map(v => v.value.bean),
@@ -163,16 +167,16 @@ class ClientReport extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (['pdf', 'clientReportDetailPdf'].includes(this.props.action)) {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'addElectricBillItemAsync') {
         this.props.addElectricBillItemAsync({
           ...res,
@@ -188,12 +192,12 @@ class ClientReport extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -202,6 +206,7 @@ class ClientReport extends PureComponent {
       clientList: this.props.clientList,
       electricBillList: this.props.electricBillList,
       init: this.props.itemDetail,
+      onOk: this.onOk,
     };
     // if (action !== 'add') {
     //   formComProps.init = this.props.itemDetail;
@@ -242,7 +247,7 @@ class ClientReport extends PureComponent {
                         ' xxxxx ： ',
                         this.props.itemDetail,
                         this.props,
-                      ); //
+                      );
                       this.props.toggleExportPDF();
                     }}
                   >
@@ -255,7 +260,7 @@ class ClientReport extends PureComponent {
         </div>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <ClientReportForm {...formComProps}></ClientReportForm>;
     // return this.renderExportPdf;
   };
@@ -280,7 +285,7 @@ class ClientReport extends PureComponent {
   };
 
   renderExportPdf = data => {
-    console.log(' ExportPdf this.ref ： ', data, this.ref); //
+    console.log(' ExportPdf this.ref ： ', data, this.ref);
     return (
       <div
         className={`pdfDetail `}
@@ -305,7 +310,7 @@ class ClientReport extends PureComponent {
                       ' xxxxx ： ',
                       this.props.itemDetail,
                       this.props,
-                    ); //
+                    );
                     tips('开始打印');
                     this.props.toggleExportPDF();
                   }}
@@ -335,7 +340,7 @@ class ClientReport extends PureComponent {
                         ' xxxxx ： ',
                         this.props.itemDetail,
                         this.props,
-                      ); //
+                      );
                       this.props.toggleExportPDF();
                     }}
                   >
@@ -371,7 +376,7 @@ class ClientReport extends PureComponent {
   };
 
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getBillTypeListAsync();
     setTimeout(() => {
       console.log('  延时器 ： ');
@@ -402,7 +407,7 @@ class ClientReport extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div className="ClientReport">
         {this.renderSearchForm()}

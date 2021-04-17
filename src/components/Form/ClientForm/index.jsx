@@ -12,8 +12,8 @@ import {
   Collapse,
 } from 'antd';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import UploadCom from '@/components/Widgets/UploadCom'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import UploadCom from '@/components/Widgets/UploadCom';
 import {
   regoins,
   clientLevelConfig,
@@ -26,8 +26,8 @@ import {
   corverAreaConfig,
   voltageLevelConfig,
   electricTypeConfig,
-} from '@/configs'; //
-import { tips, renderCheckboxOp, renderSelectOp } from '@/utils'; //
+} from '@/configs';
+import { tips, renderCheckboxOp, renderSelectOp } from '@/utils';
 import SmartFormTable from '@/common/SmartFormTable';
 import ReduxTable from '@/common/ReduxTable';
 
@@ -112,7 +112,7 @@ const formLayouts = {
 };
 
 const CollapseCom = props => {
-  const { com, header = '', extra } = props; //
+  const { com, header = '', extra } = props;
   console.log(' CollapseCom   props,   ： ', props);
   return (
     <Collapse
@@ -148,8 +148,8 @@ const CollapseCom = props => {
 // config.push(collapseCom);
 
 export const AdminForm = props => {
-  console.log(' AdminForm ： ', props); //
-  const { action, getCapture, addUserAsync } = props; //
+  console.log(' AdminForm ： ', props);
+  const { action, getCapture, addUserAsync } = props;
 
   const [form] = Form.useForm();
 
@@ -176,7 +176,7 @@ export const AdminForm = props => {
         extraChildren: (
           <Button
             onClick={() => {
-              console.log(' props addUserAsync ： ', props); //
+              console.log(' props addUserAsync ： ', props);
               // if (Object.keys(props.init).length) {
               console.log('  对吗  customer_admin.length ', props.init);
               // if (props.init.customer_admin.length) {
@@ -244,7 +244,7 @@ export const AdminForm = props => {
     //         <Button
     //           type="primary"
     //           onClick={() => {
-    //             console.log(' props addUserAsync ： ', props); //
+    //             console.log(' props addUserAsync ： ', props);
     //             // if (Object.keys(props.init).length) {
     //             console.log('  对吗  customer_admin.length ', props.init);
     //             // if (props.init.customer_admin.length) {
@@ -306,13 +306,13 @@ const rules = (params, extra) => {
 };
 
 export const SelectCom = props => {
-  console.log(' SelectCom ： ', props); //
+  console.log(' SelectCom ： ', props);
   const {
     formType = 'Input',
     itemProps = {},
     comProps = {},
     selectData,
-  } = props; //
+  } = props;
   const selectProps = {
     allowClear: true,
     filterOption: true,
@@ -333,7 +333,7 @@ export const SelectCom = props => {
 };
 
 export const getWidget = props => {
-  const { label, LabelCom, CustomCom, plainText, index } = props; //
+  const { label, LabelCom, CustomCom, plainText, index } = props;
 
   const { formType = 'Input', itemProps = {}, comProps = {} } = props;
 
@@ -399,12 +399,12 @@ export const getWidget = props => {
 };
 
 const FormListCom = props => {
-  const { config = [], name, rowText, ...rest } = props; //
+  const { config = [], name, rowText, ...rest } = props;
   console.log(' FormListCom   props,   ： ', props);
   const formListCom = (
     <Form.List name={name} key={name}>
       {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', fields); //
+        console.log(' dataInit  fieldsfields ： ', fields);
         return (
           <Row gutter={24} className={`formRow`}>
             {rowText && !props.isDisabledAll && (
@@ -510,9 +510,9 @@ FormListCom.defaultProps = {
 };
 
 const ClientForm = props => {
-  console.log(' ClientForm ： ', props, props.init); //
+  console.log(' ClientForm ： ', props, props.init);
 
-  const { action, getCapture, addUserAsync } = props; //
+  const { action, getCapture, addUserAsync } = props;
 
   const adminItem = {
     formType: 'Dynamic',
@@ -1232,7 +1232,7 @@ const ClientForm = props => {
     //       <Button
     //         type="primary"
     //         onClick={() => {
-    //           console.log(' props addUserAsync ： ', props); //
+    //           console.log(' props addUserAsync ： ', props);
     //           addUserAsync(props);
     //         }}
     //       >
@@ -1332,7 +1332,7 @@ const ClientForm = props => {
       extra: (
         <Button
           onClick={() => {
-            console.log(' getCapture ： ', getCapture); //
+            console.log(' getCapture ： ', getCapture);
             return getCapture && getCapture({ action: 'userCapture' });
           }}
           className="m-l-5"
@@ -1628,7 +1628,7 @@ const ClientForm = props => {
       </Panel>
     </Collapse>
   );
-  console.log(' configconfig ： ', config); //
+  console.log(' configconfig ： ', config);
 
   const copy2Admin = params => {
     const { index } = params;
@@ -1645,7 +1645,7 @@ const ClientForm = props => {
           email: copyItem.email,
         },
       ];
-      console.log('  res ：', res, copyItem, newAdminData); //
+      console.log('  res ：', res, copyItem, newAdminData);
       tips('信息复制成功！');
       props.propsForm.setFieldsValue({
         customer_admin: newAdminData,
@@ -1673,13 +1673,13 @@ const ClientForm = props => {
       latitude: enterprise.latitude,
       longitude: enterprise.longitude,
     };
-    console.log(' item ： ', item, enterprise, matchItem); //
+    console.log(' item ： ', item, enterprise, matchItem);
     const setFields = {
       electricity_user: electricity_user.map((v, i) =>
         index === i ? matchItem : v,
       ),
     };
-    console.log('  res ：', res, item, setFields); //
+    console.log('  res ：', res, item, setFields);
     tips('地址信息复制成功！');
     props.propsForm.setFieldsValue(setFields);
   };
@@ -1770,7 +1770,7 @@ const ClientForm = props => {
     <div className="clientForm">
       <Form.Provider
         onFormFinish={(name, { values, forms }) => {
-          console.log(' name, values, forms ： ', name, values, forms); //
+          console.log(' name, values, forms ： ', name, values, forms);
         }}
       >
         {/* <Form

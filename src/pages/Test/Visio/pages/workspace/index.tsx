@@ -108,7 +108,7 @@ import '../../assets/js/rg.js';
 import dog from '@/static/img/dog.jpg';
 import reactNodes from './Plugin/React-nodes';
 import { Modal, Tabs, Button, DatePicker, Table, Input } from 'antd';
-console.log(' flowData ： ', flowData); //
+console.log(' flowData ： ', flowData);
 
 class Index extends React.Component<{ event: IEvent }> {
   canvas: Topology;
@@ -214,7 +214,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   onMessage = (event: string, data: any) => {
-    console.log(' onMessage ： ', event, data); //
+    console.log(' onMessage ： ', event, data);
     switch (event) {
       case 'node':
       case 'addNode':
@@ -306,12 +306,12 @@ class Index extends React.Component<{ event: IEvent }> {
   };
 
   onDrag(event: React.DragEvent<HTMLAnchorElement>, node: any) {
-    console.log(' onDrag  data： ', event, node); //
+    console.log(' onDrag  data： ', event, node);
     event.dataTransfer.setData('Text', JSON.stringify(node.data));
   }
 
   handlePropsChange = (props: any, changedValues: any, allValues: any) => {
-    console.log(' handlePropsChange ： ', props, changedValues, allValues); //
+    console.log(' handlePropsChange ： ', props, changedValues, allValues);
     if (changedValues.node) {
       // 遍历查找修改的属性，赋值给原始Node
 
@@ -333,7 +333,7 @@ class Index extends React.Component<{ event: IEvent }> {
 
   componentDidUpdate() {
     if (this.props.event !== this.state.event) {
-      console.log(' 不相等 更新 ： '); //
+      console.log(' 不相等 更新 ： ');
       this.setState({ event: this.props.event });
       if (this['handle_' + this.props.event.event]) {
         this['handle_' + this.props.event.event](this.props.event.data);
@@ -361,7 +361,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   hanleContextMenu = (event: any) => {
-    console.log(' hanleContextMenu ： ', event); //
+    console.log(' hanleContextMenu ： ', event);
     event.preventDefault();
     event.stopPropagation();
 
@@ -391,31 +391,31 @@ class Index extends React.Component<{ event: IEvent }> {
   };
 
   handle_new(data: any) {
-    console.log('handle_new   ： ', data); //
-    console.log(' handle_new ： ', data); //
+    console.log('handle_new   ： ', data);
+    console.log(' handle_new ： ', data);
     this.canvas.open({ nodes: [], lines: [] });
   }
 
   handle_open(data: any) {
-    console.log(' handle_open  ： ', data); //
-    console.log(' handle_open ： ', data); //
+    console.log(' handle_open  ： ', data);
+    console.log(' handle_open ： ', data);
     this.handle_replace(data);
   }
 
   handle_replace(data: any) {
-    console.log('  ： handle_replace ', data); //
-    console.log(' handle_replace ： ', data); //
+    console.log('  ： handle_replace ', data);
+    console.log(' handle_replace ： ', data);
     const input = document.createElement('input');
     input.type = 'file';
     input.onchange = event => {
-      console.log(' onchange ： ', event); //
+      console.log(' onchange ： ', event);
       const elem: any = event.srcElement || event.target;
       if (elem.files && elem.files[0]) {
         const name = elem.files[0].name.replace('.json', '');
         const reader = new FileReader();
         reader.onload = (e: any) => {
           const text = e.target.result + '';
-          console.log(' onload ： ', text); //
+          console.log(' onload ： ', text);
           try {
             const data = JSON.parse(text);
             console.log(
@@ -423,7 +423,7 @@ class Index extends React.Component<{ event: IEvent }> {
               data,
               Array.isArray(data.nodes),
               Array.isArray(data.lines),
-            ); //
+            );
             // if (data && Array.isArray(data.nodes) && Array.isArray(data.lines)) {
             if (data) {
               this.canvas.open(data);
@@ -432,7 +432,7 @@ class Index extends React.Component<{ event: IEvent }> {
             return false;
           }
         };
-        console.log(' elem ： ', elem.files[0]); //
+        console.log(' elem ： ', elem.files[0]);
         reader.readAsText(elem.files[0]);
       }
     };
@@ -440,7 +440,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   handle_save(data: any) {
-    console.log(' handle_save  ： ', data); //
+    console.log(' handle_save  ： ', data);
     FileSaver.saveAs(
       new Blob([JSON.stringify(this.canvas.data)], {
         type: 'text/plain;charset=utf-8',
@@ -450,12 +450,12 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   handle_savePng(data: any) {
-    console.log('  ： handle_savePng ', data); //
+    console.log('  ： handle_savePng ', data);
     this.canvas.saveAsImage('le5le.topology.png');
   }
 
   handle_saveSvg(data: any) {
-    console.log('  ： handle_saveSvg ', data); //
+    console.log('  ： handle_saveSvg ', data);
     const ctx = new C2S(
       this.canvas.canvas.width + 200,
       this.canvas.canvas.height + 200,
@@ -496,32 +496,32 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   handle_undo(data: any) {
-    console.log(' handle_undo  ： ', data); //
+    console.log(' handle_undo  ： ', data);
     this.canvas.undo();
   }
 
   handle_redo(data: any) {
-    console.log(' handle_redo  ： ', data); //
+    console.log(' handle_redo  ： ', data);
     this.canvas.redo();
   }
 
   handle_copy(data: any) {
-    console.log(' handle_copy  ： ', data); //
+    console.log(' handle_copy  ： ', data);
     this.canvas.copy();
   }
 
   handle_cut(data: any) {
-    console.log('handle_cut   ： ', data); //
+    console.log('handle_cut   ： ', data);
     this.canvas.cut();
   }
 
   handle_parse(data: any) {
-    console.log('  handle_parse ： ', data); //
+    console.log('  handle_parse ： ', data);
     this.canvas.parse();
   }
 
   handle_curve(data: any) {
-    console.log('  handle_curve ： ', data); //
+    console.log('  handle_curve ： ', data);
     this.canvas.data.lineName = 'curve';
     this.props.dispatch({
       type: 'canvas/update',
@@ -532,7 +532,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   handle_polyline(data: any) {
-    console.log(' handle_polyline ： ', data); //
+    console.log(' handle_polyline ： ', data);
     this.canvas.data.lineName = 'polyline';
     this.props.dispatch({
       type: 'canvas/update',
@@ -543,7 +543,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   handle_line(data: any) {
-    console.log(' handle_line  ： ', data); //
+    console.log(' handle_line  ： ', data);
     this.canvas.data.lineName = 'line';
     this.props.dispatch({
       type: 'canvas/update',
@@ -554,7 +554,7 @@ class Index extends React.Component<{ event: IEvent }> {
   }
 
   getLocked(data: any) {
-    console.log(' getLocked ： ', data); //
+    console.log(' getLocked ： ', data);
     let locked = true;
     if (data.nodes && data.nodes.length) {
       for (const item of data.nodes) {

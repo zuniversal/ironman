@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const renderCheckboxOp = [{ label: '短信通知客户', value: 'yes', key: 'yes' }];
 
 export const InspectMissionAssignForm = props => {
-  console.log(' InspectMissionAssignForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' InspectMissionAssignForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -40,8 +40,8 @@ export const InspectMissionAssignForm = props => {
 InspectMissionAssignForm.defaultProps = {};
 
 export const InspectMissionEditDateForm = props => {
-  console.log(' InspectMissionEditDateForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' InspectMissionEditDateForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

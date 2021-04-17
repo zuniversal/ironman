@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ClientForm from '@/components/Form/ClientForm'; //
-import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
-import ClientTable from '@/components/Table/ClientTable'; //
-import ClientRadar from '@/components/Echarts/ClientRadar'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import ClientForm from '@/components/Form/ClientForm';
+import ClientSearchForm from '@/components/Form/ClientSearchForm';
+import ClientTable from '@/components/Table/ClientTable';
+import ClientRadar from '@/components/Echarts/ClientRadar';
+import SmartModal from '@/common/SmartModal';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/client'; //
+import { actions, mapStateToProps } from '@/models/client';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips, format2Null, getItem, formatSelectList } from '@/utils';
@@ -54,11 +54,11 @@ class Client extends PureComponent {
   }
   addUserAsync = async props => {
     console.log(' addUserAsync ： ', props, this.state, this.props);
-    const { action } = this.state; //
-    const { propsForm } = props; //
+    const { action } = this.state;
+    const { propsForm } = props;
     try {
       const res = await propsForm.validateFields();
-      console.log('  res await 结果  ：', res, res.values); //
+      console.log('  res await 结果  ：', res, res.values);
       // const admin = {
       //   ...res.customer_admin.map(v => ({
       //     nickname: v.username,
@@ -69,7 +69,7 @@ class Client extends PureComponent {
       //     },
       //   })),
       // };
-      // console.log(' customeradmin ： ', admin); //
+      // console.log(' customeradmin ： ', admin);
       // const customerAdmin = res.customer_admin.map(v => ({
       //   account: {
       //     ...v,
@@ -77,11 +77,11 @@ class Client extends PureComponent {
       //     account_type: 'manager',
       //   },
       // }))//
-      console.log(' customeradmin ： ', res); //
+      console.log(' customeradmin ： ', res);
       this.props.addUserAsync({ customer_admin_list: res.customer_admin });
       // this.props.addUserAsync(res.customer_admin[0]);
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderFormBtn = params => {
@@ -165,12 +165,12 @@ class Client extends PureComponent {
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
-    const { action, addItemAsync, editItemAsync, tableData } = this.props; //
-    console.log(' adminList ： ', tableData); //
+    const { action, addItemAsync, editItemAsync, tableData } = this.props;
+    console.log(' adminList ： ', tableData);
 
     // const adminIdLen = tableData.filter(v => v.id).length;
     const adminIdLen = tableData.length;
-    console.log('  adminIdLen ：', adminIdLen); //
+    console.log('  adminIdLen ：', adminIdLen);
     // if (adminIdLen === 0) {
     //   tips('必须添加管理员信息！', 2);
     //   return;
@@ -186,12 +186,12 @@ class Client extends PureComponent {
       actionFn = editItemAsync;
     }
 
-    const { form, init } = props; //
+    const { form, init } = props;
 
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action, actionFn); //
-      const { adminList, itemDetail } = this.props; //
+      console.log('  res await 结果  ：', res, action, actionFn);
+      const { adminList, itemDetail } = this.props;
       // // if (tableData.length === 0 && action !== 'add') {
       // // if (tableData.length === 0) {
       // const adminIdLen = tableData.filter((v) => v.id).length
@@ -216,7 +216,7 @@ class Client extends PureComponent {
         if (res.file && res.file.fileList && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
           // params.file = fileList[fileList.length - 1].response.url;
-          console.log(' fileList ： ', fileList); //
+          console.log(' fileList ： ', fileList);
           params.file = fileList.map(v => v.response.url).join(',');
           // } else {
           //   tips('文件不能为空！', 2);
@@ -228,14 +228,14 @@ class Client extends PureComponent {
         params.file = null;
       }
       // if (typeof res.logo !== 'string') {
-      //   console.log(' logologo ： ', res.logo); //
+      //   console.log(' logologo ： ', res.logo);
       //   if (res.logo && res.logo.fileList.length > 0) {
       //     const fileList = res.logo.fileList;
       //     params.logo = fileList[fileList.length - 1].response.url;
       //   } else {
       //     // tips('logo不能为空！', 2);
       //     // return;
-      //     console.log(' paramsparamsparams ： ', params); //
+      //     console.log(' paramsparamsparams ： ', params);
       //     params.logo = null;
       //   }
       // }
@@ -243,7 +243,7 @@ class Client extends PureComponent {
         if (res.logo && res.logo.fileList && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
           // params.file = fileList[fileList.length - 1].response.url;
-          console.log(' fileList ： ', fileList); //
+          console.log(' fileList ： ', fileList);
           params.logo = fileList.map(v => v.response.url).join(',');
           // } else {
           //   tips('文件不能为空！', 2);
@@ -266,19 +266,19 @@ class Client extends PureComponent {
       //   'asset',
       //   'covered_area',
       // ]);
-      console.log(' params ： ', params, datas); //
+      console.log(' params ： ', params, datas);
       actionFn(datas);
-      // const { dispatch } = this.props; //
+      // const { dispatch } = this.props;
       // dispatch(
       //   actionFn(params),
       // );
     } catch (error) {
-      console.log(' error ： ', error); //
-      console.log(' errorerrorerror ： ', error, error?.values); //
+      console.log(' error ： ', error);
+      console.log(' errorerrorerror ： ', error, error?.values);
     }
   };
   onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
+    console.log(' onCancel ： ', e, this.state, this.props);
     this.setState({
       show: false,
     });
@@ -287,7 +287,7 @@ class Client extends PureComponent {
   showCapture = params => {
     const { action } = params;
     console.log(' showCapture,  , ： ', action);
-    const { dispatch, portraitData } = this.props; //
+    const { dispatch, portraitData } = this.props;
     // dispatch(getPortraitAsync({
     //   d_id: 999,
     // }))
@@ -315,7 +315,7 @@ class Client extends PureComponent {
 
   renderModalForm = e => {
     console.log('    renderModalForm ： ', e, this.state, this.props);
-    const { modalForm } = this.state; //
+    const { modalForm } = this.state;
     if (modalForm) {
       return modalForm;
     }
@@ -324,7 +324,7 @@ class Client extends PureComponent {
   };
   renderContent = e => {
     console.log('    renderContent ： ', e);
-    const { commonContent } = this.state; //
+    const { commonContent } = this.state;
     return commonContent;
   };
 
@@ -333,7 +333,7 @@ class Client extends PureComponent {
     const { form } = params;
 
     const res = await form.validateFields();
-    console.log('  res await 结果  ：', res, form); //
+    console.log('  res await 结果  ：', res, form);
   };
 
   renderSearchForm = params => {
@@ -360,33 +360,33 @@ class Client extends PureComponent {
     );
     const { form } = params;
     // if (params.value.province) {
-    //   console.log(' onFieldChange 清空 province ： '); //
+    //   console.log(' onFieldChange 清空 province ： ');
     //   const resetParams = {
     //     city: null,
     //     area: null,
     //   };
     //   form.setFieldsValue(resetParams);
     //   const { city, area, ...data } = params.formData;
-    //   console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+    //   console.log(' onFieldChange 搜索 province ： ', params.value.province);
     //   this.props.getDistrictAsync(data);
     //   // this.props.getDistrictAsync({province: params.value.province});
     //   this.props.getListAsync({ ...params.formData, ...resetParams });
     //   return;
     // }
     // if (params.value.city) {
-    //   console.log(' onFieldChange 清空 city ： '); //
+    //   console.log(' onFieldChange 清空 city ： ');
     //   const resetParams = {
     //     area: null,
     //   };
     //   form.setFieldsValue(resetParams);
     //   const { area, ...data } = params.formData;
-    //   console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+    //   console.log(' onFieldChange 搜索 city ： ', params.value.city);
     //   this.props.getDistrictAsync(data);
     //   // this.props.getDistrictAsync({city: params.value.city});
     //   this.props.getListAsync({ ...params.formData, ...resetParams });
     //   return;
     // }
-    console.log(' onFieldChange 列表搜索 ： '); //
+    console.log(' onFieldChange 列表搜索 ： ');
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
@@ -463,7 +463,7 @@ class Client extends PureComponent {
 
   saveAdmin = params => {
     console.log('    saveAdmin ： ', params, this.state, this.props);
-    const { action } = this.props; //
+    const { action } = this.props;
     const keys = ['nickname', 'password', 'phone'];
     let isRight = true;
     keys.forEach((v, i) => {
@@ -472,7 +472,7 @@ class Client extends PureComponent {
         isRight = v;
       }
     });
-    console.log(' isRight ： ', isRight); //
+    console.log(' isRight ： ', isRight);
     if (isRight !== true) {
       tips('管理员信息不能为空！', 2);
       return;
@@ -486,27 +486,27 @@ class Client extends PureComponent {
     console.log('    getDistrictAsync ： ', params);
     const { form } = params;
     if (params.value.enterprise?.province) {
-      console.log(' onFieldChange 清空 province ： '); //
+      console.log(' onFieldChange 清空 province ： ');
       const resetParams = {
         city: null,
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { city, area, ...data } = params.formData.enterprise;
-      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      console.log(' onFieldChange 搜索 province ： ', params.value.province);
       this.props.getDistrictAsync(data);
       return;
     }
     if (params.value.enterprise?.city) {
-      console.log(' onFieldChange 清空 city ： '); //
+      console.log(' onFieldChange 清空 city ： ');
       const resetParams = {
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { area, ...data } = params.formData.enterprise;
-      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+      console.log(' onFieldChange 搜索 city ： ', params.value.city);
       const res = await this.props.getDistrictAsync(data);
-      console.log('  res await 结果  ：', res); //
+      console.log('  res await 结果  ：', res);
       if (params.isFormChange) {
         // form.setFieldsValue({
         //   adcode: ,
@@ -515,7 +515,7 @@ class Client extends PureComponent {
       return;
     }
     if (params.value.enterprise?.area) {
-      console.log(' onFieldChange 清空 area ： '); //
+      console.log(' onFieldChange 清空 area ： ');
       const res = await this.props.getRegionAsync({
         subdistrict: '1',
         keywords: params.value?.enterprise?.area,
@@ -525,7 +525,7 @@ class Client extends PureComponent {
       const city_code = res[0]?.citycode;
       const { province, city, area } = params.formData.enterprise;
       const address = province + city + area;
-      console.log('  res await 结果  ：', res, adcode, city_code, address); //
+      console.log('  res await 结果  ：', res, adcode, city_code, address);
       if (params.isFormChange && adcode) {
         form.setFieldsValue({
           enterprise: { adcode, city_code, address },
@@ -539,10 +539,10 @@ class Client extends PureComponent {
     const { form, formData } = params;
     if (params.value?.contact) {
       const isUrge = params.value?.contact[0]?.is_urge;
-      console.log(' isUrge ： ', isUrge); //
+      console.log(' isUrge ： ', isUrge);
       if (isUrge) {
         const { contact } = formData;
-        console.log('  formData ：', formData, contact); //
+        console.log('  formData ：', formData, contact);
         form.setFieldsValue(formData);
       }
     }
@@ -559,16 +559,16 @@ class Client extends PureComponent {
     );
     // const { form } = params;
     // const formVal = params
-    // console.log(' params.value?.enterprise ： ', params.value?.enterprise); //
+    // console.log(' params.value?.enterprise ： ', params.value?.enterprise);
     // if (params.value?.enterprise?.address) {
-    //   console.log(' onFieldChange 清空 address ： '); //
+    //   console.log(' onFieldChange 清空 address ： ');
     //   const { address } = params.value.enterprise;
     //   const res = await this.props.getGeoAsync({ address });
     //   // const res = await this.props.getGeoAsync({ address: '南山区' })
     //   const setFields = {
     //     enterprise: res,
     //   };
-    //   console.log(' address res ：', res, setFields); //
+    //   console.log(' address res ：', res, setFields);
     //   form.setFieldsValue(setFields);
     // }
     // // this.checkOne(params)
@@ -586,16 +586,16 @@ class Client extends PureComponent {
       this.props,
     );
     const { form } = params;
-    console.log(' params.value?.enterprise ： ', params.value?.enterprise); //
+    console.log(' params.value?.enterprise ： ', params.value?.enterprise);
     if (params.value?.enterprise?.address) {
-      console.log(' onFieldChange 清空 address ： '); //
+      console.log(' onFieldChange 清空 address ： ');
       const { address } = params.value.enterprise;
       const res = await this.props.getGeoAsync({ address });
       // const res = await this.props.getGeoAsync({ address: '南山区' })
       const setFields = {
         enterprise: res,
       };
-      console.log(' address res ：', res, setFields); //
+      console.log(' address res ：', res, setFields);
       form.setFieldsValue(setFields);
     }
     // this.checkOne(params)
@@ -625,7 +625,7 @@ class Client extends PureComponent {
       index,
       formVal,
       electricity_user,
-    ); //
+    );
     let res;
     if (name === 'area') {
       res = await this.props.getRegionAsync({
@@ -636,7 +636,7 @@ class Client extends PureComponent {
       res = await this.props.getDistrictAsync(reqParams);
     }
     // const res = await this.props.getDistrictAsync(reqParams);
-    console.log(' onHouseNoRegionChange res ： ', res); //
+    console.log(' onHouseNoRegionChange res ： ', res);
     let matchItem = {
       ...item,
       [name]: value,
@@ -659,13 +659,13 @@ class Client extends PureComponent {
       item,
       index,
       matchItem,
-    ); //
+    );
     const setFields = {
       electricity_user: electricity_user.map((v, i) =>
         index === i ? matchItem : v,
       ),
     };
-    console.log(' onHouseNoRegionChange setFields ： ', setFields); //
+    console.log(' onHouseNoRegionChange setFields ： ', setFields);
     params.form.setFieldsValue(setFields);
   };
   onAddrChange = async (e, params) => {
@@ -675,24 +675,24 @@ class Client extends PureComponent {
     const { index } = params;
     const { electricity_user } = formVal;
     const item = electricity_user[index];
-    console.log('  res ：', res, index, formVal, electricity_user); //
+    console.log('  res ：', res, index, formVal, electricity_user);
     const matchItem = {
       ...item,
       latitude: res.latitude,
       longitude: res.longitude,
     };
-    console.log(' item ： ', item, index, matchItem); //
+    console.log(' item ： ', item, index, matchItem);
     const setFields = {
       electricity_user: electricity_user.map((v, i) =>
         index === i ? matchItem : v,
       ),
     };
-    console.log(' setFields ： ', setFields); //
-    // console.log(' address res ：', res, setFields); //
+    console.log(' setFields ： ', setFields);
+    // console.log(' address res ：', res, setFields);
     params.form.setFieldsValue(setFields);
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getCapture: this.showCapture,
@@ -700,7 +700,7 @@ class Client extends PureComponent {
       getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
       // saveAdmin: params => {
-      //   console.log(' saveAdmin params ： ', params); //
+      //   console.log(' saveAdmin params ： ', params);
       //   // this.props.addUserAsync({ customer_admin_list: params.data, })
       // },
       adminList: this.props.adminList,
@@ -748,8 +748,8 @@ class Client extends PureComponent {
     };
 
     if (action !== 'add') {
-      // const { customer_admin } = this.props.itemDetail; //
-      // console.log(' customer_admin ： ', customer_admin); //
+      // const { customer_admin } = this.props.itemDetail;
+      // console.log(' customer_admin ： ', customer_admin);
       // formComProps.init = {
       //   ...this.props.itemDetail,
       //   customer_admin: customer_admin && customer_admin.length > 0 ? customer_admin : [{}]
@@ -762,7 +762,7 @@ class Client extends PureComponent {
     } else {
       const { enterprises = [] } = getItem('userInfo');
       const serviceEnterpriseId = `${enterprises[0]?.id}`;
-      console.log('  serviceEnterpriseId ：', enterprises, serviceEnterpriseId); //
+      console.log('  serviceEnterpriseId ：', enterprises, serviceEnterpriseId);
       formComProps.enterpriseList = formatSelectList(enterprises);
       formComProps.init = {
         service_enterprise_id: serviceEnterpriseId,
@@ -774,7 +774,7 @@ class Client extends PureComponent {
     //   ...this.props.itemDetail,
     //   customer_admin: this.props.adminList,
     // };
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <ClientForm {...formComProps}></ClientForm>;
   };
   renderSmartFormModal = params => {
@@ -798,13 +798,13 @@ class Client extends PureComponent {
       ' Client 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
 
     // this.getList()
     this.props.getTagsAsync();
     this.props.getUserAsync();
     this.props.getDistrictAsync({});
-    this.props.getOrganizeAsync({ page_size: 1000 }); //
+    this.props.getOrganizeAsync({ page_size: 1000 });
     // this.props.getGeoAsync({ address: '上海浦东' });
     // this.props.getRegionAsync({
     //   subdistrict: '0',
@@ -859,7 +859,7 @@ class Client extends PureComponent {
       commonTitle,
       action,
       titleMap,
-    } = this.state; //
+    } = this.state;
 
     return (
       <div className="Client">

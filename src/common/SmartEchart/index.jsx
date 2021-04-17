@@ -26,7 +26,7 @@ echarts.registerMap('china', china);
 
 // https://github.com/hustcc/echarts-for-react/blob/master/demo/src/charts/Map.jsx
 
-import common from './common'; //
+import common from './common';
 
 class SmartEcharts extends React.PureComponent {
   onChartClick = e => {
@@ -50,7 +50,7 @@ class SmartEcharts extends React.PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     let onEvents = {
       click: this.onChartClick,
       legendselectchanged: this.onChartLegendselectchanged,

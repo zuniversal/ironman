@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csHome';
 import * as powerStationServices from '@/services/powerStation';
 import * as inspectMissionServices from '@/services/inspectMission';
@@ -44,7 +44,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -52,7 +52,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -68,7 +68,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -133,12 +133,12 @@ export default {
         chartSearchInfo,
         payload,
         timeData,
-      ); //
+      );
       return {
         ...state,
         chartData: payload.bean.data,
         chartTimeData: timeData.map(v => {
-          console.log(' v ： ', v); //
+          console.log(' v ： ', v);
           const [year, month, day] = v.split('T')[0].split('-');
           return `${month}-${day}`;
         }),
@@ -163,31 +163,31 @@ export default {
 
   effects: {
     *getStatisticAsync({ payload, action, type }, { call, put }) {
-      console.log(' getStatisticAsync ： ', payload, action, type); //
+      console.log(' getStatisticAsync ： ', payload, action, type);
       const res = yield call(services.getStatistic, payload);
       yield put(action({ ...res, payload }));
     },
     *getDeviceStatusAsync({ payload, action, type }, { call, put }) {
-      console.log(' getDeviceStatusAsync ： ', payload, action, type); //
+      console.log(' getDeviceStatusAsync ： ', payload, action, type);
       const res = yield call(services.getDeviceStatus, payload);
       yield put(action({ ...res, payload }));
     },
     *getPowerInfoAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPowerInfoAsync ： ', payload, action, type); //
+      console.log(' getPowerInfoAsync ： ', payload, action, type);
       const powerStationRes = yield call(powerStationServices.getList, payload);
-      console.log(' powerStationRes ： ', powerStationRes.list); //
+      console.log(' powerStationRes ： ', powerStationRes.list);
       if (powerStationRes.list.length > 0 && powerStationRes.list[0].id) {
         const res = yield call(services.getPowerInfo, {
           station_id: powerStationRes.list[0].id,
           ...payload,
         });
-        console.log(' powerStationRes 有id ： ', powerStationRes, res); //
+        console.log(' powerStationRes 有id ： ', powerStationRes, res);
         yield put(action({ ...res, payload }));
       }
     },
     *getStationStatusAsync({ payload, action, type }, { call, put }) {
       const res = yield call(inspectMissionServices.getList, payload);
-      console.log(' getStationStatusAsync ： ', res); //
+      console.log(' getStationStatusAsync ： ', res);
       yield put(action({ ...res, payload }));
     },
   },

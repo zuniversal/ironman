@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/houseNo';
 import * as clientServices from '@/services/client';
 import * as userServices from '@/services/user';
@@ -47,7 +47,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -55,7 +55,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -72,15 +72,15 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
-      const { customer } = payload.bean; //
+      console.log(' getItemgetItem ： ', payload);
+      const { customer } = payload.bean;
       const { clientList } = state;
       const customerItem = {
         ...customer,
         value: `${customer.id}`,
         label: customer.name,
       };
-      console.log(' customer ： ', customer, customerItem); //
+      console.log(' customer ： ', customer, customerItem);
       return {
         ...state,
         action: payload.payload.action,
@@ -112,16 +112,16 @@ export default {
       };
     },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type); //
+      console.log(' removeItem 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type); //
+      console.log(' removeItems 修改  ： ', state, payload, type);
       const removeList = payload.payload.id.split(',');
-      console.log(' removeList ： ', removeList); //
+      console.log(' removeList ： ', removeList);
       return {
         ...state,
         dataList: state.dataList.filter(v =>
@@ -151,7 +151,7 @@ export default {
           countryList: data,
         };
       }
-      console.log(' getDistrict ： ', state, payload, datas); //
+      console.log(' getDistrict ： ', state, payload, datas);
 
       return {
         ...state,
@@ -192,7 +192,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -213,14 +213,14 @@ export default {
     },
 
     *removeItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemAsync ： ', payload, type); //
+      console.log(' removeItemAsync ： ', payload, type);
       const res = yield call(services.removeItem, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemAsync ： ', payload, type); //
+      console.log(' removeItemAsync ： ', payload, type);
       const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));
@@ -232,9 +232,9 @@ export default {
     },
 
     *getDistrictAsync({ payload, action, type }, { call, put }) {
-      console.log(' getDistrictAsync ： ', payload, type); //
+      console.log(' getDistrictAsync ： ', payload, type);
       const res = yield call(clientServices.getDistrict, payload);
-      console.log('  getDistrictAsync res ：', res); //
+      console.log('  getDistrictAsync res ：', res);
       yield put(action({ ...res, payload }));
       // yield put({ type: 'getListAsync' });
     },

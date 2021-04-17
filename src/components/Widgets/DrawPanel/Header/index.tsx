@@ -53,7 +53,7 @@ const Headers = props => {
   const { lineName = 'curve' } = data;
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
-  console.log(' Headers ： ', props, data); //
+  console.log(' Headers ： ', props, data);
 
   const [isLock, setIsLock] = useState(false); // 是否处于锁定状态
 

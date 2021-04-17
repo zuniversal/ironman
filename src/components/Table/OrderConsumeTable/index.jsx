@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 const OrderConsumeTable = props => {
   const columns = [

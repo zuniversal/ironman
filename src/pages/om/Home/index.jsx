@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Spin } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import HomeSettingForm from '@/components/Form/HomeSettingForm'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import HomeSettingForm from '@/components/Form/HomeSettingForm';
 import HomeInspectMissionTable from '@/components/Table/HomeInspectMissionTable';
 import HomeWorkOrderTable from '@/components/Table/HomeWorkOrderTable';
 import HomeStatBox from '@/components/Widgets/HomeStatBox';
@@ -14,15 +14,15 @@ import HomeTitleRow, {
 import {
   actions,
   // mapStateToProps
-} from '@/models/home'; //
-import { userActions } from '@/models/user'; //
+} from '@/models/home';
+import { userActions } from '@/models/user';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { SettingOutlined } from '@ant-design/icons';
 import Icon from '@/components/Widgets/Icons';
-import WorkOrderForm from '@/components/Form/WorkOrderForm'; //
+import WorkOrderForm from '@/components/Form/WorkOrderForm';
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
-import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm'; //
+import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm';
 
 export const TITLE = '首页';
 
@@ -71,7 +71,7 @@ class Home extends PureComponent {
 
   goPage = page => {
     console.log(' goPage,  , ： ', page, this.state, this.props);
-    const { history } = this.props; //
+    const { history } = this.props;
     history.push(page);
   };
 
@@ -120,7 +120,7 @@ class Home extends PureComponent {
     //   : getOrdersChartAsync,
     //   : ,
     // };
-    console.log(' data ： ', data); // [params.requestFn]
+    console.log(' data ： ', data);
     this.props.getChartAsync(data);
   };
   renderHomeStatEcharts = params => {
@@ -128,14 +128,14 @@ class Home extends PureComponent {
       this.props.requestFn === 'getOrdersChart'
         ? this.props.chartData.order_data
         : this.props.chartData.inspection_task_data;
-    const isLoading = this.props.loading.effects['home/getChartAsync']; //
+    const isLoading = this.props.loading.effects['home/getChartAsync'];
     console.log(
       ' renderHomeStatEcharts ： ',
       isLoading,
       barData,
       this.props,
       this.props.chartData,
-    ); //
+    );
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
         <HomeStatEcharts
@@ -205,7 +205,7 @@ class Home extends PureComponent {
   };
   get pageTitle() {
     console.log(' get 取属 pageTitle ： ', this.state, this.props);
-    const { title } = this.props.route; //
+    const { title } = this.props.route;
     return title;
   }
   showSetting = e => {
@@ -216,9 +216,9 @@ class Home extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail, extraData } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail, extraData } = this.props;
+    const { form, init } = props;
     // if (['setting'].includes(action)) {
     //   this.props.onCancel({});
     //   return;
@@ -229,7 +229,7 @@ class Home extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'setting') {
         this.props.saveHomeSetting({
           ...res,
@@ -248,12 +248,12 @@ class Home extends PureComponent {
       //   });
       // }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getTeamAsync: params => this.props.getTeamAsync({ name: params }),
@@ -291,7 +291,7 @@ class Home extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getStatisticAsync();
     this.props
       .getChartAsync

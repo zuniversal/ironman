@@ -53,4 +53,4 @@ SuccResult.propTypes = {
   // Click: PropTypes.func,
 };
 
-export default SuccResult; //
+export default SuccResult;

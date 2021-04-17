@@ -3,9 +3,9 @@ import './style.less';
 import Icon from '@/components/Widgets/Icons';
 import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
-import { LogoutOutlined } from '@ant-design/icons'; //
+import { LogoutOutlined } from '@ant-design/icons';
 import { history, connect } from 'umi';
-import { csSystemNotify, BIG_SCREEN } from '@/constants'; //
+import { csSystemNotify, BIG_SCREEN } from '@/constants';
 
 const HeaderWidget = props => {
   console.log(' HeaderWidget   props, ,   ： ', props);

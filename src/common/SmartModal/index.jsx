@@ -14,7 +14,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import Draggable from 'react-draggable';
 import { isDev } from '@/constants';
 
-export const SMALL_WIDTH = '400px'; //
+export const SMALL_WIDTH = '400px';
 
 // 封装带默认属性的 模态框
 
@@ -34,18 +34,18 @@ class SmartModal extends PureComponent {
     });
   };
   onOk = e => {
-    const { customShow, onOk } = this.props; //
+    const { customShow, onOk } = this.props;
     console.log('  onOk  customShow ', customShow, this.state, this.props);
     onOk && onOk();
   };
   onCancel = e => {
-    const { customShow, onCancel } = this.props; //
+    const { customShow, onCancel } = this.props;
     console.log('  onCancel  customShow ', customShow, this.state, this.props);
     onCancel && onCancel();
   };
   getCls = e => {
     // console.log('    getCls ： ', e, this.state, this.props);
-    const { width, size } = this.props; //
+    const { width, size } = this.props;
     if (size === 'default') {
       return 'commonModal';
     }
@@ -55,7 +55,7 @@ class SmartModal extends PureComponent {
   };
   getWidth = e => {
     // console.log('    getWidth ： ', e, this.state, this.props);
-    const { width, size } = this.props; //
+    const { width, size } = this.props;
     if (size === 'small') {
       return SMALL_WIDTH;
     }
@@ -63,14 +63,14 @@ class SmartModal extends PureComponent {
   };
   // 根据属性得出 title
   getTitle = e => {
-    const { titleMap, action, title } = this.props; //
+    const { titleMap, action, title } = this.props;
     const actionTitle = titleMap[action];
     // console.log('    getTitle ： ', e, this.state, this.props, actionTitle);
     // if (actionTitle) {
     //   return actionTitle;
     // }
     // return title;
-    const content = actionTitle ? actionTitle : title; //
+    const content = actionTitle ? actionTitle : title;
     // console.log('  content ：', content,  )//
     return (
       <div

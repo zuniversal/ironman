@@ -19,7 +19,7 @@ import {
 } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import { treeList } from '@/configs';
 
 const { TabPane } = Tabs;
@@ -109,9 +109,9 @@ const RoleTab = props => {
 };
 
 const RoleForm = props => {
-  const { formBtn, init, permsData = [], ...rest } = props; //
+  const { formBtn, init, permsData = [], ...rest } = props;
   const { perms_codes = [] } = init;
-  console.log(' RoleForm 1 ： ', props, perms_codes); //
+  console.log(' RoleForm 1 ： ', props, perms_codes);
 
   const onSelect = (selectedKeys, info) => {
     console.log('onSelect', info);

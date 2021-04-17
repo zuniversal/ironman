@@ -14,14 +14,14 @@ import {
 } from 'antd';
 
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
-import SmartEcharts from '@/common/SmartEcharts'; //
+import SmartEcharts from '@/common/SmartEcharts';
 import TimeChoice from '@/components/Widgets/TimeChoice';
 import HomeGroupRank from '@/components/Widgets/HomeGroupRank';
 import HomeBar from '@/components/Echarts/HomeBar';
-import one from '@/static/assets/one.png'; //
-import two from '@/static/assets/two.png'; //
-import three from '@/static/assets/three.png'; //
-import { ANIMATE } from '@/constants'; //
+import one from '@/static/assets/one.png';
+import two from '@/static/assets/two.png';
+import three from '@/static/assets/three.png';
+import { ANIMATE } from '@/constants';
 
 const statConfig = [
   {
@@ -56,7 +56,7 @@ const xAxis = [
 const { TabPane } = Tabs;
 
 const StatTabPanes = props => {
-  console.log(' StatTabPanes ： ', props); //
+  console.log(' StatTabPanes ： ', props);
   const [activeKey, setActiveKey] = useState('0');
   const onChange = index => {
     console.log(' onChange   ,   ： ', index, activeKey);

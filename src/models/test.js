@@ -3,7 +3,7 @@
 
 */
 
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/client';
 
 const namespace = 'test';
@@ -98,7 +98,7 @@ export default {
       // const params = { name: 'zyb',  }
       // const res = yield call(services.getList, params)
       const res = yield call(services.getList, payload);
-      console.log('  getListAsync res ：', res); //
+      console.log('  getListAsync res ：', res);
       yield put(action(res));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
@@ -109,13 +109,13 @@ export default {
     *addItemAsync({ payload, action, type }, { call, put }) {
       // console.log(' addItemAsync ： ', payload, type,     )//
       const res = yield call(services.addItem, payload);
-      console.log('  addItem res ：', res); //
+      console.log('  addItem res ：', res);
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       // console.log(' editItemAsync ： ', payload, type,     )//
       const res = yield call(services.editItem, payload);
-      console.log('  editItem res ：', res); //
+      console.log('  editItem res ：', res);
       yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
@@ -128,13 +128,13 @@ export default {
     *syncOAAsync({ payload, action, type }, { call, put }) {
       // console.log(' syncOAAsync ： ', payload, type,     )//
       const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res); //
+      console.log('  syncOA res ：', res);
       yield put(action({ ...res, payload }));
     },
     *getPortraitAsync({ payload, action, type }, { call, put }) {
       // console.log(' getPortraitAsync ： ', payload, type,     )//
       const res = yield call(services.getPortrait, payload);
-      console.log('  getPortrait res ：', res); //
+      console.log('  getPortrait res ：', res);
       yield put(action({ ...res, payload }));
     },
   },

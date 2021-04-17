@@ -1,14 +1,14 @@
 import React from 'react';
 import './style.less';
-import SmartEchart from '@/common/SmartEchart'; //
+import SmartEchart from '@/common/SmartEchart';
 
 const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
 const option = params => {
   const { data } = params;
   const xAxisData =
-    params.xAxisData.length > 0 ? params.xAxisData : defaultWeek; //
-  console.log('  xAxisData ：', xAxisData); //
+    params.xAxisData.length > 0 ? params.xAxisData : defaultWeek;
+  console.log('  xAxisData ：', xAxisData);
   console.log(' xAxisData xAxisDataxAxisData ：', params, xAxisData);
   return {
     xAxis: [

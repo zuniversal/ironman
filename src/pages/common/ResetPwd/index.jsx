@@ -3,7 +3,7 @@ import './style.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { history, connect } from 'umi';
 import loginAvatar from '@/static/assets/loginAvatar.png';
-import ResetPwdForm from '@/components/Form/ResetPwdForm'; //
+import ResetPwdForm from '@/components/Form/ResetPwdForm';
 
 const ResetPwd = props => {
   const [form] = Form.useForm();

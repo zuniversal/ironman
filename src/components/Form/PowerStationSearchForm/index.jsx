@@ -1,14 +1,14 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 import ProvinceForm, {
   provinceFormConfig,
-} from '@/components/Form/ProvinceForm'; //
+} from '@/components/Form/ProvinceForm';
 
 const PowerStationSearchForm = props => {
-  console.log(' PowerStationSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' PowerStationSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

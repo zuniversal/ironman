@@ -1,20 +1,20 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
-import SmartShowPDF from '@/common/SmartShowPDF'; //
-import ContractTable from '@/components/Table/ContractTable'; //
-import ContractForm from '@/components/Form/ContractForm'; //
-import ContractSearchForm from '@/components/Form/ContractSearchForm'; //
-import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
+import SearchForm from '@/common/SearchForm';
+import SmartShowPDF from '@/common/SmartShowPDF';
+import ContractTable from '@/components/Table/ContractTable';
+import ContractForm from '@/components/Form/ContractForm';
+import ContractSearchForm from '@/components/Form/ContractSearchForm';
+import ResultModal from '@/components/Modal/ResultModal';
+import SmartFormModal from '@/common/SmartFormModal';
+import DropDownBtn from '@/common/DropDownBtn';
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
-import ContractStepForm from '@/components/Form/ContractStepForm'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom';
+import SuccResult from '@/components/Widgets/SuccResult';
+import ContractStepForm from '@/components/Form/ContractStepForm';
 
-import { actions, mapStateToProps } from '@/models/contract'; //
+import { actions, mapStateToProps } from '@/models/contract';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import ClientForm from '@/components/Form/ClientForm';
@@ -77,15 +77,15 @@ class Contract extends PureComponent {
   }
   addUserAsync = async props => {
     console.log(' addUserAsync,  , ： ', props);
-    const { propsForm, init } = props; //
+    const { propsForm, init } = props;
     try {
       const res = await propsForm.validateFields();
-      console.log('  res await 结果  ：', res); //
+      console.log('  res await 结果  ：', res);
       // this.props.addUserAsync({
       //   ...res,
       // });
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   showResultModal = e => {
@@ -186,7 +186,7 @@ class Contract extends PureComponent {
 
   renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap, showResultModal } = this.state; //
+    const { show, title, action, titleMap, showResultModal } = this.state;
 
     const modalProps = {
       title: title,
@@ -213,23 +213,23 @@ class Contract extends PureComponent {
 
   onModalOk = async props => {
     console.log(' onModalOk,  , ： ', props);
-    const { modalAction, itemDetail } = this.props; //
-    const { form, init } = props; //
+    const { modalAction, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, modalAction); //
+      console.log('  res await 结果  ：', res, modalAction);
       if (modalAction === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderContent = e => {
     console.log('    renderContent ： ', e, this.state, this.props);
-    const { modalAction } = this.props; //
+    const { modalAction } = this.props;
     const formComProps = {
       modalAction,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
@@ -239,7 +239,7 @@ class Contract extends PureComponent {
     if (modalAction !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <ContractStepForm {...formComProps}></ContractStepForm>;
   };
   renderFormModal = params => {
@@ -299,16 +299,16 @@ class Contract extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (['showPDF'].includes(action)) {
       this.props.onCancel();
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -328,11 +328,11 @@ class Contract extends PureComponent {
         this.props.onCancel();
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUserAsync: params => this.props.getUserAsync({ keyword: params }),
@@ -342,7 +342,7 @@ class Contract extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     if (action === 'showPDF') {
-      console.log('showPDF this.state, this.props ： ', this.state, this.props); //
+      console.log('showPDF this.state, this.props ： ', this.state, this.props);
       // return <SmartShowPDF src={'http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf'} ></SmartShowPDF>;
       return (
         <SmartShowPDF
@@ -364,7 +364,7 @@ class Contract extends PureComponent {
       );
     }
 
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return (
       <>
         <div className={'fje'}>
@@ -398,7 +398,7 @@ class Contract extends PureComponent {
       ' Contract 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
     // this.showRelativeForm({action: 'edit',  });
   }
 

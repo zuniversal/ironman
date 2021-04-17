@@ -9,11 +9,11 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { notifyTypeConfig } from '@/configs';
 
 const AlarmTemplateTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {

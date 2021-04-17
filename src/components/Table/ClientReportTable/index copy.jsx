@@ -24,13 +24,13 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
-import { HOUSENO } from '@/constants'; //
-import { linkUrlFn } from '@/utils'; //
+import SmartTable from '@/common/SmartTable';
+import { HOUSENO } from '@/constants';
+import { linkUrlFn } from '@/utils';
 
 const ClientReportTable = props => {
-  console.log(' ClientReportTable ： ', props); //
-  const { tdClick, add, edit, showPdfModal, showDetail } = props; //
+  console.log(' ClientReportTable ： ', props);
+  const { tdClick, add, edit, showPdfModal, showDetail } = props;
 
   const columns = [
     {

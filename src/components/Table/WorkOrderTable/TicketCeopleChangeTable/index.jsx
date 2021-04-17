@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import {
   workOrderStatusMap,
   missionsTypeMap,
@@ -27,7 +27,7 @@ const TicketCeopleChangeTable = props => {
     showDetail,
     addTicket,
     add,
-  } = props; //
+  } = props;
 
   const columns = [
     {

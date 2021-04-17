@@ -12,18 +12,18 @@ import {
   Typography,
   Divider,
 } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
-import CsUserCenterForm from '@/components/Form/CsUserCenterForm'; //
-import CsUserCenterEditForm from '@/components/Form/CsUserCenterEditForm'; //
-import ResultModal from '@/components/Modal/ResultModal'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
+import SearchForm from '@/common/SearchForm';
+import CsUserCenterForm from '@/components/Form/CsUserCenterForm';
+import CsUserCenterEditForm from '@/components/Form/CsUserCenterEditForm';
+import ResultModal from '@/components/Modal/ResultModal';
+import SmartModal from '@/common/SmartModal';
+import SmartFormModal from '@/common/SmartFormModal';
+import DropDownBtn from '@/common/DropDownBtn';
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
+import UploadFileCom from '@/components/Widgets/UploadFileCom';
+import SuccResult from '@/components/Widgets/SuccResult';
 
-import { actions, mapStateToProps } from '@/models/csUserCenter'; //
+import { actions, mapStateToProps } from '@/models/csUserCenter';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -56,13 +56,13 @@ class CsUserCenter extends PureComponent {
 
   renderForm = params => {
     console.log(' renderForm ： ', params, this.state, this.props);
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       // init: this.props.userInfo.user,
       init: this.props.itemDetail,
     };
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return this.props.isStartEdit ? (
       <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
     ) : (
@@ -74,10 +74,10 @@ class CsUserCenter extends PureComponent {
   };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);
-    const { form, action } = props; //
+    const { form, action } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'edit') {
         if (res.logo && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
@@ -91,7 +91,7 @@ class CsUserCenter extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -100,7 +100,7 @@ class CsUserCenter extends PureComponent {
       ' CsUserCenter 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
     this.props.getItemAsync({});
   }
 

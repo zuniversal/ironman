@@ -22,9 +22,9 @@ import {
 } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import { regoins } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import { regoins } from '@/configs';
 
 export const config = [
   {
@@ -222,9 +222,9 @@ const init = {
 
 const ClientFormModal = props => {
   const [form] = Form.useForm();
-  console.log(' ClientFormModal ： ', props, form); //
+  console.log(' ClientFormModal ： ', props, form);
 
-  const { show, onOk, onCancel, onSubmit, onFail } = props; //
+  const { show, onOk, onCancel, onSubmit, onFail } = props;
 
   // const onOk = e => {
   //   console.log(' onOk   e, ,   ： ', e);

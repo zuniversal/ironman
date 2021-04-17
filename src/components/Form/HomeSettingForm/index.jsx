@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 import { Tabs, Checkbox } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -77,7 +77,7 @@ const tabPanesConfig = [
 ];
 
 const TabPanes = props => {
-  const { tabData } = props; //
+  const { tabData } = props;
   return (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
@@ -96,10 +96,10 @@ TabPanes.defaultProps = {
 };
 
 const HomeSettingForm = props => {
-  console.log(' HomeSettingForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' HomeSettingForm ： ', props);
+  const { formBtn, ...rest } = props;
 
-  console.log(' checkboxConfig ： ', checkboxConfig); //
+  console.log(' checkboxConfig ： ', checkboxConfig);
   // const CheckboxItems = checkboxData.map(v => (
   //   v.type === 'custom' ? <div>ssssssssss</div> : <Checkbox key={v.value} value={v.value}>
   //     {v.label}

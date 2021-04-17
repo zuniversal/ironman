@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const HomeWorkOrderTable = props => {
@@ -22,7 +22,7 @@ const HomeWorkOrderTable = props => {
     exportData,
     addTicket,
     add,
-  } = props; //
+  } = props;
 
   const columns = [
     {

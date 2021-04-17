@@ -2,7 +2,7 @@ import React, { useEffect, useRef, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import { Spin } from 'antd';
-import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar'; //
+import SmartCalendar, { CalendarDraggable } from '@/common/SmartCalendar';
 
 const items = { title: '部门会议x', start: '2020-10-08' };
 const items2 = {

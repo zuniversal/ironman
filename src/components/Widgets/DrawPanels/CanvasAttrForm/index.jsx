@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import { halfFormLayouts } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import { halfFormLayouts } from '@/configs';
 import { layout } from '@topology/layout';
 import { canvas } from '../index';
 
@@ -91,7 +91,7 @@ const CanvasAttrForm = props => {
     // layout(canvas.data.pens, {bkColor: '#000000', grid: false,   });
     // canvas.updateProps(true, canvas.data.pens);
     // if (canvas) {
-    //   console.log(' value ： ', params.value, canvas.data); //
+    //   console.log(' value ： ', params.value, canvas.data);
     //   layout(canvas.data.pens, params.value);
     //   canvas.updateProps(true, canvas.data.pens);
     // }

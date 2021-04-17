@@ -3,7 +3,7 @@ import './style.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { history, connect } from 'umi';
 import loginAvatar from '@/static/assets/loginAvatar.png';
-import ForgetPwdForm from '@/components/Form/ForgetPwdForm'; //
+import ForgetPwdForm from '@/components/Form/ForgetPwdForm';
 import { tips } from '@/utils';
 
 const ForgetPwd = props => {

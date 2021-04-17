@@ -54,7 +54,7 @@ const useFormItem = props => {
     plainText,
 
     isDisabledAll,
-  } = props; //
+  } = props;
 
   const realComProps = {
     // className: 'w-320',
@@ -126,12 +126,12 @@ const useFormItem = props => {
 };
 
 const SmartFormTable = props => {
-  const { edit, remove } = props; //
+  const { edit, remove } = props;
   console.log(
     ' %c SmartFormTable 组件 ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
 
   const {
     name,
@@ -141,7 +141,7 @@ const SmartFormTable = props => {
     actionCol,
     onFieldChange,
     data,
-  } = props; //
+  } = props;
   const [configs, setConfigs] = useState(config);
 
   const rules = (params, extra) => {
@@ -159,7 +159,7 @@ const SmartFormTable = props => {
   return (
     <Form.List name={name}>
       {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', fields); //
+        console.log(' dataInit  fieldsfields ： ', fields);
         // const config = [
         //   { name: 'monitor_a', label: 'A' },
         //   { name: 'monitor_b', label: 'B' },
@@ -191,7 +191,7 @@ const SmartFormTable = props => {
                     className={'add'}
                     onClick={() => {
                       // add('', 0);
-                      console.log(' adddatasdatas ： ', configs, data); //
+                      console.log(' adddatasdatas ： ', configs, data);
                       if (
                         data.filter(v => v.editing).length > 0 ||
                         data.length === 0
@@ -224,7 +224,7 @@ const SmartFormTable = props => {
                   props,
                   fields,
                   configs,
-                ); //
+                );
                 const formItem = configs.map(({ editing, ...v }, index) => (
                   <Form.Item
                     rules={noRule || noRuleAll ? undefined : rules(v)}
@@ -243,7 +243,7 @@ const SmartFormTable = props => {
                       },
                     }}
                     // onValuesChange={(params, rest) => {
-                    //   console.log(' params, rest ： ', params, rest); //
+                    //   console.log(' params, rest ： ', params, rest);
                     //   // onFieldChange && onFieldChange({ value, formData, form: formControl })
                     // }}
                   >
@@ -283,7 +283,7 @@ const SmartFormTable = props => {
                           onClick={async () => {
                             // try {
                             //   const res = await props.form.validateFields();
-                            // console.log('  res await 结果  ：', res, res.values); //
+                            // console.log('  res await 结果  ：', res, res.values);
                             // console.log('  resresres ：', res,  )//
                             const datas = props.form.getFieldValue(name);
                             console.log(
@@ -293,10 +293,10 @@ const SmartFormTable = props => {
                               i,
                               name,
                               datas,
-                            ); //
+                            );
                             props.save({ data: datas[i], datas, i });
                             // } catch (error) {
-                            //   console.log(' errorerror ： ', error); //
+                            //   console.log(' errorerror ： ', error);
                             // }
                           }}
                         >

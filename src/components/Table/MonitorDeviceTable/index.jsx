@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { monitorDeviceStatusMap, networkTypeMap } from '@/configs';
 import useHttp from '@/hooks/useHttp';
 import { getManufacturerList } from '@/services/monitorManage';
@@ -19,6 +19,9 @@ const MonitorDeviceTable = props => {
     },
   );
 
+  const manufacturerModelList = []
+  manufacturerList.forEach(v => manufacturerModelList.push(...formatSelectList(v.models)))
+  
   const columns = [
     {
       title: 'Id',
@@ -40,22 +43,27 @@ const MonitorDeviceTable = props => {
     {
       title: '型号',
       dataIndex: 'model',
+      dataMap: arrMapObj(manufacturerModelList),
     },
     {
       title: 'IMEI号',
       dataIndex: 'imei',
     },
     {
-      title: '压变',
-      dataIndex: 'voltage_ratio',
+      title: '物联网卡号',
+      dataIndex: 'iccid',
     },
-    {
-      title: '流变',
-      dataIndex: 'current_ratio',
-    },
+    // {
+    //   title: '压变',
+    //   dataIndex: 'voltage_ratio',
+    // },
+    // {
+    //   title: '流变',
+    //   dataIndex: 'current_ratio',
+    // },
     {
       title: '网络类型',
-      dataIndex: 'manufacturer',
+      dataIndex: 'network_type',
       dataMap: networkTypeMap,
     },
     {

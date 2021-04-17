@@ -17,7 +17,7 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 const CanvasProps = props => {
-  console.log(' CanvasPropsCanvasProps props ： ', props); //
+  console.log(' CanvasPropsCanvasProps props ： ', props);
   const { data, onFormValueChange } = props;
   const { lineWidth, dash, strokeStyle, name, fromArrow, toArrow } =
     data?.line || {};
@@ -31,7 +31,7 @@ const CanvasProps = props => {
       props,
       changedValues,
       allValues,
-    ); //
+    );
     // form.validateFields((err, value) => {
     //   if (err) return;
     //   if (Object.keys(data).length === 0) return;

@@ -2,8 +2,8 @@ import React from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
 
-import InputCom from '@/components/Widgets/InputCom'; //
-import SmartVideo from '@/common/SmartVideo'; //
+import InputCom from '@/components/Widgets/InputCom';
+import SmartVideo from '@/common/SmartVideo';
 
 const CsHomeVideo = props => {
   console.log(' CsHomeVideo   props, ,   ： ', props);

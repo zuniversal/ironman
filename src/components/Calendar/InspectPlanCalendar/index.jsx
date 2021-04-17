@@ -5,8 +5,8 @@ import { Input, Tooltip, Popover, Button } from 'antd';
 import SmartCalendar, {
   CalendarDraggable,
   dayCellContent,
-} from '@/common/SmartCalendar'; //
-import { ANIMATE, PRIMARY } from '@/constants'; //
+} from '@/common/SmartCalendar';
+import { ANIMATE, PRIMARY } from '@/constants';
 import { CloseOutlined, BarsOutlined } from '@ant-design/icons';
 import SmartInput from '@/common/SmartInput';
 
@@ -108,7 +108,7 @@ const ShiftsArrangeDetailList = props => {
     `color: #333; font-weight: bold`,
     props,
   );
-  const { className, leftTitle, rightTitle, type } = props; //
+  const { className, leftTitle, rightTitle, type } = props;
 
   const Com = (
     <div className={`${className} `}>
@@ -195,7 +195,7 @@ const ShiftsArrangeList = props => {
     `color: #333; font-weight: bold`,
     props,
   );
-  const { className, leftTitle, rightTitle, placement, noToolTip } = props; //
+  const { className, leftTitle, rightTitle, placement, noToolTip } = props;
 
   const Com = (
     <>
@@ -335,7 +335,7 @@ const InspectPlanCalendar = props => {
     console.log(' eventMouseEnter   ,   ： ', params);
   };
 
-  console.log(' cusRef ： ', cusRef, calendarRef); //
+  console.log(' cusRef ： ', cusRef, calendarRef);
 
   return (
     <div className="inspectPlanCalendar ">
@@ -387,13 +387,13 @@ const InspectPlanCalendar = props => {
         // }
         // dayMaxEvents={0}
         eventContent={eventInfo => {
-          // console.log(' eventInfo ： ', eventInfo); //
+          // console.log(' eventInfo ： ', eventInfo);
           return (
             // <PopoverCom>
             <div
               className={`eventWrapper ellipsis`}
               onClick={e => {
-                console.log(' eventWrappereventWrapper ： '); //
+                console.log(' eventWrappereventWrapper ： ');
               }}
             >
               {eventInfo.event.title?.split('客户')[0]}

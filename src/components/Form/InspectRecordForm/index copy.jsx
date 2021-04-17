@@ -17,15 +17,15 @@ import {
   Tabs,
   Divider,
 } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import SmartImg from '@/common/SmartImg'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-import SmartExportPdf from '@/common/SmartExportPdf'; //
+import SmartForm from '@/common/SmartForm';
+import SmartImg from '@/common/SmartImg';
+import InputCom from '@/components/Widgets/InputCom';
+import SmartExportPdf from '@/common/SmartExportPdf';
 
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData, tab } = props; //
+  const { tabData, tab } = props;
   return (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
@@ -127,8 +127,8 @@ const inputBefore = (
 );
 
 const InspectRecordForm = props => {
-  console.log(' InspectRecordForm ： ', props, props.init); //
-  const { formBtn, init, ...rest } = props; //
+  console.log(' InspectRecordForm ： ', props, props.init);
+  const { formBtn, init, ...rest } = props;
 
   const {
     // power_data = [{}],
@@ -146,7 +146,7 @@ const InspectRecordForm = props => {
     // spectOut: power_data[0].spect_out ? power_data[0].spect_out : [],
     spectOut: props.init.spect_out,
   });
-  console.log(' dataInit ： ', dataInit, power_data); //
+  console.log(' dataInit ： ', dataInit, power_data);
 
   // const powerData =
   setTimeout(() => {
@@ -180,7 +180,7 @@ const InspectRecordForm = props => {
   const spectInItem = (
     <Form.List name="spectIn" key={'spectIn'}>
       {(fields, { add, remove }) => {
-        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields); //
+        console.log(' dataInit  fieldsfields ： ', dataInit.spectIn, fields);
         const spectInConfig = [
           { name: 'v_ab', label: 'AB' },
           { name: 'v_bc', label: 'BC' },
@@ -844,7 +844,7 @@ const InspectRecordForm = props => {
 
     // <Form.List name="spectOut" key={'spectOut'}>
     //   {(fields, { add, remove }) => {
-    //     console.log(' dataInit  fieldsfields ： ', dataInit.spectOut, fields); //
+    //     console.log(' dataInit  fieldsfields ： ', dataInit.spectOut, fields);
     //     const spectOutConfig = [
     //       { name: 'monitor_a', label: 'A' },
     //       { name: 'monitor_b', label: 'B' },

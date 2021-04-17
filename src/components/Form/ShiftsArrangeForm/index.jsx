@@ -17,9 +17,9 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const choiceRadios = [
   { value: '是', key: 'yes' },
@@ -27,9 +27,9 @@ const choiceRadios = [
 ];
 
 const ShiftsArrangeForm = props => {
-  console.log(' ShiftsArrangeForm ： ', props); //
+  console.log(' ShiftsArrangeForm ： ', props);
 
-  const { getCapture, showFormModal } = props; //
+  const { getCapture, showFormModal } = props;
 
   const config = [
     {

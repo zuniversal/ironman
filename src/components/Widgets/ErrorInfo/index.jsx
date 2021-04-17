@@ -45,4 +45,4 @@ const ErrorInfo = props => {
   );
 };
 
-export default ErrorInfo; //
+export default ErrorInfo;

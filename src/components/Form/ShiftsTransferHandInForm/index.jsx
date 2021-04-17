@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import InputCom from '@/components/Widgets/InputCom';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const ticketConfig = [
   {
@@ -18,9 +18,9 @@ const ticketConfig = [
 ];
 
 const ShiftsTransferHandInForm = props => {
-  console.log(' ShiftsTransferHandInForm ： ', props); //
+  console.log(' ShiftsTransferHandInForm ： ', props);
 
-  const { getCapture, showFormModal } = props; //
+  const { getCapture, showFormModal } = props;
 
   const config = [
     {

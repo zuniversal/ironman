@@ -6,8 +6,8 @@ import SmartCalendar, {
   CalendarDraggable,
   dayCellContent,
   formatDay,
-} from '@/common/SmartCalendar'; //
-import moment from 'moment'; //
+} from '@/common/SmartCalendar';
+import moment from 'moment';
 import business from 'moment-business';
 
 const items = { title: '部门会议x', start: '2020-10-08' };
@@ -67,7 +67,7 @@ const ShiftsArrangeDetailCalendar = props => {
     console.log(' eventDrop   ,   ： ', params);
   };
 
-  console.log(' calendarRef ： ', calendarRef, moment().get('month')); //
+  console.log(' calendarRef ： ', calendarRef, moment().get('month'));
 
   return (
     <div className="shiftsArrangeDetailCalendar ">
@@ -88,7 +88,7 @@ const ShiftsArrangeDetailCalendar = props => {
           //   params,
           //   formatDay(params),
           //   params.date,
-          // ); //
+          // );
           return (
             <div className={`fsb`} onClick={e => props.dayClick(params)}>
               {dayCellContent(params)}

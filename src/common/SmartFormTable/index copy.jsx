@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './style.less';
 import { Input, Button } from 'antd';
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 export const TableInput = props => {
-  const { text, record, index, keys } = props; //
+  const { text, record, index, keys } = props;
   return props.record.isEdit ? (
     <Input
       defaultValue={text}
@@ -26,12 +26,12 @@ export const TableInput = props => {
 };
 
 const SmartFormTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
   console.log(
     ' %c SmartFormTable 组件 ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
   const [data, setData] = useState([{ key: Math.random() }]);
 
   const dataSource = data;
@@ -80,7 +80,7 @@ const SmartFormTable = props => {
         <>
           <a
             onClick={() => {
-              console.log(' record ：, ', props, record, edit); //
+              console.log(' record ：, ', props, record, edit);
               add({
                 ...record,
                 index,
@@ -92,7 +92,7 @@ const SmartFormTable = props => {
           </a>
           <a
             onClick={() => {
-              console.log(' remove record ： ', props, record, index); //
+              console.log(' remove record ： ', props, record, index);
               remove({
                 ...record,
                 index,

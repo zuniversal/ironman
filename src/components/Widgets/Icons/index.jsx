@@ -20,17 +20,17 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import Icon from '@ant-design/icons';
-import dog from '@/static/img/dog.jpg'; //
-import logo from '@/static/img/logo.png'; //
-import bell from '@/static/img/bell.png'; //
-import search from '@/static/img/search.png'; //
-import ok from '@/static/img/ok.png'; //
-import close from '@/static/img/close.png'; //
-import warning from '@/static/img/warning.png'; //
-import bigScreen from '@/static/img/bigScreen.png'; //
-import miniPower from '@/static/img/miniPower.png'; //
-import setting from '@/static/img/setting.png'; //
-import powerStatus from '@/static/img/powerStatus.png'; //
+import dog from '@/static/img/dog.jpg';
+import logo from '@/static/img/logo.png';
+import bell from '@/static/img/bell.png';
+import search from '@/static/img/search.png';
+import ok from '@/static/img/ok.png';
+import close from '@/static/img/close.png';
+import warning from '@/static/img/warning.png';
+import bigScreen from '@/static/img/bigScreen.png';
+import miniPower from '@/static/img/miniPower.png';
+import setting from '@/static/img/setting.png';
+import powerStatus from '@/static/img/powerStatus.png';
 
 // import * as Imgs from '@/static/img'//
 
@@ -177,4 +177,4 @@ Icons.propTypes = {
   className: PropTypes.string,
 };
 
-export default Icons; //
+export default Icons;

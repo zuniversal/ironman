@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const formLayouts = {
   labelCol: {
@@ -14,7 +14,7 @@ const formLayouts = {
 const checkboxData = [{ label: '短信通知客户', value: '', key: '' }];
 
 const InspectPlanAddForm = props => {
-  console.log(' InspectPlanAddForm ： ', props); //
+  console.log(' InspectPlanAddForm ： ', props);
 
   const config = [
     {

@@ -79,6 +79,6 @@ export const formatClientFormData = data => {
     data4,
     data5,
     newData,
-  ); //
+  );
   return newData;
 };

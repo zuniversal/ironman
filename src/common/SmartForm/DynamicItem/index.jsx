@@ -24,7 +24,7 @@ import {
   PlusOutlined,
   MinusOutlined,
 } from '@ant-design/icons';
-import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE } from '@/constants';
 import {
   mockFormData,
   renderSelectOp,
@@ -32,7 +32,7 @@ import {
   formatConfig,
   renderCheckboxOp,
   tips,
-} from '@/utils'; //
+} from '@/utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -129,7 +129,7 @@ const rowLayout = {
 };
 
 const DynamicItemForm = props => {
-  console.log(' DynamicItemForm ： ', props); //
+  console.log(' DynamicItemForm ： ', props);
   const {
     key,
     itemProps,
@@ -158,7 +158,7 @@ const DynamicItemForm = props => {
     value,
     noPh,
     action,
-  } = props; //
+  } = props;
 
   // const selectDatas = filterSelect ? selectData.filter((v) => {
   //   const isContain = value.every(item => v.id != item)
@@ -195,7 +195,7 @@ const DynamicItemForm = props => {
       disabled: value.includes(`${v.value}`),
     }));
   }
-  console.log(' selectDatas, selectData ： ', selectDatas, selectData); //
+  console.log(' selectDatas, selectData ： ', selectDatas, selectData);
   // const selectDatas = selectData
 
   return (
@@ -230,7 +230,7 @@ const DynamicItemForm = props => {
         // console.log('  formLabel ：', formLabel,  )//
 
         const placeholder =
-          noPh || action === 'detail' || isDisabledAll ? '' : formLabel; //
+          noPh || action === 'detail' || isDisabledAll ? '' : formLabel;
 
         if (isDisabledAll) {
           comProps.disabled = true;
@@ -241,7 +241,7 @@ const DynamicItemForm = props => {
           className: ` ${comProps.className} `,
           placeholder: placeholder,
         };
-        // console.log(' realComProps ： ', realComProps); //
+        // console.log(' realComProps ： ', realComProps);
 
         const selectProps = {
           allowClear: true,
@@ -253,7 +253,7 @@ const DynamicItemForm = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          // console.log(' selectSearch ： ', props.selectSearch); //
+          // console.log(' selectSearch ： ', props.selectSearch);
           selectProps.showArrow = false;
           selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {
@@ -269,7 +269,7 @@ const DynamicItemForm = props => {
         // const selectCom2 = (
         //   <Select {...selectProps}>{renderSelectOp(selectData, opType)}</Select>
         // );
-        // console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2); //
+        // console.log(' selectCom, selectCom2 ： ', selectCom, selectCom2);
         const formItemMap = {
           rowText: label,
           Label: LabelCom,
@@ -330,7 +330,7 @@ const DynamicItemForm = props => {
             //   ...fields,
             // ]
             fieldsData.map((field, index) => {
-              const fieldKey = name ? name : field.name; //
+              const fieldKey = name ? name : field.name;
               console.log(
                 ' 动态表单 fieldKey ：',
                 fields,
@@ -338,7 +338,7 @@ const DynamicItemForm = props => {
                 name,
                 fieldKey,
                 props,
-              ); //
+              );
 
               // if (init) {
               //   init.forEach((v, i) => {
@@ -470,4 +470,4 @@ DynamicItemForm.defaultProps = {
   limit: 10,
 };
 
-export default DynamicItemForm; //
+export default DynamicItemForm;

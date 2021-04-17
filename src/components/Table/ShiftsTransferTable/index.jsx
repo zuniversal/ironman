@@ -9,8 +9,8 @@ import React, {
 } from 'react';
 import './style.less';
 
-import { onDutyTypeMap } from '@/configs'; //
-import SmartTable from '@/common/SmartTable'; //
+import { onDutyTypeMap } from '@/configs';
+import SmartTable from '@/common/SmartTable';
 
 const ShiftsTransferTable = props => {
   const {
@@ -20,7 +20,7 @@ const ShiftsTransferTable = props => {
     tdClick,
     showTransferDetail,
     showDetail,
-  } = props; //
+  } = props;
 
   const columns = [
     {
@@ -48,7 +48,7 @@ const ShiftsTransferTable = props => {
   ];
 
   // const extra = (text, record, index, ) => {
-  //   console.log(' text, record, index  ： ', text, record, index); //
+  //   console.log(' text, record, index  ： ', text, record, index);
   //   return (
   //     <>
   //       <a onClick={() => showDetail({ action: 'detail', record: record.id })}>查看</a>
@@ -59,7 +59,7 @@ const ShiftsTransferTable = props => {
     <>
       {/* <a
         onClick={() => {
-          console.log(' propsprops ： ', props); //
+          console.log(' propsprops ： ', props);
           showTransferDetail({
             action: 'detail',
             d_id: record[props.rowKey],

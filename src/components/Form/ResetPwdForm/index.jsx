@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartForm from '@/common/SmartForm';
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 import SmartImg from '@/common/SmartImg';
 
 const ResetPwdForm = props => {
-  console.log(' ResetPwdForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' ResetPwdForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

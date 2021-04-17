@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
@@ -10,6 +10,7 @@ import {
   filterObjSame,
   format2Null,
 } from '@/utils';
+import moment from 'dayjs';
 
 const namespace = 'powerStation';
 const { createActions } = init(namespace);
@@ -73,7 +74,7 @@ export const getIsRight = (
   data,
   // validateConfig = validateConfig,
 ) => {
-  console.log(' getIsRight data ： ', data); //
+  console.log(' getIsRight data ： ', data);
   let isRight = true;
   // powerInfoData.forEach((item) => {
   data.forEach((item, i) => {
@@ -88,7 +89,7 @@ export const getIsRight = (
     });
   });
   return isRight;
-}; //
+};
 
 const initItem = {
   key: Math.random(),
@@ -145,7 +146,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -154,7 +155,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -179,22 +180,25 @@ export default {
         electricalinfromation_set,
         outline_set,
         service_team = [],
+        end_time,
       } = payload.bean;
       const { houseNoList, teamList, clientList } = state;
 
       const customer = payload.bean.customer || {};
-      console.log('  customer ：', customer); //
+      console.log('  customer ：', customer);
 
       const datas = electricalinfromation_set.map(v => ({
         ...v,
         voltage_level: v.voltage_level ?? '',
         key: Math.random(),
       }));
-      console.log(' getItemgetItem ： ', payload, datas); //
+      console.log(' getItemgetItem ： ', payload, datas);
       const itemDetail = {
         ...payload.bean,
         electricity_user: `${electricity_user.id}`,
         customer: `${customer.id}`,
+        end_time: end_time ? moment(end_time) : null,
+        inspection_type: payload.bean.inspection_type ?? 0,
       };
       // if (itemDetail.inspection_type === 0 && Array.isArray(itemDetail.service_team)) {
       //   itemDetail.service_team = itemDetail.service_team.split(',')
@@ -204,18 +208,18 @@ export default {
         itemDetail.inspection_type !== 1 &&
         Array.isArray(itemDetail.service_team)
       ) {
-        console.log(' itemDetail.service_team 0 ： ', itemDetail.service_team); //
+        console.log(' itemDetail.service_team 0 ： ', itemDetail.service_team);
         itemDetail.service_team = `${itemDetail.service_team[0].id}`;
       }
       if (
         itemDetail.inspection_type === 1 &&
         Array.isArray(itemDetail.service_team)
       ) {
-        console.log(' itemDetail.service_team 1 ： ', itemDetail.service_team); //
+        console.log(' itemDetail.service_team 1 ： ', itemDetail.service_team);
         itemDetail.service_team = itemDetail.service_team.map(v => `${v.id}`);
       }
       if (!itemDetail.service_team) {
-        console.log(' itemDetail.service_team 2 ： ', itemDetail.service_team); //
+        console.log(' itemDetail.service_team 2 ： ', itemDetail.service_team);
         itemDetail.service_team = null;
       }
 
@@ -240,7 +244,7 @@ export default {
         electricityUserItem,
         houseNoListData,
         houseNoListFitler,
-      ); //
+      );
 
       return {
         ...state,
@@ -296,9 +300,9 @@ export default {
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type); //
+      console.log(' removeItems 修改  ： ', state, payload, type);
       const removeList = payload.payload.id.split(',');
-      console.log(' removeList ： ', removeList); //
+      console.log(' removeList ： ', removeList);
       return {
         ...state,
         dataList: state.dataList.filter(v =>
@@ -315,7 +319,7 @@ export default {
     },
     addPowerInfo(state, { payload, type }) {
       const { powerInfoData } = state;
-      console.log(' addPowerInfo ： ', state, payload, powerInfoData); //
+      console.log(' addPowerInfo ： ', state, payload, powerInfoData);
       return {
         ...state,
         // powerInfoData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
@@ -323,7 +327,7 @@ export default {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -336,14 +340,14 @@ export default {
     },
     editPowerInfo(state, { payload, type }) {
       const { powerInfoData } = state;
-      console.log(' editPowerInfo ： ', state, payload, powerInfoData); //
+      console.log(' editPowerInfo ： ', state, payload, powerInfoData);
       return {
         ...state,
         powerInfoData: powerInfoData.map((v, i) => {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -355,7 +359,7 @@ export default {
       };
     },
     removePowerInfo(state, { payload, type }) {
-      console.log(' removePowerInfo ： ', state, payload); //
+      console.log(' removePowerInfo ： ', state, payload);
       const { powerInfoData } = state;
       const { action, key, index, value } = payload.payload;
       let newData = [];
@@ -370,17 +374,17 @@ export default {
           v.id != payload.payload.id,
           v.id,
           payload.id,
-        ); //
+        );
         return v.id != payload.payload.id;
       });
-      console.log(' newData ： ', newData); //
+      console.log(' newData ： ', newData);
       return {
         ...state,
         powerInfoData: newData,
       };
     },
     modifyPowerInfo(state, { payload, type }) {
-      console.log(' modifyPowerInfo ： ', state, payload); //
+      console.log(' modifyPowerInfo ： ', state, payload);
       const { powerInfoData } = state;
       const { action, keys, key, index, value } = payload;
       let newData = [];
@@ -407,14 +411,14 @@ export default {
         newData = powerInfoData.filter((v, i) => v.key != key);
       }
 
-      console.log(' modifyPowerInfo 修改  ： ', state, payload, type, newData); //
+      console.log(' modifyPowerInfo 修改  ： ', state, payload, type, newData);
       return {
         ...state,
         powerInfoData: newData,
       };
     },
     getPower(state, { payload, type }) {
-      console.log(' getPower 修改  ： ', state, payload, type); //
+      console.log(' getPower 修改  ： ', state, payload, type);
       return {
         ...state,
         powerList: formatPowerList(payload.list, 'name', 'name'),
@@ -462,7 +466,7 @@ export default {
           countryList: data,
         };
       }
-      console.log(' getDistrict ： ', state, payload, datas); //
+      console.log(' getDistrict ： ', state, payload, datas);
 
       return {
         ...state,
@@ -490,7 +494,7 @@ export default {
 
     addOutLineTableItem(state, { payload, type }) {
       const { outLineTableData } = state;
-      console.log(' addOutLineTableItem ： ', state, payload, outLineTableData); //
+      console.log(' addOutLineTableItem ： ', state, payload, outLineTableData);
       return {
         ...state,
         // outLineTableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
@@ -498,7 +502,7 @@ export default {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -517,14 +521,14 @@ export default {
         state,
         payload,
         outLineTableData,
-      ); //
+      );
       return {
         ...state,
         outLineTableData: outLineTableData.map((v, i) => {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -536,7 +540,7 @@ export default {
       };
     },
     removeOutLineTableItem(state, { payload, type }) {
-      console.log(' removeOutLineTableItem ： ', state, payload); //
+      console.log(' removeOutLineTableItem ： ', state, payload);
       const { outLineTableData } = state;
       const { action, key, index, value } = payload.payload;
       let newData = [];
@@ -551,17 +555,17 @@ export default {
           v.id != payload.payload.id,
           v.id,
           payload.id,
-        ); //
+        );
         return v.id != payload.payload.id;
       });
-      console.log(' newData ： ', newData); //
+      console.log(' newData ： ', newData);
       return {
         ...state,
         outLineTableData: newData,
       };
     },
     modifyOutLineTableItem(state, { payload, type }) {
-      console.log(' modifyOutLineTableItem ： ', state, payload); //
+      console.log(' modifyOutLineTableItem ： ', state, payload);
       const { outLineTableData } = state;
       const { action, keys, key, index, value } = payload;
       let newData = [];
@@ -594,7 +598,7 @@ export default {
         payload,
         type,
         newData,
-      ); //
+      );
       return {
         ...state,
         outLineTableData: newData,
@@ -602,19 +606,19 @@ export default {
     },
 
     addCircuitItem(state, { payload, type }) {
-      console.log(' addCircuitItem ： ', state, payload); //
+      console.log(' addCircuitItem ： ', state, payload);
       return {
         ...state,
       };
     },
     editCircuitItem(state, { payload, type }) {
-      console.log(' editCircuitItem ： ', state, payload); //
+      console.log(' editCircuitItem ： ', state, payload);
       return {
         ...state,
       };
     },
     removeCircuitItem(state, { payload, type }) {
-      console.log(' removeCircuitItem ： ', state, payload); //
+      console.log(' removeCircuitItem ： ', state, payload);
       return {
         ...state,
       };
@@ -635,7 +639,7 @@ export default {
         action,
         params,
         this,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({
         type: 'getList',
@@ -664,7 +668,7 @@ export default {
         outLineTableData,
         powerInfoData,
         payload,
-      ); //
+      );
 
       // if (powerInfoData.length < 1) {
       //   tips('电源列表不能为空！', 2);
@@ -707,7 +711,7 @@ export default {
       // }
 
       // const isRight = getIsRight(powerInfoData);
-      // console.log(' isRight ： ', isRight); //
+      // console.log(' isRight ： ', isRight);
       // if (isRight !== true) {
       //   tips(
       //     `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
@@ -724,9 +728,9 @@ export default {
       };
       if (payload.inspection_time) {
         params.inspection_time = params.inspection_time.join(',');
-        console.log(' params ： ', params); //
+        console.log(' params ： ', params);
       }
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
 
       const res = yield call(services.addItem, params);
       // const res = yield call(services.addItem, {payload});
@@ -745,7 +749,7 @@ export default {
         powerInfoData,
         outLineTableData,
         payload,
-      ); //
+      );
       // if (powerInfoData.length < 1) {
       //   tips('电源列表不能为空！', 2);
       //   return;
@@ -764,7 +768,7 @@ export default {
       //   return;
       // }
       const isRight = getIsRight(powerInfoData);
-      console.log(' isRight ： ', isRight); //
+      console.log(' isRight ： ', isRight);
       // if (isRight !== true) {
       //   tips(
       //     `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
@@ -780,9 +784,9 @@ export default {
       };
       if (payload.inspection_time) {
         params.inspection_time = params.inspection_time.join(',');
-        console.log(' params ： ', params); //
+        console.log(' params ： ', params);
       }
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
       const res = yield call(services.editItem, params);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -797,7 +801,7 @@ export default {
       });
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemsAsync ： ', payload, type); //
+      console.log(' removeItemsAsync ： ', payload, type);
       const res = yield call(services.removeItems, payload);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -809,7 +813,7 @@ export default {
       return res;
     },
     *exportDutyDataAsync({ payload, action, type }, { call, put }) {
-      console.log(' exportDutyDataAsync ： ', payload, type); //
+      console.log(' exportDutyDataAsync ： ', payload, type);
       const res = yield call(services.exportDutyData, payload);
       return res;
     },
@@ -818,7 +822,7 @@ export default {
     //   const { powerInfoData } = yield select(state => state[namespace]);
     //   const isRight = getIsRight(powerInfoData);
     //   console.log(' addPowerInfoAsync ： ', payload, powerInfoData);
-    //   console.log(' isRight ： ', isRight); //
+    //   console.log(' isRight ： ', isRight);
     //   if (isRight !== true) {
     //     tips(
     //       `电源列表 第${isRight.i + 1}行 ${isRight.key} 字段值不能为空！`,
@@ -916,7 +920,7 @@ export default {
       );
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload); //
+      console.log(' getTeamAsync ： ', payload);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
@@ -933,7 +937,7 @@ export default {
     },
     *batchGetAsync({ payload, action, type }, { call, put }) {
       // *getBelongHouseNoAsync({ payload, action, type }, { call, put }) {
-      console.log(' batchGetAsync ： '); //
+      console.log(' batchGetAsync ： ');
       const res = yield [
         call(clientServices.getList, payload),
         call(houseNoServices.getList, {
@@ -943,13 +947,13 @@ export default {
           customer: 1,
         }),
       ];
-      console.log('  reresresress ：', res); //
+      console.log('  reresresress ：', res);
     },
 
     *getDistrictAsync({ payload, action, type }, { call, put }) {
-      console.log(' getDistrictAsync ： ', payload, type); //
+      console.log(' getDistrictAsync ： ', payload, type);
       const res = yield call(clientServices.getDistrict, payload);
-      console.log('  getDistrictAsync res ：', res); //
+      console.log('  getDistrictAsync res ：', res);
       yield put(
         action({
           ...res,
@@ -1037,11 +1041,11 @@ export default {
   },
   // subscriptions: {
   //   setup: (props) => {
-  //     console.log(' setupsetup ： ', props, this); //
-  //     const { dispatch, history } = props; //
+  //     console.log(' setupsetup ： ', props, this);
+  //     const { dispatch, history } = props;
   //     //
   //     // const res = await Promise.allSettled(11)
-  //     // console.log(' resresres ： ', res); //
+  //     // console.log(' resresres ： ', res);
   //   },
   // },
 };

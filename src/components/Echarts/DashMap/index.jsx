@@ -19,10 +19,10 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartEcharts from '@/common/SmartEcharts'; //
+import SmartEcharts from '@/common/SmartEcharts';
 
 const DashMap = props => {
-  console.log(' DashMap ： ', props); //
+  console.log(' DashMap ： ', props);
 
   return (
     <div className={''}>

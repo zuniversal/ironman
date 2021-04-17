@@ -1,9 +1,9 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const selectData = [
   {
@@ -41,8 +41,8 @@ export const config = [
 ];
 
 const SmOrganizeForm = props => {
-  console.log(' SmOrganizeForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' SmOrganizeForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   return (
     <div className={' SmOrganizeForm '}>

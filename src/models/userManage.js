@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/userManage';
 import * as organizeServices from '@/services/organize';
 import * as roleServices from '@/services/role';
@@ -45,7 +45,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -53,7 +53,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -76,7 +76,7 @@ export default {
     },
     getItem(state, { payload, type }) {
       const { roles, tags, account } = payload.bean;
-      console.log(' getItemgetItem ： ', payload, account); //
+      console.log(' getItemgetItem ： ', payload, account);
       const role_ids = roles[0]?.role_id ? `${roles[0]?.role_id}` : null;
       const tag_ids = tags[0]?.tag_id ? `${tags[0]?.tag_id}` : null;
       return {
@@ -127,7 +127,7 @@ export default {
     },
 
     getOrganize(state, { payload, type }) {
-      console.log(' getOrganize ： ', state, payload); //
+      console.log(' getOrganize ： ', state, payload);
       const organizeList = recursiveHandle(payload.list);
       return {
         ...state,
@@ -162,12 +162,12 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload); //
+      console.log(' getItemAsync ： ', payload);
       const res = yield call(services.getItem, payload);
       // const res = yield call(services.getItem, {
       //   user_id: payload.d_id,
@@ -175,7 +175,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' addItemAsync ： ', payload); //
+      console.log(' addItemAsync ： ', payload);
       const params = {
         ...payload,
         account: {
@@ -187,7 +187,7 @@ export default {
           username: payload.username,
         },
       };
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
       // return
       const res = yield call(services.addItem, params);
       yield put({ type: 'getListAsync' });
@@ -204,7 +204,7 @@ export default {
           username: payload.username,
         },
       };
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
       const res = yield call(services.editItem, params);
       yield put({ type: 'getListAsync' });
     },
@@ -226,7 +226,7 @@ export default {
         // action,
         // params,
         all,
-      ); //
+      );
       // const res = yield call(services.getList, params);
       // yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -242,22 +242,22 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getSearchList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
-      console.log(' getOrganizeAsync ： ', payload); //
+      console.log(' getOrganizeAsync ： ', payload);
       const res = yield call(organizeServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getRoleAsync({ payload, action, type }, { call, put }) {
-      console.log(' getRoleAsync ： ', payload); //
+      console.log(' getRoleAsync ： ', payload);
       const res = yield call(roleServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getTagsAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTagsAsync ： ', payload); //
+      console.log(' getTagsAsync ： ', payload);
       const res = yield call(tagsServices.getList, payload);
       yield put(action({ ...res, payload }));
     },

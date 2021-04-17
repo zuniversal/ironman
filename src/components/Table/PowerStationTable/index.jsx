@@ -9,12 +9,12 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { history } from 'umi';
 import { DRAW_PANEL } from '@/constants';
 
 const PowerStationTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {

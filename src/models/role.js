@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/role';
 import * as permissionServices from '@/services/permission';
 import { formatSelectList, nowYearMonth } from '@/utils';
@@ -48,7 +48,7 @@ const formatPerms = (data = []) => {
     }),
   );
   const [item1, ...rest] = init;
-  // console.log(' initinitinitinit ： ', init, rest); //
+  // console.log(' initinitinitinit ： ', init, rest);
   return init;
   return rest;
 };
@@ -63,7 +63,7 @@ export const flatData = (data = {}, init = {}) => {
       flatData(data[key].sub, init);
     }
   });
-  console.log(' init ： ', init); //
+  console.log(' init ： ', init);
   return init;
 };
 
@@ -84,7 +84,7 @@ export const flatData = (data = {}, init = {}) => {
 export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
   // console.log(' recursiveHandle   ,   ： ', data, parent_id);
   data.forEach(v => {
-    // console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]); //
+    // console.log(' recursiveHandle ： ', perms, v, v.authKey, perms[v.authKey]);
     const value =
       v.authKey && perms[v.authKey] ? perms[v.authKey][0].value : Math.random();
     const item = {
@@ -130,7 +130,7 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
     //   `22${item.authKey}11`,
     //   perms[item.authKey],
     //   data,
-    // ); //
+    // );
     const value =
       item.authKey && perms[item.authKey]
         ? perms[item.authKey][0].value
@@ -194,7 +194,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -202,7 +202,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -220,11 +220,11 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const permsData = payload.bean.perms_codes.filter(
         v => !`${v}`.endsWith('00'),
       );
-      console.log('  permsData ：', payload.bean.perms_codes, permsData); //
+      console.log('  permsData ：', payload.bean.perms_codes, permsData);
       return {
         ...state,
         action: payload.payload.action,
@@ -262,7 +262,7 @@ export default {
     },
 
     getPermission(state, { payload, type }) {
-      console.log(' getPermission ： ', state, payload); //
+      console.log(' getPermission ： ', state, payload);
       // const permsData = flatData(payload.bean.system.sub)
       const permsData = flatData(payload.bean);
       const routeData = payload.payload.filter(v => !v.noAuth);
@@ -278,7 +278,7 @@ export default {
         permsData,
         dataArr,
         allRouteData,
-      ); //
+      );
       return {
         ...state,
         permission: [
@@ -296,7 +296,7 @@ export default {
       };
     },
     onPermsCheck(state, { payload, type }) {
-      console.log(' onPermsCheck ： ', state, payload); //
+      console.log(' onPermsCheck ： ', state, payload);
       return {
         ...state,
         permsData: payload,
@@ -317,7 +317,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -339,19 +339,19 @@ export default {
     },
 
     *getPermissionAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPermissionAsync ： ', payload); //
+      console.log(' getPermissionAsync ： ', payload);
       const res = yield call(permissionServices.getList);
       yield put(action({ ...res, payload }));
     },
   },
   // subscriptions: {
   //   setup(props) {
-  //     console.log(' setup ： ', props); //
-  //     const { dispatch, history } = props; //
+  //     console.log(' setup ： ', props);
+  //     const { dispatch, history } = props;
   //     history.listen(location => {
-  //       console.log(' 匹配 ： ', location); //
-  //     }); //
-  //     return location => console.log(' unlistenFunction匹配 ： ', location); //
+  //       console.log(' 匹配 ： ', location);
+  //     });
+  //     return location => console.log(' unlistenFunction匹配 ： ', location);
   //   },
   // },
 };

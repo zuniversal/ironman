@@ -126,7 +126,7 @@ const MonitorManageForm = props => {
   //     : [],
   //   // noMountFetch: true,
   // });
-  // console.log(' powerStationList ： ', powerStationList); //
+  // console.log(' powerStationList ： ', powerStationList);
   // const {
   //   data: houseNoList,
   //   setData: setHouseNoList,
@@ -166,7 +166,7 @@ const MonitorManageForm = props => {
   const onFieldChange = params => {
     console.log(' onFieldChange  ： ', params);
     const changeKey = Object.keys(params.value)[0];
-    console.log('  changeKey ：', changeKey); //
+    console.log('  changeKey ：', changeKey);
     if (changeKey === 'electricity_user_id') {
       getHouseNoAsync({ customer: formVals.customer_id, params });
     } else if (changeKey === 'station_id') {

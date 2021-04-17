@@ -9,13 +9,13 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
-import { HOUSENO } from '@/constants'; //
-import { linkUrlFn } from '@/utils'; //
+import SmartTable from '@/common/SmartTable';
+import { HOUSENO } from '@/constants';
+import { linkUrlFn } from '@/utils';
 import { voltageLevelMap } from '@/configs';
 
 const CsClientReportTable = props => {
-  const { tdClick, add, edit, showDetail } = props; //
+  const { tdClick, add, edit, showDetail } = props;
 
   const columns = [
     {
@@ -127,7 +127,7 @@ const CsClientReportTable = props => {
               ' 1111111 ： ',
               props.searchInfo.year_month,
               props.searchInfo.year_month.format('YYYY-MM'),
-            ); //
+            );
             props.exportData({
               action: 'getClientReportUpgradeAsync',
               reqMethod: 'getClientReportUpgradeAsync',

@@ -1,4 +1,4 @@
-import { init } from '@/utils/createAction'; //
+import { init } from '@/utils/createAction';
 import * as services from '@/services/user';
 import * as userCenterServices from '@/services/userCenter';
 import { formatSelectList, openNotification, setItem, getItem } from '@/utils';
@@ -33,7 +33,7 @@ export const userActions = actions;
 export const mapStateToProps = state => state[namespace];
 
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
-console.log(' userInfo ： ', userInfo); //
+console.log(' userInfo ： ', userInfo);
 
 export const flatAuthTest = (data = []) => {
   // console.log(' flatAuthTest   ,   ： ', data, authData);
@@ -123,7 +123,7 @@ console.log(
   routesData,
   recursiveAuth(routesData.route.routes, authData),
   flatAuth(authData),
-); //
+);
 
 export default {
   namespace,
@@ -146,14 +146,14 @@ export default {
 
   reducers: {
     toggle(state, { payload, type }) {
-      console.log(' toggle 修改  ： ', state, payload, type); //
+      console.log(' toggle 修改  ： ', state, payload, type);
       return {
         ...state,
         system: state.system == 'CS' ? 'OM' : 'CS',
       };
     },
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -161,7 +161,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -177,7 +177,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -218,7 +218,7 @@ export default {
         ' getRoutes(authData) login .userInfo.userInfo：state ',
         routeData,
         payload,
-      ); //
+      );
       return {
         ...state,
         userInfo: payload,
@@ -236,7 +236,7 @@ export default {
       };
     },
     // saveHomeSetting(state, { payload, type }) {
-    //   console.log(' saveHomeSetting 修改  ： ', state, payload, type); //
+    //   console.log(' saveHomeSetting 修改  ： ', state, payload, type);
     //   const { userInfo } = state;
     //   setItem(`${userInfo.id}_homeSettings`, payload.homeSettings)
     //   return {
@@ -249,16 +249,16 @@ export default {
 
   effects: {
     *loginAsync({ payload, action, type }, { call, put }) {
-      console.log(' loginAsync ： '); //
+      console.log(' loginAsync ： ');
       const res = yield call(services.login, payload);
-      console.log(' loginAsync ： ', res, payload, action); //
+      console.log(' loginAsync ： ', res, payload, action);
       setItem('token', res.rest.token, true);
       setItem('tokens', res.rest.token);
       // const userInfo = yield call(userCenterServices.getItem, payload);
 
       const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
-      // console.log(' enterprise ： ', enterprise); //
+      // console.log(' enterprise ： ', enterprise);
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {
@@ -271,13 +271,13 @@ export default {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
-      // console.log(' userInfo2 ： ', userInfo); //
+      // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',
         payload: userInfo,
       });
       const path = homeMap[accountType] ? homeMap[accountType] : '/';
-      console.log(' path ： ', path, accountType, resData); //
+      console.log(' path ： ', path, accountType, resData);
       // if (resData.rest.code === AUTH_FAIL) {
       //   history.push(LOGIN);
       // } else {
@@ -289,14 +289,14 @@ export default {
       });
     },
     *logoutAsync({ payload, action, type }, { call, put }) {
-      console.log(' logoutAsync ： ', payload, action, type); //
+      console.log(' logoutAsync ： ', payload, action, type);
       // const res = yield call(services.logout, payload);
       history.push(LOGIN);
       window.location.reload();
       // yield put(action({ ...res, payload }));
     },
     *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
+      console.log(' getListAsync ： ', payload, action, type);
       const res = yield call(services.getList, payload);
       yield put(action({ ...res, payload }));
     },
@@ -318,10 +318,10 @@ export default {
     },
 
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserInfoAsync ： ', payload, action, type); //
+      console.log(' getUserInfoAsync ： ', payload, action, type);
       const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
-      // console.log(' enterprise ： ', enterprise); //
+      // console.log(' enterprise ： ', enterprise);
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
       const userInfo = {
@@ -334,7 +334,7 @@ export default {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
-      // console.log(' userInfo2 ： ', userInfo); //
+      // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',
         payload: userInfo,
@@ -342,14 +342,14 @@ export default {
     },
 
     *getNotifyAsync({ payload, action, type }, { call, put }) {
-      console.log(' getNotifyAsync ： ', payload, action, type); //
+      console.log(' getNotifyAsync ： ', payload, action, type);
       const res = yield call(services.getNotify, payload);
-      console.log(' getNotifyAsync res ： ', res); //
+      console.log(' getNotifyAsync res ： ', res);
       // yield put(action({ ...res, payload }));
     },
 
     *getUserMsgAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserMsgAsync ： ', payload, action, type); //
+      console.log(' getUserMsgAsync ： ', payload, action, type);
       const res = yield call(services.getUserMsg, payload);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -361,8 +361,8 @@ export default {
 
   subscriptions: {
     setup: props => {
-      console.log(' 用户 setup ： ', props, this); //
-      const { dispatch, history } = props; //
+      console.log(' 用户 setup ： ', props, this);
+      const { dispatch, history } = props;
 
       dispatch({
         type: 'getUserMsgAsync',
@@ -372,14 +372,14 @@ export default {
       });
 
       history.listen(location => {
-        console.log(' 监听路由 匹配 ： ', history, location); //
+        console.log(' 监听路由 匹配 ： ', history, location);
         const { pathname } = location;
         if (pathname !== '/login') {
           dispatch({
             type: 'getUserInfoAsync',
           });
         }
-      }); //
+      });
 
       return;
       const msgs = [
@@ -406,12 +406,12 @@ export default {
       // const websocket = new window.WebSocket(notifyWs);
       //连接成功建立的回调方法
       websocket.onopen = event => {
-        console.log(' websocket.onopen ： ', event); //
+        console.log(' websocket.onopen ： ', event);
       };
 
       //连接发生错误的回调方法
       websocket.onerror = () => {
-        console.log(' websocket.onerror ： '); //
+        console.log(' websocket.onerror ： ');
       };
 
       //接收到消息的回调方法
@@ -422,7 +422,7 @@ export default {
 
       //连接关闭的回调方法
       websocket.onclose = () => {
-        console.log(' websocket.onclose ： '); //
+        console.log(' websocket.onclose ： ');
       };
 
       // const socket = io('ws://121.40.165.18:8800');

@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { contractTypeConfig } from '@/configs'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { contractTypeConfig } from '@/configs';
 
 const ContractSearchForm = props => {
-  console.log(' ContractSearchForm ： ', props); //
+  console.log(' ContractSearchForm ： ', props);
 
-  const { formBtn } = props; //
+  const { formBtn } = props;
 
   const config = [
     // {

@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import UserManageForm from '@/components/Form/UserManageForm'; //
-import UserManageSearchForm from '@/components/Form/UserManageSearchForm'; //
-import UserManageTable from '@/components/Table/UserManageTable'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import UserManageForm from '@/components/Form/UserManageForm';
+import UserManageSearchForm from '@/components/Form/UserManageSearchForm';
+import UserManageTable from '@/components/Table/UserManageTable';
 
-import { actions, mapStateToProps } from '@/models/userManage'; //
+import { actions, mapStateToProps } from '@/models/userManage';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -85,7 +85,7 @@ class UserManage extends PureComponent {
         formData.organization_id != undefined,
         `${value.value}`.trim(),
         `${formData.value}`.trim(),
-      ); //
+      );
       this.props.getSearchListAsync(formData);
       return;
     }
@@ -94,7 +94,7 @@ class UserManage extends PureComponent {
     //   tips('搜索参数不能为空！', 2);
     //   return;
     // }
-    console.log(' 列表搜索 ： '); //
+    console.log(' 列表搜索 ： ');
     this.props.getListAsync(formData);
   };
   renderTable = params => {
@@ -126,12 +126,12 @@ class UserManage extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -154,12 +154,12 @@ class UserManage extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -177,7 +177,7 @@ class UserManage extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <UserManageForm {...formComProps}></UserManageForm>;
   };
   renderSmartFormModal = params => {
@@ -194,10 +194,10 @@ class UserManage extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getAllAsync(); //
-    this.props.getOrganizeAsync({ page_size: 1000 }); //
-    this.props.getRoleAsync({ page_size: 1000 }); //
-    this.props.getTagsAsync({ page_size: 1000 }); //
+    this.props.getAllAsync();
+    this.props.getOrganizeAsync({ page_size: 1000 });
+    this.props.getRoleAsync({ page_size: 1000 });
+    this.props.getTagsAsync({ page_size: 1000 });
   }
 
   render() {

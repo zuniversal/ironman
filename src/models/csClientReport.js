@@ -1,7 +1,7 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csClientReport';
 import { formatSelectList, getUserInfo, nowYearMonth } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'csClientReport';
 const { createActions } = init(namespace);
@@ -22,14 +22,22 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
-console.log(' clientList ： ', clientList); //
+console.log(' clientList ： ', clientList);
 export const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
+  console.log(' formatSearch ： ', data);
   return {
     ...data,
     year_month: data.year_month ? data.year_month.format('YYYY-MM') : '',
   };
 };
+
+const filterKey = [
+  'number',
+  'name',
+  'service_staff_name',
+  'service_team_name',
+  'power_number',
+];
 
 export default {
   namespace,
@@ -54,7 +62,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -62,7 +70,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -71,9 +79,16 @@ export default {
       };
     },
     getList(state, { payload, type }) {
+      let dataList = payload.list
+      if (payload.searchInfo.filter) {
+        dataList = payload.list.filter(v => filterKey.some(key =>
+          `${v[key]}`.includes(payload.searchInfo.filter)
+        ))
+      }
+      console.log(' getListAsync res ： ', dataList, state, payload);
       return {
         ...state,
-        dataList: payload.list,
+        dataList: dataList,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -81,7 +96,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const { bill, inspect } = payload.bean;
 
       const itemDetail = {
@@ -170,7 +185,7 @@ export default {
             v.temperature,
             v.humidity,
             (v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %',
-          ); //
+          );
           return {
             ...v,
             // inspect_in: v?.inspect_in.map((v) => ({...v, })),
@@ -196,7 +211,7 @@ export default {
           };
         }),
       };
-      console.log(' itemDetail ： ', itemDetail); //
+      console.log(' itemDetail ： ', itemDetail);
       return {
         ...state,
         action: payload.payload.action,
@@ -234,14 +249,8 @@ export default {
     },
 
     getListFilter(state, { payload, type }) {
-      console.log(' getListFilter ： ', state, payload); //
+      console.log(' getListFilter ： ', state, payload);
       const { originData } = state;
-      const filterKey = [
-        'number',
-        'name',
-        'service_staff_name',
-        'service_team_name',
-      ];
 
       return {
         ...state,
@@ -253,6 +262,10 @@ export default {
           return isInclude;
         }),
         isShowModal: false,
+        searchInfo: {
+          ...state.searchInfo,
+          ...payload,
+        },
       };
     },
     closePdf(state, { payload, type }) {
@@ -262,7 +275,7 @@ export default {
       };
     },
     toggleExportPDF(state, { payload, type }) {
-      console.log(' toggleExportPDF ： ', payload); //
+      console.log(' toggleExportPDF ： ', payload);
       return {
         ...state,
         isExportPDF: !state.isExportPDF,
@@ -359,7 +372,7 @@ export default {
               };
             }),
             inspect: inspect.map(v => {
-              // console.log(' itemDetail ： ', v, v.temperature, v.humidity, ((v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %'),  ); //
+              // console.log(' itemDetail ： ', v, v.temperature, v.humidity, ((v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %'),  );
               return {
                 ...v,
                 // inspect_in: v?.inspect_in.map((v) => ({...v, })),
@@ -395,19 +408,24 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
+      console.log(' getListAsync ： ', payload, searchInfo, type);
       const params = {
         ...searchInfo,
         ...payload,
-        // customer_id: 1,
-        // customer_id: 2,
       };
-      console.log(' getListAsync ： ', searchInfo, payload, params); //
-      const { customer_id, ...rest } = params;
 
-      rest.query = customer_id.map(v => `customer_id=${v}`).join('&');
-      console.log(' getListgetList rest ： ', rest, customer_id); //
-      const res = yield call(services.getList, formatSearch(rest));
-      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
+      const res = yield call(services.getList, formatSearch(params));
+      let data = res.list
+      if (params.filter) {
+        data = res.list.filter(v => {
+          const isInclude = filterKey.some(key =>
+            `${v[key]}`.includes(params.filter),
+          );
+          return isInclude;
+        })
+      }
+      console.log(' getListAsync res ： ', data, res);
+      yield put({ type: 'getList', payload: { ...res, list: data, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);

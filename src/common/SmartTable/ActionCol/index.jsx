@@ -32,7 +32,7 @@ const ActionCol = props => {
             <a
               onClick={() => {
                 // edit({ action: 'edit', ...record });
-                console.log(' record ： ', props, record, edit); //
+                console.log(' record ： ', props, record, edit);
                 props.dataSource.length > 0
                   ? edit({
                       action: 'edit',
@@ -54,7 +54,7 @@ const ActionCol = props => {
           {!props.noRemove && (
             <a
               onClick={() => {
-                console.log(' removeremove ： ', props); //
+                console.log(' removeremove ： ', props);
                 remove({ record: formatData(record, props.rowKey) });
               }}
               // disabled={isDev ? false : authInfo.delete}
@@ -74,6 +74,6 @@ const ActionCol = props => {
       {extra(text, record, index, props)}
     </span>
   );
-}; //
+};
 
 export default ActionCol;

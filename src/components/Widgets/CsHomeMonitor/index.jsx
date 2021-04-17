@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 import { Form, Divider } from 'antd';
-import Icon from '@/components/Widgets/Icons'; //
+import Icon from '@/components/Widgets/Icons';
 
 const config = [
   {

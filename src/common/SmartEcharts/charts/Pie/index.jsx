@@ -1,7 +1,7 @@
 import { toolbox } from '../common';
 
 const option = (data, legend) => {
-  console.log(' data, legend ： ', data, legend); //
+  console.log(' data, legend ： ', data, legend);
   return {
     // color: color(),
     color: ['#108ee9', '#f50', '#13CE66', '#006699', '#e5323e', '#4cabce'],

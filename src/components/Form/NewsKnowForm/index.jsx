@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartForm from '@/common/SmartForm';
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 import UploadCom from '@/components/Widgets/UploadCom';
 import { knowledgeTypeConfig } from '@/configs';
 
@@ -12,7 +12,7 @@ const choiceRadios = [
 ];
 
 const NewsKnowForm = props => {
-  console.log(' NewsKnowForm ： ', props); //
+  console.log(' NewsKnowForm ： ', props);
 
   const config = [
     {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'; //
+import SmartForm from '@/common/SmartForm';
+import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 
 const datas = [
   {
@@ -17,8 +17,8 @@ const datas = [
 ];
 
 const InspectMissionDetailForm = props => {
-  console.log(' InspectMissionDetailForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' InspectMissionDetailForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

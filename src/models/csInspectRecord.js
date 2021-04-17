@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csInspectRecord';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
@@ -38,7 +38,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       if (payload.action === 'inspectReport') {
         // setTimeout(() => {
         //   window.print()
@@ -53,7 +53,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -75,7 +75,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const {
         created_time = '',
         start_time = '',
@@ -116,7 +116,7 @@ export default {
         })),
         spectInData,
       };
-      console.log(' getItemgetItem ： ', payload, itemDetail, power_data); //
+      console.log(' getItemgetItem ： ', payload, itemDetail, power_data);
 
       const formData = {
         ...payload.bean,
@@ -173,7 +173,7 @@ export default {
       };
     },
     toggleExportPDF(state, { payload, type }) {
-      console.log(' toggleExportPDF ： ', payload); //
+      console.log(' toggleExportPDF ： ', payload);
       return {
         ...state,
         isExportPDF: !state.isExportPDF,
@@ -196,12 +196,12 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload); //
+      console.log(' getItemAsync ： ', payload);
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },

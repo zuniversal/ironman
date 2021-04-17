@@ -18,18 +18,18 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-import HouseNoFormTable from '@/components/Table/HouseNoFormTable'; //
+import SmartForm from '@/common/SmartForm';
+import HouseNoFormTable from '@/components/Table/HouseNoFormTable';
 import {
   voltageLevelConfig,
   electricTypeConfig,
   billTypeConfig,
-} from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+} from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const HouseNoForm = props => {
-  console.log(' HouseNoForm ： ', props, config); //
-  const { action } = props; //
+  console.log(' HouseNoForm ： ', props, config);
+  const { action } = props;
 
   const capacityConfig = [
     {

@@ -53,4 +53,4 @@ const config = [
 
 const WeakFormPdf = props => <SmartPdf config={config} {...props}></SmartPdf>;
 
-export default WeakFormPdf; //
+export default WeakFormPdf;

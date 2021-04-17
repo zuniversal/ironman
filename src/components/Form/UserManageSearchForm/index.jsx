@@ -1,11 +1,11 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const UserManageSearchForm = props => {
-  console.log(' UserManageSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' UserManageSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

@@ -10,11 +10,11 @@ import React, {
 import './style.less';
 import { Tabs } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { ANIMATE } from '@/constants';
 
 const CsHomeTabsTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props; //
+  const { showModal, edit, remove, tdClick, complete } = props;
 
   const columns = [
     {
@@ -101,7 +101,7 @@ const CsHomeTabsTable = props => {
 };
 
 const CsHomeAssetsTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props; //
+  const { showModal, edit, remove, tdClick, complete } = props;
 
   const columns = [
     {

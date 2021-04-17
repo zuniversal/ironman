@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const BussniessRecordSearchForm = props => {
-  console.log(' BussniessRecordSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' BussniessRecordSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

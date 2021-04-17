@@ -16,10 +16,10 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import InputCom from '@/components/Widgets/InputCom';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const ticketConfig = [
   { name: 'ing', left: '执行中', right: '张' },
@@ -28,9 +28,9 @@ const ticketConfig = [
 ];
 
 const ShiftsTransferForm = props => {
-  console.log(' ShiftsTransferForm ： ', props); //
+  console.log(' ShiftsTransferForm ： ', props);
 
-  const { getCapture, showFormModal } = props; //
+  const { getCapture, showFormModal } = props;
 
   const config = [
     {

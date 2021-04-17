@@ -54,7 +54,7 @@ class Fb extends React.Component {
   };
   filter = e => {
     console.log('    filter ： ', e);
-    const { data, selectItem } = this.state; //
+    const { data, selectItem } = this.state;
     this.setState({
       // data: data.map((v) => ({...v, match: v.name.includes(selectItem),   } )),
       data: data.map(v => ({ ...v, match: v.name == selectItem })),
@@ -62,7 +62,7 @@ class Fb extends React.Component {
   };
   open = e => {
     console.log('    open ： ', e);
-    const { data, selectItem } = this.state; //
+    const { data, selectItem } = this.state;
     const datas = data.map((v, i) => {
       if (v.name == selectItem) {
         console.log(
@@ -92,7 +92,7 @@ class Fb extends React.Component {
     // })
   };
   onSelect = selectItem => {
-    const { data } = this.state; //
+    const { data } = this.state;
     const res = data.map(v => ({
       ...v,
       match: `${v.name}`.includes(selectItem),
@@ -112,7 +112,7 @@ class Fb extends React.Component {
   };
   openMulti = index => {
     console.log('    openMulti ： ', index);
-    const { data } = this.state; //
+    const { data } = this.state;
     data.forEach((v, i) => {
       console.log(
         ' data v ： ',
@@ -141,10 +141,10 @@ class Fb extends React.Component {
       // console.log(' datas v ： ', v,  )
       return v.datas;
     });
-    console.log(' datas3333 ： ', datas, originData ? 1 : 2); //
+    console.log(' datas3333 ： ', datas, originData ? 1 : 2);
 
     const datas2 = originData ? originData : datas;
-    console.log(' datas2 ： ', datas2); //
+    console.log(' datas2 ： ', datas2);
     const data = datas2
       // .map((v) => {
       //   console.log(' v.id ： ', v.id,  )//
@@ -169,7 +169,7 @@ class Fb extends React.Component {
   componentDidMount() {
     // this.getExec()
     const datas = getItem('data');
-    console.log('  datas ：', datas); //
+    console.log('  datas ：', datas);
     // datas.length ? this.getData() : this.getData(datas)
     this.getData(datas);
   }
@@ -180,7 +180,7 @@ class Fb extends React.Component {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div>
         <div className="">

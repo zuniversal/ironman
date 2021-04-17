@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
-import OperateRecordTable from '@/components/Table/OperateRecordTable'; //
-import OperateRecordForm from '@/components/Form/OperateRecordForm'; //
-import OperateRecordSearchForm from '@/components/Form/OperateRecordSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SearchForm from '@/common/SearchForm';
+import OperateRecordTable from '@/components/Table/OperateRecordTable';
+import OperateRecordForm from '@/components/Form/OperateRecordForm';
+import OperateRecordSearchForm from '@/components/Form/OperateRecordSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/operateRecord'; //
+import { actions, mapStateToProps } from '@/models/operateRecord';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -81,24 +81,24 @@ class OperateRecord extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -109,7 +109,7 @@ class OperateRecord extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <OperateRecordForm {...formComProps}></OperateRecordForm>;
   };
   renderSmartFormModal = params => {

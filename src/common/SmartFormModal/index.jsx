@@ -22,9 +22,9 @@ import {
   Col,
 } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-import SmartModal from '@/common/SmartModal'; //
-import { regoins } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import SmartModal from '@/common/SmartModal';
+import { regoins } from '@/configs';
 
 // 通用表单模态框组件 转发父组件传入的 表单属性给相应的表单
 // 统一自动创建 form 管理 转发 form 组件的状态供父组件使用
@@ -50,7 +50,7 @@ const SmartFormModal = props => {
     ...modalProps // 其余传给表单的属性
 
     // config,
-  } = props; //
+  } = props;
 
   // const [form = {setFieldsValue: () => {}, }, ] = show ? Form.useForm() : [];
   const [form] = show ? Form.useForm() : [];
@@ -78,13 +78,13 @@ const SmartFormModal = props => {
   //   modalProps,
   //   React.isValidElement(null),
   //   React.isValidElement(FormCom),
-  // ); //
+  // );
 
   const handleOk = e => {
     console.log(' handleOk   e, ,   ： ', e, props);
 
     const formValues = form.getFieldsValue();
-    console.log('  formValues ：', formValues, formComProps, init); //
+    console.log('  formValues ：', formValues, formComProps, init);
 
     // onOk && onOk({ e, form, init: init, });
     onOk && onOk({ e, form, init: init });

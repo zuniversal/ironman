@@ -9,10 +9,10 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 
 const AssetsTable = props => {
-  const { showModal, edit, remove, tdClick, showDetail } = props; //
+  const { showModal, edit, remove, tdClick, showDetail } = props;
 
   const columns = [
     // {

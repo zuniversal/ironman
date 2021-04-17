@@ -16,13 +16,13 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
-import ProvinceForm, { config } from '@/components/Form/ProvinceForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
+import ProvinceForm, { config } from '@/components/Form/ProvinceForm';
 
 const HouseNoSearchForm = props => {
-  console.log(' HouseNoSearchForm ： ', props); //
+  console.log(' HouseNoSearchForm ： ', props);
   const [form] = Form.useForm();
 
   const configs = [
@@ -92,7 +92,7 @@ const HouseNoSearchForm = props => {
     // },
   ];
 
-  const { formBtn, ...rest } = props; //
+  const { formBtn, ...rest } = props;
 
   return (
     <div className={'fsb HouseNoSearchForm '}>

@@ -10,13 +10,13 @@ import React, {
 import './style.less';
 import { Input, Button, Select, InputNumber } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { tips, renderSelectOp } from '@/utils';
 import { voltageLevelConfig, voltageLevelMap } from '@/configs';
 import PowerStationTable from '../PowerStationTable';
 
 export const DeviceInfoTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {
@@ -53,7 +53,7 @@ export const DeviceInfoTable = props => {
 };
 
 export const WatchInfoTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {
@@ -91,7 +91,7 @@ export const WatchInfoTable = props => {
 };
 
 export const selectCom = props => {
-  const { comProps, selectData, text, record } = props; //
+  const { comProps, selectData, text, record } = props;
   const selectProps = {
     allowClear: true,
     ...comProps,
@@ -125,7 +125,7 @@ export const getWidget = props => {
     keys,
     record,
     index,
-  } = props; //
+  } = props;
 
   const formItemMap = {
     rowText: label,
@@ -161,13 +161,13 @@ export const getWidget = props => {
 };
 
 export const TableInput = props => {
-  const { text, record, index, keys, dataMap } = props; //
-  console.log(' TableInput ： ', props); //
+  const { text, record, index, keys, dataMap } = props;
+  console.log(' TableInput ： ', props);
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
-  // ); //
+  // );
   if (dataMap && text) {
     return dataMap[text];
   }
@@ -176,12 +176,12 @@ export const TableInput = props => {
 };
 
 export const PowerStationDetailTable = props => {
-  const { showModal, edit, remove, tdClick, isDisabledAll } = props; //
+  const { showModal, edit, remove, tdClick, isDisabledAll } = props;
   console.log(
     ' %c PowerStationDetailTable 组件 ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
   // const [powerData, setPowerData] = useState([{ key: Math.random() }]);
 
   // const dataSource = powerData;
@@ -336,7 +336,7 @@ export const PowerStationDetailTable = props => {
         <>
           <a
             onClick={() => {
-              console.log(' record ：, ', props, record, edit); //
+              console.log(' record ：, ', props, record, edit);
               // const fn = record.id && record.isEdit
               if (isDisabledAll) {
                 return;
@@ -365,7 +365,7 @@ export const PowerStationDetailTable = props => {
           </a>
           <a
             onClick={() => {
-              console.log(' remove record ： ', props, record, index); //
+              console.log(' remove record ： ', props, record, index);
               if (isDisabledAll) {
                 return;
               }

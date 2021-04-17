@@ -45,7 +45,7 @@ const CanvasProps = props => {
     // fontFamily,
     ...data?.node,
   };
-  console.log(' CanvasProps ： ', props, initVal); //
+  console.log(' CanvasProps ： ', props, initVal);
 
   /**
    * 渲染位置和大小的表单
@@ -556,7 +556,7 @@ const CanvasProps = props => {
       props,
       changedValues,
       allValues,
-    ); //
+    );
     const { onFormValueChange } = props;
     if (props.data.node.name === 'echarts') {
       props.data.node.data.echarts.option.seriesFunction = changedValues.data;

@@ -1,7 +1,7 @@
 import React, { Component, useRef, useState } from 'react';
 import './style.less';
 import { Steps, Button } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import {
   missionsTypeConfig,
   missionsStatusConfig,
@@ -15,9 +15,9 @@ import MissionsHouseNoTable from '@/components/Table/MissionsHouseNoTable';
 import {
   MissionsClientForm,
   MissionsSimpleClientForm,
-} from '@/components/Form/MissionsManageActionForm'; //
-import SmartShowPDF from '@/common/SmartShowPDF'; //
-import SmartModal from '@/common/SmartModal'; //
+} from '@/components/Form/MissionsManageActionForm';
+import SmartShowPDF from '@/common/SmartShowPDF';
+import SmartModal from '@/common/SmartModal';
 import { tips } from '@/utils';
 import { getPdf } from '@/services/contract';
 import moment from 'moment';
@@ -25,7 +25,7 @@ import moment from 'moment';
 const { Step } = Steps;
 
 const CommonModal = props => {
-  console.log(' CommonModal ： ', props); //
+  console.log(' CommonModal ： ', props);
   // return <div>CommonModal</div>
   return (
     <SmartModal
@@ -49,7 +49,7 @@ CommonModal.defaultProps = {
 const editKey = ['describe', 'contacts', 'contacts_phone', 'remarks'];
 
 const MissionsManageForm = props => {
-  console.log(' MissionsManageForm ： ', props); //
+  console.log(' MissionsManageForm ： ', props);
   const [isShow, setIsShow] = useState(false);
   const [pdfData, setPdfData] = useState({});
   const [current, setCurrent] = useState(isDetail ? 1 : 0);
@@ -59,26 +59,26 @@ const MissionsManageForm = props => {
   const completeIndex = useRef(0);
 
   const onModalOk = params => {
-    console.log(' onModalOk params ： ', params); //
+    console.log(' onModalOk params ： ', params);
     setIsShow(!isShow);
   };
   const onModalCancel = params => {
-    console.log(' onModalCancel params ： ', params); //
+    console.log(' onModalCancel params ： ', params);
     setIsShow(!isShow);
   };
   const showFormModal = params => {
-    console.log(' showFormModal params ： ', params); //
+    console.log(' showFormModal params ： ', params);
     setPdfData(params);
     setIsShow(true);
   };
 
-  const { formBtn, action, ...rest } = props; //
+  const { formBtn, action, ...rest } = props;
   // const { file = [] } = props.init;
   const file = props.init.file ?? [];
 
   const isDetail = props.action === 'detail';
   const isEdit = props.action === 'edit';
-  console.log(' isDetail ： ', isDetail, isEdit); //
+  console.log(' isDetail ： ', isDetail, isEdit);
 
   const setContacter = params => {
     console.log(' setContacter   params,   ： ', params, props);
@@ -156,7 +156,7 @@ const MissionsManageForm = props => {
   ];
 
   const onServiceStaffChange = (e, params) => {
-    console.log(' onChange ： ', e, params, props, props.serviceStaffList); //
+    console.log(' onChange ： ', e, params, props, props.serviceStaffList);
     props.propsForm.setFieldsValue({
       service_phone: params.phone,
     });
@@ -446,7 +446,7 @@ const MissionsManageForm = props => {
   };
 
   const next = () => {
-    console.log(' next ： ', current, props); //
+    console.log(' next ： ', current, props);
     const indexs = current + 1;
     // if (Object.keys(props.init).length) {
     if (Object.keys(props.clientItem).length) {
@@ -462,7 +462,7 @@ const MissionsManageForm = props => {
   };
 
   const onSimpleMission = () => {
-    console.log(' onSimpleMission ： ', current, props); //
+    console.log(' onSimpleMission ： ', current, props);
     const indexs = current + 1;
     setCurrent(indexs);
     setSimpleMission(true);
@@ -474,7 +474,7 @@ const MissionsManageForm = props => {
   };
 
   const prev = () => {
-    console.log(' prev ： ', current); //
+    console.log(' prev ： ', current);
 
     if (current > 0) {
       setCurrent(current - 1);
@@ -482,7 +482,7 @@ const MissionsManageForm = props => {
       setFormKey(formKey + 1);
     }
   };
-  console.log(' current ： ', current); //
+  console.log(' current ： ', current);
 
   const contractStepConfig = [
     { key: 'client', title: '选择户号' },
@@ -567,7 +567,7 @@ const MissionsManageForm = props => {
     </>
   );
 
-  console.log(' missionsManage SmartForm props ： ', props, formKey); //
+  console.log(' missionsManage SmartForm props ： ', props, formKey);
 
   const MissionsClientFormCom = MissionsClientForm;
   // const MissionsClientFormCom = simpleMission && !isDetail ? MissionsSimpleClientForm : MissionsClientForm

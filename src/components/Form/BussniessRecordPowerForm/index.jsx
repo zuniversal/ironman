@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const BussniessRecordPowerForm = props => {
-  console.log(' BussniessRecordPowerForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' BussniessRecordPowerForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

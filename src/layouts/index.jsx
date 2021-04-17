@@ -16,12 +16,13 @@ import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
 import { history, connect } from 'umi';
 import './index.less';
 import './style.less';
-import { ANIMATE } from '@/constants'; //
-import Icon from '@/components/Widgets/Icons'; //
-import PageTitle from '@/components/Widgets/PageTitle'; //
-import LogoCom from '@/components/Widgets/LogoCom'; //
-import HeaderWidget from '@/components/Widgets/HeaderWidget'; //
-import { actions } from '@/models/layout'; //
+import { ANIMATE } from '@/constants';
+import Icon from '@/components/Widgets/Icons';
+import PageTitle from '@/components/Widgets/PageTitle';
+import LogoCom from '@/components/Widgets/LogoCom';
+import HeaderWidget from '@/components/Widgets/HeaderWidget';
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
+import { actions } from '@/models/layout';
 // import Icon from '@Widgets/Icons'//
 // import Icon from 'widgets/Icons'//
 // import UserCenterForm from '../../components/FormCom/index'//
@@ -29,9 +30,9 @@ import { actions } from '@/models/layout'; //
 // import '@/static/font/iconfont.css'
 
 // // import { login,  } from '@/services/user'//
-// import axios from 'axios'; //
+// import axios from 'axios';
 // const haveToken = localStorage.getItem('token');
-// console.log('  haveToken ：', haveToken); //
+// console.log('  haveToken ：', haveToken);
 // console.log('  对吗  !haveToken ', !haveToken);
 // if (!haveToken) {
 //   const res = axios
@@ -69,7 +70,7 @@ const Layouts = props => {
     accountType,
     getRoutes,
     userMsg,
-  } = props; //
+  } = props;
   const path = location.pathname;
   // const [pathname, setPathname] = useState('/welcome');
   const [pathname, setPathname] = useState(path);
@@ -82,7 +83,7 @@ const Layouts = props => {
   //   props,
   //   defaultProps,
   //   getRoutes,
-  // ); //
+  // );
   // return <div >{ props.children }</div>
 
   const goPage = path => {
@@ -105,7 +106,7 @@ const Layouts = props => {
   };
 
   // const getShowTitle = props => {
-  //   const { location } = props; //
+  //   const { location } = props;
   //   const { pathname } = location;
   //   const noTitlePath = ['/om/home', '/om/shiftsArrangeDetail'];
   //   const isInclude = noTitlePath.every(v => v !== pathname);
@@ -139,155 +140,157 @@ const Layouts = props => {
   // };
 
   return (
-    <div id="test-pro-layout" className={'layoutContainer'}>
-      <ProLayout
-        {...(system == 'CS' ? csRoutes : getRoutes)}
-        location={{
-          pathname: path,
-        }}
-        menu={{ defaultOpenAll: true }}
-        // onPageChange={e => {
-        //   console.log(' onPageChange 切换页面 ： ', e); //
+    <ErrorBoundary>
+      <div id="test-pro-layout" className={'layoutContainer'}>
+        <ProLayout
+          {...(system == 'CS' ? csRoutes : getRoutes)}
+          location={{
+            pathname: path,
+          }}
+          menu={{ defaultOpenAll: true }}
+          // onPageChange={e => {
+          //   console.log(' onPageChange 切换页面 ： ', e);
 
-        //   // return
-        // }}
-        // onMenuHeaderClick={e => {
-        //   console.log(' onMenuHeaderClick ： ', e); //
+          //   // return
+          // }}
+          // onMenuHeaderClick={e => {
+          //   console.log(' onMenuHeaderClick ： ', e);
 
-        //   // return
-        // }}
-        menuItemRender={(item, dom) => {
-          //console.log(' menuItemRender ： ', item, dom, pathname,   )
+          //   // return
+          // }}
+          menuItemRender={(item, dom) => {
+            //console.log(' menuItemRender ： ', item, dom, pathname,   )
 
-          // 调用 报错
-          // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
-          // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
-          if (item.path === path) {
-            // console.log(
-            //   ' 路径相同 ： ',
-            //   item,
-            //   item.path === path,
-            //   item.path,
-            //   path,
-            // ); //
-            // setTitle(item.name)
-            // props.dispatch(actions.setTitle(item.name));
-            // setTimeout(() => setTitle(item.name), 0);
-          }
-          if (item.notShowItem) {
-            return null;
-          }
-
-          return (
-            <a
-              className={'navItem'}
-              onClick={() => {
-                console.log(' onClickonClick ： ', item, pathname); //
-                // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
-                // const com = React.lazy(() => import(item.component))
-                // console.log(' com ： ', com, comRef.current, )//
-                // comRef.current = com//
-                // setPathname(item.path || '/welcome');
-                // setTitle(item.name)
-                // props.dispatch(actions.setTitle(item.name));
-                history.push(item.path);
-              }}
-            >
-              {dom}
-            </a>
-          );
-        }}
-        // Warning: pro-layout: renderPageTitle return value should be a string
-        // title={() => (
-        //   <div>
-        //     <SearchOutlined className={'m-r-10'}  />
-        //     title
-        //   </div>
-        // )}
-        className={'spinWrapperinWrap'}
-        logo={() => <LogoCom className={`logoClass`}></LogoCom>}
-        // Warning: pro-layout: renderPageTitle return value should be a string
-        // headerTitleRender={() => (
-        //   <div>
-        //     <MenuFoldOutlined />
-
-        //   </div>
-        // )}
-
-        // 会导致 导航栏 变黑色
-        // headerRender={() => (
-        //   <div>
-        //     headerRender
-
-        //   </div>
-        // )}
-
-        // 导航栏 左渲染
-        // headerContentRender={() => (
-        //   <div>
-        //     <MenuFoldOutlined />
-        //   </div>
-        // )}
-
-        // pageTitleRender={() => (
-        //   <div>
-        //     pageTitleRender
-        //   </div>
-        // )}
-        rightContentRender={() => (
-          <HeaderWidget
-            userInfo={userInfo}
-            system={system}
-            logout={logout}
-            toggle={toggle}
-            userMsg={userMsg}
-          ></HeaderWidget>
-        )}
-        // title={'POWERKEEPER'}
-        title={''}
-        // logo={null}
-        siderWidth={200}
-        {...settings}
-      >
-        <Suspense fallback={null} className={'spper'}>
-          {/* <Spin spinning={loading} spinning={false} className={'spinWrapper'}> */}
-          <Content
-            key={pathname}
-            // className={`${ANIMATE.flash} container `}
-            className={` container `}
-            style={
-              {
-                // margin: '20px',
-                // padding: '100px',
-                // minHeight: '100px',
-              }
+            // 调用 报错
+            // devScripts.js:5836 Warning: Cannot update a component (`Unknown`) while rendering a different
+            // component (`BaseMenu`). To locate the bad setState() call inside `BaseMenu`,
+            if (item.path === path) {
+              // console.log(
+              //   ' 路径相同 ： ',
+              //   item,
+              //   item.path === path,
+              //   item.path,
+              //   path,
+              // );
+              // setTitle(item.name)
+              // props.dispatch(actions.setTitle(item.name));
+              // setTimeout(() => setTitle(item.name), 0);
             }
-          >
-            {/* <div className="titleWrapper">
-                <div className="pageTitle">{title}</div>
-              </div> */}
+            if (item.notShowItem) {
+              return null;
+            }
 
-            {/* <PageTitle
-                {...props}
-                title={title}
-                className="titleWrapper"
-              ></PageTitle> */}
+            return (
+              <a
+                className={'navItem'}
+                onClick={() => {
+                  console.log(' onClickonClick ： ', item, pathname);
+                  // icon:    isMobile: false   isUrl: false   itemPath: "/户号管理"   key: "/户号管理"   locale: "menu.户号管理"   name: "户号管理"   onClick: ƒ onClick()   path: "/户号管理"   pro_layout_parentKeys: []   replace: false   propss: null
+                  // const com = React.lazy(() => import(item.component))
+                  // console.log(' com ： ', com, comRef.current, )//
+                  // comRef.current = com//
+                  // setPathname(item.path || '/welcome');
+                  // setTitle(item.name)
+                  // props.dispatch(actions.setTitle(item.name));
+                  history.push(item.path);
+                }}
+              >
+                {dom}
+              </a>
+            );
+          }}
+          // Warning: pro-layout: renderPageTitle return value should be a string
+          // title={() => (
+          //   <div>
+          //     <SearchOutlined className={'m-r-10'}  />
+          //     title
+          //   </div>
+          // )}
+          className={'spinWrapperinWrap'}
+          logo={() => <LogoCom className={`logoClass`}></LogoCom>}
+          // Warning: pro-layout: renderPageTitle return value should be a string
+          // headerTitleRender={() => (
+          //   <div>
+          //     <MenuFoldOutlined />
 
-            {/* <Com></Com> */}
-            {/* <UserCenterForm></UserCenterForm> */}
+          //   </div>
+          // )}
 
-            <div className="content">{children}</div>
-          </Content>
-          {/* </Spin> */}
-        </Suspense>
-      </ProLayout>
+          // 会导致 导航栏 变黑色
+          // headerRender={() => (
+          //   <div>
+          //     headerRender
 
-      {/* <SettingDrawer
-        getContainer={() => document.getElementById('test-pro-layout')}
-        settings={settings}
-        onSettingChange={changeSetting => setSetting(changeSetting)}
-      /> */}
-    </div>
+          //   </div>
+          // )}
+
+          // 导航栏 左渲染
+          // headerContentRender={() => (
+          //   <div>
+          //     <MenuFoldOutlined />
+          //   </div>
+          // )}
+
+          // pageTitleRender={() => (
+          //   <div>
+          //     pageTitleRender
+          //   </div>
+          // )}
+          rightContentRender={() => (
+            <HeaderWidget
+              userInfo={userInfo}
+              system={system}
+              logout={logout}
+              toggle={toggle}
+              userMsg={userMsg}
+            ></HeaderWidget>
+          )}
+          // title={'POWERKEEPER'}
+          title={''}
+          // logo={null}
+          siderWidth={200}
+          {...settings}
+        >
+          <Suspense fallback={null} className={'spper'}>
+            {/* <Spin spinning={loading} spinning={false} className={'spinWrapper'}> */}
+            <Content
+              key={pathname}
+              // className={`${ANIMATE.flash} container `}
+              className={` container `}
+              style={
+                {
+                  // margin: '20px',
+                  // padding: '100px',
+                  // minHeight: '100px',
+                }
+              }
+            >
+              {/* <div className="titleWrapper">
+                  <div className="pageTitle">{title}</div>
+                </div> */}
+
+              {/* <PageTitle
+                  {...props}
+                  title={title}
+                  className="titleWrapper"
+                ></PageTitle> */}
+
+              {/* <Com></Com> */}
+              {/* <UserCenterForm></UserCenterForm> */}
+
+              <div className="content">{children}</div>
+            </Content>
+            {/* </Spin> */}
+          </Suspense>
+        </ProLayout>
+
+        {/* <SettingDrawer
+          getContainer={() => document.getElementById('test-pro-layout')}
+          settings={settings}
+          onSettingChange={changeSetting => setSetting(changeSetting)}
+        /> */}
+      </div>
+    </ErrorBoundary>
   );
 };
 

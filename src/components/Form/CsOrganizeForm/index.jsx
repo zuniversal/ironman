@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const selectData = [
   {
@@ -30,8 +30,8 @@ const checkboxData = [
 ];
 
 const OrganizeForm = props => {
-  console.log(' OrganizeForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' OrganizeForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

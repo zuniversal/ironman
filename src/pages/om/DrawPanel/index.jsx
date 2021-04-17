@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-// import DrawPanels from '@/components/Widgets/DrawPanel'; //
-import DrawPanels from '@/components/Widgets/DrawPanels'; //
-import Preview from '@/components/Widgets/DrawPanels/Preview'; //
+import SmartFormModal from '@/common/SmartFormModal';
+// import DrawPanels from '@/components/Widgets/DrawPanel';
+import DrawPanels from '@/components/Widgets/DrawPanels';
+import Preview from '@/components/Widgets/DrawPanels/Preview';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { actions, mapStateToProps } from '@/models/drawPanel'; //
+import { actions, mapStateToProps } from '@/models/drawPanel';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -38,14 +38,14 @@ class DrawPanel extends PureComponent {
   }
 
   renderPreview = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       data: this.props.canvasData,
       show: this.props.isPreview,
       togglePreview: this.props.togglePreview,
       realParams: this.props.location.query,
     };
-    console.log(' formComProps ： ', formComProps, this.props); //
+    console.log(' formComProps ： ', formComProps, this.props);
 
     return this.props.isPreview && <Preview {...formComProps}></Preview>;
     if (this.props.isPreview) {
@@ -59,14 +59,14 @@ class DrawPanel extends PureComponent {
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       data: this.props.canvasData,
       show: this.props.isShowModal,
       realParams: this.props.location.query,
     };
-    console.log(' formComProps ： ', formComProps, this.props); //
+    console.log(' formComProps ： ', formComProps, this.props);
 
     if (action === 'preview') {
       return <Preview {...formComProps}></Preview>;
@@ -138,7 +138,7 @@ class DrawPanel extends PureComponent {
       ' DrawPanel 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
     const { powerstation_id, number } = this.props.location.query;
     if (powerstation_id) {
       this.props.getCircuitItemAsync({

@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
 
-import Icon from '@/components/Widgets/Icons'; //
+import Icon from '@/components/Widgets/Icons';
 
 const LogoCom = props => {
   // console.log(' LogoCom   props, ,   ： ', props,   );

@@ -18,11 +18,11 @@ import {
   Divider,
   DatePicker,
 } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import SmartImg from '@/common/SmartImg'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-// import SmartExportPdf from '@/common/SmartExportPdf'; //
-import useExportPdf from '@/hooks/useExportPdf'; //
+import SmartForm from '@/common/SmartForm';
+import SmartImg from '@/common/SmartImg';
+import InputCom from '@/components/Widgets/InputCom';
+// import SmartExportPdf from '@/common/SmartExportPdf';
+import useExportPdf from '@/hooks/useExportPdf';
 import { isDev } from '@/constants';
 import {
   voltageLevelConfig,
@@ -34,12 +34,12 @@ import {
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData, tab, index = 'index' } = props; //
+  const { tabData, tab, index = 'index' } = props;
   console.log(
     ' %c tabData 组件 this.state, this.props ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
   return (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={props.onChange}>
@@ -134,7 +134,7 @@ const electricFormLayouts = {
 };
 
 const StatusSelect = props => {
-  const { selectData = normalConfig, comProps = {} } = props; //
+  const { selectData = normalConfig, comProps = {} } = props;
   console.log(' StatusSelect   config,   ： ', props);
   return (
     <Form.Item name={props.name} noStyle>
@@ -158,7 +158,7 @@ const inputBefore = (
 );
 
 const createFormList = props => {
-  const { config = [], name } = props; //
+  const { config = [], name } = props;
   console.log(' createFormList   config,   ： ', props, config);
   const spectOutItem = (
     // <Form.List name={name} key={props.name + props.key}>
@@ -170,7 +170,7 @@ const createFormList = props => {
           props.dataInit,
           props.dataInit?.spectOut,
           fields,
-        ); //
+        );
 
         return (
           <>
@@ -269,7 +269,7 @@ const mergeData = params => {
       ...formValues.customer,
     },
     power_data: dataInit.power_data.map((item, idx) => {
-      console.log(' item ： ', item, formValues); //
+      console.log(' item ： ', item, formValues);
       const matchItem = idx == tabIndex;
       return {
         ...item,
@@ -289,7 +289,7 @@ const mergeData = params => {
       };
     }),
   };
-  console.log(' setData ： ', setData); //
+  console.log(' setData ： ', setData);
   return setData;
 };
 
@@ -297,7 +297,7 @@ const handleMaxChange = payload => {
   console.log(' handleMaxChange   payload,   ： ', payload);
   const { aimFor, keys, index, formVal, form, value } = payload;
   const { powerData } = formVal;
-  console.log(' powerData ： ', powerData); //
+  console.log(' powerData ： ', powerData);
   const maxMDKeys = ['peak_md', 'flat_1_md', 'flat_2_md', 'valley_md'];
   const maxMDArr = maxMDKeys.map(v => powerData[v]).filter(v => v);
   const maxMDVal = Math.max(...maxMDArr);
@@ -312,7 +312,7 @@ const handleMaxChange = payload => {
 };
 
 const InspectRecordForm = props => {
-  const { formBtn, init, isExportPDF, formData, ...rest } = props; //
+  const { formBtn, init, isExportPDF, formData, ...rest } = props;
   // const [isEdit, setIsEdit] = useState(false);
   // const {isEdit,  } = props//
   // const isEdit = isDev ? true : props.isEdit;
@@ -322,7 +322,7 @@ const InspectRecordForm = props => {
   const [modalExport, setModalExport] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
 
-  console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport); //
+  console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport);
 
   // const isExport = isExportPDF || !modalExport
   const isExport = isExportPDF || modalExport;
@@ -333,7 +333,7 @@ const InspectRecordForm = props => {
     spect_out = [],
   } = props.init;
 
-  const file = props.init.file ? props.init.file : []; //
+  const file = props.init.file ? props.init.file : [];
 
   const power_data =
     props.init.power_data && props.init.power_data.length > 0
@@ -355,7 +355,7 @@ const InspectRecordForm = props => {
       power_data[0] && power_data[0].spect_out ? power_data[0]?.spect_out : [],
     index: 0,
   });
-  console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data); //
+  console.log(' inspectRecordform dataInit ： ', file, dataInit, power_data);
 
   const onChange = index => {
     const formValues = props.propsForm.getFieldsValue();
@@ -380,7 +380,7 @@ const InspectRecordForm = props => {
     // });
 
     const setData = mergeData({ dataInit, formValues, tabIndex });
-    console.log('  setData ：', setData); //
+    console.log('  setData ：', setData);
 
     props.propsForm.setFieldsValue({
       spectIn: [],
@@ -404,7 +404,7 @@ const InspectRecordForm = props => {
       setFields.index,
       dataInit,
       setFields.spectOut,
-    ); //
+    );
     // setDataInit(setFields);
     props.propsForm.setFieldsValue({
       ...setFields,
@@ -485,7 +485,7 @@ const InspectRecordForm = props => {
           dataInit.spectIn,
           fields,
           props.propsForm.getFieldsValue(),
-        ); //
+        );
         const spectInConfig = [
           { name: 'v_ab', label: 'AB' },
           { name: 'v_bc', label: 'BC' },
@@ -656,7 +656,7 @@ const InspectRecordForm = props => {
       e.target.value,
       props,
       dataInit,
-    ); //
+    );
     // props.propsForm.setFieldsValue({
     //   // max_md: maxMD,
     //   max_md: 'maxMD',
@@ -685,15 +685,15 @@ const InspectRecordForm = props => {
       index: dataInit.index,
       form: props.propsForm,
       setDataInit,
-    }); //
+    });
   };
 
   const onActivePowerChange = (e, keys) => {
     console.log(' onActivePowerChange   e, keys,   ： ', e, keys);
-    console.log(' onChange ： ', keys, e.target.value, props, dataInit); //
+    console.log(' onChange ： ', keys, e.target.value, props, dataInit);
     const { powerData } = props.propsForm.getFieldsValue();
     const cos = powerData.total_active_power / powerData.reactive_power_1;
-    console.log('  cos ：', cos); //
+    console.log('  cos ：', cos);
     // props.propsForm.setFieldsValue({
     //   powerData: {
     //     ...powerData,
@@ -1738,7 +1738,7 @@ const InspectRecordForm = props => {
           type="primary"
           onClick={() => {
             const formValues = props.propsForm.getFieldsValue();
-            console.log(' confirmBtn ： ', props, dataInit, formValues); //
+            console.log(' confirmBtn ： ', props, dataInit, formValues);
             const { safety_equirpment } = formValues;
             const safetyEquirpment = {
               ...safety_equirpment,
@@ -1780,7 +1780,7 @@ const InspectRecordForm = props => {
                 }),
               };
             });
-            console.log('  powerDatas ：', powerDatas); //
+            console.log('  powerDatas ：', powerDatas);
 
             const params = {
               action: 'edit',
@@ -1793,7 +1793,7 @@ const InspectRecordForm = props => {
               power_data: powerDatas,
               // station: dataInit.station.id,
             };
-            console.log(' params ： ', params); //
+            console.log(' params ： ', params);
 
             props.editItemAsync(params);
           }}

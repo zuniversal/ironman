@@ -16,7 +16,7 @@ const lineNames = {
 };
 
 const CircuitSelect = props => {
-  const { selectData = [], comProps = {} } = props; //
+  const { selectData = [], comProps = {} } = props;
   // console.log(' CircuitSelect   config,   ： ', props);
   return (
     <Select
@@ -75,7 +75,7 @@ const Headers = props => {
   const { lineName = 'curve' } = data;
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
-  console.log(' HeadersHeaders ： ', props, data); //
+  console.log(' HeadersHeaders ： ', props, data);
 
   const [isLock, setIsLock] = useState(false); // 是否处于锁定状态
 
@@ -119,7 +119,7 @@ const Headers = props => {
   };
 
   const toggleLocked = data => {
-    console.log(' toggleLocked ： ', canvas); //
+    console.log(' toggleLocked ： ', canvas);
     canvas.data.locked = !canvas.data.locked;
     canvas.render();
   };
@@ -313,7 +313,7 @@ const Headers = props => {
         <Button
           // type="primary"
           onClick={() => {
-            console.log(' props.new ： '); //
+            console.log(' props.new ： ');
             props.dispatch({
               type: 'event/emit',
               payload: {
@@ -328,7 +328,7 @@ const Headers = props => {
         <Button
           type="primary"
           onClick={() => {
-            console.log(' props.toggleIsPreview ： '); //
+            console.log(' props.toggleIsPreview ： ');
             props.toggleIsPreview();
           }}
           size={'small'}
@@ -338,7 +338,7 @@ const Headers = props => {
         <Button
           type="primary"
           onClick={() => {
-            console.log(' props.save ： '); //
+            console.log(' props.save ： ');
             props.dispatch({
               type: 'event/emit',
               payload: {
@@ -354,7 +354,7 @@ const Headers = props => {
         <Button
           danger
           onClick={() => {
-            console.log(' props.save ： '); //
+            console.log(' props.save ： ');
             props.removeDraw();
           }}
           size={'small'}

@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
 
-import InputCom from '@/components/Widgets/InputCom'; //
+import InputCom from '@/components/Widgets/InputCom';
 
 const FlexInput = props => {
   console.log(' FlexInput   props, ,   ： ', props);

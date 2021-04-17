@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/visitManage';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
@@ -31,7 +31,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -39,7 +39,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -55,7 +55,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -92,7 +92,7 @@ export default {
     },
 
     onRadioChange(state, { payload, type }) {
-      console.log(' onRadioChange ： ', payload, payload.target.value); //
+      console.log(' onRadioChange ： ', payload, payload.target.value);
       return {
         ...state,
         chenckItem: payload.target.value,
@@ -102,7 +102,7 @@ export default {
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type); //
+      console.log(' getListAsync ： ', payload, action, type);
       const res = yield call(services.getList, payload);
       yield put(action({ ...res, payload }));
     },

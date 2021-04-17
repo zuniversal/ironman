@@ -1,11 +1,11 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const AlarmNotifyForm = props => {
-  console.log(' AlarmNotifyForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' AlarmNotifyForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

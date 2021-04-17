@@ -25,16 +25,16 @@ import {
   Divider,
 } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-import { AdminForm } from '@/components/Form/ClientForm'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
+import SmartForm from '@/common/SmartForm';
+import { AdminForm } from '@/components/Form/ClientForm';
+import SuccResult from '@/components/Widgets/SuccResult';
 import ContractRelativeForm, {
   clientConfig,
   contractConfig,
   houseNoConfig,
   stationConfig,
-} from '@/components/Form/ContractRelativeForm'; //
-import { formatConfig } from '@/utils'; //
+} from '@/components/Form/ContractRelativeForm';
+import { formatConfig } from '@/utils';
 
 const { Step } = Steps;
 
@@ -48,7 +48,7 @@ const ContractStepForm = props => {
   const [current, setCurrent] = useState(0);
   const completeIndex = useRef(0);
 
-  console.log(' ContractStepForm ： ', props, form, formform); //
+  console.log(' ContractStepForm ： ', props, form, formform);
 
   const completeItem = { key: 'complete', title: '完成' };
 
@@ -80,7 +80,7 @@ const ContractStepForm = props => {
   };
 
   const next = async () => {
-    console.log(' next ： ', current); //
+    console.log(' next ： ', current);
 
     const indexs = current + 1;
     setCurrent(indexs);
@@ -91,9 +91,9 @@ const ContractStepForm = props => {
     // const getRes = async (v) => {
     //   try {
     //     const res = await v.form.validateFields();
-    //     console.log('  contractStepConfig res await 结果  ：', res); //
+    //     console.log('  contractStepConfig res await 结果  ：', res);
     //   } catch (error) {
-    //     console.log(' next error ： ', error); //
+    //     console.log(' next error ： ', error);
     //   }
 
     // }
@@ -104,10 +104,10 @@ const ContractStepForm = props => {
     //   try {
     //     const propsForm = contractStepConfig[current].form
     //     const res = await propsForm.validateFields();
-    //     console.log('  next res await 结果  ：', res); //
+    //     console.log('  next res await 结果  ：', res);
     //     setCurrent(indexs);
     //   } catch (error) {
-    //     console.log(' next error ： ', error); //
+    //     console.log(' next error ： ', error);
     //   }
     //   completeIndex.current = indexs
     // }
@@ -118,7 +118,7 @@ const ContractStepForm = props => {
   };
 
   const prev = () => {
-    console.log(' prev ： ', current); //
+    console.log(' prev ： ', current);
 
     if (current > 0) {
       setCurrent(current - 1);

@@ -128,7 +128,7 @@ export class Request {
   http = null;
 
   constructor() {
-    this.http = instance; //
+    this.http = instance;
     // console.log(' super ： ',  )
     this.http.interceptors.request.use(
       config => {
@@ -168,7 +168,7 @@ export class Request {
         } else if (config.method !== 'put') {
           config.data = config.params = rest;
         }
-        console.log(' 发送请求   ： ', config, formatParams); //
+        console.log(' 发送请求   ： ', config, formatParams);
         return config;
       },
       err => Promise.reject(err),
@@ -177,7 +177,7 @@ export class Request {
     this.http.interceptors.response.use(
       res => {
         // this.http.store.dispatch({type: LOAD, data: false})
-        console.log(' 返回请求 ： ', res.data); //
+        console.log(' 返回请求 ： ', res.data);
         // tipsConfirm(res);
         this.handleResponse(res);
 
@@ -203,7 +203,7 @@ export class Request {
             { ...err.response },
             err.response,
             err.response,
-          ); //
+          );
           // // tips(err.response != undefined ? err.response.data.message : 'o(╥﹏╥)o ' , 0)
           // if (err.response.status == 406) {
           //     tips(err.response && err.response.data.message ? err.response.data.message : '没有数据', 0)
@@ -226,7 +226,7 @@ export class Request {
   };
 }
 
-export const request = new Request(); //
+export const request = new Request();
 const { http } = request;
 // console.log(' request ： ', request, URL, {...http},  )//
 //

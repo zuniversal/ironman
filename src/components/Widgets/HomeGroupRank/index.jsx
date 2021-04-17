@@ -13,11 +13,11 @@ import {
   Avatar,
 } from 'antd';
 
-import one from '@/static/assets/one.png'; //
-import two from '@/static/assets/two.png'; //
-import three from '@/static/assets/three.png'; //
-import noData from '@/static/assets/noData.png'; //
-import { ANIMATE } from '@/constants'; //
+import one from '@/static/assets/one.png';
+import two from '@/static/assets/two.png';
+import three from '@/static/assets/three.png';
+import noData from '@/static/assets/noData.png';
+import { ANIMATE } from '@/constants';
 
 const groupData = [
   { name: '小组 1', count: '323' },

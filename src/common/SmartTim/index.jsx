@@ -10,9 +10,9 @@ import COS from 'cos-js-sdk-v5';
 // import tim from './tim';
 
 const SmartTim = props => {
-  console.log(' SmartTim ： ', props); //
+  console.log(' SmartTim ： ', props);
   tim.on(TIM.EVENT.SDK_READY, onReadyStateUpdate, data => {
-    console.log(' SmartTim datadata ： ', data); //
+    console.log(' SmartTim datadata ： ', data);
     // const isSDKReady = name === this.TIM.EVENT.SDK_READY ? true : false
     // this.$store.commit('toggleIsSDKReady', isSDKReady)
     // if (isSDKReady) {

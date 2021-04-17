@@ -9,11 +9,11 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { workOrderStatusMap } from '@/configs';
 
 const InspectRecordTable = props => {
-  const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props; //
+  const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props;
 
   const columns = [
     {

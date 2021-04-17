@@ -11,14 +11,14 @@ import './style.less';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
-import ClientForm from '@/components/Form/ClientForm'; //
-import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
-import ClientTable from '@/components/Table/ClientTable'; //
-import ClientFormModal from '@/components/Modal/ClientFormModal'; //
-import ClientRadar from '@/components/Echarts/ClientRadar'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SmartTable from '@/common/SmartTable';
+import ClientForm from '@/components/Form/ClientForm';
+import ClientSearchForm from '@/components/Form/ClientSearchForm';
+import ClientTable from '@/components/Table/ClientTable';
+import ClientFormModal from '@/components/Modal/ClientFormModal';
+import ClientRadar from '@/components/Echarts/ClientRadar';
+import SmartModal from '@/common/SmartModal';
+import SmartFormModal from '@/common/SmartFormModal';
 
 // import {
 //   getList,
@@ -33,11 +33,11 @@ import SmartFormModal from '@/common/SmartFormModal'; //
 //   getPortraitAsync,
 
 // } from '@/models/client'//
-import { actions } from '@/models/test'; //
+import { actions } from '@/models/test';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-console.log(' getListAsync ： ', getListAsync); //
+console.log(' getListAsync ： ', getListAsync);
 // import { getItem,  } from '@/services/client'//
 // const res = getItem().then(res => {
 //   console.log('  getItem  ： ', res, getItem, getListAsync,   )
@@ -153,7 +153,7 @@ class CRUD extends PureComponent {
       selectedRows,
       this.state,
       this.props,
-    ); //
+    );
 
     this.setState({
       selectedRowKeys,
@@ -162,14 +162,14 @@ class CRUD extends PureComponent {
   };
   syncOAAsync = params => {
     console.log(' syncOAAsync,  , ： ', params);
-    const { dispatch } = this.props; //
+    const { dispatch } = this.props;
 
     // dispatch(syncOAAsync({
     // }))
   };
   getPortraitAsync = params => {
     console.log(' getPortraitAsync,  , ： ', params);
-    const { dispatch } = this.props; //
+    const { dispatch } = this.props;
 
     // dispatch(
     //   getPortraitAsync({
@@ -188,7 +188,7 @@ class CRUD extends PureComponent {
     );
     const isEdit = action === 'edit';
     if (isEdit) {
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       // dispatch(getItemAsync({
       //   d_id: 100,
       // }))
@@ -263,31 +263,31 @@ class CRUD extends PureComponent {
   // };
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
-    const { action } = this.state; //
+    const { action } = this.state;
     let actionFn = addItemAsync;
     if (action === 'edit') {
       actionFn = editItemAsync;
     }
 
-    const { form } = props; //
+    const { form } = props;
 
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action, actionFn); //
-      const { dispatch } = this.props; //
+      console.log('  res await 结果  ：', res, action, actionFn);
+      const { dispatch } = this.props;
       // dispatch(actionFn({
       //   data: res,
       // }))
       // const {addItemAsync,  } = this.props//
       //addItemAsync(res)
 
-      const { newTbData } = this.state; //
+      const { newTbData } = this.state;
       this.setState({
         show: false,
         newTbData: [res, ...newTbData],
       });
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
 
     // form
@@ -302,7 +302,7 @@ class CRUD extends PureComponent {
     // });
   };
   onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
+    console.log(' onCancel ： ', e, this.state, this.props);
     this.setState({
       show: false,
     });
@@ -311,7 +311,7 @@ class CRUD extends PureComponent {
   showCapture = params => {
     const { action } = params;
     console.log(' showCapture,  , ： ', action);
-    const { dispatch, portraitData } = this.props; //
+    const { dispatch, portraitData } = this.props;
     // dispatch(getPortraitAsync({
     //   d_id: 999,
     // }))
@@ -345,7 +345,7 @@ class CRUD extends PureComponent {
 
   renderModalForm = e => {
     console.log('    renderModalForm ： ', e, this.state, this.props);
-    const { modalForm } = this.state; //
+    const { modalForm } = this.state;
     if (modalForm) {
       return modalForm;
     }
@@ -354,13 +354,13 @@ class CRUD extends PureComponent {
   };
   renderModalContent = e => {
     console.log('    renderModalContent ： ', e);
-    const { modalContent } = this.state; //
+    const { modalContent } = this.state;
 
     return modalContent;
   };
   renderContent = e => {
     console.log('    renderContent ： ', e);
-    const { commonContent } = this.state; //
+    const { commonContent } = this.state;
     return commonContent;
   };
 
@@ -378,7 +378,7 @@ class CRUD extends PureComponent {
     const { form } = params;
 
     const res = await form.validateFields();
-    console.log('  res await 结果  ：', res, form); //
+    console.log('  res await 结果  ：', res, form);
   };
 
   renderSearchForm = params => {
@@ -409,7 +409,7 @@ class CRUD extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log(' CURD 组件componentDidMount挂载 ： ', this.state, this.props);
 
     // this.getList()
   }
@@ -429,7 +429,7 @@ class CRUD extends PureComponent {
       commonTitle,
       action,
       titleMap,
-    } = this.state; //
+    } = this.state;
 
     const formComProps = {
       getCapture: this.showCapture,

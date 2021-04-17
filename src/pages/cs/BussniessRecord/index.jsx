@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import BussniessRecordSearchForm from '@/components/Form/BussniessRecordSearchForm'; //
-import BussniessRecordForm from '@/components/Form/BussniessRecordForm'; //
-import BussniessRecordPowerForm from '@/components/Form/BussniessRecordPowerForm'; //
-import BussniessRecordTable from '@/components/Table/BussniessRecordTable'; //
-import { actions, mapStateToProps } from '@/models/bussniessRecord'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import BussniessRecordSearchForm from '@/components/Form/BussniessRecordSearchForm';
+import BussniessRecordForm from '@/components/Form/BussniessRecordForm';
+import BussniessRecordPowerForm from '@/components/Form/BussniessRecordPowerForm';
+import BussniessRecordTable from '@/components/Table/BussniessRecordTable';
+import { actions, mapStateToProps } from '@/models/bussniessRecord';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
@@ -80,14 +80,14 @@ class BussniessRecord extends PureComponent {
     return <BussniessRecordTable {...tableProps}></BussniessRecordTable>;
   };
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     console.log(
       ' itemDetail, itemDetail.confirm ： ',
       itemDetail,
       itemDetail.confirm,
-    ); //
+    );
     if (
       (action === 'detail' || action === 'powerDetail') &&
       !itemDetail.confirm
@@ -103,12 +103,12 @@ class BussniessRecord extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'setting') {
         return <BussniessRecordForm {...formComProps}></BussniessRecordForm>;
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
@@ -116,12 +116,12 @@ class BussniessRecord extends PureComponent {
   get hideOk() {
     console.log(' get 取属 hideOk ： ', this.state, this.props);
     const { status } = this.props.itemDetail;
-    console.log(' statusstatus ： ', status, this.props.itemDetail); //
+    console.log(' statusstatus ： ', status, this.props.itemDetail);
     return status && status === 'completed';
   }
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };

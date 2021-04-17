@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ShiftsTransferTable from '@/components/Table/ShiftsTransferTable'; //
-import ShiftsTransferForm from '@/components/Form/ShiftsTransferForm'; //
-import ShiftsTransferSearchForm from '@/components/Form/ShiftsTransferSearchForm'; //
-import ShiftsTransferDetailForm from '@/components/Form/ShiftsTransferDetailForm'; //
-import ShiftsTransferHandInForm from '@/components/Form/ShiftsTransferHandInForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import ShiftsTransferTable from '@/components/Table/ShiftsTransferTable';
+import ShiftsTransferForm from '@/components/Form/ShiftsTransferForm';
+import ShiftsTransferSearchForm from '@/components/Form/ShiftsTransferSearchForm';
+import ShiftsTransferDetailForm from '@/components/Form/ShiftsTransferDetailForm';
+import ShiftsTransferHandInForm from '@/components/Form/ShiftsTransferHandInForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/shiftsTransfer'; //
+import { actions, mapStateToProps } from '@/models/shiftsTransfer';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { teamTypeMap } from '@/configs';
@@ -58,7 +58,7 @@ class ShiftsTransfer extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <ShiftsTransferSearchForm
         formBtn={this.renderFormBtn}
@@ -111,16 +111,16 @@ class ShiftsTransfer extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (action === 'detail') {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -133,11 +133,11 @@ class ShiftsTransfer extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderModalContent = e => {
-    const { action, itemDetail } = this.props; //
+    const { action, itemDetail } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -153,7 +153,7 @@ class ShiftsTransfer extends PureComponent {
         itemDetail.dispatch_options.split(',').map((v, i) => {
           radioInit[`radio${i + 1}`] = v ? v : false;
         });
-        console.log(' radioInit ： ', radioInit); //
+        console.log(' radioInit ： ', radioInit);
       }
       formComProps.init = {
         ...itemDetail,
@@ -166,7 +166,7 @@ class ShiftsTransfer extends PureComponent {
         // dispatch_options: itemDetail.type == 1 ? : [],
       };
     }
-    console.log(' formComProps ： ', formComProps, itemDetail, itemDetail.type); //
+    console.log(' formComProps ： ', formComProps, itemDetail, itemDetail.type);
     // if (itemDetail.type == 0) {
     if (itemDetail.type == '调度') {
       return <ShiftsTransferForm {...formComProps}></ShiftsTransferForm>;
@@ -191,8 +191,8 @@ class ShiftsTransfer extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getUserAsync(); //
-    this.props.getTeamAsync(); //
+    this.props.getUserAsync();
+    this.props.getTeamAsync();
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.less';
-import Icon from '@/components/Widgets/Icons'; //
+import Icon from '@/components/Widgets/Icons';
 
 const WeakDetailImg = props => {
   // console.log(' WeakDetailImg   props, ,   ： ', props);
@@ -16,4 +16,4 @@ WeakDetailImg.defaultProps = {
   // src:
 };
 
-export default WeakDetailImg; //
+export default WeakDetailImg;

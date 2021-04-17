@@ -9,7 +9,7 @@ const option = params => {
     data,
     tabData,
     myExpenseBarTxt,
-  ); //
+  );
   return {
     color: ['#108ee9', '#f50', '#13CE66', '#006699', '#e5323e', '#4cabce'],
     tooltip: {

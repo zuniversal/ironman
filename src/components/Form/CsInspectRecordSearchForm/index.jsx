@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { workOrderStatusConfig } from '@/configs';
 
 const CsInspectRecordSearchForm = props => {
-  console.log(' CsInspectRecordSearchForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' CsInspectRecordSearchForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import { halfFormLayouts } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import { halfFormLayouts } from '@/configs';
 import { layout } from '@topology/layout';
 import { canvas } from '../index';
 import {

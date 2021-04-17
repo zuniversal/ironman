@@ -1245,7 +1245,7 @@ export const Tools = [
   //             type: 'primary',
   //             children: '查询',
   //             onClick: () => {
-  //               console.log(' onClickonClick ： '); //
+  //               console.log(' onClickonClick ： ');
   //             },
   //           },
   //           // 异步请求配置

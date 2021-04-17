@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.less';
 import { Form, Select } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import SmartFormTable from '@/common/SmartFormTable'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-import UploadCom from '@/components/Widgets/UploadCom'; //
+import SmartForm from '@/common/SmartForm';
+import SmartFormTable from '@/common/SmartFormTable';
+import InputCom from '@/components/Widgets/InputCom';
+import UploadCom from '@/components/Widgets/UploadCom';
 import { renderSelectOp } from '@/utils';
 import {
   workTicketPeopleChangeConfig,
@@ -83,8 +83,8 @@ const radioData = [
 ];
 
 const WorkOrderTicketForm = props => {
-  console.log(' WorkOrderTicketForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' WorkOrderTicketForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const excuteConfig = [
     {

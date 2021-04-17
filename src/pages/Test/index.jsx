@@ -8,8 +8,8 @@ import Solute from './Solute';
 import SearchPanel from './SearchPanel';
 
 const Topogy = props => {
-  console.log(' Topogy ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' Topogy ： ', props);
+  const { formBtn, ...rest } = props;
   return <Fb {...props}></Fb>;
   return <SearchPanel {...props}></SearchPanel>;
   return <Solute {...props}></Solute>;

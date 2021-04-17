@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/home';
 import * as teamServices from '@/services/shiftsManage';
 import * as workOrderServices from '@/services/workOrder';
@@ -24,7 +24,7 @@ export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
-// console.log(' actions ： ', actions, getItem('homeSettings')); //
+// console.log(' actions ： ', actions, getItem('homeSettings'));
 export const mapStateToProps = state => state[namespace];
 
 const settingData = [
@@ -66,7 +66,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -75,7 +75,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -91,7 +91,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -128,7 +128,7 @@ export default {
     },
 
     saveHomeSetting(state, { payload, type }) {
-      console.log(' saveHomeSetting 修改  ： ', state, payload, type); //
+      console.log(' saveHomeSetting 修改  ： ', state, payload, type);
       const userInfo = getItem('userInfo');
       const res =
         payload.homeSettings && payload.homeSettings.length
@@ -142,14 +142,14 @@ export default {
       };
     },
     getStatistic(state, { payload, type }) {
-      console.log(' getStatistic ： ', state, payload); //
+      console.log(' getStatistic ： ', state, payload);
       return {
         ...state,
         statisticData: payload.bean,
       };
     },
     getChart(state, { payload, type }) {
-      console.log(' getChart ： ', state, payload); //
+      console.log(' getChart ： ', state, payload);
       const { chartSearchInfo } = state;
 
       return {
@@ -163,7 +163,7 @@ export default {
       };
     },
     getOrdersChart(state, { payload, type }) {
-      console.log(' getOrdersChart ： ', state, payload); //
+      console.log(' getOrdersChart ： ', state, payload);
       return {
         ...state,
         chartData: payload.bean,
@@ -171,7 +171,7 @@ export default {
       };
     },
     getInspectionsChart(state, { payload, type }) {
-      console.log(' getInspectionsChart ： ', state, payload); //
+      console.log(' getInspectionsChart ： ', state, payload);
       return {
         ...state,
         chartData: payload.bean,
@@ -179,7 +179,7 @@ export default {
       };
     },
     getPendingOrders(state, { payload, type }) {
-      console.log(' getPendingOrders ： ', state, payload); //
+      console.log(' getPendingOrders ： ', state, payload);
       return {
         ...state,
         pendingOrdersList: payload.list.map(v => ({
@@ -192,7 +192,7 @@ export default {
       };
     },
     getInspectionTasks(state, { payload, type }) {
-      console.log(' getInspectionTasks ： ', state, payload); //
+      console.log(' getInspectionTasks ： ', state, payload);
       return {
         ...state,
         inspectionTasksList: payload.list.map(v => ({
@@ -214,7 +214,7 @@ export default {
 
   effects: {
     *getStatisticAsync({ payload, action, type }, { call, put }) {
-      console.log(' getStatisticAsync ： ', payload, action, type); //
+      console.log(' getStatisticAsync ： ', payload, action, type);
       const res = yield call(services.getStatistic, payload);
       yield put(action({ ...res, payload }));
     },
@@ -228,17 +228,17 @@ export default {
       },
       { call, put },
     ) {
-      console.log(' getChartAsync ： ', payload, action, type); //
+      console.log(' getChartAsync ： ', payload, action, type);
       const res = yield call(services[payload.requestFn], payload);
       yield put(action({ ...res, payload }));
     },
     // *getOrdersChartAsync({ payload, action, type }, { call, put }) {
-    //   console.log(' getOrdersChartAsync ： ', payload, action, type); //
+    //   console.log(' getOrdersChartAsync ： ', payload, action, type);
     //   const res = yield call(services.getOrdersChart, payload);
     //   yield put(action({ ...res, payload }));
     // },
     // *getInspectionsChartAsync({ payload, action, type }, { call, put }) {
-    //   console.log(' getInspectionsChartAsync ： ', payload, action, type); //
+    //   console.log(' getInspectionsChartAsync ： ', payload, action, type);
     //   const res = yield call(services.getInspectionsChart, payload);
     //   yield put(action({ ...res, payload }));
     // },
@@ -250,7 +250,7 @@ export default {
         ...pendingOrdersSearchInfo,
         ...payload,
       };
-      console.log(' getPendingOrdersAsync ： ', payload, action, type, params); //
+      console.log(' getPendingOrdersAsync ： ', payload, action, type, params);
       const res = yield call(services.getPendingOrders, params);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -259,18 +259,18 @@ export default {
       });
     },
     *getInspectionTasksAsync({ payload, action, type }, { call, put }) {
-      console.log(' getInspectionTasksAsync ： ', payload, action, type); //
+      console.log(' getInspectionTasksAsync ： ', payload, action, type);
       const res = yield call(services.getInspectionTasks, payload);
       yield put(action({ ...res, payload }));
     },
 
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload, action, type); //
+      console.log(' getTeamAsync ： ', payload, action, type);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *dispatchOrderAsync({ payload, action, type }, { call, put }) {
-      console.log(' dispatchOrderAsync ： ', payload, type); //
+      console.log(' dispatchOrderAsync ： ', payload, type);
       const res = yield call(workOrderServices.dispatchOrder, payload);
       yield put({ type: 'getPendingOrdersAsync' });
     },

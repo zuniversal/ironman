@@ -34,4 +34,4 @@ InspectMissionTimeline.propTypes = {
   datas: PropTypes.array,
 };
 
-export default InspectMissionTimeline; //
+export default InspectMissionTimeline;

@@ -11,16 +11,16 @@ import './style.less';
 
 import { Form, Input, Button, Checkbox } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
-import ClientForm from '@/components/Form/ClientForm'; //
-import ClientSearchForm from '@/components/Form/ClientSearchForm'; //
-import ClientTable from '@/components/Table/ClientTable'; //
-import ClientFormModal from '@/components/Modal/ClientFormModal'; //
-import ClientRadar from '@/components/Echarts/ClientRadar'; //
-import SmartModal from '@/common/SmartModal'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SmartTable from '@/common/SmartTable';
+import ClientForm from '@/components/Form/ClientForm';
+import ClientSearchForm from '@/components/Form/ClientSearchForm';
+import ClientTable from '@/components/Table/ClientTable';
+import ClientFormModal from '@/components/Modal/ClientFormModal';
+import ClientRadar from '@/components/Echarts/ClientRadar';
+import SmartModal from '@/common/SmartModal';
+import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/client'; //
+import { actions, mapStateToProps } from '@/models/client';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -78,11 +78,11 @@ class Client extends PureComponent {
 
   addUserAsync = async props => {
     console.log(' addUserAsync ： ', props, this.state, this.props);
-    const { action } = this.state; //
-    const { propsForm } = props; //
+    const { action } = this.state;
+    const { propsForm } = props;
     try {
       const res = await propsForm.validateFields();
-      console.log('  res await 结果  ：', res, res.values); //
+      console.log('  res await 结果  ：', res, res.values);
       const admin = {
         ...res.customer_admin.map(v => ({
           nickname: v.username,
@@ -93,10 +93,10 @@ class Client extends PureComponent {
           },
         })),
       };
-      console.log(' admin ： ', admin); //
+      console.log(' admin ： ', admin);
       this.props.addUserAsync(admin[0]);
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   renderFormBtn = params => {
@@ -201,24 +201,24 @@ class Client extends PureComponent {
 
   onOk = async props => {
     console.log(' onOkonOk ： ', props, this.state, this.props);
-    const { action } = this.state; //
+    const { action } = this.state;
     let actionFn = actions.addItemAsync;
     if (action === 'edit') {
       actionFn = actions.editItemAsync;
     }
 
-    const { form, init } = props; //
+    const { form, init } = props;
 
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action, actionFn); //
-      const { adminList } = this.props; //
-      console.log(' adminList ： ', adminList); //
+      console.log('  res await 结果  ：', res, action, actionFn);
+      const { adminList } = this.props;
+      console.log(' adminList ： ', adminList);
       if (adminList.length === 0) {
         tips('必须添加管理员信息！', 2);
         return;
       }
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       dispatch(
         actionFn({
           ...init,
@@ -231,11 +231,11 @@ class Client extends PureComponent {
       //   isShow: false,
       // });
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
   onCancel = e => {
-    console.log(' onCancel ： ', e, this.state, this.props); //
+    console.log(' onCancel ： ', e, this.state, this.props);
     this.setState({
       show: false,
     });
@@ -244,7 +244,7 @@ class Client extends PureComponent {
   showCapture = params => {
     const { action } = params;
     console.log(' showCapture,  , ： ', action);
-    const { dispatch, portraitData } = this.props; //
+    const { dispatch, portraitData } = this.props;
     // dispatch(getPortraitAsync({
     //   d_id: 999,
     // }))
@@ -272,7 +272,7 @@ class Client extends PureComponent {
 
   renderModalForm = e => {
     console.log('    renderModalForm ： ', e, this.state, this.props);
-    const { modalForm } = this.state; //
+    const { modalForm } = this.state;
     if (modalForm) {
       return modalForm;
     }
@@ -281,13 +281,13 @@ class Client extends PureComponent {
   };
   renderModalContent = e => {
     console.log('    renderModalContent ： ', e);
-    const { modalContent } = this.state; //
+    const { modalContent } = this.state;
 
     return modalContent;
   };
   renderContent = e => {
     console.log('    renderContent ： ', e);
-    const { commonContent } = this.state; //
+    const { commonContent } = this.state;
     return commonContent;
   };
 
@@ -296,7 +296,7 @@ class Client extends PureComponent {
     const { form } = params;
 
     const res = await form.validateFields();
-    console.log('  res await 结果  ：', res, form); //
+    console.log('  res await 结果  ：', res, form);
   };
 
   renderSearchForm = params => {
@@ -345,7 +345,7 @@ class Client extends PureComponent {
     return <ClientTable {...tableProps}></ClientTable>;
   };
   renderSmartFormModal = params => {
-    const { action, show, titleMap } = this.state; //
+    const { action, show, titleMap } = this.state;
 
     const formComProps = {
       action: this.state.action,
@@ -380,7 +380,7 @@ class Client extends PureComponent {
       ' Client 组件componentDidMount挂载 ： ',
       this.state,
       this.props,
-    ); //
+    );
 
     // this.getList()
   }
@@ -400,7 +400,7 @@ class Client extends PureComponent {
       commonTitle,
       action,
       titleMap,
-    } = this.state; //
+    } = this.state;
 
     return (
       <div className="Client">

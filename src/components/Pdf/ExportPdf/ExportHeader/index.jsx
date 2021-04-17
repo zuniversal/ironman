@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import { Button } from 'antd';
 
 const ExportHeader = props => {
-  console.log(' ExportHeader ： ', props); //
-  const { goBack } = props; //
+  console.log(' ExportHeader ： ', props);
+  const { goBack } = props;
   const print = () => {
     console.log(' printprintprint   ,   ： ');
     props.print();

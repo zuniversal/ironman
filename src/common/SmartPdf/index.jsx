@@ -175,7 +175,7 @@ const useCreatePdf = config => {
 };
 
 const SmartPdf = props => {
-  const { config = [] } = props; //
+  const { config = [] } = props;
   const com = useCreatePdf(config);
   console.log(' com  config.map v ： ', props, com);
   const viewer = (

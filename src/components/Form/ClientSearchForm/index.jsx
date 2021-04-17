@@ -18,19 +18,19 @@ import {
 } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import SmartForm, { SearchForm } from '@/common/SmartForm'; //
-// import SearchForm from '@/common/SearchForm'; //
-import ProvinceForm, { config } from '@/components/Form/ProvinceForm'; //
-import { regoins, customerTypeConfig } from '@/configs'; //
+import SmartForm, { SearchForm } from '@/common/SmartForm';
+// import SearchForm from '@/common/SearchForm';
+import ProvinceForm, { config } from '@/components/Form/ProvinceForm';
+import { regoins, customerTypeConfig } from '@/configs';
 
-console.log(' config ： ', config); //
+console.log(' config ： ', config);
 
 const ClientSearchForm = props => {
-  console.log(' ClientSearchForm ： ', props); //
+  console.log(' ClientSearchForm ： ', props);
 
   const [form] = Form.useForm();
 
-  const { formBtn, ...rest } = props; //
+  const { formBtn, ...rest } = props;
 
   const configs = [
     // ...config(props),
@@ -83,7 +83,7 @@ const ClientSearchForm = props => {
     //   },
     // },
   ];
-  console.log(' configs ： ', configs); //
+  console.log(' configs ： ', configs);
 
   return (
     <div className="clientSearchForm">

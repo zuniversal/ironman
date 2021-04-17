@@ -4,9 +4,9 @@ import './style.less';
 import { Form, Button, Upload, Result, Tabs } from 'antd';
 
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const { TabPane } = Tabs;
 
@@ -189,7 +189,7 @@ export const clientConfig = [
   //       <Button
   //         type="primary"
   //         onClick={() => {
-  //           console.log(' props addUserAsync ： ', props); //
+  //           console.log(' props addUserAsync ： ', props);
   //           props.addUserAsync(props);
   //         }}
   //       >
@@ -608,12 +608,12 @@ const init = {
 };
 
 const ContractRelativeForm = props => {
-  console.log(' ContractRelativeForm ： ', props); //
+  console.log(' ContractRelativeForm ： ', props);
 
-  const { index, propsForm, formConfigs } = props; //
+  const { index, propsForm, formConfigs } = props;
 
   // const formConfigs = formatConfig(config);
-  // console.log(' formConfigs ： ', formConfigs); //
+  // console.log(' formConfigs ： ', formConfigs);
   const config1 = formatConfig(clientConfig);
   const config2 = formatConfig(contractConfig);
   const config3 = formatConfig(houseNoConfig);

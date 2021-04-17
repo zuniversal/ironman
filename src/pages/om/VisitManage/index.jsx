@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Radio } from 'antd';
-import VisitManageWaitTable from '@/components/Table/VisitManageWaitTable'; //
-import VisitManageRecordTable from '@/components/Table/VisitManageRecordTable'; //
-import VisitManageForm from '@/components/Form/VisitManageForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
+import VisitManageWaitTable from '@/components/Table/VisitManageWaitTable';
+import VisitManageRecordTable from '@/components/Table/VisitManageRecordTable';
+import VisitManageForm from '@/components/Form/VisitManageForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import SearchKwForm from '@/components/Form/SearchKwForm';
 
-import { actions, mapStateToProps } from '@/models/visitManage'; //
+import { actions, mapStateToProps } from '@/models/visitManage';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -104,24 +104,24 @@ class VisitManage extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -132,7 +132,7 @@ class VisitManage extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <VisitManageForm {...formComProps}></VisitManageForm>;
   };
   get size() {
@@ -161,7 +161,7 @@ class VisitManage extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div className="VisitManage">
         {this.renderSearchForm()}

@@ -10,11 +10,11 @@ import React, {
 import './style.less';
 import { Tabs } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap } from '@/configs';
 
 const CsHomeStationTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props; //
+  const { showModal, edit, remove, tdClick, complete } = props;
 
   const columns = [
     {

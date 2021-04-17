@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/bussniessRecord';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
@@ -30,7 +30,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -38,7 +38,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -59,7 +59,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const { type: types, status, created_time } = payload.bean;
 
       return {
@@ -82,7 +82,7 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      console.log(' editItem ： ', state, payload); //
+      console.log(' editItem ： ', state, payload);
       return {
         ...state,
         // d_id: payload.payload.d_id,
@@ -118,7 +118,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -131,7 +131,7 @@ export default {
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' editItemAsync ： ', payload); //
+      console.log(' editItemAsync ： ', payload);
       const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },

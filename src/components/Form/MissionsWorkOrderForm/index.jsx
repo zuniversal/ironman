@@ -1,11 +1,11 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const MissionsWorkOrderForm = props => {
-  console.log(' MissionsWorkOrderForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsWorkOrderForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import HouseNoTable from '@/components/Table/HouseNoTable'; //
-import PowerStationForm from '@/components/Form/PowerStationForm'; //
+import HouseNoTable from '@/components/Table/HouseNoTable';
+import PowerStationForm from '@/components/Form/PowerStationForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
-import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import DropDownBtn from '@/common/DropDownBtn'; //
-import UploadFileCom from '@/components/Widgets/UploadFileCom'; //
-import SuccResult from '@/components/Widgets/SuccResult'; //
+import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import DropDownBtn from '@/common/DropDownBtn';
+import UploadFileCom from '@/components/Widgets/UploadFileCom';
+import SuccResult from '@/components/Widgets/SuccResult';
 
-import { actions, mapStateToProps } from '@/models/houseNo'; //
+import { actions, mapStateToProps } from '@/models/houseNo';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -179,33 +179,33 @@ class HouseNo extends PureComponent {
     );
     const { form } = params;
     if (params.value.province) {
-      console.log(' onFieldChange 清空 province ： '); //
+      console.log(' onFieldChange 清空 province ： ');
       const resetParams = {
         city: null,
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { city, area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      console.log(' onFieldChange 搜索 province ： ', params.value.province);
       this.props.getDistrictAsync(data);
       // this.props.getDistrictAsync({province: params.value.province});
       this.props.getListAsync({ ...params.formData, ...resetParams });
       return;
     }
     if (params.value.city) {
-      console.log(' onFieldChange 清空 city ： '); //
+      console.log(' onFieldChange 清空 city ： ');
       const resetParams = {
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+      console.log(' onFieldChange 搜索 city ： ', params.value.city);
       this.props.getDistrictAsync(data);
       // this.props.getDistrictAsync({city: params.value.city});
       this.props.getListAsync({ ...params.formData, ...resetParams });
       return;
     }
-    console.log(' onFieldChange 列表搜索 ： '); //
+    console.log(' onFieldChange 列表搜索 ： ');
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
@@ -261,9 +261,9 @@ class HouseNo extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, d_id } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, d_id } = props;
     if (['detail'].includes(action)) {
       this.props.onCancel({});
       return;
@@ -274,7 +274,7 @@ class HouseNo extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -288,12 +288,12 @@ class HouseNo extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -314,7 +314,7 @@ class HouseNo extends PureComponent {
         ></UploadFileCom>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <HouseNoForm {...formComProps}></HouseNoForm>;
   };
   renderSmartFormModal = params => {

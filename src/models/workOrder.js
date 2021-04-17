@@ -1,11 +1,11 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/workOrder';
 import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/userManage';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { workOrderStatusMap, missionsTypeMap } from '@/configs';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'workOrder';
 const { createActions } = init(namespace);
@@ -28,7 +28,7 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 export const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
+  console.log(' formatSearch ： ', data);
   return {
     ...data,
     // page_size: 40,
@@ -37,7 +37,7 @@ export const formatSearch = data => {
 };
 
 export const formatAddTicket = data => {
-  console.log(' formatAddTicket ： ', data); //
+  console.log(' formatAddTicket ： ', data);
   return {
     ...data,
     work_date: data.work_date.format('YYYY-MM'),
@@ -63,7 +63,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -71,7 +71,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -91,7 +91,7 @@ export default {
       };
     },
     getItem(state, { payload }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const { created_time, type, status } = payload.bean;
 
       return {
@@ -125,7 +125,7 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      console.log(' editItem ： ', state, payload); //
+      console.log(' editItem ： ', state, payload);
       return {
         ...state,
         // d_id: payload.payload.d_id,
@@ -193,7 +193,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -206,7 +206,7 @@ export default {
       yield put(action(res));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' editItemAsync ： ', payload); //
+      console.log(' editItemAsync ： ', payload);
       const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },
@@ -242,15 +242,15 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *dispatchOrderAsync({ payload, action, type }, { call, put }) {
-      console.log(' dispatchOrderAsync ： ', payload, type); //
+      console.log(' dispatchOrderAsync ： ', payload, type);
       const res = yield call(services.dispatchOrder, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *addTicketAsync({ payload, action, type }, { call, put }) {
-      console.log(' addTicketAsync ： ', payload, type); //
+      console.log(' addTicketAsync ： ', payload, type);
       // if (typeof res.file !== 'string') {
-      //   console.log(' filefile ： ', res.file); //
+      //   console.log(' filefile ： ', res.file);
       //   if (res.file && res.file.fileList.length > 0) {
       //     const fileList = res.file.fileList;
       //     res.file = fileList[fileList.length - 1].response.url;
@@ -441,7 +441,7 @@ export default {
         check: [checkTime, checkPointTo, checkMan],
         // work_date: payload.work_date.format('YYYY-MM-DD'),
       };
-      console.log(' params2 ： ', params, params2); //
+      console.log(' params2 ： ', params, params2);
 
       // return
       const res = yield call(services.addTicket, {

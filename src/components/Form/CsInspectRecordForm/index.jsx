@@ -16,8 +16,8 @@ import {
   Tag,
   Tabs,
 } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import InputCom from '@/components/Widgets/InputCom'; //
+import SmartForm from '@/common/SmartForm';
+import InputCom from '@/components/Widgets/InputCom';
 
 const { TabPane } = Tabs;
 
@@ -104,8 +104,8 @@ const inputBefore = (
 );
 
 const CsInspectRecordForm = props => {
-  console.log(' CsInspectRecordForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' CsInspectRecordForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

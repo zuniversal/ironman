@@ -29,9 +29,9 @@ import {
   ExclamationOutlined,
 } from '@ant-design/icons';
 
-import SmartForm from '@/common/SmartForm'; //
-import SmartModal from '@/common/SmartModal'; //
-import { regoins } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import SmartModal from '@/common/SmartModal';
+import { regoins } from '@/configs';
 
 const { Paragraph, Text } = Typography;
 
@@ -69,7 +69,7 @@ export const RemoveModal = props => {
   const title = '删除电站';
   const showResultModal = false;
 
-  const { modalProps, resProps, children } = props; //
+  const { modalProps, resProps, children } = props;
 
   // const resProps = {
   //   status: 'error',
@@ -117,7 +117,7 @@ RemoveModal.defaultProps = {
 
 const ResultModal = props => {
   const [form] = Form.useForm();
-  // console.log(' ResultModal ： ', props, form); //
+  // console.log(' ResultModal ： ', props, form);
   const {
     show,
     onOk,
@@ -127,7 +127,7 @@ const ResultModal = props => {
     modalProps,
     resProps,
     children,
-  } = props; //
+  } = props;
 
   const { status = 'succ', okText, cancelText, okFn, offFn } = resProps;
 
@@ -144,7 +144,7 @@ const ResultModal = props => {
 
   // const {
   //   children = btnCom,
-  // } = props; //
+  // } = props;
 
   // const onOk = e => {
   //   console.log(' onOk   e, ,   ： ', e);
@@ -159,7 +159,7 @@ const ResultModal = props => {
     warning: 'warning',
   }[status];
 
-  // console.log(' statusMap ： ', statusMap, status); //
+  // console.log(' statusMap ： ', statusMap, status);
 
   return (
     <SmartModal

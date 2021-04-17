@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Input, Button, Select, InputNumber } from 'antd';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { tips, renderSelectOp } from '@/utils';
 import debounce from 'lodash/debounce';
 import { INPUT_TXT, SELECT_TXT } from '@/constants';
@@ -24,7 +24,7 @@ export const InputCom = props => {
     keys,
     index,
     // formType = 'Input',
-  } = props; //
+  } = props;
   const {
     formType = 'Input',
     itemProps = {},
@@ -58,7 +58,7 @@ export const SelectCom = props => {
     record,
     config,
     // formType = 'Input',
-  } = props; //
+  } = props;
   const {
     formType = 'Input',
     itemProps = {},
@@ -118,7 +118,7 @@ export const getWidget = props => {
     keys,
     record,
     index,
-  } = props; //
+  } = props;
 
   const { formType = 'Input', itemProps = {}, comProps = {} } = props.config;
 
@@ -160,13 +160,13 @@ export const getWidget = props => {
 };
 
 export const TableInput = props => {
-  const { text, record, index, keys } = props; //
+  const { text, record, index, keys } = props;
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
-  // ); //
-  // console.log(' TableInput mapText, dataMap ：', props ); //
+  // );
+  // console.log(' TableInput mapText, dataMap ：', props );
   let txt = text;
   if (props.config.dataMap) {
     if (Array.isArray(text)) {
@@ -180,12 +180,12 @@ export const TableInput = props => {
 };
 
 // export const TableInput = props => {
-//   const { text, record, index, keys, config } = props; //
+//   const { text, record, index, keys, config } = props;
 //   // console.log(
 //   //   ' %c TableInput 组件 ： ',
 //   //   `color: #333; font-weight: bold`,
 //   //   props,
-//   // ); //
+//   // );
 //   // return props.record.isEdit && config.noEdit ? (
 //   return props.record.isEdit && keys !== 'id' ? (
 //     <Input
@@ -208,12 +208,12 @@ export const TableInput = props => {
 // };
 
 const ReduxTable = props => {
-  const { edit, remove, config, isDisabledAll } = props; //
+  const { edit, remove, config, isDisabledAll } = props;
   console.log(
     ' %c ReduxTable 组件 ： ',
     `color: #333; font-weight: bold`,
     props,
-  ); //
+  );
 
   const columns = config.map(v => ({
     title: v.label,
@@ -244,7 +244,7 @@ const ReduxTable = props => {
           {!props.hideSaveEdit && (
             <a
               onClick={() => {
-                console.log(' record ：, ', props, config, record, edit); //
+                console.log(' record ：, ', props, config, record, edit);
                 if (isDisabledAll) {
                   return;
                 }
@@ -275,7 +275,7 @@ const ReduxTable = props => {
           )}
           <a
             onClick={() => {
-              console.log(' remove record ： ', props, record, index); //
+              console.log(' remove record ： ', props, record, index);
               if (isDisabledAll) {
                 return;
               }
@@ -356,4 +356,4 @@ ReduxTable.defaultProps = {
   addText: '新增',
 };
 
-export default ReduxTable; //
+export default ReduxTable;

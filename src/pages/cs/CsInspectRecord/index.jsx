@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import CsInspectRecordForm from '@/components/Form/CsInspectRecordForm'; //
-import CsInspectRecordSearchForm from '@/components/Form/CsInspectRecordSearchForm'; //
-import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
-import InspectRecordForm from '@/components/Form/InspectRecordForm'; //
-import CsInspectRecordTable from '@/components/Table/CsInspectRecordTable'; //
-import ExportPdf from '@/components/Pdf/ExportPdf'; //
-import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import CsInspectRecordForm from '@/components/Form/CsInspectRecordForm';
+import CsInspectRecordSearchForm from '@/components/Form/CsInspectRecordSearchForm';
+import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
+import InspectRecordForm from '@/components/Form/InspectRecordForm';
+import CsInspectRecordTable from '@/components/Table/CsInspectRecordTable';
+import ExportPdf from '@/components/Pdf/ExportPdf';
+import ExportHeader from '@/components/Pdf/ExportPdf/ExportHeader';
 
-import { actions, mapStateToProps } from '@/models/csInspectRecord'; //
+import { actions, mapStateToProps } from '@/models/csInspectRecord';
 import ReactDOM from 'react-dom';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -107,9 +107,9 @@ class CsInspectRecord extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (
       action === 'detail' ||
       action === 'inspectReport' ||
@@ -120,7 +120,7 @@ class CsInspectRecord extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -132,12 +132,12 @@ class CsInspectRecord extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -155,7 +155,7 @@ class CsInspectRecord extends PureComponent {
         <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     // return <CsInspectRecordForm {...formComProps}></CsInspectRecordForm>;
     return (
       <InspectRecordForm
@@ -232,7 +232,7 @@ class CsInspectRecord extends PureComponent {
   };
 
   get renderInspectRecordForm() {
-    console.log(' renderInspectRecordForm ： ', this.props); //
+    console.log(' renderInspectRecordForm ： ', this.props);
     return (
       <div className={`pdfDetail`}>
         {/* {!this.state.isShowExportPdf && (
@@ -259,7 +259,7 @@ class CsInspectRecord extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
 
     // if (this.props.isShowExportPdf) {
     //   return (

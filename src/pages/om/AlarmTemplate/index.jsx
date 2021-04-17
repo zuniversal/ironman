@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm'; //
-import AlarmTemplateTable from '@/components/Table/AlarmTemplateTable'; //
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm';
+import AlarmTemplateTable from '@/components/Table/AlarmTemplateTable';
 
-import { actions, mapStateToProps } from '@/models/alarmTemplate'; //
+import { actions, mapStateToProps } from '@/models/alarmTemplate';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -95,12 +95,12 @@ class AlarmTemplate extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       const { one, two, three } = res.role;
       const role = [
         // res.role['0'],
@@ -114,7 +114,7 @@ class AlarmTemplate extends PureComponent {
         ...res,
         role,
       };
-      console.log(' role ： ', role, data); //
+      console.log(' role ： ', role, data);
       // return
       if (action === 'add') {
         this.props.addItemAsync(data);
@@ -127,12 +127,12 @@ class AlarmTemplate extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
@@ -143,7 +143,7 @@ class AlarmTemplate extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <AlarmTemplateForm {...formComProps}></AlarmTemplateForm>;
   };
 

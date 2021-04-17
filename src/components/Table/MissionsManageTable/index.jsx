@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
 import { tips } from '@/utils';
 
@@ -23,7 +23,7 @@ const MissionsManageTable = props => {
     linkContract,
     schedule,
     confirmSchedule,
-  } = props; //
+  } = props;
 
   const columns = [
     {
@@ -220,7 +220,7 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {record.status === 'completed' && record.finished_tag && (
+      {record.status === 'pending' && record.finished_tag && (
         <a
           onClick={() =>
             props.showFormModal({

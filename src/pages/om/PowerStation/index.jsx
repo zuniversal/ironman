@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import PowerStationTable from '@/components/Table/PowerStationTable'; //
-import PowerStationForm from '@/components/Form/PowerStationForm'; //
-import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import { PowerstationMonthForm } from '@/components/Form/PowerStationActionForm'; //
+import PowerStationTable from '@/components/Table/PowerStationTable';
+import PowerStationForm from '@/components/Form/PowerStationForm';
+import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import { PowerstationMonthForm } from '@/components/Form/PowerStationActionForm';
 
-import { commonActions } from '@/models/common'; //
-import { actions, mapStateToProps } from '@/models/powerStation'; //
+import { commonActions } from '@/models/common';
+import { actions, mapStateToProps } from '@/models/powerStation';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
@@ -121,33 +121,33 @@ class PowerStation extends PureComponent {
     );
     const { form } = params;
     if (params.value.province) {
-      console.log(' onFieldChange 清空 province ： '); //
+      console.log(' onFieldChange 清空 province ： ');
       const resetParams = {
         city: null,
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { city, area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 province ： ', params.value.province); //
+      console.log(' onFieldChange 搜索 province ： ', params.value.province);
       this.props.getDistrictAsync(data);
       // this.props.getDistrictAsync({province: params.value.province});
       this.props.getListAsync({ ...params.formData, ...resetParams });
       return;
     }
     if (params.value.city) {
-      console.log(' onFieldChange 清空 city ： '); //
+      console.log(' onFieldChange 清空 city ： ');
       const resetParams = {
         area: null,
       };
       form.setFieldsValue(resetParams);
       const { area, ...data } = params.formData;
-      console.log(' onFieldChange 搜索 city ： ', params.value.city); //
+      console.log(' onFieldChange 搜索 city ： ', params.value.city);
       this.props.getDistrictAsync(data);
       // this.props.getDistrictAsync({city: params.value.city});
       this.props.getListAsync({ ...params.formData, ...resetParams });
       return;
     }
-    console.log(' onFieldChange 列表搜索 ： '); //
+    console.log(' onFieldChange 列表搜索 ： ');
     this.props.getListAsync({ ...params.formData, page: 1 });
   };
 
@@ -203,9 +203,9 @@ class PowerStation extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail, d_id } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail, d_id } = this.props;
+    const { form, init } = props;
     // if (action === 'add') {
     //   this.props.addItemAsync({
     //   });
@@ -220,7 +220,7 @@ class PowerStation extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'exportDutyData') {
         this.props.exportData({
           reqMethod: 'exportDutyDataAsync',
@@ -263,12 +263,12 @@ class PowerStation extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
@@ -291,7 +291,7 @@ class PowerStation extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     const powerTable = (
       <PowerStationDetailTable
         addPowerInfoAsync={this.props.addPowerInfoAsync}
@@ -330,7 +330,7 @@ class PowerStation extends PureComponent {
       params,
       this.props,
       this.props.location.query.powerstation_id,
-    ); //
+    );
     this.props.removeCircuitItemAsync({
       power_station_id: this.props.location.query.powerstation_id,
       circuit_id: params.circuit_id,
@@ -409,7 +409,7 @@ class PowerStation extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div className="PowerStation">
         {this.renderSearchForm()}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 import { Form, InputNumber } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import { notifyTypeConfig, fullFormLayouts } from '@/configs';
 
 const defRule = {
@@ -25,8 +25,8 @@ const layoutObj = {
 };
 
 const AlarmTemplateForm = props => {
-  console.log(' AlarmTemplateForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' AlarmTemplateForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const ruleConfig = [
     {
@@ -143,7 +143,7 @@ const AlarmTemplateForm = props => {
   // const formList = (
   //   <Form.List name="spect_out" key={'spectIn'}>
   //     {(fields, { add, remove }) => {
-  //       console.log(' dataInit  fieldsfields ： ', fields); //
+  //       console.log(' dataInit  fieldsfields ： ', fields);
   //       return (
   //         <>
   //           {fields.map(field => {

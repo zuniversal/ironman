@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const choiceRadios = [
   { label: '是', value: 'yes', key: 'yes' },
@@ -9,8 +9,8 @@ const choiceRadios = [
 ];
 
 export const WorkOrderDispatchOrderForm = props => {
-  console.log(' WorkOrderDispatchOrderForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' WorkOrderDispatchOrderForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

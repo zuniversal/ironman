@@ -1,8 +1,8 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/clientReport';
 import * as electricBillServices from '@/services/electricBill';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'clientReport';
 const { createActions } = init(namespace);
@@ -32,12 +32,20 @@ export const actions = {
 export const mapStateToProps = state => state[namespace];
 
 export const formatSearch = data => {
-  console.log(' formatSearch ： ', data); //
+  console.log(' formatSearch ： ', data);
   return {
     ...data,
     year_month: data.year_month ? data.year_month.format('YYYY-MM') : '',
   };
 };
+
+const filterKey = [
+  'number',
+  'name',
+  'service_staff_name',
+  'service_team_name',
+  'power_number',
+];
 
 export default {
   namespace,
@@ -64,7 +72,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       const extraData = {};
       if (payload.action === 'addElectricBillItemAsync') {
         extraData.itemDetail = {
@@ -72,7 +80,7 @@ export default {
           capacity: payload.record.real_capacity,
           customer: payload.record.name,
           electrical_id: `${payload.record.id}`,
-          year_month: moment(),
+          year_month: state.searchInfo.year_month,
         };
       }
 
@@ -84,7 +92,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -94,9 +102,167 @@ export default {
       };
     },
     getList(state, { payload, type }) {
+      let dataList = payload.list
+      if (payload.searchInfo.filter) {
+        dataList = payload.list.filter(v => filterKey.some(key =>
+          `${v[key]}`.includes(payload.searchInfo.filter)
+        ))
+      }
+      console.log(' getListAsync res ： ', dataList, state, payload);
       return {
         ...state,
-        dataList: payload.list,
+        dataList: [
+          {
+              "id": 2753,
+              "name": "福州泰禾物业管理有限公司",
+              "number": "1345349188",
+              "billing_method": "0",
+              "electricity_user_id": "66675",
+              "power_number": "11031857443",
+              "meter_number": "563",
+              "voltage_level": "2",
+              "magnification": 1500,
+              "transformer_capacity": 1000.0,
+              "real_capacity": 1000.0,
+              "service_staff_id": "90",
+              "service_staff_name": "刘文明",
+              "amount_adjust": null,
+              "amount": null,
+              "capacity": null,
+              "power_factor_real": null,
+              "power_factor": 0.85,
+              "volume": 0,
+              "finish": 0,
+              "service_team": "2105",
+              "service_team_name": "姚国华",
+              "year_month": "2021-04"
+          },
+          {
+              "id": 2754,
+              "name": "福州泰禾物业管理有限公司",
+              "number": "1345349188",
+              "billing_method": "0",
+              "electricity_user_id": "66675",
+              "power_number": "11031861457",
+              "meter_number": "870",
+              "voltage_level": "2",
+              "magnification": 1500,
+              "transformer_capacity": 1000.0,
+              "real_capacity": 1000.0,
+              "service_staff_id": "90",
+              "service_staff_name": "刘文明",
+              "amount_adjust": null,
+              "amount": null,
+              "capacity": null,
+              "power_factor_real": null,
+              "power_factor": 0.85,
+              "volume": 0,
+              "finish": 0,
+              "service_team": "2105",
+              "service_team_name": "姚国华",
+              "year_month": "2021-04"
+          },
+          {
+              "id": 2513,
+              "name": "精英模具(上海)有限公司",
+              "number": "0231400778",
+              "billing_method": "4",
+              "electricity_user_id": "6669",
+              "power_number": "5600260689",
+              "meter_number": "796",
+              "voltage_level": "2",
+              "magnification": 3000,
+              "transformer_capacity": 2400.0,
+              "real_capacity": 2400.0,
+              "service_staff_id": "112",
+              "service_staff_name": "陈捷",
+              "amount_adjust": null,
+              "amount": null,
+              "capacity": null,
+              "power_factor_real": null,
+              "power_factor": 0.9,
+              "volume": 0,
+              "finish": 0,
+              "service_team": "1608",
+              "service_team_name": "徐勤富",
+              "year_month": "2021-04"
+          },
+          {
+              "id": 2514,
+              "name": "精英模具(上海)有限公司",
+              "number": "0231400778",
+              "billing_method": "4",
+              "electricity_user_id": "6669",
+              "power_number": "10895388943",
+              "meter_number": "081",
+              "voltage_level": "2",
+              "magnification": 1000,
+              "transformer_capacity": 800.0,
+              "real_capacity": 800.0,
+              "service_staff_id": "112",
+              "service_staff_name": "陈捷",
+              "amount_adjust": null,
+              "amount": null,
+              "capacity": null,
+              "power_factor_real": null,
+              "power_factor": 0.9,
+              "volume": 0,
+              "finish": 0,
+              "service_team": "1608",
+              "service_team_name": "徐勤富",
+              "year_month": "2021-04"
+          },
+        {
+            "id": 3298,
+            "name": "普洛斯(上海)奉城物流园",
+            "number": "1367073427",
+            "billing_method": "0",
+            "electricity_user_id": "78888",
+            "power_number": "11140598326",
+            "meter_number": "532",
+            "voltage_level": "2",
+            "magnification": 1000,
+            "transformer_capacity": 800.0,
+            "real_capacity": 800.0,
+            "service_staff_id": "118",
+            "service_staff_name": "王海峰",
+            "amount_adjust": null,
+            "amount": null,
+            "capacity": null,
+            "power_factor_real": null,
+            "power_factor": 0.9,
+            "volume": 0,
+            "finish": 0,
+            "service_team": "2620",
+            "service_team_name": "黄海",
+            "year_month": "2021-04"
+        },
+        {
+            "id": 3299,
+            "name": "普洛斯(上海)奉城物流园",
+            "number": "1367073427",
+            "billing_method": "0",
+            "electricity_user_id": "78888",
+            "power_number": "11289089076",
+            "meter_number": "474",
+            "voltage_level": "2",
+            "magnification": 1000,
+            "transformer_capacity": 800.0,
+            "real_capacity": 800.0,
+            "service_staff_id": "118",
+            "service_staff_name": "王海峰",
+            "amount_adjust": null,
+            "amount": null,
+            "capacity": null,
+            "power_factor_real": null,
+            "power_factor": 0.9,
+            "volume": 0,
+            "finish": 0,
+            "service_team": "2620",
+            "service_team_name": "黄海",
+            "year_month": "2021-04"
+        }],
+        // dataList: dataList,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -104,7 +270,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const { bill, inspect } = payload.bean;
 
       const itemDetail = {
@@ -193,7 +359,7 @@ export default {
             v.temperature,
             v.humidity,
             (v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %',
-          ); //
+          );
           return {
             ...v,
             // inspect_in: v?.inspect_in.map((v) => ({...v, })),
@@ -220,7 +386,7 @@ export default {
           };
         }),
       };
-      console.log(' itemDetail ： ', itemDetail); //
+      console.log(' itemDetail ： ', itemDetail);
       return {
         ...state,
         action: payload.payload.action,
@@ -258,14 +424,8 @@ export default {
     },
 
     getListFilter(state, { payload, type }) {
-      console.log(' getListFilter ： ', state, payload); //
+      console.log(' getListFilter ： ', state, payload);
       const { originData } = state;
-      const filterKey = [
-        'number',
-        'name',
-        'service_staff_name',
-        'service_team_name',
-      ];
 
       return {
         ...state,
@@ -277,6 +437,10 @@ export default {
           return isInclude;
         }),
         isShowModal: false,
+        searchInfo: {
+          ...state.searchInfo,
+          ...payload,
+        },
       };
     },
     closePdf(state, { payload, type }) {
@@ -286,7 +450,7 @@ export default {
       };
     },
     toggleExportPDF(state, { payload, type }) {
-      console.log(' toggleExportPDF ： ', payload); //
+      console.log(' toggleExportPDF ： ', payload);
       return {
         ...state,
         // isExportPDF: !state.isExportPDF,
@@ -307,7 +471,7 @@ export default {
       };
     },
     getElectricBillItem(state, { payload, type }) {
-      console.log(' getElectricBillItem ： ', payload); //
+      console.log(' getElectricBillItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -413,7 +577,7 @@ export default {
               };
             }),
             inspect: inspect.map(v => {
-              // console.log(' itemDetail ： ', v, v.temperature, v.humidity, ((v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %'),  ); //
+              // console.log(' itemDetail ： ', v, v.temperature, v.humidity, ((v.temperature || '') + '℃ / ' + (v.humidity || '') + ' %'),  );
               return {
                 ...v,
                 // inspect_in: v?.inspect_in.map((v) => ({...v, })),
@@ -449,16 +613,26 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
-      console.log(' getListAsync ： ', payload, searchInfo, type); //
+      console.log(' getListAsync ： ', payload, searchInfo, type);
       const params = {
         ...searchInfo,
         ...payload,
       };
 
       const res = yield call(services.getList, formatSearch(params));
+      // let data = res.list
+      // if (params.filter) {
+      //   data = res.list.filter(v => {
+      //     const isInclude = filterKey.some(key =>
+      //       `${v[key]}`.includes(params.filter),
+      //     );
+      //     return isInclude;
+      //   })
+      // }
+      // console.log(' getListAsync res ： ', data, res);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
-      // const payloads = payload ? payload : searchInfo; //
-      // console.log('  payloads ：', payloads); //
+      // const payloads = payload ? payload : searchInfo;
+      // console.log('  payloads ：', payloads);
       // const params = {
       //   ...payloads,
       //   year_month:

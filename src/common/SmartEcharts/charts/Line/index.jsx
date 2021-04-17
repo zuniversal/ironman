@@ -9,7 +9,7 @@ const option = params => {
     data,
     tabData,
     myExpenseBarTxt,
-  ); //
+  );
   return {
     grid,
     color: [

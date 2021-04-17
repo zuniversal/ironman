@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 
 export const config = [
   {
@@ -45,8 +45,8 @@ export const config = [
 ];
 
 const DictForm = props => {
-  console.log(' DictForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' DictForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   return (
     <div className={' DictForm '}>

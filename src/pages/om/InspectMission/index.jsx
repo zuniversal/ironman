@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm';
 import {
   InspectMissionAssignForm,
   InspectMissionEditDateForm,
-} from '@/components/Form/InspectMissionActionForm'; //
-import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm'; //
-import InspectMissionTable from '@/components/Table/InspectMissionTable'; //
+} from '@/components/Form/InspectMissionActionForm';
+import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
+import InspectMissionTable from '@/components/Table/InspectMissionTable';
 
-import { actions, mapStateToProps } from '@/models/inspectMission'; //
+import { actions, mapStateToProps } from '@/models/inspectMission';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { inspectMissionStatusMap } from '@/configs';
@@ -172,16 +172,16 @@ class InspectMission extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (action === 'detail') {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -212,41 +212,41 @@ class InspectMission extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   onFormFieldChange = params => {
     console.log('    onFormFieldChange ： ', params, this.state, this.props);
     // if (params.value.customer_id === undefined) {
-    //   console.log(' onFormFieldChange  customer_id 无值 ： '); //
+    //   console.log(' onFormFieldChange  customer_id 无值 ： ');
     //   params.form.setFieldsValue({
     //     station_id: null,
     //   });
     // }
     if (params.value.customer_id) {
-      console.log(' onFormFieldChange  customer_id 有值 ： '); //
+      console.log(' onFormFieldChange  customer_id 有值 ： ');
       params.form.setFieldsValue({
         station_id: null,
       });
       this.props.getPowerAsync({ customer: params.value.customer_id });
     }
     if (params.value.station_id === undefined) {
-      console.log(' onFormFieldChange  station_id 无值 ： '); //
+      console.log(' onFormFieldChange  station_id 无值 ： ');
       this.props.getPowerAsync();
     }
     if (params.value.station_id) {
       console.log(
         ' onFormFieldChange  station_id 有值 ： ',
         params.value.station_id,
-      ); //
+      );
       const customer = this.props.powerList.find(
         v => v.id == params.value.station_id,
       );
-      console.log(' customer ： ', customer); //
+      console.log(' customer ： ', customer);
       const customer_id = customer?.customer?.id;
       const name = customer?.customer?.name;
-      console.log(' customer_id ： ', customer_id, name); //
+      console.log(' customer_id ： ', customer_id, name);
       this.props.getClient({
         list: [
           ...this.props.powerList,
@@ -262,7 +262,7 @@ class InspectMission extends PureComponent {
     }
   };
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUserAsync: params => this.props.getUserAsync({ value: params }),
@@ -274,7 +274,7 @@ class InspectMission extends PureComponent {
       getPowerAsync: params => this.props.getPowerAsync({ name: params }),
       powerList: this.props.powerList,
 
-      onFieldChange: this.onFormFieldChange,
+      // onFieldChange: this.onFormFieldChange,
     };
     if (action !== 'add') {
       formComProps.init = {
@@ -301,7 +301,7 @@ class InspectMission extends PureComponent {
         <InspectMissionDetailForm {...formComProps}></InspectMissionDetailForm>
       );
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <InspectMissionForm {...formComProps}></InspectMissionForm>;
   };
   get size() {

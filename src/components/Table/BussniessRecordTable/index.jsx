@@ -9,12 +9,12 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
+import SmartTable from '@/common/SmartTable';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
 import { tips } from '@/utils';
 
 const BussniessRecordTable = props => {
-  const { showModal, edit, remove, tdClick } = props; //
+  const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
     {
@@ -57,7 +57,7 @@ const BussniessRecordTable = props => {
 
   const extra = (text, record, index, props) => {
     const action = formTypeMap[record.type];
-    console.log('  action ：', action); //
+    console.log('  action ：', action);
     return (
       <>
         {record.type !== 'demand_declaration' && (

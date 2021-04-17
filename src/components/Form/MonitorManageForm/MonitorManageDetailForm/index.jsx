@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './style.less';
 import { Divider, Radio } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
-import MonitorManageForm from '@/components/Form/MonitorManageForm'; //
+import SmartForm from '@/common/SmartForm';
+import MonitorManageForm from '@/components/Form/MonitorManageForm';
 import { PRIMARY } from '@/constants';
 
 const formLayouts = {
@@ -95,10 +95,10 @@ const ListCom = props => {
 };
 
 const MonitorManageDetailForm = props => {
-  console.log(' MonitorManageDetailForm ： ', props); //
+  console.log(' MonitorManageDetailForm ： ', props);
   const [checkItem, setCheckItem] = useState('A相');
 
-  const { formBtn, ...rest } = props; //
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -144,7 +144,7 @@ const MonitorManageDetailForm = props => {
           <Radio.Group
             options={radioOptions}
             onChange={e => {
-              console.log(' e.target.value ： ', e.target.value); //
+              console.log(' e.target.value ： ', e.target.value);
               // setCheckItem
             }}
             value={checkItem}

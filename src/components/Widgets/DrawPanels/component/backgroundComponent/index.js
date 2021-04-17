@@ -18,7 +18,7 @@ const { TabPane } = Tabs;
 const { Panel } = Collapse;
 const { TextArea } = Input;
 const CanvasProps = props => {
-  console.log(' CanvasProps ： ', props, canvas); //
+  console.log(' CanvasProps ： ', props, canvas);
   const { data } = props;
   // const { bkColor = '', bkImage = '' } = data;
   // const [wsAddress, setWsAddress] = useState(
@@ -50,7 +50,7 @@ const CanvasProps = props => {
       formData,
       canvas,
       data,
-    ); //
+    );
     const { layout, size } = value;
     // data.clearBkImg();
     const keys = Object.keys(value)[0];
@@ -85,7 +85,7 @@ const CanvasProps = props => {
             checkedChildren="开"
             unCheckedChildren="关"
             onClick={e => {
-              console.log(' showGridshowGrid ： ', e, canvas, canvas.showGrid); //
+              console.log(' showGridshowGrid ： ', e, canvas, canvas.showGrid);
               // canvas.showGrid(e);
             }}
           />
@@ -101,7 +101,7 @@ const CanvasProps = props => {
             checkedChildren="开"
             unCheckedChildren="关"
             onClick={e => {
-              console.log(' rule ： ', e, canvas, canvas.showGrid); //
+              console.log(' rule ： ', e, canvas, canvas.showGrid);
               // canvas.showGrid(e);
             }}
           />
@@ -114,7 +114,7 @@ const CanvasProps = props => {
             checkedChildren="是"
             unCheckedChildren="否"
             onClick={e => {
-              console.log(' rule ： ', e, canvas, canvas.showGrid); //
+              console.log(' rule ： ', e, canvas, canvas.showGrid);
               // canvas.showGrid(e);
             }}
           />

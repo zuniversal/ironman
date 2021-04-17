@@ -2,9 +2,9 @@ import { animate, createProperty } from '@/utils';
 
 export const isDev = process.env.NODE_ENV === 'development';
 
-export const MINI_POWER = 'http://81.68.221.146/#/home'; //
+export const MINI_POWER = 'http://81.68.221.146/#/home';
 
-export const DOWN_ASSETS_TPL = '/api/v1/export/equipment.xlsx'; //
+export const DOWN_ASSETS_TPL = '/api/v1/export/equipment.xlsx';
 
 // export const BASE_URL = `http://yapi.afafa.com.cn/mock/17/api/v1/console/`;
 // export const TEST_URL = `http://188.131.235.243:31002/api/v1/console/`;
@@ -30,7 +30,7 @@ export const screenPort = {
   'http:': DEV_SCREEN_PORT,
   'https:': PROD_SCREEN_PORT,
 }[protocol];
-console.log(' protocol ： ', screenPort); //
+console.log(' protocol ： ', screenPort);
 export const BIG_SCREEN =
   protocol + '//' + hostname + `:${screenPort}/normal_screen`;
 
@@ -39,7 +39,7 @@ export const PROXY_URL = `/api/v1/`;
 // export const PROXY_URL = `/api/v1/cnosole/`;
 // export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
-// console.log(' BASE_URL ： ', BASE_URL, process.env); //
+// console.log(' BASE_URL ： ', BASE_URL, process.env);
 // export const URL = `${URL_PREFIX}${BASE_URL}`;
 export const URL = `${BASE_URL}`;
 

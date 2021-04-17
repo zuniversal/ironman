@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.less';
 import { Descriptions, Button } from 'antd';
-import CsClientReportPie from '@/components/Echarts/CsClientReportPie'; //
-import useExportPdf from '@/hooks/useExportPdf'; //
-import CsHomeLine from '@/components/Echarts/CsHomeLine'; //
-import SmartEcharts from '@/common/SmartEcharts'; //
-import stamp from '@/static/assets/stamp.png'; //
-import powerHZ from '@/static/assets/powerHZ.png'; //
-import gzh from '@/static/assets/gzh.png'; //
+import CsClientReportPie from '@/components/Echarts/CsClientReportPie';
+import useExportPdf from '@/hooks/useExportPdf';
+import CsHomeLine from '@/components/Echarts/CsHomeLine';
+import SmartEcharts from '@/common/SmartEcharts';
+import stamp from '@/static/assets/stamp.png';
+import powerHZ from '@/static/assets/powerHZ.png';
+import gzh from '@/static/assets/gzh.png';
 import { voltageLevelMap } from '@/configs';
 
 const coverImgConfig = [
@@ -317,8 +317,8 @@ const ReportCover = props => {
 };
 
 const MonthPowerReport = props => {
-  console.log(' MonthPowerReport ：', props); //
-  const { formBtn, data, ...rest } = props; //
+  console.log(' MonthPowerReport ：', props);
+  const { formBtn, data, ...rest } = props;
   // const headerCom = (
   //   <Descriptions title="" className="headerWrapper " layout="vertical" colon={false} column={1}>
   //     <DescItem label={'月度用电分析报告'} className="noPadding ant-descriptions-item pdfTitle">
@@ -424,7 +424,7 @@ const MonthPowerReport = props => {
     value: props.data[v.key],
     name: `${v.name} ${props.data[v.key]} %`,
   }));
-  console.log(' pieData1 ： ', pieData1, pieData2); //
+  console.log(' pieData1 ： ', pieData1, pieData2);
   const domRef = useRef();
 
   // const pieData2 = [
@@ -460,7 +460,7 @@ const MonthPowerReport = props => {
       setPieUrl={setPieUrl2}
     ></CsClientReportPieCom>
   );
-  // console.log(' pieCom ： ', pieCom1, domRef); //
+  // console.log(' pieCom ： ', pieCom1, domRef);
 
   const headerCom = (
     <div className="headerWrapper">
@@ -641,8 +641,8 @@ const MonthPowerReport = props => {
 };
 
 const MonthStationReport = props => {
-  console.log(' MonthStationReport ：', props); //
-  const { formBtn, data, ...rest } = props; //
+  console.log(' MonthStationReport ：', props);
+  const { formBtn, data, ...rest } = props;
   const headerCom = (
     <div className="headerWrapper">
       <div className={`pdfTitle`}>变(配)电站月度运行报告</div>
@@ -689,7 +689,7 @@ const MonthStationReport = props => {
       ))}
     </Descriptions>
   );
-  console.log(' footerConfig ： ', footerConfig, footerCom); //
+  console.log(' footerConfig ： ', footerConfig, footerCom);
 
   const config1 = [
     {
@@ -1042,10 +1042,10 @@ const MonthStationReport = props => {
 };
 
 const CsClientReportDescription = props => {
-  console.log(' CsClientReportDescription ：', props); //
+  console.log(' CsClientReportDescription ：', props);
 
   // useEffect(() => {
-  //   console.log(' ExportPdf useEffect ： ', ); //
+  //   console.log(' ExportPdf useEffect ： ', );
   //   props.onChildLoad(true)
   // }, []);
 
@@ -1093,7 +1093,7 @@ const CsClientReportDescription = props => {
         <Button
           type="primary"
           onClick={() => {
-            console.log(' xx ： ', ); //
+            console.log(' xx ： ', );
             window.print();
           }}
         >

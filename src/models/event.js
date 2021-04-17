@@ -8,7 +8,7 @@ const EventModel = {
 
   reducers: {
     emit(state, action) {
-      console.log(' emit event ： ', state, action); //
+      console.log(' emit event ： ', state, action);
       return {
         ...state,
         event: action.payload.event,

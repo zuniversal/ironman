@@ -24,7 +24,7 @@ import {
   PlusOutlined,
   MinusOutlined,
 } from '@ant-design/icons';
-import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants'; //
+import { INPUT_TXT, SELECT_TXT, REQUIRE, ANIMATE } from '@/constants';
 import {
   mockFormData,
   renderSelectOp,
@@ -32,7 +32,7 @@ import {
   formatConfig,
   renderCheckboxOp,
   tips,
-} from '@/utils'; //
+} from '@/utils';
 
 const animates = ANIMATE.bounceIn;
 
@@ -192,7 +192,7 @@ const ActionBtn = ({
 );
 
 const DynamicFormTable = props => {
-  console.log(' DynamicFormTable ： ', props); //
+  console.log(' DynamicFormTable ： ', props);
   const {
     key,
     itemProps,
@@ -221,7 +221,7 @@ const DynamicFormTable = props => {
     filterSelect,
     rowExtra,
     extraChildren,
-  } = props; //
+  } = props;
 
   return (
     <Form.List
@@ -280,7 +280,7 @@ const DynamicFormTable = props => {
           // onSelect: onSelect,
         };
         if (formType === 'Search') {
-          // console.log(' selectSearch ： ', props.selectSearch); //
+          // console.log(' selectSearch ： ', props.selectSearch);
           selectProps.showArrow = false;
           selectProps.optionFilterProp = 'children';
           if (props.selectSearch) {
@@ -339,7 +339,7 @@ const DynamicFormTable = props => {
         // }
 
         return fieldsData.map((field, index) => {
-          const fieldKey = name ? name : field.name; //
+          const fieldKey = name ? name : field.name;
           console.log(
             ' 动态表单 fieldKey ：',
             formItemLayout,
@@ -348,7 +348,7 @@ const DynamicFormTable = props => {
             name,
             fieldKey,
             props,
-          ); //
+          );
 
           // if (init) {
           //   init.forEach((v, i) => {
@@ -403,7 +403,7 @@ const DynamicFormTable = props => {
           );
 
           const extraItem = config.map((v, i) => {
-            // console.log(' extraItem v ： ', v.itemProps.name, field, field.key); //
+            // console.log(' extraItem v ： ', v.itemProps.name, field, field.key);
             const { itemProps } = v;
             const { label, className } = itemProps;
 
@@ -526,4 +526,4 @@ DynamicFormTable.defaultProps = {
   rowExtra: false,
 };
 
-export default DynamicFormTable; //
+export default DynamicFormTable;

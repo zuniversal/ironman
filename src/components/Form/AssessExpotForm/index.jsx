@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 export const config = [
   {
@@ -12,8 +12,8 @@ export const config = [
 ];
 
 const AssessExpotForm = props => {
-  console.log(' AssessExpotForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' AssessExpotForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   return (
     <div className={' AssessExpotForm '}>

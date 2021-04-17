@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import SearchForm from '@/common/SearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
 import CsHomeStationTable from '@/components/Table/CsHomeStationTable';
 import CsHomeTabsTable from '@/components/Table/CsHomeTabsTable';
 import CsHomeMonitor from '@/components/Widgets/CsHomeMonitor';
@@ -11,16 +11,16 @@ import CsHomeStatBox from '@/components/Widgets/CsHomeStatBox';
 import CsHomeMonitorVideo from '@/components/Widgets/CsHomeMonitorVideo';
 import CsHomeStatEcharts from '@/components/Widgets/CsHomeStatEcharts';
 import HomeTitleRow from '@/components/Widgets/HomeTitleRow';
-import SmartVideo from '@/common/SmartVideo'; //
+import SmartVideo from '@/common/SmartVideo';
 
 import {
   actions,
   // mapStateToProps,
-} from '@/models/csHome'; //
+} from '@/models/csHome';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { ANIMATE, MINI_POWER } from '@/constants'; //
-import Icon from '@/components/Widgets/Icons'; //
+import { ANIMATE, MINI_POWER } from '@/constants';
+import Icon from '@/components/Widgets/Icons';
 import WeakForm from '@/components/Form/WeakForm';
 
 export const TITLE = '';
@@ -148,7 +148,7 @@ class CsHome extends PureComponent {
     //   data.start_time = null;
     //   data.end_time = null;
     // }
-    console.log(' data ： ', data); // [params.requestFn]
+    console.log(' data ： ', data);
     this.props.getPowerInfoAsync(data);
   };
   renderCsHomeStatEcharts = params => {
@@ -165,28 +165,28 @@ class CsHome extends PureComponent {
     return <CsHomeTabsTable></CsHomeTabsTable>;
   };
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (action === 'weakDetail') {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'setting') {
         // this.props.homeSetting({
         //   ...res,
         // });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };
@@ -217,7 +217,7 @@ class CsHome extends PureComponent {
       this.state,
       this.props,
       this.props.user,
-    ); //
+    );
     this.props.getStatisticAsync({});
     this.props.getDeviceStatusAsync();
     this.props.getPowerInfoAsync({
@@ -233,7 +233,7 @@ class CsHome extends PureComponent {
       `color: #333; font-weight: bold`,
       this.state,
       this.props,
-    ); //
+    );
     return (
       <div className="csHome">
         {this.renderPageTitle()}

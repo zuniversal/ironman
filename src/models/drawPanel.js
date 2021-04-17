@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/powerStation';
 import * as screenServices from '@/services/screen';
 import { formatSelectList, nowYearMonth } from '@/utils';
@@ -46,7 +46,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -54,7 +54,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -72,7 +72,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -109,7 +109,7 @@ export default {
     },
 
     togglePreview(state, { payload, type }) {
-      console.log(' togglePreview ： ', state, payload); //
+      console.log(' togglePreview ： ', state, payload);
       return {
         ...state,
         isPreview: !state.isPreview,
@@ -117,7 +117,7 @@ export default {
       };
     },
     getCircuitItem(state, { payload, type }) {
-      console.log(' getCircuitItem ： ', state, payload); //
+      console.log(' getCircuitItem ： ', state, payload);
       return {
         ...state,
         circuitList: formatSelectList(
@@ -125,7 +125,7 @@ export default {
             console.log(' v, index ： ', v, index, {
               ...v,
               label: `线路图-${index + 1}`,
-            }); //
+            });
             const { deleted, ...rest } = v;
             return { ...rest, label: `线路图-${index + 1}`, id: `${v.id}` };
           }),
@@ -134,19 +134,19 @@ export default {
       };
     },
     addCircuitItem(state, { payload, type }) {
-      console.log(' addCircuitItem ： ', state, payload); //
+      console.log(' addCircuitItem ： ', state, payload);
       return {
         ...state,
       };
     },
     editCircuitItem(state, { payload, type }) {
-      console.log(' editCircuitItem ： ', state, payload); //
+      console.log(' editCircuitItem ： ', state, payload);
       return {
         ...state,
       };
     },
     removeCircuitItem(state, { payload, type }) {
-      console.log(' removeCircuitItem ： ', state, payload); //
+      console.log(' removeCircuitItem ： ', state, payload);
       return {
         ...state,
       };
@@ -165,7 +165,7 @@ export default {
       };
     },
     clearCircurt(state, { payload, type }) {
-      console.log(' clearCircurt ： ', state, payload); //
+      console.log(' clearCircurt ： ', state, payload);
       return {
         ...state,
         circuitList: [],
@@ -187,7 +187,7 @@ export default {
         action,
         params,
         history,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -229,12 +229,12 @@ export default {
     },
 
     *getPowerPointListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPowerPointListAsync ： ', payload); //
+      console.log(' getPowerPointListAsync ： ', payload);
       const res = yield call(screenServices.getPowerPointList, payload);
       yield put(action({ ...res, payload }));
     },
     *getPowerPointRealListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getPowerPointRealListAsync ： ', payload); //
+      console.log(' getPowerPointRealListAsync ： ', payload);
       const res = yield call(screenServices.getPowerPointRealList, payload);
       yield put(action({ ...res, payload }));
     },

@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/missionsManage';
 import * as teamServices from '@/services/shiftsManage';
 import * as userServices from '@/services/userManage';
@@ -52,7 +52,7 @@ const formatTeamList = data => {
     label: v.team_headman + ' - ' + v.name,
     value: v.id,
   }));
-  // console.log(' formatTeamList res ： ', res); //
+  // console.log(' formatTeamList res ： ', res);
   return res;
 };
 
@@ -88,14 +88,14 @@ export default {
 
   reducers: {
     getEnumList(state, { payload, type }) {
-      console.log(' getEnumList ： ', payload); //
+      console.log(' getEnumList ： ', payload);
       return {
         ...state,
         enumList: payload.list,
       };
     },
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -105,7 +105,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -130,7 +130,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const clientData = [
         {
           value: payload.bean.customer.id,
@@ -197,7 +197,7 @@ export default {
       };
     },
     editItem(state, { payload, type }) {
-      console.log(' editItem ： ', state, payload); //
+      console.log(' editItem ： ', state, payload);
       return {
         ...state,
         // d_id: payload.payload.d_id,
@@ -243,7 +243,7 @@ export default {
       };
     },
     getMissionClient(state, { payload, type }) {
-      console.log(' getMissionClient 修改  ： ', state, payload, type); //
+      console.log(' getMissionClient 修改  ： ', state, payload, type);
       const { clientSearchInfo } = state;
       return {
         ...state,
@@ -281,7 +281,7 @@ export default {
       };
     },
     getClientDetail(state, { payload, type }) {
-      console.log(' getClientDetail 修改  ： ', state, payload, type); //
+      console.log(' getClientDetail 修改  ： ', state, payload, type);
       const { customer_admin = [] } = payload.bean;
       return {
         ...state,
@@ -307,7 +307,7 @@ export default {
       };
     },
     getClientItem(state, { payload, type }) {
-      console.log(' getClientItem 修改  ： ', state, payload, type); //
+      console.log(' getClientItem 修改  ： ', state, payload, type);
       const { electricity_user } = payload.bean;
       return {
         ...state,
@@ -347,7 +347,7 @@ export default {
       };
     },
     getHouseNo(state, { payload, type }) {
-      console.log(' getHouseNo 修改  ： ', state, payload, type); //
+      console.log(' getHouseNo 修改  ： ', state, payload, type);
       const { clientSearchInfo } = state;
       return {
         ...state,
@@ -385,12 +385,12 @@ export default {
     },
 
     showClient(state, { payload, type }) {
-      console.log(' showClient ： ', payload); //
+      console.log(' showClient ： ', payload);
       const {
         customer_admin,
         service_staff,
         last_service_staff,
-      } = payload.bean; //
+      } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -406,7 +406,7 @@ export default {
       };
     },
     showContract(state, { payload, type }) {
-      console.log(' showContract ： ', payload); //
+      console.log(' showContract ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -418,7 +418,7 @@ export default {
       };
     },
     selectClient(state, { payload, type }) {
-      console.log(' selectClient ： ', payload); //
+      console.log(' selectClient ： ', payload);
       return {
         ...state,
         clientItem: payload.payload,
@@ -439,7 +439,7 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -496,7 +496,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getClientItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getClientItemAsync ： ', payload); //
+      console.log(' getClientItemAsync ： ', payload);
       const res = yield call(services.getClientItem, payload);
       yield put(action({ ...res, payload }));
     },
@@ -520,7 +520,7 @@ export default {
 
     *startWorkOrderAsync({ payload, action, type }, { call, put, select }) {
       const { itemDetail } = yield select(state => state[namespace]);
-      console.log(' startWorkOrderAsync ： ', payload, type); //
+      console.log(' startWorkOrderAsync ： ', payload, type);
       // return
       const res = yield call(services.startWorkOrder, {
         ...payload,
@@ -531,20 +531,20 @@ export default {
       yield put({ type: 'getListAsync' });
     },
     *closeMissionAsync({ payload, action, type }, { call, put }) {
-      console.log(' closeMissionAsync ： ', payload, type); //
+      console.log(' closeMissionAsync ： ', payload, type);
       // return;
       const res = yield call(services.closeMission, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *linkContractAsync({ payload, action, type }, { call, put }) {
-      console.log(' linkContractAsync ： ', payload, type); //
+      console.log(' linkContractAsync ： ', payload, type);
       const res = yield call(services.linkContract, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *scheduleAsync({ payload, action, type }, { call, put }) {
-      console.log(' scheduleAsync ： ', payload, type); //
+      console.log(' scheduleAsync ： ', payload, type);
       const params = {
         ...payload,
       };
@@ -553,7 +553,7 @@ export default {
       yield put({ type: 'getListAsync' });
     },
     *confirmScheduleAsync({ payload, action, type }, { call, put }) {
-      console.log(' confirmScheduleAsync ： ', payload, type); //
+      console.log(' confirmScheduleAsync ： ', payload, type);
       // return;
       const res = yield call(services.confirmSchedule, payload);
       // yield put(action({ ...res, payload }));
@@ -564,7 +564,7 @@ export default {
       return res;
     },
     *getEnumListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getEnumListAsync ： ', payload, type); //
+      console.log(' getEnumListAsync ： ', payload, type);
       const res = yield call(commonServices.getEnumList, payload);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Layout = ({ Tools, onDrag }) => {
   return Tools.map((item, index) => {
-    console.log(' 系统组件 item ： ', item); //
+    console.log(' 系统组件 item ： ', item);
     return (
       <div key={index}>
         {/* <div className="title">{item.group}</div> */}

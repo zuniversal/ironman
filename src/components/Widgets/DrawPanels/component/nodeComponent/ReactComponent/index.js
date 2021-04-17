@@ -5,7 +5,7 @@ import TableForm from './Table';
 
 const Page = props => {
   const { data, onUpdateComponentProps } = props;
-  console.log(' propspropspropsprops ： ', props); //
+  console.log(' propspropspropsprops ： ', props);
 
   const [form] = Form.useForm();
   const onFormLayoutChange = (changedValues, allValues) => {
@@ -15,7 +15,7 @@ const Page = props => {
       props,
       changedValues,
       allValues,
-    ); //
+    );
     if (props.data.node.name === 'table') {
       // allValues.columns = allValues.key.map((item, index) => ({
       //   title: allValues.title[index] || 'NA',

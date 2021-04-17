@@ -9,9 +9,9 @@ const useWebsocket = (props = {}) => {
   //   ' %c useWebsocket 组件 this.state, this.props ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
-  // ); //
+  // );
   const { url = 'ws://119.3.123.144:8008/websocket' } = props;
-  console.log(' %c useWebsocketuseWebsocket 组件 ', props, url); //
+  console.log(' %c useWebsocketuseWebsocket 组件 ', props, url);
 
   // const websocket = new window.WebSocket("ws://119.3.123.144:8008/websocket");
   // useEffect(() => {
@@ -22,17 +22,17 @@ const useWebsocket = (props = {}) => {
   const [wsData, setWsData] = useState(props.init);
 
   // useEffect(() => {
-  // console.log(' useWebsocket useEffect 副作用 ： '); //
+  // console.log(' useWebsocket useEffect 副作用 ： ');
   // const socket = new window.WebSocket(notifyWs);
   if (socket) {
     //连接成功建立的回调方法
     socket.onopen = event => {
-      console.log(' socket.onopen 副作用 ： ', event); //
+      console.log(' socket.onopen 副作用 ： ', event);
     };
 
     //连接发生错误的回调方法
     socket.onerror = error => {
-      console.log(' socket.onerror 副作用 ： ', error); //
+      console.log(' socket.onerror 副作用 ： ', error);
     };
 
     //接收到消息的回调方法
@@ -61,7 +61,7 @@ const useWebsocket = (props = {}) => {
 
     //连接关闭的回调方法
     socket.onclose = () => {
-      console.log(' socket.onclose ： '); //
+      console.log(' socket.onclose ： ');
     };
   } else {
     setSocket(new window.WebSocket(url));

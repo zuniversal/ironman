@@ -10,13 +10,13 @@ import React, {
 } from 'react';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable'; //
-import { HOUSENO } from '@/constants'; //
-import { linkUrlFn } from '@/utils'; //
+import SmartTable from '@/common/SmartTable';
+import { HOUSENO } from '@/constants';
+import { linkUrlFn } from '@/utils';
 import { voltageLevelMap } from '@/configs';
 
 const ClientReportTable = props => {
-  const { tdClick, add, edit, showDetail } = props; //
+  const { tdClick, add, edit, showDetail } = props;
 
   const columns = [
     {
@@ -72,6 +72,8 @@ const ClientReportTable = props => {
     {
       title: '力率调整',
       dataIndex: 'amount_adjust',
+      sorter: (a, b) => a.amount_adjust - b.amount_adjust,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: '功率因数',
@@ -88,6 +90,8 @@ const ClientReportTable = props => {
     {
       title: '总电量(千瓦时)',
       dataIndex: 'volume',
+      sorter: (a, b) => a.volume - b.volume,
+      sortDirections: ['descend', 'ascend'],
     },
     // {
     //   title: '巡检组长',
@@ -125,7 +129,7 @@ const ClientReportTable = props => {
               ' 1111111 ： ',
               props.searchInfo.year_month,
               props.searchInfo.year_month.format('YYYY-MM'),
-            ); //
+            );
             // return
             props.exportData({
               action: 'getClientReportUpgradeAsync',

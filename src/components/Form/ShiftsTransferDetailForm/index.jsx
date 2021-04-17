@@ -16,10 +16,10 @@ import {
   InputNumber,
 } from 'antd';
 
-import SmartForm from '@/common/SmartForm'; //
-import InputCom from '@/components/Widgets/InputCom'; //
-import { regoins } from '@/configs'; //
-import { formatConfig, reportRadioOp } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import InputCom from '@/components/Widgets/InputCom';
+import { regoins } from '@/configs';
+import { formatConfig, reportRadioOp } from '@/utils';
 
 const choiceRadios = [
   {
@@ -117,9 +117,9 @@ const transferRadios = transferDetailConfig.map((v, i) => ({
 }));
 
 const ShiftsTransferDetailForm = props => {
-  console.log(' ShiftsTransferDetailForm ： ', props); //
+  console.log(' ShiftsTransferDetailForm ： ', props);
 
-  const { getCapture, showFormModal } = props; //
+  const { getCapture, showFormModal } = props;
 
   const config = [
     {

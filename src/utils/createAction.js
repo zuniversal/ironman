@@ -110,7 +110,7 @@ export const isLoading = props => {
   } = props;
   // console.log(' get 取属 isShowLoading config, path, actions,  ： ', config, path, actions,  )//
   const configs =
-    config.length > 0 ? config : [...crudConfigs, ...extraLoading]; //
+    config.length > 0 ? config : [...crudConfigs, ...extraLoading];
   // console.log(' isLoading  configs ：', configs, path,  )//
   return configs.some(asyncSuffix => {
     // console.log(' action === `${path}/${asyncSuffix}` ： ', config, actions, `${path}/${asyncSuffix}`,  actions[`${path}/${asyncSuffix}`], )//
@@ -138,7 +138,7 @@ export const init = (prefix, noDefault) => {
   const transferActions = (config = []) => {
     const actions = {};
     config.forEach(types => (actions[types] = createAction(types)));
-    console.log(' actionsactions ： ', actions); //
+    console.log(' actionsactions ： ', actions);
     return actions;
   };
   const createCRUD = (config = []) => {

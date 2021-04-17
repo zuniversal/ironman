@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
 import { Divider } from 'antd';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 
 const formLayouts = {
   labelCol: {
@@ -13,8 +13,8 @@ const formLayouts = {
 };
 
 const SystemNotifyForm = props => {
-  console.log(' SystemNotifyForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' SystemNotifyForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

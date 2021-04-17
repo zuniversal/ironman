@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-// import SmartTim from '@/common/SmartTim'; //
+// import SmartTim from '@/common/SmartTim';
 import { Badge, Input } from 'antd';
 
 const { TextArea } = Input;
@@ -137,7 +137,7 @@ const InputBox = props => {
 };
 
 const ChatWindow = props => {
-  // console.log(' ChatWindow ： ', props, props.title); //
+  // console.log(' ChatWindow ： ', props, props.title);
   return (
     <div className={`chatWindow`}>
       <UserList config={[...config, ...config, ...config]}></UserList>

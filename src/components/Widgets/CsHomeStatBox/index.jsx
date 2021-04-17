@@ -4,11 +4,11 @@ import './style.less';
 import { Form, Input, Statistic } from 'antd';
 
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
-import operateDays from '@/static/assets/operateDays.png'; //
-import weights from '@/static/assets/weights.png'; //
-import csCompleteInspect from '@/static/assets/csCompleteInspect.png'; //
+import operateDays from '@/static/assets/operateDays.png';
+import weights from '@/static/assets/weights.png';
+import csCompleteInspect from '@/static/assets/csCompleteInspect.png';
 import StatBox from '@/components/Widgets/StatBox';
-import { ANIMATE } from '@/constants'; //
+import { ANIMATE } from '@/constants';
 
 const { Countdown } = Statistic;
 

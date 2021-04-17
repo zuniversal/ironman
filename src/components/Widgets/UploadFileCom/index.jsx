@@ -18,7 +18,7 @@ import {
   Result,
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import { uploadFile } from '@/services/assets'; //
+import { uploadFile } from '@/services/assets';
 import { tips } from '@/utils';
 
 const UploadFileCom = props => {
@@ -59,7 +59,7 @@ const UploadFileCom = props => {
         <div className="extra">支持扩展名：xls, xlsx, csv,...</div>
       </Upload>
     </div>
-  ); //
+  );
 };
 
 export default UploadFileCom;

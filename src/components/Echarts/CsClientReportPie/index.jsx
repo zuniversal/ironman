@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import './style.less';
-import SmartEchart from '@/common/SmartEchart'; //
+import SmartEchart from '@/common/SmartEchart';
 import { gridZero } from '@/common/SmartEchart/common';
 
 const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
@@ -41,7 +41,7 @@ const option = props => {
 
 const CsClientReportPie = props => {
   // const domRef = useRef()
-  console.log(' CsClientReportPie ： ', props); //
+  console.log(' CsClientReportPie ： ', props);
   return (
     <SmartEchart
       {...props}

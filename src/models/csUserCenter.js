@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csUserCenter';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
@@ -31,7 +31,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -39,7 +39,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -47,7 +47,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -67,7 +67,7 @@ export default {
     },
 
     toggleEditInfo(state, { payload, type }) {
-      console.log(' toggleEditInfo 修改  ： ', state, payload, type); //
+      console.log(' toggleEditInfo 修改  ： ', state, payload, type);
       return {
         ...state,
         isStartEdit: !state.isStartEdit,

@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchForm from '@/common/SearchForm'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
-import MissionsManageForm from '@/components/Form/MissionsManageForm'; //
-import MissionsManageSearchForm from '@/components/Form/MissionsManageSearchForm'; //
+import SearchForm from '@/common/SearchForm';
+import SmartFormModal from '@/common/SmartFormModal';
+import MissionsManageForm from '@/components/Form/MissionsManageForm';
+import MissionsManageSearchForm from '@/components/Form/MissionsManageSearchForm';
 import {
   MissionsManageWorkOrderForm,
   MissionsManageContractForm,
@@ -12,19 +12,19 @@ import {
   MissionsManageConfirmScheduleForm,
   MissionsManageOrderInfoForm,
   MissionsClientForm,
-} from '@/components/Form/MissionsManageActionForm'; //
-import MissionsManageTable from '@/components/Table/MissionsManageTable'; //
+} from '@/components/Form/MissionsManageActionForm';
+import MissionsManageTable from '@/components/Table/MissionsManageTable';
 import ClientForm from '@/components/Form/ClientForm';
 import ContractForm from '@/components/Form/ContractForm';
 import MissionsHouseNoTable from '@/components/Table/MissionsHouseNoTable';
 import SmartInput from '@/common/SmartInput';
 
-import { actions, mapStateToProps } from '@/models/missionsManage'; //
+import { actions, mapStateToProps } from '@/models/missionsManage';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import WorkOrderTicketForm from '@/components/Form/WorkOrderForm';
 import { tips } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const TITLE = '任务';
 
@@ -182,9 +182,9 @@ class MissionsManage extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail, d_id } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail, d_id } = this.props;
+    const { form, init } = props;
     if (
       ['detail', 'clientDetail', 'contractDetail', 'orderInfoDetail'].includes(
         action,
@@ -202,7 +202,7 @@ class MissionsManage extends PureComponent {
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'startWorkOrder') {
         this.props.startWorkOrderAsync({
           ...res,
@@ -236,7 +236,7 @@ class MissionsManage extends PureComponent {
         res.equipment_id = null;
       }
       if (typeof res.file !== 'string') {
-        console.log(' filefile ： ', res.file); //
+        console.log(' filefile ： ', res.file);
         if (res.file && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
           // res.file = fileList[fileList.length - 1].response.url;
@@ -249,7 +249,7 @@ class MissionsManage extends PureComponent {
       const repair_time = res.repair_time
         ? res.repair_time.format('YYYY-MM-DD HH:mm:ss')
         : null;
-      console.log(' repair_time ： ', res, repair_time, this.props); //
+      console.log(' repair_time ： ', res, repair_time, this.props);
 
       if (action === 'add') {
         this.props.addItemAsync({
@@ -269,18 +269,18 @@ class MissionsManage extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       getUser: params => this.props.getUserAsync({ keyword: params }),
       userList: this.props.userList,
       getClientAsync: params => {
-        console.log(' getClientAsync params ： ', params); //
+        console.log(' getClientAsync params ： ', params);
         return this.props.getClientAsync({ name: params });
       },
       clientList: this.props.clientList,
@@ -365,7 +365,7 @@ class MissionsManage extends PureComponent {
         ></MissionsManageOrderInfoForm>
       );
     }
-    console.log(' formComProps ： ', formComProps, this.props); //
+    console.log(' formComProps ： ', formComProps, this.props);
 
     const tableProps = {
       // dataSource: this.props.houseNoList,
@@ -385,7 +385,7 @@ class MissionsManage extends PureComponent {
       // showFormModal: this.props.showFormModal,
       // showItemAsync: this.props.showItemAsync,
     };
-    console.log(' tableProps ： ', tableProps, this.props.clientItem); //
+    console.log(' tableProps ： ', tableProps, this.props.clientItem);
 
     const {
       customer_admin = [],
@@ -425,7 +425,7 @@ class MissionsManage extends PureComponent {
         clientItem={this.props.clientItem}
         onChange={this.onClientChange}
         // onChange={(e, rest) => {
-        //   console.log(' e ： ', e, e.target.value); //
+        //   console.log(' e ： ', e, e.target.value);
         //   this.props.getHouseNoAsync({ keyword: e.target.value });
         // }}
         tableProps={tableProps}
@@ -503,8 +503,8 @@ class MissionsManage extends PureComponent {
       ? {
           footer: null,
         }
-      : {}; //
-    console.log('  detailProps ：', detailProps); //
+      : {};
+    console.log('  detailProps ：', detailProps);
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -533,9 +533,9 @@ class MissionsManage extends PureComponent {
     this.props.getPowerAsync();
     // this.props.getAssetsAsync();
     this.props.getTeamAsync();
-    this.props.getContractAsync(); //
-    this.props.getHouseNoAsync(); //
-    this.props.getServiceStaffAsync(); //
+    this.props.getContractAsync();
+    this.props.getHouseNoAsync();
+    this.props.getServiceStaffAsync();
   }
 
   render() {

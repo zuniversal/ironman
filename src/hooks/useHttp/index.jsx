@@ -35,14 +35,14 @@ const useHttp = (
   };
 
   const req = async request => {
-    console.log(' req request ： ', request); //
+    console.log(' req request ： ', request);
     setIsLoading(true);
     const res = await request();
     handleRes(res);
   };
 
   useEffect(() => {
-    console.log(' useHttp useEffect  ： ', params); //
+    console.log(' useHttp useEffect  ： ', params);
     if (!noMountFetch) {
       const asyncFn = async () => {
         const res = await http();

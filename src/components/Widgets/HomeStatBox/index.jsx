@@ -4,11 +4,11 @@ import './style.less';
 import { Form, Input, Statistic } from 'antd';
 
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
-import completeInspect from '@/static/assets/completeInspect.png'; //
-import completeMissionNum from '@/static/assets/completeMissionNum.png'; //
-import completeWorkOrder from '@/static/assets/completeWorkOrder.png'; //
+import completeInspect from '@/static/assets/completeInspect.png';
+import completeMissionNum from '@/static/assets/completeMissionNum.png';
+import completeWorkOrder from '@/static/assets/completeWorkOrder.png';
 import StatBox from '@/components/Widgets/StatBox';
-import { ANIMATE } from '@/constants'; //
+import { ANIMATE } from '@/constants';
 
 const { bounceIn, slideInDown } = ANIMATE;
 
@@ -58,7 +58,7 @@ const statConfig = [
 
 const StatBoxCom = props => {
   // console.log(' StatBoxCom   props, ,   ： ', props);
-  const { data } = props; //
+  const { data } = props;
   const weekDirectionText = data.week_compare >= 0 ? '↑' : '↓';
   const dayDirectionText = data.day_compare >= 0 ? '↑' : '↓';
   return (

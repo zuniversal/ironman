@@ -11,11 +11,11 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Input } from 'antd';
 import debounce from 'lodash/debounce';
-import { INPUT_TXT, WORD } from '@/constants'; //
+import { INPUT_TXT, WORD } from '@/constants';
 
 const SmartInput = props => {
-  console.log(' SmartInput  + word{...prop} ： ', props); //
-  const { placeholder, word, ph, className, time, ...rest } = props; //
+  console.log(' SmartInput  + word{...prop} ： ', props);
+  const { placeholder, word, ph, className, time, ...rest } = props;
 
   const prop = {
     placeholder: ph ? INPUT_TXT + ph : placeholder,
@@ -28,7 +28,7 @@ const SmartInput = props => {
       e,
       e.target.value,
       rest,
-    ); //
+    );
     props.onChange(e);
     // props.onPressEnter(e) debounce(() => , time)
   };
@@ -38,7 +38,7 @@ const SmartInput = props => {
       e,
       e.target.value,
       rest,
-    ); //
+    );
     props.onPressEnter(e);
     // props.onPressEnter(e) debounce(() => , time)
   };

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './style.less';
 import { Form, Input } from 'antd';
 
-import SmartVideo from '@/common/SmartVideo'; //
-import InputCom from '@/components/Widgets/InputCom'; //
+import SmartVideo from '@/common/SmartVideo';
+import InputCom from '@/components/Widgets/InputCom';
 
 const CsHomeMonitorVideo = props => {
   console.log(' CsHomeMonitorVideo   props, ,   ： ', props);

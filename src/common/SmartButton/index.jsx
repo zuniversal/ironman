@@ -4,7 +4,7 @@ import './style.less';
 import { Button } from 'antd';
 
 const SmartButton = props => {
-  console.log(' SmartButton ： ', props); //
+  console.log(' SmartButton ： ', props);
   const { onClick } = props;
 
   return <Button {...props} />;

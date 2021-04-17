@@ -3,7 +3,7 @@
 
 */
 
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/client';
 import * as userServices from '@/services/userManage';
 import * as tagsServices from '@/services/tags';
@@ -100,7 +100,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -108,7 +108,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -118,7 +118,7 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      console.log(' getList 修改  ： ', state, payload, type); //
+      console.log(' getList 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: payload.list.map(v => ({
@@ -134,7 +134,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItem 修改  ： ', state, payload, type); //
+      console.log(' getItem 修改  ： ', state, payload, type);
       const {
         customer_admin,
         service_staff,
@@ -146,7 +146,7 @@ export default {
         last_service_staff_name,
         service_organization_name,
         enterprise,
-      } = payload.bean; //
+      } = payload.bean;
       const { userList, adminList } = state;
       const serviceStaff = {
         ...service_staff,
@@ -162,7 +162,7 @@ export default {
         ' serviceStaff, lastServiceStaff ： ',
         serviceStaff,
         lastServiceStaff,
-      ); //
+      );
       return {
         ...state,
         action: payload.payload.action,
@@ -213,7 +213,7 @@ export default {
       };
     },
     addItem(state, { payload, type }) {
-      console.log(' addItem 修改  ： ', state, payload, type); //
+      console.log(' addItem 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -225,7 +225,7 @@ export default {
       const dataList = state.dataList.map(v =>
         v.id === state.d_id ? { ...v, ...payload.bean } : v,
       );
-      console.log(' editItem 修改  ： ', state, payload, type, dataList); //
+      console.log(' editItem 修改  ： ', state, payload, type, dataList);
       return {
         ...state,
         isShowModal: false,
@@ -235,7 +235,7 @@ export default {
       };
     },
     // removeItem(state, { payload, type }) {
-    //   console.log(' removeItem 修改  ： ', state, payload, type); //
+    //   console.log(' removeItem 修改  ： ', state, payload, type);
     //   const removeList = payload.payload;
     //   console.log(
     //     ' removeList  payload.payload.filter v ： ',
@@ -252,16 +252,16 @@ export default {
     //   };
     // },
     removeItem(state, { payload, type }) {
-      console.log(' removeItem 修改  ： ', state, payload, type); //
+      console.log(' removeItem 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: state.dataList.filter(v => v.id != payload.payload.d_id),
       };
     },
     removeItems(state, { payload, type }) {
-      console.log(' removeItems 修改  ： ', state, payload, type); //
+      console.log(' removeItems 修改  ： ', state, payload, type);
       const removeList = payload.payload.id.split(',');
-      console.log(' removeList ： ', removeList); //
+      console.log(' removeList ： ', removeList);
       return {
         ...state,
         dataList: state.dataList.filter(v =>
@@ -291,7 +291,7 @@ export default {
       };
     },
     onAdminChange(state, { payload, type }) {
-      console.log(' onAdminChange ： ', payload); //
+      console.log(' onAdminChange ： ', payload);
       return {
         ...state,
         // adminList: [...state.adminList, ...payload.list, ],
@@ -300,7 +300,7 @@ export default {
       };
     },
     addUser(state, { payload, type }) {
-      console.log(' addUseraddUser ： ', payload); //
+      console.log(' addUseraddUser ： ', payload);
       return {
         ...state,
         // // adminList: [...state.adminList, ...payload.list],
@@ -310,7 +310,7 @@ export default {
       };
     },
     removeUser(state, { payload, type }) {
-      console.log(' removeUseraddUser ： ', payload); //
+      console.log(' removeUseraddUser ： ', payload);
       return {
         ...state,
         adminList: payload.list,
@@ -337,7 +337,7 @@ export default {
           countryList: data,
         };
       }
-      console.log(' getDistrict ： ', state, payload, datas); //
+      console.log(' getDistrict ： ', state, payload, datas);
 
       return {
         ...state,
@@ -370,7 +370,7 @@ export default {
       };
     },
     getOrganize(state, { payload, type }) {
-      console.log(' getOrganize ： ', state, payload); //
+      console.log(' getOrganize ： ', state, payload);
       const organizeList = recursiveHandle(payload.list);
       return {
         ...state,
@@ -392,7 +392,7 @@ export default {
 
     addTableItem(state, { payload, type }) {
       const { tableData } = state;
-      console.log(' addTableItem ： ', state, payload, tableData); //
+      console.log(' addTableItem ： ', state, payload, tableData);
       return {
         ...state,
         // tableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
@@ -400,7 +400,7 @@ export default {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -414,14 +414,14 @@ export default {
     },
     editTableItem(state, { payload, type }) {
       const { tableData } = state;
-      console.log(' editTableItem ： ', state, payload, tableData); //
+      console.log(' editTableItem ： ', state, payload, tableData);
       return {
         ...state,
         tableData: tableData.map((v, i) => {
           console.log(
             ' v.key === payload.payload.key ： ',
             v.key === payload.payload.key,
-          ); //
+          );
           return v.key === payload.payload.key
             ? {
                 ...v,
@@ -433,7 +433,7 @@ export default {
       };
     },
     removeTableItem(state, { payload, type }) {
-      console.log(' removeTableItem ： ', state, payload); //
+      console.log(' removeTableItem ： ', state, payload);
       const { tableData } = state;
       const { action, key, index, value } = payload.payload;
       let newData = [];
@@ -448,17 +448,17 @@ export default {
           v.id != payload.payload.id,
           v.id,
           payload.id,
-        ); //
+        );
         return v.id != payload.payload.id;
       });
-      console.log(' newData ： ', newData); //
+      console.log(' newData ： ', newData);
       return {
         ...state,
         tableData: newData,
       };
     },
     modifyTableItem(state, { payload, type }) {
-      console.log(' modifyTableItem ： ', state, payload); //
+      console.log(' modifyTableItem ： ', state, payload);
       const { tableData } = state;
       const { action, keys, key, index, value } = payload;
       let newData = [];
@@ -485,7 +485,7 @@ export default {
         newData = tableData.filter((v, i) => v.key != key);
       }
 
-      console.log(' modifyTableItem 修改  ： ', state, payload, type, newData); //
+      console.log(' modifyTableItem 修改  ： ', state, payload, type, newData);
       return {
         ...state,
         tableData: newData,
@@ -506,12 +506,12 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload, type); //
+      console.log(' getItemAsync ： ', payload, type);
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
@@ -525,10 +525,10 @@ export default {
         //   },
         // ],
       };
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
       const res = yield call(services.addItem, params);
       // const res = yield call(services.addItem, payload);
-      console.log('  addItem res ：', res); //
+      console.log('  addItem res ：', res);
       // yield put(action(res));
       yield put({ type: 'getListAsync' });
     },
@@ -545,21 +545,21 @@ export default {
         //   },
         // ],
       };
-      console.log(' params ： ', params); //
+      console.log(' params ： ', params);
       const res = yield call(services.editItem, params);
-      console.log('  editItem res ：', res, itemDetail); //
+      console.log('  editItem res ：', res, itemDetail);
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemAsync ： ', payload, type); //
+      console.log(' removeItemAsync ： ', payload, type);
       const res = yield call(services.removeItem, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
     *removeItemsAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeItemAsync ： ', payload, type); //
+      console.log(' removeItemAsync ： ', payload, type);
       const res = yield call(services.removeItems, payload);
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));
@@ -569,7 +569,7 @@ export default {
     *syncOAAsync({ payload, action, type }, { call, put }) {
       // console.log(' syncOAAsync ： ', payload, type,     )//
       const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res); //
+      console.log('  syncOA res ：', res);
       yield put({
         type: 'getList',
         payload: res,
@@ -578,7 +578,7 @@ export default {
     *getPortraitAsync({ payload, action, type }, { call, put }) {
       // console.log(' getPortraitAsync ： ', payload, type,     )//
       const res = yield call(services.getPortrait, payload);
-      console.log('  getPortrait res ：', res); //
+      console.log('  getPortrait res ：', res);
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
@@ -589,7 +589,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *addUserAsync({ payload, action, type }, { call, put }) {
-      console.log(' addUserAsync ： ', payload, type); //
+      console.log(' addUserAsync ： ', payload, type);
       // const res = yield call(services.addAdmin, payload);
       const params = {
         ...payload,
@@ -608,19 +608,19 @@ export default {
         },
       };
       const res = yield call(services.addAdmin, params);
-      console.log('  addUserAsync res ：', res); //
+      console.log('  addUserAsync res ：', res);
       yield put(action(res));
     },
     *removeUserAsync({ payload, action, type }, { call, put }) {
       // console.log(' removeUserAsync ： ', payload, type,     )//
       const res = yield call(services.removeAdmin, payload);
-      console.log('  removeUserAsync res ：', res); //
+      console.log('  removeUserAsync res ：', res);
       yield put(action(res));
     },
     *getDistrictAsync({ payload, action, type }, { call, put }) {
-      console.log(' getDistrictAsync ： ', payload, type); //
+      console.log(' getDistrictAsync ： ', payload, type);
       const res = yield call(services.getDistrict, payload);
-      console.log('  getDistrictAsync res ：', res); //
+      console.log('  getDistrictAsync res ：', res);
       yield put(action({ ...res, payload }));
       // yield put({ type: 'getListAsync' });
       return res;
@@ -692,23 +692,23 @@ export default {
     },
 
     *getTagsAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTagsAsync ： ', payload); //
+      console.log(' getTagsAsync ： ', payload);
       const res = yield call(tagsServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getOrganizeAsync({ payload, action, type }, { call, put }) {
-      console.log(' getOrganizeAsync ： ', payload); //
+      console.log(' getOrganizeAsync ： ', payload);
       const res = yield call(organizeServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *getGeoAsync({ payload, action, type }, { call, put }) {
-      console.log(' getGeoAsync ： ', payload); //
+      console.log(' getGeoAsync ： ', payload);
       const res = yield call(commonServices.getGeo, payload);
       yield put(action({ ...res, payload }));
       return res.data ? res.data : {};
     },
     *getRegionAsync({ payload, action, type }, { call, put }) {
-      console.log(' getRegionAsync ： ', payload); //
+      console.log(' getRegionAsync ： ', payload);
       const res = yield call(commonServices.getRegion, payload);
       // yield put(action({ ...res, payload }));
       return res.list;

@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/common';
 // import * as powerStationServices from '@/services/powerStation';
 // import * as clientServices from '@/services/client';
@@ -55,7 +55,7 @@ import * as electricBillServices from '@/services/electricBill';
 import * as monitorDeviceServices from '@/services/monitorDevice'; // 同一份请求
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
-import moment from 'moment'; //
+import moment from 'moment';
 import {
   missionsStatusMap,
   missionsTypeMap,
@@ -169,7 +169,7 @@ export default {
 
   reducers: {
     showCommonModal(state, { payload, type }) {
-      console.log(' showCommonModal 修改  ： ', state, payload, type); //
+      console.log(' showCommonModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowCommonModal: true,
@@ -178,7 +178,7 @@ export default {
       };
     },
     closeCommonModal(state, { payload, type }) {
-      console.log(' closeCommonModal 修改  ： ', state, payload, type); //
+      console.log(' closeCommonModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowCommonModal: false,
@@ -187,7 +187,7 @@ export default {
       };
     },
     clientDetail(state, { payload, type }) {
-      console.log(' clientDetail ： ', state, payload); //
+      console.log(' clientDetail ： ', state, payload);
       const {
         customer_admin,
         service_staff,
@@ -199,7 +199,7 @@ export default {
         last_service_staff_name,
         service_organization_name,
         enterprise,
-      } = payload.bean; //
+      } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -237,7 +237,7 @@ export default {
       };
     },
     contractDetail(state, { payload, type }) {
-      console.log(' contractDetail ： ', state, payload); //
+      console.log(' contractDetail ： ', state, payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -249,9 +249,11 @@ export default {
       };
     },
     powerStationDetail(state, { payload, type }) {
+      payload.bean = {"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心","addr":"上海市奉贤区庄行镇南亭公路3073号","province":null,"city":null,"area":null,"customer":{"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心"},"electricity_user":{"id":80437,"number":"0231001380","voltage_level":"1","ep_factor":0.85,"is_md":null},"operation_level":null,"person":null,"phone":null,"file":null,"status":true,"inspections_number":1,"total_capacity":160.0,"real_capacity":160.0,"electricalinfromation_set":[{"id":4103,"power_number":"0231001380","meter_number":"583","powerstation":80437,"incoming_line_name":"","comment":"","magnification":60.0,"transformer_capacity":160.0,"real_capacity":160.0,"voltage_level":"1","ep_factor":"0.85"}],"outline_set":[{"id":5240,"name":"583-出","powerstation":80437,"power_number":"4103"}],"inspection_time":null,"inspection_type":null,"service_team":[{"id":700,"name":"蒋佩明组"}],"end_time":"2022-03-31T00:00:00"}
       const itemDetail = {
         ...payload.bean,
         customer: payload.bean.customer?.name,
+        inspection_type: payload.bean.inspection_type ?? 0,
       };
 
       if (
@@ -266,7 +268,7 @@ export default {
       ) {
         itemDetail.service_team = itemDetail.service_team.map(v => v.name);
       }
-      console.log(' powerStationDetail ： ', state, payload); //
+      console.log(' powerStationDetail ： ', state, payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -288,7 +290,7 @@ export default {
       };
     },
     assetsDetail(state, { payload, type }) {
-      console.log(' assetsDetail ： ', state, payload); //
+      console.log(' assetsDetail ： ', state, payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -304,14 +306,14 @@ export default {
       };
     },
     houseNoDetail(state, { payload, type }) {
-      console.log(' houseNoDetail ： ', state, payload); //
-      const { customer } = payload.bean; //
+      console.log(' houseNoDetail ： ', state, payload);
+      const { customer } = payload.bean;
       const customerItem = {
         ...customer,
         value: `${customer.id}`,
         label: customer.name,
       };
-      console.log(' customer ： ', customer, customerItem); //
+      console.log(' customer ： ', customer, customerItem);
       return {
         ...state,
         action: payload.payload.action,
@@ -323,8 +325,8 @@ export default {
       };
     },
     shiftsManageDetail(state, { payload }) {
-      console.log(' shiftsManageDetail ： ', state, payload); //
-      const { team_headman, leader = {}, type, member } = payload.bean; //
+      console.log(' shiftsManageDetail ： ', state, payload);
+      const { team_headman, leader = {}, type, member } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -339,7 +341,7 @@ export default {
       };
     },
     missionsManageDetail(state, { payload, type }) {
-      console.log(' missionsManageDetail ： ', state, payload); //
+      console.log(' missionsManageDetail ： ', state, payload);
       const {
         customer,
         person,
@@ -383,7 +385,7 @@ export default {
       };
     },
     inspectMissionDetail(state, { payload, type }) {
-      console.log(' inspectMissionDetail ： ', state, payload); //
+      console.log(' inspectMissionDetail ： ', state, payload);
       const {
         created_time = '',
         start_time = '',
@@ -404,7 +406,7 @@ export default {
       };
     },
     inspectRecordDetail(state, { payload, type }) {
-      console.log(' inspectRecordDetail ： ', payload); //
+      console.log(' inspectRecordDetail ： ', payload);
       const {
         created_time = '',
         start_time = '',
@@ -414,7 +416,7 @@ export default {
         spect_out = [],
         safety_equirpment,
       } = payload.bean;
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const safetyEquirpment = {
         ...safety_equirpment,
       };
@@ -422,7 +424,7 @@ export default {
         console.log(' inspectRecordDateConfig v ： ', v, i);
         safetyEquirpment[v] = moment(safety_equirpment[v]);
       });
-      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment); //
+      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment);
 
       const itemDetail = {
         ...payload.bean,
@@ -453,7 +455,7 @@ export default {
       };
     },
     weakDetail(state, { payload, type }) {
-      console.log(' weakDetail ： ', payload); //
+      console.log(' weakDetail ： ', payload);
       const { inspection_task = {} } = payload.bean;
 
       return {
@@ -472,7 +474,7 @@ export default {
       };
     },
     workOrderDetail(state, { payload, type }) {
-      console.log(' workOrderDetail ： ', payload); //
+      console.log(' workOrderDetail ： ', payload);
       const {
         status,
         created_time,
@@ -514,7 +516,7 @@ export default {
       };
     },
     newsKnowDetail(state, { payload, type }) {
-      console.log(' newsKnowDetail ： ', payload); //
+      console.log(' newsKnowDetail ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -527,7 +529,7 @@ export default {
       };
     },
     knowledgeCateDetail(state, { payload, type }) {
-      console.log(' knowledgeCateDetail ： ', payload); //
+      console.log(' knowledgeCateDetail ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -538,8 +540,8 @@ export default {
       };
     },
     clientReportDetail(state, { payload }) {
-      console.log(' clientReportDetail ： ', state, payload); //
-      const { team_headman, leader = {}, type, member } = payload.bean; //
+      console.log(' clientReportDetail ： ', state, payload);
+      const { team_headman, leader = {}, type, member } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -559,7 +561,7 @@ export default {
     *showItemAsync({ payload = {}, action, type }, { call, put }) {
       // const service = serviceMap[payload.action];
       const service = getService(payload.action);
-      console.log(' showItemAsync service ： ', serviceMap, service, payload); //
+      console.log(' showItemAsync service ： ', serviceMap, service, payload);
       if (!payload.action || !service) {
         tips('请传入对应详情的action参数！', 2);
         return;

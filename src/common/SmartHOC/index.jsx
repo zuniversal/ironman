@@ -9,15 +9,15 @@ import React, {
 } from 'react';
 import './style.less';
 
-import PageTitle from '@/components/Widgets/PageTitle'; //
-import SmartFormModal from '@/common/SmartFormModal'; //
+import PageTitle from '@/components/Widgets/PageTitle';
+import SmartFormModal from '@/common/SmartFormModal';
 import { RemoveModal } from '@/components/Modal/ResultModal';
 import { tips, downLoad } from '@/utils';
 import { noShowTitlePath } from '@/configs';
 
 import { Form, Input, Button, Spin } from 'antd';
 import { SIZE, DOWN_URL, isDev } from '@/constants';
-import { commonActions } from '@/models/common'; //
+import { commonActions } from '@/models/common';
 import { connect } from 'umi';
 
 /* 
@@ -57,7 +57,7 @@ const getAuth = (authInfo = {}, authKey = '') => {
   //     props,
   //     Object.keys(props),
   //     authInfo,
-  //   ); //
+  //   );
   //   return authInfo;
   // } else {
   //   return authData ? authData : {}
@@ -73,7 +73,7 @@ const handleAuth = (props = {}) => {
     //   props,
     //   Object.keys(props),
     //   authInfo,
-    // ); //
+    // );
     return authInfo;
   } else {
     return props;
@@ -135,7 +135,7 @@ export default ({
               (actionObj[key] = params =>
                 this.props.dispatch(actionsObj[key](params))),
           );
-          // console.log('  actionObj ：', actionObj, actionsObj); //
+          // console.log('  actionObj ：', actionObj, actionsObj);
           return actionObj;
         };
         this.actionProps = createActions();
@@ -147,7 +147,7 @@ export default ({
     };
     dispatchAction = (action, params) => {
       const actionFn = this.getAction(action);
-      console.log('  dispatchAction ：', action); //
+      console.log('  dispatchAction ：', action);
       if (action === 'add') {
         // tips('add没有相应的action方法！');
         return;
@@ -169,8 +169,8 @@ export default ({
     };
     onBatchRemove2 = props => {
       console.log(' onBatchRemove2 ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
-      const { selectedRows, selectedRowKeys } = this.state; //
+      const { dispatch } = this.props;
+      const { selectedRows, selectedRowKeys } = this.state;
       if (selectedRowKeys.length) {
         // const params = props.key ? { [props.key]: selectedRowKeys, } : selectedRowKeys
         // console.log(' params ： ', params,  )//
@@ -186,8 +186,8 @@ export default ({
 
     removeAction = props => {
       console.log(' removeAction ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
-      const { selectedRowKeys, isBatch } = this.state; //
+      const { dispatch } = this.props;
+      const { selectedRowKeys, isBatch } = this.state;
       const isArray = Array.isArray(props);
       // const params = isArray
       //   ? props
@@ -196,7 +196,7 @@ export default ({
       //       // ...props.record,
       //       // props.record,
       //       // record,
-      //     ]; //
+      //     ];
       const params = props;
       // const params = isArray
       //   ? props
@@ -205,7 +205,7 @@ export default ({
       //       // ...props.record,
       //       // props.record,
       //       // record,
-      //     ]; //
+      //     ];
       const resetState = {
         isShowRemoveModal: false,
       };
@@ -218,14 +218,14 @@ export default ({
         // dispatch(actions.removeItemAsync({ id: `${props.record.id}` }));
         this.props.dispatch(actions.removeItemAsync(params));
       }
-      console.log('  params ：', params, resetState); //
+      console.log('  params ：', params, resetState);
       // dispatch(actions.removeItemAsync(params));
       this.setState(resetState);
     };
     // onBatchRemove = props => {
     //   console.log(' onBatchRemove ： ', props, this.state, this.props);
-    //   const { dispatch } = this.props; //
-    //   const { selectedRows, selectedRowKeys } = this.state; //
+    //   const { dispatch } = this.props;
+    //   const { selectedRows, selectedRowKeys } = this.state;
     //   if (selectedRowKeys.length) {
     //     this.onRemove(selectedRowKeys);
     //   } else {
@@ -234,7 +234,7 @@ export default ({
     // };
     // onRemove = removeParams => {
     //   console.log('    onRemove ： ', removeParams, this.state, this.props);
-    //   const { remove } = this.props; //
+    //   const { remove } = this.props;
     //   this.setState({
     //     removeParams,
     //     isShowRemoveModal: true,
@@ -243,8 +243,8 @@ export default ({
 
     onBatchRemove = props => {
       console.log(' onBatchRemove ： ', props, this.state, this.props);
-      const { dispatch } = this.props; //
-      const { selectedRows, selectedRowKeys } = this.state; //
+      const { dispatch } = this.props;
+      const { selectedRows, selectedRowKeys } = this.state;
       if (selectedRowKeys.length) {
         // this.onRemove(selectedRowKeys, true);
         this.onRemove(props, true);
@@ -260,7 +260,7 @@ export default ({
         this.state,
         this.props,
       );
-      const { remove } = this.props; //
+      const { remove } = this.props;
       this.setState({
         removeParams,
         isShowRemoveModal: true,
@@ -283,8 +283,8 @@ export default ({
     };
     renderRemoveModal = params => {
       // console.log(' renderRemoveModal ： ', params, this.state, this.props);
-      const { isShowRemoveModal, removeParams } = this.state; //
-      // const { removeTitle = '删除操作' } = this.props; //
+      const { isShowRemoveModal, removeParams } = this.state;
+      // const { removeTitle = '删除操作' } = this.props;
       const { removeTitle = '删除操作' } = removeParams;
 
       const modalProps = {
@@ -341,7 +341,7 @@ export default ({
       // );
 
       if (action !== 'add') {
-        // const { dispatch } = this.props; //
+        // const { dispatch } = this.props;
         // dispatch(actionFn(params));
         this.dispatchAction(action, params);
       }
@@ -367,7 +367,7 @@ export default ({
     };
     renderModalContent = e => {
       // console.log('    renderModalContent ： ', e,   )
-      const { modalContent } = this.state; //
+      const { modalContent } = this.state;
       if (modalContent) {
         return modalContent;
       }
@@ -376,20 +376,20 @@ export default ({
 
     onOk = async props => {
       console.log(' onOkonOk ： ', props, this.state, this.props);
-      const { action } = this.state; //
+      const { action } = this.state;
       let actionFn = actions.addItemAsync;
       if (action === 'edit') {
         actionFn = actions.editItemAsync;
       }
 
-      const { form, init } = props; //
+      const { form, init } = props;
 
       try {
         // const res = await form.validateFields(['customer_admin']);
-        // console.log('  res await 结果 1 ：', res, action, actionFn); //
+        // console.log('  res await 结果 1 ：', res, action, actionFn);
         const res = await form.validateFields();
-        console.log('  res await 结果  ：', res, action, actionFn); //
-        const { dispatch } = this.props; //
+        console.log('  res await 结果  ：', res, action, actionFn);
+        const { dispatch } = this.props;
         dispatch(
           // actionFn({
           //   data: res,
@@ -403,7 +403,7 @@ export default ({
           isShow: false,
         });
       } catch (error) {
-        console.log(' error ： ', error); //
+        console.log(' error ： ', error);
       }
 
       // form
@@ -418,7 +418,7 @@ export default ({
       // });
     };
     onCancel = e => {
-      console.log(' onCancel ： ', e, this.state, this.props); //
+      console.log(' onCancel ： ', e, this.state, this.props);
       this.setState({
         isShow: false,
         // topCom: null,
@@ -432,7 +432,7 @@ export default ({
         selectedRows,
         this.state,
         this.props,
-      ); //
+      );
 
       this.setState({
         selectedRowKeys,
@@ -442,7 +442,7 @@ export default ({
 
     downloadFile = params => {
       console.log(' downloadFile,  , ： ', params);
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       tips('模拟文件下载成功！');
     };
     exportData = async params => {
@@ -457,10 +457,10 @@ export default ({
       //   tips('请先勾选导出项！', 2)
       //   return
       // }
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       const reqMethod = params?.reqMethod
         ? actions[params?.reqMethod]
-        : actions.exportDataAsync; //
+        : actions.exportDataAsync;
       const res = await dispatch(
         reqMethod({
           page: 1,
@@ -468,12 +468,12 @@ export default ({
           ...params,
         }),
       );
-      console.log('  res ：', res); //
+      console.log('  res ：', res);
       const url = res.bean;
       if (url && typeof url === 'string') {
         const urlArr = `${url}`.split('/');
         const name = urlArr[urlArr.length - 1];
-        console.log(' DOWN_URL +  url ：', url, name); //
+        console.log(' DOWN_URL +  url ：', url, name);
         downLoad(url, { name });
       } else {
         tips('没有文件可以导出！', 2);
@@ -483,7 +483,7 @@ export default ({
     };
     syncOAAsync = params => {
       console.log(' syncOAAsync,  , ： ', params);
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       tips('正在同步OA！');
       // dispatch(actions.syncOAAsync({}));
     };
@@ -493,10 +493,10 @@ export default ({
 
       try {
         const res = await form.validateFields();
-        console.log('  search res await 结果  ：', res); //
+        console.log('  search res await 结果  ：', res);
         this.getList(res);
       } catch (error) {
-        console.log(' error ： ', error); //
+        console.log(' error ： ', error);
       }
     };
 
@@ -509,11 +509,11 @@ export default ({
         this.state,
         this.props,
       );
-      const { dispatch } = this.props; //
+      const { dispatch } = this.props;
       dispatch(actions.getListAsync(params));
     };
     checkQuery = e => {
-      const { location, dispatch } = this.props; //
+      const { location, dispatch } = this.props;
       if (location) {
         const { query } = location;
         console.log('    checkQuery ： ', e, this.state, this.props, query);
@@ -541,7 +541,7 @@ export default ({
 
     renderSmartFormModal = params => {
       // console.log(' renderSmartFormModal ： ', params, this.state, this.props);
-      const { action, isShow, formModalProps } = this.state; //
+      const { action, isShow, formModalProps } = this.state;
 
       const formComProps = {
         action,
@@ -605,7 +605,7 @@ export default ({
       //   this.state,
       //   this.props,
       //   noMountFetch,
-      // ); //
+      // );
 
       if (!noMountFetch) {
         this.getList();
@@ -627,7 +627,7 @@ export default ({
     };
     get pageTitle() {
       const getShowTitle = props => {
-        const { route } = props; //
+        const { route } = props;
         const { path, title } = route;
         const isInclude = noShowTitlePath.every(v => v != path);
         return isInclude ? title : false;

@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm'; //
+import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm';
 import ShiftsArrangeDetailCalendar from '@/components/Calendar/ShiftsArrangeDetailCalendar';
-import ChoiceRadio from '@/components/Widgets/ChoiceRadio'; //
+import ChoiceRadio from '@/components/Widgets/ChoiceRadio';
 
-import { actions, mapStateToProps } from '@/models/shiftsArrange'; //
+import { actions, mapStateToProps } from '@/models/shiftsArrange';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
 import { getMonthWeekDaysSimple, nowYear, tips, filterArr } from '@/utils';
@@ -60,8 +60,8 @@ class ShiftsArrangeDetail extends PureComponent {
 
   // formatArrangeData = data => {
   //   console.log(' formatArrangeData,  , ： ', data, this.state, this.props);
-  //   const { selectData } = this.state; //
-  //   const { location } = this.props; //
+  //   const { selectData } = this.state;
+  //   const { location } = this.props;
   //   return selectData.map(v => ({
   //     team: location.query.team,
   //     schedule_date: `${location.query.schedule_date}-${v}`,
@@ -70,7 +70,7 @@ class ShiftsArrangeDetail extends PureComponent {
   // handleArrangeOk = params => {
   //   console.log('    handleArrangeOk ： ', params, this.state, this.props);
   //   const res = this.formatArrangeData();
-  //   console.log('  res ：', res); //
+  //   console.log('  res ：', res);
   //   if (res.length) {
   //     // this.props.dispatch(actions.addItemAsync({ teamschedule_list: res }));
   //     this.props.addItemAsync({ teamschedule_list: res })
@@ -87,12 +87,12 @@ class ShiftsArrangeDetail extends PureComponent {
   //   const { form } = params;
   //   try {
   //     const res = await form.validateFields();
-  //     console.log('  search res await 结果  ：', res); //
+  //     console.log('  search res await 结果  ：', res);
   //     const searchParams = this.formatParams(res)
   //     console.log(' searchParams ： ', searchParams,  )//
   //     this.props.dispatch(actions.getListAsync(searchParams));
   //   } catch (error) {
-  //     console.log(' error ： ', error); //
+  //     console.log(' error ： ', error);
   //   }
   // };
 
@@ -102,7 +102,7 @@ class ShiftsArrangeDetail extends PureComponent {
     history.push(SHIFTSARRANGE);
   };
   renderFormBtn = params => {
-    console.log(' renderFormBtn ： ', params, actions); //
+    console.log(' renderFormBtn ： ', params, actions);
     return (
       <div className={'btnWrapper'}>
         <Button onClick={this.handleCancel}>取消</Button>
@@ -146,18 +146,18 @@ class ShiftsArrangeDetail extends PureComponent {
       this.props,
     );
     const { checked, day } = e.target;
-    const { selectData } = this.state; //
+    const { selectData } = this.state;
     const datas = checked
       ? [...selectData, day]
       : selectData.filter(v => v != day);
-    console.log('  datas ：', datas); //
+    console.log('  datas ：', datas);
     this.setState({
       selectData: datas,
     });
   };
   onChoiceRadio = e => {
     console.log(' onChoiceRadio   e, ,   ： ', e, this.state, this.props);
-    const { calendarEvents, selectData } = this.state; //
+    const { calendarEvents, selectData } = this.state;
     this.setState({
       isQuickArrange: !this.state.isQuickArrange,
       calendarEvents: calendarEvents.map(v => ({ ...v, isChecked: true })),
@@ -169,7 +169,7 @@ class ShiftsArrangeDetail extends PureComponent {
   };
   renderChoiceRadio = params => {
     // console.log(' renderChoiceRadio ： ', params,  )
-    const { isQuickArrange } = this.state; //
+    const { isQuickArrange } = this.state;
     return (
       <div className="choiceRadioWrapper">
         <div className="label">按法定工作日快速排班</div>{' '}
@@ -197,7 +197,7 @@ class ShiftsArrangeDetail extends PureComponent {
       this.state,
       this.props,
     );
-    const { isQuickArrange, calendarEvents, selectData } = this.state; //
+    const { isQuickArrange, calendarEvents, selectData } = this.state;
     return (
       <ShiftsArrangeDetailCalendar
         // isQuickArrange={isQuickArrange}

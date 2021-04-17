@@ -1,10 +1,10 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/inspectRecord';
 import * as clientServices from '@/services/client';
 import * as powerStationServices from '@/services/powerStation';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { missionsStatusMap, inspectRecordDateConfig } from '@/configs';
-import moment from 'moment'; //
+import moment from 'moment';
 
 const namespace = 'inspectRecord';
 const { createActions } = init(namespace);
@@ -51,7 +51,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       if (payload.action === 'inspectReport') {
         // setTimeout(() => {
         //   window.print()
@@ -66,7 +66,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -98,7 +98,7 @@ export default {
         spect_out = [],
         safety_equirpment,
       } = payload.bean;
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
       const spectInData = [];
       power_data?.forEach(v =>
@@ -119,7 +119,7 @@ export default {
         console.log(' inspectRecordDateConfig v ： ', v, i);
         safetyEquirpment[v] = moment(safety_equirpment[v]);
       });
-      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment); //
+      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment);
 
       const itemDetail = {
         ...payload.bean,
@@ -192,14 +192,14 @@ export default {
     },
 
     getClient(state, { payload, type }) {
-      console.log(' getClient 修改  ： ', state, payload, type); //
+      console.log(' getClient 修改  ： ', state, payload, type);
       return {
         ...state,
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
     getPower(state, { payload, type }) {
-      console.log(' getPower 修改  ： ', state, payload, type); //
+      console.log(' getPower 修改  ： ', state, payload, type);
       return {
         ...state,
         powerList: formatSelectList(payload.list, 'name'),
@@ -218,7 +218,7 @@ export default {
         end_time = '',
         status,
       } = payload.bean;
-      console.log(' getMissionItem ： ', payload); //
+      console.log(' getMissionItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -241,7 +241,7 @@ export default {
       };
     },
     toggleExportPDF(state, { payload, type }) {
-      console.log(' toggleExportPDF ： ', payload); //
+      console.log(' toggleExportPDF ： ', payload);
       return {
         ...state,
         isExportPDF: !state.isExportPDF,
@@ -250,14 +250,14 @@ export default {
       };
     },
     toggleEdit(state, { payload, type }) {
-      console.log(' toggleEdit ： ', payload); //
+      console.log(' toggleEdit ： ', payload);
       return {
         ...state,
         isEdit: !state.isEdit,
       };
     },
     onFieldChange(state, { payload, type }) {
-      console.log(' onFieldChange ： ', payload); //
+      console.log(' onFieldChange ： ', payload);
       // const {powerData,  } = payload.formData
       // // const {powerData,  } = payload.value
       const { itemDetailCopy, itemDetail, formData, formKey } = state;
@@ -272,7 +272,7 @@ export default {
       if (aimFor === 'maxMd') {
         // if (payload.value.powerData) {
         const { powerData } = formVal;
-        console.log(' powerData ： ', powerData); //
+        console.log(' powerData ： ', powerData);
         const maxMDKeys = ['peak_md', 'flat_1_md', 'flat_2_md', 'valley_md'];
         const maxMDArr = maxMDKeys.map(v => powerData[v]).filter(v => v);
         const maxMDVal = Math.max(...maxMDArr);
@@ -301,7 +301,7 @@ export default {
           },
         });
 
-        console.log(' form.getFieldsValue() ： ', form.getFieldsValue()); //
+        console.log(' form.getFieldsValue() ： ', form.getFieldsValue());
       }
       // const {powerData,  } = payload.formData
       // // const {powerData,  } = payload.value
@@ -334,12 +334,12 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload); //
+      console.log(' getItemAsync ： ', payload);
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },

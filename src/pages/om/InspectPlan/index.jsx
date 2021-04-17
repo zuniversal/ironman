@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Spin } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import InspectPlanForm from '@/components/Form/InspectPlanForm'; //
-import InspectPlanAddForm from '@/components/Form/InspectPlanAddForm'; //
-import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm'; //
-import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import InspectPlanForm from '@/components/Form/InspectPlanForm';
+import InspectPlanAddForm from '@/components/Form/InspectPlanAddForm';
+import InspectPlanSearchForm from '@/components/Form/InspectPlanSearchForm';
+import InspectPlanCalendar from '@/components/Calendar/InspectPlanCalendar';
 
 import {
   actions,
   // mapStateToProps
-} from '@/models/inspectPlan'; //
+} from '@/models/inspectPlan';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips, nowYearMonthDay } from '@/utils';
@@ -55,9 +55,9 @@ class InspectPlan extends PureComponent {
     });
     return;
     const { dragList, scheduleList } = this.props;
-    const dragListlen = dragList.length; //
-    const scheduleListlen = scheduleList.length; //
-    console.log(' savePlan dragList ： ', dragListlen, scheduleListlen); //
+    const dragListlen = dragList.length;
+    const scheduleListlen = scheduleList.length;
+    console.log(' savePlan dragList ： ', dragListlen, scheduleListlen);
     if (dragListlen) {
       dragListlen == scheduleListlen
         ? this.props.editItemAsync()
@@ -67,12 +67,12 @@ class InspectPlan extends PureComponent {
     }
   };
   onSearch = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action } = this.props; //
-    const { form } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action } = this.props;
+    const { form } = props;
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (res.leader && res.month) {
         this.props.getListAsync({
           ...res,
@@ -82,7 +82,7 @@ class InspectPlan extends PureComponent {
         tips('请先选择客户代表及月份！', 2);
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
       tips('请先选择客户代表及月份！', 2);
     }
   };
@@ -142,7 +142,7 @@ class InspectPlan extends PureComponent {
     if (params.length > 0) {
       this.props.changeStationPlan(params);
     }
-    // const latestDrag = params[params.length - 1]; //
+    // const latestDrag = params[params.length - 1];
     // if (latestDrag && latestDrag.id) {
     //   this.props.showFormModal({
     //     action: 'addPlan',
@@ -157,7 +157,7 @@ class InspectPlan extends PureComponent {
   };
   renderInspectPlanCalendar = params => {
     // console.log(' renderInspectPlanCalendar ： ', params,  )
-    const { loading, searchInfo } = this.props; //
+    const { loading, searchInfo } = this.props;
     // const isLoading = loading['inspectPlan/getTagUserAsync']
     return (
       // !loading && <InspectPlanCalendar
@@ -191,16 +191,16 @@ class InspectPlan extends PureComponent {
     this.props.getListAsync();
   };
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     if (action === 'removeAsync') {
       this.props.removeAsync({});
       return;
     }
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       if (action === 'addPlan') {
         this.props.addItemAsync({
           ...res,
@@ -217,19 +217,19 @@ class InspectPlan extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     if (action === 'addPlan') {
       return <InspectPlanAddForm {...formComProps}></InspectPlanAddForm>;
     }
@@ -262,7 +262,7 @@ class InspectPlan extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props); //
+    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     // this.props.getTagUserAsync();
     // this.props.getUserAsync();
 
@@ -302,9 +302,9 @@ class InspectPlan extends PureComponent {
       this.state,
       this.props,
       this.props.loading,
-    ); //
+    );
 
-    const { loading } = this.props; //
+    const { loading } = this.props;
 
     return (
       <div className="inspectPlan">

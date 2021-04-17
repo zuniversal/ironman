@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import './style.less';
 
 const CanvasContextMenu = props => {
-  console.log(' CanvasContextMenu ： ', props); //
-  const { canvas } = props; //
+  console.log(' CanvasContextMenu ： ', props);
+  const { canvas } = props;
 
   const onTop = () => {
-    console.log(' onTop ： ', props); //
+    console.log(' onTop ： ', props);
     if (props.data.node) {
       canvas.top(props.data.node);
     }
@@ -21,7 +21,7 @@ const CanvasContextMenu = props => {
   };
 
   const onBottom = () => {
-    console.log(' onBottom ： ', props); //
+    console.log(' onBottom ： ', props);
     if (props.data.node) {
       canvas.bottom(props.data.node);
     }
@@ -36,7 +36,7 @@ const CanvasContextMenu = props => {
   };
 
   const onCombine = stand => {
-    console.log(' onCombine ： ', stand); //
+    console.log(' onCombine ： ', stand);
     if (!props.data.nodes) {
       return;
     }
@@ -45,7 +45,7 @@ const CanvasContextMenu = props => {
   };
 
   const onUncombine = () => {
-    console.log(' onUncombine ： ', props); //
+    console.log(' onUncombine ： ', props);
     if (!props.data.node) {
       return;
     }
@@ -54,7 +54,7 @@ const CanvasContextMenu = props => {
   };
 
   const onLock = () => {
-    console.log(' onLock ： ', props); //
+    console.log(' onLock ： ', props);
     props.data.locked = !props.data.locked;
     if (props.data.node) {
       props.data.node.locked = props.data.locked;
@@ -72,7 +72,7 @@ const CanvasContextMenu = props => {
   };
 
   const handleDispatch = key => {
-    console.log(' handleDispatch ： ', key, props); //
+    console.log(' handleDispatch ： ', key, props);
     props.dispatch({
       type: 'event/emit',
       payload: {

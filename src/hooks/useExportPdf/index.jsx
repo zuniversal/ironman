@@ -9,7 +9,7 @@ const useSmartExportPdf = props => {
   const [isExport, setIsExport] = useState(false);
 
   const exportPdf = props => {
-    console.log(' exportPdf ： ', props); //
+    console.log(' exportPdf ： ', props);
     // 要导出的dom节点，注意如果使用class控制样式，一定css规则
     // const element = document.getElementsByClassName('ant-modal-body')[0]
     // const element = document.getElementsByClassName('inspectRecordForm')[0]
@@ -24,7 +24,7 @@ const useSmartExportPdf = props => {
     const idEle = document.getElementById(ele);
     const clsEle = document.getElementsByClassName(ele)[0];
     const element = idEle || clsEle;
-    console.log(' exportPdf element ： ', element, clsEle); //
+    console.log(' exportPdf element ： ', element, clsEle);
     // 导出配置
     const opt = {
       mode: 'avoid-all',
@@ -49,9 +49,9 @@ const useSmartExportPdf = props => {
           console.log(' finish res  ： ', res);
           tips(tipsText);
           return res;
-        }); // 导出
-      console.log(' finish ： ', props.finish); //
-      props.finish && props.finish(); //
+        });// 导出
+      console.log(' finish ： ', props.finish);
+      props.finish && props.finish();
       setIsExport(false);
     }
   };
@@ -79,7 +79,7 @@ const useSmartExportPdf = props => {
     // html2canvas(document.body).then(canvas => {
     // html2canvas(document.getElementsByClassName('ant-modal-body')[0]).then(
     //   canvas => {
-    //     console.log(' canvas ： ', canvas); //
+    //     console.log(' canvas ： ', canvas);
     //     //通过html2canvas将html渲染成canvas，然后获取图片数据
     //     let imgData = canvas.toDataURL('image/jpeg', 1.0);
     //     // console.log(imgData);

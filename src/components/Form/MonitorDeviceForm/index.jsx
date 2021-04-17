@@ -5,12 +5,11 @@ import {
   getManufacturerList,
   getList as getMonitorPointList,
 } from '@/services/monitorManage';
-import SmartForm from '@/common/SmartForm'; //
-import { monitorDeviceStatusConfig, networkTypeConfig } from '@/configs'; //
+import SmartForm from '@/common/SmartForm';
+import { monitorDeviceStatusConfig, networkTypeConfig } from '@/configs';
 import { formatSelectList, filterObjSame } from '@/utils';
 
 const MonitorDeviceForm = props => {
-  console.log(' MonitorDeviceForm ： ', props); //
 
   const commonParams = {
     init: [],
@@ -33,6 +32,10 @@ const MonitorDeviceForm = props => {
     },
   );
 
+  const manufacturerModelList = []
+  manufacturerList.forEach(v => manufacturerModelList.push(...formatSelectList(v.models)))
+  console.log(' MonitorDeviceForm ： ', props, manufacturerModelList);
+
   const config = [
     {
       // noRule: true,
@@ -46,6 +49,8 @@ const MonitorDeviceForm = props => {
     },
     {
       // noRule: true,
+      formType: 'Select',
+      selectData: manufacturerModelList,
       itemProps: {
         label: '型号',
         name: 'model',
@@ -67,15 +72,15 @@ const MonitorDeviceForm = props => {
         name: 'imei',
       },
     },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: 'SIM',
+    //     name: 'sim',
+    //   },
+    // },
     {
-      // noRule: true,
-      itemProps: {
-        label: 'SIM',
-        name: 'sim',
-      },
-    },
-    {
-      // noRule: true,
+      noRule: true,
       formType: 'Select',
       selectData: monitorDeviceStatusConfig,
       itemProps: {
@@ -84,7 +89,7 @@ const MonitorDeviceForm = props => {
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       // formType: 'Select',
       formType: 'Search',
       // selectSearch: getMonitorPointListAsync,
@@ -101,7 +106,7 @@ const MonitorDeviceForm = props => {
   // sim
   // monitor_point_id
 
-  const { manufacturer, network_type, monitor_point_id } = props.init;
+  const { status, model, manufacturer, network_type, monitor_point_id } = props.init;
 
   return (
     <div className={'monitorDeviceForm '}>
@@ -110,8 +115,10 @@ const MonitorDeviceForm = props => {
         {...props}
         init={{
           ...props.init,
+          status: status ? `${status}` : null,
+          model: model ? `${model}` : null,
           manufacturer: manufacturer ? `${manufacturer}` : null,
-          network_type: network_type ? `${manufacturer}` : null,
+          network_type: network_type ? `${network_type}` : null,
           monitor_point_id: monitor_point_id ? `${monitor_point_id}` : null,
         }}
       ></SmartForm>

@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
 import { Form, Input } from 'antd';
-import PageTitle from '@/components/Widgets/PageTitle'; //
-import Icon from '@/components/Widgets/Icons'; //
+import PageTitle from '@/components/Widgets/PageTitle';
+import Icon from '@/components/Widgets/Icons';
 import { SettingOutlined } from '@ant-design/icons';
 
 export const HomeSettingBtn = props => {

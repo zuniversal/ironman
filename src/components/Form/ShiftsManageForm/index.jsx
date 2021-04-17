@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins, onDutyTypeConfig } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins, onDutyTypeConfig } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const ShiftsManageForm = props => {
-  console.log(' ShiftsManageForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' ShiftsManageForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {

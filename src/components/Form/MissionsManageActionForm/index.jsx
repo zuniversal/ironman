@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './style.less';
-import SmartForm from '@/common/SmartForm'; //
+import SmartForm from '@/common/SmartForm';
 import {
   missionsTypeConfig,
   fullFormLayouts,
@@ -12,8 +12,8 @@ import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'
 import SmartImg from '@/common/SmartImg';
 
 export const MissionsManageWorkOrderForm = props => {
-  console.log(' MissionsManageWorkOrderForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsManageWorkOrderForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -68,8 +68,8 @@ export const MissionsManageWorkOrderForm = props => {
 MissionsManageWorkOrderForm.defaultProps = {};
 
 export const MissionsManageContractForm = props => {
-  console.log(' MissionsManageContractForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsManageContractForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -98,8 +98,8 @@ export const MissionsManageContractForm = props => {
 MissionsManageContractForm.defaultProps = {};
 
 export const MissionsManageScheduleForm = props => {
-  console.log(' MissionsManageScheduleForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsManageScheduleForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -133,8 +133,8 @@ const scheduleRadios = [
 ];
 
 export const MissionsManageConfirmScheduleForm = props => {
-  console.log(' MissionsManageConfirmScheduleForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' MissionsManageConfirmScheduleForm ： ', props);
+  const { formBtn, ...rest } = props;
 
   const config = [
     {
@@ -185,7 +185,7 @@ MissionsManageConfirmScheduleForm.defaultProps = {};
 const { TabPane } = Tabs;
 
 const TabPanes = props => {
-  const { tabData, activeKey } = props; //
+  const { tabData, activeKey } = props;
   return (
     <div className="w100">
       <Tabs
@@ -228,9 +228,9 @@ const formLayouts = {
 };
 
 export const MissionsManageOrderInfoForm = props => {
-  console.log(' MissionsManageOrderInfoForm ： ', props); //
+  console.log(' MissionsManageOrderInfoForm ： ', props);
   const [tabIndex, setTabIndex] = useState(0);
-  console.log(' tabIndex ： ', tabIndex); //
+  console.log(' tabIndex ： ', tabIndex);
 
   const { extra } = props.init;
   const { task = {}, file } = props.init;

@@ -4,9 +4,9 @@ import './style.less';
 import { Form, Input, Statistic } from 'antd';
 
 import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
-import completeInspect from '@/static/assets/completeInspect.png'; //
-import completeMissionNum from '@/static/assets/completeMissionNum.png'; //
-import completeWorkOrder from '@/static/assets/completeWorkOrder.png'; //
+import completeInspect from '@/static/assets/completeInspect.png';
+import completeMissionNum from '@/static/assets/completeMissionNum.png';
+import completeWorkOrder from '@/static/assets/completeWorkOrder.png';
 
 const { Countdown } = Statistic;
 

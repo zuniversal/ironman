@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
+import SmartForm from '@/common/SmartForm';
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 
 const choiceRadios = [
   { label: '是', value: true, key: 'yes' },
@@ -10,7 +10,7 @@ const choiceRadios = [
 ];
 
 const KnowledgeCateForm = props => {
-  console.log(' KnowledgeCateForm ： ', props); //
+  console.log(' KnowledgeCateForm ： ', props);
 
   const config = [
     {

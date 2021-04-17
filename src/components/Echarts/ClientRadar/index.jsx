@@ -19,10 +19,10 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 
-import SmartEcharts from '@/common/SmartEcharts'; //
+import SmartEcharts from '@/common/SmartEcharts';
 
 const ClientRadar = props => {
-  console.log(' ClientRadar ： ', props); //
+  console.log(' ClientRadar ： ', props);
 
   return (
     <div className={''}>

@@ -1,4 +1,4 @@
-import { init, action } from '@/utils/createAction'; //
+import { init, action } from '@/utils/createAction';
 import * as services from '@/services/organize';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
@@ -53,7 +53,7 @@ export default {
 
   reducers: {
     showFormModal(state, { payload, type }) {
-      console.log(' showFormModal 修改  ： ', state, payload, type); //
+      console.log(' showFormModal 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: true,
@@ -61,7 +61,7 @@ export default {
       };
     },
     onCancel(state, { payload, type }) {
-      console.log(' onCancel 修改  ： ', state, payload, type); //
+      console.log(' onCancel 修改  ： ', state, payload, type);
       return {
         ...state,
         isShowModal: false,
@@ -70,7 +70,7 @@ export default {
     },
     getList(state, { payload, type }) {
       const organizeList = recursiveHandle(payload.list);
-      console.log('  organizeList ：', organizeList); //
+      console.log('  organizeList ：', organizeList);
       return {
         ...state,
         // dataList: payload.list,
@@ -81,7 +81,7 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload); //
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
         action: payload.payload.action,
@@ -120,7 +120,7 @@ export default {
     },
 
     getOrganize(state, { payload, type }) {
-      console.log(' getOrganize 修改  ： ', state, payload, type); //
+      console.log(' getOrganize 修改  ： ', state, payload, type);
       return {
         ...state,
         organizeList: recursiveHandle(payload.list),
@@ -141,13 +141,13 @@ export default {
         searchInfo,
         action,
         params,
-      ); //
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       // const res = yield call(services.getItem, payload);
-      console.log(' getItemAsync ： ', payload); //
+      console.log(' getItemAsync ： ', payload);
       yield put(action({ payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {

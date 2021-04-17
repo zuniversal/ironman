@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SmartFormModal from '@/common/SmartFormModal'; //
-import RoleForm from '@/components/Form/RoleForm'; //
-import SearchKwForm from '@/components/Form/SearchKwForm'; //
-import RoleTable from '@/components/Table/RoleTable'; //
+import SmartFormModal from '@/common/SmartFormModal';
+import RoleForm from '@/components/Form/RoleForm';
+import SearchKwForm from '@/components/Form/SearchKwForm';
+import RoleTable from '@/components/Table/RoleTable';
 
 import {
   actions,
   // mapStateToProps
-} from '@/models/role'; //
+} from '@/models/role';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { filterArr } from '@/utils';
@@ -105,9 +105,9 @@ class Role extends PureComponent {
   };
 
   onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props); //
-    const { action, itemDetail } = this.props; //
-    const { form, init } = props; //
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
     const filterData = this.props.permsData.filter(v => v !== 'all');
     const permsCodesMain = filterArr(
       filterData.map(v => `${v}`.slice(0, 4)).map(v => Number(v + '00')),
@@ -126,10 +126,10 @@ class Role extends PureComponent {
       permsCodesMain,
       permsCodesRoot,
       permsCodes,
-    ); //
+    );
     try {
       const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action); //
+      console.log('  res await 结果  ：', res, action);
       // return
       if (!res.comments) {
         res.comments = undefined;
@@ -149,12 +149,12 @@ class Role extends PureComponent {
         });
       }
     } catch (error) {
-      console.log(' error ： ', error); //
+      console.log(' error ： ', error);
     }
   };
 
   renderModalContent = e => {
-    const { action } = this.props; //
+    const { action } = this.props;
     const formComProps = {
       action,
       permission: this.props.permission,
@@ -164,7 +164,7 @@ class Role extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    console.log(' formComProps ： ', formComProps); //
+    console.log(' formComProps ： ', formComProps);
     return <RoleForm {...formComProps}></RoleForm>;
   };
   renderSmartFormModal = params => {
@@ -181,12 +181,12 @@ class Role extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getPermissionAsync(this.props.getRoutes.route.routes); //
+    this.props.getPermissionAsync(this.props.getRoutes.route.routes);
     // this.props.addItemAsync({
     //   "name":"12323","comments":"12312",
     //   "perms_codes": [100000, 180000]
 
-    // }); //
+    // });
   }
 
   render() {

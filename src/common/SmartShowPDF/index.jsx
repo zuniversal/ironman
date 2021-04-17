@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import dog from '@/static/img/dog.jpg'; //
-import { getPdf } from '@/services/common'; //
-import { pdfPrefix } from '@/services/contract'; //
+import dog from '@/static/img/dog.jpg';
+import { getPdf } from '@/services/common';
+import { pdfPrefix } from '@/services/contract';
 
 const SmartShowPDF = props => {
   // console.log(' SmartShowPDF   props, ,   ： ', props);

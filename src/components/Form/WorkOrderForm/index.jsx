@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import WeakDetailImg from '@/components/Widgets/WeakDetailImg'; //
-import { fullFormLayouts, workOrderStatusConfig } from '@/configs'; //
-import { formatConfig, createArr } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
+import { fullFormLayouts, workOrderStatusConfig } from '@/configs';
+import { formatConfig, createArr } from '@/utils';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 import OrderConsumeTable from '@/components/Table/OrderConsumeTable';
 import SmartImg from '@/common/SmartImg';
@@ -15,8 +15,8 @@ const choiceRadios = [
 ];
 
 const WorkOrderTicketForm = props => {
-  console.log(' WorkOrderTicketForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' WorkOrderTicketForm ： ', props);
+  const { formBtn, ...rest } = props;
   const { task = {}, file } = props.init;
   const buildFile = file ? file : [];
   const responseFile = task.file ? task.file : [];
@@ -27,7 +27,7 @@ const WorkOrderTicketForm = props => {
     props.init,
     task,
     props.init.work_log,
-  ); //
+  );
 
   const logTimeLine = [
     {

@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.less';
 
-import SmartForm from '@/common/SmartForm'; //
-import { regoins } from '@/configs'; //
-import { formatConfig } from '@/utils'; //
+import SmartForm from '@/common/SmartForm';
+import { regoins } from '@/configs';
+import { formatConfig } from '@/utils';
 
 const UserManageForm = props => {
-  console.log(' UserManageForm ： ', props); //
-  const { formBtn, ...rest } = props; //
+  console.log(' UserManageForm ： ', props);
+  const { formBtn, ...rest } = props;
   //  account 对象里的   password    account_type -  客户 管理着 - 默认  certification_status 1
   const config = [
     {

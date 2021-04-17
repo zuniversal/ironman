@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
 import { DatePicker } from 'antd';
-import SmartEcharts from '@/common/SmartEcharts'; //
-import SmartEchart from '@/common/SmartEchart'; //
+import SmartEcharts from '@/common/SmartEcharts';
+import SmartEchart from '@/common/SmartEchart';
 import TimeChoice from '@/components/Widgets/TimeChoice';
-import { ANIMATE } from '@/constants'; //
+import { ANIMATE } from '@/constants';
 import { createIndexArr } from '@/utils';
 import CsHomeLine from '@/components/Echarts/CsHomeLine';
 

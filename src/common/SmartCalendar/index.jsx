@@ -11,8 +11,8 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import '@fullcalendar/common/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
-import DragCom from '@/common/SmartCalendar/CalendarDraggable'; //
-import { ANIMATE } from '@/constants'; //
+import DragCom from '@/common/SmartCalendar/CalendarDraggable';
+import { ANIMATE } from '@/constants';
 const { bounceIn } = ANIMATE;
 
 export const CalendarDraggable = DragCom;
