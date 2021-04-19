@@ -270,6 +270,11 @@ export const managerRoutes = [
         component: '../pages/om/AlarmTemplate',
       },
       {
+        path: '/om/monitorApproval',
+        authKey: 'monitorEquipment',
+        name: '监控审批单',
+      },
+      {
         path: '/om/monitorManage',
         authKey: 'monitorEquipment',
         name: '监控设备管理',

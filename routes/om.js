@@ -118,6 +118,12 @@ export default [
   },
 
   {
+    path: '/om/monitorApproval',
+    authKey: 'monitorEquipment',
+    component: '@/pages/om/MonitorApproval',
+    title: '监控审批单',
+  },
+  {
     path: '/om/monitorManage',
     authKey: 'monitorEquipment',
     component: '@/pages/om/MonitorManage',
