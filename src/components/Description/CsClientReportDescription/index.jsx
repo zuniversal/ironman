@@ -1083,7 +1083,7 @@ const CsClientReportDescription = props => {
     <MonthStationReport
       data={v}
       key={i}
-      reportTime={v.work_date.split(' ')[0]}
+      reportTime={v.end_time.split(' ')[0]}
     ></MonthStationReport>
   ));
 

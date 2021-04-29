@@ -20,7 +20,7 @@ const PowerStationSearchForm = props => {
         name: 'name',
         // className: 'w50',
       },
-      searchSuffix: true,
+      // searchSuffix: true,
     },
     {
       itemProps: {
@@ -38,7 +38,7 @@ const PowerStationSearchForm = props => {
   ];
 
   return (
-    <div className={'fsb PowerStationSearchForm '}>
+    <div className={'fsb  '}>
       <SearchForm
         config={config}
         noRuleAll

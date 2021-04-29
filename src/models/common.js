@@ -133,6 +133,8 @@ const serviceConfigMap = {
   knowledgeCateServices,
   electricBillServices,
   monitorDeviceServices,
+
+  powerNumberServices: () => {},
 };
 
 const getService = action => {
@@ -142,15 +144,6 @@ const getService = action => {
   const serviceStr = action.split(dettailSuffix)[0] + serviceSuffix;
   console.log(' getService   action,   ： ', action, actionSlice, serviceStr);
   return serviceConfigMap[serviceStr];
-};
-
-const serviceMap = {
-  powerStationDetailAsync: powerStationServices,
-  houseNoDetailAsync: houseNoServices,
-  clientDetailAsync: clientServices,
-  assetsDetailAsync: assetsServices,
-  inspectRecordDetailAsync: inspectRecordServices,
-  missionsManageDetailAsync: missionsManageServices,
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -184,6 +177,15 @@ export default {
         isShowCommonModal: false,
         itemDetail: {},
         commonModalContent: null,
+      };
+    },
+    powerNumberDetail(state, { payload, type }) {
+      console.log(' powerNumberDetail ： ', payload);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        extraData: payload.payload.extraData,
       };
     },
     clientDetail(state, { payload, type }) {
@@ -249,7 +251,7 @@ export default {
       };
     },
     powerStationDetail(state, { payload, type }) {
-      payload.bean = {"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心","addr":"上海市奉贤区庄行镇南亭公路3073号","province":null,"city":null,"area":null,"customer":{"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心"},"electricity_user":{"id":80437,"number":"0231001380","voltage_level":"1","ep_factor":0.85,"is_md":null},"operation_level":null,"person":null,"phone":null,"file":null,"status":true,"inspections_number":1,"total_capacity":160.0,"real_capacity":160.0,"electricalinfromation_set":[{"id":4103,"power_number":"0231001380","meter_number":"583","powerstation":80437,"incoming_line_name":"","comment":"","magnification":60.0,"transformer_capacity":160.0,"real_capacity":160.0,"voltage_level":"1","ep_factor":"0.85"}],"outline_set":[{"id":5240,"name":"583-出","powerstation":80437,"power_number":"4103"}],"inspection_time":null,"inspection_type":null,"service_team":[{"id":700,"name":"蒋佩明组"}],"end_time":"2022-03-31T00:00:00"}
+      // payload.bean = {"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心","addr":"上海市奉贤区庄行镇南亭公路3073号","province":null,"city":null,"area":null,"customer":{"id":80437,"name":"上海市奉贤区庄行镇社区卫生服务中心"},"electricity_user":{"id":80437,"number":"0231001380","voltage_level":"1","ep_factor":0.85,"is_md":null},"operation_level":null,"person":null,"phone":null,"file":null,"status":true,"inspections_number":1,"total_capacity":160.0,"real_capacity":160.0,"electricalinfromation_set":[{"id":4103,"power_number":"0231001380","meter_number":"583","powerstation":80437,"incoming_line_name":"","comment":"","magnification":60.0,"transformer_capacity":160.0,"real_capacity":160.0,"voltage_level":"1","ep_factor":"0.85"}],"outline_set":[{"id":5240,"name":"583-出","powerstation":80437,"power_number":"4103"}],"inspection_time":null,"inspection_type":null,"service_team":[{"id":700,"name":"蒋佩明组"}],"end_time":"2022-03-31T00:00:00"}
       const itemDetail = {
         ...payload.bean,
         customer: payload.bean.customer?.name,
@@ -559,14 +561,13 @@ export default {
 
   effects: {
     *showItemAsync({ payload = {}, action, type }, { call, put }) {
-      // const service = serviceMap[payload.action];
       const service = getService(payload.action);
-      console.log(' showItemAsync service ： ', serviceMap, service, payload);
+      console.log(' showItemAsync service ： ', service, payload);
       if (!payload.action || !service) {
         tips('请传入对应详情的action参数！', 2);
         return;
       }
-      const res = yield call(service.getItem, payload);
+      const res = !payload.noReq ? yield call(service.getItem, payload) : {};
       console.log(' showItemAsync service ： ', res, payload);
       let extraReqData;
       if (payload.extraReq) {

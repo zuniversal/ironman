@@ -175,14 +175,20 @@ export const teamTypeConfig = [
     value: '3',
     label: '抢修',
   },
+  {
+    value: '4',
+    label: '共享电工',
+  },
 ];
 
-export const teamTypeMap = {
-  0: '调度',
-  1: '值班',
-  2: '巡检',
-  3: '抢修',
-};
+export const teamTypeMap = arrMapObj(teamTypeConfig);
+
+// export const teamTypeMap = {
+//   0: '调度',
+//   1: '值班',
+//   2: '巡检',
+//   3: '抢修',
+// };
 
 export const onDutyTypeConfig = [
   {
@@ -201,12 +207,18 @@ export const onDutyTypeConfig = [
     value: '3',
     label: '抢修',
   },
+  {
+    value: '4',
+    label: '共享电工',
+  },
 ];
 
-export const onDutyTypeMap = {
-  0: '调度',
-  1: '值班',
-};
+export const onDutyTypeMap = arrMapObj(onDutyTypeConfig);
+
+// export const onDutyTypeMap = {
+//   0: '调度',
+//   1: '值班',
+// };
 
 export const customerTypeConfig = [
   {
@@ -956,8 +968,8 @@ export const electricTypeMap = arrMapObj(electricTypeConfig);
 
 export const billTypeConfig = [
   {
-    label: '未知',
-    value: '0',
+    label: '两部制 按实际最大需量计费',
+    value: '3',
   },
   {
     label: '单一制 无基本电费',
@@ -968,12 +980,13 @@ export const billTypeConfig = [
     value: '2',
   },
   {
-    label: '两部制 按实际最大需量计费',
-    value: '3',
-  },
-  {
     label: '两部制 按合同最大需量计',
     value: '4',
+  },
+  {
+    label: '未知',
+    value: '0',
+    disabled: true,
   },
 ];
 
@@ -1454,3 +1467,65 @@ export const alarmRecordTypeConfig = [
 ];
 
 export const alarmRecordTypeMap = arrMapObj(alarmRecordTypeConfig);
+
+export const monitorApprovalConfig = [
+  {
+    value: '0',
+    label: '待审批',
+  },
+  {
+    value: '1',
+    label: '已通过',
+  },
+  {
+    value: '2',
+    label: '监控数据异常',
+  },
+  {
+    value: '3',
+    label: '填报内容错误',
+  },
+  {
+    value: '-1',
+    label: '未通过',
+  },
+];
+
+export const monitorApprovalMap = arrMapObj(monitorApprovalConfig);
+
+export const iotAccountConfig = [
+  {
+    value: '0',
+    label: '待审批',
+  },
+  {
+    value: '1',
+    label: '已通过',
+  },
+  {
+    value: '2',
+    label: '监控数据异常',
+  },
+  {
+    value: '3',
+    label: '填报内容错误',
+  },
+];
+
+export const iotAccountMap = arrMapObj(iotAccountConfig);
+
+export const changeNumberProps = {
+  min: 0,
+  // max: 1,
+  step: 0.01,
+  precision: 2,
+};
+
+export const monitorApprovalImgConfig = [
+  'device_img',
+  'meter_img',
+  'trans_nameplate_img',
+  'complete_img',
+  'data_img',
+  'other_img',
+];

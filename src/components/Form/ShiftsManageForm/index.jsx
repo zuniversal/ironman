@@ -50,6 +50,7 @@ const ShiftsManageForm = props => {
     //   },
     // },
     {
+      noRule: true,
       formType: 'Search',
       selectSearch: props.getUser,
       selectData: props.userList,
@@ -94,6 +95,10 @@ const ShiftsManageForm = props => {
         config={config}
         isDisabledAll={!['add', 'edit'].includes(props.action)}
         {...props}
+        init={{
+          member: [],
+          ...props.init,
+        }}
       ></SmartForm>
 
       {/* {formBtn} */}

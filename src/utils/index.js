@@ -169,12 +169,7 @@ export const renderSelectOp = (config = [], opType = 'option') => {
         );
       })
     : configs.map(v => (
-        <Option
-          value={v.value}
-          key={v.key || v.value}
-          title={v.label}
-          // {...v}
-        >
+        <Option value={v.value} key={v.key || v.value} title={v.label} {...v}>
           {v.label}
         </Option>
       ));
@@ -703,8 +698,8 @@ export const filterObjArr = (arr, key) => {
       obj[arr[i][key]] = true;
     }
   }
-  return newArr
-}
+  return newArr;
+};
 
 export const filterArrOForm = (arr, k, e = 'data') =>
   arr

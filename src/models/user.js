@@ -1,10 +1,21 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/user';
 import * as userCenterServices from '@/services/userCenter';
-import { formatSelectList, openNotification, setItem, getItem } from '@/utils';
+import {
+  formatSelectList,
+  openNotification,
+  setItem,
+  getItem,
+  getItems,
+  setItems,
+} from '@/utils';
 import { history } from 'umi';
 import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
-import defaultProps, { managerRoutes, customerRoutes } from '@/configs/routes';
+import defaultProps, {
+  managerRoutes,
+  customerRoutes,
+  PLATFORM,
+} from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
 import io from 'socket.io-client';
@@ -21,7 +32,7 @@ const otherActions = [
   'getUserMsgAsync',
 ];
 
-const batchTurnActions = [];
+const batchTurnActions = ['onPlatformChange'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -88,7 +99,7 @@ const getRoutesMap = (text, dataMap) => {
 //   });
 // };
 
-const getRoutes = props => {
+const getRoutes = (props = {}) => {
   const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 
   const routes = isDev
@@ -102,8 +113,12 @@ const getRoutes = props => {
     routes,
     props,
   );
+  const { platform = PLATFORM } = props; //
   // const routesConfig = recursiveAuth(routes, authData);
-  const routesConfig = recursiveAuth(routes, props?.perms);
+  const routesConfig = recursiveAuth(routes, props?.perms).map(v => ({
+    ...v,
+    hideInMenu: v.platform && v.platform !== platform ? true : false,
+  }));
   const routesData = {
     route: {
       path: '/',
@@ -142,6 +157,7 @@ export default {
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
     userMsg: [],
+    platform: getItem('platform') || 'base',
   },
 
   reducers: {
@@ -213,7 +229,10 @@ export default {
       };
     },
     login(state, { payload, type }) {
-      const routeData = getRoutes(payload);
+      const routeData = getRoutes({
+        ...payload,
+        platform: state.platform,
+      });
       console.log(
         ' getRoutes(authData) login .userInfo.userInfo：state ',
         routeData,
@@ -233,6 +252,42 @@ export default {
       return {
         ...state,
         userMsg: payload.list,
+      };
+    },
+    onPlatformChange(state, { payload, type }) {
+      console.log(' onPlatformChange   ,   ： ', state, payload);
+      const { getRoutes } = state;
+      const { platform } = payload;
+      const filteRouteData = getRoutes.route.routes.map(v => {
+        console.log(
+          ' filteRouteData xxxxxx ： ',
+          v,
+          v.platform,
+          platform,
+          v.platform !== platform,
+          v.platform && v.platform !== platform,
+        ); //
+        return {
+          ...v,
+          // hideInMenu: v.platform && v.platform !== platform ? true : v.hideInMenu,
+          hideInMenu: v.platform && v.platform !== platform ? true : false,
+        };
+      });
+      setItem('platform', platform);
+      history.push(HOME);
+      console.log(' filteRouteData ： ', state, payload, filteRouteData); //
+      return {
+        ...state,
+        platform,
+        getRoutes: {
+          route: {
+            path: '/',
+            routes: filteRouteData,
+          },
+          location: {
+            pathname: '/',
+          },
+        },
       };
     },
     // saveHomeSetting(state, { payload, type }) {

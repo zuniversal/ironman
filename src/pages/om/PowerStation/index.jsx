@@ -247,7 +247,7 @@ class PowerStation extends PureComponent {
         end_time: res.end_time ? res.end_time.format('YYYY-MM-DD') : null,
       };
       if (res.inspection_type === 1) {
-        res.service_team = res.service_team.join(',');
+        params.service_team = res.service_team.join(',');
       }
 
       if (action === 'add') {

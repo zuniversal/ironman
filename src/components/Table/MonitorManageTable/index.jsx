@@ -69,6 +69,14 @@ const MonitorManageTable = props => {
       dataMap: deviceFrequencyMap,
     },
     {
+      title: 'ICCID号',
+      dataIndex: 'iccid',
+    },
+    {
+      title: '上线时间',
+      dataIndex: 'created_time',
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       dataMap: monitorDeviceStatusMap,

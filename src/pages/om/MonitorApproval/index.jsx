@@ -6,33 +6,42 @@ import MonitorApprovalTable from '@/components/Table/MonitorApprovalTable';
 import MonitorApprovalForm from '@/components/Form/MonitorApprovalForm';
 import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/monitorApproval';
+import {
+  actions,
+  // mapStateToProps
+} from '@/models/monitorApproval';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
-import PowerStationForm from '@/components/Form/PowerStationForm';
+import { monitorApprovalImgConfig } from '@/configs';
+import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
 
-const TITLE = '电站';
+const TITLE = '监控审批单';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  add: `监控审批单`,
-  approval: `审批通过`,
+  approval: `监控审批单`,
+  approvalPass: `审批通过`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   PowerStationDetailAsync: `电站详情`,
+  powerNumberDetailAsync: `电源编号详情`,
 };
 
 const detailFormMap = {
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
-  powerStationDetailAsync: PowerStationForm,
+  powerNumberDetailAsync: PowerStationDetailTable,
 };
 
+const mapStateToProps = ({ monitorApproval, user }) => ({
+  ...monitorApproval,
+  userInfo: user.userInfo,
+});
 @connect(mapStateToProps)
 @SmartHOC({
   actions,
@@ -56,8 +65,7 @@ class MonitorApproval extends PureComponent {
         className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        // label={'检测点、客户、户号、电站、设备'}
-        label={'关键字'}
+        label={'imei/审批人/工作人员/客户/电站/户号/工程编号'}
         keyword={'keyword'}
         noLabel
       ></SearchKwForm>
@@ -107,6 +115,7 @@ class MonitorApproval extends PureComponent {
           <DetailForm
             init={this.props.common.itemDetail}
             action={'detail'}
+            {...this.props.common.extraData}
           ></DetailForm>
         )}
       </SmartFormModal>
@@ -133,6 +142,39 @@ class MonitorApproval extends PureComponent {
         });
         return;
       }
+      const formatImg = () => {
+        console.log(' formatImg   ,   ： ');
+        monitorApprovalImgConfig.forEach(key => {
+          if (typeof res[key] !== 'string') {
+            if (res[key] && res[key].fileList.length > 0) {
+              const fileList = res[key].fileList;
+              res[key] = fileList[fileList.length - 1].response.url;
+            } else {
+              // tips('文件不能为空！', 2);
+              // return;
+              res[key] = '';
+            }
+          }
+        });
+      };
+      formatImg();
+      res.updated_time = res.updated_time
+        ? res.updated_time.format('YYYY-MM-DD')
+        : null;
+      if (action === 'approval') {
+        this.props.approvalAsync({
+          ...res,
+          d_id: d_id,
+          record_id: d_id,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          d_id: d_id,
+          record_id: d_id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -142,17 +184,22 @@ class MonitorApproval extends PureComponent {
     const { action } = this.props;
     const formComProps = {
       action,
+      showItemAsync: this.props.showItemAsync,
+      userInfo: this.props.userInfo,
     };
 
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
-    if (action === 'approval') {
-      return <div className={`approvalContent`}>确认审批通过？</div>;
+    if (action === 'approvalPass') {
+      return <div className={`textCenter`}>确认审批通过？</div>;
     }
     return <MonitorApprovalForm {...formComProps}></MonitorApprovalForm>;
   };
+  get okTxt() {
+    return ['approval'].some(v => v === this.props.action) ? '上线完成' : null;
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -163,12 +210,21 @@ class MonitorApproval extends PureComponent {
         onCancel={this.props.onCancel}
         size={this.size}
         isNoForm={this.isNoForm}
+        okTxt={this.okTxt}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
   };
-  componentDidMount() {}
+  componentDidMount() {
+    // setTimeout(() => {
+    //   console.log('  延时器 ： ',  )
+    //   this.props.showFormModal({
+    //     action: 'edit',
+    //     d_id: 1,
+    //   });
+    // }, 2000)
+  }
 
   render() {
     console.log(

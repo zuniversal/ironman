@@ -74,7 +74,7 @@ class SearchForm extends PureComponent {
 
   handleChange = value => {
     console.log(' handleChange ： ', value);
-    this.props.onChange();
+    this.props.onChange && this.props.onChange();
 
     this.setState({
       value,
@@ -138,6 +138,7 @@ SearchForm.defaultProps = {
   word: WORD,
   defPh: true,
   selectData: [],
+  // onChange: () => {},
 };
 
 SearchForm.propTypes = {
@@ -146,6 +147,7 @@ SearchForm.propTypes = {
   word: PropTypes.string,
   defPh: PropTypes.bool,
   selectData: PropTypes.array,
+  // onChange: PropTypes.func,
 };
 
 export default SearchForm;

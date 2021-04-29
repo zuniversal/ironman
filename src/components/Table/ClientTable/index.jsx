@@ -109,7 +109,7 @@ const ClientTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  return <SmartTable noEdit columns={columns} {...props}></SmartTable>;
 };
 
 ClientTable.defaultProps = {

@@ -326,7 +326,7 @@ export const PowerStationDetailTable = props => {
     },
   ];
 
-  if (!isDisabledAll) {
+  if (!isDisabledAll && !props.noActionCol) {
     columns.push({
       title: '操作',
       dataIndex: 'action',
@@ -401,7 +401,8 @@ export const PowerStationDetailTable = props => {
       pagination={false}
       rowSelection={null}
       title={() =>
-        !isDisabledAll && (
+        !isDisabledAll &&
+        props.showAdd && (
           <div className={`fje`}>
             <Button
               type="primary"

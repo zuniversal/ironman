@@ -271,3 +271,17 @@ export const blobPost = (url, params, o) =>
     data: { ...params, noTips: true },
     responseType: 'blob',
   });
+
+export const req = {
+  get,
+  post,
+  put,
+  patch,
+  remove,
+  noTipsGet,
+  noTipsPost,
+  noTipsPatch,
+  noTipsRemove,
+  blobGet,
+  blobPost,
+};

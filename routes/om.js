@@ -118,6 +118,12 @@ export default [
   },
 
   {
+    path: '/om/iotAccount',
+    authKey: 'iotAccount',
+    component: '@/pages/om/IotAccount',
+    title: '物联网卡台账',
+  },
+  {
     path: '/om/monitorApproval',
     authKey: 'monitorEquipment',
     component: '@/pages/om/MonitorApproval',

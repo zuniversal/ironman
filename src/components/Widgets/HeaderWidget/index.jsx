@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.less';
 import Icon from '@/components/Widgets/Icons';
 import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
-import { LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import { history, connect } from 'umi';
 import { csSystemNotify, BIG_SCREEN } from '@/constants';
+import {
+  bussniessTabConfig,
+  DEF_BUSSNIESS_TAB,
+  isSmartOMS,
+} from '@/configs/routes';
+import { Tag } from 'antd';
+const { CheckableTag } = Tag;
+
+const BussniessTab = props => {
+  console.log(' BussniessTab   ,   ： ', props);
+  // const [checkItem, setCheckItem] = useState(DEF_BUSSNIESS_TAB);
+  const onChange = (item, checked) => {
+    console.log(' BussniessTab onChange  ,   ： ', props, item, checked);
+    // setCheckItem(item)
+    props.onPlatformChange(item);
+  };
+  return isSmartOMS(props.platform) ? (
+    bussniessTabConfig.map(v => (
+      <CheckableTag
+        key={v.value}
+        // checked={checkItem === v.value}
+        checked={props.platform === v.value}
+        onChange={checked => onChange(v.value, checked)}
+      >
+        {v.label}
+      </CheckableTag>
+    ))
+  ) : (
+    <div></div>
+  );
+};
 
 const HeaderWidget = props => {
   console.log(' HeaderWidget   props, ,   ： ', props);
@@ -31,7 +62,7 @@ const HeaderWidget = props => {
     <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
   );
 
-  return (
+  const headerWidget = (
     <div className="headerWidget dfc ">
       {/* <Icon icon={'search'} className={'actionItem '} /> */}
       <DropdownNotice
@@ -73,6 +104,20 @@ const HeaderWidget = props => {
       >
         {/* {props.system === 'OM' ? 'CS' : 'OM'} */}
       </span>
+    </div>
+  );
+
+  // return headerWidget
+  return (
+    <div className={`headers`}>
+      <div className={`hederLeft`}>
+        {/* hederLeft */}
+        <BussniessTab
+          platform={props.platform}
+          onPlatformChange={props.onPlatformChange}
+        ></BussniessTab>
+      </div>
+      {headerWidget}
     </div>
   );
 };

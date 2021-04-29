@@ -58,6 +58,17 @@ const MissionsManageForm = props => {
 
   const completeIndex = useRef(0);
 
+  const formInit = simpleMission
+    ? {
+        addr: '',
+        repair_time: moment(),
+      }
+    : {
+        addr: '',
+        team_id: null,
+        ...props.init,
+      };
+
   const onModalOk = params => {
     console.log(' onModalOk params ： ', params);
     setIsShow(!isShow);
@@ -334,7 +345,7 @@ const MissionsManageForm = props => {
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       formType: 'Search',
       selectSearch: props.getTeamAsync,
       selectData: props.teamList,
@@ -456,6 +467,7 @@ const MissionsManageForm = props => {
       if (indexs > completeIndex.current) {
         completeIndex.current = indexs;
       }
+      props.propsForm.setFieldsValue(formInit);
     } else {
       tips('请先选择一个客户在继续！', 2);
     }
@@ -467,6 +479,7 @@ const MissionsManageForm = props => {
     setCurrent(indexs);
     setSimpleMission(true);
     setFormKey(formKey + 1);
+    props.propsForm.setFieldsValue(formInit);
   };
 
   const onFieldChange = v => {
@@ -482,7 +495,6 @@ const MissionsManageForm = props => {
       setFormKey(formKey + 1);
     }
   };
-  console.log(' current ： ', current);
 
   const contractStepConfig = [
     { key: 'client', title: '选择户号' },
@@ -567,7 +579,7 @@ const MissionsManageForm = props => {
     </>
   );
 
-  console.log(' missionsManage SmartForm props ： ', props, formKey);
+  console.log(' missionsManage SmartForm props ： ', props, formKey, formInit);
 
   const MissionsClientFormCom = MissionsClientForm;
   // const MissionsClientFormCom = simpleMission && !isDetail ? MissionsSimpleClientForm : MissionsClientForm
@@ -577,7 +589,7 @@ const MissionsManageForm = props => {
     <div className={' missionsManageForm '}>
       {!isDetail && stepCom}
       <div className="missionsManageFormWrapper">
-        <div className="left f1">
+        <div className="left f1" key={formKey}>
           {/* {current == 0 ? props.houseNotable : <SmartForm config={config} {...props}></SmartForm>} */}
           {current == 0 && !isDetail && !isEdit ? (
             houseNotable
@@ -591,18 +603,9 @@ const MissionsManageForm = props => {
               //   repair_time: moment(),
               //   ...props.init,
               // }}
-              init={
-                simpleMission
-                  ? {
-                      repair_time: moment(),
-                    }
-                  : {
-                      ...props.init,
-                    }
-              }
+              init={{}}
               // key={props.init?.contact}
               // key={props.init}
-              key={formKey}
               // key={Math.random()}
             ></SmartForm>
           )}

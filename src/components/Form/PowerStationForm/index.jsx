@@ -214,6 +214,7 @@ const PowerStationForm = props => {
     },
   ];
 
+  // 月巡检电站只能绑定一个班组
   const monthTeamCol = [
     {
       key: 'monthTeamCol',
@@ -279,6 +280,7 @@ const PowerStationForm = props => {
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '运行等级',
         name: 'operation_level',
@@ -367,12 +369,12 @@ const PowerStationForm = props => {
         rules: null,
       }}
     ></UploadCom>,
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '电源信息',
-    //   },
-    // },
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '电源信息',
+      },
+    },
     // <UploadCom
     //   label={'上传一次系统图'}
     //   text={'上传文件'}
@@ -537,6 +539,7 @@ const PowerStationForm = props => {
         {...props}
         init={{
           // inspection_type: 0,
+          operation_level: null,
           inspection_type: inspectMode,
           ...props.init,
         }}
@@ -552,6 +555,7 @@ const PowerStationForm = props => {
         dataSource={powerInfoData}
         init={props.init}
         isDisabledAll={!['add', 'edit'].includes(action)}
+        showAdd
       ></PowerStationDetailTable>
 
       <ReduxTable

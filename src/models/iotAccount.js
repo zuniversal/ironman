@@ -1,13 +1,11 @@
 import { init, action } from '@/utils/createAction';
-import * as services from '@/services/monitorApproval';
-import { addItem as addMonitorDeviceItem } from '@/services/monitorManage';
+import * as services from '@/services/iotAccount';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import { deviceFrequencyConfig } from '@/configs';
 
-const namespace = 'monitorApproval';
+const namespace = 'iotAccount';
 const { createActions } = init(namespace);
 
-const otherActions = ['approvalAsync'];
+const otherActions = ['getRealDataAsync'];
 
 const batchTurnActions = [];
 
@@ -28,6 +26,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    realDataParams: {},
   },
 
   reducers: {
@@ -37,7 +36,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
-        // itemDetail: payload.action === 'approval' ? payload.record : {},
+        realDataParams: payload.realDataParams,
       };
     },
     onCancel(state, { payload, type }) {
@@ -46,6 +45,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        realDataParams: {},
       };
     },
     getList(state, { payload, type }) {
@@ -59,6 +59,15 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
+      const {
+        customer_id,
+        station_id,
+        electricity_user_id,
+        equipment_id,
+        device_id,
+        template_id,
+      } = payload.bean;
+
       return {
         ...state,
         action: payload.payload.action,
@@ -66,6 +75,12 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
+          customer_id: `${customer_id}`,
+          electricity_user_id: `${electricity_user_id}`,
+          station_id: `${station_id}`,
+          equipment_id: `${equipment_id}`,
+          device_id: `${device_id}`,
+          template_id: `${template_id}`,
         },
       };
     },
@@ -95,6 +110,24 @@ export default {
         ),
       };
     },
+
+    getRealData(state, { payload, type }) {
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        realDataParams: payload.payload.realDataParams,
+        itemDetail: {
+          ...payload.bean,
+          // customer_id: `${customer_id}`,
+          // electricity_user_id: `${electricity_user_id}`,
+          // station_id: `${station_id}`,
+          // equipment_id: `${equipment_id}`,
+          // device_id: `${device_id}`,
+          // template_id: `${template_id}`,
+        },
+      };
+    },
   },
 
   effects: {
@@ -115,7 +148,6 @@ export default {
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload); //
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
@@ -131,27 +163,10 @@ export default {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
     },
-    *approvalAsync({ payload, action, type }, { call, put }) {
-      console.log(' approvalAsync ： ', payload); //
-      const deviceParams = {
-        equipment_id: payload.equipment_id,
-        customer_id: payload.customer_id,
-        electricity_user_id: payload.electricity_user_id,
-        // outline_id: payload.outline_id,
-        device_id: payload.device_id,
-        electrical_info_id: payload.electrical_info_id,
-        name: payload.name,
-        frequency: deviceFrequencyConfig[0].value,
-        template_id: null,
-        comments: null,
-      };
-      console.log(' approvalAsyncdeviceParams ： ', deviceParams); //
-      const deviceRes = yield call(addMonitorDeviceItem, deviceParams);
-      console.log(' approvalAsync deviceRes ： ', params, deviceRes); //
-      // const { , ...rest  } = payload
-      const res = yield call(services.editItem, payload);
-      console.log(' approvalAsync res ： ', res); //
-      yield put({ type: 'getListAsync' });
+
+    *getRealDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getRealData, payload);
+      yield put(action({ ...res, payload }));
     },
   },
 };

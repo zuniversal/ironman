@@ -15,17 +15,11 @@ import {
   manufacturerConfig,
   monitorDeviceStatusConfig,
   deviceFrequencyConfig,
+  changeNumberProps,
 } from '@/configs';
 import { formatSelectList, filterObjSame } from '@/utils';
 
 // 下拉项关系  户号跟客户 电站跟户号 设备跟户号 请求数据
-
-const numberComProps = {
-  min: 0,
-  // max: 1,
-  step: 0.01,
-  precision: 2,
-};
 
 const MonitorManageForm = props => {
   console.log(' MonitorManageForm ： ', props);
@@ -211,6 +205,7 @@ const MonitorManageForm = props => {
 
   const config = [
     {
+      noRule: true,
       formType: 'Search',
       // selectSearch: onClientChange,
       // selectData: clientList,
@@ -233,6 +228,7 @@ const MonitorManageForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'Search',
       // selectSearch: onHouseNoChange,
       // selectData: [
@@ -261,6 +257,7 @@ const MonitorManageForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'Search',
       // selectSearch: onPowerStationChange,
       // selectData: powerStationList,
@@ -300,6 +297,7 @@ const MonitorManageForm = props => {
       },
     },
     {
+      noRule: true,
       itemProps: {
         label: '监控点名称',
         name: 'name',
@@ -387,6 +385,7 @@ const MonitorManageForm = props => {
       },
     },
     {
+      noRule: true,
       formType: 'Select',
       selectData: deviceFrequencyConfig,
       itemProps: {
@@ -395,25 +394,25 @@ const MonitorManageForm = props => {
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '压变',
         name: 'voltage_ratio',
       },
       comProps: {
-        ...numberComProps,
+        ...changeNumberProps,
       },
     },
     {
-      // noRule: true,
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '流变',
         name: 'current_ratio',
       },
       comProps: {
-        ...numberComProps,
+        ...changeNumberProps,
       },
     },
     {
@@ -441,7 +440,8 @@ const MonitorManageForm = props => {
           template_id: null,
           comments: null,
           ...props.init,
-          frequency: deviceFrequencyConfig[0].value,
+          frequency: `${props.init?.frequency ??
+            deviceFrequencyConfig[0].value}`,
         }}
         // onFieldChange={onFieldChange}
       ></SmartForm>

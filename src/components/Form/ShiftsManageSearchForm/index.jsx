@@ -39,7 +39,7 @@ const ShiftsManageSearchForm = props => {
       comProps: {
         className: 'lastFormItem',
       },
-      searchSuffix: true,
+      // searchSuffix: true,
     },
   ];
 
