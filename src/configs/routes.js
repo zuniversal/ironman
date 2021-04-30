@@ -106,6 +106,26 @@ export const customerInformation = {
   ],
 };
 
+export const carManage = {
+  platform: 'base',
+  path: '/carManage',
+  authKey: 'system',
+  name: '集团管理',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
+export const clientAssetsManage = {
+  platform: 'base',
+  path: '/clientAssetsManage',
+  authKey: 'system',
+  name: '客户资产管理',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
 export const system = {
   platform: 'base',
   path: '/system',
@@ -380,6 +400,46 @@ export const smartOMS3 = {
   ],
 };
 
+export const smartOMS4 = {
+  platform: 'smartOMS',
+  path: '/smartOMS4',
+  authKey: 'system',
+  name: '托管客户',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
+export const smartOMS5 = {
+  platform: 'smartOMS',
+  path: '/smartOMS5',
+  authKey: 'system',
+  name: '报告管理',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
+export const smartOMS6 = {
+  platform: 'smartOMS',
+  path: '/smartOMS6',
+  authKey: 'system',
+  name: '资产管理',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
+export const smartOMS7 = {
+  platform: 'smartOMS',
+  path: '/smartOMS7',
+  authKey: 'system',
+  name: '缺陷管理',
+  icon: <Icon icon={'systemManage'} />,
+  component: '../Waiter',
+  routes: [],
+};
+
 export const smartEfficiency = [
   {
     platform: 'smartEfficiency',
@@ -415,7 +475,73 @@ export const smartEfficiency = [
   },
 ];
 
-export const smartOMS = [smartOMS1, smartOMS2, smartOMS3, ...smartEfficiency];
+export const smartOMS = [
+  smartOMS1,
+  smartOMS2,
+  smartOMS3,
+  smartOMS4,
+  smartOMS5,
+  smartOMS6,
+  smartOMS7,
+  ...smartEfficiency,
+];
+
+export const iotRoutes = [
+  {
+    platform: 'iot',
+    path: '/SIM卡管理',
+    authKey: 'system',
+    name: 'SIM卡管理',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+  {
+    platform: 'iot',
+    path: '/电力监控管理',
+    authKey: 'system',
+    name: '电力监控管理',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+  {
+    platform: 'iot',
+    path: '/视频监控管理',
+    authKey: 'system',
+    name: '视频监控管理',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+  {
+    platform: 'iot',
+    path: '/巡检机器人',
+    authKey: 'system',
+    name: '巡检机器人',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+  {
+    platform: 'iot',
+    path: '/其他loT设备',
+    authKey: 'system',
+    name: '其他loT设备',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+  {
+    platform: 'iot',
+    path: '/告普管理',
+    authKey: 'system',
+    name: '告普管理',
+    icon: <Icon icon={'systemManage'} />,
+    component: '../Waiter',
+    routes: [],
+  },
+];
 
 export const managerRoutes = [
   // {
@@ -464,8 +590,13 @@ export const managerRoutes = [
   // },
 
   customerInformation,
+  carManage,
+  clientAssetsManage,
+
   monitor,
   ...smartOMS,
+
+  ...iotRoutes,
 
   // {
   //   path: '/kpi',
