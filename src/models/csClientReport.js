@@ -22,7 +22,7 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
-console.log(' clientList ： ', clientList);
+
 export const formatSearch = data => {
   console.log(' formatSearch ： ', data);
   return {
@@ -79,11 +79,13 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      let dataList = payload.list
+      let dataList = payload.list;
       if (payload.searchInfo.filter) {
-        dataList = payload.list.filter(v => filterKey.some(key =>
-          `${v[key]}`.includes(payload.searchInfo.filter)
-        ))
+        dataList = payload.list.filter(v =>
+          filterKey.some(key =>
+            `${v[key]}`.includes(payload.searchInfo.filter),
+          ),
+        );
       }
       console.log(' getListAsync res ： ', dataList, state, payload);
       return {
@@ -415,17 +417,20 @@ export default {
       };
 
       const res = yield call(services.getList, formatSearch(params));
-      let data = res.list
+      let data = res.list;
       if (params.filter) {
         data = res.list.filter(v => {
           const isInclude = filterKey.some(key =>
             `${v[key]}`.includes(params.filter),
           );
           return isInclude;
-        })
+        });
       }
       console.log(' getListAsync res ： ', data, res);
-      yield put({ type: 'getList', payload: { ...res, list: data, searchInfo: params } });
+      yield put({
+        type: 'getList',
+        payload: { ...res, list: data, searchInfo: params },
+      });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);

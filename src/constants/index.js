@@ -30,7 +30,6 @@ export const screenPort = {
   'http:': DEV_SCREEN_PORT,
   'https:': PROD_SCREEN_PORT,
 }[protocol];
-console.log(' protocol ： ', screenPort);
 export const BIG_SCREEN =
   protocol + '//' + hostname + `:${screenPort}/normal_screen`;
 

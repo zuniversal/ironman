@@ -19,6 +19,24 @@ export default [
     title: '首页',
   },
   {
+    path: '/cs/energyInfo',
+    authKey: '',
+    component: '@/pages/cs/EnergyInfo',
+    title: '用能概况',
+  },
+  {
+    path: '/cs/electricInfo',
+    authKey: '',
+    component: '@/pages/cs/ElectricInfo',
+    title: '电气信息',
+  },
+  {
+    path: '/cs/assets',
+    authKey: '',
+    component: '@/pages/cs/Assets',
+    title: '资产管理',
+  },
+  {
     path: '/cs/powerStation',
     authKey: '',
     component: '@/pages/cs/PowerStation',

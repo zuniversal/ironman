@@ -1,0 +1,275 @@
+import React, { PureComponent } from 'react';
+import './style.less';
+import PageTitle from '@/components/Widgets/PageTitle';
+import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
+import SmartFormModal from '@/common/SmartFormModal';
+import { actions, mapStateToProps } from '@/models/energyInfo';
+import LineEcharts from './LineEcharts';
+import SmartHOC from '@/common/SmartHOC';
+import { connect } from 'umi';
+
+import power1 from '@/static/assets/cs/power1.png';
+import power2 from '@/static/assets/cs/power2.png';
+import power3 from '@/static/assets/cs/power3.png';
+import power4 from '@/static/assets/cs/power4.png';
+import { Tabs } from 'antd';
+const { TabPane } = Tabs;
+
+const TITLE = '';
+
+const titleMap = {
+  add: `新建${TITLE}`,
+  edit: `kw{TITLE}`,
+  detail: `${TITLE}详情`,
+  upload: `文件上传`,
+  down: `文件下载`,
+};
+
+const detailFormMap = {};
+
+// const mapStateToProps = ({ houseNo, }) => houseNo;
+
+@connect(mapStateToProps)
+@SmartHOC({
+  actions,
+  titleMap,
+})
+class EnergyInfo extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      titleMap,
+    };
+  }
+
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
+
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
+    if (['handleAlarm', 'notifyClient'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action);
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
+      }
+    } catch (error) {
+      console.log(' error ： ', error);
+    }
+  };
+
+  renderModalContent = e => {
+    const { action } = this.props;
+    const formComProps = {
+      action,
+      getUser: params => this.props.getUserAsync({ keyword: params }),
+      userList: this.props.userList,
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
+      clientList: this.props.clientList,
+    };
+    if (action !== 'add') {
+      formComProps.init = this.props.itemDetail;
+    }
+    console.log(' formComProps ： ', formComProps);
+  };
+  get size() {
+    return [
+      'handleAlarm',
+      // 'notifyClient'
+    ].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
+  renderSmartFormModal = params => {
+    return (
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
+        onOk={this.onOk}
+        onCancel={this.props.onCancel}
+        size={this.size}
+      >
+        {this.renderModalContent()}
+      </SmartFormModal>
+    );
+  };
+
+  renderStatBox = params => {
+    const statConfig = [
+      {
+        dataKey: 'order_data',
+        title: '本月用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
+          boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
+        },
+        iconCom: <img src={power1} className="icon" />,
+      },
+      {
+        dataKey: 'task_data',
+        title: '今日用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #FEB833 0%, #FE9833 100%)',
+          boxShadow: '0px 5px 10px rgba(253, 156, 51, 0.5)',
+        },
+        iconCom: <img src={power2} className="icon" />,
+      },
+      {
+        dataKey: 'inspe_data',
+        title: '昨日用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
+          boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
+        },
+        iconCom: <img src={power3} className="icon" />,
+      },
+      {
+        dataKey: 'inspe_data',
+        title: '上月用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
+          boxShadow: '0px 5px 10px #1AB460',
+        },
+        iconCom: <img src={power4} className="icon" />,
+      },
+    ];
+    return (
+      <CsMonitorStatBox
+        data={this.props.statisticData}
+        config={statConfig}
+      ></CsMonitorStatBox>
+    );
+  };
+  renderHavePowerEcharts = params => {
+    const config = {};
+    return (
+      <>
+        <PageTitle title={'实时有功电量'}></PageTitle>
+        <LineEcharts {...config}></LineEcharts>
+      </>
+    );
+  };
+  renderMonthPowerEcharts = params => {
+    const powerTabConfig = [
+      {
+        tab: '有功电量',
+        key: '有功电量',
+      },
+      {
+        tab: '电量电费',
+        key: '电量电费',
+      },
+      {
+        tab: '累计有功电量',
+        key: '累计有功电量',
+      },
+      {
+        tab: '累计电量电费',
+        key: '累计电量电费',
+      },
+      {
+        tab: '有功功率',
+        key: '有功功率',
+      },
+      {
+        tab: '功率因数',
+        key: '功率因数',
+      },
+    ];
+    const onChange = e => {
+      console.log(' onChange   ,   ： ', e);
+    };
+
+    const config = {
+      yAxisTitle: '',
+      yAxisTitle2: '',
+    };
+    const tabs = (
+      <Tabs defaultActiveKey="1" onChange={onChange}>
+        {powerTabConfig.map((v, i) => (
+          <TabPane {...v}></TabPane>
+        ))}
+      </Tabs>
+    );
+    return (
+      <>
+        <PageTitle title={'本月用电曲线'}></PageTitle>
+        {tabs}
+        <LineEcharts {...config}></LineEcharts>
+      </>
+    );
+  };
+  render10DayPowerEcharts = params => {
+    const config = {
+      yAxisTitle2: '电量电费:元',
+    };
+    return (
+      <>
+        <PageTitle title={'近10日用电曲线'}></PageTitle>
+        <LineEcharts {...config}></LineEcharts>
+      </>
+    );
+  };
+  render6DayPowerEcharts = params => {
+    const config = {
+      yAxisTitle2: '电量电费:元',
+    };
+    return (
+      <>
+        <PageTitle title={'近6日用电曲线'}></PageTitle>
+        <LineEcharts {...config}></LineEcharts>
+      </>
+    );
+  };
+
+  render() {
+    return (
+      <div className="energyInfo">
+        {this.renderStatBox()}
+
+        {this.renderSmartFormModal()}
+
+        {this.renderHavePowerEcharts()}
+        {this.renderMonthPowerEcharts()}
+        {this.render10DayPowerEcharts()}
+        {this.render6DayPowerEcharts()}
+      </div>
+    );
+  }
+}
+
+export default EnergyInfo;

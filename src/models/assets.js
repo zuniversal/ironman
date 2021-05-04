@@ -153,35 +153,30 @@ export default {
     },
 
     syncOA(state, { payload, type }) {
-      // console.log(' syncOA 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         // portraitData: payload.,
       };
     },
     getPortrait(state, { payload, type }) {
-      // console.log(' getPortrait 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         // portraitData: payload.,
       };
     },
     getPower(state, { payload, type }) {
-      console.log(' getPower 修改  ： ', state, payload, type);
       return {
         ...state,
         powerList: formatSelectList(payload.list, 'name'),
       };
     },
     getHouseNo(state, { payload, type }) {
-      // console.log(' getHouseNo 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         houseNoList: formatSelectList(payload.list, 'number'),
       };
     },
     getClient(state, { payload, type }) {
-      // console.log(' getClient 修改  ： ', state, payload, type,     )//
       return {
         ...state,
         clientList: formatSelectList(payload.list, 'name'),
@@ -196,13 +191,13 @@ export default {
         ...searchInfo,
         ...payload,
       };
-      console.log(
-        ' getListAsync  payload ： ',
-        payload,
-        searchInfo,
-        action,
-        params,
-      );
+      // console.log(
+      //   ' getListAsync  payload ： ',
+      //   payload,
+      //   searchInfo,
+      //   action,
+      //   params,
+      // );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },

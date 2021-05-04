@@ -12,8 +12,8 @@ const OperationTips = props => {
         </div>
         <div>Delete 键/删除键 可删除选中元素</div>
         <div>
-          Ctrl + A 可整体选中拖动 （元素多会卡顿）可组合使用 锁定画布后
-          可拖动整块画布
+          Ctrl + A 可整体选中拖动 （元素多全选拖动会卡顿）可组合使用
+          推荐锁定画布后 可拖动整块画布
         </div>
         <div>长按Ctrl + 鼠标左键可批量选中图形 批量移动区域内的内容</div>
         <div>

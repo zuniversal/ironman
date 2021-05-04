@@ -12,31 +12,23 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const AssetsTable = props => {
-  const { showModal, edit, remove, tdClick, showDetail } = props;
-
   const columns = [
-    // {
-    //   title: '所属客户',
-    //   dataIndex: 'customer_name',
-    //   d_item: 'id',
-    //   // render: (text, record, index) => (
-    //   //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
-    //   // ),
-    // },
     {
       noFilter: true,
       noCutText: true,
       width: 300,
-      title: '客户名称',
+      title: '所属客户',
       dataIndex: ['electricity_user', 'customer'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.electricity_user.customer.id,
+        }),
     },
     {
       title: '户号',
       dataIndex: 'code',
       dataIndex: ['electricity_user', 'number'],
-      // render: (text, record, index) => (
-      //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
-      // ),
       detailFn: record =>
         props.showItemAsync({
           action: 'houseNoDetailAsync',
@@ -58,6 +50,7 @@ const AssetsTable = props => {
     },
     {
       title: '设备名称',
+      title: '资产名称',
       dataIndex: 'name',
       // render: (text, record, index) => (
       //   <a onClick={() => showDetail({ action: 'detail' })}>{text}</a>
@@ -71,27 +64,36 @@ const AssetsTable = props => {
         }),
     },
     {
-      title: '设备型号',
-      dataIndex: 'model',
+      title: '电源编号',
+      //   dataIndex: 'electrical_info_id',
+      dataIndex: 'power_number',
     },
     {
-      title: '变压容量',
-      dataIndex: 'transformer_capacity',
+      title: '进线侧名称',
+      dataIndex: '',
     },
     {
-      title: '出厂日期',
-      dataIndex: 'production_date',
+      title: '资产类型',
+      dataIndex: '',
     },
+    // {
+    //   title: '设备型号',
+    //   dataIndex: 'model',
+    // },
+    // {
+    //   title: '变压容量',
+    //   dataIndex: 'transformer_capacity',
+    // },
+    // {
+    //   title: '出厂日期',
+    //   dataIndex: 'production_date',
+    // },
     {
       title: '状态',
       dataIndex: 'status',
       render: (text, record, index) => (text ? '正常' : '异常'),
     },
   ];
-
-  const showQRCode = e => {
-    console.log(' showQRCode   e, ,   ： ', e);
-  };
 
   const extra = (text, record, index, props) => (
     <>
@@ -121,8 +123,6 @@ const AssetsTable = props => {
   );
 };
 
-AssetsTable.defaultProps = {
-  tdClick: () => {},
-};
+AssetsTable.defaultProps = {};
 
 export default AssetsTable;

@@ -24,6 +24,7 @@ import UploadCom from '@/components/Widgets/UploadCom';
 import useHttp from '@/hooks/useHttp';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { getList as getPowerStationList } from '@/services/powerStation';
+import { getList as getHouseNoList } from '@/services/houseNo';
 
 const AssetsForm = props => {
   console.log(' AssetsForm ： ', props, config);
@@ -41,6 +42,13 @@ const AssetsForm = props => {
       ...commonParams,
     },
   );
+  // const { data: powerStationList, req: getPowerStationAsync } = useHttp(
+  //   getHouseNoList,
+  //   {
+  //     ...commonParams,
+  //     format: res => formatSelectList(res, 'number'),
+  //   },
+  // );
 
   const onFieldChange = params => {
     console.log(' onFieldChange  ： ', params);

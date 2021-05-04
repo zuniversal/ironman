@@ -92,7 +92,7 @@ export const formatSelectList = (
     value: `${v[idKey]}`,
     // title: v[labelKey] + '2222222222',
   }));
-  console.log(' formatSelectList res ： ', res);
+  // console.log(' formatSelectList res ： ', res);
   return res;
 };
 

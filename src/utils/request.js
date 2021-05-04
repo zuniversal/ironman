@@ -53,7 +53,7 @@ export const getStatusMsg = (status, url) => {
 };
 
 export const isTips = res => {
-  console.log('  isTips  !res ', !res, res);
+  // console.log('  isTips  !res ', !res, res);
   if (!res) {
     tips('未知错误！', 2);
     return;
@@ -65,18 +65,18 @@ export const isTips = res => {
   const { noTips } = res.config.customInfo;
   const { url } = config;
 
-  console.log(
-    ' 提示 对吗  code !== NORMAL_CODE ',
-    history,
-    window,
-    res,
-    code,
-    // res.data,
-    config,
-    config.datas,
-    res.config.customInfo,
-    url,
-  );
+  // console.log(
+  //   ' 提示 对吗  code !== NORMAL_CODE ',
+  //   history,
+  //   window,
+  //   res,
+  //   code,
+  //   // res.data,
+  //   config,
+  //   config.datas,
+  //   res.config.customInfo,
+  //   url,
+  // );
 
   if (statusMap[status]) {
     tips(statusMap[status], 2);
@@ -89,14 +89,14 @@ export const isTips = res => {
   if (code && code !== NORMAL_CODE) {
     // if (false) {
     const codeMsg = getCodeMsg(code);
-    console.log(
-      ' 提示 对吗  !codeMsg ',
-      history,
-      msg_show,
-      code,
-      !codeMsg,
-      codeMsg,
-    );
+    // console.log(
+    //   ' 提示 对吗  !codeMsg ',
+    //   history,
+    //   msg_show,
+    //   code,
+    //   !codeMsg,
+    //   codeMsg,
+    // );
     if (code === AUTH_FAIL && !isDev) {
       history.push(LOGIN);
     }
@@ -106,7 +106,7 @@ export const isTips = res => {
     // }
     return;
   } else {
-    console.log(' 提示 对吗  !noTips ', !noTips, msg_show, noTips, status);
+    // console.log(' 提示 对吗  !noTips ', !noTips, msg_show, noTips, status);
     if (!noTips || (status != 200 && status != 201)) {
       tips(msg_show, status != 200 && status != 201 ? 2 : 1);
     }

@@ -31,6 +31,12 @@ const AssetsSearchForm = props => {
     // },
     // {
     //   itemProps: {
+    //     label: '资产位置',
+    //     name: '',
+    //   },
+    // },
+    // {
+    //   itemProps: {
     //     label: '资产名称',
     //     name: '',
     //   },

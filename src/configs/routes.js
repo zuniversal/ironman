@@ -678,8 +678,8 @@ export const managerRoutes = [
   // },
 ];
 
-export const customerRoutes = [];
-export const customerRoutes2 = [
+export const customerRoutes2 = [];
+export const customerRoutes = [
   {
     noAuth: true,
     path: '/cs/home',
@@ -688,6 +688,28 @@ export const customerRoutes2 = [
     icon: <Icon icon={'csHome'} />,
     component: '../Home',
   },
+  {
+    noAuth: true,
+    path: '/cs/energyInfo',
+    authKey: '',
+    name: '用能概况',
+    icon: <Icon icon={'csOrganize'} />,
+  },
+  {
+    noAuth: true,
+    path: '/cs/electricInfo',
+    authKey: '',
+    name: '电气信息',
+    icon: <Icon icon={'csOrganize'} />,
+  },
+  {
+    noAuth: true,
+    path: '/cs/assets',
+    authKey: '',
+    name: '资产管理',
+    icon: <Icon icon={'csOrganize'} />,
+  },
+
   {
     noAuth: true,
     path: '/cs/powerStation',

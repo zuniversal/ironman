@@ -9,6 +9,7 @@ const PageTitle = props => {
   return props.title ? (
     <div className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper`}>
       <div className="pageTitle">{props.title}</div>
+      {props.children}
     </div>
   ) : null;
   // props.isWrapper &&<div className="pageTitle">{props.title}</div> <div className={props.className}>

@@ -44,7 +44,7 @@ export const userActions = actions;
 export const mapStateToProps = state => state[namespace];
 
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
-console.log(' userInfo ： ', userInfo);
+// console.log(' userInfo ： ', userInfo);
 
 export const flatAuthTest = (data = []) => {
   // console.log(' flatAuthTest   ,   ： ', data, authData);
@@ -106,13 +106,13 @@ const getRoutes = (props = {}) => {
     ? [...managerRoutes, ...customerRoutes]
     : // ? [...customerRoutes]
       getRoutesMap(userInfo.accountType, routesMap);
-  console.log(
-    ' getRoutes   userInfo,   ： ',
-    userInfo,
-    userInfo.accountType,
-    routes,
-    props,
-  );
+  // console.log(
+  //   ' getRoutes   userInfo,   ： ',
+  //   userInfo,
+  //   userInfo.accountType,
+  //   routes,
+  //   props,
+  // );
   const { platform = PLATFORM } = props; //
   // const routesConfig = recursiveAuth(routes, authData);
   const routesConfig = recursiveAuth(routes, props?.perms).map(v => ({
@@ -133,12 +133,12 @@ const getRoutes = (props = {}) => {
 };
 
 const routesData = getRoutes(authData);
-console.log(
-  ' getRoutes(authData) ： ',
-  routesData,
-  recursiveAuth(routesData.route.routes, authData),
-  flatAuth(authData),
-);
+// console.log(
+//   ' getRoutes(authData) ： ',
+//   routesData,
+//   recursiveAuth(routesData.route.routes, authData),
+//   flatAuth(authData),
+// );
 
 export default {
   namespace,
@@ -233,11 +233,11 @@ export default {
         ...payload,
         platform: state.platform,
       });
-      console.log(
-        ' getRoutes(authData) login .userInfo.userInfo：state ',
-        routeData,
-        payload,
-      );
+      // console.log(
+      //   ' getRoutes(authData) login .userInfo.userInfo：state ',
+      //   routeData,
+      //   payload,
+      // );
       return {
         ...state,
         userInfo: payload,
@@ -270,7 +270,11 @@ export default {
         return {
           ...v,
           // hideInMenu: v.platform && v.platform !== platform ? true : v.hideInMenu,
-          hideInMenu: v.platform && v.platform !== platform ? true : false,
+          hideInMenu: isDev
+            ? false
+            : v.platform && v.platform !== platform
+            ? true
+            : false,
         };
       });
       setItem('platform', platform);
@@ -373,7 +377,7 @@ export default {
     },
 
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserInfoAsync ： ', payload, action, type);
+      // console.log(' getUserInfoAsync ： ', payload, action, type);
       const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
       // console.log(' enterprise ： ', enterprise);
@@ -404,7 +408,7 @@ export default {
     },
 
     *getUserMsgAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserMsgAsync ： ', payload, action, type);
+      // console.log(' getUserMsgAsync ： ', payload, action, type);
       const res = yield call(services.getUserMsg, payload);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -416,7 +420,7 @@ export default {
 
   subscriptions: {
     setup: props => {
-      console.log(' 用户 setup ： ', props, this);
+      // console.log(' 用户 setup ： ', props, this);
       const { dispatch, history } = props;
 
       dispatch({
@@ -427,7 +431,7 @@ export default {
       });
 
       history.listen(location => {
-        console.log(' 监听路由 匹配 ： ', history, location);
+        // console.log(' 监听路由 匹配 ： ', history, location);
         const { pathname } = location;
         if (pathname !== '/login') {
           dispatch({

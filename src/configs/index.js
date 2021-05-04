@@ -375,7 +375,8 @@ export const city = province;
 export const noShowTitlePath = [
   '/om/home',
   '/cs/home',
-  '/cs/home',
+  '/cs/energyInfo',
+  '/cs/electricInfo',
   // '/om/shiftsArrangeDetail'
 ];
 

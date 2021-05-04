@@ -47,22 +47,26 @@ const TimeChoice = props => {
           </a>
         ))}
       </div>
-      <RangePicker
-        // showNow
-        // showTime
-        // showToday
-        onChange={onDayChange}
-      />
+      {!props.noPicker && (
+        <RangePicker
+          // showNow
+          // showTime
+          // showToday
+          onChange={onDayChange}
+        />
+      )}
     </div>
   );
 };
 
 TimeChoice.defaultProps = {
   config: timeChoices,
+  onOptionChange: () => {},
 };
 
 TimeChoice.propTypes = {
   config: PropTypes.array,
+  onOptionChange: PropTypes.func,
 };
 
 export default TimeChoice;

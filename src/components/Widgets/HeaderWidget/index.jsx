@@ -15,7 +15,7 @@ import { Tag } from 'antd';
 const { CheckableTag } = Tag;
 
 const BussniessTab = props => {
-  console.log(' BussniessTab   ,   ： ', props);
+  // console.log(' BussniessTab   ,   ： ', props);
   // const [checkItem, setCheckItem] = useState(DEF_BUSSNIESS_TAB);
   const onChange = (item, checked) => {
     console.log(' BussniessTab onChange  ,   ： ', props, item, checked);
@@ -39,9 +39,8 @@ const BussniessTab = props => {
 };
 
 const HeaderWidget = props => {
-  console.log(' HeaderWidget   props, ,   ： ', props);
+  // console.log(' HeaderWidget   props, ,   ： ', props);
   const haveScreenAuth = props.userInfo?.perms?.screen?.perms?.module;
-  console.log(' haveScreenAuth,   ： ', haveScreenAuth);
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path, BIG_SCREEN);
     window.open(BIG_SCREEN);

@@ -118,7 +118,7 @@ class CsMonitor extends PureComponent {
 
   render() {
     return (
-      <div className="AlarmRecord">
+      <div className="csMonitor">
         {this.renderStatBox()}
 
         {this.renderSearchForm()}

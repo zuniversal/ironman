@@ -19,6 +19,7 @@ const statConfig = [
   {
     dataKey: 'order_data',
     title: 'CPU',
+    val: '23 / 88',
     unit: '核',
     day: '日环比 ',
     style: {
@@ -30,6 +31,7 @@ const statConfig = [
   {
     dataKey: 'task_data',
     title: '内存',
+    val: '23 / 88',
     unit: 'G',
     day: '日环比 ',
     style: {
@@ -41,6 +43,7 @@ const statConfig = [
   {
     dataKey: 'inspe_data',
     title: '存储',
+    val: '23 / 88',
     unit: 'T',
     day: '日环比 ',
     style: {
@@ -52,6 +55,7 @@ const statConfig = [
   {
     dataKey: 'inspe_data',
     title: '网络',
+    val: '23 / 88',
     unit: 'M',
     day: '日环比 ',
     style: {
@@ -76,8 +80,10 @@ const StatBoxCom = props => {
       }
       right={
         <>
-          <Icon icon={props.icon} />
-          <div className="statInfo">23 / 88 {props.unit}</div>
+          {props.iconCom ? props.iconCom : <Icon icon={props.icon} />}
+          <div className="statInfo">
+            {props.val} {props.unit}
+          </div>
         </>
       }
     ></StatBox>
@@ -92,15 +98,16 @@ const CsMonitorStatBox = props => {
   // console.log(' CsMonitorStatBox   props, ,   ： ', props);
   return (
     <div className="csMonitorStatBoxWrapper dfc">
-      {statConfig.map((v, i) => (
+      {props.config.map((v, i) => (
         <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
       ))}
     </div>
   );
 };
 
-CsMonitorStatBox.defaultProps = {};
-
-CsMonitorStatBox.propTypes = {};
+CsMonitorStatBox.defaultProps = {
+  data: {},
+  config: statConfig,
+};
 
 export default CsMonitorStatBox;

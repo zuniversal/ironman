@@ -60,7 +60,7 @@ const Preview = props => {
     props.data.locked = 1;
     canvas.open(props.data);
 
-    onHandleFit();
+    !props.noFitWindow && onHandleFit();
   }, []);
 
   useEffect(() => {
@@ -94,13 +94,15 @@ const Preview = props => {
     };
   }, [props.data, props.show]);
 
-  return (
+  return !props.noPortal ? (
     <CreatePortal show={props.show}>
       <div className="btnBlock">
         <CloseCircleOutlined onClick={props.togglePreview} />
       </div>
       <div id="topology-canvas-preview" className={'previewContainer'}></div>
     </CreatePortal>
+  ) : (
+    <div id="topology-canvas-preview" className={'previewContainer'}></div>
   );
 };
 

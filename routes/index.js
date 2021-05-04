@@ -3,7 +3,7 @@ import om from './om';
 import sm from './sm';
 
 export default [
-  // ...cs,
+  ...cs,
   ...om,
   // ...sm，
 ];

@@ -3,6 +3,7 @@ import './style.less';
 import { Button } from 'antd';
 import AssetsTable from '@/components/Table/AssetsTable';
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable';
+import ClientForm from '@/components/Form/ClientForm';
 import AssetsForm from '@/components/Form/AssetsForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
@@ -14,6 +15,7 @@ import DropDownBtn from '@/common/DropDownBtn';
 import ErrorInfo from '@/components/Widgets/ErrorInfo';
 import UploadCom from '@/components/Widgets/UploadCom';
 import SuccResult from '@/components/Widgets/SuccResult';
+import AssetsInfo from './AssetsInfo';
 
 import { actions, mapStateToProps } from '@/models/assets';
 import SmartHOC from '@/common/SmartHOC';
@@ -56,12 +58,14 @@ const titleMap = {
   detail: `${TITLE}详情`,
   uploadFile: `资产列表`,
   down: `文件下载`,
-  assetsDetailAsync: `资产详情`,
-  houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
+  houseNoDetailAsync: `户号详情`,
+  assetsDetailAsync: `资产详情`,
+  clientDetailAsync: `客户详情`,
 };
 
 const detailFormMap = {
+  clientDetailAsync: ClientForm,
   assetsDetailAsync: AssetsForm,
   houseNoDetailAsync: HouseNoForm,
   powerStationDetailAsync: PowerStationForm,
@@ -300,7 +304,8 @@ class Assets extends PureComponent {
       powerList: this.props.powerList,
       houseNoList: this.props.houseNoList,
     };
-    if (action === 'detail') {
+    if (action === 'detail' || action === 'edit') {
+      return <AssetsInfo data={itemDetail}></AssetsInfo>;
       return <AssetsDetailTable data={itemDetail}></AssetsDetailTable>;
     }
     if (action === 'uploadFile') {

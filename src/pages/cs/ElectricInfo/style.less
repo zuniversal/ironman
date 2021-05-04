@@ -1,0 +1,84 @@
+.electricInfo {
+  .searchForm {
+    margin-left: 30px;
+  }
+  .pageTitleWrapper {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .pageTitle {
+    // margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+
+  .extraWrapper {
+    display: inline-flex;
+    margin-left: 20px;
+  }
+
+  .livePicWrapper {
+    .livePic {
+      width: 245px;
+      height: 177px;
+      margin-right: 22px;
+      margin-bottom: 30px;
+    }
+  }
+
+  .drawWrapper {
+    // width: 100%;
+    display: flex;
+    justify-content: center;
+    .previewContainer {
+      width: 803px;
+      height: 602px;
+      border: 1px solid black;
+    }
+  }
+
+  .statBoxWrapper {
+    border: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+    // padding: 20px;
+    .statBoxCol {
+      display: inline-flex;
+      flex-direction: column;
+      width: 25%;
+      border-right: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+      padding: 0 27px;
+      .statBoxItem {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        padding-right: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.14901960784313725);
+        &:last-child {
+          // border-right: none;
+          border-bottom: none;
+        }
+        .title {
+          font-weight: 400;
+          line-height: 18px;
+          color: #333333;
+          margin-bottom: 16px;
+        }
+        .subTitle {
+          font-size: 20px;
+          font-weight: 500;
+          color: #333333;
+        }
+        .icon {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}

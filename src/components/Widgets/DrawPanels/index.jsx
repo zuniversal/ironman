@@ -514,7 +514,7 @@ const DrawPanel = props => {
       console.log(' JSON.parse(reader.result) ： ', JSON.parse(reader.result));
     };
 
-    const res2 = FileSaver.saveAs(res, `le5le.topology.json`);
+    const res2 = FileSaver.saveAs(res, `data.json`);
     console.log('  res2 ：', res2);
   };
 
@@ -545,7 +545,7 @@ const DrawPanel = props => {
   };
 
   const handle_savePng = data => {
-    canvas.saveAsImage('le5le.topology.png');
+    canvas.saveAsImage('线路图.png');
   };
 
   const handle_saveSvg = data => {
@@ -578,7 +578,7 @@ const DrawPanel = props => {
     const url = urlObject.createObjectURL(export_blob);
 
     const a = document.createElement('a');
-    a.setAttribute('download', 'le5le.topology.svg');
+    a.setAttribute('download', '线路图svg');
     a.setAttribute('href', url);
     const evt = document.createEvent('MouseEvents');
     evt.initEvent('click', true, true);
