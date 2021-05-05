@@ -15,6 +15,7 @@ import LivePic from './LivePic';
 import data from './data.json';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
+import { DRAW_PANEL } from '@/constants';
 
 const TITLE = '告警通知';
 

@@ -82,7 +82,8 @@ const StatBoxCom = props => {
         <>
           {props.iconCom ? props.iconCom : <Icon icon={props.icon} />}
           <div className="statInfo">
-            {props.val} {props.unit}
+            {/* {props.val} */}
+            {data} {props.unit}
           </div>
         </>
       }
@@ -91,7 +92,7 @@ const StatBoxCom = props => {
 };
 
 StatBoxCom.defaultProps = {
-  data: {},
+  data: '',
 };
 
 const CsMonitorStatBox = props => {

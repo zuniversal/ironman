@@ -62,8 +62,12 @@ const option = params => {
     month: chartTimeData,
     week: weekArr,
   };
-  const xAxis = xAxisMap['week'] ?? dayHoursArr;
+  const xAxis = params.xAxis ?? xAxisMap['week'] ?? dayHoursArr;
   return {
+    grid: {
+      left: '5%',
+      right: '5%',
+    },
     legend: {
       data: legendData,
     },
@@ -117,7 +121,7 @@ const option = params => {
           color: 'rgba(255, 64, 65, .2)',
         },
         data,
-        data: datas,
+        // data: datas,
       },
       {
         name: yAxisTitle,
@@ -136,7 +140,7 @@ const option = params => {
           color: 'rgba(229, 248, 238, .6)',
         },
         data,
-        data: datas.map(v => v + 100),
+        // data: datas.map(v => v + 100),
       },
     ],
   };

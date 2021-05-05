@@ -123,7 +123,7 @@ class EnergyInfo extends PureComponent {
   renderStatBox = params => {
     const statConfig = [
       {
-        dataKey: 'order_data',
+        dataKey: 'month',
         title: '本月用电量',
         val: '10',
         unit: 'kw',
@@ -134,7 +134,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power1} className="icon" />,
       },
       {
-        dataKey: 'task_data',
+        dataKey: 'today',
         title: '今日用电量',
         val: '10',
         unit: 'kw',
@@ -145,7 +145,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power2} className="icon" />,
       },
       {
-        dataKey: 'inspe_data',
+        dataKey: 'yesterday',
         title: '昨日用电量',
         val: '10',
         unit: 'kw',
@@ -156,7 +156,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power3} className="icon" />,
       },
       {
-        dataKey: 'inspe_data',
+        dataKey: 'lastMonth',
         title: '上月用电量',
         val: '10',
         unit: 'kw',
@@ -179,7 +179,11 @@ class EnergyInfo extends PureComponent {
     return (
       <>
         <PageTitle title={'实时有功电量'}></PageTitle>
-        <LineEcharts {...config}></LineEcharts>
+        <LineEcharts
+          {...config}
+          xAxis={this.props.powerData.xAxis}
+          data={this.props.powerData.data}
+        ></LineEcharts>
       </>
     );
   };
@@ -187,31 +191,35 @@ class EnergyInfo extends PureComponent {
     const powerTabConfig = [
       {
         tab: '有功电量',
-        key: '有功电量',
+        key: 'power_data',
       },
-      {
-        tab: '电量电费',
-        key: '电量电费',
-      },
+      // {
+      //   tab: '电量电费',
+      //   key: '电量电费',
+      // },
       {
         tab: '累计有功电量',
-        key: '累计有功电量',
+        key: 'power',
       },
-      {
-        tab: '累计电量电费',
-        key: '累计电量电费',
-      },
+      // {
+      //   tab: '累计电量电费',
+      //   key: '累计电量电费',
+      // },
       {
         tab: '有功功率',
-        key: '有功功率',
+        key: 'active_power',
       },
       {
         tab: '功率因数',
-        key: '功率因数',
+        key: 'power_factor',
       },
     ];
-    const onChange = e => {
-      console.log(' onChange   ,   ： ', e);
+    const onChange = type => {
+      console.log(' onChange   ,   ： ', type);
+      this.props.getRecentPowerAsync({
+        customer_id: 1,
+        type,
+      });
     };
 
     const config = {
@@ -229,7 +237,11 @@ class EnergyInfo extends PureComponent {
       <>
         <PageTitle title={'本月用电曲线'}></PageTitle>
         {tabs}
-        <LineEcharts {...config}></LineEcharts>
+        <LineEcharts
+          {...config}
+          xAxis={this.props.powerUseData.xAxis}
+          data={this.props.powerUseData.data}
+        ></LineEcharts>
       </>
     );
   };
@@ -255,8 +267,21 @@ class EnergyInfo extends PureComponent {
       </>
     );
   };
+  componentDidMount() {
+    // this.props.getPowerStatisticAsync({ customer_id: 1,   })
+    this.props.getRecentPowerAsync({
+      customer_id: 1,
+      type: 'power_data',
+    });
+    // this.props.getPowerDataAsync({ customer_id: 1,   })
+  }
 
   render() {
+    console.log(
+      ' EnergyInfo 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="energyInfo">
         {this.renderStatBox()}

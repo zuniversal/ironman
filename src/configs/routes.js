@@ -110,7 +110,7 @@ export const carManage = {
   platform: 'base',
   path: '/carManage',
   authKey: 'system',
-  name: '集团管理',
+  name: '车辆管理',
   icon: <Icon icon={'systemManage'} />,
   component: '../Waiter',
   routes: [],

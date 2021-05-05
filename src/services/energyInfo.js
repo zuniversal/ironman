@@ -9,8 +9,9 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet('console/message', p);
-export const getItem = p => noTipsGet(`console/message/${p.d_id}/info`, p);
-export const addItem = p => post('console/message', p);
-export const editItem = p => put(`console/message/${p.d_id}`, p);
-export const removeItem = p => remove(`console/message/${p.d_id}`, p);
+export const getPowerStatistic = p =>
+  noTipsGet('console/customer_system/statistic', p);
+export const getRecentPower = p =>
+  noTipsGet('console/customer_system/recent_power', p);
+export const getPowerData = p =>
+  noTipsGet('console/customer_system/power_data', p);

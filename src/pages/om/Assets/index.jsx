@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button } from 'antd';
+import { Button, Popover } from 'antd';
 import AssetsTable from '@/components/Table/AssetsTable';
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable';
 import ClientForm from '@/components/Form/ClientForm';
@@ -49,7 +49,8 @@ const menuConfig = [
   },
 ];
 
-export const TITLE = '资产';
+// export const TITLE = '资产';
+export const TITLE = '设备';
 export const DEVICE = '设备';
 
 const titleMap = {
@@ -140,6 +141,31 @@ class Assets extends PureComponent {
   };
 
   renderFormBtn = params => {
+    const content = (
+      <div className={`btnWrapper`}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增进线侧一级{TITLE}
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增进线侧二级{TITLE}
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增出线侧{TITLE}
+        </Button>
+      </div>
+    );
     return (
       <div className={'btnWrapper'}>
         {/* <Button
@@ -159,13 +185,15 @@ class Assets extends PureComponent {
         >
           同步OA
         </Button> */}
-        <Button
-          type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
-          disabled={this.props.authInfo.create !== true}
-        >
-          新增{TITLE}
-        </Button>
+        <Popover content={content} title={`新增${TITLE}`} trigger="hover">
+          <Button
+            type="primary"
+            onClick={() => this.props.showFormModal({ action: 'add' })}
+            disabled={this.props.authInfo.create !== true}
+          >
+            新增{TITLE}
+          </Button>
+        </Popover>
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
         </Button>

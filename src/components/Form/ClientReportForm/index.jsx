@@ -5,6 +5,7 @@ import { powerRateMap, billTypeConfig } from '@/configs';
 import useHttp from '@/hooks/useHttp';
 import { getBillType } from '@/services/electricBill';
 import { formatSelectList, filterObjSame } from '@/utils';
+import { Form } from 'antd';
 
 // 小计金额=所有的电量*电价的和+ 基本电费
 // 总有功=峰平谷尖+其他电量的和
@@ -224,6 +225,8 @@ const ClientReportForm = props => {
     props.propsForm.setFieldsValue(setFields);
   };
 
+  const [form] = Form.useForm();
+
   const selectConfig = [
     {
       noRule: true,
@@ -438,21 +441,25 @@ const ClientReportForm = props => {
 
     console.log('  getBillTypeReq res await 结果  ：', res); //
     // return
-    if (billing_type) {
+    if (billing_type && billing_type.name) {
       props.propsForm.setFieldsValue({
-        basic_price: billing_type.base_prise,
-        tip_price: billing_type.tip_prise,
-        peak_price: billing_type.peak_prise,
-        usual_price: billing_type.flat_prise,
-        valley_price: billing_type.valley_prise,
-        tip_price2: billing_type.tip_prise,
-        peak_price2: billing_type.peak_prise,
-        usual_price2: billing_type.flat_prise,
-        valley_price2: billing_type.valley_prise,
+        // basic_price: billing_type.base_prise,
+        // tip_price: billing_type.tip_prise,
+        // peak_price: billing_type.peak_prise,
+        // usual_price: billing_type.flat_prise,
+        // valley_price: billing_type.valley_prise,
+        // tip_price2: billing_type.tip_prise,
+        // peak_price2: billing_type.peak_prise,
+        // usual_price2: billing_type.flat_prise,
+        // valley_price2: billing_type.valley_prise,
         // billing_type: billing_type.name,
         billing_type: `${billing_type.id}`,
       });
     }
+    if (billing_method) {
+      form.setFieldsValue({ type: `${billing_method}` });
+    }
+
     // autoCalc();
   };
 
@@ -888,6 +895,7 @@ const ClientReportForm = props => {
           // type: '16',
           type: initBillType,
         }}
+        propsForm={form}
       ></SmartForm>
 
       <SmartForm
