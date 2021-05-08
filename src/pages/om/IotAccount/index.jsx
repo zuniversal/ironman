@@ -14,7 +14,8 @@ import UploadCom from '@/components/Widgets/UploadCom';
 import { actions, mapStateToProps } from '@/models/iotAccount';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
+import { SIM_XLSX } from '@/constants';
+import { downLoad } from '@/utils';
 
 const TITLE = '物联网卡';
 
@@ -70,6 +71,12 @@ class MonitorManage extends PureComponent {
           onClick={() => this.props.showFormModal({ action: 'uploadFile' })}
         >
           Excel导入
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => downLoad(SIM_XLSX, { name: 'SIM卡模板' })}
+        >
+          下载模板
         </Button>
       </div>
     );
@@ -142,9 +149,15 @@ class MonitorManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
+    if (['uploadFile'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      // if (action === 'uploadFile') {
+      // }
       const params = {
         ...res,
         start_time: res.start_time
@@ -198,7 +211,7 @@ class MonitorManage extends PureComponent {
           isInputUpload
           contentClass={'dfc'}
           formItemCls={'assetsUpload'}
-          action={'/api/v1/upload'}
+          action={'/api/v1/console/sim_card/import'}
           name={'file'}
           extra={'支持扩展名:xls、xlsx、csv'}
           uploadProps={{

@@ -73,6 +73,7 @@ export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
 export const csElectricInfo = '/cs/electricInfo?';
 export const DRAW_PANEL = '/om/drawPanel';
+export const SIM_XLSX = '/sim.xlsx';
 
 const animations = [
   'bounce',

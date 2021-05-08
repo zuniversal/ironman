@@ -15,7 +15,10 @@ const getPowerPoint = data => {
 };
 
 const showPowerPointData = (data, powerPoints) => {
-  const powerPointsRes = powerPoints.map(v => v.value);
+  const powerPointsRes = powerPoints
+    .filter(v => v.status === 'fulfilled')
+    .map(v => v.value);
+  console.log(' powerPointsRes ： ', data, powerPoints, powerPointsRes); //
   const penIdList = powerPointsRes.map(v => v[0]);
   const powerPointsData = powerPointsRes.map(v => v[1]);
   data.forEach(v => {

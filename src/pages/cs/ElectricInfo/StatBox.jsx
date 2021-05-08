@@ -13,21 +13,8 @@ import { formatSelectList } from '@/utils';
 import { getList as getBillTypeList } from '@/services/electricBill';
 
 const statConfig = [
-  [
-    {
-      title: '电价类型',
-      dataKey: 'type',
-      content: '',
-      icon: icon1,
-    },
-    {
-      title: '计费方式',
-      dataKey: 'billing_method',
-      content: '',
-      icon: icon2,
-      dataMap: billTypeMap,
-    },
-  ],
+  // [
+  // ],
   [
     {
       title: '电压器容量',
@@ -59,6 +46,22 @@ const statConfig = [
   ],
   [
     {
+      title: '电价类型',
+      dataKey: 'type',
+      //   content: '',
+      icon: icon1,
+      noBorder: true,
+    },
+    {
+      // title: '计费方式',
+      dataKey: 'billing_method',
+      content: '',
+      icon: null,
+      dataMap: billTypeMap,
+    },
+  ],
+  [
+    {
       title: '托管电站数',
       dataKey: '',
       content: '',
@@ -76,13 +79,13 @@ const StatBoxItem = props => {
     : null;
 
   return (
-    <div className={`statBoxItem `}>
+    <div className={`statBoxItem ${!props.noBorder ? 'statCol' : ''}`}>
       <div className="left">
         <div className="title">{props.title}</div>
         <div className="subTitle">{content}</div>
       </div>
       <div className="right">
-        <img src={props.icon} className="icon" />
+        {props.icon && <img src={props.icon} className="icon" />}
       </div>
     </div>
   );

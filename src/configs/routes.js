@@ -192,6 +192,7 @@ export const monitor = {
   path: '/om/alarm',
   authKey: 'alarm',
   name: '监控管理',
+  name: '电力监控管理',
   icon: <Icon icon={'alarmManage'} />,
   routes: [
     {
@@ -447,14 +448,6 @@ export const iotRoutes = [
   },
   {
     platform: 'iot',
-    path: '/电力监控管理',
-    authKey: 'system',
-    name: '电力监控管理',
-    icon: <Icon icon={'systemManage'} />,
-    routes: [],
-  },
-  {
-    platform: 'iot',
     path: '/视频监控管理',
     authKey: 'system',
     name: '视频监控管理',
@@ -648,12 +641,7 @@ export const customerRoutes = [
     path: '/cs/alarmNotify',
     authKey: '',
     name: '告警通知',
-    icon: <Icon icon={'msgList'} />,
-  },
-  {
-    path: '/cs/systemNotify',
-    authKey: '',
-    name: '系统通知',
+    name: '监控告警',
     icon: <Icon icon={'msgList'} />,
   },
   {
@@ -691,6 +679,12 @@ export const customerRoutes = [
     authKey: '',
     name: '组织管理',
     icon: <Icon icon={'csOrganize'} />,
+  },
+  {
+    path: '/cs/systemNotify',
+    authKey: '',
+    name: '系统通知',
+    icon: <Icon icon={'msgList'} />,
   },
 ];
 

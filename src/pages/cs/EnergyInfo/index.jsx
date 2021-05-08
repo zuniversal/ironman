@@ -46,28 +46,6 @@ class EnergyInfo extends PureComponent {
   renderStatBox = params => {
     const statConfig = [
       {
-        dataKey: 'month',
-        title: '本月用电量',
-        val: '10',
-        unit: 'kw',
-        style: {
-          background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
-          boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
-        },
-        iconCom: <img src={power1} className="icon" />,
-      },
-      {
-        dataKey: 'lastMonth',
-        title: '上月用电量',
-        val: '10',
-        unit: 'kw',
-        style: {
-          background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
-          boxShadow: '0px 5px 10px #1AB460',
-        },
-        iconCom: <img src={power4} className="icon" />,
-      },
-      {
         dataKey: 'today',
         title: '今日用电量',
         val: '10',
@@ -88,6 +66,28 @@ class EnergyInfo extends PureComponent {
           boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
         },
         iconCom: <img src={power3} className="icon" />,
+      },
+      {
+        dataKey: 'month',
+        title: '本月用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
+          boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
+        },
+        iconCom: <img src={power1} className="icon" />,
+      },
+      {
+        dataKey: 'lastMonth',
+        title: '上月用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
+          boxShadow: '0px 5px 10px #1AB460',
+        },
+        iconCom: <img src={power4} className="icon" />,
       },
     ];
     return (
