@@ -13,8 +13,6 @@ import { formatSelectList } from '@/utils';
 import { getList as getBillTypeList } from '@/services/electricBill';
 
 const statConfig = [
-  // [
-  // ],
   [
     {
       title: '电压器容量',

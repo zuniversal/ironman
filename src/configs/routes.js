@@ -190,9 +190,8 @@ export const system = {
 export const monitor = {
   platform: 'iot',
   path: '/om/alarm',
-  authKey: 'alarm',
-  name: '监控管理',
-  name: '电力监控管理',
+  // name: '监控管理',
+  name: '电力监控管理1',
   icon: <Icon icon={'alarmManage'} />,
   routes: [
     {

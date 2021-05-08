@@ -279,13 +279,13 @@ const PowerStationForm = props => {
         name: 'status',
       },
     },
-    {
-      noRule: true,
-      itemProps: {
-        label: '运行等级',
-        name: 'operation_level',
-      },
-    },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '运行等级',
+    //     name: 'operation_level',
+    //   },
+    // },
     // {
     //   formType: 'Search',
     //   selectData: inspectTemplateConfig,
@@ -438,12 +438,12 @@ const PowerStationForm = props => {
         name: 'status',
       },
     },
-    {
-      itemProps: {
-        label: '运行等级',
-        name: 'operation_level',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '运行等级',
+    //     name: 'operation_level',
+    //   },
+    // },
 
     ...inspectModeCol,
     ...inspectCol,
