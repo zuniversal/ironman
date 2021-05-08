@@ -801,10 +801,12 @@ class Client extends PureComponent {
     );
 
     // this.getList()
-    this.props.getTagsAsync();
-    this.props.getUserAsync();
+
+    // this.props.getTagsAsync();
+    // this.props.getUserAsync();
+    // this.props.getOrganizeAsync({ page_size: 1000 });
+
     this.props.getDistrictAsync({});
-    this.props.getOrganizeAsync({ page_size: 1000 });
     // this.props.getGeoAsync({ address: '上海浦东' });
     // this.props.getRegionAsync({
     //   subdistrict: '0',

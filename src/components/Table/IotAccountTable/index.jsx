@@ -2,52 +2,54 @@ import React from 'react';
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';
-import { monitorDeviceStatusMap, networkTypeMap } from '@/configs';
+import { simcardStatusMap, validityPeriodMap } from '@/configs';
 
 const IotAccountTable = props => {
   const columns = [
     {
       title: 'ICCID',
-      dataIndex: '',
+      dataIndex: 'iccid',
     },
     {
       title: 'SIM卡号',
-      dataIndex: '',
+      dataIndex: 'sim_number',
     },
     {
       title: '开户时间',
-      dataIndex: '',
+      dataIndex: 'start_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '套餐流量',
-      dataIndex: '',
+      dataIndex: 'flow',
     },
     {
       title: '套餐有效期',
-      dataIndex: '',
+      dataIndex: 'validity_period',
+      dataMap: validityPeriodMap,
     },
     {
       title: '运营商',
-      dataIndex: '',
+      dataIndex: 'operator',
     },
     {
       title: '供应商',
-      dataIndex: '',
+      dataIndex: 'supplier',
     },
     {
       title: '状态',
-      dataIndex: '',
-      dataMap: networkTypeMap,
+      dataIndex: 'status',
+      dataMap: simcardStatusMap,
     },
     {
       title: '激活时间',
-      dataIndex: '',
-      dataMap: monitorDeviceStatusMap,
+      dataIndex: 'activate_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '到期时间',
-      dataIndex: '',
-      dataMap: monitorDeviceStatusMap,
+      dataIndex: 'end_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
   ];
 

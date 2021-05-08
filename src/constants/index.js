@@ -38,7 +38,7 @@ export const PROXY_URL = `/api/v1/`;
 // export const PROXY_URL = `/api/v1/cnosole/`;
 // export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
-// console.log(' BASE_URL ： ', BASE_URL, process.env);
+console.log(' BASE_URL ： ', BASE_URL, process.env);
 // export const URL = `${URL_PREFIX}${BASE_URL}`;
 export const URL = `${BASE_URL}`;
 
@@ -61,14 +61,17 @@ export const TIME_ZERO = ' 00:00:00';
 
 export const LOGIN = '/login';
 export const HOME = '/om/home';
-export const CS_HOME = '/cs/home';
+// export const CS_HOME = '/cs/home';
+export const CS_HOME = '/cs/energyInfo';
 export const homeMap = {
   manager: HOME,
   customer: CS_HOME,
 };
+export const DEF_PALTFORM = 'smartOMS';
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
+export const csElectricInfo = '/cs/electricInfo?';
 export const DRAW_PANEL = '/om/drawPanel';
 
 const animations = [

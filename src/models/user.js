@@ -10,7 +10,14 @@ import {
   setItems,
 } from '@/utils';
 import { history } from 'umi';
-import { HOME, CS_HOME, isDev, homeMap, LOGIN } from '@/constants';
+import {
+  HOME,
+  CS_HOME,
+  isDev,
+  homeMap,
+  LOGIN,
+  DEF_PALTFORM,
+} from '@/constants';
 import defaultProps, {
   managerRoutes,
   customerRoutes,
@@ -157,7 +164,7 @@ export default {
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
     userMsg: [],
-    platform: getItem('platform') || 'base',
+    platform: getItem('platform') || DEF_PALTFORM,
   },
 
   reducers: {
@@ -330,6 +337,7 @@ export default {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
+      setItem('platform', DEF_PALTFORM);
       // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',
@@ -341,6 +349,7 @@ export default {
       //   history.push(LOGIN);
       // } else {
       // }
+
       history.push(path);
       openNotification({
         message: '系统通知',
@@ -393,6 +402,7 @@ export default {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
+      setItem('platform', DEF_PALTFORM);
       // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',

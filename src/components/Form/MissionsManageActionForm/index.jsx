@@ -420,7 +420,8 @@ export const MissionsManageOrderInfoForm = props => {
     {
       itemProps: {
         label: '处理时间:',
-        name: 'commencement_date',
+        // name: 'commencement_date',
+        name: 'finish_time',
       },
       comProps: {
         allowClear: false,

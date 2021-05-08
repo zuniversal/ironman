@@ -9,8 +9,8 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = p => noTipsGet(`console/monitor/devices`, p);
-export const getItem = p => noTipsGet(`console/monitor/devices/${p.d_id}`);
-export const addItem = p => post(`console/monitor/devices`, p);
-export const editItem = p => put(`console/monitor/devices/${p.d_id}`, p);
-export const removeItem = p => remove(`console/monitor/devices/${p.d_id}`, p);
+export const getList = p => noTipsGet(`console/sim_card/list`, p);
+export const getItem = p => noTipsGet(`console/sim_card/${p.d_id}/info`);
+export const addItem = p => post(`console/sim_card/create`, p);
+export const editItem = p => put(`console/sim_card/${p.d_id}/update`, p);
+export const removeItem = p => remove(`console/sim_card/${p.d_id}/delete`, p);

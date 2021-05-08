@@ -1,92 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import * as monitorManageServices from '@/services/monitorManage';
 import './style.less';
 
-import SmartTable from '@/common/SmartTable';
-import { missionsStatusMap } from '@/configs';
+import MonitorManageTable from '@/components/Table/MonitorManageTable';
 
 const ElectricInfoTable = props => {
-  const columns = [
-    {
-      title: 'id',
-      dataIndex: 'id',
-      className: 'textCenter',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-    {
-      title: '备注',
-      dataIndex: '',
-    },
-  ];
-
-  const extra = (text, record, index, props) => (
-    <>
-      <a
-        onClick={() =>
-          props.showFormModal({
-            action: 'detail',
-            d_id: record.id,
-          })
-        }
-      >
-        监控数据展示
-      </a>
-    </>
-  );
+  const [dataList, setDataList] = useState();
+  console.log(' ElectricInfoTableElectricInfoTable,   , ： ', props);
+  const getListAsync = async () => {
+    const res = await monitorManageServices.getList({
+      keyword: props.houseNo,
+    });
+    console.log(' ElectricInfoTable ElectricInfoTableres,  , ： ', res);
+    setDataList(res.list);
+  };
+  useEffect(() => {
+    console.log(' ElectricInfoTableElectricInfoTable, 副作用  , ： ', props);
+    // .then(res => {
+    //   console.log(' ElectricInfoTableres,  , ： ', res);
+    // })
+    if (props.houseNo) {
+      getListAsync();
+    }
+  }, [props.houseNo]);
+  console.log(' ElectricInfoTableres, dataList , ： ', dataList);
 
   return (
-    <SmartTable
-      columns={columns}
-      extra={extra}
+    <MonitorManageTable
       noDefault
       {...props}
-    ></SmartTable>
+      dataSource={dataList}
+    ></MonitorManageTable>
   );
 };
 

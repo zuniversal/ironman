@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm';
 import ElectricInfoTable from '@/components/Table/ElectricInfoTable';
 import PageTitle from '@/components/Widgets/PageTitle';
 import TimeChoice from '@/components/Widgets/TimeChoice';
@@ -9,25 +8,49 @@ import Preview from '@/components/Widgets/DrawPanels/Preview';
 import SmartFormModal from '@/common/SmartFormModal';
 import SearchForm from '@/common/SearchForm';
 import AssetsInfo from '@/pages/om/Assets/AssetsInfo';
-import { actions, mapStateToProps } from '@/models/electricInfo';
+
+import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
+import MonitorManageDetailForm from '@/components/Form/MonitorManageForm/MonitorManageDetailForm';
+import ClientForm from '@/components/Form/ClientForm';
+import HouseNoForm from '@/components/Form/HouseNoForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
+import MonitorDeviceForm from '@/components/Form/MonitorDeviceForm';
+import AssetsForm from '@/components/Form/AssetsForm';
+
+import HouseNoSearch from './HouseNoSearch';
 import StatBox from './StatBox';
 import LivePic from './LivePic';
-import data from './data.json';
+// import data from './data.json';
+
+import { actions, mapStateToProps } from '@/models/electricInfo';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
 import { DRAW_PANEL } from '@/constants';
 
-const TITLE = '告警通知';
+const TITLE = '';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  upload: `文件上传`,
-  down: `文件下载`,
+  monitorManageAsync: `监控详情`,
+  getRealDataAsync: `监控数据`,
+  clientDetailAsync: `客户详情`,
+  houseNoDetailAsync: `户号详情`,
+  powerStationDetailAsync: `电站详情`,
+  assetsDetailAsync: `设备详情`,
+  monitorDeviceDetailAsync: `监控设备详情`,
 };
 
-const detailFormMap = {};
+const detailFormMap = {
+  monitorManageAsync: MonitorManageDetailForm,
+  // getRealDataAsync: RealDataImei,
+  clientDetailAsync: ClientForm,
+  houseNoDetailAsync: HouseNoForm,
+  powerStationDetailAsync: PowerStationForm,
+  assetsDetailAsync: AssetsForm,
+  monitorDeviceDetailAsync: MonitorDeviceForm,
+};
 
 const powerStationInfoConfig = [
   { text: '电站1信息', type: 'week' },
@@ -49,48 +72,14 @@ class ElectricInfo extends PureComponent {
       titleMap,
     };
   }
-  renderFormBtn = params => {
-    return (
-      <div className={'btnWrapper'}>
-        <Button type="primary" onClick={() => this.props.search(params)}>
-          查询
-        </Button>
-      </div>
-    );
-  };
-  renderSearchForm = params => {
-    return (
-      <SearchKwForm
-        // formBtn={this.renderFormBtn}
-        className={'fje'}
-        init={this.props.searchInfo}
-        onFieldChange={this.onFieldChange}
-        label={'监控点名称、告警名，户号，客户名，imei'}
-        keyword={'keyword'}
-        noLabel
-      ></SearchKwForm>
-    );
-  };
-  onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
-  };
 
   renderTable = params => {
     const tableProps = {
-      onSelectChange: this.props.onSelectChange,
-      dataSource: this.props.dataList,
-
-      count: this.props.count,
-      authInfo: this.props.authInfo,
-      searchInfo: this.props.searchInfo,
-      getListAsync: this.props.getListAsync,
-      showDetail: this.props.getItemAsync,
-      edit: this.props.getItemAsync,
-      remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
       title: () => <div className="title">IOT设备清单</div>,
+      houseNo: this.props.houseNo,
+      noDefault: true,
     };
 
     return <ElectricInfoTable {...tableProps}></ElectricInfoTable>;
@@ -120,18 +109,9 @@ class ElectricInfo extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['handleAlarm', 'notifyClient'].includes(action)) {
-      this.props.onCancel({});
-      return;
-    }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      if (action === 'add') {
-        this.props.addItemAsync({
-          ...res,
-        });
-      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -151,14 +131,6 @@ class ElectricInfo extends PureComponent {
     }
     console.log(' formComProps ： ', formComProps);
   };
-  get size() {
-    return [
-      'handleAlarm',
-      // 'notifyClient'
-    ].some(v => v === this.props.action)
-      ? 'small'
-      : 'default';
-  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -167,13 +139,19 @@ class ElectricInfo extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
-        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
   };
   renderPageTitle = params => {
+    return (
+      <HouseNoSearch
+        value={this.props.houseNo}
+        data={this.props.clientPowerList}
+        onChange={this.props.setStationList}
+      ></HouseNoSearch>
+    );
     return (
       <PageTitle title={'用电户号'}>
         <SearchForm
@@ -187,8 +165,8 @@ class ElectricInfo extends PureComponent {
   renderStatBox = params => {
     return (
       <>
-        <div className="title">户号22222信息</div>
-        <StatBox></StatBox>
+        <div className="title">户号信息</div>
+        <StatBox data={this.props.powerInfo}></StatBox>
       </>
     );
   };
@@ -196,21 +174,37 @@ class ElectricInfo extends PureComponent {
     return (
       <>
         <PageTitle title={'电站信息'}>
-          <TimeChoice noPicker config={powerStationInfoConfig}></TimeChoice>
+          <TimeChoice noPicker config={this.props.stationList}></TimeChoice>
         </PageTitle>
         <div className="title">电站实景图</div>
         <LivePic></LivePic>
       </>
     );
   };
+  handleAction = params => {
+    console.log('    handleAction ： ', params, this.state, this.props);
+    this.props.setData({
+      isShowRemoveModal: true,
+      removeParams: {
+        noRemove: true,
+        removeTitle: '提示',
+        removeContent: '是否确认删除',
+        okFn: e => {
+          console.log(' 确认删除 ： ', e, params);
+          this.props.removeCircuitItemAsync({
+            circuit_id: this.props.canvasInfo.id,
+            power_station_id: this.props.canvasInfo.power_station_id,
+          });
+          this.props.onResultModalCancel();
+        },
+      },
+    });
+  };
   renderDrawPic = params => {
     const formComProps = {
+      // data: data,
+      // realParams: { number: '0000727272', powerstation_id: '79730' },
       data: this.props.canvasData,
-      // show: this.props.isPreview,
-      // togglePreview: this.props.togglePreview,
-      realParams: this.props.location.query,
-      data: data,
-      realParams: { number: '0000727272', powerstation_id: '79730' },
       noPortal: true,
       noFitWindow: true,
     };
@@ -223,20 +217,29 @@ class ElectricInfo extends PureComponent {
               type="primary"
               onClick={() =>
                 history.push(
-                  `${DRAW_PANEL}?powerstation_id=${record.id}&number=${record.electricity_user.number}`,
+                  `${DRAW_PANEL}?powerstation_id=${this.props.stationId}&number=${this.props.houseNo}`,
                 )
               }
               className={`m-r-10`}
             >
               进入编辑器
             </Button>
-            <Button type="primary" onClick={() => this.props.search(params)}>
+            <Button
+              type="primary"
+              onClick={this.handleAction}
+              disabled={!this.props.canvasInfo?.id}
+            >
               清空
             </Button>
           </div>
         </div>
         <div className="drawWrapper">
-          <Preview {...formComProps}></Preview>
+          {this.props.canvasData ? (
+            <Preview {...formComProps}></Preview>
+          ) : (
+            <div className="previewContainer dfc">该电站暂无系统图</div>
+          )}
+          {/* <Preview {...formComProps}></Preview> */}
         </div>
       </>
     );
@@ -245,7 +248,57 @@ class ElectricInfo extends PureComponent {
     return <AssetsInfo></AssetsInfo>;
   };
 
+  onOk = async props => {
+    console.log(' onOkonOk ： ', props, this.state, this.props);
+    const { action, itemDetail } = this.props;
+    const { form, init } = props;
+    if (['getRealDataAsync'].includes(action)) {
+      this.props.onCancel({});
+      return;
+    }
+  };
+  renderModalContent = e => {
+    const { action } = this.props;
+    const formComProps = {
+      action,
+    };
+    console.log(' formComProps ： ', formComProps, this.props);
+    if (action === 'getRealDataAsync') {
+      return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
+    }
+  };
+  renderSmartFormModal = params => {
+    return (
+      <SmartFormModal
+        show={this.props.isShowModal}
+        action={this.props.action}
+        titleMap={this.state.titleMap}
+        onOk={this.onOk}
+        onCancel={this.props.onCancel}
+      >
+        {this.renderModalContent()}
+      </SmartFormModal>
+    );
+  };
+
+  componentDidMount() {
+    // this.props.getPowerInfoAsync({
+    //   ele_number: '0000727272',
+    //   // ele_number: ,
+    // });
+    // this.props.getClientPowerAsync();
+    // this.props.getMonitorDeviceListAsync();
+
+    this.props.getRelativedAsync();
+  }
+
   render() {
+    console.log(
+      ' %c ElectricInfo 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="electricInfo">
         {this.renderPageTitle()}
@@ -263,6 +316,8 @@ class ElectricInfo extends PureComponent {
         {this.renderTable()}
 
         {this.renderAssets()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

@@ -145,15 +145,20 @@ class MonitorManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      const params = {
+        ...res,
+        start_time: res.start_time
+          ? res.start_time.format('YYYY-MM-DD HH:mm:ss')
+          : null,
+      };
       if (action === 'add') {
         this.props.addItemAsync({
-          ...res,
+          ...params,
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
-          ...res,
-          id: itemDetail.id,
+          ...params,
           d_id: itemDetail.id,
         });
       }

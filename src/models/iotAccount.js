@@ -1,6 +1,8 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/iotAccount';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { validityPeriodMap } from '@/configs';
+import moment from 'moment';
 
 const namespace = 'iotAccount';
 const { createActions } = init(namespace);
@@ -58,15 +60,23 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload);
       const {
-        customer_id,
-        station_id,
-        electricity_user_id,
-        equipment_id,
-        device_id,
-        template_id,
+        activate_time,
+        start_time,
+        end_time,
+        validity_period,
       } = payload.bean;
+
+      let endTime = end_time;
+      if (activate_time && validity_period) {
+        const periodTime = validityPeriodConfig.find(
+          v => v.value == validity_period,
+        ).time;
+        endTime = moment(activate_time)
+          .add(periodTime, 'days')
+          .format('YYYY-MM-DD HH:mm:ss');
+        console.log(' getItemgetItem ： ', payload, periodTime, endTime);
+      }
 
       return {
         ...state,
@@ -75,12 +85,10 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          customer_id: `${customer_id}`,
-          electricity_user_id: `${electricity_user_id}`,
-          station_id: `${station_id}`,
-          equipment_id: `${equipment_id}`,
-          device_id: `${device_id}`,
-          template_id: `${template_id}`,
+          end_time: end_time ? moment(end_time) : null,
+          start_time: start_time ? moment(start_time) : null,
+          activate_time: activate_time ? moment(activate_time) : null,
+          end_time: endTime,
         },
       };
     },
@@ -156,6 +164,7 @@ export default {
       yield put({ type: 'getListAsync' });
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' editItemAsync ： ', payload); //
       const res = yield call(services.editItem, payload);
       yield put({ type: 'getListAsync' });
     },

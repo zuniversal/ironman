@@ -465,7 +465,7 @@ const PowerStationForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '过期时间',
-        className: 'end_time',
+        name: 'end_time',
       },
     },
     ...typeCols,

@@ -6,6 +6,7 @@ import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/energyInfo';
 import LineEcharts from './LineEcharts';
 import SmartHOC from '@/common/SmartHOC';
+import { recentPowerAxisConfig } from '@/configs';
 import { connect } from 'umi';
 
 import power1 from '@/static/assets/cs/power1.png';
@@ -42,84 +43,6 @@ class EnergyInfo extends PureComponent {
     };
   }
 
-  renderCommonModal = params => {
-    const DetailForm = detailFormMap[this.props.common.action];
-    return (
-      <SmartFormModal
-        show={this.props.common.isShowCommonModal}
-        action={this.props.common.action}
-        titleMap={titleMap}
-        onOk={this.props.closeCommonModal}
-        onCancel={this.props.closeCommonModal}
-      >
-        {DetailForm && (
-          <DetailForm
-            init={this.props.common.itemDetail}
-            action={'detail'}
-          ></DetailForm>
-        )}
-      </SmartFormModal>
-    );
-  };
-
-  onOk = async props => {
-    console.log(' onOkonOk ： ', props, this.state, this.props);
-    const { action, itemDetail } = this.props;
-    const { form, init } = props;
-    if (['handleAlarm', 'notifyClient'].includes(action)) {
-      this.props.onCancel({});
-      return;
-    }
-    try {
-      const res = await form.validateFields();
-      console.log('  res await 结果  ：', res, action);
-      if (action === 'add') {
-        this.props.addItemAsync({
-          ...res,
-        });
-      }
-    } catch (error) {
-      console.log(' error ： ', error);
-    }
-  };
-
-  renderModalContent = e => {
-    const { action } = this.props;
-    const formComProps = {
-      action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getClientAsync: params => this.props.getClientAsync({ name: params }),
-      clientList: this.props.clientList,
-    };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
-    console.log(' formComProps ： ', formComProps);
-  };
-  get size() {
-    return [
-      'handleAlarm',
-      // 'notifyClient'
-    ].some(v => v === this.props.action)
-      ? 'small'
-      : 'default';
-  }
-  renderSmartFormModal = params => {
-    return (
-      <SmartFormModal
-        show={this.props.isShowModal}
-        action={this.props.action}
-        titleMap={this.state.titleMap}
-        onOk={this.onOk}
-        onCancel={this.props.onCancel}
-        size={this.size}
-      >
-        {this.renderModalContent()}
-      </SmartFormModal>
-    );
-  };
-
   renderStatBox = params => {
     const statConfig = [
       {
@@ -132,6 +55,17 @@ class EnergyInfo extends PureComponent {
           boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
         },
         iconCom: <img src={power1} className="icon" />,
+      },
+      {
+        dataKey: 'lastMonth',
+        title: '上月用电量',
+        val: '10',
+        unit: 'kw',
+        style: {
+          background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
+          boxShadow: '0px 5px 10px #1AB460',
+        },
+        iconCom: <img src={power4} className="icon" />,
       },
       {
         dataKey: 'today',
@@ -154,17 +88,6 @@ class EnergyInfo extends PureComponent {
           boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
         },
         iconCom: <img src={power3} className="icon" />,
-      },
-      {
-        dataKey: 'lastMonth',
-        title: '上月用电量',
-        val: '10',
-        unit: 'kw',
-        style: {
-          background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
-          boxShadow: '0px 5px 10px #1AB460',
-        },
-        iconCom: <img src={power4} className="icon" />,
       },
     ];
     return (
@@ -217,13 +140,12 @@ class EnergyInfo extends PureComponent {
     const onChange = type => {
       console.log(' onChange   ,   ： ', type);
       this.props.getRecentPowerAsync({
-        customer_id: 1,
         type,
       });
     };
 
     const config = {
-      yAxisTitle: '',
+      // yAxisTitle: '',
       yAxisTitle2: '',
     };
     const tabs = (
@@ -248,6 +170,9 @@ class EnergyInfo extends PureComponent {
   render10DayPowerEcharts = params => {
     const config = {
       yAxisTitle2: '电量电费:元',
+      xAxis: this.props.recentPower10DayData.xAxis,
+      data: this.props.recentPower10DayData.data,
+      yAxisTitleArr: recentPowerAxisConfig,
     };
     return (
       <>
@@ -259,6 +184,9 @@ class EnergyInfo extends PureComponent {
   render6DayPowerEcharts = params => {
     const config = {
       yAxisTitle2: '电量电费:元',
+      xAxis: this.props.recentPower6MonthData.xAxis,
+      data: this.props.recentPower6MonthData.data,
+      yAxisTitleArr: recentPowerAxisConfig,
     };
     return (
       <>
@@ -268,12 +196,13 @@ class EnergyInfo extends PureComponent {
     );
   };
   componentDidMount() {
-    // this.props.getPowerStatisticAsync({ customer_id: 1,   })
+    this.props.getPowerStatisticAsync({});
     this.props.getRecentPowerAsync({
-      customer_id: 1,
       type: 'power_data',
     });
-    // this.props.getPowerDataAsync({ customer_id: 1,   })
+    this.props.getPowerDataAsync({});
+    this.props.getRecentPower10DayAsync();
+    this.props.getRecentPower6MonthAsync();
   }
 
   render() {
@@ -285,9 +214,6 @@ class EnergyInfo extends PureComponent {
     return (
       <div className="energyInfo">
         {this.renderStatBox()}
-
-        {this.renderSmartFormModal()}
-
         {this.renderHavePowerEcharts()}
         {this.renderMonthPowerEcharts()}
         {this.render10DayPowerEcharts()}

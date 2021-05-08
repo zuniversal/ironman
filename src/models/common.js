@@ -133,16 +133,38 @@ const serviceConfigMap = {
   knowledgeCateServices,
   electricBillServices,
   monitorDeviceServices,
-
   powerNumberServices: () => {},
 };
 
-const getService = action => {
-  const dettailSuffix = 'DetailAsync';
-  const serviceSuffix = 'Services';
+const removeParams = (params, keys = []) => {
+  console.log(' removeParams   ,   ： ');
+  keys.forEach((v, i) => {
+    delete params[v];
+  });
+};
+
+const getService = params => {
+  const {
+    action,
+    dettailSuffix = 'DetailAsync',
+    serviceSuffix = 'Services',
+    serviceKey,
+  } = params;
+  // const dettailSuffix = 'DetailAsync';
+  // const serviceSuffix = 'Services';
   const actionSlice = action.split(dettailSuffix)[0];
-  const serviceStr = action.split(dettailSuffix)[0] + serviceSuffix;
-  console.log(' getService   action,   ： ', action, actionSlice, serviceStr);
+  const serviceStr =
+    serviceKey || action.split(dettailSuffix)[0] + serviceSuffix;
+  console.log(
+    ' getService   action,   ： ',
+    params,
+    action,
+    actionSlice,
+    serviceStr,
+    serviceConfigMap,
+    serviceConfigMap[serviceStr],
+  );
+  removeParams(params, ['dettailSuffix', 'serviceSuffix', 'serviceKey']);
   return serviceConfigMap[serviceStr];
 };
 
@@ -212,10 +234,6 @@ export default {
             customer_admin && customer_admin.length > 0
               ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
               : [{}],
-          service_staff: service_staff?.nickname,
-          last_service_staff: last_service_staff
-            ? `${last_service_staff?.nickname}`
-            : '',
           // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
           enterprise: {
@@ -230,11 +248,15 @@ export default {
             is_quit: [v.is_quit],
             tags: v.tags.map(v => `${v.id}`) ?? [],
           })),
-          service_staff: `${service_staff_name}`,
-          last_service_staff: `${last_service_staff_name}`,
-          service_organization_id: service_organization_name ?? '',
-          service_staff_id: service_staff_name,
-          last_service_staff_id: `${last_service_staff_name}`,
+          // service_staff: service_staff?.nickname,
+          // last_service_staff: last_service_staff
+          // ? `${last_service_staff?.nickname}`
+          // : '',
+          // service_staff: `${service_staff_name}`,
+          // last_service_staff: `${last_service_staff_name}`,
+          // service_organization_id: service_organization_name ?? '',
+          // service_staff_id: service_staff_name,
+          // last_service_staff_id: `${last_service_staff_name}`,
         },
       };
     },
@@ -256,6 +278,9 @@ export default {
         ...payload.bean,
         customer: payload.bean.customer?.name,
         inspection_type: payload.bean.inspection_type ?? 0,
+        end_time: payload.bean.end_time
+          ? moment(payload.bean.end_time).format('YYYY-MM-DD')
+          : null,
       };
 
       if (
@@ -561,7 +586,8 @@ export default {
 
   effects: {
     *showItemAsync({ payload = {}, action, type }, { call, put }) {
-      const service = getService(payload.action);
+      // const service = getService(payload.action);
+      const service = getService(payload);
       console.log(' showItemAsync service ： ', service, payload);
       if (!payload.action || !service) {
         tips('请传入对应详情的action参数！', 2);

@@ -81,6 +81,18 @@ export const getDataMap = (text, dataMap) => {
   return val ? val : text;
 };
 
+export const objNum2str = (data = {}, config = []) => {
+  const newObj = {
+    ...data,
+  };
+  const res = config.forEach(key => {
+    if (newObj[key]) {
+      newObj[key] = `${newObj[key]}`;
+    }
+  });
+  return newObj;
+};
+
 export const formatSelectList = (
   data = [],
   labelKey = 'name',
@@ -90,6 +102,7 @@ export const formatSelectList = (
     ...v,
     label: v[labelKey],
     value: `${v[idKey]}`,
+    // value: v[idKey],
     // title: v[labelKey] + '2222222222',
   }));
   // console.log(' formatSelectList res ： ', res);
@@ -749,3 +762,5 @@ export const format2Null = (data = {}, keys = []) => {
   keys.forEach(k => (formatObj[k] = data[k] ? data[k] : null));
   return formatObj;
 };
+
+export const openTab = url => window.open(url);

@@ -1,13 +1,21 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/electricInfo';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import * as monitorManageServices from '@/services/monitorManage';
+import { getClientPower, getRelatived } from '@/services/client';
+import { getCircuitItem, removeCircuitItem } from '@/services/powerStation';
+import { formatSelectList, getItem } from '@/utils';
+import { history } from 'umi';
 
 const namespace = 'electricInfo';
 const { createActions } = init(namespace);
 
-const otherActions = ['getRealDataAsync'];
+const otherActions = [
+  'getRelativedAsync',
+  'removeCircuitItemAsync',
+  // 'getPowerInfoAsync', 'getClientPowerAsync', 'getMonitorDeviceListAsync',
+];
 
-const batchTurnActions = [];
+const batchTurnActions = ['setStationList'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -23,9 +31,14 @@ export default {
   state: {
     action: '',
     isShowModal: false,
-    dataList: [],
-    count: 0,
-    itemDetail: {},
+    powerInfo: {},
+    clientPowerList: [],
+    clientPowerList2: [],
+    monitorDeviceList: [],
+    stationList: [],
+    houseNo: null,
+    stationId: null,
+    canvasInfo: {},
     realDataParams: {},
   },
 
@@ -48,125 +61,121 @@ export default {
         realDataParams: {},
       };
     },
-    getList(state, { payload, type }) {
+    // getPowerInfo(state, { payload, type }) {
+    //   return {
+    //     ...state,
+    //     powerInfo: payload.bean,
+    //   };
+    // },
+    // getClientPower(state, { payload, type }) {
+    //   const clientPowerList = formatSelectList(
+    //     payload.list,
+    //     'customer_name',
+    //     'customer_id',
+    //   )
+    //   console.log('  clientPowerList ：', clientPowerList,  )//
+    //   return {
+    //     ...state,
+    //     clientPowerList: clientPowerList,
+    //   };
+    // },
+    // getMonitorDeviceList(state, { payload, type }) {
+    //   const monitorDeviceList = payload.list
+    //   console.log('  getMonitorDeviceList ：', monitorDeviceList,  )//
+    //   return {
+    //     ...state,
+    //     monitorDeviceList: monitorDeviceList,
+    //     dataList: monitorDeviceList,
+    //   };
+    // },
+    getRelatived(state, { payload, type }) {
+      const clientPowerList = formatSelectList(
+        payload.list.map(v => v.electricity_users[0]),
+        'number',
+        'number',
+      );
+      const stationList = clientPowerList[0].stations.map(v => ({
+        ...v,
+        text: v.name,
+        type: `${v.id}`,
+      }));
+      console.log('  getRelatived ：', clientPowerList, stationList); //
       return {
         ...state,
-        dataList: payload.list,
-        count: payload.rest.count,
-        isShowModal: false,
-        searchInfo: payload.searchInfo,
+        clientPowerList: clientPowerList,
+        stationList: stationList,
+        houseNo: `${clientPowerList[0].number}`,
+        stationId: stationList[0].type,
+        powerInfo: payload.powerInfo,
+        canvasData: payload.canvasData,
+        canvasInfo: payload.canvasInfo,
       };
     },
-    getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload);
-      const {
-        customer_id,
-        station_id,
-        electricity_user_id,
-        equipment_id,
-        device_id,
-        template_id,
-      } = payload.bean;
-
+    setStationList(state, { payload, type }) {
+      console.log('  setStationList ：', payload); //
       return {
         ...state,
-        action: payload.payload.action,
-        isShowModal: true,
-        d_id: payload.payload.d_id,
-        itemDetail: {
-          ...payload.bean,
-          customer_id: `${customer_id}`,
-          electricity_user_id: `${electricity_user_id}`,
-          station_id: `${station_id}`,
-          equipment_id: `${equipment_id}`,
-          device_id: `${device_id}`,
-          template_id: `${template_id}`,
-        },
-      };
-    },
-    addItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
-      };
-    },
-    editItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
+        stationList: payload.stationList.map(v => ({
+          text: v.name,
+          type: `${v.id}`,
         })),
-        isShowModal: false,
-      };
-    },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
-      return {
-        ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
-      };
-    },
-
-    getRealData(state, { payload, type }) {
-      return {
-        ...state,
-        action: payload.payload.action,
-        isShowModal: true,
-        realDataParams: payload.payload.realDataParams,
-        itemDetail: {
-          ...payload.bean,
-          // customer_id: `${customer_id}`,
-          // electricity_user_id: `${electricity_user_id}`,
-          // station_id: `${station_id}`,
-          // equipment_id: `${equipment_id}`,
-          // device_id: `${device_id}`,
-          // template_id: `${template_id}`,
-        },
+        houseNo: payload.houseNo,
       };
     },
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put, select }) {
-      const { searchInfo } = yield select(state => state[namespace]);
-      const params = {
-        ...searchInfo,
-        ...payload,
-      };
-      console.log(
-        ' getListAsync  payload ： ',
-        payload,
-        searchInfo,
-        action,
-        params,
-      );
-      const res = yield call(services.getList, params);
-      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
+    *getRelativedAsync({ payload, action, type }, { call, put }) {
+      const { customer_id } = history.location.query;
+      console.log(' history22 ： ', getItem('userInfo')); //
+      const user_id = getItem('userInfo')?.enterprises[0].customers[0]?.id;
+      console.log(' history ： ', history, customer_id, user_id); //
+      const clientId = customer_id || user_id;
+      console.log(' history clientId ： ', clientId); //
+      if (clientId) {
+        const res = yield call(getRelatived, {
+          customer_id: clientId,
+        });
+        const powerInfoRes = yield call(services.getPowerInfo, {
+          ele_number: res.list[0].electricity_users[0].number,
+        });
+        const canvasDataRes = yield call(getCircuitItem, {
+          power_station_id: res.list[0].electricity_users[0].stations[0].id,
+        });
+        console.log(
+          ' canvasDataRes, res ： ',
+          powerInfoRes,
+          canvasDataRes,
+          res,
+        ); //
+        yield put(
+          action({
+            ...res,
+            payload,
+            powerInfo: powerInfoRes.bean,
+            canvasData: canvasDataRes.list[0]?.draw,
+            canvasInfo: canvasDataRes.list[0],
+          }),
+        );
+      }
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
+    *removeCircuitItemAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(removeCircuitItem, payload);
+      yield put({ type: 'removeCircuitItem' });
     },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
-      yield put({ type: 'getListAsync' });
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editItem, payload);
-      yield put({ type: 'getListAsync' });
-    },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put({ type: 'getListAsync' });
-    },
-
-    *getRealDataAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getRealData, payload);
-      yield put(action({ ...res, payload }));
-    },
+    // *getPowerInfoAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.getPowerInfo, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *getClientPowerAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(getClientPower, payload);
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *getMonitorDeviceListAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(monitorManageServices.getList, {
+    //     keyword: '0000727272',
+    //   });
+    //   yield put(action({ ...res, payload }));
+    // },
   },
 };

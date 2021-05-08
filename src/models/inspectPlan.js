@@ -503,8 +503,7 @@ export default {
       yield put(action({ ...res, payload }));
     },
     *getUserAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(userServices.getSearchList, {
-        service_staff: 1,
+      const res = yield call(userServices.getServiceStaff, {
         choices: 1,
         ...payload,
       });

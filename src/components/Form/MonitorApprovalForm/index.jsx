@@ -52,14 +52,12 @@ const MonitorApprovalForm = props => {
         : [],
       // format: res => formatSelectList(res).map(({address, ...v}) => ({...v, label: `${v.label} - ${address}`})),
       format: res =>
-        formatSelectList(
-          res,
-          'customer_name',
-          'customer_id',
-        ).map(({ customer_address, ...v }) => ({
-          ...v,
-          label: `${v.label} - ${customer_address}`,
-        })),
+        formatSelectList(res, 'customer_name', 'customer_id').map(
+          ({ customer_address, ...v }) => ({
+            ...v,
+            label: `${v.label} - ${customer_address}`,
+          }),
+        ),
     },
   );
   const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(

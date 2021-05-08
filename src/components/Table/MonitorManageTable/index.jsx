@@ -75,6 +75,7 @@ const MonitorManageTable = props => {
     {
       title: '上线时间',
       dataIndex: 'created_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '状态',
@@ -94,6 +95,14 @@ const MonitorManageTable = props => {
               imei: record.imei,
             },
           });
+          // props.showItemAsync({
+          //   // props.getRealDataAsync({
+          //   action: 'getRealDataAsync',
+          //   serviceKey: 'monitorManageServices',
+          //   realDataParams: {
+          //     imei: record.imei,
+          //   },
+          // });
         }}
       >
         监控数据

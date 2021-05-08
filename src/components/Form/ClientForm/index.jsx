@@ -27,7 +27,13 @@ import {
   voltageLevelConfig,
   electricTypeConfig,
 } from '@/configs';
-import { tips, renderCheckboxOp, renderSelectOp } from '@/utils';
+import {
+  tips,
+  renderCheckboxOp,
+  renderSelectOp,
+  getItem,
+  objNum2str,
+} from '@/utils';
 import SmartFormTable from '@/common/SmartFormTable';
 import ReduxTable from '@/common/ReduxTable';
 
@@ -39,6 +45,13 @@ import {
 import { getLabel } from '@/common/SmartForm';
 import { REQUIRE, SELECT_TXT } from '@/constants';
 import debounce from 'lodash/debounce';
+
+import useHttp from '@/hooks/useHttp';
+import { getServiceStaff } from '@/services/userManage';
+import { getList as getTagList } from '@/services/tags';
+import { getList as getOrganize } from '@/services/organize';
+import { recursiveHandle } from '@/models/organize';
+import { formatSelectList, filterObjSame } from '@/utils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -344,7 +357,6 @@ export const getWidget = props => {
     //   comProps.onSelect = (...e) => props.onComChange(...e, {index, ...props.extraParams})
     // }
   }
-  console.log(' ReduxTable  getWidget   props,   ： ', props, comProps);
 
   const selectProps = {
     allowClear: true,
@@ -513,6 +525,23 @@ const ClientForm = props => {
   console.log(' ClientForm ： ', props, props.init);
 
   const { action, getCapture, addUserAsync } = props;
+
+  const { enterprises = [] } = getItem('userInfo');
+  const enterpriseList = formatSelectList(enterprises);
+
+  const { data: userList } = useHttp(getServiceStaff, {
+    format: res => formatSelectList(res, 'nickname'),
+  });
+  const { data: tagsList } = useHttp(getTagList, {
+    format: res => formatSelectList(res),
+  });
+  const { data: organizeList } = useHttp(
+    () => getOrganize({ page_size: 1000 }),
+    {
+      format: res => recursiveHandle(res),
+    },
+  );
+  console.log(' userList ： ', userList); //
 
   const adminItem = {
     formType: 'Dynamic',
@@ -888,7 +917,8 @@ const ClientForm = props => {
     {
       flexRow: 1,
       formType: 'Search',
-      selectData: props.enterpriseList,
+      // selectData: props.enterpriseList,
+      selectData: enterpriseList,
       itemProps: {
         label: '服务企业',
         name: 'service_enterprise_id',
@@ -933,7 +963,8 @@ const ClientForm = props => {
       noRule: true,
       formType: 'Search',
       // selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      // selectData: props.userList,
+      selectData: userList,
       itemProps: {
         label: '上一任客户代表',
         name: 'last_service_staff',
@@ -946,8 +977,9 @@ const ClientForm = props => {
     {
       noRule: true,
       formType: 'Search',
-      selectSearch: props.getUserAsync,
-      selectData: props.userList,
+      // selectSearch: props.getUserAsync,
+      // selectData: props.userList,
+      selectData: userList,
       itemProps: {
         label: '客户代表',
         name: 'service_staff',
@@ -973,7 +1005,8 @@ const ClientForm = props => {
         name: 'service_organization_id',
       },
       comProps: {
-        treeData: props.organizeList,
+        // treeData: props.organizeList,
+        treeData: organizeList,
       },
     },
   ];
@@ -1501,7 +1534,8 @@ const ClientForm = props => {
       // noRule: true,
       formType: 'Search',
       // selectSearch: props.getTagsAsync,
-      selectData: props.tagsList,
+      // selectData: props.tagsList,
+      selectData: tagsList,
       itemProps: {
         label: '职位',
         name: 'tags',
@@ -1582,7 +1616,13 @@ const ClientForm = props => {
         contact: [{}],
         // electricity_user: [{}],
         // enterprise: { address: '泉港区' },
-        ...props.init,
+        ...objNum2str(props.init, [
+          'service_organization_id',
+          'service_staff_id',
+          'last_service_staff_id',
+          'service_enterprise_id',
+          'tags',
+        ]),
         // customer_admin: [
         //   {
         //     nickname: 'nickname1',

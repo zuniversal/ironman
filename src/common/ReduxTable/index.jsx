@@ -209,11 +209,11 @@ export const TableInput = props => {
 
 const ReduxTable = props => {
   const { edit, remove, config, isDisabledAll } = props;
-  console.log(
-    ' %c ReduxTable 组件 ： ',
-    `color: #333; font-weight: bold`,
-    props,
-  );
+  // console.log(
+  //   ' %c ReduxTable 组件 ： ',
+  //   `color: #333; font-weight: bold`,
+  //   props,
+  // );
 
   const columns = config.map(v => ({
     title: v.label,

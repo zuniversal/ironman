@@ -7,7 +7,11 @@ import { Form, Input } from 'antd';
 const PageTitle = props => {
   // console.log(' PageTitle ： ', props, props.title);
   return props.title ? (
-    <div className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper`}>
+    <div
+      className={`${props.noPadding ? '' : 'paddingTop'} pageTitleWrapper ${
+        props.className
+      }`}
+    >
       <div className="pageTitle">{props.title}</div>
       {props.children}
     </div>

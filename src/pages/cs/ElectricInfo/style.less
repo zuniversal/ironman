@@ -1,4 +1,7 @@
 .electricInfo {
+  .houseNoTabs {
+    margin-left: 30px;
+  }
   .searchForm {
     margin-left: 30px;
   }
@@ -12,10 +15,10 @@
   }
 
   .title {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333333;
     margin-bottom: 20px;
+    color: #333333;
+    font-weight: bold;
+    font-size: 14px;
   }
 
   .extraWrapper {
@@ -25,10 +28,17 @@
 
   .livePicWrapper {
     .livePic {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 245px;
       height: 177px;
       margin-right: 22px;
       margin-bottom: 30px;
+      color: #ccc;
+      font-size: 40px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
   }
 
@@ -39,6 +49,8 @@
     .previewContainer {
       width: 803px;
       height: 602px;
+      color: #ccc;
+      font-size: 22px;
       border: 1px solid black;
     }
   }
@@ -50,12 +62,12 @@
       display: inline-flex;
       flex-direction: column;
       width: 25%;
-      border-right: 1px solid rgba(0, 0, 0, 0.14901960784313725);
       padding: 0 27px;
+      border-right: 1px solid rgba(0, 0, 0, 0.14901960784313725);
       .statBoxItem {
         display: inline-flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 20px 0;
         padding-right: 15px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.14901960784313725);
@@ -64,15 +76,16 @@
           border-bottom: none;
         }
         .title {
+          margin-bottom: 16px;
+          color: #333333;
           font-weight: 400;
           line-height: 18px;
-          color: #333333;
-          margin-bottom: 16px;
         }
         .subTitle {
-          font-size: 20px;
-          font-weight: 500;
           color: #333333;
+          font-weight: 500;
+          font-size: 20px;
+          font-size: 14px;
         }
         .icon {
           width: 28px;

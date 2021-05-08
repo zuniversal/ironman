@@ -55,6 +55,7 @@ const option = params => {
     yAxisTitle = '有功电量:kWh',
     yAxisTitle2 = '单价:元',
     legendData = ['平', '电度电量'],
+    yAxisTitleArr = [],
   } = params;
   const xAxisMap = {
     day: dayHoursArr,
@@ -65,7 +66,7 @@ const option = params => {
   const xAxis = params.xAxis ?? xAxisMap['week'] ?? dayHoursArr;
   return {
     grid: {
-      left: '5%',
+      left: '8%',
       right: '5%',
     },
     legend: {
@@ -112,25 +113,6 @@ const option = params => {
         symbolSize: 8,
         itemStyle: {
           normal: {
-            color: '#FD7D7D',
-            borderWidth: 3,
-            borderColor: '#FD7D7D', //拐点边框颜色
-          },
-        },
-        areaStyle: {
-          color: 'rgba(255, 64, 65, .2)',
-        },
-        data,
-        // data: datas,
-      },
-      {
-        name: yAxisTitle,
-        type: 'line',
-        yAxisIndex: 0,
-        symbol: 'circle',
-        symbolSize: 8,
-        itemStyle: {
-          normal: {
             color: '#1CBB51',
             borderWidth: 3,
             borderColor: '#1CBB51', //拐点边框颜色
@@ -142,7 +124,44 @@ const option = params => {
         data,
         // data: datas.map(v => v + 100),
       },
+      // {
+      //   name: yAxisTitle,
+      //   type: 'line',
+      //   yAxisIndex: 0,
+      //   symbol: 'circle',
+      //   symbolSize: 8,
+      //   itemStyle: {
+      //     normal: {
+      //       color: '#FD7D7D',
+      //       borderWidth: 3,
+      //       borderColor: '#FD7D7D', //拐点边框颜色
+      //     },
+      //   },
+      //   areaStyle: {
+      //     color: 'rgba(255, 64, 65, .2)',
+      //   },
+      //   data: params.data2,
+      //   // data: datas,
+      // },
     ],
+    series: data.map((v, i) => ({
+      name: yAxisTitleArr.length > 0 ? yAxisTitleArr[i] : yAxisTitle,
+      type: 'line',
+      yAxisIndex: 0,
+      symbol: 'circle',
+      symbolSize: 8,
+      // itemStyle: {
+      //   normal: {
+      //     color: '#1CBB51',
+      //     borderWidth: 3,
+      //     borderColor: '#1CBB51', //拐点边框颜色
+      //   },
+      // },
+      // areaStyle: {
+      //   color: 'rgba(229, 248, 238, .6)',
+      // },
+      data: v,
+    })),
   };
 };
 

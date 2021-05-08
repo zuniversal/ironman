@@ -68,14 +68,15 @@ const AssetsTable = props => {
       //   dataIndex: 'electrical_info_id',
       dataIndex: 'power_number',
     },
-    {
-      title: '进线侧名称',
-      dataIndex: '',
-    },
-    {
-      title: '资产类型',
-      dataIndex: '',
-    },
+    // {
+    //   title: '进线侧名称',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '资产类型',
+    //   dataIndex: '',
+    // },
+
     // {
     //   title: '设备型号',
     //   dataIndex: 'model',

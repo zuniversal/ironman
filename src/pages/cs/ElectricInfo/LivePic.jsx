@@ -1,13 +1,15 @@
 import React from 'react';
 import './style.less';
+import { UploadOutlined } from '@ant-design/icons';
 
+// <img src={v} src={'/dog.jpg'} className="livePic" key={i} />
 const LivePic = props => {
   return (
     <div className="livePicWrapper">
-      {Array(4)
+      {Array(1)
         .fill('')
         .map((v, i) => (
-          <img src={v} src={'/dog.jpg'} className="livePic" key={i} />
+          <UploadOutlined className="livePic" key={i} />
         ))}
     </div>
   );

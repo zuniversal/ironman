@@ -120,8 +120,8 @@ export const isTips = res => {
 
 const instance = axios.create({
   baseURL: URL,
-  // timeout: 3000,
-  timeout: 0,
+  timeout: 300000,
+  // timeout: 0,
 });
 
 export class Request {

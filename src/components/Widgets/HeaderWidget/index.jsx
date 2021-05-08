@@ -28,7 +28,10 @@ const BussniessTab = props => {
         key={v.value}
         // checked={checkItem === v.value}
         checked={props.platform === v.value}
-        onChange={checked => onChange(v.value, checked)}
+        onChange={checked => {
+          console.log(' onChange(v.value, checked) ： ', checked, v); //
+          !v.disable && onChange(v.value, checked);
+        }}
       >
         {v.label}
       </CheckableTag>

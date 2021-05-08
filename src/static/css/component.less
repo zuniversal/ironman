@@ -11,10 +11,10 @@
 
     // }
     &:not(:last-child):after {
-      content: '|';
+      width: 2px;
       padding: 10px;
       color: @primary;
-      width: 2px;
+      content: '|';
     }
     // margin-right: 10px;
     // border-right: 2px solid @primary;
@@ -37,8 +37,8 @@
   }
 
   th {
-    border-bottom: 2px solid @primary!important;
     color: #fff;
+    border-bottom: 2px solid @primary!important;
   }
   .noThLine {
     th {

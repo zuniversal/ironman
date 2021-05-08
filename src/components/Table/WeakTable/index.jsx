@@ -60,6 +60,7 @@ const WeakTable = props => {
     {
       title: '反馈时间',
       dataIndex: 'created_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
 
     // {

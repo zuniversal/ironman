@@ -1494,6 +1494,26 @@ export const monitorApprovalConfig = [
 
 export const monitorApprovalMap = arrMapObj(monitorApprovalConfig);
 
+export const validityPeriodConfig = [
+  {
+    value: '0',
+    label: '三个月',
+    time: 90,
+  },
+  {
+    value: '1',
+    label: '半年',
+    time: 180,
+  },
+  {
+    value: '2',
+    label: '一年',
+    time: 365,
+  },
+];
+
+export const validityPeriodMap = arrMapObj(validityPeriodConfig);
+
 export const iotAccountConfig = [
   {
     value: '0',
@@ -1530,3 +1550,17 @@ export const monitorApprovalImgConfig = [
   'data_img',
   'other_img',
 ];
+
+export const recentPowerAxisConfig = [
+  '峰电量',
+  '平电量',
+  '谷电量',
+  '峰电价',
+  '平电价',
+  '谷电价',
+];
+
+export const simcardStatusMap = {
+  true: '激活',
+  false: '未激活',
+};

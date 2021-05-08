@@ -426,7 +426,7 @@ export default {
           return isInclude;
         });
       }
-      console.log(' getListAsync res ： ', data, res);
+      console.log(' getListAsync res ： ', data, res, params);
       yield put({
         type: 'getList',
         payload: { ...res, list: data, searchInfo: params },

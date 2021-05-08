@@ -45,14 +45,14 @@ const ClientSearchForm = props => {
     //   },
     //   searchSuffix: true,
     // },
-    {
-      formType: 'Search',
-      selectData: customerTypeConfig,
-      itemProps: {
-        label: '客户类型',
-        name: 'type',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectData: customerTypeConfig,
+    //   itemProps: {
+    //     label: '客户类型',
+    //     name: 'type',
+    //   },
+    // },
     {
       noLabel: true,
       itemProps: {

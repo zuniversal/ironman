@@ -165,6 +165,7 @@ export default {
     },
 
     *getRealDataAsync({ payload, action, type }, { call, put }) {
+      console.log(' getRealDataAsync ： ', payload); //
       const res = yield call(services.getRealData, payload);
       yield put(action({ ...res, payload }));
     },
