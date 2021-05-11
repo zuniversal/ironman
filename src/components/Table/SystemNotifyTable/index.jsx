@@ -16,6 +16,7 @@ const WeakTable = props => {
 
   const columns = [
     {
+      noCutText: true,
       title: '通知',
       dataIndex: 'verb',
     },

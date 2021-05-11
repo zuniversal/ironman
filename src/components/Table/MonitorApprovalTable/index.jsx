@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';
-import { monitorApprovalMap } from '@/configs';
+import { monitorApprovalMap, APPROVAL_PASS, WAIT_APPROVAL } from '@/configs';
 import { formatSelectList, arrMapObj } from '@/utils';
 
 const MonitorApprovalTable = props => {
@@ -12,8 +12,8 @@ const MonitorApprovalTable = props => {
       dataIndex: 'order_code',
     },
     {
-      title: '设备编号',
-      dataIndex: 'id',
+      title: 'IMEI',
+      dataIndex: 'imei',
     },
     {
       noCutText: true,
@@ -54,6 +54,10 @@ const MonitorApprovalTable = props => {
       dataIndex: 'monitor_point_name',
     },
     {
+      title: '额定功率',
+      dataIndex: 'power',
+    },
+    {
       title: '施工人员',
       dataIndex: 'worker_name',
     },
@@ -64,46 +68,47 @@ const MonitorApprovalTable = props => {
     },
   ];
 
+  // 待上线—待审批—已通过
   const extra = (text, record, index, props) => (
     <>
-      {true ? (
+      {record.status == APPROVAL_PASS && (
         <a
           onClick={() => {
             props.edit({
               action: 'approval',
               // props.showFormModal({
               //   action: 'approval',
-              record,
               d_id: record.id,
-            });
-          }}
-        >
-          审批
-        </a>
-      ) : (
-        <a
-          onClick={() => {
-            props.showFormModal({
-              action: 'approvalPass',
-              record,
-              d_id: record,
             });
           }}
         >
           监控上线
         </a>
       )}
-      {/* <a
+      {record.status == WAIT_APPROVAL && (
+        <a
+          onClick={() => {
+            props.edit({
+              action: 'approvalPass',
+              d_id: record.id,
+            });
+          }}
+        >
+          审批
+        </a>
+      )}
+      <a
         onClick={() => {
           props.showFormModal({
-            action: 'viewMonitor',
-            record,
-            d_id: record,
+            action: 'getRealDataAsync',
+            realDataParams: {
+              imei: record.imei,
+            },
           });
         }}
       >
         查看监控
-      </a> */}
+      </a>
       {/* <a
         onClick={() => {
           props.showFormModal({

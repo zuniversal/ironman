@@ -1469,26 +1469,21 @@ export const alarmRecordTypeConfig = [
 
 export const alarmRecordTypeMap = arrMapObj(alarmRecordTypeConfig);
 
+export const APPROVAL_PASS = '0'; //
+export const WAIT_APPROVAL = '1'; //
+export const PASS_APPROVAL = '2'; //
 export const monitorApprovalConfig = [
   {
-    value: '0',
+    value: APPROVAL_PASS,
+    label: '待上线',
+  },
+  {
+    value: WAIT_APPROVAL,
     label: '待审批',
   },
   {
-    value: '1',
-    label: '已通过',
-  },
-  {
     value: '2',
-    label: '监控数据异常',
-  },
-  {
-    value: '3',
-    label: '填报内容错误',
-  },
-  {
-    value: '-1',
-    label: '未通过',
+    label: '已通过',
   },
 ];
 

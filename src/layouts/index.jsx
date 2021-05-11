@@ -66,6 +66,7 @@ const Layouts = props => {
         placeholder={'请选择平台'}
         value={plaformFormat(platform)}
         onChange={onPlatformChange}
+        disabled={system == 'CS'}
       ></SearchForm>
     </div>
   );

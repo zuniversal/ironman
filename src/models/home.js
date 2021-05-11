@@ -214,7 +214,6 @@ export default {
 
   effects: {
     *getStatisticAsync({ payload, action, type }, { call, put }) {
-      console.log(' getStatisticAsync ： ', payload, action, type);
       const res = yield call(services.getStatistic, payload);
       yield put(action({ ...res, payload }));
     },
@@ -228,7 +227,6 @@ export default {
       },
       { call, put },
     ) {
-      console.log(' getChartAsync ： ', payload, action, type);
       const res = yield call(services[payload.requestFn], payload);
       yield put(action({ ...res, payload }));
     },
@@ -250,7 +248,6 @@ export default {
         ...pendingOrdersSearchInfo,
         ...payload,
       };
-      console.log(' getPendingOrdersAsync ： ', payload, action, type, params);
       const res = yield call(services.getPendingOrders, params);
       // yield put(action({ ...res, payload }));
       yield put({
@@ -259,18 +256,15 @@ export default {
       });
     },
     *getInspectionTasksAsync({ payload, action, type }, { call, put }) {
-      console.log(' getInspectionTasksAsync ： ', payload, action, type);
       const res = yield call(services.getInspectionTasks, payload);
       yield put(action({ ...res, payload }));
     },
 
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload, action, type);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
     *dispatchOrderAsync({ payload, action, type }, { call, put }) {
-      console.log(' dispatchOrderAsync ： ', payload, type);
       const res = yield call(workOrderServices.dispatchOrder, payload);
       yield put({ type: 'getPendingOrdersAsync' });
     },

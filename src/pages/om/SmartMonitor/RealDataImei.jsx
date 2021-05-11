@@ -13,7 +13,8 @@ export default React.memo(function RealData(props) {
   const commonParams = {
     init: {},
     attr: 'bean',
-    noMountFetch: true,
+    // noMountFetch: true,
+    format: null,
   };
 
   const { data: list, loading: listLoading, req: getRealDataAsync } = useHttp(

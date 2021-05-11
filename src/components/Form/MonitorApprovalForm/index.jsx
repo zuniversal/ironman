@@ -10,7 +10,7 @@ import {
   getRelatived,
   getClientPower,
 } from '@/services/client';
-import { getPowerInfo } from '@/services/powerStation';
+import { getPowerInfo, getElectricOutlineList } from '@/services/powerStation';
 import { getTransformer } from '@/services/assets';
 import SmartForm from '@/common/SmartForm';
 import {
@@ -88,10 +88,28 @@ const MonitorApprovalForm = props => {
           label: `${v.label} - 容量:${v.capacity} - ${
             v.is_bind ? '已' : '未'
           }绑定`,
+          style: v.is_bind
+            ? {
+                background: '#ff0d0d',
+                color: 'white',
+              }
+            : null,
         })),
       // noMountFetch,
     },
   );
+
+  const { data: electricOutlineList, req: getelectricOutlineAsync } = useHttp(
+    () =>
+      getElectricOutlineList({
+        ele_info: props.init.electrical_info_id,
+      }),
+    {
+      format: res => formatSelectList(res),
+      ifReq: props.init.electrical_info_id,
+    },
+  );
+  console.log(' electricOutlineList ： ', electricOutlineList); //
 
   const manufacturerModelList = [];
   manufacturerList.forEach(v =>
@@ -298,11 +316,12 @@ const MonitorApprovalForm = props => {
       ),
     },
     {
-      noRule: true,
+      // noRule: true,
       formType: 'Select',
       selectData: filterObjSame(
         [
           ...outlineList,
+          ...electricOutlineList,
           {
             value: props.init.outline_id,
             label: props.init.outline_id,
@@ -338,7 +357,7 @@ const MonitorApprovalForm = props => {
         name: 'trans_capacity',
       },
       comProps: {
-        suffix: 'V',
+        suffix: 'KVA',
       },
     },
     {
@@ -407,6 +426,13 @@ const MonitorApprovalForm = props => {
       itemProps: {
         label: '点位名称',
         name: 'name',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '额定功率',
+        name: 'power',
       },
     },
     {
@@ -533,6 +559,8 @@ const MonitorApprovalForm = props => {
   const {
     manufacturer,
     customer_id,
+    equipment_id,
+    outline_id,
     electricity_user_id,
     electrical_info_id,
     model,
@@ -545,11 +573,13 @@ const MonitorApprovalForm = props => {
       {...props}
       init={{
         ...props.init,
+        outline_id: outline_id ? `${outline_id}` : null,
         customer_id: customer_id ? `${customer_id}` : null,
         electricity_user_id: electricity_user_id
           ? `${electricity_user_id}`
           : null,
         electrical_info_id: electrical_info_id ? `${electrical_info_id}` : null,
+        equipment_id: equipment_id ? `${equipment_id}` : null,
         manufacturer: manufacturer ? `${manufacturer}` : null,
         model: model ? `${model}` : null,
         updated_time: updated_time ? moment(updated_time) : null,

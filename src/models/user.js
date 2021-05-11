@@ -22,6 +22,7 @@ import defaultProps, {
   managerRoutes,
   customerRoutes,
   PLATFORM,
+  platformMap,
 } from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
@@ -66,7 +67,11 @@ export const flatAuthTest = (data = []) => {
 // flatAuthTest(authData)
 
 export const flatAuth = (authData = {}, authConfig = {}) => {
-  // console.log('  getRoutes(authData) flatAuthflatAuth   ,   ： ', authData, authConfig);
+  console.log(
+    '  getRoutes(authData) flatAuthflatAuth   ,   ： ',
+    authData,
+    authConfig,
+  );
   Object.keys(authData).forEach(authKey => {
     authConfig[authKey] = authData[authKey].perms;
     if (Object.keys(authData[authKey].sub).length) {
@@ -79,9 +84,11 @@ export const flatAuth = (authData = {}, authConfig = {}) => {
 export const recursiveAuth = (data = [], authData = {}) => {
   // console.log(' recursiveAuth   ,   ： ', data, authData);
   return data.map(v => ({
-    hideInMenu: isDev
-      ? false
-      : !(v.authKey ? authData[v.authKey]?.perms.module : true),
+    // hideInMenu: isDev
+    //   ? false
+    //   : !(v.authKey ? authData[v.authKey]?.perms.module : true),
+    // hideInMenu: !(v.authKey ? authData[v.authKey]?.perms.module : true),
+    hideInMenu: false,
     authInfo: authData[v.authKey]?.perms ?? {},
     ...v,
     routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
@@ -236,6 +243,7 @@ export default {
       };
     },
     login(state, { payload, type }) {
+      console.log(' loginAsync loginAsync  ： ', payload);
       const routeData = getRoutes({
         ...payload,
         platform: state.platform,
@@ -253,6 +261,7 @@ export default {
         authInfo: flatAuth(payload.perms),
         accountType: payload.account.account_type,
         system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
+        platform: payload.platform || state.platform,
       };
     },
     getUserMsg(state, { payload, type }) {
@@ -266,22 +275,22 @@ export default {
       const { getRoutes } = state;
       const { platform } = payload;
       const filteRouteData = getRoutes.route.routes.map(v => {
-        console.log(
-          ' filteRouteData xxxxxx ： ',
-          v,
-          v.platform,
-          platform,
-          v.platform !== platform,
-          v.platform && v.platform !== platform,
-        ); //
+        // console.log(
+        //   ' filteRouteData xxxxxx ： ',
+        //   v,
+        //   v.platform,
+        //   platform,
+        //   v.platform !== platform,
+        //   v.platform && v.platform !== platform,
+        // ); //
         return {
           ...v,
-          // hideInMenu: v.platform && v.platform !== platform ? true : v.hideInMenu,
-          hideInMenu: isDev
-            ? false
-            : v.platform && v.platform !== platform
-            ? true
-            : false,
+          hideInMenu: v.platform && v.platform !== platform ? true : false,
+          // hideInMenu: isDev
+          //   ? false
+          //   : v.platform && v.platform !== platform
+          //   ? true
+          //   : false,
         };
       });
       setItem('platform', platform);
@@ -327,17 +336,19 @@ export default {
       // console.log(' enterprise ： ', enterprise);
       const accountType = resData.bean.user.account.account_type;
       // console.log(' resData ： ', resData, accountType,  )//
+      const platform = platformMap[accountType];
       const userInfo = {
         ...resData.bean.user,
         ...resData.bean,
         accountType: accountType,
+        platform: platform,
       };
+      setItem('platform', platform);
       cookie.remove('enterprise_id');
       if (enterprise.enterprise_id) {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
-      setItem('platform', DEF_PALTFORM);
       // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',
@@ -402,7 +413,6 @@ export default {
         cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
-      setItem('platform', DEF_PALTFORM);
       // console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',

@@ -9,6 +9,11 @@ const placeIcon = <Icon icon={''} className={'subIcon'} />;
 export const PLATFORM = 'base';
 export const DEF_BUSSNIESS_TAB = 'smartOMS';
 
+export const platformMap = {
+  manager: DEF_BUSSNIESS_TAB,
+  customer: 'cs',
+};
+
 export const platformSelectConfig = [
   {
     value: 'base',
@@ -16,7 +21,7 @@ export const platformSelectConfig = [
   },
   {
     value: 'iot',
-    label: 'Iot平台',
+    label: 'IoT平台',
   },
   {
     value: 'smartOMS',
@@ -66,13 +71,13 @@ export const customerInformation = {
       // icon: <Icon icon={'client'} />,
       // icon: placeIcon,
     },
-    {
-      path: '/om/assets',
-      authKey: 'asset',
-      name: '资产管理',
-      // icon: <Icon icon={'assets'} />,
-      // icon: placeIcon,
-    },
+    // {
+    //   path: '/om/assets',
+    //   authKey: 'asset',
+    //   name: '资产管理',
+    //   // icon: <Icon icon={'assets'} />,
+    //   // icon: placeIcon,
+    // },
     {
       path: '/om/houseNo',
       authKey: 'number',
@@ -102,21 +107,6 @@ export const carManage = {
   path: '/carManage',
   authKey: 'system',
   name: '车辆管理',
-  icon: <Icon icon={'systemManage'} />,
-  routes: [
-    {
-      path: '/om/敬请期待1',
-      authKey: 'materiel',
-      name: '敬请期待',
-    },
-  ],
-};
-
-export const clientAssetsManage = {
-  platform: 'base',
-  path: '/clientAssetsManage',
-  authKey: 'system',
-  name: '客户资产管理',
   icon: <Icon icon={'systemManage'} />,
   routes: [
     {
@@ -170,20 +160,20 @@ export const system = {
       // icon: <Icon icon={'msg'} />,
       // icon: placeIcon,
     },
-    // {
-    //   path: '/sm/csMonitor',
-    //   authKey: 'monitor',
-    //   name: '系统监控',
-    //   // icon: <Icon icon={'csMonitor'} />,
-    //   // icon: placeIcon,
-    // },
-    // {
-    //   path: '/sm/operateRecord',
-    //   authKey: 'operationRecord',
-    //   name: '操作记录',
-    //   // icon: <Icon icon={'operateRecord'} />,
-    //   // icon: placeIcon,
-    // },
+    {
+      path: '/sm/csMonitor',
+      authKey: 'monitor',
+      name: '系统监控',
+      // icon: <Icon icon={'csMonitor'} />,
+      // icon: placeIcon,
+    },
+    {
+      path: '/sm/operateRecord',
+      authKey: 'operationRecord',
+      name: '操作记录',
+      // icon: <Icon icon={'operateRecord'} />,
+      // icon: placeIcon,
+    },
   ],
 };
 
@@ -191,34 +181,35 @@ export const monitor = {
   platform: 'iot',
   path: '/om/alarm',
   // name: '监控管理',
-  name: '电力监控管理1',
+  name: '电力监控管理',
   icon: <Icon icon={'alarmManage'} />,
   routes: [
     {
+      noAuth: true,
       path: '/om/monitorApproval',
-      authKey: 'monitorEquipment',
       name: '监控审批单',
     },
     {
+      noAuth: true,
       path: '/om/monitorManage',
-      authKey: 'monitorEquipment',
       name: '监控设备管理',
+      name: '监控点位管理',
       // icon: <Icon icon={'monitorManage'} />,
       // icon: placeIcon,
     },
     {
+      noAuth: true,
       path: '/om/monitorDevice',
-      authKey: 'monitorEquipment',
       name: '监控设备',
     },
     {
+      noAuth: true,
       path: '/om/alarmTemplate',
-      authKey: 'alarmTemplate',
       name: '告警策略模板',
     },
     {
+      noAuth: true,
       path: '/om/alarmRecord',
-      authKey: 'alarmRecord',
       name: '告警记录',
       // icon: placeIcon,
     },
@@ -379,15 +370,6 @@ export const smartOMS6 = {
   routes: [],
 };
 
-export const smartOMS7 = {
-  platform: 'smartOMS',
-  path: '/om/weak',
-  authKey: 'defect',
-  name: '缺陷管理',
-  icon: <Icon icon={'systemManage'} />,
-  routes: [],
-};
-
 export const smartEfficiency = [
   {
     platform: 'smartEfficiency',
@@ -422,12 +404,11 @@ export const smartEfficiency = [
 export const smartOMS = [
   smartOMS4,
   smartOMS1,
-  smartOMS2,
   smartOMS3,
   smartOMS5,
   smartOMS6,
-  smartOMS7,
   ...smartEfficiency,
+  smartOMS2,
 ];
 
 export const iotRoutes = [
@@ -448,7 +429,6 @@ export const iotRoutes = [
   {
     platform: 'iot',
     path: '/视频监控管理',
-    authKey: 'system',
     name: '视频监控管理',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
@@ -456,7 +436,6 @@ export const iotRoutes = [
   {
     platform: 'iot',
     path: '/巡检机器人',
-    authKey: 'system',
     name: '巡检机器人',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
@@ -464,16 +443,7 @@ export const iotRoutes = [
   {
     platform: 'iot',
     path: '/其他loT设备',
-    authKey: 'system',
     name: '其他loT设备',
-    icon: <Icon icon={'systemManage'} />,
-    routes: [],
-  },
-  {
-    platform: 'iot',
-    path: '/告警管理',
-    authKey: 'system',
-    name: '告警管理',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
   },
@@ -517,7 +487,6 @@ export const managerRoutes = [
 
   customerInformation,
   carManage,
-  clientAssetsManage,
 
   monitor,
   ...smartOMS,

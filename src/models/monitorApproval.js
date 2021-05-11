@@ -7,7 +7,7 @@ import { deviceFrequencyConfig } from '@/configs';
 const namespace = 'monitorApproval';
 const { createActions } = init(namespace);
 
-const otherActions = ['approvalAsync'];
+const otherActions = ['approvalAsync', 'approvalPassAsync'];
 
 const batchTurnActions = [];
 
@@ -28,6 +28,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    realDataParams: {},
   },
 
   reducers: {
@@ -37,6 +38,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        realDataParams: payload.realDataParams,
         // itemDetail: payload.action === 'approval' ? payload.record : {},
       };
     },
@@ -46,6 +48,7 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
+        realDataParams: {},
       };
     },
     getList(state, { payload, type }) {
@@ -131,27 +134,67 @@ export default {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
     },
+    *approvalPassAsync({ payload, action, type }, { call, put }) {
+      console.log(' approvalPassAsync ： ', payload); //
+      const res = yield call(services.editItem, payload);
+      yield put({ type: 'getListAsync' });
+    },
     *approvalAsync({ payload, action, type }, { call, put }) {
       console.log(' approvalAsync ： ', payload); //
+      const {
+        id,
+        outline_id,
+        equipment_id,
+        customer_id,
+        electricity_user_id,
+        device_id,
+        electrical_info_id,
+        name,
+        power,
+        current_ratio,
+        voltage_ratio,
+      } = payload;
+
       const deviceParams = {
-        equipment_id: payload.equipment_id,
-        customer_id: payload.customer_id,
-        electricity_user_id: payload.electricity_user_id,
-        // outline_id: payload.outline_id,
-        device_id: payload.device_id,
-        electrical_info_id: payload.electrical_info_id,
-        name: payload.name,
+        id,
+        outline_id,
+        equipment_id,
+        customer_id,
+        electricity_user_id,
+        device_id,
+        electrical_info_id,
+        name,
+        power,
         frequency: deviceFrequencyConfig[0].value,
         template_id: null,
         comments: null,
       };
+      const point_data = {
+        customer_id,
+        electricity_user_id,
+        equipment_id,
+        name,
+        frequency: deviceFrequencyConfig[0].value,
+        current_ratio,
+        voltage_ratio,
+        power,
+        comments: null,
+        electrical_info_id,
+        station_id: null,
+      };
       console.log(' approvalAsyncdeviceParams ： ', deviceParams); //
       const deviceRes = yield call(addMonitorDeviceItem, deviceParams);
-      console.log(' approvalAsync deviceRes ： ', params, deviceRes); //
+      console.log(' approvalAsync deviceRes ： ', deviceRes); //
       // const { , ...rest  } = payload
-      const res = yield call(services.editItem, payload);
-      console.log(' approvalAsync res ： ', res); //
-      yield put({ type: 'getListAsync' });
+      // const res = yield call(services.editItem, payload);
+      yield put({ type: 'approvalPassAsync', payload });
+      // const res = yield call(services.editItem, {
+      //   ...payload,
+      //   record_id: id,
+      //   // point_data,
+      // });
+      // console.log(' approvalAsync res ： ', res); //
+      // yield put({ type: 'getListAsync' });
     },
   },
 };

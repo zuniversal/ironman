@@ -19,35 +19,33 @@ const MonitorDeviceTable = props => {
     },
   );
 
-  const manufacturerModelList = []
-  manufacturerList.forEach(v => manufacturerModelList.push(...formatSelectList(v.models)))
-  
+  const manufacturerModelList = [];
+  manufacturerList.forEach(v =>
+    manufacturerModelList.push(...formatSelectList(v.models)),
+  );
+
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
+      title: 'IMEI号',
+      dataIndex: 'imei',
     },
     {
       title: '厂商',
       dataIndex: 'manufacturer',
       dataMap: arrMapObj(manufacturerList),
     },
-    {
-      title: '检测点id',
-      dataIndex: 'monitor_point_id',
-    },
-    {
-      title: '检测点名称',
-      dataIndex: 'monitor_point_name',
-    },
+    // {
+    //   title: '检测点id',
+    //   dataIndex: 'monitor_point_id',
+    // },
+    // {
+    //   title: '检测点名称',
+    //   dataIndex: 'monitor_point_name',
+    // },
     {
       title: '型号',
       dataIndex: 'model',
       dataMap: arrMapObj(manufacturerModelList),
-    },
-    {
-      title: 'IMEI号',
-      dataIndex: 'imei',
     },
     {
       title: '物联网卡号',

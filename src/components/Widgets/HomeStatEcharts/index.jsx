@@ -56,7 +56,6 @@ const xAxis = [
 const { TabPane } = Tabs;
 
 const StatTabPanes = props => {
-  console.log(' StatTabPanes ： ', props);
   const [activeKey, setActiveKey] = useState('0');
   const onChange = index => {
     console.log(' onChange   ,   ： ', index, activeKey);
@@ -66,7 +65,7 @@ const StatTabPanes = props => {
 
   const countData = props.barData.map(v => v.count);
   const xAxisData = props.barData.map(v => v.date);
-  console.log(' countData  .map v ： ', props.barData, countData, xAxisData);
+  // console.log(' countData  .map v ： ', props.barData, countData, xAxisData);
 
   return (
     <div className="statTabPanes">

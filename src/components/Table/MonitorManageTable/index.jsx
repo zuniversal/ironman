@@ -55,6 +55,10 @@ const MonitorManageTable = props => {
       title: '监控点',
       dataIndex: 'name',
     },
+    {
+      title: '额定功率',
+      dataIndex: 'power',
+    },
     // {
     //   title: '设备类型',
     //   dataIndex: '',

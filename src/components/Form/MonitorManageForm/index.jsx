@@ -313,6 +313,15 @@ const MonitorManageForm = props => {
       //   </Button>
       // ),
     },
+
+    {
+      noRule: true,
+      itemProps: {
+        label: '额定功率',
+        name: 'power',
+      },
+    },
+
     {
       noRule: true,
       formType: 'Select',

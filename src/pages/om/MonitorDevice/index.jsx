@@ -165,7 +165,6 @@ class MonitorManage extends PureComponent {
         this.props.editItemAsync({
           ...res,
           id: itemDetail.id,
-          d_id: itemDetail.id,
         });
       }
     } catch (error) {

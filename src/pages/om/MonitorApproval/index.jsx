@@ -12,11 +12,12 @@ import {
 } from '@/models/monitorApproval';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
-import { monitorApprovalImgConfig } from '@/configs';
+import { tips, getItem } from '@/utils';
+import { monitorApprovalImgConfig, PASS_APPROVAL } from '@/configs';
 import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
+import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 
 const TITLE = '监控审批单';
 
@@ -126,7 +127,18 @@ class MonitorApproval extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail, d_id } = this.props;
     const { form, init } = props;
-    if (['detail'].includes(action)) {
+
+    const worker_id = getItem('userInfo').user.id;
+    if (action === 'approvalPass') {
+      this.props.approvalPassAsync({
+        ...this.props.itemDetail,
+        status: PASS_APPROVAL,
+        d_id: this.props.itemDetail.id,
+        record_id: this.props.itemDetail.id,
+        worker_id,
+      });
+    }
+    if (['getRealDataAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -165,14 +177,9 @@ class MonitorApproval extends PureComponent {
         this.props.approvalAsync({
           ...res,
           d_id: d_id,
-          record_id: d_id,
-        });
-      }
-      if (action === 'edit') {
-        this.props.editItemAsync({
-          ...res,
-          d_id: d_id,
-          record_id: d_id,
+          id: this.props.itemDetail.id,
+          record_id: this.props.itemDetail.id,
+          worker_id,
         });
       }
     } catch (error) {
@@ -195,10 +202,21 @@ class MonitorApproval extends PureComponent {
     if (action === 'approvalPass') {
       return <div className={`textCenter`}>确认审批通过？</div>;
     }
+    if (action === 'getRealDataAsync') {
+      return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
+    }
     return <MonitorApprovalForm {...formComProps}></MonitorApprovalForm>;
   };
+  get size() {
+    // console.log(' get 取属 size ： ', this.state, this.props);
+    return ['approvalPass'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   get okTxt() {
-    return ['approval'].some(v => v === this.props.action) ? '上线完成' : null;
+    return ['approval'].some(v => v === this.props.action)
+      ? '上线完成'
+      : '确定';
   }
   renderSmartFormModal = params => {
     return (

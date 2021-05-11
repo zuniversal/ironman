@@ -11,7 +11,9 @@ const useHttp = (http = () => {}, configs) => {
     withObj,
     noMountFetch,
     isObj,
+    ifReq = true,
   } = configs;
+  // console.log(' useHttp ： ', configs,   )//
 
   const [data, setData] = useState(init);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +29,7 @@ const useHttp = (http = () => {}, configs) => {
         ...withObj,
       };
     }
-    console.log(' handleRes   res,   ： ', res, attr, datas, configs);
+    // console.log(' handleRes   res,   ： ', res, attr, datas, configs);
 
     // console.log(' request  ： ', res, datas, isLoading    )
     setData(datas);
@@ -43,7 +45,7 @@ const useHttp = (http = () => {}, configs) => {
 
   useEffect(() => {
     console.log(' useHttp useEffect  ： ', params);
-    if (!noMountFetch) {
+    if (!noMountFetch && ifReq) {
       const asyncFn = async () => {
         const res = await http();
         handleRes(res);

@@ -7,6 +7,8 @@ import { getBillType } from '@/services/electricBill';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { Form } from 'antd';
 
+// ** 如果有改变计算公式涉及到的输入框的值 就以当前输入的值计算
+
 // 小计金额=所有的电量*电价的和+ 基本电费
 // 总有功=峰平谷尖+其他电量的和
 // 实际考核功率因素=总有功 / 开根号（ 无功电量 绝对值的平方 + 总有功的平方 ）
@@ -345,7 +347,10 @@ const ClientReportForm = props => {
     // 实际考核功率因素=总有功/开根号（ 无功电量 绝对值的平方+总有功的平方）
     const capcitySum =
       idle_volume * idle_volume + calcTotalPowerRes * calcTotalPowerRes;
-    const calcRealFactorValue = calcTotalPowerRes / Math.sqrt(capcitySum);
+    const calcRealFactorValue =
+      changeKey === 'power_factor_real'
+        ? power_factor_real
+        : calcTotalPowerRes / Math.sqrt(capcitySum);
     const calcRealFactorRes = (isNaN(calcRealFactorValue)
       ? 0
       : calcRealFactorValue
@@ -355,10 +360,11 @@ const ClientReportForm = props => {
     const factorRow = powerRateMap[calcRealFactorRes];
     const setFields = {
       calcMoeny: changeKey === 'calcMoeny' ? calcMoeny : calcRes,
-      power_factor_real:
-        changeKey === 'power_factor_real'
-          ? power_factor_real
-          : calcRealFactorRes,
+      // power_factor_real:
+      //   changeKey === 'power_factor_real'
+      //     ? power_factor_real
+      //     : calcRealFactorRes,
+      power_factor_real: calcRealFactorRes,
     };
 
     console.log(
@@ -367,21 +373,26 @@ const ClientReportForm = props => {
       calcRes,
       calcTotalPowerRes,
       capcitySum,
+      power_factor_real,
+      calcRealFactorValue,
       calcRealFactorRes,
       factorRow,
       basePriceRes,
+      power_factor_adjust,
     );
     // if (power_factor && factorRow) {
     const factorRes =
-      (factorRow && factorRow[`${power_factor}`]) || power_factor_adjust;
+      changeKey === 'power_factor_adjust'
+        ? power_factor_adjust
+        : (factorRow && factorRow[`${power_factor}`]) || power_factor_adjust;
     setFields.power_factor_adjust =
       changeKey === 'power_factor_adjust' ? power_factor_adjust : factorRes;
     // if (factorRes) {
     // 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100  +  基本电费
-    const amountAdjust = (
-      ((Number(calcRes) - levy_fee) / 100) *
-      factorRes
-    ).toFixed(2);
+    const amountAdjust =
+      changeKey === 'amount_adjust'
+        ? amount_adjust
+        : (((Number(calcRes) - levy_fee) / 100) * factorRes).toFixed(2);
     // 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
     const amountRes = (Number(calcRes) + Number(amountAdjust)).toFixed(2);
     setFields.amount_adjust =

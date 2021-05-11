@@ -116,7 +116,8 @@ class Role extends PureComponent {
       filterData.map(v => `${v}`.slice(0, 3)).map(v => Number(v + '000')),
     );
     const permsCodes = filterArr([
-      ...this.props.permsData,
+      // ...this.props.permsData,
+      ...filterData,
       ...permsCodesMain,
       ...permsCodesRoot,
     ]);

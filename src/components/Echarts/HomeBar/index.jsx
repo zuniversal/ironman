@@ -8,8 +8,7 @@ const option = params => {
   const { data } = params;
   const xAxisData =
     params.xAxisData.length > 0 ? params.xAxisData : defaultWeek;
-  console.log('  xAxisData ：', xAxisData);
-  console.log(' xAxisData xAxisDataxAxisData ：', params, xAxisData);
+  // console.log(' xAxisData xAxisDataxAxisData ：', params, xAxisData);
   return {
     xAxis: [
       {

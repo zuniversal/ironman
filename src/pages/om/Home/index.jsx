@@ -129,13 +129,6 @@ class Home extends PureComponent {
         ? this.props.chartData.order_data
         : this.props.chartData.inspection_task_data;
     const isLoading = this.props.loading.effects['home/getChartAsync'];
-    console.log(
-      ' renderHomeStatEcharts ： ',
-      isLoading,
-      barData,
-      this.props,
-      this.props.chartData,
-    );
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
         <HomeStatEcharts
@@ -204,7 +197,6 @@ class Home extends PureComponent {
     );
   };
   get pageTitle() {
-    console.log(' get 取属 pageTitle ： ', this.state, this.props);
     const { title } = this.props.route;
     return title;
   }

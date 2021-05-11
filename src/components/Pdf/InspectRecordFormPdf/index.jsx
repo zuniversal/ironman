@@ -45,7 +45,7 @@ const config = [
     name: '',
   },
   {
-   ; formType: 'TextArea',
+    formType: 'TextArea',
     label: '备注',
     name: 'remark',
   },
@@ -53,4 +53,4 @@ const config = [
 
 const WeakFormPdf = props => <SmartPdf config={config} {...props}></SmartPdf>;
 
-export default WeakFormPdf;;
+export default WeakFormPdf;
