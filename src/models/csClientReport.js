@@ -22,6 +22,7 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
+console.log(' clientList ： ', clientList); //
 
 export const formatSearch = data => {
   console.log(' formatSearch ： ', data);
@@ -51,22 +52,30 @@ export default {
     d_id: '',
     searchInfo: {},
     searchInfo: {
-      customer_id: clientList.map(v => `${v.id}`),
+      // customer_id: clientList.map(v => `${v.id}`),
+      customer_id: clientList[0]?.id,
       year_month: moment().subtract(1, 'months'),
     },
 
     isShowExportPdf: false,
     clientList,
     pdfDataList: [],
+    extraData: {},
   },
 
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
+      let extraData = {};
+      if (payload.action === 'getClientReportUpgradeAsync') {
+        extraData = payload;
+      }
+      console.log(' getClientReportUpgradeAsync showFormModal ： ', extraData); //
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
+        ...extraData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -415,7 +424,7 @@ export default {
         ...searchInfo,
         ...payload,
       };
-
+      console.log(' formatSearch(params) ： ', formatSearch(params)); //
       const res = yield call(services.getList, formatSearch(params));
       let data = res.list;
       if (params.filter) {

@@ -110,10 +110,10 @@ class Role extends PureComponent {
     const { form, init } = props;
     const filterData = this.props.permsData.filter(v => v !== 'all');
     const permsCodesMain = filterArr(
-      filterData.map(v => `${v}`.slice(0, 4)).map(v => Number(v + '00')),
+      filterData.map(v => `${v}`.slice(0, 5)).map(v => Number(v + '00')),
     );
     const permsCodesRoot = filterArr(
-      filterData.map(v => `${v}`.slice(0, 3)).map(v => Number(v + '000')),
+      filterData.map(v => `${v}`.slice(0, 4)).map(v => Number(v + '000')),
     );
     const permsCodes = filterArr([
       // ...this.props.permsData,

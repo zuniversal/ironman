@@ -1547,12 +1547,14 @@ export const monitorApprovalImgConfig = [
 ];
 
 export const recentPowerAxisConfig = [
-  '峰电量',
-  '平电量',
-  '谷电量',
-  '峰电价',
-  '平电价',
-  '谷电价',
+  // '峰电量',
+  // '平电量',
+  // '谷电量',
+  // '峰电价',
+  // '平电价',
+  // '谷电价',
+  '电量',
+  '电价',
 ];
 
 export const simcardStatusMap = {

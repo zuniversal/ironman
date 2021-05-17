@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction';
 import * as services from '@/services/role';
 import * as permissionServices from '@/services/permission';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { platformSelectConfig } from '@/configs/routes';
 
 const namespace = 'role';
 const { createActions } = init(namespace);
@@ -19,15 +20,8 @@ export const mapStateToProps = state => state[namespace];
 
 const otherRoutes = [
   {
-    authKey: 'screen',
+    authKey: 'screenModel',
     name: '大屏',
-    routes: [
-      {
-        authKey: 'screenDashboard',
-        name: '大屏面板',
-        routes: [],
-      },
-    ],
   },
 ];
 
@@ -59,11 +53,12 @@ export const flatData = (data = {}, init = {}) => {
     // init[data[key].perms[2]] = data[key].perms[1]
     // init[key] = formatPerms(data[key].perms)
     init[key] = formatPerms(data[key].perms);
-    if (Object.keys(data[key].sub).length > 0) {
+    console.log(' init[key] ： ', init[key], key, data, init); //
+    if (data[key].sub && Object.keys(data[key].sub).length > 0) {
       flatData(data[key].sub, init);
     }
   });
-  console.log(' init ： ', init);
+  // console.log(' flatData init ： ', init);
   return init;
 };
 
@@ -121,7 +116,7 @@ export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
 };
 
 export const recursiveHandle = (data = [], perms = {}, datas = []) => {
-  console.log(' recursiveHandle   ,   ： ', data, perms, datas);
+  // console.log(' recursiveHandle   ,   ： ', data, perms, datas);
   data.forEach(item => {
     // console.log(
     //   ' recursiitemeHandle ： ',
@@ -131,6 +126,8 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
     //   perms[item.authKey],
     //   data,
     // );
+    let routes = item.routes ?? [];
+
     const value =
       item.authKey && perms[item.authKey]
         ? perms[item.authKey][0].value
@@ -139,9 +136,9 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
     item.key = value;
     item.title = item.name;
     item.label = item.name;
-    if (!item.hideInMenu && item.routes && item.routes.length > 0) {
-      // recursiveHandle(item.routes, perms[item.authKey], datas)
-      recursiveHandle(item.routes, perms, datas);
+    if (routes) {
+      // recursiveHandle(routes, perms[item.authKey], datas)
+      recursiveHandle(routes, perms, datas);
     }
     if (!item.hideInMenu && item.authKey && perms[item.authKey]) {
       // console.log(' perms[v.authKey] ： ', perms, v, v.authKey, perms[v.authKey], )//
@@ -150,12 +147,12 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
       //   perms[v.authKey],
       // ]
       // item.children = perms[v.authKey]
+
       const [item1, ...rest] = perms[item.authKey];
-      let routes = [];
+      // console.log(' perms[item.authKey] ： ', perms[item.authKey], item.authKey,  data, perms, datas, item, item1, rest, )//
+      // let routes = [];
       if (item.haveDetail) {
-        routes = item.routes.filter(v => !v.hideInMenu);
-      } else {
-        routes = item.routes;
+        routes = routes.filter(v => !v.hideInMenu);
       }
 
       item.children = [
@@ -267,17 +264,21 @@ export default {
       const permsData = flatData(payload.bean);
       const routeData = payload.payload.filter(v => !v.noAuth);
       const allRouteData = [...routeData, ...otherRoutes];
+      const allRouteData2 = [...platformSelectConfig, ...otherRoutes];
       const dataArr = [];
       const permission = recursiveHandle(allRouteData, permsData, dataArr);
+      const permission2 = recursiveHandle(allRouteData2, permsData, dataArr);
       console.log(
         '  permissionpermissionpermissionpermission ：',
         payload,
         routeData,
-        permission,
         payload.bean,
         permsData,
         dataArr,
         allRouteData,
+        allRouteData2,
+        permission,
+        permission2,
       );
       return {
         ...state,
@@ -291,6 +292,7 @@ export default {
             // children: permission,
             // children: routeData,
             children: allRouteData,
+            children: allRouteData2,
           },
         ],
       };

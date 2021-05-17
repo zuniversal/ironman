@@ -217,6 +217,7 @@ const RoleForm = props => {
           treeData={props.permission}
           className={`roleAuthTree`}
           switcherIcon={<DownOutlined />}
+          // defaultExpandAll
           // checkStrictly
         />
       ),

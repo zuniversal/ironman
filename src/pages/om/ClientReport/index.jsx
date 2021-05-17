@@ -7,6 +7,7 @@ import ClientReportSearchForm from '@/components/Form/ClientReportSearchForm';
 import SmartFormModal from '@/common/SmartFormModal';
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf';
 import CsClientReportDescription from '@/components/Description/CsClientReportDescription';
+import SmartShowPDF from '@/common/SmartShowPDF';
 import usePrintPdf, { ExportPdf } from '@/hooks/usePrintPdf';
 import ClientForm from '@/components/Form/ClientForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
@@ -15,7 +16,7 @@ import * as services from '@/services/clientReport';
 import { actions, mapStateToProps } from '@/models/clientReport';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips, filterObjArr, } from '@/utils';
+import { tips, filterObjArr } from '@/utils';
 
 const TITLE = '客户';
 
@@ -32,6 +33,7 @@ const titleMap = {
   houseNoDetailAsync: `户号详情`,
   addElectricBillItemAsync: `新建电费账单`,
   editElectricBillItemAsync: `编辑电费账单`,
+  getClientReportUpgradeAsync: `升级版月报`,
 };
 
 const detailFormMap = {
@@ -93,24 +95,23 @@ class ClientReport extends PureComponent {
       this.props.selectedRows,
     );
     // if (this.props.selectedRowKeys.length > 0) {
-      
+
     const datas = (this.props.selectedRows.length > 0
       ? this.props.selectedRows
       : this.props.dataList
-    )
-      .filter(v => v.finish == 1)
-    const filterData = filterObjArr(datas, 'number', )
-    console.log(' datas ： ', datas, filterData,  );
-      
+    ).filter(v => v.finish == 1);
+    const filterData = filterObjArr(datas, 'number');
+    console.log(' datas ： ', datas, filterData);
+
     const res = await Promise.allSettled(
       filterData.map(v =>
-          services.getItem({
-            d_id: v.electricity_user_id,
-            year_month: this.props.searchInfo.year_month
-              ? this.props.searchInfo.year_month.format('YYYY-MM')
-              : '',
-          }),
-        ),
+        services.getItem({
+          d_id: v.electricity_user_id,
+          year_month: this.props.searchInfo.year_month
+            ? this.props.searchInfo.year_month.format('YYYY-MM')
+            : '',
+        }),
+      ),
     );
     console.log(' res ： ', res);
     this.props.batchExportPDF({
@@ -215,6 +216,20 @@ class ClientReport extends PureComponent {
     //   // return <ClientReportPdf></ClientReportPdf>;
     //   return this.renderExportPdf;
     // }
+    if (action === 'getClientReportUpgradeAsync') {
+      console.log(
+        'getClientReportUpgradeAsync this.state, this.props ： ',
+        this.state,
+        this.props,
+        this.props.extraData,
+      );
+      return (
+        <SmartShowPDF
+          src={`${this.props.extraData.path}`}
+          path={`${this.props.extraData.path}`}
+        ></SmartShowPDF>
+      );
+    }
     if (['clientReportDetailPdf'].includes(action)) {
       // return <ClientReportPdf></ClientReportPdf>;
       return this.renderExportPdf(this.props.itemDetail);

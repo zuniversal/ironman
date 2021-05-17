@@ -8,7 +8,7 @@ import ClientRadar from '@/components/Echarts/ClientRadar';
 import SmartModal from '@/common/SmartModal';
 import SmartFormModal from '@/common/SmartFormModal';
 
-import { actions, mapStateToProps } from '@/models/client';
+import { actions, mapStateToProps } from '@/models/trustClient';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
 import { tips, format2Null, getItem, formatSelectList } from '@/utils';
@@ -38,6 +38,15 @@ const detailFormMap = {
   titleMap,
   modalForm: ClientForm,
   // noMountFetch: true,
+  getListParams: (() => {
+    const isTrustClient = history.location.pathname === TRUST_CLIENT;
+    // console.log(' getListParams etList page:  ： ', window.location, history, isTrustClient   )//
+    return isTrustClient
+      ? {
+          trusteeship: true,
+        }
+      : undefined;
+  })(),
 })
 class Client extends PureComponent {
   constructor(props) {
@@ -437,6 +446,8 @@ class Client extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+
+      showClientView: true,
     };
 
     return <ClientTable {...tableProps}></ClientTable>;

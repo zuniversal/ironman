@@ -93,11 +93,11 @@ const HouseNoSearch = props => {
         {tabs}
         {/* {searchForm} */}
 
-        {customer_id && (
+        {/* {customer_id && (
           <Button type="primary" onClick={history.goBack}>
             返回
           </Button>
-        )}
+        )} */}
       </div>
     </PageTitle>
   );

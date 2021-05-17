@@ -31,9 +31,11 @@ const titleMap = {
   houseNoDetailAsync: `户号详情`,
   PowerStationDetailAsync: `电站详情`,
   powerNumberDetailAsync: `电源编号详情`,
+  monitorApprovalDetailAsync: `${TITLE}详情`,
 };
 
 const detailFormMap = {
+  monitorApprovalDetailAsync: MonitorApprovalForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
   powerNumberDetailAsync: PowerStationDetailTable,
@@ -117,6 +119,7 @@ class MonitorApproval extends PureComponent {
             init={this.props.common.itemDetail}
             action={'detail'}
             {...this.props.common.extraData}
+            showItemAsync={this.props.showItemAsync}
           ></DetailForm>
         )}
       </SmartFormModal>
@@ -192,7 +195,7 @@ class MonitorApproval extends PureComponent {
     const formComProps = {
       action,
       showItemAsync: this.props.showItemAsync,
-      userInfo: this.props.userInfo,
+      // userInfo: this.props.userInfo,
     };
 
     if (action !== 'add') {

@@ -18,7 +18,7 @@ import { actions, mapStateToProps } from '@/models/contract';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import ClientForm from '@/components/Form/ClientForm';
-import { getPdf } from '@/services/contract';
+import { getPdf, pdfPrefix } from '@/services/contract';
 
 const menuConfig = [
   {
@@ -348,7 +348,7 @@ class Contract extends PureComponent {
         <SmartShowPDF
           // src={'http://oss-cm-tc.epkeeper.com/2020/12/GC-TC-2020-0149FB.pdf'}
           src={`${getPdf}${this.props.extraData.path}.pdf`}
-          path={`${this.props.extraData.path}.pdf`}
+          path={`${pdfPrefix}${this.props.extraData.path}.pdf`}
         ></SmartShowPDF>
       );
     }

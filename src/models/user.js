@@ -6,6 +6,7 @@ import {
   openNotification,
   setItem,
   getItem,
+  removeItem,
   getItems,
   setItems,
 } from '@/utils';
@@ -15,6 +16,7 @@ import {
   CS_HOME,
   isDev,
   homeMap,
+  guestModeRedirectMap,
   LOGIN,
   DEF_PALTFORM,
 } from '@/constants';
@@ -54,6 +56,22 @@ export const mapStateToProps = state => state[namespace];
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 // console.log(' userInfo ： ', userInfo);
 
+export const handleGuestMode = props => {
+  const { customer_id } = history.location.query;
+  console.log(' handleGuestMode   ,   ： ', props, customer_id);
+  setItem('isGuestMode', true);
+  if (customer_id) {
+    cookie.save('s_cst_id', customer_id);
+  }
+};
+
+export const logoutGuest = props => {
+  console.log(' logoutGuest   ,   ： ', props);
+  removeItem('isGuestMode');
+  cookie.remove('s_cst_id');
+  cookie.remove('enterprise_id');
+};
+
 export const flatAuthTest = (data = []) => {
   // console.log(' flatAuthTest   ,   ： ', data, authData);
   const authConfig = {};
@@ -67,14 +85,15 @@ export const flatAuthTest = (data = []) => {
 // flatAuthTest(authData)
 
 export const flatAuth = (authData = {}, authConfig = {}) => {
-  console.log(
-    '  getRoutes(authData) flatAuthflatAuth   ,   ： ',
-    authData,
-    authConfig,
-  );
+  // console.log(
+  //   '  getRoutes(authData) flatAuthflatAuth   ,   ： ',
+  //   authData,
+  //   authConfig,
+  // );
   Object.keys(authData).forEach(authKey => {
     authConfig[authKey] = authData[authKey].perms;
-    if (Object.keys(authData[authKey].sub).length) {
+    // if (Object.keys(authData[authKey].sub).length) {
+    if (authData[authKey].sub && Object.keys(authData[authKey].sub).length) {
       flatAuth(authData[authKey].sub, authConfig);
     }
   });
@@ -82,16 +101,22 @@ export const flatAuth = (authData = {}, authConfig = {}) => {
 };
 
 export const recursiveAuth = (data = [], authData = {}) => {
-  // console.log(' recursiveAuth   ,   ： ', data, authData);
+  // console.log(' Layouts  recursiveAuth   ,   ： ', data, authData);
   return data.map(v => ({
     // hideInMenu: isDev
     //   ? false
     //   : !(v.authKey ? authData[v.authKey]?.perms.module : true),
-    // hideInMenu: !(v.authKey ? authData[v.authKey]?.perms.module : true),
-    hideInMenu: false,
-    authInfo: authData[v.authKey]?.perms ?? {},
+    hideInMenu: !(v.authKey && authData[v.authKey]
+      ? authData[v.authKey]?.module
+      : true),
+    // hideInMenu: false,
+    authInfo: authData[v.authKey] ?? {},
     ...v,
-    routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
+    // routes: recursiveAuth(v.routes, authData[v.authKey]?.sub),
+    routes:
+      v.routes && v.routes.length > 0
+        ? recursiveAuth(v.routes, authData)
+        : v.routes,
   }));
 };
 
@@ -114,8 +139,8 @@ const getRoutesMap = (text, dataMap) => {
 // };
 
 const getRoutes = (props = {}) => {
-  const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
-
+  const userInfo = getItem('userInfo') ?? {};
+  console.log(' userInfo ： ', userInfo, props); //
   const routes = isDev
     ? [...managerRoutes, ...customerRoutes]
     : // ? [...customerRoutes]
@@ -128,8 +153,9 @@ const getRoutes = (props = {}) => {
   //   props,
   // );
   const { platform = PLATFORM } = props; //
+  console.log(' platform ： ', platform); //
   // const routesConfig = recursiveAuth(routes, authData);
-  const routesConfig = recursiveAuth(routes, props?.perms).map(v => ({
+  const routesConfig = recursiveAuth(routes, flatAuth(props?.perms)).map(v => ({
     ...v,
     hideInMenu: v.platform && v.platform !== platform ? true : false,
   }));
@@ -146,7 +172,7 @@ const getRoutes = (props = {}) => {
   return routesData;
 };
 
-const routesData = getRoutes(authData);
+// const routesData = getRoutes(authData);
 // console.log(
 //   ' getRoutes(authData) ： ',
 //   routesData,
@@ -167,11 +193,13 @@ export default {
     authInfo: {},
     accountType: 'customer',
     // getRoutes: getRoutes()[0],
-    getRoutes: getRoutes(),
+    getRoutes: getRoutes(getItem('userInfo') || {}),
     system: 'OM',
     // homeSettings: [ 'item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', ],
     userMsg: [],
     platform: getItem('platform') || DEF_PALTFORM,
+    guestInfo: {},
+    isGuestMode: getItem('isGuestMode'),
   },
 
   reducers: {
@@ -243,7 +271,16 @@ export default {
       };
     },
     login(state, { payload, type }) {
-      console.log(' loginAsync loginAsync  ： ', payload);
+      const isGuestMode = getItem('isGuestMode');
+      const userInfoKey = isGuestMode ? 'guestInfo' : 'userInfo';
+      console.log(
+        ' loginAsync loginAsync  ： ',
+        state,
+        payload,
+        isGuestMode,
+        userInfoKey,
+      );
+      const authInfo = flatAuth(payload.perms);
       const routeData = getRoutes({
         ...payload,
         platform: state.platform,
@@ -255,10 +292,12 @@ export default {
       // );
       return {
         ...state,
-        userInfo: payload,
+        isGuestMode,
+        [userInfoKey]: payload,
         getRoutes: routeData,
         // authInfo: flatAuth(authData),
-        authInfo: flatAuth(payload.perms),
+        // authInfo: flatAuth(payload.perms),
+        authInfo: authInfo,
         accountType: payload.account.account_type,
         system: payload.account.account_type == 'manager' ? 'OM' : 'CS',
         platform: payload.platform || state.platform,
@@ -370,34 +409,37 @@ export default {
     *logoutAsync({ payload, action, type }, { call, put }) {
       console.log(' logoutAsync ： ', payload, action, type);
       // const res = yield call(services.logout, payload);
+      logoutGuest();
       history.push(LOGIN);
       window.location.reload();
       // yield put(action({ ...res, payload }));
     },
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type);
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+    *logoutGuestAsync({ payload, action, type }, { call, put }) {
+      console.log(' logoutGuestAsync ： ', payload, action, type);
+      logoutGuest();
+      const res = yield put({
+        type: 'getUserInfoAsync',
+        payload: {
+          isLogoutGuest: true,
+        },
+      });
+      console.log('  logoutGuestAsync res ：', res); //
+      // const res = yield call(services.logout, payload);
+      // history.push(LOGIN);
+      // window.location.reload();
+      // yield put(action({ ...res, payload }));
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
-    },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addItem, payload);
       yield put(action({ ...res, payload }));
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
       yield put(action({ ...res, payload }));
     },
-    *removeItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeItem, payload);
-      yield put(action({ ...res, payload }));
-    },
 
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getUserInfoAsync ： ', payload, action, type);
+      console.log(' getUserInfoAsync ： ', payload, action, type);
       const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
       // console.log(' enterprise ： ', enterprise);
@@ -407,6 +449,7 @@ export default {
         ...resData.bean.user,
         ...resData.bean,
         accountType: accountType,
+        platform: payload?.isLogoutGuest ? DEF_PALTFORM : null,
       };
       cookie.remove('enterprise_id');
       if (enterprise.enterprise_id) {
@@ -414,10 +457,16 @@ export default {
       }
       setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo);
+
       yield put({
         type: 'login',
         payload: userInfo,
       });
+
+      if (payload?.isLogoutGuest) {
+        console.log(' getUserInfoAsync payload?.isLogoutGuest ： '); //
+        history.push(guestModeRedirectMap[accountType]);
+      }
     },
 
     *getNotifyAsync({ payload, action, type }, { call, put }) {
@@ -429,7 +478,10 @@ export default {
 
     *getUserMsgAsync({ payload, action, type }, { call, put }) {
       // console.log(' getUserMsgAsync ： ', payload, action, type);
-      const res = yield call(services.getUserMsg, payload);
+      // const res = yield call(services.getUserMsg, payload);
+      const res = yield call(services.getUserMsg, {
+        page_size: 5,
+      });
       // yield put(action({ ...res, payload }));
       yield put({
         type: 'getUserMsg',

@@ -117,38 +117,86 @@ export default {
       };
     },
     getRecentPower(state, { payload, type }) {
+      console.log(' getRecentPower ： ', state, payload); //
       return {
         ...state,
         powerUseData: {
-          data: payload.bean.data.map(v => v.ept),
-          xAxis: payload.bean.time.map(v => dayjs(v).format('HH:mm:ss')),
+          // data: payload.bean.data.map(v => v.ept),
+          // xAxis: payload.bean.time.map(v => dayjs(v).format('HH:mm:ss')),
+          data: payload.bean.data,
+          xAxis: payload.bean.time,
         },
       };
     },
     getPowerData(state, { payload, type }) {
+      console.log(' getPowerData ： ', state, payload); //
       return {
         ...state,
         powerData: {
+          ...state.powerData,
           data: payload.bean.data,
           // xAxis: payload.bean.time[0].map((v) => v?.split('T')[0]),
-          xAxis: payload.bean.time[0].map(v => dayjs(v).format('HH:mm')),
+          // xAxis: payload.bean?.time[0].map(v => dayjs(v).format('HH:mm')),
+          // xAxis: payload.bean?.time?.map(v => dayjs(v).format('HH:mm')),
         },
       };
     },
     getRecentPower10Day(state, { payload, type }) {
       const { data } = payload.bean;
+      const datas = {
+        bean: {
+          time: [
+            '2020-12-01T00:00:00',
+            '2021-01-01T00:00:00',
+            '2021-02-01T00:00:00',
+            '2021-03-01T00:00:00',
+            '2021-04-01T00:00:00',
+            '2021-05-01T00:00:00',
+          ],
+          data: {
+            power: {
+              '2020-12': 135664.125,
+              '2021-01': 149565.25,
+              '2021-02': 1875516.5,
+              '2021-03': 100392.75,
+              '2021-04': 73822.0,
+              '2021-05': 40743.625,
+            },
+            money: {
+              '2020-12': 236811.91062500002,
+              '2021-01': 261731.549,
+              '2021-02': 2030830.93475,
+              '2021-03': 175033.66724999997,
+              '2021-04': 128563.22175,
+              '2021-05': 70425.46612499999,
+            },
+          },
+        },
+      };
+      // const {money, power, } =
+
       return {
         ...state,
         recentPower10DayData: {
           data: [
-            data.map(v => v.consumption.valley),
-            data.map(v => v.consumption.usual),
-            data.map(v => v.consumption.peak),
-            data.map(v => v.cost.valley),
-            data.map(v => v.cost.usual),
-            data.map(v => v.cost.peak),
+            // data.map(v => v.consumption.valley),
+            // data.map(v => v.consumption.usual),
+            // data.map(v => v.consumption.peak),
+            // data.map(v => v.cost.valley),
+            // data.map(v => v.cost.usual),
+            // data.map(v => v.cost.peak),
+
+            Object.values(datas.bean.data.power),
+            Object.values(datas.bean.data.money),
           ],
-          xAxis: payload.bean.time.map(v => v?.split('T')[0]),
+          xAxis: datas.bean.time.map(v => v?.split('T')[0]),
+        },
+        recentPower10DayData: {
+          data: [
+            Object.values(payload.bean.data.power),
+            Object.values(payload.bean.data.money),
+          ],
+          xAxis: Object.keys(payload.bean.data.power),
         },
       };
     },
@@ -156,16 +204,23 @@ export default {
       const { data } = payload.bean;
       return {
         ...state,
+        // recentPower6MonthData: {
+        //   data: [
+        //     data.map(v => v.consumption.valley),
+        //     data.map(v => v.consumption.usual),
+        //     data.map(v => v.consumption.peak),
+        //     data.map(v => v.cost.valley),
+        //     data.map(v => v.cost.usual),
+        //     data.map(v => v.cost.peak),
+        //   ],
+        //   xAxis: payload.bean.time.map(v => v?.split('T')[0]),
+        // },
         recentPower6MonthData: {
           data: [
-            data.map(v => v.consumption.valley),
-            data.map(v => v.consumption.usual),
-            data.map(v => v.consumption.peak),
-            data.map(v => v.cost.valley),
-            data.map(v => v.cost.usual),
-            data.map(v => v.cost.peak),
+            Object.values(payload.bean.power),
+            Object.values(payload.bean.money),
           ],
-          xAxis: payload.bean.time.map(v => v?.split('T')[0]),
+          xAxis: Object.keys(payload.bean.power),
         },
       };
     },

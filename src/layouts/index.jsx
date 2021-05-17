@@ -12,7 +12,7 @@ import defaultProps, {
 import { history, connect } from 'umi';
 import './index.less';
 import './style.less';
-import { ANIMATE } from '@/constants';
+import { ANIMATE, CS_SYSTEM } from '@/constants';
 import LogoCom from '@/components/Widgets/LogoCom';
 import HeaderWidget from '@/components/Widgets/HeaderWidget';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
@@ -32,6 +32,8 @@ const Layouts = props => {
     location,
     loading,
     userInfo,
+    guestInfo,
+    isGuestMode,
     system,
     accountType,
     getRoutes,
@@ -60,14 +62,16 @@ const Layouts = props => {
       <div className={`logoWrapper dfc`}>
         <LogoCom className={`logoClass`}></LogoCom>
       </div>
-      <SearchForm
-        suffixIcon={<SwapOutlined />}
-        selectData={platformSelectConfig}
-        placeholder={'请选择平台'}
-        value={plaformFormat(platform)}
-        onChange={onPlatformChange}
-        disabled={system == 'CS'}
-      ></SearchForm>
+      {system != CS_SYSTEM && (
+        <SearchForm
+          suffixIcon={<SwapOutlined />}
+          selectData={platformSelectConfig}
+          placeholder={'请选择平台'}
+          value={plaformFormat(platform)}
+          onChange={onPlatformChange}
+          disabled={system == CS_SYSTEM}
+        ></SearchForm>
+      )}
     </div>
   );
 
@@ -75,6 +79,13 @@ const Layouts = props => {
     console.log(' logout   path,   ： ', path);
     props.dispatch({
       type: 'user/logoutAsync',
+    });
+  };
+
+  const logoutGuest = path => {
+    console.log(' logoutGuest   path,   ： ', path);
+    props.dispatch({
+      type: 'user/logoutGuestAsync',
     });
   };
 
@@ -114,9 +125,11 @@ const Layouts = props => {
           logo={() => <LogoCom className={`logoClass`}></LogoCom>}
           rightContentRender={() => (
             <HeaderWidget
-              userInfo={userInfo}
+              userInfo={isGuestMode ? guestInfo : userInfo}
+              isGuestMode={isGuestMode}
               system={system}
               logout={logout}
+              logoutGuest={logoutGuest}
               toggle={toggle}
               userMsg={userMsg}
               platform={platform}
@@ -160,6 +173,8 @@ const Layouts = props => {
 const mapStateToProps = ({ loading, user }) => ({
   loading: loading.global,
   userInfo: user.userInfo,
+  guestInfo: user.guestInfo,
+  isGuestMode: user.isGuestMode,
   system: user.system,
   platform: user.platform,
   accountType: user.accountType,

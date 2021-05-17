@@ -11,9 +11,10 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';
-import { HOUSENO } from '@/constants';
+import { HOUSENO, PDF_URL } from '@/constants';
 import { linkUrlFn } from '@/utils';
 import { voltageLevelMap } from '@/configs';
+import { downLoad } from '@/utils';
 
 const ClientReportTable = props => {
   const { tdClick, add, edit, showDetail } = props;
@@ -125,19 +126,36 @@ const ClientReportTable = props => {
       {record.finish == 1 && (
         <a
           onClick={() => {
+            // return
+            // props.exportData({
+            //   action: 'getClientReportUpgradeAsync',
+            //   reqMethod: 'getClientReportUpgradeAsync',
+            //   ele_number: record.number,
+            //   year_month: props.searchInfo.year_month
+            //     ? props.searchInfo.year_month.format('YYYY-MM')
+            //     : '',
+            // });
+            const yearMonth = props.searchInfo.year_month.format('YYYY-MM');
+            const downLoadUrl =
+              PDF_URL +
+              `${yearMonth}/` +
+              record.number +
+              '_' +
+              yearMonth +
+              '.pdf';
             console.log(
-              ' 1111111 ： ',
+              ' 1111111222 ： ',
               props.searchInfo.year_month,
               props.searchInfo.year_month.format('YYYY-MM'),
+              downLoadUrl,
+              yearMonth,
+              record.number,
             );
-            // return
-            props.exportData({
+            props.showFormModal({
               action: 'getClientReportUpgradeAsync',
-              reqMethod: 'getClientReportUpgradeAsync',
-              ele_number: record.number,
-              year_month: props.searchInfo.year_month
-                ? props.searchInfo.year_month.format('YYYY-MM')
-                : '',
+              extraData: {
+                path: downLoadUrl,
+              },
             });
           }}
         >

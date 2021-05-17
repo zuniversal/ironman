@@ -10,6 +10,7 @@ import React, {
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';
+import SearchForm from '@/common/SearchForm';
 
 const RoleTable = props => {
   const { showModal, edit, remove, tdClick } = props;
@@ -21,6 +22,10 @@ const RoleTable = props => {
     },
     {
       title: '角色',
+      // title: <div className={`dfc`}>
+      //   <div className={`m-b-5`} >角色</div>
+      //   <SearchForm></SearchForm>
+      // </div>,
       dataIndex: 'name',
     },
     {

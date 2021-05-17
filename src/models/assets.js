@@ -19,8 +19,10 @@ const otherActions = [
   'getClientAsync',
 ];
 
+const batchTurnActions = ['editItems'];
+
 export const actions = {
-  ...createActions(otherActions),
+  ...createActions(otherActions, batchTurnActions),
 };
 
 // console.log(' actions ： ', actions,  )//
@@ -126,7 +128,7 @@ export default {
       const dataList = state.dataList.map(v =>
         v.id === state.d_id ? { ...v, ...payload.payload } : v,
       );
-      console.log(' editItem 修改  ： ', state, payload, type, dataList);
+      console.log(' editItem 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: dataList,
@@ -182,6 +184,14 @@ export default {
         clientList: formatSelectList(payload.list, 'name'),
       };
     },
+    editItems(state, { payload, type }) {
+      console.log(' editItems 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.action,
+        formTypes: payload.formTypes,
+      };
+    },
   },
 
   effects: {
@@ -234,16 +244,6 @@ export default {
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
-
-    // *syncOAAsync({ payload, action, type }, { call, put }) {
-    //   // console.log(' syncOAAsync ： ', payload, type,     )//
-    //   const res = yield call(services.syncOA, payload);
-    //   console.log('  syncOA res ：', res);
-    //   yield put({
-    //     type: 'getList',
-    //     payload: res,
-    //   });
-    // },
 
     *uploadFile({ payload, action, type }, { call, put }) {
       // console.log(' uploadFile ： ', payload, type,     )//

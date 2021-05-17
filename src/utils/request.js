@@ -2,6 +2,7 @@ import { httpTipsMap } from '@/configs';
 import { URL, LOAD, LOUOUT, LOGIN, isDev } from '@/constants';
 import {
   getToken,
+  getPlatformToken,
   getItems,
   wrapParams,
   tipsConfirm,

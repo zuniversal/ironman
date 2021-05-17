@@ -8,7 +8,7 @@ const dayHoursArr = createIndexArr(24).map(
   v => `${v}`.padStart(2, '0') + ':00',
 );
 
-const weekArr = [
+export const weekArr = [
   '周日',
   '周一',
   '周二',
@@ -57,6 +57,7 @@ const option = params => {
     legendData = ['平', '电度电量'],
     yAxisTitleArr = [],
   } = params;
+  console.log(' optionoption ： ', params); //
   const xAxisMap = {
     day: dayHoursArr,
     week: chartTimeData,
@@ -144,28 +145,51 @@ const option = params => {
       //   // data: datas,
       // },
     ],
-    series: data.map((v, i) => ({
-      name: yAxisTitleArr.length > 0 ? yAxisTitleArr[i] : yAxisTitle,
-      type: 'line',
-      yAxisIndex: 0,
-      symbol: 'circle',
-      symbolSize: 8,
-      // itemStyle: {
-      //   normal: {
-      //     color: '#1CBB51',
-      //     borderWidth: 3,
-      //     borderColor: '#1CBB51', //拐点边框颜色
-      //   },
-      // },
-      // areaStyle: {
-      //   color: 'rgba(229, 248, 238, .6)',
-      // },
-      data: v,
-    })),
+    series:
+      yAxisTitleArr.length > 0
+        ? data.map((v, i) => ({
+            name: yAxisTitleArr.length > 0 ? yAxisTitleArr[i] : yAxisTitle,
+            type: 'line',
+            yAxisIndex: 0,
+            symbol: 'circle',
+            symbolSize: 8,
+            // itemStyle: {
+            //   normal: {
+            //     color: '#1CBB51',
+            //     borderWidth: 3,
+            //     borderColor: '#1CBB51', //拐点边框颜色
+            //   },
+            // },
+            // areaStyle: {
+            //   color: 'rgba(229, 248, 238, .6)',
+            // },
+            data: v,
+          }))
+        : [
+            {
+              name: yAxisTitle,
+              type: 'line',
+              yAxisIndex: 0,
+              symbol: 'circle',
+              symbolSize: 8,
+              itemStyle: {
+                normal: {
+                  color: '#1CBB51',
+                  borderWidth: 3,
+                  borderColor: '#1CBB51', //拐点边框颜色
+                },
+              },
+              areaStyle: {
+                color: 'rgba(229, 248, 238, .6)',
+              },
+              data,
+            },
+          ],
   };
 };
 
 const LineEcharts = props => {
+  console.log(' LineEcharts option ： ', props); //
   return <SmartEchart {...props} option={option(props)}></SmartEchart>;
 };
 

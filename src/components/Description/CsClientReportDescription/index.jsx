@@ -494,7 +494,8 @@ const MonthPowerReport = props => {
   const billFooterData = {
     reportTime: props.reportTime,
     repoter: '夏瑞春',
-    reviewer: '华思明',
+    // reviewer: '华思明',
+    reviewer: '王晓东',
     provider: '电管家能源管理(上海)有限公司',
   };
 
@@ -1083,7 +1084,7 @@ const CsClientReportDescription = props => {
     <MonthStationReport
       data={v}
       key={i}
-      reportTime={v.end_time.split(' ')[0]}
+      reportTime={v.end_time?.split(' ')[0]}
     ></MonthStationReport>
   ));
 

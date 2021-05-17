@@ -4,7 +4,7 @@ import PageTitle from '@/components/Widgets/PageTitle';
 import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/energyInfo';
-import LineEcharts from './LineEcharts';
+import LineEcharts, { weekArr } from './LineEcharts';
 import SmartHOC from '@/common/SmartHOC';
 import { recentPowerAxisConfig } from '@/configs';
 import { connect } from 'umi';
@@ -104,7 +104,7 @@ class EnergyInfo extends PureComponent {
         <PageTitle title={'实时有功电量'}></PageTitle>
         <LineEcharts
           {...config}
-          xAxis={this.props.powerData.xAxis}
+          xAxis={weekArr}
           data={this.props.powerData.data}
         ></LineEcharts>
       </>

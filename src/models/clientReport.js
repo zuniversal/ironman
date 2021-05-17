@@ -59,8 +59,8 @@ export default {
     d_id: '',
     searchInfo: {},
     searchInfo: {
-      // year_month: moment().subtract(1, 'months'),
-      year_month: moment(),
+      year_month: moment().subtract(1, 'months'),
+      // year_month: moment(),
     },
     isShowPdfDetail: false,
     missionItemDetail: {},
@@ -68,12 +68,13 @@ export default {
     originData: [],
     electricBillList: [],
     pdfDataList: [],
+    extraData: {},
   },
 
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
-      const extraData = {};
+      let extraData = {};
       if (payload.action === 'addElectricBillItemAsync') {
         extraData.itemDetail = {
           ...payload.record,
@@ -83,7 +84,10 @@ export default {
           year_month: state.searchInfo.year_month,
         };
       }
-
+      if (payload.action === 'getClientReportUpgradeAsync') {
+        extraData = payload;
+      }
+      console.log(' getClientReportUpgradeAsync showFormModal ： ', extraData); //
       return {
         ...state,
         isShowModal: true,

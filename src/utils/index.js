@@ -665,12 +665,16 @@ export const createProperty = (arr, f) => {
   return origin;
 };
 
-export const getToken = (k = 'token', prefix = 'AFAJWT ') => {
+export const TOKEN_PREFIX = 'AFAJWT '; //
+
+export const getToken = (k = 'token', prefix = TOKEN_PREFIX) => {
   const token =
     localStorage.getItem(k) != undefined ? localStorage.getItem(k) : 'no_token';
   // console.log(' prefix, k ： ', prefix, k, token);
   return prefix + token;
 };
+
+export const getPlatformToken = () => getToken('guest_token') ?? getToken();
 
 export const getUserInfo = (k = 'userInfo') => getItem(k);
 

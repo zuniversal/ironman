@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { history, connect } from 'umi';
 import loginAvatar from '@/static/assets/loginAvatar.png';
 import LoginForm from '@/components/Form/LoginForm';
+import { logoutGuest } from '@/models/user';
 
 const Login = props => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    logoutGuest();
+  }, []);
 
   const goPage = path => {
     console.log(' goPage   path,   ： ', path);

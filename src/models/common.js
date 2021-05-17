@@ -53,6 +53,7 @@ import * as knowledgeCateServices from '@/services/knowledgeCate';
 import * as electricBillServices from '@/services/electricBill';
 
 import * as monitorDeviceServices from '@/services/monitorDevice'; // 同一份请求
+import * as monitorApprovalServices from '@/services/monitorApproval';
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment';
@@ -133,6 +134,7 @@ const serviceConfigMap = {
   knowledgeCateServices,
   electricBillServices,
   monitorDeviceServices,
+  monitorApprovalServices,
   powerNumberServices: () => {},
 };
 
@@ -199,6 +201,15 @@ export default {
         isShowCommonModal: false,
         itemDetail: {},
         commonModalContent: null,
+      };
+    },
+    monitorApprovalDetail(state, { payload, type }) {
+      console.log(' monitorApprovalDetail ： ', state, payload);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: payload.bean,
       };
     },
     powerNumberDetail(state, { payload, type }) {

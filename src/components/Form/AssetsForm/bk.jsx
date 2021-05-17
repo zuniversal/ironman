@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import './style.less';
-import { Button } from 'antd';
+import {
+  Form,
+  Input,
+  Tooltip,
+  Cascader,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete,
+  Radio,
+  Space,
+  InputNumber,
+  Upload,
+  Result,
+} from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm';
 // import AssetsFormTable from 'smartTb/AssetsFormTable';
 import UploadCom from '@/components/Widgets/UploadCom';
 import useHttp from '@/hooks/useHttp';
-import { getManufacturerList } from '@/services/monitorManage';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { getList as getPowerStationList } from '@/services/powerStation';
 import { getList as getHouseNoList } from '@/services/houseNo';
@@ -25,13 +40,6 @@ const AssetsForm = props => {
     () => getPowerStationList({}),
     {
       ...commonParams,
-    },
-  );
-  const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(
-    getManufacturerList,
-    {
-      ...commonParams,
-      format: res => formatSelectList(res, 'manufacturer'),
     },
   );
   // const { data: powerStationList, req: getPowerStationAsync } = useHttp(
@@ -60,121 +68,6 @@ const AssetsForm = props => {
       // setHouseNoList(res && res.electricity_user ? [{value: `${res.electricity_user.id}`, label: res.electricity_user.number, }] : [])
     }
   };
-
-  const addConfig = [
-    {
-      // noRule: true,
-      formType: 'Search',
-      selectSearch: getManufacturerListAsync,
-      selectData: manufacturerList,
-      itemProps: {
-        label: '资产类型',
-        name: '',
-      },
-    },
-    {
-      formType: 'CustomCom',
-      CustomCom: <div></div>,
-      itemProps: {
-        label: ' ',
-      },
-    },
-    {
-      // formType: 'Select',
-      // noRule: true,
-      itemProps: {
-        label: '资产名称',
-        name: 'name',
-      },
-    },
-    {
-      // noRule: true,
-      formType: 'Search',
-      selectSearch: getManufacturerListAsync,
-      selectData: manufacturerList,
-      itemProps: {
-        label: '制造厂商',
-        name: '',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '设备型号',
-        name: 'model',
-      },
-    },
-    {
-      // noRule: true,
-      itemProps: {
-        label: '出厂编号',
-        name: 'production_code',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      noRule: true,
-      itemProps: {
-        label: '额定电压',
-        name: 'voltage',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      noRule: true,
-      itemProps: {
-        label: '额定电流',
-        name: 'electricity',
-      },
-    },
-    {
-      formType: 'DatePicker',
-      // noRule: true,
-      itemProps: {
-        label: '出厂日期',
-        name: 'production_date',
-      },
-    },
-    {
-      formType: 'DatePicker',
-      // noRule: true,
-      itemProps: {
-        label: '投运日期',
-        name: 'operation_date',
-      },
-    },
-  ];
-
-  const config2 = [
-    {
-      noRule: true,
-      formType: 'Select',
-      selectData: houseNoList,
-      itemProps: {
-        label: '户号',
-        name: 'electricity_user',
-        className: 'hidden',
-      },
-    },
-    {
-      // formType: 'Search',
-      // selectSearch: props.getListAsync,
-      // selectData: props.dataList,
-      noRule: true,
-      itemProps: {
-        label: '上级设备',
-        name: 'parent_id',
-      },
-    },
-    {
-      // formType: 'Select',
-      // noRule: true,
-      itemProps: {
-        label: '设备名称',
-        name: 'name',
-      },
-    },
-  ];
 
   const config = [
     // {
@@ -315,35 +208,10 @@ const AssetsForm = props => {
   //   )
   // }
 
-  const configs = config.map(v => ({
-    ...v,
-    comProps: { className: `${v.className} w-200`, ...v.comProps },
-  }));
-
-  const actionBtn = (
-    <div className={'btnWrapper clearFix'}>
-      <div className={'f-r'}>
-        <Button
-          type="primary"
-          onClick={() => props.showFormModal({ action: 'add' })}
-        >
-          保存
-        </Button>
-      </div>
-    </div>
-  );
-
-  const configMap = {
-    addConfig,
-    config,
-  };
-
   return (
     <div className={''}>
-      {/* {actionBtn} */}
-
       <SmartForm
-        config={configMap[props.formTypes]}
+        config={config}
         // config={configs}
 
         {...props}

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button } from 'antd';
+import { Button, Popover } from 'antd';
 import AssetsTable from '@/components/Table/AssetsTable';
 import AssetsDetailTable from '@/components/Table/AssetsDetailTable';
 import ClientForm from '@/components/Form/ClientForm';
@@ -9,7 +9,6 @@ import PowerStationForm from '@/components/Form/PowerStationForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import HouseNoSearchForm from '@/components/Form/HouseNoSearchForm';
 import AssetsSearchForm from '@/components/Form/AssetsSearchForm';
-import AssetTree from '@/components/Tree/AssetTree';
 import ResultModal from '@/components/Modal/ResultModal';
 import SmartFormModal from '@/common/SmartFormModal';
 import DropDownBtn from '@/common/DropDownBtn';
@@ -142,6 +141,31 @@ class Assets extends PureComponent {
   };
 
   renderFormBtn = params => {
+    const content = (
+      <div className={`btnWrapper`}>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增进线侧一级{TITLE}
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增进线侧二级{TITLE}
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'add' })}
+          disabled={this.props.authInfo.create !== true}
+        >
+          新增出线侧{TITLE}
+        </Button>
+      </div>
+    );
     return (
       <div className={'btnWrapper'}>
         {/* <Button
@@ -154,12 +178,31 @@ class Assets extends PureComponent {
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn>
+        {/* <Button
+          type="primary"
+          htmlType="submit"
+          onClick={this.props.syncOAAsync}
+        >
+          同步OA
+        </Button> */}
+        <Popover content={content} title={`新增${TITLE}`} trigger="hover">
+          <Button
+            type="primary"
+            onClick={() => this.props.showFormModal({ action: 'add' })}
+            disabled={this.props.authInfo.create !== true}
+          >
+            新增{TITLE}
+          </Button>
+        </Popover>
+        <Button type="primary" onClick={() => this.props.exportData()}>
+          导出{TITLE}数据
+        </Button>
         <Button
           type="primary"
-          onClick={() => this.props.showFormModal({ action: 'add' })}
-          disabled={this.props.authInfo.create !== true}
+          disabled={this.props.authInfo.delete !== true}
+          onClick={this.onBatchRemove}
         >
-          新增{TITLE}
+          删除
         </Button>
       </div>
     );
@@ -338,32 +381,6 @@ class Assets extends PureComponent {
       </SmartFormModal>
     );
   };
-  handleAction = params => {
-    console.log('    handleAction ： ', params, this.state, this.props);
-    this.props.setData({
-      isShowRemoveModal: true,
-      removeParams: {
-        noRemove: true,
-        removeTitle: '提示',
-        removeContent: '是否确认删除',
-        okFn: e => {
-          console.log(' okFnokFnokFnokFn ： ', e, params);
-          this.props.handleWeakAsync(params);
-          this.props.onResultModalCancel();
-        },
-      },
-    });
-  };
-  renderAssetTree = params => {
-    return (
-      <AssetTree
-        showFormModal={this.props.showFormModal}
-        editItems={this.props.editItems}
-        formTypes={this.props.formTypes}
-        handleAction={this.handleAction}
-      ></AssetTree>
-    );
-  };
 
   renderResultModal = params => {
     console.log(' renderResultModal ： ', params, this.state, this.props);
@@ -411,8 +428,7 @@ class Assets extends PureComponent {
       <div className="assets">
         {this.renderSearchForm()}
 
-        {/* {this.renderTable()} */}
-        {this.renderAssetTree()}
+        {this.renderTable()}
 
         {this.renderSmartFormModal()}
 

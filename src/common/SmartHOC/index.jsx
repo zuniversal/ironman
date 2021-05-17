@@ -32,6 +32,7 @@ import { connect } from 'umi';
 
 const getAuth = (authInfo = {}, authKey = '') => {
   const authData = authInfo[authKey];
+  console.log(' getAuth ： ', authInfo, authKey); //
   if (authData && Object.keys(authData).length) {
     if (false) {
       // if (isDev) {
@@ -94,6 +95,7 @@ export default ({
   isCheckQuery,
   noCreateActions,
   noConnectCommon,
+  getListParams,
 }) => Com => {
   class SmartHoc extends React.Component {
     constructor(props) {
@@ -608,7 +610,7 @@ export default ({
       // );
 
       if (!noMountFetch) {
-        this.getList();
+        this.getList(getListParams);
       }
       if (isCheckQuery) {
         this.checkQuery();
@@ -666,6 +668,12 @@ export default ({
             // authInfo={handleAuth(authInfo, route.authKey)}
             // authInfo={authInfo[route.authKey]}
             authInfo={authData}
+            // authInfo={{
+            //   module: true,
+            //   describe: true,
+            //   create: true,
+            //   edit: true,
+            //   delete: true,}}
             {...this.actionProps}
             // onRemove={this.onRemove2}
             // onBatchRemove={this.onBatchRemove2}

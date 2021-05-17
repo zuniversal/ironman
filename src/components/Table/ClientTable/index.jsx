@@ -112,16 +112,18 @@ const ClientTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a
-        onClick={() =>
-          // history.push(`${csElectricInfo}customer_id=${record.id}`)
-          openTab(
-            `${window.location.origin}/#${csElectricInfo}customer_id=${record.id}`,
-          )
-        }
-      >
-        客户视图
-      </a>
+      {props.showClientView && (
+        <a
+          onClick={
+            () => history.push(`${csElectricInfo}customer_id=${record.id}`)
+            // openTab(
+            //   `${window.location.origin}/#${csElectricInfo}customer_id=${record.id}`,
+            // )
+          }
+        >
+          客户视图
+        </a>
+      )}
     </>
   );
 

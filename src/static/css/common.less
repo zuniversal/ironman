@@ -191,9 +191,16 @@ body {
   color: @primary;
 }
 
-// .f-r {
-//     float: right;
-// }
+.f-r {
+  float: right;
+}
+
+// 清除浮动
+.clearFix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
 
 // .t-r {
 //     text-align: right;
@@ -247,13 +254,6 @@ body {
 // // .iconfont {
 // //     font-size: 36px!important;
 // // }
-
-// // 清除浮动
-// .clearFix::after {
-//     content: '';
-//     display: block;
-//     clear: both;
-// }
 
 // .tooltip {
 //     position: relative;

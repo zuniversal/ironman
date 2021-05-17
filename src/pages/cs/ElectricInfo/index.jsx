@@ -211,7 +211,7 @@ class ElectricInfo extends PureComponent {
     return (
       <>
         <div className="titleRow fsb">
-          <div className="title">一次性系统图</div>
+          <div className="title">一次系统图</div>
           <div className="btnWrapper">
             <Button
               type="primary"
@@ -282,6 +282,11 @@ class ElectricInfo extends PureComponent {
   };
 
   componentDidMount() {
+    console.log(
+      ' ElectricInfo 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+    ); //
     // this.props.getPowerInfoAsync({
     //   ele_number: '0000727272',
     //   // ele_number: ,

@@ -9,10 +9,11 @@ import {
   noTipsRemove,
 } from '@/utils/request';
 
-export const getList = ({ query, ...p }) => {
-  console.log(' getListAsync query, p ： ', query, p); //
-  return noTipsGet(`console/OMS/customer/report?${query}`, p);
-};
+// export const getList = ({ query, ...p }) => {
+//   console.log(' getListAsync query, p ： ', query, p); //
+//   return noTipsGet(`console/OMS/customer/report?${query}`, p);
+// };
+export const getList = p => noTipsGet(`console/OMS/customer/report`, p);
 export const getItem = p =>
   noTipsGet(`console/OMS/customer/report/${p.d_id}`, p);
 // export const getList = p => noTipsGet(`custom_info/`, p);

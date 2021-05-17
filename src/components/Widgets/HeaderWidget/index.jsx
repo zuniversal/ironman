@@ -3,7 +3,7 @@ import './style.less';
 import Icon from '@/components/Widgets/Icons';
 import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
-import { LogoutOutlined, SwapOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { history, connect } from 'umi';
 import { csSystemNotify, BIG_SCREEN } from '@/constants';
 import {
@@ -11,7 +11,7 @@ import {
   DEF_BUSSNIESS_TAB,
   isSmartOMS,
 } from '@/configs/routes';
-import { Tag } from 'antd';
+import { Tag, Tooltip } from 'antd';
 const { CheckableTag } = Tag;
 
 const BussniessTab = props => {
@@ -42,8 +42,12 @@ const BussniessTab = props => {
 };
 
 const HeaderWidget = props => {
-  // console.log(' HeaderWidget   props, ,   ： ', props);
-  const haveScreenAuth = props.userInfo?.perms?.screen?.perms?.module;
+  console.log(
+    ' HeaderWidget   props, ,   ： ',
+    props,
+    props.userInfo?.perms?.screenModel,
+  );
+  const haveScreenAuth = props.userInfo?.perms?.screenModel?.perms?.module;
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path, BIG_SCREEN);
     window.open(BIG_SCREEN);
@@ -76,7 +80,7 @@ const HeaderWidget = props => {
         <Icon icon={'bell'} className={' '} />
       </DropdownNotice>
       <span className="yAxis actionItem"></span>
-      {haveScreenAuth && (
+      {!props.isGuestMode && haveScreenAuth && (
         <span className="bigScreenWrapper actionItem dfc" onClick={goBigScreen}>
           <Icon icon={'bigScreen'} />
           <span className="text">大屏展示</span>
@@ -91,7 +95,17 @@ const HeaderWidget = props => {
         {/* {props.userInfo.name} */}
         {props.userInfo.nickname}
       </span>
-      <LogoutOutlined onClick={props.logout} className={'actionItem  '} />
+      <Tooltip placement="bottom" title={'退出登录'}>
+        <LogoutOutlined onClick={props.logout} className={'actionItem  '} />
+      </Tooltip>
+      <Tooltip placement="bottom" title={'退出访客模式'}>
+        {props.isGuestMode && (
+          <UserSwitchOutlined
+            onClick={props.logoutGuest}
+            className={'actionItem  '}
+          />
+        )}
+      </Tooltip>
       {/* <span className="cs " onClick={() => goPage('/cs/csHome?type=test')}>CS</span> */}
       <span
         className="cs "

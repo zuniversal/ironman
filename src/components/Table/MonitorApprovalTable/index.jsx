@@ -99,6 +99,16 @@ const MonitorApprovalTable = props => {
       )}
       <a
         onClick={() => {
+          props.showItemAsync({
+            action: 'monitorApprovalDetailAsync',
+            d_id: record.id,
+          });
+        }}
+      >
+        详情
+      </a>
+      <a
+        onClick={() => {
           props.showFormModal({
             action: 'getRealDataAsync',
             realDataParams: {

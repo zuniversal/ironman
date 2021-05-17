@@ -2,6 +2,8 @@ import { animate, createProperty } from '@/utils';
 
 export const isDev = process.env.NODE_ENV === 'development';
 
+export const PDF_URL =
+  'https://report-1302976931.cos.ap-shanghai.myqcloud.com/'; //
 export const MINI_POWER = 'http://81.68.221.146/#/home';
 
 export const DOWN_ASSETS_TPL = '/api/v1/export/equipment.xlsx';
@@ -62,17 +64,24 @@ export const TIME_ZERO = ' 00:00:00';
 export const LOGIN = '/login';
 export const HOME = '/om/home';
 // export const CS_HOME = '/cs/home';
-export const CS_HOME = '/cs/energyInfo';
-export const homeMap = {
-  manager: HOME,
-  customer: CS_HOME,
-};
-export const DEF_PALTFORM = 'smartOMS';
+export const CS_SYSTEM = 'CS';
+export const DEF_PALTFORM = 'bp';
 export const HOUSENO = '/om/houseNo?';
 export const SHIFTSARRANGE = '/om/shiftsArrange?';
 export const csSystemNotify = '/cs/systemNotify?';
 export const csElectricInfo = '/cs/electricInfo?';
 export const DRAW_PANEL = '/om/drawPanel';
+export const TRUST_CLIENT = '/om/trustClient';
+export const CS_HOME = '/cs/energyInfo';
+export const homeMap = {
+  manager: HOME,
+  customer: CS_HOME,
+};
+export const guestModeRedirectMap = {
+  manager: TRUST_CLIENT,
+  customer: CS_HOME,
+};
+
 export const SIM_XLSX = '/sim.xlsx';
 
 const animations = [

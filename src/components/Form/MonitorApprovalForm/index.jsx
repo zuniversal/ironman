@@ -18,7 +18,7 @@ import {
   networkTypeConfig,
   changeNumberProps,
 } from '@/configs';
-import { formatSelectList, filterObjSame, tips } from '@/utils';
+import { formatSelectList, filterObjSame, tips, getItem } from '@/utils';
 import UploadCom from '@/components/Widgets/UploadCom';
 import dayjs from 'dayjs';
 import moment from 'moment';
@@ -556,6 +556,8 @@ const MonitorApprovalForm = props => {
     ></UploadCom>,
   ];
 
+  const userInfo = getItem('userInfo');
+
   const {
     manufacturer,
     customer_id,
@@ -584,7 +586,7 @@ const MonitorApprovalForm = props => {
         model: model ? `${model}` : null,
         updated_time: updated_time ? moment(updated_time) : null,
         // updated_time: updated_time ? dayjs(updated_time) : null,
-        user: props.userInfo.nickname,
+        user: userInfo?.nickname,
       }}
       className={`monitorApprovalForm`}
     ></SmartForm>

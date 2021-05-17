@@ -5,6 +5,7 @@ import { getClientPower, getRelatived } from '@/services/client';
 import { getCircuitItem, removeCircuitItem } from '@/services/powerStation';
 import { formatSelectList, getItem } from '@/utils';
 import { history } from 'umi';
+import { handleGuestMode } from '@/models/user';
 
 const namespace = 'electricInfo';
 const { createActions } = init(namespace);
@@ -126,9 +127,18 @@ export default {
 
   effects: {
     *getRelativedAsync({ payload, action, type }, { call, put }) {
+      handleGuestMode({ put });
+      yield put({
+        type: 'user/getUserInfoAsync',
+      });
       const { customer_id } = history.location.query;
       console.log(' history22 ： ', getItem('userInfo')); //
-      const user_id = getItem('userInfo')?.enterprises[0].customers[0]?.id;
+      console.log(
+        ' getItem.enterprises[0] ： ',
+        getItem('userInfo')?.enterprises[0],
+      ); //
+      const { customers = [] } = getItem('userInfo')?.enterprises[0];
+      const user_id = customers[0]?.id;
       console.log(' history ： ', history, customer_id, user_id); //
       const clientId = customer_id || user_id;
       console.log(' history clientId ： ', clientId); //
