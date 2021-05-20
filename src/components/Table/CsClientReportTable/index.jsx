@@ -110,7 +110,7 @@ const CsClientReportTable = props => {
           onClick={() =>
             props.showDetail({
               // action: 'clientReportDetailAsync',
-              action: 'csClientReportDetailPdf',
+              action: 'clientReportDetailPdf',
               d_id: record.electricity_user_id,
               year_month: props.searchInfo.year_month
                 ? props.searchInfo.year_month.format('YYYY-MM')

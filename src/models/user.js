@@ -56,10 +56,17 @@ export const mapStateToProps = state => state[namespace];
 const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 // console.log(' userInfo ： ', userInfo);
 
+export const getClientId = props => {
+  const userInfo = getItem('userInfo');
+  const customer_id = getItem('guestModeId') || userInfo.id;
+  return customer_id;
+};
+
 export const handleGuestMode = props => {
   const { customer_id } = history.location.query;
   console.log(' handleGuestMode   ,   ： ', props, customer_id);
   setItem('isGuestMode', true);
+  setItem('guestModeId', customer_id);
   if (customer_id) {
     cookie.save('s_cst_id', customer_id);
   }
@@ -68,6 +75,7 @@ export const handleGuestMode = props => {
 export const logoutGuest = props => {
   console.log(' logoutGuest   ,   ： ', props);
   removeItem('isGuestMode');
+  removeItem('guestModeId');
   cookie.remove('s_cst_id');
   cookie.remove('enterprise_id');
 };
@@ -141,10 +149,11 @@ const getRoutesMap = (text, dataMap) => {
 const getRoutes = (props = {}) => {
   const userInfo = getItem('userInfo') ?? {};
   console.log(' userInfo ： ', userInfo, props); //
-  const routes = isDev
-    ? [...managerRoutes, ...customerRoutes]
-    : // ? [...customerRoutes]
-      getRoutesMap(userInfo.accountType, routesMap);
+  // const routes = isDev
+  //   ? [...managerRoutes, ...customerRoutes]
+  //   : // ? [...customerRoutes]
+  //     getRoutesMap(userInfo.accountType, routesMap);
+  const routes = getRoutesMap(userInfo.accountType, routesMap);
   // console.log(
   //   ' getRoutes   userInfo,   ： ',
   //   userInfo,

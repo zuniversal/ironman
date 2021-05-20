@@ -666,7 +666,8 @@ const MonthStationReport = props => {
     {
       label: `审核人：`,
       key: '',
-      val: '华思明',
+      // val: '华思明',
+      val: '王晓东',
     },
     {
       label: `巡检时间：`,

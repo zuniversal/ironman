@@ -42,11 +42,6 @@ const BussniessTab = props => {
 };
 
 const HeaderWidget = props => {
-  console.log(
-    ' HeaderWidget   props, ,   ： ',
-    props,
-    props.userInfo?.perms?.screenModel,
-  );
   const haveScreenAuth = props.userInfo?.perms?.screenModel?.perms?.module;
   const goBigScreen = path => {
     console.log(' goBigScreen   path,   ： ', path, BIG_SCREEN);

@@ -23,15 +23,17 @@ const SmartShowPDF = props => {
   useEffect(() => {
     // console.log(' useEffect   副作用,   ： ', props);
     // getPdf(pdfPrefix + props.path)
-    return;
-    getPdf(props.path)
-      .then(res => {
-        console.log('  res  ： ', res);
-      })
-      .catch(err => {
-        console.log('  err catch  ： ', err);
-        setIsError(true);
-      });
+    // return;
+    if (props.path) {
+      getPdf(props.path)
+        .then(res => {
+          console.log('  res  ： ', res);
+        })
+        .catch(err => {
+          console.log('  err catch  ： ', err);
+          setIsError(true);
+        });
+    }
   }, []);
 
   // return (

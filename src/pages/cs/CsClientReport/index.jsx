@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
 import CsClientReportTable from '@/components/Table/CsClientReportTable';
-import ClientReportForm from '@/components/Form/ClientReportForm';
 import CsClientReportSearchForm from '@/components/Form/CsClientReportForm/CsClientReportSearchForm';
 import SmartFormModal from '@/common/SmartFormModal';
 import ClientReportPdf from '@/components/Pdf/ClientReportPdf';
@@ -37,7 +36,6 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: ClientReportForm,
   // noMountFetch: true,
 })
 class ClientReport extends PureComponent {
@@ -214,6 +212,7 @@ class ClientReport extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
+      electricBillList: this.props.electricBillList,
       onOk: this.onOk,
     };
     if (action !== 'add') {
@@ -234,7 +233,7 @@ class ClientReport extends PureComponent {
       return (
         <SmartShowPDF
           src={`${this.props.extraData.path}`}
-          path={`${this.props.extraData.path}`}
+          // path={`${this.props.extraData.path}`}
         ></SmartShowPDF>
       );
     }
@@ -283,7 +282,6 @@ class ClientReport extends PureComponent {
         </div>
       );
     }
-    return <ClientReportForm {...formComProps}></ClientReportForm>;
   };
   get size() {
     return ['uploadFile'].some(v => v === this.props.action)

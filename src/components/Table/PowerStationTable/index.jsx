@@ -17,10 +17,10 @@ const PowerStationTable = props => {
   const { showModal, edit, remove, tdClick } = props;
 
   const columns = [
-    {
-      title: '序号',
-      dataIndex: 'id',
-    },
+    // {
+    //   title: '序号',
+    //   dataIndex: 'id',
+    // },
     {
       title: '电站名称',
       dataIndex: 'name',
@@ -32,7 +32,7 @@ const PowerStationTable = props => {
     },
     {
       noCutText: true,
-      width: 300,
+      width: 400,
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
@@ -51,6 +51,7 @@ const PowerStationTable = props => {
         }),
     },
     {
+      width: 300,
       title: '电站地址',
       dataIndex: 'addr',
     },

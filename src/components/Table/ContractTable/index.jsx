@@ -38,6 +38,8 @@ const ContractTable = props => {
         }),
     },
     {
+      noCutText: true,
+      width: 300,
       title: '业务主体',
       dataIndex: 'business_entity',
       // detailFn: record =>

@@ -10,10 +10,10 @@ import { actions, mapStateToProps } from '@/models/systemNotify';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '字典';
+const TITLE = '系统通知';
 
 const titleMap = {
-  add: `${TITLE}`,
+  add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `抢修合同通知`,
   upload: `文件上传`,

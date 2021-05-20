@@ -96,7 +96,7 @@ export default {
         power_data = [],
         inspection_task,
         spect_out = [],
-        safety_equirpment,
+        safety_equirpment = {},
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload);
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
@@ -116,7 +116,7 @@ export default {
         ...safety_equirpment,
       };
       inspectRecordDateConfig.forEach((v, i) => {
-        console.log(' inspectRecordDateConfig v ： ', v, i);
+        console.log(' inspectRecordDateConfig v ： ', safety_equirpment, v, i);
         safetyEquirpment[v] = moment(safety_equirpment[v]);
       });
       console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment);

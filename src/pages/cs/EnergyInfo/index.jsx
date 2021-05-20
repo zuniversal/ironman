@@ -6,7 +6,7 @@ import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/energyInfo';
 import LineEcharts, { weekArr } from './LineEcharts';
 import SmartHOC from '@/common/SmartHOC';
-import { recentPowerAxisConfig } from '@/configs';
+import { recentPowerAxisConfig, powerMoneyAxisConfig } from '@/configs';
 import { connect } from 'umi';
 
 import power1 from '@/static/assets/cs/power1.png';
@@ -57,7 +57,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power2} className="icon" />,
       },
       {
-        dataKey: 'yesterday',
+        dataKey: 'yestoday',
         title: '昨日用电量',
         val: '10',
         unit: 'kw',
@@ -68,7 +68,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power3} className="icon" />,
       },
       {
-        dataKey: 'month',
+        dataKey: 'this_month',
         title: '本月用电量',
         val: '10',
         unit: 'kw',
@@ -79,7 +79,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power1} className="icon" />,
       },
       {
-        dataKey: 'lastMonth',
+        dataKey: 'last_month',
         title: '上月用电量',
         val: '10',
         unit: 'kw',
@@ -98,15 +98,17 @@ class EnergyInfo extends PureComponent {
     );
   };
   renderHavePowerEcharts = params => {
-    const config = {};
+    const config = {
+      yAxisTitleArr: ['有功电量:kWh', '单价:元'],
+      xAxis: weekArr,
+      data: [this.props.powerData.data],
+      lineNameArr: [],
+    };
+    console.log(' renderHavePowerEcharts ： ', config); //
     return (
       <>
         <PageTitle title={'实时有功电量'}></PageTitle>
-        <LineEcharts
-          {...config}
-          xAxis={weekArr}
-          data={this.props.powerData.data}
-        ></LineEcharts>
+        <LineEcharts {...config}></LineEcharts>
       </>
     );
   };
@@ -147,6 +149,10 @@ class EnergyInfo extends PureComponent {
     const config = {
       // yAxisTitle: '',
       yAxisTitle2: '',
+      xAxis: this.props.powerUseData.xAxis,
+      data: this.props.powerUseData.data,
+      yAxisTitleArr: ['有功电量:kWh'],
+      lineNameArr: recentPowerAxisConfig,
     };
     const tabs = (
       <Tabs defaultActiveKey="1" onChange={onChange}>
@@ -159,11 +165,7 @@ class EnergyInfo extends PureComponent {
       <>
         <PageTitle title={'本月用电曲线'}></PageTitle>
         {tabs}
-        <LineEcharts
-          {...config}
-          xAxis={this.props.powerUseData.xAxis}
-          data={this.props.powerUseData.data}
-        ></LineEcharts>
+        <LineEcharts {...config}></LineEcharts>
       </>
     );
   };
@@ -172,8 +174,11 @@ class EnergyInfo extends PureComponent {
       yAxisTitle2: '电量电费:元',
       xAxis: this.props.recentPower10DayData.xAxis,
       data: this.props.recentPower10DayData.data,
-      yAxisTitleArr: recentPowerAxisConfig,
+      yAxisTitleArr: ['有功电量:kWh', '电量电费:元'],
+      lineNameArr: powerMoneyAxisConfig,
+      yAxisIndex: 3,
     };
+    console.log(' render10DayPowerEcharts ： ', config); //
     return (
       <>
         <PageTitle title={'近10日用电曲线'}></PageTitle>
@@ -185,8 +190,40 @@ class EnergyInfo extends PureComponent {
     const config = {
       yAxisTitle2: '电量电费:元',
       xAxis: this.props.recentPower6MonthData.xAxis,
+      data: [
+        [
+          121.6,
+          151.9,
+          191.0,
+          201.7,
+          231.4,
+          261.7,
+          281.6,
+          221.2,
+          284.3,
+          321.7,
+          371.0,
+          351.8,
+        ].map(v => v + 100),
+        [
+          121.6,
+          151.9,
+          191.0,
+          201.7,
+          231.4,
+          261.7,
+          281.6,
+          221.2,
+          284.3,
+          321.7,
+          371.0,
+          351.8,
+        ],
+      ],
       data: this.props.recentPower6MonthData.data,
-      yAxisTitleArr: recentPowerAxisConfig,
+      yAxisTitleArr: ['有功电量:kWh', '电量电费:元'],
+      lineNameArr: powerMoneyAxisConfig,
+      yAxisIndex: 3,
     };
     return (
       <>

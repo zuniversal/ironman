@@ -6,6 +6,7 @@ import SmartForm from '@/common/SmartForm';
 // import AssetsFormTable from 'smartTb/AssetsFormTable';
 import UploadCom from '@/components/Widgets/UploadCom';
 import useHttp from '@/hooks/useHttp';
+import { getRelatived, getClientPower } from '@/services/client';
 import { getManufacturerList } from '@/services/monitorManage';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { getList as getPowerStationList } from '@/services/powerStation';
@@ -34,6 +35,20 @@ const AssetsForm = props => {
       format: res => formatSelectList(res, 'manufacturer'),
     },
   );
+  const { data: clientPowerList, req: getClientAsync } = useHttp(
+    // () => getRelatived({ get_all: '1' }),
+    getClientPower,
+    {
+      format: res => formatSelectList(res, 'customer_name', 'customer_id'),
+      // .map(
+      //   ({ customer_address, ...v }) => ({
+      //     ...v,
+      //     label: `${v.label} - ${customer_address}`,
+      //   }),
+      // ),
+    },
+  );
+  console.log(' clientPowerList ： ', clientPowerList); //
   // const { data: powerStationList, req: getPowerStationAsync } = useHttp(
   //   getHouseNoList,
   //   {
@@ -320,45 +335,26 @@ const AssetsForm = props => {
     comProps: { className: `${v.className} w-200`, ...v.comProps },
   }));
 
-  const actionBtn = (
-    <div className={'btnWrapper clearFix'}>
-      <div className={'f-r'}>
-        <Button
-          type="primary"
-          onClick={() => props.showFormModal({ action: 'add' })}
-        >
-          保存
-        </Button>
-      </div>
-    </div>
-  );
-
   const configMap = {
     addConfig,
     config,
   };
 
   return (
-    <div className={''}>
-      {/* {actionBtn} */}
+    <SmartForm
+      config={configMap[props.formTypes]}
+      // config={configs}
 
-      <SmartForm
-        config={configMap[props.formTypes]}
-        // config={configs}
-
-        {...props}
-        init={{
-          electricity_user: null,
-          station: null,
-          station_id: null,
-          ...props.init,
-        }}
-        onFieldChange={onFieldChange}
-      ></SmartForm>
-    </div>
+      {...props}
+      init={{
+        electricity_user: null,
+        station: null,
+        station_id: null,
+        ...props.init,
+      }}
+      onFieldChange={onFieldChange}
+    ></SmartForm>
   );
 };
-
-AssetsForm.defaultProps = {};
 
 export default AssetsForm;

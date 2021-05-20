@@ -1,5 +1,18 @@
 export default [
   {
+    path: '/sm/cameraConfig',
+    authKey: 'customerModel',
+    component: '@/pages/sm/CameraConfig',
+    title: '摄像头配置',
+  },
+  {
+    path: '/sm/platformConfig',
+    authKey: 'customerModel',
+    component: '@/pages/sm/PlatformConfig',
+    title: '平台配置',
+  },
+
+  {
     path: '/sm/userManage',
     authKey: 'userModel',
     component: '@/pages/sm/UserManage',

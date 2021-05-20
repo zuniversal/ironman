@@ -12,7 +12,7 @@ import { connect } from 'umi';
 const TITLE = '部门';
 
 const titleMap = {
-  add: `新增${TITLE}`,
+  add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,

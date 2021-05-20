@@ -110,12 +110,18 @@ class SmartModal extends PureComponent {
       maskClosable = false,
       show,
       size,
+      extraBtn,
     } = this.props;
 
     // const {show,  } = this.state//
 
     const widths = this.getWidth();
-
+    console.log(
+      ' %c SmartModal 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <Modal
         destroyOnClose
@@ -145,6 +151,7 @@ class SmartModal extends PureComponent {
               {okTxt}
             </Button>
           ) : null,
+          extraBtn(this.props),
         ]}
         {...this.props}
         width={widths}
@@ -170,6 +177,7 @@ SmartModal.defaultProps = {
   hideOk: false,
   titleMap: {}, // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
   size: 'default',
+  extraBtn: () => {},
 };
 
 SmartModal.propTypes = {

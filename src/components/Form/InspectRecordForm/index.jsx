@@ -322,8 +322,6 @@ const InspectRecordForm = props => {
   const [modalExport, setModalExport] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
 
-  console.log(' InspectRecordForm ： ', props, props.init, isEdit, modalExport);
-
   // const isExport = isExportPDF || !modalExport
   const isExport = isExportPDF || modalExport;
 
@@ -333,7 +331,16 @@ const InspectRecordForm = props => {
     spect_out = [],
   } = props.init;
 
-  const file = props.init.file ? props.init.file : [];
+  const file = props.init.file ?? [];
+  const image = props.init.image ?? [];
+  console.log(
+    ' InspectRecordForm ： ',
+    props,
+    props.init,
+    isEdit,
+    modalExport,
+    image,
+  );
 
   const power_data =
     props.init.power_data && props.init.power_data.length > 0
@@ -1719,6 +1726,27 @@ const InspectRecordForm = props => {
           },
         ]
       : []),
+
+    {
+      formType: 'rowText',
+      itemProps: {
+        label: '现场照片',
+        className: 'w100',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          {image.map((v, i) => (
+            <SmartImg src={v} key={i} />
+          ))}
+        </>
+      ),
+      itemProps: {
+        label: '',
+      },
+    },
   ];
 
   const configs = config.map(v => ({

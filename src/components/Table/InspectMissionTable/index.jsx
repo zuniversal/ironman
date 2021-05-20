@@ -22,16 +22,16 @@ const InspectMissionTable = props => {
       // d_item: 'id',
       className: 'textCenter',
     },
-    {
-      title: '名称',
-      dataIndex: 'name',
-      // d_item: 'id',
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'inspectMissionDetailAsync',
-          d_id: record.id,
-        }),
-    },
+    // {
+    //   title: '名称',
+    //   dataIndex: 'name',
+    //   // d_item: 'id',
+    //   detailFn: record =>
+    //     props.showItemAsync({
+    //       action: 'inspectMissionDetailAsync',
+    //       d_id: record.id,
+    //     }),
+    // },
     {
       title: '电站',
       dataIndex: ['plan', 'station', 'name'],

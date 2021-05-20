@@ -354,13 +354,24 @@ class Assets extends PureComponent {
       },
     });
   };
+  saveTreeNodeAsync = params => {
+    console.log('    saveTreeNodeAsync ： ', params);
+    // this.props.saveTreeNodeAsync(params)
+    this.props.editTreeNode(params);
+  };
   renderAssetTree = params => {
     return (
       <AssetTree
         showFormModal={this.props.showFormModal}
         editItems={this.props.editItems}
         formTypes={this.props.formTypes}
+        editAssetStruct={this.props.editAssetStruct}
         handleAction={this.handleAction}
+        addTreeNode={this.props.addTreeNode}
+        editTreeNode={this.props.editTreeNode}
+        saveTreeNodeAsync={this.saveTreeNodeAsync}
+        // treeData={this.props.dataList}
+        treeData={this.props.treeData}
       ></AssetTree>
     );
   };
@@ -392,11 +403,9 @@ class Assets extends PureComponent {
     );
   };
   componentDidMount() {
+    this.props.getAssetDeviceAsync();
     this.props.getPowerAsync();
-    this.props.getListAsync({
-      page: 1,
-      page_size: 10,
-    });
+    this.props.getListAsync();
   }
 
   render() {

@@ -123,7 +123,8 @@ export const getShowRealData = data => {
       label: '数据时间',
       value: () => {
         const val = get(data, 'tm');
-        return val ? moment(val).format('YYYY-MM-DD hh:mm:ss') : '-';
+        // return val ? moment(val).format('YYYY-MM-DD hh:mm:ss') : '-';
+        return val ? val.split('T').join(' ') : '-';
       },
     },
   ];

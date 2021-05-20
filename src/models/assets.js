@@ -17,9 +17,16 @@ const otherActions = [
   'getPowerAsync',
   'getHouseNoAsync',
   'getClientAsync',
+  'getAssetDeviceAsync',
 ];
 
-const batchTurnActions = ['editItems'];
+const batchTurnActions = [
+  'editItems',
+  'editAssetStruct',
+  'addTreeNode',
+  'editTreeNode',
+  'onInputChange',
+];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -38,6 +45,151 @@ const formatParams = data => {
   return params;
 };
 
+const recursiveHandle = (data = [], indexes) => {
+  console.log('treeData  recursiveHandle   ,   ： ', data, indexes);
+  // return data.map((v, i) => ({...v,}));
+  return data.map((v, i) => {
+    const item = {
+      ...v,
+      isEdit: false,
+      indexes: [...(indexes ?? []), i],
+    };
+    // if (v.children) {
+    //   item.children = recursiveHandle(v.children, [...(indexes ?? []), i])
+    // }
+    item.children = item.children
+      ? recursiveHandle(v.children, [...(indexes ?? []), i])
+      : [];
+    return item;
+  });
+};
+
+const treeDatas = recursiveHandle([
+  {
+    title: '0-0',
+    key: '0-0',
+    children: [
+      {
+        title: '0-0-0',
+        key: '0-0-0',
+        children: [
+          { title: '0-0-0-0', key: '0-0-0-0' },
+          { title: '0-0-0-1', key: '0-0-0-1' },
+          { title: '0-0-0-2', key: '0-0-0-2' },
+        ],
+      },
+      {
+        title: '0-0-1',
+        key: '0-0-1',
+        children: [
+          { title: '0-0-1-0', key: '0-0-1-0' },
+          { title: '0-0-1-1', key: '0-0-1-1' },
+          { title: '0-0-1-2', key: '0-0-1-2' },
+        ],
+      },
+      {
+        title: '0-0-2',
+        key: '0-0-2',
+      },
+    ],
+  },
+  {
+    title: '0-1',
+    key: '0-1',
+    children: [
+      { title: '0-1-0-0', key: '0-1-0-0' },
+      { title: '0-1-0-1', key: '0-1-0-1' },
+      { title: '0-1-0-2', key: '0-1-0-2' },
+    ],
+  },
+  {
+    title: '0-2',
+    key: '0-2',
+  },
+]);
+
+const addTreeAttr = ({ treeData, val, attr, item, i }) => {
+  console.log(' addTreeAttr   e, item, i,   ： ', treeData, val, item, i);
+  const { indexes } = item;
+  const [index0, index1, index2] = indexes;
+  const copyData = [...treeData];
+  console.log('  对吗  indexes.length ', indexes);
+  const newTreeNode = {
+    // indexes: [...indexes, children.length],
+    isEdit: true,
+    title: '资产名',
+    children: [],
+  };
+  switch (indexes.length) {
+    case 1:
+      copyData[index0].children = [
+        ...copyData[index0].children,
+        {
+          ...newTreeNode,
+          key: `${item.key}-${copyData[index0].children.length}`,
+          indexes: [...indexes, copyData[index0].children.length],
+        },
+      ];
+      break;
+    case 2:
+      console.log(
+        ' copyData[index0].children[index1].children  ： ',
+        copyData[index0].children[index1].children,
+      ); //
+      copyData[index0].children[index1].children = [
+        ...copyData[index0].children[index1].children,
+        {
+          ...newTreeNode,
+          key: `${item.key}-${copyData[index0].children[index1].children.length}`,
+          indexes: [
+            ...indexes,
+            copyData[index0].children[index1].children.length,
+          ],
+        },
+      ];
+      break;
+    case 3:
+      copyData[index0].children[index1].children[index2].children = [
+        ...copyData[index0].children[index1].children[index2].children,
+        {
+          ...newTreeNode,
+          key: `${item.key}-${copyData[index0].children[index1].children[index2].children.length}`,
+          indexes: [
+            ...indexes,
+            copyData[index0].children[index1].children[index2].children.length,
+          ],
+        },
+      ];
+      break;
+    default:
+      break;
+  }
+  console.log(' copyData ： ', copyData); //
+  return copyData;
+};
+const editTreeAttr = ({ treeData, val, attr, item, i }) => {
+  console.log(' editTreeAttr   e, item, i,   ： ', treeData, val, item, i);
+  const { indexes } = item;
+  const [index0, index1, index2] = indexes;
+  const copyData = [...treeData];
+  console.log('  对吗  indexes.length ', indexes);
+  switch (indexes.length) {
+    case 1:
+      copyData[index0][attr] = val;
+      break;
+    case 2:
+      copyData[index0].children[index1][attr] = val;
+      break;
+    case 3:
+      copyData[index0].children[index1].children[index2][attr] = val;
+      break;
+    default:
+      break;
+  }
+  console.log(' copyData ： ', copyData); //
+  return copyData;
+};
+
 const initialState = {
   action: '',
   isShowModal: false,
@@ -51,6 +203,9 @@ const initialState = {
   powerList: [],
   houseNoList: [],
   clientList: [],
+  treeData: [],
+  treeData: treeDatas,
+  assetDeviceList: [],
 };
 
 export default {
@@ -192,6 +347,44 @@ export default {
         formTypes: payload.formTypes,
       };
     },
+
+    getAssetDevice(state, { payload, type }) {
+      // console.log(' getAssetDevice 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        assetDeviceList: payload.list,
+      };
+    },
+
+    addTreeNode(state, { payload, type }) {
+      console.log(' addTreeNode 修改  ： ', state, payload, type);
+      // const treeDatas = addTreeAttr(payload)
+      // console.log(' treeDatas ： ', treeDatas,  )//
+      return {
+        ...state,
+        dataList: payload.treeDatas,
+        treeData: payload.treeDatas,
+      };
+    },
+    editTreeNode(state, { payload, type }) {
+      console.log(' editTreeNode 修改  ： ', state, payload, type);
+      // const treeDatas = addTreeAttr(payload)
+      // console.log(' treeDatas ： ', treeDatas,  )//
+      return {
+        ...state,
+        dataList: payload.treeDatas,
+        treeData: payload.treeDatas,
+      };
+    },
+    onInputChange(state, { payload, type }) {
+      // console.log(' onInputChange 修改  ： ', state, payload, type);
+      // const treeDatas = editTreeAttr(payload)
+      return {
+        ...state,
+        dataList: payload.treeDatas,
+        treeData: payload.treeDatas,
+      };
+    },
   },
 
   effects: {
@@ -243,6 +436,11 @@ export default {
       // console.log('  removeItem res ：', res, {...res, payload,} )//
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
+    },
+    *getAssetDeviceAsync({ payload, action, type }, { call, put }) {
+      console.log(' getAssetDeviceAsync ： ', payload, type);
+      const res = yield call(services.getAssetDevice, payload);
+      yield put(action({ ...res, payload }));
     },
 
     *uploadFile({ payload, action, type }, { call, put }) {

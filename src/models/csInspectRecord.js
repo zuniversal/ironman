@@ -1,6 +1,8 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csInspectRecord';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { missionsStatusMap, inspectRecordDateConfig } from '@/configs';
+import moment from 'moment';
 
 const namespace = 'csInspectRecord';
 const { createActions } = init(namespace);
@@ -75,7 +77,6 @@ export default {
       };
     },
     getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload);
       const {
         created_time = '',
         start_time = '',
@@ -83,7 +84,9 @@ export default {
         power_data = [],
         inspection_task,
         spect_out = [],
+        safety_equirpment = {},
       } = payload.bean;
+      console.log(' getItemgetItem ： ', payload);
       const isExportPdf = payload.payload.extraAction === 'showExportPdf';
       const spectInData = [];
       power_data?.forEach(v =>
@@ -96,6 +99,15 @@ export default {
       //     index,
       //   }
       // });
+
+      const safetyEquirpment = {
+        ...safety_equirpment,
+      };
+      inspectRecordDateConfig.forEach((v, i) => {
+        console.log(' inspectRecordDateConfig v ： ', safety_equirpment, v, i);
+        safetyEquirpment[v] = moment(safety_equirpment[v]);
+      });
+      console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment);
 
       const itemDetail = {
         ...payload.bean,
@@ -115,8 +127,9 @@ export default {
           })),
         })),
         spectInData,
+
+        safety_equirpment: safetyEquirpment,
       };
-      console.log(' getItemgetItem ： ', payload, itemDetail, power_data);
 
       const formData = {
         ...payload.bean,

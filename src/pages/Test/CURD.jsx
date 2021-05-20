@@ -70,7 +70,7 @@ const mapActions = {
 export const TITLE = '客户';
 
 const titleMap = {
-  add: `新增${TITLE}`,
+  add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   userCapture: `${TITLE}画像`,

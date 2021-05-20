@@ -82,7 +82,14 @@ class ElectricInfo extends PureComponent {
       noDefault: true,
     };
 
-    return <ElectricInfoTable {...tableProps}></ElectricInfoTable>;
+    return (
+      <>
+        <PageTitle title={'电站信息'}>
+          <TimeChoice noPicker config={this.props.stationList}></TimeChoice>
+        </PageTitle>
+        <ElectricInfoTable {...tableProps}></ElectricInfoTable>
+      </>
+    );
   };
 
   renderCommonModal = params => {
@@ -173,9 +180,6 @@ class ElectricInfo extends PureComponent {
   renderLivePic = params => {
     return (
       <>
-        <PageTitle title={'电站信息'}>
-          <TimeChoice noPicker config={this.props.stationList}></TimeChoice>
-        </PageTitle>
         <div className="title">电站实景图</div>
         <LivePic></LivePic>
       </>
@@ -312,13 +316,13 @@ class ElectricInfo extends PureComponent {
 
         {this.renderStatBox()}
 
+        {this.renderTable()}
+
         {this.renderLivePic()}
 
         {this.renderDrawPic()}
 
         {this.renderSmartFormModal()}
-
-        {this.renderTable()}
 
         {this.renderAssets()}
 

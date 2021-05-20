@@ -1,19 +1,8 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 
 const GoodsTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '物料编号',
@@ -40,8 +29,6 @@ const GoodsTable = props => {
   return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
-GoodsTable.defaultProps = {
-  tdClick: () => {},
-};
+GoodsTable.defaultProps = {};
 
 export default GoodsTable;

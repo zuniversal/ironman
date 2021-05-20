@@ -226,7 +226,7 @@ class ClientReport extends PureComponent {
       return (
         <SmartShowPDF
           src={`${this.props.extraData.path}`}
-          path={`${this.props.extraData.path}`}
+          // path={`${this.props.extraData.path}`}
         ></SmartShowPDF>
       );
     }

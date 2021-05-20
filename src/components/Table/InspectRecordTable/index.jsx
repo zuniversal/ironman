@@ -22,30 +22,32 @@ const InspectRecordTable = props => {
       // d_item: 'id',
       className: 'textCenter',
     },
+    // {
+    //   title: '名称',
+    //   dataIndex: 'name',
+    //   // d_item: 'id',
+    //   // render: (text, record, index) => (
+    //   //   <a
+    //   //     onClick={() =>
+    //   //       props.getMissionItemAsync({
+    //   //         action: 'inspectMission',
+    //   //         d_id: record.id,
+    //   //         d: record.id,
+    //   //       })
+    //   //     }
+    //   //   >
+    //   //     {text}
+    //   //   </a>
+    //   // ),
+    //   detailFn: record =>
+    //     props.showItemAsync({
+    //       action: 'inspectRecordDetailAsync',
+    //       d_id: record.id,
+    //     }),
+    // },
     {
-      title: '名称',
-      dataIndex: 'name',
-      // d_item: 'id',
-      // render: (text, record, index) => (
-      //   <a
-      //     onClick={() =>
-      //       props.getMissionItemAsync({
-      //         action: 'inspectMission',
-      //         d_id: record.id,
-      //         d: record.id,
-      //       })
-      //     }
-      //   >
-      //     {text}
-      //   </a>
-      // ),
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'inspectRecordDetailAsync',
-          d_id: record.id,
-        }),
-    },
-    {
+      noCutText: true,
+      width: 250,
       title: '电站',
       dataIndex: ['plan', 'station', 'name'],
       detailFn: record =>
@@ -57,7 +59,7 @@ const InspectRecordTable = props => {
 
     {
       noCutText: true,
-      width: 300,
+      width: 350,
       title: '客户名称',
       // dataIndex: 'plan.customer',
       dataIndex: ['plan', 'customer'],

@@ -302,7 +302,13 @@ const SmartForm = (props, state) => {
     );
     const { layout, size } = value;
     if (isSearchForm) formData.page = 1;
-    onFieldChange && onFieldChange({ value, formData, form: formControl });
+    onFieldChange &&
+      onFieldChange({
+        value,
+        formData,
+        form: formControl,
+        changeKey: Object.keys(value)[0],
+      });
     // onFieldChange && debounce(() => onFieldChange({ value, formData, form: formControl }), 500)();
     // setFormLayout(layout);
     // setComponentSize(size);
@@ -359,7 +365,7 @@ const SmartForm = (props, state) => {
     }
 
     if ((!formType || formType === 'Input') && isSearchForm) {
-      items.comProps.onPressEnter = props.getList; ;
+      items.comProps.onPressEnter = props.getList;
     }
 
     const { label } = itemProps;

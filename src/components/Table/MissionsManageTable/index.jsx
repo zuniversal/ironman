@@ -220,7 +220,20 @@ const MissionsManageTable = props => {
           确认排期
         </a>
       )}
-      {record.status === 'pending' && record.finished_tag && (
+      {/* {record.status === 'pending' && record.finished_tag && (
+        <a
+          onClick={() =>
+            props.showFormModal({
+              action: 'closeMission',
+              d_id: record.id,
+              // itemDetail: record,
+            })
+          }
+        >
+          关闭任务
+        </a>
+      )} */}
+      {record.status !== 'completed' && (
         <a
           onClick={() =>
             props.showFormModal({

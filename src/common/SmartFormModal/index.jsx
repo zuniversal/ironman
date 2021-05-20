@@ -96,7 +96,13 @@ const SmartFormModal = props => {
   };
 
   return (
-    <SmartModal show={show} onOk={handleOk} onCancel={close} {...modalProps}>
+    <SmartModal
+      show={show}
+      onOk={handleOk}
+      onCancel={close}
+      form={form}
+      {...modalProps}
+    >
       {/* <SmartForm
         // flexRow={4}
         config={formConfig}

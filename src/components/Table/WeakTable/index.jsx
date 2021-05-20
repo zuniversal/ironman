@@ -23,7 +23,7 @@ const WeakTable = props => {
     },
 
     {
-      title: '名称',
+      title: '缺陷描述',
       dataIndex: 'name',
       detailFn: record =>
         props.showItemAsync({
@@ -33,6 +33,8 @@ const WeakTable = props => {
     },
 
     {
+      noCutText: true,
+      width: 300,
       title: '电站',
       dataIndex: ['station', 'name'],
       detailFn: record =>
@@ -43,6 +45,8 @@ const WeakTable = props => {
     },
 
     {
+      noCutText: true,
+      width: 400,
       title: '客户名称',
       dataIndex: ['customer', 'name'],
       detailFn: record =>
@@ -69,10 +73,10 @@ const WeakTable = props => {
     //   dataMap: missionsStatusMap,
     // },
 
-    {
-      title: '备注',
-      dataIndex: 'remark',
-    },
+    // {
+    //   title: '备注',
+    //   dataIndex: 'remark',
+    // },
   ];
 
   const extra = (text, record, index, props) => (

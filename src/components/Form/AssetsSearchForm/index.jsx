@@ -10,37 +10,61 @@ const AssetsSearchForm = props => {
   const [houseNoList, setHouseNoList] = useState([]);
   const [powerStationList, setPowerStationList] = useState([]);
   const [clientSelectList, setclientSelectList] = useState([]);
-  const [houseNoSelectList, setHouseNoSelectList] = useState([]);
-  const [powerStationSelectList, setPowerStationSelectList] = useState([]);
+  const [houseNoSelectList, setHouseNoSelectList] = useState(null);
+  const [powerStationSelectList, setPowerStationSelectList] = useState(null);
   const [form] = Form.useForm();
 
   const { data: clientList } = useHttp(() => getRelatived({ get_all: '1' }), {
     format: res => {
-      const data = formatSelectList(res);
-      console.log(' AssetsSearchForm data ：', data); //
+      const data = formatSelectList(res).map(v => ({
+        ...v,
+        electricity_users: formatSelectList(v.electricity_users, 'number').map(
+          item => ({
+            ...item,
+            clientid: v.value,
+            stations: formatSelectList(item.stations).map(items => ({
+              ...items,
+              clientid: v.value,
+              houseno: item.number,
+            })),
+          }),
+        ),
+      }));
+      // console.log(' AssetsSearchForm data ：', data); //
       const powerStationList = [];
       const houseNoList = [];
       data.forEach(v => houseNoList.push(...v.electricity_users));
       houseNoList.forEach(v => powerStationList.push(...v.stations));
-      console.log(
-        ' AssetsSearchForm res  data.map v ： ',
-        houseNoList,
-        powerStationList,
-      );
-      setHouseNoList(formatSelectList(houseNoList, 'number'));
-      setPowerStationList(formatSelectList(powerStationList));
+      setHouseNoList(houseNoList);
+      setPowerStationList(powerStationList);
       return data;
     },
   });
-  console.log(
-    ' AssetsSearchForm   XXX ： ',
-    props,
-    clientList,
-    houseNoList,
-    powerStationList,
-  );
-  const onClientChange = (params, rest) => {
-    console.log(' onClientChange  ： ', props, params, rest);
+  // console.log(
+  //   ' AssetsSearchForm   XXX ： ',
+  //   props,
+  //   clientList,
+  //   houseNoList,
+  //   powerStationList,
+  //   houseNoSelectList,
+  //   powerStationSelectList,
+  // );
+  const onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    if (params.changeKey === 'customer' && !params.value.customer) {
+      setHouseNoSelectList(null);
+      setPowerStationSelectList(null);
+    } else if (
+      params.changeKey === 'power_number' &&
+      !params.value.power_number
+    ) {
+      setHouseNoSelectList(null);
+      setPowerStationSelectList(null);
+    }
+    props.onFieldChange(params);
+  };
+  const onClientChange = (params, item) => {
+    console.log(' onClientChange  ： ', params, item);
     // const res = clientList.find(v => v.value == params);
     // const formatRes = formatSelectList(res.electricity_users, 'number');
     // console.log(' res  clientList.filter v ： ', res, formatRes);
@@ -48,12 +72,26 @@ const AssetsSearchForm = props => {
     // setPowerStationList([]);
     // setAssetsList([]);
     // getClientAsync({ name: params });
+    const powerStationSelectList = [];
+    item.electricity_users.forEach(v =>
+      powerStationSelectList.push(...v.stations),
+    );
+    console.log(
+      ' houseNoSelectList, powerStationSelectList ： ',
+      powerStationSelectList,
+    ); //
+    setHouseNoSelectList(item.electricity_users);
+    setPowerStationSelectList(powerStationSelectList);
+    form.setFieldsValue({
+      power_number: powerStationSelectList[0].houseno,
+      station: powerStationSelectList[0].value,
+    });
   };
-  const onHouseNoChange = (params, rest) => {
+  const onHouseNoChange = (params, item) => {
     console.log(
       ' onHouseNoChange  ： ',
       params,
-      rest,
+      item,
       houseNoList,
       form.getFieldsValue(),
     );
@@ -65,9 +103,15 @@ const AssetsSearchForm = props => {
     // const formatRes = formatSelectList(res.stations, 'name');
     // console.log(' res  houseNoList.filter v ： ', res, formatRes);
     // setPowerStationList(formatRes);
+    setPowerStationSelectList(item.stations);
+    form.setFieldsValue({
+      customer: item.stations[0].clientid,
+      power_number: item.stations[0].houseno,
+      station: item.stations[0].value,
+    });
   };
-  const onPowerStationChange = (params, rest) => {
-    console.log(' onPowerStationChange  ： ', params, rest);
+  const onPowerStationChange = (params, item) => {
+    console.log(' onPowerStationChange  ： ', params, item);
     // getPowerStationAsync(params);
   };
 
@@ -85,7 +129,7 @@ const AssetsSearchForm = props => {
     },
     {
       formType: 'Select',
-      selectData: houseNoList,
+      selectData: houseNoSelectList ?? houseNoList,
       itemProps: {
         label: '户号',
         name: 'power_number',
@@ -96,11 +140,10 @@ const AssetsSearchForm = props => {
     },
     {
       formType: 'Select',
-      selectData: powerStationList,
+      selectData: powerStationSelectList ?? powerStationList,
       itemProps: {
         label: '电站',
-        // name: 'station',
-        name: 'powerStation',
+        name: 'station',
       },
       comProps: {
         onSelect: onPowerStationChange,
@@ -110,7 +153,12 @@ const AssetsSearchForm = props => {
 
   return (
     <div className={'fsb assetsSearchForm '}>
-      <SearchForm config={config} propsForm={form} {...props}></SearchForm>
+      <SearchForm
+        config={config}
+        propsForm={form}
+        {...props}
+        onFieldChange={onFieldChange}
+      ></SearchForm>
     </div>
   );
 };

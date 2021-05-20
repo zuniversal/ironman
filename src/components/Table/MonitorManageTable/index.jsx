@@ -1,12 +1,4 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';

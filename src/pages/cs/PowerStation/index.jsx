@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import PowerStationForm from '@/components/Form/PowerStationForm';
+import SmartFormModal from '@/common/SmartFormModal';
 
 import { actions, mapStateToProps } from '@/models/powerStation';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
 import SmartTable from '@/common/SmartTable';
-import { getItem } from '@/utils';
+import { getClientId } from '@/models/user';
 
 const PowerStationTable = props => {
   const columns = [
@@ -36,6 +37,17 @@ const PowerStationTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
+      <a
+        onClick={() => {
+          console.log('Received values of form: ', props);
+          props.showItemAsync({
+            action: 'powerStationDetailAsync',
+            d_id: record.id,
+          });
+        }}
+      >
+        详情
+      </a>
       <a
         onClick={() => {
           console.log('Received values of form: ', props);
@@ -73,12 +85,15 @@ const titleMap = {
   inspectDetailAsync: `巡检详情`,
 };
 
+const detailFormMap = {
+  powerStationDetailAsync: PowerStationForm,
+};
+
 @connect(mapStateToProps)
 @SmartHOC({
   noMountFetch: true,
   actions,
   titleMap,
-  modalForm: PowerStationForm,
 })
 class PowerStation extends PureComponent {
   constructor(props) {
@@ -106,10 +121,29 @@ class PowerStation extends PureComponent {
 
     return <PowerStationTable {...tableProps}></PowerStationTable>;
   };
+
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
   componentDidMount() {
     // this.props.getPowerAsync();
-    const userInfo = getItem('userInfo');
-    this.props.getListAsync({ customer: userInfo.id });
+    this.props.getListAsync({ customer: getClientId() });
     // this.props.getListAsync({ customer_name: userInfo.nickname });
   }
 
@@ -120,7 +154,13 @@ class PowerStation extends PureComponent {
       this.state,
       this.props,
     );
-    return <div className="PowerStation">{this.renderTable()}</div>;
+    return (
+      <div className="PowerStation">
+        {this.renderTable()}
+
+        {this.renderCommonModal()}
+      </div>
+    );
   }
 }
 

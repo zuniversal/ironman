@@ -75,6 +75,30 @@ export const carManage = {
   icon: <Icon icon={'systemManage'} />,
 };
 
+export const systemConfig = {
+  platform: 'base',
+  path: '/system',
+  authKey: 'systemModel',
+  name: '系统管理',
+  icon: <Icon icon={'systemManage'} />,
+  routes: [
+    {
+      path: '/sm/cameraConfig',
+      authKey: 'customerModel',
+      // noAuth: true,
+      component: '@/pages/sm/CameraConfig',
+      title: '摄像头配置',
+    },
+    {
+      path: '/sm/platformConfig',
+      authKey: 'customerModel',
+      // noAuth: true,
+      component: '@/pages/sm/PlatformConfig',
+      title: '平台配置',
+    },
+  ],
+};
+
 export const system = {
   platform: 'base',
   path: '/system',
@@ -261,7 +285,6 @@ export const bpRoutes = [
     ],
   },
   {
-    // name: '报告管理',
     // icon: <Icon icon={'systemManage'} />,
     // routes: [],
     platform: 'bp',
@@ -286,14 +309,6 @@ export const bpRoutes = [
     path: '/om/能效客户',
     noAuth: true,
     name: '能效客户',
-    icon: <Icon icon={'bussniessManage'} />,
-    routes: [],
-  },
-  {
-    platform: 'smartEfficiency',
-    path: '/om/报告管理',
-    noAuth: true,
-    name: '报告管理',
     icon: <Icon icon={'bussniessManage'} />,
     routes: [],
   },
@@ -524,12 +539,12 @@ export const customerRoutes = [
     icon: <Icon icon={'csOrganize'} />,
   },
 
-  // {
-  //   noAuth: true,
-  //   path: '/cs/powerStation',
-  //   name: '我的电站',
-  //   icon: <Icon icon="powerStation" />,
-  // },
+  {
+    noAuth: true,
+    path: '/cs/powerStation',
+    name: '我的电站',
+    icon: <Icon icon="powerStation" />,
+  },
   // {
   //   noAuth: true,
   //   path: '/cs/msgList',

@@ -22,7 +22,8 @@ const ClientTable = props => {
     {
       noFilter: true,
       noCutText: true,
-      width: 300,
+      width: 400,
+      className: 'clientCol',
       title: '客户名称',
       dataIndex: 'name',
       detailFn: record =>
@@ -128,7 +129,13 @@ const ClientTable = props => {
   );
 
   return (
-    <SmartTable noEdit columns={columns} extra={extra} {...props}></SmartTable>
+    <SmartTable
+      noEdit
+      columns={columns}
+      extra={extra}
+      {...props}
+      className={`clientTable`}
+    ></SmartTable>
   );
 };
 

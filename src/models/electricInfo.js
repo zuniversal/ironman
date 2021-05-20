@@ -162,7 +162,10 @@ export default {
           action({
             ...res,
             payload,
-            powerInfo: powerInfoRes.bean,
+            powerInfo: {
+              ...powerInfoRes.bean,
+              priceType: powerInfoRes.bean.type?.name,
+            },
             canvasData: canvasDataRes.list[0]?.draw,
             canvasInfo: canvasDataRes.list[0],
           }),

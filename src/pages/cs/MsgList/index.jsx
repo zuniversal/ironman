@@ -24,10 +24,10 @@ import { actions, mapStateToProps } from '@/models/msgList';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '字典';
+const TITLE = '消息';
 
 const titleMap = {
-  add: `${TITLE}`,
+  add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
   upload: `文件上传`,

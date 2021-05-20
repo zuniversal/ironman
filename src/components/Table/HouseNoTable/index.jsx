@@ -29,7 +29,7 @@ const HouseNoTable = props => {
     },
     {
       noCutText: true,
-      width: 300,
+      width: 400,
       title: '所属客户',
       dataIndex: ['customer', 'name'],
       // className: 'textCenter',
@@ -72,6 +72,7 @@ const HouseNoTable = props => {
     {
       title: '录入日期',
       dataIndex: 'created_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
   ];
 

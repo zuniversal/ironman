@@ -2,6 +2,7 @@ import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csClientReport';
 import { formatSelectList, getUserInfo, nowYearMonth } from '@/utils';
 import moment from 'moment';
+import { getClientId } from '@/models/user';
 
 const namespace = 'csClientReport';
 const { createActions } = init(namespace);
@@ -22,7 +23,7 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
-console.log(' clientList ： ', clientList); //
+console.log(' clientList ： ', clientList, getUserInfo()); //
 
 export const formatSearch = data => {
   console.log(' formatSearch ： ', data);
@@ -53,7 +54,6 @@ export default {
     searchInfo: {},
     searchInfo: {
       // customer_id: clientList.map(v => `${v.id}`),
-      customer_id: clientList[0]?.id,
       year_month: moment().subtract(1, 'months'),
     },
 
@@ -419,10 +419,17 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
-      console.log(' getListAsync ： ', payload, searchInfo, type);
+      console.log(
+        ' getListAsync ： ',
+        payload,
+        searchInfo,
+        type,
+        getClientId(),
+      );
       const params = {
         ...searchInfo,
         ...payload,
+        customer_id: getClientId(),
       };
       console.log(' formatSearch(params) ： ', formatSearch(params)); //
       const res = yield call(services.getList, formatSearch(params));

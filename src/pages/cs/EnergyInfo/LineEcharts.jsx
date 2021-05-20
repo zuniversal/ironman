@@ -8,6 +8,45 @@ const dayHoursArr = createIndexArr(24).map(
   v => `${v}`.padStart(2, '0') + ':00',
 );
 
+const areaStyleConfig = [
+  {
+    itemStyle: {
+      normal: {
+        color: '#1CBB51',
+        borderWidth: 3,
+        borderColor: '#1CBB51', //拐点边框颜色
+      },
+    },
+    areaStyle: {
+      color: 'rgba(229, 248, 238, .6)',
+    },
+  },
+  {
+    itemStyle: {
+      normal: {
+        color: '#FD7D7D',
+        borderWidth: 3,
+        borderColor: '#FD7D7D',
+      },
+    },
+    areaStyle: {
+      color: 'rgba(255, 64, 65, .8)',
+    },
+  },
+  {
+    itemStyle: {
+      normal: {
+        color: '#3fafff',
+        borderWidth: 3,
+        borderColor: '#3fafff',
+      },
+    },
+    areaStyle: {
+      color: 'rgba(14, 244, 245, .8)',
+    },
+  },
+];
+
 export const weekArr = [
   '周日',
   '周一',
@@ -47,15 +86,17 @@ const datas = [
   163.3,
 ];
 
-const option = params => {
+const optionHandle = params => {
   const {
-    data,
+    data = [],
     chartSearchInfo,
     chartTimeData,
     yAxisTitle = '有功电量:kWh',
     yAxisTitle2 = '单价:元',
     legendData = ['平', '电度电量'],
     yAxisTitleArr = [],
+    lineNameArr = [],
+    yAxisIndex,
   } = params;
   console.log(' optionoption ： ', params); //
   const xAxisMap = {
@@ -71,7 +112,7 @@ const option = params => {
       right: '5%',
     },
     legend: {
-      data: legendData,
+      data: yAxisTitleArr ?? legendData,
     },
     xAxis: [
       {
@@ -83,28 +124,30 @@ const option = params => {
         boundaryGap: false,
       },
     ],
-    yAxis: [
-      {
-        type: 'value',
-        name: yAxisTitle,
-        axisLabel: {
-          formatter: '{value}',
-        },
-        axisLine: {
-          show: false,
-        },
-      },
-      {
-        type: 'value',
-        name: yAxisTitle2,
-        axisLabel: {
-          formatter: '{value}',
-        },
-        axisLine: {
-          show: false,
-        },
-      },
-    ],
+    yAxis:
+      yAxisTitleArr.length > 0
+        ? yAxisTitleArr.map((v, i) => ({
+            type: 'value',
+            name: v,
+            axisLabel: {
+              formatter: '{value}',
+            },
+            axisLine: {
+              show: false,
+            },
+          }))
+        : [
+            {
+              type: 'value',
+              name: yAxisTitle2,
+              axisLabel: {
+                formatter: '{value}',
+              },
+              axisLine: {
+                show: false,
+              },
+            },
+          ],
     series: [
       {
         name: yAxisTitle,
@@ -116,7 +159,7 @@ const option = params => {
           normal: {
             color: '#1CBB51',
             borderWidth: 3,
-            borderColor: '#1CBB51', //拐点边框颜色
+            borderColor: '#1CBB51',
           },
         },
         areaStyle: {
@@ -148,21 +191,15 @@ const option = params => {
     series:
       yAxisTitleArr.length > 0
         ? data.map((v, i) => ({
-            name: yAxisTitleArr.length > 0 ? yAxisTitleArr[i] : yAxisTitle,
+            name: lineNameArr.length > 0 ? lineNameArr[i] : yAxisTitle,
             type: 'line',
-            yAxisIndex: 0,
+            yAxisIndex: i,
+            yAxisIndex: yAxisIndex ? (i === yAxisIndex ? 1 : 0) : 0,
+            // yAxisIndex: 0,
             symbol: 'circle',
             symbolSize: 8,
-            // itemStyle: {
-            //   normal: {
-            //     color: '#1CBB51',
-            //     borderWidth: 3,
-            //     borderColor: '#1CBB51', //拐点边框颜色
-            //   },
-            // },
-            // areaStyle: {
-            //   color: 'rgba(229, 248, 238, .6)',
-            // },
+            // ...areaStyleConfig[i % 2],
+            // ...areaStyleConfig[i],
             data: v,
           }))
         : [
@@ -189,8 +226,9 @@ const option = params => {
 };
 
 const LineEcharts = props => {
-  console.log(' LineEcharts option ： ', props); //
-  return <SmartEchart {...props} option={option(props)}></SmartEchart>;
+  const option = optionHandle(props);
+  console.log(' LineEcharts optionoption  ： ', props, option); //
+  return <SmartEchart {...props} option={option}></SmartEchart>;
 };
 
 LineEcharts.defaultProps = {};

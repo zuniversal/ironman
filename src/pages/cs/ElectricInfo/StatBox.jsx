@@ -19,12 +19,14 @@ const statConfig = [
       dataKey: 'transformer_capacity',
       content: '',
       icon: icon3,
+      unit: 'kVA',
     },
     {
       title: '实际容量',
       dataKey: 'real_capacity',
       content: '',
       icon: icon4,
+      unit: 'kVA',
     },
   ],
   [
@@ -45,7 +47,7 @@ const statConfig = [
   [
     {
       title: '电价类型',
-      dataKey: 'type',
+      dataKey: 'priceType',
       //   content: '',
       icon: icon1,
       noBorder: true,
@@ -61,7 +63,7 @@ const statConfig = [
   [
     {
       title: '托管电站数',
-      dataKey: '',
+      dataKey: 'trusteeship_num',
       content: '',
       icon: icon7,
     },
@@ -80,7 +82,9 @@ const StatBoxItem = props => {
     <div className={`statBoxItem ${!props.noBorder ? 'statCol' : ''}`}>
       <div className="left">
         <div className="title">{props.title}</div>
-        <div className="subTitle">{content}</div>
+        <div className="subTitle">
+          {content} {props.unit}
+        </div>
       </div>
       <div className="right">
         {props.icon && <img src={props.icon} className="icon" />}
