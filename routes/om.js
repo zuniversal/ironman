@@ -70,6 +70,12 @@ export default [
     title: '资产管理',
   },
   {
+    path: '/om/assetsList',
+    authKey: 'assetManageModel',
+    component: '@/pages/om/AssetsList',
+    title: '资产管理',
+  },
+  {
     path: '/om/powerStation',
     authKey: 'powerStationModel',
     component: '@/pages/om/PowerStation',

@@ -45,26 +45,52 @@ const formatParams = data => {
   return params;
 };
 
-const recursiveHandle = (data = [], indexes) => {
-  console.log('treeData  recursiveHandle   ,   ： ', data, indexes);
+export const recursiveResetAssets = (data = [], { indexes, pid } = {}) => {
+  console.log(
+    'treeData  recursiveAssets recursiveResetAssets  ,   ： ',
+    data,
+    indexes,
+    pid,
+  );
   // return data.map((v, i) => ({...v,}));
   return data.map((v, i) => {
     const item = {
       ...v,
       isEdit: false,
+      isNew: false,
+    };
+    item.children = item.sub ? recursiveAssets(v.sub) : [];
+    return item;
+  });
+};
+
+export const recursiveAssets = (data = [], { indexes, pid } = {}) => {
+  // console.log('treeData  recursiveAssets   ,   ： ', data, indexes, pid);
+  // return data.map((v, i) => ({...v,}));
+  return formatSelectList(data).map((v, i) => {
+    const item = {
+      ...v,
+      // pid,
+      isEdit: false,
+      isNew: false,
+      key: `${v.key || v.id}`,
+      title: v.label,
       indexes: [...(indexes ?? []), i],
     };
     // if (v.children) {
-    //   item.children = recursiveHandle(v.children, [...(indexes ?? []), i])
+    //   item.children = recursiveAssets(v.children, [...(indexes ?? []), i])
     // }
-    item.children = item.children
-      ? recursiveHandle(v.children, [...(indexes ?? []), i])
+    item.children = item.sub
+      ? recursiveAssets(v.sub, {
+          indexes: [...(indexes ?? []), i],
+          // pid: item.pid,
+        })
       : [];
     return item;
   });
 };
 
-const treeDatas = recursiveHandle([
+const treeDatas = recursiveAssets([
   {
     title: '0-0',
     key: '0-0',
@@ -206,6 +232,8 @@ const initialState = {
   treeData: [],
   treeData: treeDatas,
   assetDeviceList: [],
+  selectItem: {},
+  // formTypes: 'addConfig',
 };
 
 export default {
@@ -231,13 +259,17 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      // console.log(' getList 修改  ： ', state, payload, type,     )//
+      console.log(' getList 修改  ： ', state, payload, type); //
       return {
         ...state,
-        dataList: payload.list,
+        dataList: recursiveAssets(payload.list),
+        treeData: recursiveAssets(payload.list),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
+        selectItem: {},
+        itemDetail: {},
+        action: '',
       };
     },
     getItem(state, { payload, type }) {
@@ -268,7 +300,19 @@ export default {
         d_id: payload.payload.d_id,
         powerList: filterObjSame([...powerList, stationItem]),
       };
-      production_date;
+    },
+    getItem(state, { payload, type }) {
+      action;
+      console.log(' getItem 修改  ： ', state, payload, payload.action, type);
+      return {
+        ...state,
+        itemDetail: {
+          ...payload.bean,
+        },
+        action: payload.payload.action,
+        selectItem: payload.payload.selectItem,
+        formTypes: 'addConfig',
+      };
     },
     addItem(state, { payload, type }) {
       console.log(' addItem 修改  ： ', state, payload, type);
@@ -341,10 +385,30 @@ export default {
     },
     editItems(state, { payload, type }) {
       console.log(' editItems 修改  ： ', state, payload, type);
+      // payload.form.setFieldsValue({
+      //   manufacturer: '11111',
+      // });
+      // payload.form.resetFields();
+      payload?.form.setFieldsValue({
+        type: undefined,
+        name: undefined,
+        manufacturer: undefined,
+        model: undefined,
+        production_code: undefined,
+        voltage: undefined,
+        current: undefined,
+        production_date: undefined,
+        operation_date: undefined,
+        service_life: undefined,
+        capacity: undefined,
+        real_capacity: undefined,
+      });
       return {
         ...state,
         action: payload.action,
+        selectItem: payload.selectItem,
         formTypes: payload.formTypes,
+        itemDetail: {},
       };
     },
 
@@ -360,10 +424,28 @@ export default {
       console.log(' addTreeNode 修改  ： ', state, payload, type);
       // const treeDatas = addTreeAttr(payload)
       // console.log(' treeDatas ： ', treeDatas,  )//
+      payload.form.setFieldsValue({
+        type: undefined,
+        name: undefined,
+        manufacturer: undefined,
+        model: undefined,
+        production_code: undefined,
+        voltage: undefined,
+        current: undefined,
+        production_date: undefined,
+        operation_date: undefined,
+        service_life: undefined,
+        capacity: undefined,
+        real_capacity: undefined,
+      });
       return {
         ...state,
+        action: payload.action,
         dataList: payload.treeDatas,
         treeData: payload.treeDatas,
+        selectItem: payload.selectItem,
+        itemDetail: {},
+        formTypes: 'addConfig',
       };
     },
     editTreeNode(state, { payload, type }) {
@@ -372,8 +454,10 @@ export default {
       // console.log(' treeDatas ： ', treeDatas,  )//
       return {
         ...state,
-        dataList: payload.treeDatas,
-        treeData: payload.treeDatas,
+        action: payload.action,
+        dataList: [...payload.treeDatas],
+        treeData: [...payload.treeDatas],
+        selectItem: payload.selectItem,
       };
     },
     onInputChange(state, { payload, type }) {
@@ -394,13 +478,13 @@ export default {
         ...searchInfo,
         ...payload,
       };
-      // console.log(
-      //   ' getListAsync  payload ： ',
-      //   payload,
-      //   searchInfo,
-      //   action,
-      //   params,
-      // );
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      );
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
@@ -421,6 +505,42 @@ export default {
       const res = yield call(services.editItem, formatParams(payload));
       console.log('  editItem res ：', res);
       // yield put(action({ ...res, payload }));
+      yield put({ type: 'getListAsync' });
+    },
+    *getItemAsync({ payload, action, type }, { call, put }) {
+      console.log(' getItemAsync ： ', payload, type);
+      // const res = yield call(services.getItem, payload);
+      const res = yield call(services.getItem, { d_id: payload.d_id });
+      console.log('  getItemAsync  res ：', res);
+      // const datas = {
+      //   ...res.bean,
+      //   res.operation_date = res.bean.operation_date ? moment(res.bean.operation_date) : null
+      //   res.production_date = res.bean.production_date ? moment(res.bean.production_date) : null
+      // }
+      res.bean.operation_date = res.bean.operation_date
+        ? moment(res.bean.operation_date)
+        : null;
+      res.bean.production_date = res.bean.production_date
+        ? moment(res.bean.production_date)
+        : null;
+      // console.log(' datas ： ', datas,  )//
+      // payload.form.setFieldsValue(datas);
+      // payload.form.setFieldsValue({...res.bean, name: payload.selectItem.name,});
+      // yield put(action({ ...datas, payload }));
+      console.log(' res.bean ： ', res.bean); //
+      payload.form.setFieldsValue(res.bean);
+      yield put(action({ ...res, payload }));
+    },
+    *addItemAsync({ payload, action, type }, { call, put }) {
+      // console.log(' addItemAsync ： ', payload, type,     )//
+      const res = yield call(services.addItem, payload);
+      console.log('  addItem res ：', res);
+      yield put({ type: 'getListAsync' });
+    },
+    *editItemAsync({ payload, action, type }, { call, put }) {
+      // console.log(' editItemAsync ： ', payload, type,     )//
+      const res = yield call(services.editItem, payload);
+      console.log('  editItem res ：', res);
       yield put({ type: 'getListAsync' });
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {

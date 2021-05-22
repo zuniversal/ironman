@@ -3,10 +3,15 @@ import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import useHttp from '@/hooks/useHttp';
 import { formatSelectList, filterObjSame } from '@/utils';
-import { getRelatived } from '@/services/client';
+import { getRelatived, getClientPower } from '@/services/client';
 import { Form } from 'antd';
 
 const AssetsSearchForm = props => {
+  console.log(
+    ' %c AssetsSearchForm 组件 this.state, this.props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  ); //
   const [houseNoList, setHouseNoList] = useState([]);
   const [powerStationList, setPowerStationList] = useState([]);
   const [clientSelectList, setclientSelectList] = useState([]);
@@ -25,7 +30,7 @@ const AssetsSearchForm = props => {
             stations: formatSelectList(item.stations).map(items => ({
               ...items,
               clientid: v.value,
-              houseno: item.value,
+              houseno: item.number,
             })),
           }),
         ),
@@ -51,12 +56,12 @@ const AssetsSearchForm = props => {
   // );
   const onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    if (params.changeKey === 'customer_id' && !params.value.customer_id) {
+    if (params.changeKey === 'customer' && !params.value.customer) {
       setHouseNoSelectList(null);
       setPowerStationSelectList(null);
     } else if (
-      params.changeKey === 'electricity_user_id' &&
-      !params.value.electricity_user_id
+      params.changeKey === 'power_number' &&
+      !params.value.power_number
     ) {
       setHouseNoSelectList(null);
       setPowerStationSelectList(null);
@@ -83,12 +88,9 @@ const AssetsSearchForm = props => {
     setHouseNoSelectList(item.electricity_users);
     setPowerStationSelectList(powerStationSelectList);
     form.setFieldsValue({
-      electricity_user_id: powerStationSelectList[0].value,
-      electricity_user_id: powerStationSelectList[0].value,
+      power_number: powerStationSelectList[0].houseno,
       station: powerStationSelectList[0].value,
     });
-    console.log(' form.getFieldsValue(),  ： ', form.getFieldsValue());
-    props.getListAsync(form.getFieldsValue());
   };
   const onHouseNoChange = (params, item) => {
     console.log(
@@ -100,7 +102,7 @@ const AssetsSearchForm = props => {
     );
     // sethouseNoList(setPowerStationList);
     // setAssetsList([]);
-    // getHouseNoAsync({ customer_id: params });
+    // getHouseNoAsync({ customer: params });
     // const res = houseNoList.find(v => v.value == params);
     // console.log(' res  houseNoList.filter v ： ', res);
     // const formatRes = formatSelectList(res.stations, 'name');
@@ -108,42 +110,55 @@ const AssetsSearchForm = props => {
     // setPowerStationList(formatRes);
     setPowerStationSelectList(item.stations);
     form.setFieldsValue({
-      customer_id: item.stations[0].clientid,
-      electricity_user_id: item.value,
+      customer: item.stations[0].clientid,
+      power_number: item.stations[0].houseno,
       station: item.stations[0].value,
     });
-    console.log(' form.getFieldsValue(),  ： ', form.getFieldsValue());
-    props.getListAsync(form.getFieldsValue());
   };
   const onPowerStationChange = (params, item) => {
     console.log(' onPowerStationChange  ： ', params, item);
     // getPowerStationAsync(params);
   };
-  console.log(' houseNoList,  ： ', houseNoList);
+
+  const { data: clientPowerList, req: getClientAsync } = useHttp(
+    getClientPower,
+    {
+      format: res => formatSelectList(res, 'customer_name', 'customer_id'),
+    },
+  );
+  // console.log('    clientPowerList ： ', clientPowerList);
+
+  const onClientSelect = (params, item) => {
+    console.log(' onClientSelect  ： ', params, item);
+    props.getListAsync({
+      electricity_user_id: item.electricity_user_id,
+      customer_id: item.customer_id,
+    });
+  };
 
   const config = [
-    {
-      formType: 'Select',
-      selectData: clientList,
-      itemProps: {
-        label: '客户',
-        name: 'customer_id',
-      },
-      comProps: {
-        onSelect: onClientChange,
-      },
-    },
-    {
-      formType: 'Select',
-      selectData: houseNoList,
-      itemProps: {
-        label: '户号',
-        name: 'electricity_user_id',
-      },
-      comProps: {
-        onSelect: onHouseNoChange,
-      },
-    },
+    // {
+    //   formType: 'Select',
+    //   selectData: clientList,
+    //   itemProps: {
+    //     label: '客户',
+    //     name: 'customer',
+    //   },
+    //   comProps: {
+    //     onSelect: onClientChange,
+    //   },
+    // },
+    // {
+    //   formType: 'Select',
+    //   selectData: houseNoSelectList ?? houseNoList,
+    //   itemProps: {
+    //     label: '户号',
+    //     name: 'power_number',
+    //   },
+    //   comProps: {
+    //     onSelect: onHouseNoChange,
+    //   },
+    // },
     // {
     //   formType: 'Select',
     //   selectData: powerStationSelectList ?? powerStationList,
@@ -155,6 +170,23 @@ const AssetsSearchForm = props => {
     //     onSelect: onPowerStationChange,
     //   },
     // },
+    {
+      formType: 'Search',
+      selectData: clientPowerList,
+      itemProps: {
+        label: '客户',
+        name: 'customer_id',
+      },
+      comProps: {
+        onSelect: onClientSelect,
+      },
+    },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
+      },
+    },
   ];
 
   return (
@@ -163,6 +195,7 @@ const AssetsSearchForm = props => {
         config={config}
         propsForm={form}
         {...props}
+        // key={props.init}
         // onFieldChange={onFieldChange}
       ></SearchForm>
     </div>

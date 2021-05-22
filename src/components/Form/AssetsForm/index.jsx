@@ -11,12 +11,24 @@ import { getManufacturerList } from '@/services/monitorManage';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { getList as getPowerStationList } from '@/services/powerStation';
 import { getList as getHouseNoList } from '@/services/houseNo';
+import { assetTypeConfig, assetFormTypeMap } from '@/configs'; //
+import moment from 'moment';
+
+const formatFormItem = (data = []) =>
+  data.map(v => ({
+    noRule: true,
+    itemProps: {
+      label: v.label,
+      name: ['extra_data', v.name],
+    },
+  })); //
 
 const AssetsForm = props => {
   console.log(' AssetsForm ： ', props, config);
   const { action } = props;
 
   const [houseNoList, setHouseNoList] = useState([]);
+  const [dynamicFormType, setDynamicFormType] = useState('');
 
   // const formConfig = formatConfig(config);
   const commonParams = {
@@ -28,27 +40,13 @@ const AssetsForm = props => {
       ...commonParams,
     },
   );
-  const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(
-    getManufacturerList,
-    {
-      ...commonParams,
-      format: res => formatSelectList(res, 'manufacturer'),
-    },
-  );
-  const { data: clientPowerList, req: getClientAsync } = useHttp(
-    // () => getRelatived({ get_all: '1' }),
-    getClientPower,
-    {
-      format: res => formatSelectList(res, 'customer_name', 'customer_id'),
-      // .map(
-      //   ({ customer_address, ...v }) => ({
-      //     ...v,
-      //     label: `${v.label} - ${customer_address}`,
-      //   }),
-      // ),
-    },
-  );
-  console.log(' clientPowerList ： ', clientPowerList); //
+  // const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(
+  //   getManufacturerList,
+  //   {
+  //     ...commonParams,
+  //     format: res => formatSelectList(res, 'manufacturer'),
+  //   },
+  // );
   // const { data: powerStationList, req: getPowerStationAsync } = useHttp(
   //   getHouseNoList,
   //   {
@@ -74,17 +72,33 @@ const AssetsForm = props => {
       });
       // setHouseNoList(res && res.electricity_user ? [{value: `${res.electricity_user.id}`, label: res.electricity_user.number, }] : [])
     }
+
+    const { type } = props.propsForm.getFieldsValue();
+    const formatFormItemRes = assetFormTypeMap[type]
+      ? formatFormItem(assetFormTypeMap[type])
+      : [];
+    setDynamicFormType(formatFormItemRes);
+    console.log(
+      ' onFieldChange formatFormItemRes ：',
+      formatFormItemRes,
+      assetFormTypeMap[type],
+    ); //
   };
+
+  const { type } = props.propsForm.getFieldsValue();
+  const formatFormItemRes = assetFormTypeMap[type]
+    ? formatFormItem(assetFormTypeMap[type])
+    : [];
+  console.log('  formatFormItemRes ：', formatFormItemRes); //
 
   const addConfig = [
     {
       // noRule: true,
       formType: 'Search',
-      selectSearch: getManufacturerListAsync,
-      selectData: manufacturerList,
+      selectData: assetTypeConfig,
       itemProps: {
         label: '资产类型',
-        name: '',
+        name: 'type',
       },
     },
     {
@@ -94,31 +108,50 @@ const AssetsForm = props => {
         label: ' ',
       },
     },
+    ...(props.action !== 'edit'
+      ? [
+          {
+            // formType: 'Select',
+            noRule: true,
+            itemProps: {
+              label: '资产名称',
+              name: 'name',
+            },
+          },
+        ]
+      : []),
+    // {
+    //   // formType: 'Select',
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '资产名称',
+    //     name: 'name',
+    //   },
+    // },
     {
-      // formType: 'Select',
       // noRule: true,
-      itemProps: {
-        label: '资产名称',
-        name: 'name',
-      },
-    },
-    {
-      // noRule: true,
-      formType: 'Search',
-      selectSearch: getManufacturerListAsync,
-      selectData: manufacturerList,
+      // formType: 'Search',
+      // selectSearch: getManufacturerListAsync,
+      // selectData: manufacturerList,
       itemProps: {
         label: '制造厂商',
-        name: '',
+        name: 'manufacturer',
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '设备型号',
         name: 'model',
       },
     },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: 'id',
+    //     name: 'id',
+    //   },
+    // },
     {
       // noRule: true,
       itemProps: {
@@ -139,7 +172,23 @@ const AssetsForm = props => {
       noRule: true,
       itemProps: {
         label: '额定电流',
-        name: 'electricity',
+        name: 'current',
+      },
+    },
+    {
+      // noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '容量',
+        name: 'capacity',
+      },
+    },
+    {
+      // noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '实际容量',
+        name: 'real_capacity',
       },
     },
     {
@@ -158,6 +207,16 @@ const AssetsForm = props => {
         name: 'operation_date',
       },
     },
+    {
+      // noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '使用年限',
+        name: 'service_life',
+      },
+    },
+
+    ...formatFormItemRes,
   ];
 
   const config2 = [
@@ -342,14 +401,17 @@ const AssetsForm = props => {
 
   return (
     <SmartForm
-      config={configMap[props.formTypes]}
-      // config={configs}
-
+      // config={configMap[props.formTypes]}
+      config={configs}
+      config={addConfig}
       {...props}
       init={{
         electricity_user: null,
         station: null,
         station_id: null,
+        real_capacity: null,
+        production_date: moment(),
+        operation_date: moment(),
         ...props.init,
       }}
       onFieldChange={onFieldChange}

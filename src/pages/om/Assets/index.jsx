@@ -154,20 +154,20 @@ class Assets extends PureComponent {
         <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn>
-        <Button
+        {/* <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
           disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
-        </Button>
+        </Button> */}
       </div>
     );
   };
   renderSearchForm = params => {
     return (
       <AssetsSearchForm
-        formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
         getHouseNoAsync={this.props.getHouseNoAsync}
         getPowerAsync={params => this.props.getPowerAsync({ name: params })}
         getClientAsync={params => this.props.getClientAsync({ name: params })}
@@ -175,7 +175,8 @@ class Assets extends PureComponent {
         powerList={this.props.powerList}
         houseNoList={this.props.houseNoList}
         init={this.props.searchInfo}
-        onFieldChange={this.onFieldChange}
+        // onFieldChange={this.onFieldChange}
+        getListAsync={this.props.getListAsync}
       ></AssetsSearchForm>
     );
   };
@@ -356,8 +357,8 @@ class Assets extends PureComponent {
   };
   saveTreeNodeAsync = params => {
     console.log('    saveTreeNodeAsync ： ', params);
-    // this.props.saveTreeNodeAsync(params)
-    this.props.editTreeNode(params);
+    this.props.addItemAsync(params);
+    // this.props.editTreeNode(params);
   };
   renderAssetTree = params => {
     return (
@@ -371,7 +372,17 @@ class Assets extends PureComponent {
         editTreeNode={this.props.editTreeNode}
         saveTreeNodeAsync={this.saveTreeNodeAsync}
         // treeData={this.props.dataList}
+        action={this.props.action}
+        dataList={this.props.dataList}
         treeData={this.props.treeData}
+        treeData={this.props.dataList}
+        searchInfo={this.props.searchInfo}
+        addItemAsync={this.props.addItemAsync}
+        editItemAsync={this.props.editItemAsync}
+        getItemAsync={this.props.getItemAsync}
+        itemDetail={this.props.itemDetail}
+        selectItem={this.props.selectItem}
+        onRemove={this.onRemove}
       ></AssetTree>
     );
   };
@@ -403,9 +414,11 @@ class Assets extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getAssetDeviceAsync();
     this.props.getPowerAsync();
-    this.props.getListAsync();
+    this.props.getListAsync({
+      electricity_user_id: '6464',
+      customer_id: '6464',
+    });
   }
 
   render() {

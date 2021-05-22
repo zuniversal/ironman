@@ -343,6 +343,23 @@ export default {
         },
       };
     },
+    assetsDetail(state, { payload, type }) {
+      console.log(' assetsDetail ： ', state, payload);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          operation_date: payload.bean.operation_date
+            ? moment(payload.bean.operation_date)
+            : null,
+          production_date: payload.bean.production_date
+            ? moment(payload.bean.production_date)
+            : null,
+        },
+      };
+    },
     houseNoDetail(state, { payload, type }) {
       console.log(' houseNoDetail ： ', state, payload);
       const { customer } = payload.bean;

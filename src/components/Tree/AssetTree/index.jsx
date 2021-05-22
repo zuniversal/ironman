@@ -8,40 +8,46 @@ import {
   SearchOutlined,
   FileOutlined,
 } from '@ant-design/icons';
-import { Tree, Input, Row, Col, Button, Tooltip } from 'antd';
+import { Tree, Input, Row, Col, Button, Tooltip, Form } from 'antd';
+import { recursiveResetAssets } from '@/models/assets'; //
 
-const EmptyAsset = props => (
-  <>
-    该处资产现在为空，请添加资产
-    <Button
-      type="primary"
-      onClick={() =>
-        props.editItems({
-          action: 'editItems',
-          // item,
-          formTypes: 'addConfig',
-        })
-      }
-      className={`m-l-10`}
-    >
-      新增
-    </Button>
-  </>
-);
+const EmptyAsset = props => {
+  console.log('EmptyAsset     ,   ： ', props);
+  return (
+    <div className={`dfc`}>
+      该处资产现在为空，请添加资产
+      <Button
+        type="primary"
+        onClick={() =>
+          // props.editItems({
+          //   action: 'editItems',
+          //   // item,
+          //   formTypes: 'addConfig',
+          //   form: props.form,
+          // })
+          props.addTreeNode(props.selectItem)
+        }
+        className={`m-l-10`}
+      >
+        新增
+      </Button>
+    </div>
+  );
+};
 
 const AssetForm = props => (
   <AssetsForm
     flexRow={2}
-    formTypes={props.formTypes}
-    key={props.formTypes}
     formBtn={props.renderFormBtn}
-  >
-    {props.children}
-  </AssetsForm>
+    key={props.init.id}
+    {...props}
+  ></AssetsForm>
 );
 
-const recursiveHandle = (data = [], { indexes, parent_id }) => {
-  console.log('treeData  recursiveHandle   ,   ： ', data, indexes);
+const recursiveHandle = recursiveResetAssets;
+const recursiveHandle2 = (data = [], params = {}) => {
+  console.log('treeData  recursiveHandle   ,   ： ', data, params);
+  const { indexes, parent_id } = params;
   // return data.map((v, i) => ({...v,}));
   return data.map((v, i) => {
     const item = {
@@ -65,7 +71,7 @@ const recursiveHandle = (data = [], { indexes, parent_id }) => {
 };
 
 export const recursiveKeys = (data = [], allKeys = []) => {
-  console.log('treeData  recursiveKeys   ,   ： ', data, allKeys);
+  // console.log('treeData  recursiveKeys   ,   ： ', data, allKeys);
   // return data.map((v, i) => ({...v,}));
   data.forEach((v, i) => {
     allKeys.push(v.key);
@@ -121,14 +127,14 @@ const datas = [
 
 const addTreeAttr = ({ treeData, val, attr, item, i }) => {
   console.log(' addTreeAttr   e, item, i,   ： ', treeData, val, item, i);
-  const { indexes } = item;
+  const { indexes = [] } = item;
   const [index0, index1, index2] = indexes;
   const copyData = [...treeData];
   console.log('  对吗  indexes.length ', indexes);
   const newTreeNode = {
     // indexes: [...indexes, children.length],
     isNew: true,
-    isEdit: true,
+    isEdit: false,
     title: '资产名',
     children: [],
   };
@@ -138,6 +144,7 @@ const addTreeAttr = ({ treeData, val, attr, item, i }) => {
         ...copyData[index0].children,
         {
           ...newTreeNode,
+          pid: copyData[index0].pid,
           key: `${item.key}-${copyData[index0].children.length}`,
           indexes: [...indexes, copyData[index0].children.length],
         },
@@ -152,6 +159,7 @@ const addTreeAttr = ({ treeData, val, attr, item, i }) => {
         ...copyData[index0].children[index1].children,
         {
           ...newTreeNode,
+          pid: copyData[index0].children[index1].pid,
           key: `${item.key}-${copyData[index0].children[index1].children.length}`,
           indexes: [
             ...indexes,
@@ -165,6 +173,7 @@ const addTreeAttr = ({ treeData, val, attr, item, i }) => {
         ...copyData[index0].children[index1].children[index2].children,
         {
           ...newTreeNode,
+          pid: copyData[index0].children[index1].children[index2].pid,
           key: `${item.key}-${copyData[index0].children[index1].children[index2].children.length}`,
           indexes: [
             ...indexes,
@@ -203,6 +212,8 @@ const editTreeAttr = ({ treeData, val, attr, item, i }) => {
 };
 
 const AssetTree = props => {
+  const [form] = Form.useForm();
+
   const [searchValue, setSearchValue] = useState('');
   // const [ treeData, setTreeData ] = useState(recursiveHandle(treeDatas))
   // const [ treeData, setTreeData ] = useState(treeDatas)
@@ -226,7 +237,11 @@ const AssetTree = props => {
     });
     console.log(' treeDatas ： ', treeDatas); //
     // setTreeData(treeDatas)
-    props.editTreeNode({ treeDatas });
+    props.editTreeNode({
+      treeDatas,
+      selectItem: props.selectItem,
+      action: 'edit',
+    });
   };
 
   const addTreeNode = (item, i) => {
@@ -240,7 +255,7 @@ const AssetTree = props => {
     });
     console.log(' treeDatas ： ', treeDatas); //
     // setTreeData(treeDatas)
-    props.addTreeNode({ treeDatas });
+    props.addTreeNode({ treeDatas, selectItem: item, form, action: 'add' });
   };
   const editTreeNode = (item, i) => {
     console.log(' editTreeNode   item, i,   ： ', item, i);
@@ -253,7 +268,7 @@ const AssetTree = props => {
     });
     console.log(' treeDatas ： ', treeDatas); //
     // setTreeData(treeDatas)
-    props.editTreeNode({ treeDatas });
+    props.editTreeNode({ treeDatas, selectItem: item, action: 'edit' });
   };
 
   // const saveTreeData = () => {
@@ -266,47 +281,106 @@ const AssetTree = props => {
     setSearchValue(e.target.value);
   };
 
+  const onClick = (selectItem, e) => {
+    console.log(
+      '  onClickonClick  ：',
+      selectItem,
+      e,
+      selectItem.equipment_data_id ? '数据' : '无数据',
+    );
+    // props.editItems({
+    //   action: 'add',
+    //   selectItem,
+    //   formTypes: 'addConfig',
+    // })
+    // return
+    selectItem.equipment_data_id
+      ? props.getItemAsync({
+          action: 'edit',
+          selectItem,
+          formTypes: 'addConfig',
+          d_id: selectItem.id,
+          form,
+        })
+      : props.editItems({
+          action: 'add',
+          selectItem,
+          formTypes: 'addConfig',
+          form,
+        });
+  };
   const onSelect = (selectItem, e) => {
     console.log('  onSelect  ：', e, selectItem);
+    props.editItems({
+      action: 'editItems',
+      // item,
+      selectItem,
+      formTypes: 'addConfig',
+    });
     // setSearchValue(e.target.value)
     // props.onSelectTreeNode()
   };
 
   const actionCom = ({ item, i, props }) => (
     <>
-      {item.isEdit ? (
+      {/* <EditOutlined
+        onClick={() => onClick(item, )
+          // props.editItems({
+          //   action: 'editItems',
+          //   item,
+          //   formTypes: 'config',
+          // })
+        }
+      /> */}
+      {item.isEdit || item.isNew ? (
         <Tooltip title="保存资产结构">
           <FileOutlined
-            onClick={() =>
-              props.saveTreeNodeAsync({
-                action: 'saveTreeNodeAsync',
-                treeData,
+            onClick={() => {
+              console.log(' 保存资产结构 ： '); //
+              console.log(
+                ' 保存资产结构 ： ',
+                recursiveHandle(treeData),
+                props,
                 item,
-              })
-            }
+                props.selectItem,
+              ); //
+              // props.saveTreeNodeAsync({
+              //   action: 'saveTreeNodeAsync',
+              //   // treeDatas: recursiveHandle(treeData),
+              //   // item,
+              //   // customer_id: props.searchInfo.customer_id,
+              //   ...props.searchInfo,
+              //   pid: item.pid,
+              //   name: item.title,
+              // })
+              // if (props.selectItem.isEdit) {
+              //   props.saveTreeNodeAsync({
+              //     ...props.searchInfo,
+              //     pid: props.selectItem.id,
+              //     name: item.title,
+              //   })
+              // } else {
+              props.saveTreeNodeAsync({
+                ...props.searchInfo,
+                pid: props.selectItem.id,
+                name: item.title,
+              });
+              // }
+            }}
           />
         </Tooltip>
       ) : (
         <Tooltip title="编辑资产结构">
-          <EditOutlined onClick={() => editTreeNode(item, i)} />
+          {/* <EditOutlined onClick={() => editTreeNode(item, i)} /> */}
+          <EditOutlined onClick={() => onClick(item)} />
         </Tooltip>
       )}
-      <EditOutlined
+      {/* <EditOutlined
         onClick={() =>
           props.editItems({
             action: 'editItems',
             item,
             formTypes: 'addConfig',
-          })
-        }
-      />
-
-      <EditOutlined
-        onClick={() =>
-          props.editItems({
-            action: 'editItems',
-            item,
-            formTypes: 'config',
           })
         }
       />
@@ -318,12 +392,13 @@ const AssetTree = props => {
             formTypes: null,
           })
         }
-      />
-      {item.indexes.length < 3 && (
+      /> */}
+      {!item.isNew && item.indexes.length < 3 && (
         <Tooltip title="新增资产结构">
           <PlusCircleOutlined
-            onClick={() => {
-              console.log(' item, i ： ', item, i); //
+            onClick={e => {
+              console.log(' preventDefault item, i ： ', item, i, e); //
+              e.preventDefault();
               const treeDatas = [...treeData];
               addTreeNode(item, i);
               return;
@@ -337,20 +412,25 @@ const AssetTree = props => {
           />
         </Tooltip>
       )}
-      <Tooltip title="删除资产结构">
-        <MinusCircleOutlined
-          onClick={() =>
-            props.handleAction({
-              action: 'handleWeak',
-            })
-          }
-        />
-      </Tooltip>
+      {!item.isNew && (
+        <Tooltip title="删除资产结构">
+          <MinusCircleOutlined
+            onClick={() =>
+              props.onRemove({
+                action: 'onRemove',
+                record: {
+                  id: item.id,
+                },
+              })
+            }
+          />
+        </Tooltip>
+      )}
     </>
   );
 
   const loop = (data, props) => {
-    console.log('  treeData loop ： ', data); //
+    // console.log('  treeData loop ： ', data); //
     const { searchValue } = props;
 
     return data.map((item, i) => {
@@ -377,14 +457,19 @@ const AssetTree = props => {
       );
 
       const title = (
-        <div className={`treeRow`}>
-          {item.isNew && '新：'}
-          {item.isEdit ? inputCom : titleText}
+        <div
+          className={`treeRow`}
+          // onClick={e => onClick(item, e)}
+        >
+          {item.isNew && '新增：'}
+          {item.isEdit && '编辑：'}
+          {item.isNew || item.isEdit ? inputCom : titleText}
+          {/* {item.isEdit ? inputCom : titleText} */}
           {actionCom({ item, i, props })}
         </div>
       );
 
-      console.log(' treeData  item ： ', item); //
+      // console.log(' treeData  item ： ', item); //
       if (item.children) {
         return { title, key: item.key, children: loop(item.children, props) };
       }
@@ -397,7 +482,8 @@ const AssetTree = props => {
 
   const expandedKeys = [];
   recursiveKeys(treeData, expandedKeys);
-  console.log('  expandedKeys ：', expandedKeys); //
+  // console.log('  expandedKeys ：', expandedKeys); //
+
   const treeNodes = (
     <>
       <Input
@@ -407,17 +493,17 @@ const AssetTree = props => {
       />
       <Tree
         // expandedKeys={['0-0-0', '0-0-1']}
-        expandedKeys={expandedKeys}
+        // expandedKeys={expandedKeys}
         autoExpandParent={true}
         treeData={loop(treeData, {
           ...props,
           onInputChange,
           searchValue,
         })}
-        onSelect={onSelect}
+        // onSelect={onSelect}
         className={`assetTree`}
       />
-      <div className={`dfc saveBtn`}>
+      {/* <div className={`dfc saveBtn`}>
         <Button
           type="primary"
           onClick={() => props.showFormModal({ action: 'add' })}
@@ -425,18 +511,18 @@ const AssetTree = props => {
         >
           保存
         </Button>
-      </div>
+      </div> */}
     </>
   );
 
-  const saveBtn = form => {
-    console.log(' saveBtn ： ', form); //
+  const saveBtns = forms => {
+    console.log(' saveBtn ： ', forms); //
     return (
       <div className={`dfc`}>
         <Button
           type="primary"
           onClick={() => {
-            console.log(' formform ： ', form); //
+            console.log(' formform ： ', forms, form); //
           }}
           className={`m-l-10`}
         >
@@ -446,17 +532,106 @@ const AssetTree = props => {
     );
   };
 
+  const onSave = async params => {
+    console.log(' onSave ： ', params, props, form);
+    // const { form,  } = params;
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res);
+      const params = {
+        ...res,
+        production_date: res.production_date.format('YYYY-MM-DD'),
+        operation_date: res.operation_date.format('YYYY-MM-DD'),
+      };
+      console.log(' params ： ', params); //
+      if (props.action === 'edit') {
+        props.editItemAsync({
+          d_id: props.itemDetail.id,
+          ...params,
+        });
+        return;
+      }
+      // if (props.action === 'add') {
+      // }
+      props.addItemAsync({
+        ...props.searchInfo,
+        pid: props.selectItem.id,
+        name: props.selectItem.title || params.name,
+        data: {
+          ...params,
+        },
+      });
+    } catch (error) {
+      console.log(' error ： ', error);
+    }
+  };
+
+  const saveBtn = (
+    <div className={`dfc`}>
+      <Button type="primary" onClick={onSave} className={`m-l-10`}>
+        保存
+      </Button>
+    </div>
+  );
+
   return (
     <div className={`assetTree`}>
       <Row>
-        <Col span={8}>{treeNodes}</Col>
-        <Col span={16} className={`dfc`}>
-          {props.formTypes ? (
-            <AssetForm formTypes={props.formTypes} renderFormBtn={saveBtn}>
-              {/* {saveBtn} */}
-            </AssetForm>
+        <Col span={8} className={`treeStruct`}>
+          {treeNodes}
+        </Col>
+        {/* <Col span={16} className={`dfc`}> */}
+        <Col span={16} className={``}>
+          {props.action ? (
+            // {props.formTypes ? (
+            // {Object.keys(props.itemDetail).length ? (
+            <>
+              {!Object.keys(props.itemDetail).length && (
+                <EmptyAsset
+                  editItems={props.editItems}
+                  addTreeNode={addTreeNode}
+                  selectItem={props.selectItem}
+                  form={form}
+                ></EmptyAsset>
+              )}
+              <AssetsForm
+                flexRow={2}
+                init={{
+                  ...props.itemDetail,
+                  type: '1201',
+                  name: 'name',
+                  manufacturer: 'manufacturer',
+                  model: 'model',
+                  production_code: 'production_code',
+                  voltage: 1,
+                  current: 1,
+                  production_date: '2020-12-12',
+                  operation_date: '2020-12-12',
+                  service_life: 1,
+                  capacity: 'capacity',
+                  // real_capacity: 'real_capacity',
+                }}
+                init={{
+                  ...props.itemDetail,
+                }}
+                propsForm={form}
+                action={props.action}
+                formTypes={props.formTypes}
+                // key={props.itemDetail.id}
+                // key={props.itemDetail.id || props.formTypes}
+                // renderFormBtn={saveBtn}
+                // key={props.itemDetail}
+              >
+                {saveBtn}
+              </AssetsForm>
+            </>
           ) : (
-            <EmptyAsset editItems={props.editItems}></EmptyAsset>
+            <EmptyAsset
+              editItems={props.editItems}
+              addTreeNode={addTreeNode}
+              selectItem={props.selectItem}
+              form={form}
+            ></EmptyAsset>
           )}
         </Col>
       </Row>

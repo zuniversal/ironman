@@ -25,7 +25,7 @@ const AssetsSearchForm = props => {
             stations: formatSelectList(item.stations).map(items => ({
               ...items,
               clientid: v.value,
-              houseno: item.value,
+              houseno: item.number,
             })),
           }),
         ),
@@ -51,12 +51,12 @@ const AssetsSearchForm = props => {
   // );
   const onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    if (params.changeKey === 'customer_id' && !params.value.customer_id) {
+    if (params.changeKey === 'customer' && !params.value.customer) {
       setHouseNoSelectList(null);
       setPowerStationSelectList(null);
     } else if (
-      params.changeKey === 'electricity_user_id' &&
-      !params.value.electricity_user_id
+      params.changeKey === 'power_number' &&
+      !params.value.power_number
     ) {
       setHouseNoSelectList(null);
       setPowerStationSelectList(null);
@@ -83,12 +83,9 @@ const AssetsSearchForm = props => {
     setHouseNoSelectList(item.electricity_users);
     setPowerStationSelectList(powerStationSelectList);
     form.setFieldsValue({
-      electricity_user_id: powerStationSelectList[0].value,
-      electricity_user_id: powerStationSelectList[0].value,
+      power_number: powerStationSelectList[0].houseno,
       station: powerStationSelectList[0].value,
     });
-    console.log(' form.getFieldsValue(),  ： ', form.getFieldsValue());
-    props.getListAsync(form.getFieldsValue());
   };
   const onHouseNoChange = (params, item) => {
     console.log(
@@ -100,7 +97,7 @@ const AssetsSearchForm = props => {
     );
     // sethouseNoList(setPowerStationList);
     // setAssetsList([]);
-    // getHouseNoAsync({ customer_id: params });
+    // getHouseNoAsync({ customer: params });
     // const res = houseNoList.find(v => v.value == params);
     // console.log(' res  houseNoList.filter v ： ', res);
     // const formatRes = formatSelectList(res.stations, 'name');
@@ -108,18 +105,15 @@ const AssetsSearchForm = props => {
     // setPowerStationList(formatRes);
     setPowerStationSelectList(item.stations);
     form.setFieldsValue({
-      customer_id: item.stations[0].clientid,
-      electricity_user_id: item.value,
+      customer: item.stations[0].clientid,
+      power_number: item.stations[0].houseno,
       station: item.stations[0].value,
     });
-    console.log(' form.getFieldsValue(),  ： ', form.getFieldsValue());
-    props.getListAsync(form.getFieldsValue());
   };
   const onPowerStationChange = (params, item) => {
     console.log(' onPowerStationChange  ： ', params, item);
     // getPowerStationAsync(params);
   };
-  console.log(' houseNoList,  ： ', houseNoList);
 
   const config = [
     {
@@ -127,7 +121,7 @@ const AssetsSearchForm = props => {
       selectData: clientList,
       itemProps: {
         label: '客户',
-        name: 'customer_id',
+        name: 'customer',
       },
       comProps: {
         onSelect: onClientChange,
@@ -135,26 +129,26 @@ const AssetsSearchForm = props => {
     },
     {
       formType: 'Select',
-      selectData: houseNoList,
+      selectData: houseNoSelectList ?? houseNoList,
       itemProps: {
         label: '户号',
-        name: 'electricity_user_id',
+        name: 'power_number',
       },
       comProps: {
         onSelect: onHouseNoChange,
       },
     },
-    // {
-    //   formType: 'Select',
-    //   selectData: powerStationSelectList ?? powerStationList,
-    //   itemProps: {
-    //     label: '电站',
-    //     name: 'station',
-    //   },
-    //   comProps: {
-    //     onSelect: onPowerStationChange,
-    //   },
-    // },
+    {
+      formType: 'Select',
+      selectData: powerStationSelectList ?? powerStationList,
+      itemProps: {
+        label: '电站',
+        name: 'station',
+      },
+      comProps: {
+        onSelect: onPowerStationChange,
+      },
+    },
   ];
 
   return (
@@ -163,7 +157,7 @@ const AssetsSearchForm = props => {
         config={config}
         propsForm={form}
         {...props}
-        // onFieldChange={onFieldChange}
+        onFieldChange={onFieldChange}
       ></SearchForm>
     </div>
   );
