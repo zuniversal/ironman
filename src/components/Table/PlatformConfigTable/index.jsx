@@ -15,6 +15,10 @@ const PlatformConfigTable = props => {
     {
       title: '平台地址',
       dataIndex: '',
+      // detailFn: record => props.showItemAsync({
+      //     action: 'clientDetailAsync',
+      //     d_id: record.id,
+      //   }),
     },
   ];
 

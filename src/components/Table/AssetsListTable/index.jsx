@@ -1,41 +1,10 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import './style.less';
-
 import SmartTable from '@/common/SmartTable';
+import { assetTypeMap } from '@/configs';
 
 const AssetsListTable = props => {
   const columns = [
-    {
-      noFilter: true,
-      noCutText: true,
-      width: 300,
-      title: '所属客户',
-      dataIndex: 'customer_name',
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'clientDetailAsync',
-          d_id: record.customer_id,
-        }),
-    },
-    {
-      title: '户号',
-      dataIndex: 'code',
-      dataIndex: 'number',
-      detailFn: record =>
-        props.showItemAsync({
-          action: 'houseNoDetailAsync',
-          // d_id: record.electricity_user.id,
-          d_id: record.electricity_user_id,
-        }),
-    },
     // {
     //   title: '电站',
     //   dataIndex: ['station', 'name'],
@@ -60,14 +29,15 @@ const AssetsListTable = props => {
       //     id: record.id,
       //   }),
     },
-    {
-      title: '设备模块',
-      dataIndex: 'modular',
-    },
+    // {
+    //   title: '设备模块',
+    //   dataIndex: 'modular',
+    // },
 
     {
       title: '设备类型',
       dataIndex: 'type',
+      dataMap: assetTypeMap,
     },
     {
       title: '厂商',
@@ -76,6 +46,29 @@ const AssetsListTable = props => {
     {
       title: '型号',
       dataIndex: 'model',
+    },
+    {
+      noFilter: true,
+      noCutText: true,
+      width: 300,
+      title: '所属客户',
+      dataIndex: 'customer_name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer_id,
+        }),
+    },
+    {
+      title: '户号',
+      dataIndex: 'code',
+      dataIndex: 'number',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          // d_id: record.electricity_user.id,
+          d_id: record.electricity_user_id,
+        }),
     },
     // {
     //   title: '状态',

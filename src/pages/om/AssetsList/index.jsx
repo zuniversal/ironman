@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import SearchKwForm from '@/components/Form/SearchKwForm';
 import AssetsListSearchForm from '@/components/Form/AssetsListSearchForm';
 import AssetsListTable from '@/components/Table/AssetsListTable';
-// import AssetsListForm from '@/components/Form/AssetsListForm';
 import SmartFormModal from '@/common/SmartFormModal';
 import AssetsForm from '@/components/Form/AssetsForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
@@ -14,7 +12,6 @@ import ClientForm from '@/components/Form/ClientForm';
 import { actions, mapStateToProps } from '@/models/assetsList';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { tips } from '@/utils';
 
 const TITLE = '资产清单';
 
@@ -60,27 +57,9 @@ class AssetsList extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        {/* <Button type="primary" onClick={() => this.props.exportData()}> */}
-        <Button type="primary" onClick={() => tips('暂未开发！')}>
-          导出{TITLE}数据
-        </Button>
       </div>
     );
   };
-  renderSearchForm = params => {
-    return (
-      <SearchKwForm
-        // formBtn={this.renderFormBtn}
-        className={'fje'}
-        init={this.props.searchInfo}
-        onFieldChange={this.onFieldChange}
-        label={'关键字'}
-        placeholder={'客户名称、户号、设备名称、设备厂家、设备型号'}
-        keyword={'keyword'}
-      ></SearchKwForm>
-    );
-  };
-
   renderSearchForm = params => {
     return (
       <AssetsListSearchForm

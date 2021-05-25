@@ -123,6 +123,9 @@ const CustomImg = () => {
             href="/#"
             onDragStart={ev => onDrag(ev, item)}
             key={index}
+            onClick={() => {
+              console.log(' xxxxxxx ： '); //
+            }}
           >
             <img alt="pic" src={item} className={`customImg`} />
           </a>

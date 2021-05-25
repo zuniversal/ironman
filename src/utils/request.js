@@ -87,6 +87,7 @@ export const isTips = res => {
   //   tips(codeMap[code], 2);
   //   return;
   // }
+  console.log(' codecode ： ', code); //
   if (code && code !== NORMAL_CODE) {
     // if (false) {
     const codeMsg = getCodeMsg(code);
@@ -101,6 +102,7 @@ export const isTips = res => {
     if (code === AUTH_FAIL && !isDev) {
       history.push(LOGIN);
     }
+    console.log(' codecode ： ', msg_show, msg_show ?? '操作成功', codeMsg); //
     tips(msg_show || codeMsg, 2);
     // if (!codeMsg) {
     //   tips(codeMsg, 2);

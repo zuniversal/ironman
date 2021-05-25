@@ -9,7 +9,7 @@ import { Form } from 'antd';
 const AssetsSearchForm = props => {
   const [houseNoList, setHouseNoList] = useState([]);
   const [powerStationList, setPowerStationList] = useState([]);
-  const [clientSelectList, setclientSelectList] = useState([]);
+  const [clientSelectList, setclientSelectList] = useState(null);
   const [houseNoSelectList, setHouseNoSelectList] = useState(null);
   const [powerStationSelectList, setPowerStationSelectList] = useState(null);
   const [form] = Form.useForm();
@@ -40,6 +40,15 @@ const AssetsSearchForm = props => {
       return data;
     },
   });
+  console.log(
+    ' %c AssetsSearchForm 组件 this.state, this.props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+    clientSelectList,
+    houseNoSelectList,
+    houseNoList,
+    clientList,
+  ); //
   // console.log(
   //   ' AssetsSearchForm   XXX ： ',
   //   props,
@@ -50,21 +59,23 @@ const AssetsSearchForm = props => {
   //   powerStationSelectList,
   // );
   const onFieldChange = params => {
-    console.log(' onFieldChange,  , ： ', params);
+    console.log(' onFieldChange,  , ： ', props, params, params.value);
     if (params.changeKey === 'customer_id' && !params.value.customer_id) {
-      setHouseNoSelectList(null);
-      setPowerStationSelectList(null);
+      // setHouseNoSelectList(null);
+      setclientSelectList(null);
+      // setPowerStationSelectList(null);
     } else if (
       params.changeKey === 'electricity_user_id' &&
       !params.value.electricity_user_id
     ) {
       setHouseNoSelectList(null);
-      setPowerStationSelectList(null);
+      // setclientSelectList(null);
+      // setPowerStationSelectList(null);
     }
-    props.onFieldChange(params);
+    // props.onFieldChange(params);
   };
   const onClientChange = (params, item) => {
-    console.log(' onClientChange  ： ', params, item);
+    console.log(' AssetsSearchForm onClientChange  ： ', params, item);
     // const res = clientList.find(v => v.value == params);
     // const formatRes = formatSelectList(res.electricity_users, 'number');
     // console.log(' res  clientList.filter v ： ', res, formatRes);
@@ -92,7 +103,7 @@ const AssetsSearchForm = props => {
   };
   const onHouseNoChange = (params, item) => {
     console.log(
-      ' onHouseNoChange  ： ',
+      ' AssetsSearchForm onHouseNoChange  ： ',
       params,
       item,
       houseNoList,
@@ -106,7 +117,12 @@ const AssetsSearchForm = props => {
     // const formatRes = formatSelectList(res.stations, 'name');
     // console.log(' res  houseNoList.filter v ： ', res, formatRes);
     // setPowerStationList(formatRes);
-    setPowerStationSelectList(item.stations);
+
+    // setPowerStationSelectList(item.stations);
+    const res = clientList.filter(v => v.value == item.clientid);
+    console.log(' AssetsSearchForm res  clientList.filter v ： ', res);
+    setclientSelectList(res);
+
     form.setFieldsValue({
       customer_id: item.stations[0].clientid,
       electricity_user_id: item.value,
@@ -123,8 +139,8 @@ const AssetsSearchForm = props => {
 
   const config = [
     {
-      formType: 'Select',
-      selectData: clientList,
+      formType: 'Search',
+      selectData: clientSelectList || clientList,
       itemProps: {
         label: '客户',
         name: 'customer_id',
@@ -134,14 +150,20 @@ const AssetsSearchForm = props => {
       },
     },
     {
-      formType: 'Select',
-      selectData: houseNoList,
+      formType: 'Search',
+      selectData: houseNoSelectList || houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user_id',
       },
       comProps: {
         onSelect: onHouseNoChange,
+      },
+    },
+    {
+      formType: 'Divider',
+      itemProps: {
+        label: '',
       },
     },
     // {
@@ -163,7 +185,7 @@ const AssetsSearchForm = props => {
         config={config}
         propsForm={form}
         {...props}
-        // onFieldChange={onFieldChange}
+        onFieldChange={onFieldChange}
       ></SearchForm>
     </div>
   );

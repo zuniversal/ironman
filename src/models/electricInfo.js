@@ -1,11 +1,13 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/electricInfo';
 import * as monitorManageServices from '@/services/monitorManage';
-import { getClientPower, getRelatived } from '@/services/client';
+import { getRelatived } from '@/services/client';
 import { getCircuitItem, removeCircuitItem } from '@/services/powerStation';
+import * as assetsServices from '@/services/assets';
 import { formatSelectList, getItem } from '@/utils';
 import { history } from 'umi';
 import { handleGuestMode } from '@/models/user';
+import { recursiveAssets } from '@/models/assets';
 
 const namespace = 'electricInfo';
 const { createActions } = init(namespace);
@@ -13,6 +15,8 @@ const { createActions } = init(namespace);
 const otherActions = [
   'getRelativedAsync',
   'removeCircuitItemAsync',
+  'getAssetListAsync',
+  'getAssetDetailAsync',
   // 'getPowerInfoAsync', 'getClientPowerAsync', 'getMonitorDeviceListAsync',
 ];
 
@@ -25,6 +29,16 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 
 export const mapStateToProps = state => state[namespace];
+
+const flatAssets = (data = {}, config = []) => {
+  Object.keys(data).forEach(key => {
+    config.push(data[key]);
+    if (data[key].sub && Object.keys(data[key].sub).length) {
+      flatAssets(data[key].sub, config);
+    }
+  });
+  return config;
+};
 
 export default {
   namespace,
@@ -41,6 +55,10 @@ export default {
     stationId: null,
     canvasInfo: {},
     realDataParams: {},
+    assetList: [],
+    subAssetList: [],
+    selectItem: {},
+    assetDetail: {},
   },
 
   reducers: {
@@ -58,7 +76,7 @@ export default {
       return {
         ...state,
         isShowModal: false,
-        itemDetail: {},
+        assetDetail: {},
         realDataParams: {},
       };
     },
@@ -123,6 +141,43 @@ export default {
         houseNo: payload.houseNo,
       };
     },
+
+    getAssetList(state, { payload, type }) {
+      console.log(' getAssetList 修改  ： ', state, payload, type); //
+      // const dataList = recursiveAssets(payload.list)
+      // const assetList = payload.list.map((v) => ({
+      //   key: v.id,
+      //   title: v.name,
+      // }))
+      const assetList = recursiveAssets(payload.list);
+      console.log(' assetList ： ', assetList); //
+      // const subAssetList = dataList[3].children
+      const subAssetList = assetList[0].children;
+      return {
+        ...state,
+        assetList,
+        assetList: assetList,
+        selectItem: assetList[0],
+        subAssetList,
+        subAssetTreeList: subAssetList.map(v => ({ tab: v.name, key: v.id })),
+        // subAssetList: [],
+        // subAssetTreeList: [],
+      };
+    },
+    getAssetDetail(state, { payload, type }) {
+      console.log(' getAssetDetail 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        // assetItemDetail: recursiveAssets(payload.list),
+        // subAssetList: payload.payload.selectItem ? payload.payload.selectItem.children.map((v) => ({tab: v.name, key: v.id, })) : state.subAssetList,
+        assetDetail: payload.bean,
+        selectItem: payload.payload.selectItem ?? state.selectItem,
+        subAssetList: payload.payload.subAssetList ?? state.subAssetList,
+        subAssetTreeList: payload.payload.subAssetList
+          ? payload.payload.subAssetList.map(v => ({ tab: v.name, key: v.id }))
+          : state.subAssetTreeList,
+      };
+    },
   },
 
   effects: {
@@ -132,9 +187,9 @@ export default {
         type: 'user/getUserInfoAsync',
       });
       const { customer_id } = history.location.query;
-      console.log(' history22 ： ', getItem('userInfo')); //
       console.log(
-        ' getItem.enterprises[0] ： ',
+        ' history22 ： ',
+        getItem('userInfo'),
         getItem('userInfo')?.enterprises[0],
       ); //
       const { customers = [] } = getItem('userInfo')?.enterprises[0];
@@ -146,11 +201,21 @@ export default {
         const res = yield call(getRelatived, {
           customer_id: clientId,
         });
+        console.log(' resres ： ', res); //
         const powerInfoRes = yield call(services.getPowerInfo, {
           ele_number: res.list[0].electricity_users[0].number,
         });
         const canvasDataRes = yield call(getCircuitItem, {
           power_station_id: res.list[0].electricity_users[0].stations[0].id,
+        });
+        yield put({
+          type: 'getAssetListAsync',
+          payload: {
+            customer_id: clientId,
+            electricity_user_id: res.list[0].electricity_users[0].id,
+            // electricity_user_id: '6464',
+            // customer_id: '6464',
+          },
         });
         console.log(
           ' canvasDataRes, res ： ',
@@ -190,5 +255,53 @@ export default {
     //   });
     //   yield put(action({ ...res, payload }));
     // },
+    *getAssetListAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' getAssetListAsyncgetAssetListAsync ： ', payload, type);
+      const res = yield call(assetsServices.getList, payload);
+      let d_id;
+      const selectItem = recursiveAssets(res.list)[0];
+      if (selectItem.equipment_data_id) {
+        console.log(' 111 ： '); //
+        d_id = selectItem.id;
+      }
+      if (
+        selectItem.children.length > 0 &&
+        selectItem.children[0]?.equipment_data_id
+      ) {
+        console.log(' 222 ： '); //
+        d_id = selectItem.children[0].id;
+      }
+
+      if (
+        selectItem.children.length > 0 &&
+        selectItem.children[0].children.length > 0 &&
+        selectItem.children[0].children.length > 0 &&
+        selectItem.children[0].children[0].equipment_data_id
+      ) {
+        console.log(' 333 ： '); //
+        d_id = selectItem.children[0].children[0].id;
+      }
+      console.log(' d_id ： ', d_id); //
+      yield put({
+        type: 'getAssetDetailAsync',
+        payload: {
+          selectItem,
+          d_id,
+          subAssetList: selectItem.children,
+        },
+      });
+      yield put({ type: 'getAssetList', payload: { ...res, payload } });
+    },
+    *getAssetDetailAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' getAssetDetailAsync ： ', payload, type);
+      const res = payload.d_id
+        ? yield call(assetsServices.getItem, {
+            d_id: payload.d_id,
+          })
+        : {
+            bean: {},
+          };
+      yield put({ type: 'getAssetDetail', payload: { ...res, payload } });
+    },
   },
 };

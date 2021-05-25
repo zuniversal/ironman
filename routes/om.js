@@ -94,15 +94,15 @@ export default [
     title: '客户报告',
   },
 
-  {
-    path: '/om/shiftsManage/:id',
-    authKey: 'teamManagementModel',
-    component: '@/pages/om/ShiftsManage',
-    title: '班组管理2',
-  },
+  // {
+  //   path: '/om/shiftsManage/:id',
+  //   authKey: 'teamManagementModel',
+  //   component: '@/pages/om/ShiftsManage',
+  //   title: '班组管理2',
+  // },
   {
     path: '/om/shiftsManage',
-    authKey: 'teamManagementModel',
+    authKey: 'teamModel',
     component: '@/pages/om/ShiftsManage',
     title: '班组管理',
   },

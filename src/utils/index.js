@@ -383,7 +383,7 @@ export const formatConfig = (
     }
     if (action === 'detail') {
       if (['DatePicker', 'MonthPicker', 'RangePicker'].includes(v.formType)) {
-        items.formType = 'Input';
+        // items.formType = 'Input';
       }
     }
 
@@ -573,7 +573,7 @@ export const tips = (msg, type = 1, time = 3, cb) => {
     1: 'success',
     2: 'warn',
   }[type];
-  message[msgMap](msg, time, cb);
+  message[msgMap](msg ?? '操作成功', time, cb);
 };
 
 // export const isNoTips = res => JSON.parse(res.config.data).noTips
@@ -764,6 +764,14 @@ export const format2Null = (data = {}, keys = []) => {
     ...data,
   };
   keys.forEach(k => (formatObj[k] = data[k] ? data[k] : null));
+  return formatObj;
+};
+
+export const num2Str = (data = {}, keys = []) => {
+  const formatObj = {
+    ...data,
+  };
+  keys.forEach(k => (formatObj[k] = isNaN(data[k]) ? data[k] : `${data[k]}`));
   return formatObj;
 };
 

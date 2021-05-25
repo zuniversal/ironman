@@ -597,13 +597,17 @@ const MissionsManageForm = props => {
             <SmartForm
               config={config}
               {...props}
-              // init={simpleMission ? {
-              //   repair_time: moment(),
-              // } : {
-              //   repair_time: moment(),
-              //   ...props.init,
-              // }}
-              init={{}}
+              init={
+                simpleMission
+                  ? {
+                      repair_time: moment(),
+                    }
+                  : {
+                      repair_time: moment(),
+                      ...props.init,
+                    }
+              }
+              // init={{}}
               // key={props.init?.contact}
               // key={props.init}
               // key={Math.random()}

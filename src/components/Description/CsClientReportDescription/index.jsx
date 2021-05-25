@@ -495,7 +495,7 @@ const MonthPowerReport = props => {
     reportTime: props.reportTime,
     repoter: '夏瑞春',
     // reviewer: '华思明',
-    reviewer: '王晓东',
+    reviewer: '王晓冬',
     provider: '电管家能源管理(上海)有限公司',
   };
 
@@ -667,7 +667,7 @@ const MonthStationReport = props => {
       label: `审核人：`,
       key: '',
       // val: '华思明',
-      val: '王晓东',
+      val: '王晓冬',
     },
     {
       label: `巡检时间：`,

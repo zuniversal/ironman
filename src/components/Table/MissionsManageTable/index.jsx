@@ -282,7 +282,7 @@ const MissionsManageTable = props => {
         onClick={() =>
           props.edit({
             action: 'edit',
-            ...record,
+            // ...record,
             d_id: record.id,
           })
         }

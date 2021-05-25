@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.less';
-import SmartForm, { SearchForm } from '@/common/SmartForm';
-import { formatSelectList, filterObjSame } from '@/utils';
+import { SearchForm } from '@/common/SmartForm';
 
 const AssetsListSearchForm = props => {
   console.log(' AssetsListSearchForm ： ', props); //

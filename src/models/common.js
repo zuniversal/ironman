@@ -351,6 +351,7 @@ export default {
         isShowCommonModal: true,
         itemDetail: {
           ...payload.bean,
+          type: `${payload.bean.type}`,
           operation_date: payload.bean.operation_date
             ? moment(payload.bean.operation_date)
             : null,
@@ -420,7 +421,7 @@ export default {
             created_time: moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
           })),
           team_id: team?.name,
-          repair_time: moment(created_time).format('YYYY-MM-DD HH:mm:ss'),
+          // repair_time: moment(created_time).format('YYYY-MM-DD HH:mm:ss'),
         },
         extraData: {
           clientItem: {

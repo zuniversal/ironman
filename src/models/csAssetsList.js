@@ -1,9 +1,8 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/assets';
-import { formatSelectList, filterObjSame } from '@/utils';
-import moment from 'moment';
+import { getClientId } from '@/models/user';
 
-const namespace = 'assetsList';
+const namespace = 'csAssetsList';
 const { createActions } = init(namespace);
 
 const otherActions = [];
@@ -67,6 +66,7 @@ export default {
       const params = {
         ...searchInfo,
         ...payload,
+        customer_id: getClientId(),
       };
       console.log(
         ' getListAsync  payload ： ',

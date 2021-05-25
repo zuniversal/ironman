@@ -101,25 +101,25 @@ const AssetsForm = props => {
         name: 'type',
       },
     },
-    {
-      formType: 'CustomCom',
-      CustomCom: <div></div>,
-      itemProps: {
-        label: ' ',
-      },
-    },
-    ...(props.action !== 'edit'
-      ? [
-          {
-            // formType: 'Select',
-            noRule: true,
-            itemProps: {
-              label: '资产名称',
-              name: 'name',
-            },
-          },
-        ]
-      : []),
+    // {
+    //   formType: 'CustomCom',
+    //   CustomCom: <div></div>,
+    //   itemProps: {
+    //     label: ' ',
+    //   },
+    // },
+    // ...(props.action !== 'edit'
+    //   ? [
+    //       {
+    //         // formType: 'Select',
+    //         noRule: true,
+    //         itemProps: {
+    //           label: '资产名称',
+    //           name: 'name',
+    //         },
+    //       },
+    //     ]
+    //   : []),
     // {
     //   // formType: 'Select',
     //   noRule: true,
@@ -161,7 +161,7 @@ const AssetsForm = props => {
     },
     {
       formType: 'InputNumber',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '额定电压',
         name: 'voltage',
@@ -169,7 +169,7 @@ const AssetsForm = props => {
     },
     {
       formType: 'InputNumber',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '额定电流',
         name: 'current',
@@ -187,10 +187,19 @@ const AssetsForm = props => {
       // noRule: true,
       formType: 'InputNumber',
       itemProps: {
-        label: '实际容量',
-        name: 'real_capacity',
+        label: '使用年限',
+        name: 'service_life',
       },
     },
+    // {
+    //   // noRule: true,
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '实际容量',
+    //     name: 'real_capacity',
+    //   },
+    //   itemPropsCls: 'hidden',
+    // },
     {
       formType: 'DatePicker',
       // noRule: true,
@@ -207,47 +216,8 @@ const AssetsForm = props => {
         name: 'operation_date',
       },
     },
-    {
-      // noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '使用年限',
-        name: 'service_life',
-      },
-    },
 
     ...formatFormItemRes,
-  ];
-
-  const config2 = [
-    {
-      noRule: true,
-      formType: 'Select',
-      selectData: houseNoList,
-      itemProps: {
-        label: '户号',
-        name: 'electricity_user',
-        className: 'hidden',
-      },
-    },
-    {
-      // formType: 'Search',
-      // selectSearch: props.getListAsync,
-      // selectData: props.dataList,
-      noRule: true,
-      itemProps: {
-        label: '上级设备',
-        name: 'parent_id',
-      },
-    },
-    {
-      // formType: 'Select',
-      // noRule: true,
-      itemProps: {
-        label: '设备名称',
-        name: 'name',
-      },
-    },
   ];
 
   const config = [
@@ -389,21 +359,24 @@ const AssetsForm = props => {
   //   )
   // }
 
-  const configs = config.map(v => ({
+  const addConfigs = addConfig.map(v => ({
     ...v,
-    comProps: { className: `${v.className} w-200`, ...v.comProps },
+    comProps: props.changeWidth
+      ? { className: `${v.className} w-220`, ...v.comProps }
+      : v.comProps,
   }));
 
-  const configMap = {
-    addConfig,
-    config,
-  };
+  // const configMap = {
+  //   addConfig,
+  //   config,
+  // };
 
   return (
     <SmartForm
       // config={configMap[props.formTypes]}
-      config={configs}
+      // config={configs}
       config={addConfig}
+      config={addConfigs}
       {...props}
       init={{
         electricity_user: null,

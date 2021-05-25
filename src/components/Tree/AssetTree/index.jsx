@@ -7,9 +7,37 @@ import {
   MinusCircleOutlined,
   SearchOutlined,
   FileOutlined,
+  FolderOpenOutlined,
 } from '@ant-design/icons';
 import { Tree, Input, Row, Col, Button, Tooltip, Form } from 'antd';
 import { recursiveResetAssets } from '@/models/assets'; //
+import { num2Str } from '@/utils';
+const { DirectoryTree } = Tree;
+
+const SaveBtn = props => {
+  const [status, setStatus] = useState(false);
+  return (
+    <div className={`dfc`}>
+      {props.action === 'detail' ? (
+        <Button
+          type="primary"
+          onClick={() =>
+            props.changeAction({
+              action: 'edit',
+            })
+          }
+          className={`m-l-10`}
+        >
+          编辑
+        </Button>
+      ) : (
+        <Button type="primary" onClick={props.onSave} className={`m-l-10`}>
+          保存
+        </Button>
+      )}
+    </div>
+  );
+};
 
 const EmptyAsset = props => {
   console.log('EmptyAsset     ,   ： ', props);
@@ -22,10 +50,12 @@ const EmptyAsset = props => {
           // props.editItems({
           //   action: 'editItems',
           //   // item,
-          //   formTypes: 'addConfig',
           //   form: props.form,
           // })
-          props.addTreeNode(props.selectItem)
+          // props.addTreeNode(props.selectItem)
+          props.changeAction({
+            action: 'add',
+          })
         }
         className={`m-l-10`}
       >
@@ -80,6 +110,7 @@ export const recursiveKeys = (data = [], allKeys = []) => {
     }
   });
 };
+
 const datas = [
   {
     title: '0-0',
@@ -125,7 +156,7 @@ const datas = [
 ];
 // const treeDatas = recursiveHandle(datas);
 
-const addTreeAttr = ({ treeData, val, attr, item, i }) => {
+const addTreeAttr = ({ treeData, val, attr, item = {}, i }) => {
   console.log(' addTreeAttr   e, item, i,   ： ', treeData, val, item, i);
   const { indexes = [] } = item;
   const [index0, index1, index2] = indexes;
@@ -151,10 +182,6 @@ const addTreeAttr = ({ treeData, val, attr, item, i }) => {
       ];
       break;
     case 2:
-      console.log(
-        ' copyData[index0].children[index1].children  ： ',
-        copyData[index0].children[index1].children,
-      ); //
       copyData[index0].children[index1].children = [
         ...copyData[index0].children[index1].children,
         {
@@ -185,15 +212,15 @@ const addTreeAttr = ({ treeData, val, attr, item, i }) => {
     default:
       break;
   }
-  console.log(' copyData ： ', copyData); //
   return copyData;
 };
-const editTreeAttr = ({ treeData, val, attr, item, i }) => {
+
+const editTreeAttr = ({ treeData, val, attr, item = {}, i }) => {
   console.log(' editTreeAttr   e, item, i,   ： ', treeData, val, item, i);
-  const { indexes } = item;
+  const { indexes = [] } = item;
+  console.log(' indexes ： ', indexes); //
   const [index0, index1, index2] = indexes;
   const copyData = [...treeData];
-  console.log('  对吗  indexes.length ', indexes);
   switch (indexes.length) {
     case 1:
       copyData[index0][attr] = val;
@@ -205,9 +232,9 @@ const editTreeAttr = ({ treeData, val, attr, item, i }) => {
       copyData[index0].children[index1].children[index2][attr] = val;
       break;
     default:
+      copyData[i][attr] = val;
       break;
   }
-  console.log(' copyData ： ', copyData); //
   return copyData;
 };
 
@@ -219,15 +246,10 @@ const AssetTree = props => {
   // const [ treeData, setTreeData ] = useState(treeDatas)
   const { treeData } = props; //
 
-  console.log(' AssetTree ： ', props); //
-  console.log(' treeData ： ', treeData); //
+  console.log(' AssetTree ： ', props, treeData); //
 
-  const onPressEnter = (e, o) => {
-    console.log(' onPressEnter   e, o,   ： ', e, o);
-  };
   const onInputChange = (e, item, i) => {
     console.log(' onInputChange   e, item, i,   ： ', e, item, i);
-    console.log(' e.target.value ： ', e.target.value); //
     const treeDatas = editTreeAttr({
       treeData,
       val: e.target.value,
@@ -240,7 +262,7 @@ const AssetTree = props => {
     props.editTreeNode({
       treeDatas,
       selectItem: props.selectItem,
-      action: 'edit',
+      action: item.isEdit ? '' : 'detail',
     });
   };
 
@@ -255,7 +277,8 @@ const AssetTree = props => {
     });
     console.log(' treeDatas ： ', treeDatas); //
     // setTreeData(treeDatas)
-    props.addTreeNode({ treeDatas, selectItem: item, form, action: 'add' });
+    // props.addTreeNode({ treeDatas, selectItem: item, form, action: 'add' });
+    props.addTreeNode({ treeDatas, selectItem: item, form });
   };
   const editTreeNode = (item, i) => {
     console.log(' editTreeNode   item, i,   ： ', item, i);
@@ -268,7 +291,8 @@ const AssetTree = props => {
     });
     console.log(' treeDatas ： ', treeDatas); //
     // setTreeData(treeDatas)
-    props.editTreeNode({ treeDatas, selectItem: item, action: 'edit' });
+    // props.editTreeNode({ treeDatas, selectItem: item, action: 'detail' });
+    props.editTreeNode({ treeDatas, selectItem: item, action: '' });
   };
 
   // const saveTreeData = () => {
@@ -291,21 +315,18 @@ const AssetTree = props => {
     // props.editItems({
     //   action: 'add',
     //   selectItem,
-    //   formTypes: 'addConfig',
     // })
     // return
     selectItem.equipment_data_id
       ? props.getItemAsync({
-          action: 'edit',
+          action: 'detail',
           selectItem,
-          formTypes: 'addConfig',
           d_id: selectItem.id,
           form,
         })
       : props.editItems({
-          action: 'add',
+          // action: 'add',
           selectItem,
-          formTypes: 'addConfig',
           form,
         });
   };
@@ -315,7 +336,6 @@ const AssetTree = props => {
       action: 'editItems',
       // item,
       selectItem,
-      formTypes: 'addConfig',
     });
     // setSearchValue(e.target.value)
     // props.onSelectTreeNode()
@@ -328,7 +348,6 @@ const AssetTree = props => {
           // props.editItems({
           //   action: 'editItems',
           //   item,
-          //   formTypes: 'config',
           // })
         }
       /> */}
@@ -343,6 +362,7 @@ const AssetTree = props => {
                 props,
                 item,
                 props.selectItem,
+                props,
               ); //
               // props.saveTreeNodeAsync({
               //   action: 'saveTreeNodeAsync',
@@ -354,25 +374,57 @@ const AssetTree = props => {
               //   name: item.title,
               // })
               // if (props.selectItem.isEdit) {
-              //   props.saveTreeNodeAsync({
-              //     ...props.searchInfo,
-              //     pid: props.selectItem.id,
-              //     name: item.title,
-              //   })
-              // } else {
-              props.saveTreeNodeAsync({
-                ...props.searchInfo,
-                pid: props.selectItem.id,
-                name: item.title,
-              });
+              // if (Object.keys(props.itemDetail).length) {
+              if (item.isNew) {
+                props.saveTreeNodeAsync({
+                  ...props.searchInfo,
+                  pid: props.selectItem.id, // 新增发父级的id
+                  // pid: 0,
+                  name: item.title,
+                });
+                return;
+              }
+
+              if (props.selectItem.id) {
+                const {
+                  modular,
+                  production_date,
+                  operation_date,
+                  ...rest
+                } = props.itemDetail;
+                props.editItemAsync({
+                  ...props.searchInfo,
+                  pid: props.selectItem.pid,
+                  name: item.title,
+                  data: Object.keys(props.itemDetail).length
+                    ? {
+                        ...rest,
+                        production_date: production_date
+                          ? production_date.format('YYYY-MM-DD')
+                          : null,
+                        operation_date: operation_date
+                          ? operation_date.format('YYYY-MM-DD')
+                          : null,
+                      }
+                    : undefined,
+                  // d_id: item.id,
+                  d_id: props.selectItem.id,
+                });
+                return;
+              }
               // }
             }}
           />
         </Tooltip>
       ) : (
         <Tooltip title="编辑资产结构">
-          {/* <EditOutlined onClick={() => editTreeNode(item, i)} /> */}
-          <EditOutlined onClick={() => onClick(item)} />
+          <EditOutlined
+            onClick={() => {
+              editTreeNode(item, i);
+              // onClick(item)
+            }}
+          />
+          {/* <EditOutlined onClick={() => onClick(item)} /> */}
         </Tooltip>
       )}
       {/* <EditOutlined
@@ -380,7 +432,6 @@ const AssetTree = props => {
           props.editItems({
             action: 'editItems',
             item,
-            formTypes: 'addConfig',
           })
         }
       />
@@ -389,17 +440,18 @@ const AssetTree = props => {
           props.editItems({
             action: 'editItems',
             item,
-            formTypes: null,
           })
         }
       /> */}
-      {!item.isNew && item.indexes.length < 3 && (
+
+      {/* 如果是资产目录 即 没有资产表单内容的行可以新增子节点 */}
+      {!item.isNew && item.indexes.length < 3 && !item.equipment_data_id && (
         <Tooltip title="新增资产结构">
           <PlusCircleOutlined
             onClick={e => {
               console.log(' preventDefault item, i ： ', item, i, e); //
               e.preventDefault();
-              const treeDatas = [...treeData];
+              // const treeDatas = [...treeData];
               addTreeNode(item, i);
               return;
               setTreeData([...treeData, { title: '0-3', key: '0-3' }]);
@@ -440,7 +492,7 @@ const AssetTree = props => {
       // console.log(' index, beforeStr, afterStr ： ', index, beforeStr, afterStr, item )//
       const titleText =
         index > -1 ? (
-          <span className={`treeNode`}>
+          <span className={`treeNode`} onClick={e => onClick(item, e)}>
             {beforeStr}
             <span className="site-tree-search-value">{searchValue}</span>
             {afterStr}
@@ -463,7 +515,14 @@ const AssetTree = props => {
         >
           {item.isNew && '新增：'}
           {item.isEdit && '编辑：'}
-          {item.isNew || item.isEdit ? inputCom : titleText}
+          {item.isNew || item.isEdit ? (
+            inputCom
+          ) : (
+            <span>
+              {!item.equipment_data_id && <FolderOpenOutlined />}
+              {titleText}
+            </span>
+          )}
           {/* {item.isEdit ? inputCom : titleText} */}
           {actionCom({ item, i, props })}
         </div>
@@ -482,7 +541,7 @@ const AssetTree = props => {
 
   const expandedKeys = [];
   recursiveKeys(treeData, expandedKeys);
-  // console.log('  expandedKeys ：', expandedKeys); //
+  console.log('  expandedKeys ：', expandedKeys); //
 
   const treeNodes = (
     <>
@@ -491,10 +550,13 @@ const AssetTree = props => {
         className={`searchInput`}
         suffix={<SearchOutlined />}
       />
+      {/* <DirectoryTree */}
       <Tree
         // expandedKeys={['0-0-0', '0-0-1']}
-        // expandedKeys={expandedKeys}
+        defaultExpandedKeys={expandedKeys}
+        defaultExpandAll={true}
         autoExpandParent={true}
+        // showLine={true}
         treeData={loop(treeData, {
           ...props,
           onInputChange,
@@ -515,23 +577,6 @@ const AssetTree = props => {
     </>
   );
 
-  const saveBtns = forms => {
-    console.log(' saveBtn ： ', forms); //
-    return (
-      <div className={`dfc`}>
-        <Button
-          type="primary"
-          onClick={() => {
-            console.log(' formform ： ', forms, form); //
-          }}
-          className={`m-l-10`}
-        >
-          保存
-        </Button>
-      </div>
-    );
-  };
-
   const onSave = async params => {
     console.log(' onSave ： ', params, props, form);
     // const { form,  } = params;
@@ -542,12 +587,20 @@ const AssetTree = props => {
         ...res,
         production_date: res.production_date.format('YYYY-MM-DD'),
         operation_date: res.operation_date.format('YYYY-MM-DD'),
+        real_capacity: props.itemDetail.real_capacity ?? null,
       };
       console.log(' params ： ', params); //
       if (props.action === 'edit') {
         props.editItemAsync({
+          ...props.searchInfo,
+          pid: props.selectItem.pid,
+          name: props.selectItem.title || params.name,
+          data: {
+            ...params,
+            real_capacity: null,
+          },
           d_id: props.itemDetail.id,
-          ...params,
+          d_id: props.selectItem.id,
         });
         return;
       }
@@ -555,10 +608,11 @@ const AssetTree = props => {
       // }
       props.addItemAsync({
         ...props.searchInfo,
-        pid: props.selectItem.id,
+        pid: props.selectItem.pid,
         name: props.selectItem.title || params.name,
         data: {
           ...params,
+          real_capacity: null,
         },
       });
     } catch (error) {
@@ -566,73 +620,91 @@ const AssetTree = props => {
     }
   };
 
-  const saveBtn = (
-    <div className={`dfc`}>
-      <Button type="primary" onClick={onSave} className={`m-l-10`}>
-        保存
-      </Button>
-    </div>
-  );
-
   return (
     <div className={`assetTree`}>
       <Row>
-        <Col span={8} className={`treeStruct`}>
+        <Col span={6} className={`treeStruct`}>
           {treeNodes}
         </Col>
         {/* <Col span={16} className={`dfc`}> */}
-        <Col span={16} className={``}>
+        <Col span={18} className={``}>
+          {treeData.length > 0 && (
+            <div className={`fje addAssetWrapper`}>
+              <Button
+                type="primary"
+                // onClick={() => {
+                //   console.log(' 111111111 ： ', treeData   )//
+                //   addTreeNode(treeData[0], 0)
+                // }}
+                onClick={props.addTreeStruct}
+                className={`m-l-10`}
+              >
+                新增一级资产结构
+              </Button>
+              {/* <EmptyAsset
+              editItems={props.editItems}
+              addTreeNode={addTreeNode}
+              selectItem={props.selectItem}
+              changeAction={props.changeAction}
+              form={form}
+            ></EmptyAsset>  */}
+            </div>
+          )}
           {props.action ? (
             // {props.formTypes ? (
             // {Object.keys(props.itemDetail).length ? (
             <>
-              {!Object.keys(props.itemDetail).length && (
-                <EmptyAsset
-                  editItems={props.editItems}
-                  addTreeNode={addTreeNode}
-                  selectItem={props.selectItem}
-                  form={form}
-                ></EmptyAsset>
-              )}
-              <AssetsForm
-                flexRow={2}
-                init={{
-                  ...props.itemDetail,
-                  type: '1201',
-                  name: 'name',
-                  manufacturer: 'manufacturer',
-                  model: 'model',
-                  production_code: 'production_code',
-                  voltage: 1,
-                  current: 1,
-                  production_date: '2020-12-12',
-                  operation_date: '2020-12-12',
-                  service_life: 1,
-                  capacity: 'capacity',
-                  // real_capacity: 'real_capacity',
-                }}
-                init={{
-                  ...props.itemDetail,
-                }}
-                propsForm={form}
-                action={props.action}
-                formTypes={props.formTypes}
-                // key={props.itemDetail.id}
-                // key={props.itemDetail.id || props.formTypes}
-                // renderFormBtn={saveBtn}
-                // key={props.itemDetail}
-              >
-                {saveBtn}
-              </AssetsForm>
+              {/* {props.selectItem?.children.length === 0 ? <AssetsForm */}
+              {props.selectItem.id ? (
+                <AssetsForm
+                  flexRow={2}
+                  init={{
+                    ...props.itemDetail,
+                    type: '1201',
+                    name: 'name',
+                    manufacturer: 'manufacturer',
+                    model: 'model',
+                    production_code: 'production_code',
+                    voltage: 1,
+                    current: 1,
+                    production_date: '2020-12-12',
+                    operation_date: '2020-12-12',
+                    service_life: 1,
+                    capacity: 'capacity',
+                    // real_capacity: 'real_capacity',
+                  }}
+                  init={num2Str(props.itemDetail, ['type'])}
+                  propsForm={form}
+                  action={props.action}
+                  // changeWidth
+                  // action={'detail'}
+                  // key={props.itemDetail.id}
+                  // key={props.itemDetail.id || props.formTypes}
+                  // renderFormBtn={saveBtn}
+                  // key={props.itemDetail}
+                >
+                  <SaveBtn
+                    itemDetail={props.itemDetail}
+                    onSave={onSave}
+                    action={props.action}
+                    changeAction={props.changeAction}
+                  ></SaveBtn>
+                </AssetsForm>
+              ) : null}
             </>
-          ) : (
+          ) : null}
+          {!props.action &&
+          !Object.keys(props.itemDetail)?.length &&
+          props.selectItem?.children?.length === 0 ? (
             <EmptyAsset
-              editItems={props.editItems}
+              changeAction={props.changeAction}
               addTreeNode={addTreeNode}
               selectItem={props.selectItem}
               form={form}
             ></EmptyAsset>
-          )}
+          ) : Object.keys(props.itemDetail).length ? (
+            <div className={`assetTitle`}>{/* 资产详情 */}</div>
+          ) : null}
         </Col>
       </Row>
     </div>

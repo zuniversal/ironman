@@ -22,10 +22,11 @@ const otherActions = [
 
 const batchTurnActions = [
   'editItems',
-  'editAssetStruct',
   'addTreeNode',
   'editTreeNode',
   'onInputChange',
+  'addTreeStruct',
+  'changeAction',
 ];
 
 export const actions = {
@@ -45,28 +46,29 @@ const formatParams = data => {
   return params;
 };
 
+export const newTreeNode = {
+  isNew: true,
+  isEdit: false,
+  title: '资产名',
+  children: [],
+};
+
 export const recursiveResetAssets = (data = [], { indexes, pid } = {}) => {
-  console.log(
-    'treeData  recursiveAssets recursiveResetAssets  ,   ： ',
-    data,
-    indexes,
-    pid,
-  );
+  console.log('treeDatas  recursiveResetAssets   ,   ： ', data, indexes, pid);
   // return data.map((v, i) => ({...v,}));
   return data.map((v, i) => {
     const item = {
       ...v,
       isEdit: false,
       isNew: false,
+      children: v.sub ? recursiveResetAssets(v.sub) : [],
     };
-    item.children = item.sub ? recursiveAssets(v.sub) : [];
     return item;
   });
 };
 
 export const recursiveAssets = (data = [], { indexes, pid } = {}) => {
-  // console.log('treeData  recursiveAssets   ,   ： ', data, indexes, pid);
-  // return data.map((v, i) => ({...v,}));
+  // console.log('treeDatas  recursiveAssets   ,   ： ', data, indexes, pid);
   return formatSelectList(data).map((v, i) => {
     const item = {
       ...v,
@@ -76,144 +78,15 @@ export const recursiveAssets = (data = [], { indexes, pid } = {}) => {
       key: `${v.key || v.id}`,
       title: v.label,
       indexes: [...(indexes ?? []), i],
+      children: v.sub
+        ? recursiveAssets(v.sub, {
+            indexes: [...(indexes ?? []), i],
+            // pid: item.pid,
+          })
+        : [],
     };
-    // if (v.children) {
-    //   item.children = recursiveAssets(v.children, [...(indexes ?? []), i])
-    // }
-    item.children = item.sub
-      ? recursiveAssets(v.sub, {
-          indexes: [...(indexes ?? []), i],
-          // pid: item.pid,
-        })
-      : [];
     return item;
   });
-};
-
-const treeDatas = recursiveAssets([
-  {
-    title: '0-0',
-    key: '0-0',
-    children: [
-      {
-        title: '0-0-0',
-        key: '0-0-0',
-        children: [
-          { title: '0-0-0-0', key: '0-0-0-0' },
-          { title: '0-0-0-1', key: '0-0-0-1' },
-          { title: '0-0-0-2', key: '0-0-0-2' },
-        ],
-      },
-      {
-        title: '0-0-1',
-        key: '0-0-1',
-        children: [
-          { title: '0-0-1-0', key: '0-0-1-0' },
-          { title: '0-0-1-1', key: '0-0-1-1' },
-          { title: '0-0-1-2', key: '0-0-1-2' },
-        ],
-      },
-      {
-        title: '0-0-2',
-        key: '0-0-2',
-      },
-    ],
-  },
-  {
-    title: '0-1',
-    key: '0-1',
-    children: [
-      { title: '0-1-0-0', key: '0-1-0-0' },
-      { title: '0-1-0-1', key: '0-1-0-1' },
-      { title: '0-1-0-2', key: '0-1-0-2' },
-    ],
-  },
-  {
-    title: '0-2',
-    key: '0-2',
-  },
-]);
-
-const addTreeAttr = ({ treeData, val, attr, item, i }) => {
-  console.log(' addTreeAttr   e, item, i,   ： ', treeData, val, item, i);
-  const { indexes } = item;
-  const [index0, index1, index2] = indexes;
-  const copyData = [...treeData];
-  console.log('  对吗  indexes.length ', indexes);
-  const newTreeNode = {
-    // indexes: [...indexes, children.length],
-    isEdit: true,
-    title: '资产名',
-    children: [],
-  };
-  switch (indexes.length) {
-    case 1:
-      copyData[index0].children = [
-        ...copyData[index0].children,
-        {
-          ...newTreeNode,
-          key: `${item.key}-${copyData[index0].children.length}`,
-          indexes: [...indexes, copyData[index0].children.length],
-        },
-      ];
-      break;
-    case 2:
-      console.log(
-        ' copyData[index0].children[index1].children  ： ',
-        copyData[index0].children[index1].children,
-      ); //
-      copyData[index0].children[index1].children = [
-        ...copyData[index0].children[index1].children,
-        {
-          ...newTreeNode,
-          key: `${item.key}-${copyData[index0].children[index1].children.length}`,
-          indexes: [
-            ...indexes,
-            copyData[index0].children[index1].children.length,
-          ],
-        },
-      ];
-      break;
-    case 3:
-      copyData[index0].children[index1].children[index2].children = [
-        ...copyData[index0].children[index1].children[index2].children,
-        {
-          ...newTreeNode,
-          key: `${item.key}-${copyData[index0].children[index1].children[index2].children.length}`,
-          indexes: [
-            ...indexes,
-            copyData[index0].children[index1].children[index2].children.length,
-          ],
-        },
-      ];
-      break;
-    default:
-      break;
-  }
-  console.log(' copyData ： ', copyData); //
-  return copyData;
-};
-const editTreeAttr = ({ treeData, val, attr, item, i }) => {
-  console.log(' editTreeAttr   e, item, i,   ： ', treeData, val, item, i);
-  const { indexes } = item;
-  const [index0, index1, index2] = indexes;
-  const copyData = [...treeData];
-  console.log('  对吗  indexes.length ', indexes);
-  switch (indexes.length) {
-    case 1:
-      copyData[index0][attr] = val;
-      break;
-    case 2:
-      copyData[index0].children[index1][attr] = val;
-      break;
-    case 3:
-      copyData[index0].children[index1].children[index2][attr] = val;
-      break;
-    default:
-      break;
-  }
-  console.log(' copyData ： ', copyData); //
-  return copyData;
 };
 
 const initialState = {
@@ -229,11 +102,9 @@ const initialState = {
   powerList: [],
   houseNoList: [],
   clientList: [],
-  treeData: [],
-  treeData: treeDatas,
+  treeDatas: [],
   assetDeviceList: [],
   selectItem: {},
-  // formTypes: 'addConfig',
 };
 
 export default {
@@ -262,8 +133,7 @@ export default {
       console.log(' getList 修改  ： ', state, payload, type); //
       return {
         ...state,
-        dataList: recursiveAssets(payload.list),
-        treeData: recursiveAssets(payload.list),
+        treeDatas: recursiveAssets(payload.list),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -311,7 +181,6 @@ export default {
         },
         action: payload.payload.action,
         selectItem: payload.payload.selectItem,
-        formTypes: 'addConfig',
       };
     },
     addItem(state, { payload, type }) {
@@ -407,7 +276,6 @@ export default {
         ...state,
         action: payload.action,
         selectItem: payload.selectItem,
-        formTypes: payload.formTypes,
         itemDetail: {},
       };
     },
@@ -420,6 +288,29 @@ export default {
       };
     },
 
+    addTreeStruct(state, { payload, type }) {
+      console.log(' addTreeStruct 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.action,
+        treeDatas: [
+          ...state.treeDatas,
+          {
+            ...newTreeNode,
+            key: Math.random(),
+          },
+        ],
+        selectItem: {},
+        itemDetail: {},
+      };
+    },
+    changeAction(state, { payload, type }) {
+      console.log(' changeAction 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.action,
+      };
+    },
     addTreeNode(state, { payload, type }) {
       console.log(' addTreeNode 修改  ： ', state, payload, type);
       // const treeDatas = addTreeAttr(payload)
@@ -441,11 +332,9 @@ export default {
       return {
         ...state,
         action: payload.action,
-        dataList: payload.treeDatas,
-        treeData: payload.treeDatas,
+        treeDatas: payload.treeDatas,
         selectItem: payload.selectItem,
         itemDetail: {},
-        formTypes: 'addConfig',
       };
     },
     editTreeNode(state, { payload, type }) {
@@ -454,9 +343,8 @@ export default {
       // console.log(' treeDatas ： ', treeDatas,  )//
       return {
         ...state,
-        action: payload.action,
-        dataList: [...payload.treeDatas],
-        treeData: [...payload.treeDatas],
+        // action: payload.action,
+        treeDatas: [...payload.treeDatas],
         selectItem: payload.selectItem,
       };
     },
@@ -465,8 +353,7 @@ export default {
       // const treeDatas = editTreeAttr(payload)
       return {
         ...state,
-        dataList: payload.treeDatas,
-        treeData: payload.treeDatas,
+        treeDatas: payload.treeDatas,
       };
     },
   },
@@ -528,7 +415,10 @@ export default {
       // payload.form.setFieldsValue({...res.bean, name: payload.selectItem.name,});
       // yield put(action({ ...datas, payload }));
       console.log(' res.bean ： ', res.bean); //
-      payload.form.setFieldsValue(res.bean);
+      payload.form.setFieldsValue({
+        ...res.bean,
+        type: `${res.bean.type}`,
+      });
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {

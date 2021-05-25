@@ -249,7 +249,17 @@ class ElectricInfo extends PureComponent {
     );
   };
   renderAssets = params => {
-    return <AssetsInfo></AssetsInfo>;
+    console.log(' AssetsInfoAssetsInfo ： ', params, this.props);
+    return (
+      <AssetsInfo
+        assetList={this.props.assetList}
+        subAssetList={this.props.subAssetList}
+        subAssetTreeList={this.props.subAssetTreeList}
+        selectItem={this.props.selectItem}
+        assetDetail={this.props.assetDetail}
+        getAssetDetailAsync={this.props.getAssetDetailAsync}
+      ></AssetsInfo>
+    );
   };
 
   onOk = async props => {
@@ -322,9 +332,9 @@ class ElectricInfo extends PureComponent {
 
         {this.renderDrawPic()}
 
-        {this.renderSmartFormModal()}
-
         {this.renderAssets()}
+
+        {this.renderSmartFormModal()}
 
         {this.renderCommonModal()}
       </div>
