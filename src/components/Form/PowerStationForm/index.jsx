@@ -60,11 +60,19 @@ const PowerStationForm = props => {
     init: [],
     format: res => formatSelectList(res),
   };
+
+  const isAdd = props.action === 'add';
   const { data: powerInfoList, req: getPowerInfoAsync } = useHttp(
-    getPowerInfo,
+    isAdd
+      ? getPowerInfo
+      : () =>
+          getPowerInfo({
+            station_id: props.init.id,
+          }),
     {
       ...commonParams,
       format: res => formatSelectList(res, 'power_number'),
+      // noMountFetch: isAdd,
     },
   );
 
@@ -515,8 +523,9 @@ const PowerStationForm = props => {
     },
     {
       formType: 'Search',
-      selectSearch: props.getPowerInfoAsync,
-      selectData: props.powerInfoList,
+      // selectSearch: props.getPowerInfoAsync,
+      // selectData: props.powerInfoList,
+      selectData: powerInfoList,
       // dataMap: arrMapObj(props.powerInfoList),
       dataMap: arrMapObj(powerInfoList),
       itemProps: {
@@ -533,13 +542,7 @@ const PowerStationForm = props => {
     action === 'detail' ? props.init.powerInfoData : props.powerInfoData;
   const outLineTableData =
     action === 'detail' ? props.init.outLineTableData : props.outLineTableData;
-  console.log(
-    '  outLineTableData ：',
-    powerInfoData,
-    outLineTableData,
-    arrMapObj(props.powerInfoList),
-    props.powerInfoList,
-  );
+  console.log('  outLineTableData ：', powerInfoData, outLineTableData);
 
   return (
     <div className={`powerStationForm`}>
