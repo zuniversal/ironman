@@ -90,6 +90,15 @@ const PowerStationForm = props => {
     // setInspectMode(inspectMode == 0 ? 1 : 0);
   };
 
+  const onPowerStationChange = e => {
+    console.log(
+      ' PowerStationForm onPowerStationChange   e, 改变设置  ： ',
+      e,
+      e.target.value,
+    );
+    // getPowerInfoAsync(() => getPowerInfo({}))
+  };
+
   // const formConfig = formatConfig(config);
   const deciveRow = {
     formType: 'rowText',
@@ -260,6 +269,9 @@ const PowerStationForm = props => {
         label: '电站名称',
         name: 'name',
       },
+      // comProps: {
+      //   onChange: onPowerStationChange,
+      // },
     },
     {
       // noRule: true,

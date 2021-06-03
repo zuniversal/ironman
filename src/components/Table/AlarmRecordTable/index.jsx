@@ -75,7 +75,7 @@ const AlarmRecordTable = props => {
     {
       title: '持续时长',
       dataIndex: 'duration',
-      render: (text, record, index) => `${text / 60} 分钟`,
+      // render: (text, record, index) => `${(text / 60)}`.toFixed(2) + ' 分钟',
     },
     {
       title: '开始时间',
@@ -90,21 +90,27 @@ const AlarmRecordTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => props.showFormModal({ action: 'handleAlarm', record })}>
-        处理
-      </a>
-      <a
+      {record.status == 0 && (
+        <a
+          onClick={() =>
+            props.showFormModal({ action: 'handleAlarm', d_id: record.id })
+          }
+        >
+          处理
+        </a>
+      )}
+      {/* <a
         onClick={() => props.showFormModal({ action: 'notifyClient', record })}
       >
         通知客户
-      </a>
+      </a> */}
     </>
   );
 
   return (
     <SmartTable
       columns={columns}
-      // extra={extra}
+      extra={extra}
       noDefault
       {...props}
     ></SmartTable>

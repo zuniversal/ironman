@@ -43,12 +43,20 @@ const mapStateToProps = ({ loading }) => ({ loadingData: loading });
 class SmartTable extends PureComponent {
   constructor(props) {
     super(props);
-    const { columns, total, count, size = SIZE } = this.props;
+    const {
+      columns,
+      total,
+      count,
+      size = SIZE,
+      showQuickJumper,
+      showSizeChanger,
+      paginationConfig,
+    } = this.props;
     const pagination = {
       // current: 10,
       // pageSize: 6,
-      showQuickJumper: true,
-      showSizeChanger: true,
+      showQuickJumper,
+      showSizeChanger,
       // showTotal: showTotal,
       position: ['bottomCenter'],
       pageSize: Number(size),
@@ -56,6 +64,7 @@ class SmartTable extends PureComponent {
       total: count,
       size: 'default',
       onChange: this.onPageChange,
+      ...paginationConfig,
     };
     console.log(' SmartTableSmartTable ： ', this.state, this.props);
     this.state = {
@@ -382,7 +391,7 @@ class SmartTable extends PureComponent {
     });
   };
   onPageChange = (page, page_size) => {
-    if (!this.props.noRequest) {
+    if (!this.props.noRequest && this.props.getListAsync) {
       this.props.getListAsync({
         page,
         page_size,
@@ -726,6 +735,7 @@ SmartTable.defaultProps = {
   rowKey: 'id',
   authInfo: {},
   pageConfig: {},
+  paginationConfig: {},
 
   // edit: () => {},
   remove: () => {},
@@ -740,6 +750,8 @@ SmartTable.defaultProps = {
   count: 0,
   animation: '',
   noRequest: false,
+  showQuickJumper: true,
+  showSizeChanger: true,
 };
 
 SmartTable.propTypes = {
@@ -750,6 +762,7 @@ SmartTable.propTypes = {
   rowKey: PropTypes.string,
   authInfo: PropTypes.object,
   pageConfig: PropTypes.object,
+  paginationConfig: PropTypes.object,
   edit: PropTypes.func,
   remove: PropTypes.func,
   showDetail: PropTypes.func,

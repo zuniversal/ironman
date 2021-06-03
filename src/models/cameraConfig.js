@@ -1,11 +1,12 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/cameraConfig';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { CAMERA1 } from '@/configs';
 
 const namespace = 'cameraConfig';
 const { createActions } = init(namespace);
 
-const otherActions = ['showVideoAsync'];
+const otherActions = ['getCameraVideoAsync'];
 
 const batchTurnActions = ['onCameraTabsChange'];
 
@@ -28,7 +29,11 @@ export default {
     d_id: '',
 
     searchInfo: {},
-    tableType: 'FixedCameraConfigTable',
+    type: 'FixedCameraConfigTable',
+    type: CAMERA1,
+    videoUrl: '',
+    token: '',
+    extraPayload: {},
   },
 
   reducers: {
@@ -57,11 +62,22 @@ export default {
         searchInfo: payload.searchInfo,
       };
     },
-    onCameraTabsChange(state, { payload, type }) {
-      console.log(' onCameraTabsChange ： ', payload);
+    getItem(state, { payload, type }) {
+      console.log(' getItemgetItem ： ', payload);
       return {
         ...state,
-        tableType: payload.tableType,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: {
+          ...payload.bean,
+          station_id: payload.bean.station
+            ? `${payload.bean.station.id}`
+            : null,
+          customer_id: `${payload.bean.customer_id}`,
+          system: payload.bean.video_system,
+          system: `${payload.bean.system_id}`,
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -88,6 +104,27 @@ export default {
         dataList: state.dataList.filter(v =>
           removeList.some(item => v.id === item),
         ),
+      };
+    },
+
+    onCameraTabsChange(state, { payload, type }) {
+      console.log(' onCameraTabsChange ： ', payload);
+      return {
+        ...state,
+        type: payload.type,
+      };
+    },
+    getCameraVideo(state, { payload, type }) {
+      console.log(' getCameraVideo ： ', payload);
+      return {
+        ...state,
+        // videoUrl: payload.bean?.data.url,
+        videoUrl: payload.list[0].url,
+        token: payload.list[0].token,
+        // action: payload.payload.action,
+        action: 'showCameraVideo',
+        isShowModal: true,
+        extraPayload: payload.payload.extraPayload,
       };
     },
   },
@@ -124,6 +161,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
+    },
+    *getCameraVideoAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getCameraVideo, payload);
+      yield put({ type: 'getCameraVideo', payload: { ...res, payload } });
+      // yield put({ type: 'getCameraVideo',  });
     },
   },
 };

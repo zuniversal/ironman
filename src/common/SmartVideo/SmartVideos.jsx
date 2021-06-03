@@ -66,6 +66,7 @@ class SmartVideo extends PureComponent {
       controls: true,
       preload: 'auto',
       fluid: true,
+      muted: true,
     });
 
     this.player.src({ src });
@@ -87,7 +88,7 @@ class SmartVideo extends PureComponent {
         }}
       >
         {/* video标签的className一定要是 "video-js",否则样式不生效 */}
-        <video id={this.state.videoId} className="video-js" />
+        <video id={this.state.videoId} className="custom-video" />
       </div>
     );
   }

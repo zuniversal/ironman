@@ -1,23 +1,5 @@
 import React from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-  Upload,
-  Result,
-} from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm';
 import HouseNoFormTable from '@/components/Table/HouseNoFormTable';
 import {
@@ -25,7 +7,6 @@ import {
   electricTypeConfig,
   billTypeConfig,
 } from '@/configs';
-import { formatConfig, reportRadioOp } from '@/utils';
 
 const HouseNoForm = props => {
   console.log(' HouseNoForm ： ', props, config);
@@ -47,7 +28,6 @@ const HouseNoForm = props => {
       },
     },
   ];
-  // const formConfig = formatConfig(config);
   const areaConfig = [
     // {
     //   noRule: true,
@@ -59,6 +39,7 @@ const HouseNoForm = props => {
     // },,
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '经度',
         name: 'longitude',
@@ -69,6 +50,7 @@ const HouseNoForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '纬度',
         name: 'latitude',
@@ -196,6 +178,7 @@ const HouseNoForm = props => {
     },
 
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '电功率考核因数',
         name: 'ep_factor',

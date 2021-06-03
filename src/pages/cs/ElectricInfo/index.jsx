@@ -7,7 +7,7 @@ import TimeChoice from '@/components/Widgets/TimeChoice';
 import Preview from '@/components/Widgets/DrawPanels/Preview';
 import SmartFormModal from '@/common/SmartFormModal';
 import SearchForm from '@/common/SearchForm';
-import AssetsInfo from '@/pages/om/Assets/AssetsInfo';
+import AssetsInfo from '@/pages/om/AssetsDetail/AssetsInfo';
 
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 import MonitorManageDetailForm from '@/components/Form/MonitorManageForm/MonitorManageDetailForm';

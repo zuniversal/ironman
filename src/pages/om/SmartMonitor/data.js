@@ -130,6 +130,10 @@ export const getShowRealData = data => {
   ];
   return mapping.map(item => {
     let value;
+    // if (typeof item.value === 'number') {
+    if (!isNaN(item.value)) {
+      value = Number(item.value.toFixed(3));
+    }
     if (typeof item.value === 'function') {
       value = item.value();
     } else {

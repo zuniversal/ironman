@@ -12,7 +12,7 @@ import {
 } from '@/models/role';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
-import { filterArr } from '@/utils';
+import { filterArr, copyData } from '@/utils';
 
 const TITLE = '角色';
 
@@ -182,7 +182,18 @@ class Role extends PureComponent {
     );
   };
   componentDidMount() {
-    this.props.getPermissionAsync(this.props.getRoutes.route.routes);
+    console.log(
+      ' %c Role componentDidMount 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
+    console.log(
+      ' Role this.props.getRoutes.route.routes) ： ',
+      this.props.getRoutes.route.routes,
+    ); //
+    // this.props.getPermissionAsync(copyData(this.props.getRoutes.route.routes));
+    this.props.getPermissionAsync();
     // this.props.addItemAsync({
     //   "name":"12323","comments":"12312",
     //   "perms_codes": [100000, 180000]
@@ -192,7 +203,7 @@ class Role extends PureComponent {
 
   render() {
     return (
-      <div className="AlarmRecord">
+      <div className="role">
         {this.renderSearchForm()}
 
         {this.renderTable()}

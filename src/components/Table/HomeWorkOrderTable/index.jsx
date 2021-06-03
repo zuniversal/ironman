@@ -90,6 +90,7 @@ const HomeWorkOrderTable = props => {
       extra={extra}
       // noActionCol
       noDefault
+      rowSelection={null}
       {...props}
     ></SmartTable>
   );

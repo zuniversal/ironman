@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import SearchForm from '@/common/SearchForm';
 
 const RoleTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -35,10 +33,6 @@ const RoleTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-RoleTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default RoleTable;

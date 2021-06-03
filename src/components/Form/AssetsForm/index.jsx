@@ -362,7 +362,7 @@ const AssetsForm = props => {
   const addConfigs = addConfig.map(v => ({
     ...v,
     comProps: props.changeWidth
-      ? { className: `${v.className} w-220`, ...v.comProps }
+      ? { className: `${v.className} w-260`, ...v.comProps }
       : v.comProps,
   }));
 

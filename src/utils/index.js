@@ -614,7 +614,7 @@ export const wrapParams = p => ({
   // other: 'xxx',
 });
 
-export const backupFn = o => JSON.parse(JSON.stringify(o));
+export const copyData = o => JSON.parse(JSON.stringify(o));
 
 export const setItem = (k, v, isString) =>
   v && localStorage.setItem(k, isString ? v : JSON.stringify(v));
@@ -776,3 +776,12 @@ export const num2Str = (data = {}, keys = []) => {
 };
 
 export const openTab = url => window.open(url);
+
+export const recursiveKeys = (data = [], allKeys = []) => {
+  data.forEach((v, i) => {
+    allKeys.push(v.key);
+    if (v.children) {
+      recursiveKeys(v.children, allKeys);
+    }
+  });
+};

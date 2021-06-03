@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.less';
 import { Button } from 'antd';
 import { getList as getAssetsList } from '@/services/assets';
-import { getList as getClientList, getRelatived } from '@/services/client';
+import {
+  getList as getClientList,
+  getRelatived,
+  getClientPower,
+} from '@/services/client';
 import { getList as getHouseNoList } from '@/services/houseNo';
 import { getList as getPowerStationList } from '@/services/powerStation';
 import { getManufacturerList } from '@/services/monitorManage';
@@ -27,6 +31,15 @@ const MonitorManageForm = props => {
   const [houseNoList, setHouseNoList] = useState([]);
   const [powerStationList, setPowerStationList] = useState([]);
   // const [ assetsList, setAssetsList ] = useState([])
+
+  // const [powerNumberList, setPowerNumberList] = useState(props.init.electrical_info_id ? [
+  //       {
+  //         value: props.init.electrical_info_id,
+  //         label: props.init.power_number,
+  //       },
+  //     ] : []);
+  const [powerNumberList, setPowerNumberList] = useState([]);
+  const [outlineList, setOutlineList] = useState([]);
 
   // const getClientAsync = async (params, ) => {
   //   const res = await getClientList({params: params})
@@ -79,20 +92,44 @@ const MonitorManageForm = props => {
       format: res => formatSelectList(res, 'imei', 'id'),
     },
   );
+  // const { data: clientList, req: getClientAsync } = useHttp(
+  //   () => getRelatived({ get_all: '1' }),
+  //   {
+  //     ...commonParams,
+  //     withArr: noAdd
+  //       ? [
+  //           {
+  //             value: props.init.customer_id,
+  //             label: props.init.customer_name,
+  //           },
+  //         ]
+  //       : [],
+  //   },
+  // );
   const { data: clientList, req: getClientAsync } = useHttp(
-    () => getRelatived({ get_all: '1' }),
+    // () => getRelatived({ get_all: '1' }),
+    getClientPower,
     {
       ...commonParams,
-      withArr: noAdd
-        ? [
-            {
-              value: props.init.customer_id,
-              label: props.init.customer_name,
-            },
-          ]
-        : [],
+      // withArr: noAdd
+      //   ? [
+      //       {
+      //         value: props.init.customer_id,
+      //         label: props.init.customer_name,
+      //       },
+      //     ]
+      //   : [],
+      // format: res => formatSelectList(res).map(({address, ...v}) => ({...v, label: `${v.label} - ${address}`})),
+      format: res =>
+        formatSelectList(res, 'customer_name', 'customer_id').map(
+          ({ customer_address, ...v }) => ({
+            ...v,
+            label: `${v.label} - ${customer_address}`,
+          }),
+        ),
     },
   );
+
   // const { data: clientList, req: getClientAsync, } = useHttp(getClientList, {
   //   ...commonParams,
   //   withArr: noAdd
@@ -141,20 +178,28 @@ const MonitorManageForm = props => {
   const {
     data: assetsList,
     setData: setAssetsList,
-    http: getAssetsAsync,
-    req,
-  } = useHttp(getAssetsList, {
-    ...commonParams,
-    withArr: noAdd
-      ? [
-          {
-            value: props.init.equipment_id,
-            label: props.init.equipment_name,
-          },
-        ]
-      : [],
-    // noMountFetch: true,
-  });
+    req: getAssetsListAsync,
+  } = useHttp(
+    () =>
+      getAssetsList({
+        customer_id: props.init.customer_id,
+        electricity_user_id: props.init.electricity_user_id,
+      }),
+    {
+      ...commonParams,
+      withArr:
+        noAdd && props.init.equipment_id
+          ? [
+              {
+                value: `${props.init.equipment_id}`,
+                label: props.init.equipment_name,
+              },
+            ]
+          : [],
+      noMountFetch: !props.init.customer_id,
+    },
+  );
+  console.log(' assetsList ： ', assetsList); //
   // // console.log(' houseNoList, getHouseNoAsync,  ： ', houseNoList, getHouseNoAsync,   )//
 
   const onFieldChange = params => {
@@ -172,16 +217,72 @@ const MonitorManageForm = props => {
   const onManufacturerChange = params => {
     console.log(' onManufacturerChange  ： ', params);
   };
+  // const onClientChange = (val, item) => {
+  //   console.log(' onClientChange  ： ', val, item);
+  //   const res = clientList.find(v => v.value == val);
+  //   const formatRes = formatSelectList(res.electricity_users, 'number');
+  //   const formatRes = formatSelectList(
+  //     res,
+  //     'number',
+  //     'electricity_user_id',
+  //   )
+  //   console.log(' res  clientList.filter v ： ', res, formatRes);
+  //   setHouseNoList(formatRes);
+  //   setPowerStationList([]);
+  //   setOutlineList([]);
+  //   props.propsForm.setFieldsValue({
+  //     electricity_user_id: item[0]?.value,
+  //     station_id: null,
+  //     equipment_id: null,
+  //   });
+  //   // setAssetsList([]);
+  //   // getClientAsync({ name: params });
+  // };
+  // const onHouseNoChange = params => {
+  //   console.log(
+  //     ' onHouseNoChange  ： ',
+  //     params,
+  //     houseNoList,
+  //     props.propsForm.getFieldsValue(),
+  //   );
+  //   // sethouseNoList(setPowerStationList);
+  //   // setAssetsList([]);
+  //   // getHouseNoAsync({ customer: params });
+  //   const res = houseNoList.find(v => v.value == params);
+  //   console.log(' res  houseNoList.filter v ： ', res);
+  //   const formatRes = formatSelectList(res.stations, 'name');
+  //   console.log(' res  houseNoList.filter v ： ', res, formatRes);
+  //   setPowerStationList(formatRes);
+  //   props.propsForm.setFieldsValue({
+  //     station_id: null,
+  //   });
+  //   const { customer_id, electricity_user_id, } = props.propsForm.getFieldsValue()
+  //   if (customer_id && electricity_user_id) {
+  //     getAssetsListAsync(() => getAssetsList({customer_id, electricity_user_id, }))
+  //   }
+  // };
+
   const onClientChange = (params, rest) => {
-    console.log(' onClientChange  ： ', params, rest);
-    const res = clientList.find(v => v.value == params);
-    const formatRes = formatSelectList(res.electricity_users, 'number');
+    console.log(' onClientChange  ： ', clientList, params, rest);
+    // const res = clientList.find(v => v.value == params);
+    // const formatRes = formatSelectList(res.electricity_users, 'number').map((v) => ({...v, label: `${v.label} - ${v.addr}`}));
+    const res = clientList.filter(v => v.value == params);
+    const formatRes = formatSelectList(
+      res,
+      'number',
+      'electricity_user_id',
+    ).map(v => ({ ...v, label: `${v.label} - ${v.electricity_user_addr}` }));
     console.log(' res  clientList.filter v ： ', res, formatRes);
     setHouseNoList(formatRes);
-    setPowerStationList([]);
-    // setAssetsList([]);
-    // getClientAsync({ name: params });
+    setPowerNumberList([]);
+    setOutlineList([]);
+    props.propsForm.setFieldsValue({
+      electricity_user_id: null,
+      electrical_info_id: null,
+      outline_id: null,
+    });
   };
+
   const onHouseNoChange = params => {
     console.log(
       ' onHouseNoChange  ： ',
@@ -189,18 +290,96 @@ const MonitorManageForm = props => {
       houseNoList,
       props.propsForm.getFieldsValue(),
     );
-    // sethouseNoList(setPowerStationList);
-    // setAssetsList([]);
-    // getHouseNoAsync({ customer: params });
-    const res = houseNoList.find(v => v.value == params);
-    console.log(' res  houseNoList.filter v ： ', res);
-    const formatRes = formatSelectList(res.stations, 'name');
-    console.log(' res  houseNoList.filter v ： ', res, formatRes);
-    setPowerStationList(formatRes);
+    // const res = houseNoList.find(v => v.value == params);
+    // console.log(' res  houseNoList.filter v ： ', res);
+    // const formatRes = formatSelectList(res.stations, 'name');
+    const res = houseNoList.filter(v => v.value == params);
+    const formatRes = formatSelectList(
+      res,
+      'power_number',
+      'electrical_info_id',
+    );
+    const formatOutlineRes = formatSelectList(
+      res,
+      'outline_name',
+      'outline_id',
+    );
+    console.log(
+      ' res  houseNoList.filter v ： ',
+      res,
+      formatRes,
+      formatOutlineRes,
+    );
+    setPowerNumberList(formatRes);
+    setOutlineList(formatOutlineRes);
   };
-  const onPowerStationChange = params => {
-    console.log(' onPowerStationChange  ： ', params);
-    // getPowerStationAsync(params);
+  const onHouseNoChangeHandle = (params, houseNoList) => {
+    console.log(
+      ' onHouseNoChange  ： ',
+      params,
+      houseNoList,
+      houseNoList,
+      props.propsForm.getFieldsValue(),
+    );
+    // const res = houseNoList.find(v => v.value == params);
+    // console.log(' res  houseNoList.filter v ： ', res);
+    // const formatRes = formatSelectList(res.stations, 'name');
+    const res = houseNoList.filter(v => v.value == params);
+    const formatRes = formatSelectList(
+      res,
+      'power_number',
+      'electrical_info_id',
+    );
+    const formatOutlineRes = formatSelectList(
+      res,
+      'outline_name',
+      'outline_id',
+    );
+    console.log(
+      ' res  houseNoList.filter v ： ',
+      res,
+      formatRes,
+      formatOutlineRes,
+    );
+    setPowerNumberList(formatRes);
+    setOutlineList(formatOutlineRes);
+  };
+
+  useEffect(() => {
+    console.log(' 副作用 clientList  ： ', clientList, noAdd, props.init); //
+    if (noAdd) {
+      const res = clientList.filter(v => v.value == props.init.customer_id);
+      const formatRes = formatSelectList(
+        res,
+        'number',
+        'electricity_user_id',
+      ).map(v => ({ ...v, label: `${v.label} - ${v.electricity_user_addr}` }));
+      console.log(' res  clientList.filter v ： ', res, formatRes);
+      setHouseNoList(formatRes);
+      onHouseNoChangeHandle(props.init.electricity_user_id, formatRes);
+    }
+  }, [clientList, noAdd]);
+
+  console.log(
+    ' onHouseNoChangeonHouseNoChange  res  clientList.filter v ： ',
+    clientList,
+    houseNoList,
+    powerNumberList,
+    outlineList,
+  );
+
+  const onPowerNumberChange = params => {
+    console.log(
+      ' onPowerNumberChange   params,   ： ',
+      params,
+      powerNumberList,
+      outlineList,
+    );
+    const res = powerNumberList.filter(v => v.value == params);
+    console.log(' resres ： ', res); //
+    const formatRes = formatSelectList(res, 'outline_name', 'outline_id');
+    console.log(' res  clientList.filter v ： ', res, formatRes);
+    setOutlineList(formatRes);
   };
 
   const config = [
@@ -208,17 +387,17 @@ const MonitorManageForm = props => {
       noRule: true,
       formType: 'Search',
       // selectSearch: onClientChange,
-      // selectData: clientList,
-      selectData: filterObjSame(
-        [
-          ...clientList,
-          {
-            value: props.init.customer_id,
-            label: props.init.customer_name,
-          },
-        ],
-        'value',
-      ),
+      selectData: clientList,
+      // selectData: filterObjSame(
+      //   [
+      //     ...clientList,
+      //     {
+      //       value: props.init.customer_id,
+      //       label: props.init.customer_name,
+      //     },
+      //   ],
+      //   'value',
+      // ),
       itemProps: {
         label: '客户',
         name: 'customer_id',
@@ -238,16 +417,17 @@ const MonitorManageForm = props => {
       //     label: props.init.customer_name,
       //   }] : [],
       // ],
-      selectData: filterObjSame(
-        [
-          ...houseNoList,
-          {
-            value: props.init.electricity_user_id,
-            label: props.init.number,
-          },
-        ],
-        'value',
-      ),
+      // selectData: filterObjSame(
+      //   [
+      //     ...houseNoList,
+      //     {
+      //       value: props.init.electricity_user_id,
+      //       label: props.init.number,
+      //     },
+      //   ],
+      //   'value',
+      // ),
+      selectData: houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user_id',
@@ -256,41 +436,65 @@ const MonitorManageForm = props => {
         onSelect: onHouseNoChange,
       },
     },
+    // {
+    //   noRule: true,
+    //   formType: 'Search',
+    //   // selectSearch: onPowerStationChange,
+    //   // selectData: powerStationList,
+    //   selectData: filterObjSame(
+    //     [
+    //       ...powerStationList,
+    //       {
+    //         value: props.init.station_id,
+    //         label: props.init.station_name,
+    //       },
+    //     ],
+    //     'value',
+    //   ),
+    //   itemProps: {
+    //     label: '电站',
+    //     name: 'station_id',
+    //   },
+    // },
+
     {
       noRule: true,
       formType: 'Search',
-      // selectSearch: onPowerStationChange,
-      // selectData: powerStationList,
-      selectData: filterObjSame(
-        [
-          ...powerStationList,
-          {
-            value: props.init.station_id,
-            label: props.init.station_name,
-          },
-        ],
-        'value',
-      ),
+      selectData: powerNumberList,
       itemProps: {
         label: '电站',
-        name: 'station_id',
+        label: '电源编号',
+        name: 'electrical_info_id',
+      },
+      comProps: {
+        onSelect: onPowerNumberChange,
       },
     },
     {
       noRule: true,
       formType: 'Search',
+      selectData: outlineList,
+      itemProps: {
+        label: '出线侧',
+        name: 'outline_id',
+      },
+    },
+
+    {
+      noRule: true,
+      formType: 'Search',
       // selectSearch: getAssetsAsync,
-      // selectData: assetsList,
-      selectData: filterObjSame(
-        [
-          ...assetsList,
-          {
-            value: props.init.equipment_id,
-            label: props.init.equipment_name,
-          },
-        ],
-        'value',
-      ),
+      selectData: assetsList,
+      // selectData: filterObjSame(
+      //   [
+      //     ...assetsList,
+      //     {
+      //       value: props.init.equipment_id,
+      //       label: props.init.equipment_name,
+      //     },
+      //   ],
+      //   'value',
+      // ),
       itemProps: {
         label: '关联客户设备',
         name: 'equipment_id',
@@ -316,6 +520,7 @@ const MonitorManageForm = props => {
 
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '额定功率',
         name: 'power',
@@ -324,7 +529,7 @@ const MonitorManageForm = props => {
 
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       // selectSearch: getMonitorDeviceAsync,
       selectData: [
         ...monitorDeviceList,
@@ -354,7 +559,7 @@ const MonitorManageForm = props => {
     //   },
     // },
     // {
-    //   formType: 'Select',
+    //   formType: 'Search',
     //   selectData: props.serviceStaffList,
     //   itemProps: {
     //     label: '设备类型',
@@ -363,7 +568,7 @@ const MonitorManageForm = props => {
     // },
     // // 固定的 厂商   先选厂商 然后带选模型
     // {
-    //   formType: 'Select',
+    //   formType: 'Search',
     //   selectData: manufacturerConfig,
     //   itemProps: {
     //     label: '品牌',
@@ -375,7 +580,7 @@ const MonitorManageForm = props => {
     //   },
     // },
     // {
-    //   formType: 'Select',
+    //   formType: 'Search',
     //   selectData: monitorDeviceStatusConfig,
     //   itemProps: {
     //     label: '状态',
@@ -395,7 +600,7 @@ const MonitorManageForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectData: deviceFrequencyConfig,
       itemProps: {
         label: '上传频率',
@@ -426,6 +631,7 @@ const MonitorManageForm = props => {
     },
     {
       noRule: true,
+      formType: 'TextArea',
       itemProps: {
         label: '说明',
         name: 'comments',

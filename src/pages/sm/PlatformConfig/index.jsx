@@ -45,7 +45,7 @@ class PlatformConfig extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'succ' })}
         >
@@ -56,7 +56,7 @@ class PlatformConfig extends PureComponent {
           onClick={() => this.props.showFormModal({ action: 'fail' })}
         >
           新增{TITLE}
-        </Button>
+        </Button> */}
       </div>
     );
   };
@@ -67,8 +67,8 @@ class PlatformConfig extends PureComponent {
         className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        keyword={'name'}
-        label={'名称'}
+        keyword={'keyword'}
+        label={'关键字'}
         noLabel
       ></SearchKwForm>
     );
@@ -118,6 +118,12 @@ class PlatformConfig extends PureComponent {
           ...res,
         });
       }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          d_id: itemDetail.id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -155,12 +161,16 @@ class PlatformConfig extends PureComponent {
     return ['add'].some(v => v === this.props.action) ? '直接确定' : '确定';
   }
   confirmHandle = async (params, type) => {
-    console.log('    confirmHandle ： ', params, type);
+    console.log('    confirmHandle ： ', params, type, this.props);
+    const { action } = this.props;
     const { form } = params;
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
+        this.props.addItemAsync({
+          ...res,
+        });
       }
     } catch (error) {
       console.log(' error ： ', error);
@@ -171,14 +181,14 @@ class PlatformConfig extends PureComponent {
     if (this.props.action === 'add') {
       return (
         <div className={`extraBtnWrapper`} key="extraBtn">
-          <Button
+          {/* <Button
             key="loginValidate"
             // onClick={e => this.onOk(e, 'loginValidate')}
             onClick={e => this.confirmHandle(params, 'loginValidate')}
             type="primary"
           >
             账号登录验证
-          </Button>
+          </Button> */}
           <Button
             key="ok"
             onClick={e => this.confirmHandle(params, 'onOk')}

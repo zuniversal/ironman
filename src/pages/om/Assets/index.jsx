@@ -1,64 +1,29 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button } from 'antd';
-import AssetsTable from '@/components/Table/AssetsTable';
-import AssetsDetailTable from '@/components/Table/AssetsDetailTable';
+import { Button, Row, Col, Divider } from 'antd';
+import AssetsSearchForm from '@/components/Form/AssetsSearchForm';
+import AssetsDetailSearchForm from '@/components/Form/AssetsDetailSearchForm';
+import SearchKwForm from '@/components/Form/SearchKwForm';
 import ClientForm from '@/components/Form/ClientForm';
 import AssetsForm from '@/components/Form/AssetsForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
-import AssetsSearchForm from '@/components/Form/AssetsSearchForm';
-import AssetTree from '@/components/Tree/AssetTree';
-import ResultModal from '@/components/Modal/ResultModal';
 import SmartFormModal from '@/common/SmartFormModal';
-import DropDownBtn from '@/common/DropDownBtn';
-import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadCom from '@/components/Widgets/UploadCom';
-import SuccResult from '@/components/Widgets/SuccResult';
-import AssetsInfo from './AssetsInfo';
+import ClientSimpleTable from '@/components/Table/ClientSimpleTable';
+import AssetsInfo from '@/pages/om/AssetsDetail/AssetsInfo';
+import { ASSETS_DETAIL } from '@/constants';
 
 import { actions, mapStateToProps } from '@/models/assets';
 import SmartHOC from '@/common/SmartHOC';
-import { connect } from 'umi';
-import { tips, downLoad } from '@/utils';
-import { DOWN_ASSETS_TPL } from '@/constants';
-
-const smallLayout = {
-  labelCol: {
-    sm: { span: 5 }, //
-  },
-  wrapperCol: {
-    sm: { span: 19 }, //
-  },
-};
-
-const menuConfig = [
-  {
-    key: 'upload',
-    clickFn: 'showUploadModal',
-    action: 'uploadFile',
-    text: '上传文件',
-  },
-  {
-    key: 'down',
-    // clickFn: 'showResultModal',
-    clickFn: 'downloadFile',
-    action: 'down',
-    text: '下载数据模板',
-    // downFile: 'OMS/equipment/getTemplate',
-  },
-];
+import { connect, history } from 'umi';
 
 export const TITLE = '资产';
-// export const TITLE = '设备';
 export const DEVICE = '设备';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  uploadFile: `资产列表`,
-  down: `文件下载`,
   powerStationDetailAsync: `电站详情`,
   houseNoDetailAsync: `户号详情`,
   assetsDetailAsync: `资产详情`,
@@ -78,151 +43,78 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: AssetsForm,
   noMountFetch: true,
 })
 class Assets extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      showResultModal: false,
-
-      modalContent: null,
-
-      action: '',
-      title: '',
-      assetsTitle: '',
       titleMap,
     };
   }
-
-  showResultModal = e => {
-    console.log('    showResultModal ： ', e);
-    this.setState({
-      showResultModal: true,
-    });
-  };
-  onResultModalCancel = e => {
-    console.log('    onResultModalCancel ： ', e);
-    this.setState({
-      showResultModal: false,
-    });
-  };
-
-  onUploadChange = params => {
-    console.log(' onUploadChange,  , ： ', params);
-    if (params.file.status === 'done') {
-      setTimeout(() => {
-        console.log('  延时器 ： ');
-        this.setState({
-          modalContent: <SuccResult></SuccResult>,
-        });
-      }, 2000);
-    }
-  };
-  downloadFile = params => {
-    console.log('    downloadFile ： ', params);
-    // this.props.downloadFile();
-    downLoad(DOWN_ASSETS_TPL, { name: '资产数据模板' });
-  };
-
-  menuClick = params => {
-    const { key, clickFn, action } = params;
-    console.log(' menuClick,  , ： ', params, this.state.titleMap, params.key);
-    if (action === 'uploadFile') {
-      this.props.showFormModal(params);
-      return;
-    }
-    if (clickFn) {
-      this[clickFn](params);
-      return;
-    }
-  };
-
   renderFormBtn = params => {
+    const { customer_id, electricity_user_id } = this.props.assetsSearchInfo;
     return (
       <div className={'btnWrapper'}>
-        {/* <Button
-          type="primary"
-          // onClick={() => this.props.search({ keyword: params })}
-          onClick={() => this.props.search(params)}
-        >
-          搜索
-        </Button> */}
-        <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
-          Excel导入
-        </DropDownBtn>
         <Button
           type="primary"
-          onClick={() => this.addTree}
-          disabled={this.props.authInfo.create !== true}
+          onClick={() =>
+            history.push(
+              `${ASSETS_DETAIL}customer_id=${customer_id}&electricity_user_id=${electricity_user_id}`,
+            )
+          }
+          disabled={!customer_id}
         >
-          新增{TITLE}结构
+          编辑
         </Button>
       </div>
     );
   };
-  addTree = e => {
-    console.log('    addTree ： ', e);
-  };
   renderSearchForm = params => {
     return (
       <AssetsSearchForm
-        // formBtn={this.renderFormBtn}
-        getHouseNoAsync={this.props.getHouseNoAsync}
-        getPowerAsync={params => this.props.getPowerAsync({ name: params })}
-        getClientAsync={params => this.props.getClientAsync({ name: params })}
-        clientList={this.props.clientList}
-        powerList={this.props.powerList}
-        houseNoList={this.props.houseNoList}
+        formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
-        // onFieldChange={this.onFieldChange}
-        getListAsync={this.props.getListAsync}
+        onFieldChange={this.onFieldChange}
+        houseNoList={this.props.houseNoList}
       ></AssetsSearchForm>
     );
+    return (
+      <SearchKwForm
+        formBtn={this.renderFormBtn}
+        className={'fje'}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+        keyword={'keyword'}
+        label={'客户名称'}
+        noLabel
+      ></SearchKwForm>
+    );
+  };
+  renderSearchForm = params => {
+    return (
+      <>
+        <AssetsDetailSearchForm
+          formBtn={this.renderFormBtn}
+          init={this.props.searchInfo}
+          init={this.props.assetsSearchInfo}
+          // onFieldChange={this.onFieldChange}
+          getListAsync={this.props.getListFilter}
+          className={'assetsDetailSearchForm'}
+        ></AssetsDetailSearchForm>
+        <Divider />
+      </>
+    );
+  };
+  getListFilter = params => {
+    console.log(' getListFilter,  , ： ', params);
+    this.props.getListFilter(params);
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
-    this.props.getListAsync(params.formData);
+    this.props.getListFilter({ ...params.value });
   };
 
-  onRemove = params => {
-    console.log(' onRemove    ： ', params);
-    // this.props.removeItemAsync({
-    //   // id: `${params.record.id}`,
-    //   d_id: `${params.record.id}`,
-    // });
-    this.props.onRemove({
-      d_id: `${params.record.id}`,
-    });
-  };
-  onBatchRemove = params => {
-    console.log(' onBatchRemove    ： ', params, this.state, this.props);
-    this.props.onBatchRemove({
-      ids: this.props.selectedRowKeys,
-    });
-  };
-  renderTable = params => {
-    const tableProps = {
-      onSelectChange: this.props.onSelectChange,
-      dataSource: this.props.dataList,
-
-      count: this.props.count,
-      authInfo: this.props.authInfo,
-      searchInfo: this.props.searchInfo,
-      getListAsync: this.props.getListAsync,
-      showDetail: this.props.getItemAsync,
-      edit: this.props.getItemAsync,
-      remove: this.onRemove,
-
-      add: this.props.showFormModal,
-      showFormModal: this.props.showFormModal,
-      showItemAsync: this.props.showItemAsync,
-    };
-
-    return <AssetsTable {...tableProps}></AssetsTable>;
-  };
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
     return (
@@ -254,27 +146,6 @@ class Assets extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      if (typeof res.file !== 'string') {
-        if (res.file && res.file.fileList.length > 0) {
-          const fileList = res.file.fileList;
-          res.file = fileList[fileList.length - 1].response.url;
-          // } else {
-          //   tips('文件不能为空！', 2);
-          //   return;
-        }
-      }
-      if (action === 'add') {
-        this.props.addItemAsync({
-          ...res,
-        });
-      }
-      if (action === 'edit') {
-        this.props.editItemAsync({
-          ...itemDetail,
-          ...res,
-          // electricity_user: itemDetail.electricity_user?.id,
-        });
-      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -283,50 +154,13 @@ class Assets extends PureComponent {
     const { action, itemDetail } = this.props;
     const formComProps = {
       action,
-      getUser: params => this.props.getUserAsync({ keyword: params }),
-      userList: this.props.userList,
-      getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
-      getPowerAsync: params => this.props.getPowerAsync({ name: params }),
-      getListAsync: params => this.props.getListAsync({ keyword: params }),
-      dataList: this.props.dataList,
-      powerList: this.props.powerList,
-      houseNoList: this.props.houseNoList,
     };
-    if (action === 'detail' || action === 'edit') {
-      return <AssetsInfo data={itemDetail}></AssetsInfo>;
-      return <AssetsDetailTable data={itemDetail}></AssetsDetailTable>;
-    }
-    if (action === 'uploadFile') {
-      return (
-        <UploadCom
-          label={this.state.titleMap[action]}
-          action={'file'}
-          isInputUpload
-          contentClass={'dfc'}
-          formItemCls={'assetsUpload'}
-          action={'/api/v1/upload'}
-          name={'file'}
-          extra={'支持扩展名:xls、xlsx、csv'}
-          uploadProps={{
-            accept:
-              'text/csv,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          }}
-          formItemLayout={smallLayout}
-        ></UploadCom>
-      );
-    }
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
     return <AssetsForm {...formComProps}></AssetsForm>;
   };
-  get size() {
-    if (this.props.action === 'uploadFile') {
-      return 'small';
-    }
-    return 'default';
-  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -335,90 +169,52 @@ class Assets extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
-        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
   };
-  handleAction = params => {
-    console.log('    handleAction ： ', params, this.state, this.props);
-    this.props.setData({
-      isShowRemoveModal: true,
-      removeParams: {
-        noRemove: true,
-        removeTitle: '提示',
-        removeContent: '是否确认删除',
-        okFn: e => {
-          console.log(' okFnokFnokFnokFn ： ', e, params);
-          this.props.handleWeakAsync(params);
-          this.props.onResultModalCancel();
-        },
+
+  renderAssets = params => {
+    console.log(' AssetsInfoAssetsInfo ： ', params, this.props);
+    const tableProps = {
+      rowSelection: null,
+      dataSource: this.props.clientListFilter,
+      count: this.props.clientCount,
+      getAssetListAsync: this.props.getAssetListAsync,
+      // getListAsync: this.props.getClientRelativedAsync,
+      rowClassName: (record, index) =>
+        record.id == this.props.assetsSearchInfo?.customer_id
+          ? 'activeRow'
+          : '',
+      paginationConfig: {
+        showQuickJumper: false,
+        showSizeChanger: false,
+        size: 'small',
       },
-    });
-  };
-  saveTreeNodeAsync = params => {
-    console.log('    saveTreeNodeAsync ： ', params);
-    this.props.addItemAsync(params);
-    // this.props.editTreeNode(params);
-  };
-  renderAssetTree = params => {
-    return this.props.treeDatas.length > 0 ? (
-      <AssetTree
-        showFormModal={this.props.showFormModal}
-        editItems={this.props.editItems}
-        action={this.props.action}
-        treeData={this.props.treeDatas}
-        searchInfo={this.props.searchInfo}
-        addItemAsync={this.props.addItemAsync}
-        editItemAsync={this.props.editItemAsync}
-        getItemAsync={this.props.getItemAsync}
-        addTreeNode={this.props.addTreeNode}
-        editTreeNode={this.props.editTreeNode}
-        saveTreeNodeAsync={this.saveTreeNodeAsync}
-        itemDetail={this.props.itemDetail}
-        selectItem={this.props.selectItem}
-        onRemove={this.onRemove}
-        addTreeStruct={this.props.addTreeStruct}
-        changeAction={this.props.changeAction}
-      ></AssetTree>
-    ) : (
-      <div className="dfc">无对应的资产数据！</div>
-    );
-  };
-
-  renderResultModal = params => {
-    console.log(' renderResultModal ： ', params, this.state, this.props);
-    const { show, title, action, titleMap, showResultModal } = this.state;
-
-    const modalProps = {
-      title: title,
-      show: showResultModal,
-      onOk: this.onResultModalOk,
-      onCancel: this.onResultModalCancel,
     };
-    const resProps = {
-      status: 'error',
-      title: '导入失败',
-      subTitle: '请核对并修改以下信息后，再重新提交。',
-      // extra: [
-      //   <Button  key="console" >返回列表</Button>,
-      // ],
-      // children: <ErrorInfo></ErrorInfo>,
-    };
-
     return (
-      <ResultModal modalProps={modalProps} resProps={resProps}>
-        <ErrorInfo></ErrorInfo>
-      </ResultModal>
+      <div className="assetInfoWrapper">
+        <Row gutter={[16, 16]}>
+          <Col span={8}>
+            <ClientSimpleTable {...tableProps}></ClientSimpleTable>
+          </Col>
+          <Col span={16}>
+            <AssetsInfo
+              assetList={this.props.assetList}
+              subAssetList={this.props.subAssetList}
+              subAssetTreeList={this.props.subAssetTreeList}
+              selectItem={this.props.selectItem}
+              assetDetail={this.props.assetDetail}
+              getAssetDetailAsync={this.props.getAssetDetailAsync}
+            ></AssetsInfo>
+          </Col>
+        </Row>
+      </div>
     );
   };
   componentDidMount() {
-    // this.props.getPowerAsync();
-    // this.props.getListAsync({
-    //   electricity_user_id: '6464',
-    //   customer_id: '6464',
-    // });
+    this.props.getClientRelativedAsync();
   }
 
   render() {
@@ -433,14 +229,11 @@ class Assets extends PureComponent {
       <div className="assets">
         {this.renderSearchForm()}
 
-        {/* {this.renderTable()} */}
-        {this.renderAssetTree()}
+        {this.renderAssets()}
 
         {this.renderSmartFormModal()}
 
         {this.renderCommonModal()}
-
-        {this.renderResultModal()}
       </div>
     );
   }

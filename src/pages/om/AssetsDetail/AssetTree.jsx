@@ -11,100 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Tree, Input, Row, Col, Button, Tooltip, Form } from 'antd';
 import { recursiveResetAssets } from '@/models/assets'; //
-import { num2Str } from '@/utils';
-
-const { DirectoryTree } = Tree;
-
-const EmptyAsset = props => {
-  console.log('EmptyAsset     ,   ： ', props);
-  return (
-    <div className={`dfc`}>
-      该处资产现在为空，请添加资产
-      <Button
-        type="primary"
-        onClick={() =>
-          // props.editItems({
-          //   action: 'editItems',
-          //   // item,
-          //   form: props.form,
-          // })
-          // props.addTreeNode(props.selectItem)
-          props.changeAction({
-            action: 'edit',
-          })
-        }
-        className={`m-l-10`}
-      >
-        新增
-      </Button>
-    </div>
-  );
-};
-
-const AssetForm = props => (
-  <AssetsForm
-    flexRow={2}
-    formBtn={props.renderFormBtn}
-    key={props.init.id}
-    {...props}
-  ></AssetsForm>
-);
-
-const recursiveHandle = recursiveResetAssets;
-
-export const recursiveKeys = (data = [], allKeys = []) => {
-  // console.log('treeData  recursiveKeys   ,   ： ', data, allKeys);
-  // return data.map((v, i) => ({...v,}));
-  data.forEach((v, i) => {
-    allKeys.push(v.key);
-    if (v.children) {
-      recursiveKeys(v.children, allKeys);
-    }
-  });
-};
-const datas = [
-  {
-    title: '0-0',
-    key: '0-0',
-    children: [
-      {
-        title: '0-0-0',
-        key: '0-0-0',
-        children: [
-          { title: '0-0-0-0', key: '0-0-0-0' },
-          { title: '0-0-0-1', key: '0-0-0-1' },
-          { title: '0-0-0-2', key: '0-0-0-2' },
-        ],
-      },
-      {
-        title: '0-0-1',
-        key: '0-0-1',
-        children: [
-          { title: '0-0-1-0', key: '0-0-1-0' },
-          { title: '0-0-1-1', key: '0-0-1-1' },
-          { title: '0-0-1-2', key: '0-0-1-2' },
-        ],
-      },
-      {
-        title: '0-0-2',
-        key: '0-0-2',
-      },
-    ],
-  },
-  {
-    title: '0-1',
-    key: '0-1',
-    children: [
-      { title: '0-1-0-0', key: '0-1-0-0' },
-      { title: '0-1-0-1', key: '0-1-0-1' },
-      { title: '0-1-0-2', key: '0-1-0-2' },
-    ],
-  },
-  {
-    title: '0-2',
-    key: '0-2',
-  },
-];
+import { num2Str, recursiveKeys } from '@/utils';
 
 const AssetTree = props => {
   const [form] = Form.useForm();
@@ -207,8 +114,8 @@ const AssetTree = props => {
       <Tree
         // expandedKeys={['0-0-0', '0-0-1']}
         expandedKeys={[]}
-        autoExpandParent={true}
-        showLine={true}
+        autoExpandParent
+        showLine
         treeData={loop(treeData, {
           ...props,
           searchValue,

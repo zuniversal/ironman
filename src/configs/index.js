@@ -1822,3 +1822,31 @@ export const assetFormTypeMap = {
 
   1601: capacitorExtra,
 };
+
+export const cameraSystemConfig = [
+  {
+    value: '1',
+    label: '乐橙云',
+  },
+  {
+    value: '2',
+    label: '萤石云',
+  },
+  {
+    value: '3',
+    label: '哈罗鱼',
+  },
+];
+
+export const cameraSystemMap = arrMapObj(cameraSystemConfig);
+
+export const CAMERA1 = '1'; //
+export const CAMERA2 = '2';
+export const cameraTypeConfig = [
+  { value: CAMERA1, label: '头盔摄像头' },
+  { value: CAMERA2, label: '固定式摄像头' },
+];
+
+export const cameraTypeMap = arrMapObj(cameraTypeConfig);
+
+//

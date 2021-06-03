@@ -62,6 +62,7 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
+      const { electricity_user_id, electrical_info_id } = payload.bean;
       return {
         ...state,
         action: payload.payload.action,
@@ -69,6 +70,12 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
+          electricity_user_id: electricity_user_id
+            ? `${electricity_user_id}`
+            : electricity_user_id,
+          electrical_info_id: electrical_info_id
+            ? `${electrical_info_id}`
+            : electrical_info_id,
         },
       };
     },
@@ -166,6 +173,8 @@ export default {
         name,
         power,
         frequency: deviceFrequencyConfig[0].value,
+        current_ratio,
+        voltage_ratio,
         template_id: null,
         comments: null,
       };

@@ -146,7 +146,12 @@ class AlarmRecord extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['handleAlarm', 'notifyClient'].includes(action)) {
+    if (
+      [
+        // 'handleAlarm',
+        'notifyClient',
+      ].includes(action)
+    ) {
       this.props.onCancel({});
       return;
     }
@@ -155,6 +160,11 @@ class AlarmRecord extends PureComponent {
       console.log('  res await 结果  ：', res, action);
       if (action === 'add') {
         this.props.addItemAsync({
+          ...res,
+        });
+      }
+      if (action === 'handleAlarm') {
+        this.props.handleAlarmAsync({
           ...res,
         });
       }

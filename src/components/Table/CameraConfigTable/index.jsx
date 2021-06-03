@@ -1,28 +1,34 @@
 import React from 'react';
 import './style.less';
 import SmartTable from '@/common/SmartTable';
+import { cameraTypeMap } from '@/configs';
+
+const cameraCommonCol = [
+  {
+    title: '摄像头名称',
+    dataIndex: 'name',
+  },
+  {
+    title: '摄像头编号',
+    dataIndex: 'deviceSerial',
+  },
+  {
+    title: '平台',
+    dataIndex: 'system_name',
+    // dataMap: cameraTypeMap,
+  },
+];
 
 export const FixedCameraConfigTable = props => {
   const columns = [
-    {
-      title: '摄像头名称',
-      dataIndex: '',
-    },
-    {
-      title: '摄像头编号',
-      dataIndex: '',
-    },
-    {
-      title: '类型',
-      dataIndex: '',
-    },
+    ...cameraCommonCol,
     {
       title: '所属电站',
-      dataIndex: '',
+      dataIndex: ['station', 'name'],
     },
     {
       title: '客户',
-      dataIndex: '',
+      dataIndex: ['customer', 'name'],
     },
   ];
 
@@ -30,9 +36,12 @@ export const FixedCameraConfigTable = props => {
     <>
       <a
         onClick={() => {
-          props.showFormModal({
-            action: 'showVideoAsync',
+          props.getCameraVideoAsync({
+            action: 'showCameraVideo',
             d_id: record.id,
+            // d_id: 37,
+            extraPayload: record,
+            type: 1,
           });
         }}
       >
@@ -46,21 +55,10 @@ export const FixedCameraConfigTable = props => {
 
 export const HeadCameraConfigTable = props => {
   const columns = [
-    {
-      title: '摄像头名称',
-      dataIndex: '',
-    },
-    {
-      title: '摄像头编号',
-      dataIndex: '',
-    },
-    {
-      title: '类型',
-      dataIndex: '',
-    },
+    ...cameraCommonCol,
     {
       title: '电工名字',
-      dataIndex: '',
+      dataIndex: ['user', 'name'],
     },
   ];
 
@@ -68,9 +66,12 @@ export const HeadCameraConfigTable = props => {
     <>
       <a
         onClick={() => {
-          props.showFormModal({
-            action: 'showVideoAsync',
+          props.getCameraVideoAsync({
+            action: 'showCameraVideo',
             d_id: record.id,
+            // d_id: 37,
+            extraPayload: record,
+            type: 1,
           });
         }}
       >

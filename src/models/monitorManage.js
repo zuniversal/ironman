@@ -51,7 +51,11 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          created_time: v.created_time !== 'NaT' ? v.created_time : undefined,
+        })),
+        // dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -66,6 +70,8 @@ export default {
         equipment_id,
         device_id,
         template_id,
+        electrical_info_id,
+        outline_id,
       } = payload.bean;
 
       return {
@@ -78,9 +84,12 @@ export default {
           customer_id: `${customer_id}`,
           electricity_user_id: `${electricity_user_id}`,
           station_id: `${station_id}`,
-          equipment_id: `${equipment_id}`,
+          equipment_id: equipment_id ? `${equipment_id}` : equipment_id,
           device_id: `${device_id}`,
-          template_id: template_id ? `${template_id}` : template_id,
+          electrical_info_id: electrical_info_id
+            ? `${electrical_info_id}`
+            : electrical_info_id,
+          outline_id: outline_id ? `${outline_id}` : outline_id,
         },
       };
     },

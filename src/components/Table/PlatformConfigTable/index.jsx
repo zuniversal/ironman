@@ -1,28 +1,36 @@
 import React from 'react';
 import './style.less';
 import SmartTable from '@/common/SmartTable';
+import { cameraSystemMap } from '@/configs';
 
 const PlatformConfigTable = props => {
   const columns = [
     {
       title: '平台名称',
-      dataIndex: '',
+      dataIndex: 'name',
     },
     {
       title: '平台类型',
-      dataIndex: '',
+      dataIndex: 'system',
+      dataMap: cameraSystemMap,
     },
-    {
-      title: '平台地址',
-      dataIndex: '',
-      // detailFn: record => props.showItemAsync({
-      //     action: 'clientDetailAsync',
-      //     d_id: record.id,
-      //   }),
-    },
+    // {
+    //   title: '平台地址',
+    //   dataIndex: '',
+    //   // detailFn: record => props.showItemAsync({
+    //   //     action: 'clientDetailAsync',
+    //   //     d_id: record.id,
+    //   //   }),
+    // },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      //  noActionCol
+      {...props}
+    ></SmartTable>
+  );
 };
 
 export default PlatformConfigTable;

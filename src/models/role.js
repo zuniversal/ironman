@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/role';
 import * as permissionServices from '@/services/permission';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, copyData } from '@/utils';
 import { platformSelectConfig } from '@/configs/routes';
 
 const namespace = 'role';
@@ -118,6 +118,10 @@ export const recursiveHandle2 = (data = [], perms = {}, datas = []) => {
 export const recursiveHandle = (data = [], perms = {}, datas = []) => {
   // console.log(' recursiveHandle   ,   ： ', data, perms, datas);
   data.forEach(item => {
+    // const item = {
+    //   ...v,
+    // }
+
     // console.log(
     //   ' recursiitemeHandle ： ',
     //   perms,
@@ -262,22 +266,22 @@ export default {
       console.log(' getPermission ： ', state, payload);
       // const permsData = flatData(payload.bean.system.sub)
       const permsData = flatData(payload.bean);
-      const routeData = payload.payload.filter(v => !v.noAuth);
-      const allRouteData = [...routeData, ...otherRoutes];
-      const allRouteData2 = [...platformSelectConfig, ...otherRoutes];
+      // const routeData = payload.payload.filter(v => !v.noAuth);
+      // const allRouteData = [...routeData, ...otherRoutes];
+      const allRouteData2 = copyData([...platformSelectConfig, ...otherRoutes]);
       const dataArr = [];
-      const permission = recursiveHandle(allRouteData, permsData, dataArr);
+      // const permission = recursiveHandle(allRouteData, permsData, dataArr);
       const permission2 = recursiveHandle(allRouteData2, permsData, dataArr);
       console.log(
         '  permissionpermissionpermissionpermission ：',
         payload,
-        routeData,
+        // routeData,
         payload.bean,
         permsData,
         dataArr,
-        allRouteData,
+        // allRouteData,
         allRouteData2,
-        permission,
+        // permission,
         permission2,
       );
       return {
@@ -291,7 +295,7 @@ export default {
             label: '全部',
             // children: permission,
             // children: routeData,
-            children: allRouteData,
+            // children: allRouteData,
             children: allRouteData2,
           },
         ],

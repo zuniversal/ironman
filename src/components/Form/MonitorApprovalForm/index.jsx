@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.less';
 import useHttp from '@/hooks/useHttp';
 import {
@@ -26,13 +26,32 @@ import moment from 'moment';
 const url = '/api/v1/console/monitor/devices/record/upload';
 
 const MonitorApprovalForm = props => {
-  const [houseNoList, setHouseNoList] = useState([]);
-  const [powerNumberList, setPowerNumberList] = useState([]);
+  const [houseNoList, setHouseNoList] = useState(
+    props.init.electricity_user_id
+      ? [
+          {
+            value: `${props.init.electricity_user_id}`,
+            label: props.init.number,
+          },
+        ]
+      : [],
+  );
+  const [powerNumberList, setPowerNumberList] = useState(
+    props.init.electrical_info_id
+      ? [
+          {
+            value: `${props.init.electrical_info_id}`,
+            label: props.init.power_number,
+          },
+        ]
+      : [],
+  );
   const [outlineList, setOutlineList] = useState([]);
 
   const { imei } = props.init; //
 
   const noAdd = props.action !== 'add';
+
   const commonParams = {
     init: [],
     format: res => formatSelectList(res),
@@ -42,14 +61,14 @@ const MonitorApprovalForm = props => {
     getClientPower,
     {
       ...commonParams,
-      withArr: noAdd
-        ? [
-            {
-              value: props.init.customer_id,
-              label: props.init.customer_name,
-            },
-          ]
-        : [],
+      // withArr: noAdd
+      //   ? [
+      //       {
+      //         value: props.init.customer_id,
+      //         label: props.init.customer_name,
+      //       },
+      //     ]
+      //   : [],
       // format: res => formatSelectList(res).map(({address, ...v}) => ({...v, label: `${v.label} - ${address}`})),
       format: res =>
         formatSelectList(res, 'customer_name', 'customer_id').map(
@@ -99,7 +118,10 @@ const MonitorApprovalForm = props => {
     },
   );
 
-  const { data: electricOutlineList, req: getelectricOutlineAsync } = useHttp(
+  const {
+    data: electricOutlineList,
+    req: getElectricOutlineListAsync,
+  } = useHttp(
     () =>
       getElectricOutlineList({
         ele_info: props.init.electrical_info_id,
@@ -115,7 +137,6 @@ const MonitorApprovalForm = props => {
   manufacturerList.forEach(v =>
     manufacturerModelList.push(...formatSelectList(v.models)),
   );
-
   const clientPowerList = [];
 
   // const clientList = formatSelectList(clientPowerList, 'customer_name', 'customer_id')
@@ -148,6 +169,7 @@ const MonitorApprovalForm = props => {
       outline_id: null,
     });
   };
+
   const onHouseNoChange = params => {
     console.log(
       ' onHouseNoChange  ： ',
@@ -178,6 +200,75 @@ const MonitorApprovalForm = props => {
     setPowerNumberList(formatRes);
     setOutlineList(formatOutlineRes);
   };
+  const onHouseNoChangeHandle = (params, houseNoList) => {
+    console.log(
+      ' onHouseNoChange  ： ',
+      params,
+      houseNoList,
+      houseNoList,
+      props.propsForm.getFieldsValue(),
+    );
+    // const res = houseNoList.find(v => v.value == params);
+    // console.log(' res  houseNoList.filter v ： ', res);
+    // const formatRes = formatSelectList(res.stations, 'name');
+    const res = houseNoList.filter(v => v.value == params);
+    const formatRes = formatSelectList(
+      res,
+      'power_number',
+      'electrical_info_id',
+    );
+    const formatOutlineRes = formatSelectList(
+      res,
+      'outline_name',
+      'outline_id',
+    );
+    console.log(
+      ' res  houseNoList.filter v ： ',
+      res,
+      formatRes,
+      formatOutlineRes,
+    );
+    setPowerNumberList(formatRes);
+    setOutlineList(formatOutlineRes);
+  };
+
+  useEffect(() => {
+    console.log(' 副作用 clientList  ： ', clientList, noAdd, props.init); //
+    if (noAdd) {
+      const res = clientList.filter(v => v.value == props.init.customer_id);
+      const formatRes = formatSelectList(
+        res,
+        'number',
+        'electricity_user_id',
+      ).map(v => ({ ...v, label: `${v.label} - ${v.electricity_user_addr}` }));
+      console.log(' res  clientList.filter v ： ', res, formatRes);
+      setHouseNoList(formatRes);
+      onHouseNoChangeHandle(props.init.electricity_user_id, formatRes);
+    }
+  }, [clientList, noAdd]);
+
+  console.log(
+    ' onHouseNoChangeonHouseNoChange  res  clientList.filter v ： ',
+    clientList,
+    houseNoList,
+    powerNumberList,
+    outlineList,
+    electricOutlineList,
+  );
+
+  const onPowerNumberChange = params => {
+    console.log(
+      ' onPowerNumberChange   params,   ： ',
+      params,
+      powerNumberList,
+      outlineList,
+    );
+    const res = powerNumberList.filter(v => v.value == params);
+    console.log(' resres ： ', res); //
+    const formatRes = formatSelectList(res, 'outline_name', 'outline_id');
+    console.log(' res  clientList.filter v ： ', res, formatRes);
+    setOutlineList(formatRes);
+  };
 
   const showPowerNumber = () => {
     const { electrical_info_id } = props.propsForm.getFieldsValue();
@@ -207,7 +298,7 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectData: filterObjSame(
         [
           {
@@ -246,17 +337,12 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
-      selectData: filterObjSame(
-        [
-          ...houseNoList,
-          {
-            value: props.init.electricity_user_id,
-            label: props.init.number,
-          },
-        ],
-        'value',
-      ),
+      formType: 'Search',
+      // selectData: houseNoList.length > 0 ? houseNoList : props.init.electricity_user_id ? [{
+      //     value: props.init.electricity_user_id,
+      //     label: props.init.number,
+      //   }] : [],
+      selectData: houseNoList,
       itemProps: {
         label: '户号',
         name: 'electricity_user_id',
@@ -287,22 +373,21 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
-      selectData: filterObjSame(
-        [
-          // ...powerInfoList,
-          ...powerNumberList,
-          {
-            value: props.init.electrical_info_id,
-            label: props.init.power_number,
-          },
-        ],
-        'value',
-      ),
+      formType: 'Search',
+      // selectData: powerNumberList.length > 0 ? powerNumberList : [
+      //   {
+      //     value: props.init.electrical_info_id,
+      //     label: props.init.power_number,
+      //   },
+      // ],
+      selectData: powerNumberList,
       itemProps: {
         label: '电站',
         label: '电源编号',
         name: 'electrical_info_id',
+      },
+      comProps: {
+        onSelect: onPowerNumberChange,
       },
       extra: (
         <a
@@ -317,18 +402,20 @@ const MonitorApprovalForm = props => {
     },
     {
       // noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectData: filterObjSame(
         [
           ...outlineList,
           ...electricOutlineList,
-          {
-            value: props.init.outline_id,
-            label: props.init.outline_id,
-          },
+          // {
+          //   value: props.init.outline_id,
+          //   label: props.init.outline_id,
+          // },
         ],
         'value',
       ),
+      selectData: outlineList.length > 0 ? outlineList : electricOutlineList,
+      selectData: outlineList,
       itemProps: {
         label: '出线侧',
         name: 'outline_id',
@@ -336,7 +423,7 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectData: filterObjSame([...transformerList], 'value'),
       itemProps: {
         label: '变压器',
@@ -380,7 +467,7 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectSearch: getManufacturerListAsync,
       selectData: manufacturerList,
       itemProps: {
@@ -393,7 +480,7 @@ const MonitorApprovalForm = props => {
     },
     {
       noRule: true,
-      formType: 'Select',
+      formType: 'Search',
       selectData: manufacturerModelList,
       itemProps: {
         label: '版本号',

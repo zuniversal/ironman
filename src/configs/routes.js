@@ -75,30 +75,6 @@ export const carManage = {
   icon: <Icon icon={'systemManage'} />,
 };
 
-export const systemConfig = {
-  platform: 'base',
-  path: '/system',
-  authKey: 'systemModel',
-  name: '系统管理',
-  icon: <Icon icon={'systemManage'} />,
-  routes: [
-    {
-      path: '/sm/cameraConfig',
-      authKey: 'customerModel',
-      // noAuth: true,
-      component: '@/pages/sm/CameraConfig',
-      title: '摄像头配置',
-    },
-    {
-      path: '/sm/platformConfig',
-      authKey: 'customerModel',
-      // noAuth: true,
-      component: '@/pages/sm/PlatformConfig',
-      title: '平台配置',
-    },
-  ],
-};
-
 export const system = {
   platform: 'base',
   path: '/system',
@@ -188,12 +164,6 @@ export const monitor = {
       authKey: 'alarmTemplateModel',
       path: '/om/alarmTemplate',
       name: '告警策略模板',
-    },
-    {
-      authKey: 'alarmRecordModel',
-      path: '/om/alarmRecord',
-      name: '告警记录',
-      // icon: placeIcon,
     },
   ],
 };
@@ -305,11 +275,17 @@ export const bpRoutes = [
     routes: [
       {
         platform: 'bp',
-        authKey: 'assetManageModel',
         authKey: 'assetModel',
         path: '/om/assets',
         name: '资产管理',
-        icon: <Icon icon={'systemManage'} />,
+        routes: [],
+      },
+      {
+        hideInMenu: true,
+        platform: 'bp',
+        authKey: 'assetModel',
+        path: '/om/assetsDetail',
+        name: '资产详情',
         routes: [],
       },
       {
@@ -317,10 +293,15 @@ export const bpRoutes = [
         authKey: 'assetModel',
         path: '/om/assetsList',
         name: '资产清单',
-        icon: <Icon icon={'systemManage'} />,
         routes: [],
       },
     ],
+  },
+  {
+    authKey: 'alarmRecordModel',
+    path: '/om/alarmRecord',
+    name: '告警记录',
+    icon: <Icon icon={'shiftsManage'} />,
   },
   {
     platform: 'smartEfficiency',
@@ -400,11 +381,26 @@ export const iotRoutes = [
   {
     platform: 'iot',
     authKey: 'monitorVideoManageModel',
-    authKey: 'monitorVideoModel',
+    // authKey: 'monitorVideoModel',
     path: '/视频监控管理',
     name: '视频监控管理',
     icon: <Icon icon={'systemManage'} />,
-    routes: [],
+    routes: [
+      {
+        path: '/sm/cameraConfig',
+        authKey: 'customerModel',
+        // noAuth: true,
+        component: '@/pages/sm/CameraConfig',
+        name: '摄像头配置',
+      },
+      {
+        path: '/sm/platformConfig',
+        authKey: 'customerModel',
+        // noAuth: true,
+        component: '@/pages/sm/PlatformConfig',
+        name: '平台配置',
+      },
+    ],
   },
   {
     platform: 'iot',

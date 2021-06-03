@@ -49,6 +49,7 @@ const MonitorDeviceTable = props => {
     },
     {
       title: '物联网卡号',
+      title: 'ICCID',
       dataIndex: 'iccid',
     },
     // {

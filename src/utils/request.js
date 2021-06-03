@@ -87,7 +87,7 @@ export const isTips = res => {
   //   tips(codeMap[code], 2);
   //   return;
   // }
-  console.log(' codecode ： ', code); //
+  // console.log(' codecode ： ', code); //
   if (code && code !== NORMAL_CODE) {
     // if (false) {
     const codeMsg = getCodeMsg(code);
@@ -161,7 +161,7 @@ export class Request {
         //     : config.data,
         // );
         config.customInfo = formatParams;
-        const { noTips, ...rest } = formatParams;
+        const { noTips, extraPayload, ...rest } = formatParams;
         // if (config.params) {
         //   const { noTips, ...rest } = config.params;
         //   config.data = config.params = rest;

@@ -73,6 +73,8 @@ export const csElectricInfo = '/cs/electricInfo?';
 export const DRAW_PANEL = '/om/drawPanel';
 export const TRUST_CLIENT = '/om/trustClient';
 export const CS_HOME = '/cs/energyInfo';
+export const ASSETS_DETAIL = '/om/assetsDetail?';
+export const ASSETS = '/om/assets';
 export const homeMap = {
   manager: HOME,
   customer: CS_HOME,

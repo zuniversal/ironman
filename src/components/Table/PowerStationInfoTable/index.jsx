@@ -152,7 +152,24 @@ export const getWidget = props => {
         }
       />
     ),
-    InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
+    InputNumber: (
+      <InputNumber
+        allowClear
+        maxLength={32}
+        onChange={value =>
+          props.modifyPowerInfo({
+            action: 'edit',
+            value: value,
+            // keys: 'outline_number',
+            keys: keys,
+            text,
+            ...record,
+            index,
+          })
+        }
+        {...comProps}
+      />
+    ),
     Select: selectCom(props),
   };
 
@@ -292,6 +309,7 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'real_capacity'}
+          // formType={'InputNumber'}
         ></TableInput>
       ),
     },

@@ -44,6 +44,7 @@ const assetFormConfig = [
   {
     label: '资产类型',
     name: 'type',
+    dataMap: assetTypeMap,
   },
   // {
   //   label: '资产名称',
@@ -123,7 +124,9 @@ const RenderList = props => {
         <List.Item>
           <div className="label">{v.label}</div>
           {/* <div className="intro">{v.intro}</div> */}
-          <div className="intro">{props.data[v.name]}</div>
+          <div className="intro">
+            {v.dataMap ? v.dataMap[props.data[v.name]] : props.data[v.name]}
+          </div>
         </List.Item>
       )}
       {...props}
@@ -137,9 +140,7 @@ RenderList.defaultProps = {
 };
 
 const AssetsInfo = props => {
-  const [form] = Form.useForm();
   const [activeItem, setActiveItem] = useState(0);
-  // const [ activeKey, setActiveKey ] = useState(1)
   const [activeKey, setActiveKey] = useState(props.selectItem[0]?.key);
   const selectData =
     props.selectItem?.children?.length > 0
@@ -148,9 +149,6 @@ const AssetsInfo = props => {
           ?.children.map(v => ({ tab: v.name, key: v.id }))
       : null;
   console.log(' AssetsInfoAssetsInfo ： ', props, activeKey, selectData);
-  useEffect(() => {
-    console.log(' AssetsInfoAssetsInfo 挂载 props ： ', props); //
-  }, []);
 
   const data = [
     {
@@ -237,7 +235,8 @@ const AssetsInfo = props => {
 
   // const { type } = form.getFieldsValue();
   const { type } = props.assetDetail;
-  const formatFormItemRes = type ? assetFormTypeMap[type] ?? [] : [];
+  // const formatFormItemRes = type ? assetFormTypeMap[type] ?? [] : [];
+  const formatFormItemRes = assetFormTypeMap[type] || [];
   const formConfig = [...assetFormConfig, ...formatFormItemRes];
   console.log(
     '  formatFormItemRes ：',
@@ -271,8 +270,7 @@ const AssetsInfo = props => {
     if (
       selectItem.children.length > 0 &&
       selectItem.children[0].children.length > 0 &&
-      selectItem.children[0].children.length > 0 &&
-      selectItem.children[0].children[0].equipment_data_id
+      selectItem.children[0].children[0]?.equipment_data_id
     ) {
       console.log(' 333 ： '); //
       d_id = selectItem.children[0].children[0].id;
@@ -305,15 +303,17 @@ const AssetsInfo = props => {
           </Panel>
         </Collapse> */}
         <div className={`collapseWrapper`}>
-          {props.assetList.map((v, i) => (
-            <div
-              onClick={() => onClick(v, i)}
-              className={`treeRow ${i === activeItem ? 'activeLink' : ''}`}
-              key={i}
-            >
-              {v.title}
-            </div>
-          ))}
+          <div className={`collapsList`}>
+            {props.assetList.map((v, i) => (
+              <div
+                onClick={() => onClick(v, i)}
+                className={`treeRow ${i === activeItem ? 'activeLink' : ''}`}
+                key={i}
+              >
+                {v.title}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* <Col span={6} className={``}>
@@ -367,10 +367,6 @@ const AssetsInfo = props => {
       </div>
     </div>
   );
-};
-
-AssetsInfo.defaultProps = {
-  showFormModal: () => {},
 };
 
 export default AssetsInfo;

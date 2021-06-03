@@ -69,13 +69,10 @@ const HomeInspectMissionTable = props => {
       // extra={extra}
       noActionCol
       noDefault
+      rowSelection={null}
       {...props}
     ></SmartTable>
   );
-};
-
-HomeInspectMissionTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default HomeInspectMissionTable;

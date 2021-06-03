@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { tips, formatSelectList, filterObjSame } from '@/utils';
 
-const useHttp = (http = () => {}, configs) => {
+const useHttp = (http = () => {}, configs = {}) => {
   const {
-    init = [],
+    init = [], // 数据的初始值
     params,
-    attr = 'list',
-    format = formatSelectList,
+    attr = 'list', // 数据的固定格式属性
+    format = formatSelectList, // 格式化函数
+    formatKey,
+    formatVal, // 格式化方法的键和值文本
     withArr,
     withObj,
-    noMountFetch,
+    noMountFetch, // 挂载是否不默认发出请求
     isObj,
-    ifReq = true,
+    ifReq = true, // 是否请求
   } = configs;
   // console.log(' useHttp ： ', configs,   )//
 
   const [data, setData] = useState(init);
   const [isLoading, setIsLoading] = useState(false);
 
+  // 数据结果处理函数
   const handleRes = res => {
-    const attrRes = attr ? res[attr] : res;
-    let datas = format ? format(attrRes) : attrRes;
+    setIsLoading(false);
+    const attrRes = attr ? res[attr] : res; // 返回数结果值 是否使用 配置的属性值获取
+    let datas = format ? format(attrRes, formatVal, formatKey) : attrRes;
+
+    // 如果配置需要跟数据结果一起的数据 解构合并
     if (withArr) {
       datas = [...datas, ...withArr];
     } else if (withObj || isObj) {
+      // 如果是对象
       datas = {
         ...datas,
         ...withObj,
@@ -33,23 +40,23 @@ const useHttp = (http = () => {}, configs) => {
 
     // console.log(' request  ： ', res, datas, isLoading    )
     setData(datas);
-    setIsLoading(false);
   };
 
+  // 手动调用 该请求钩子的请求方法使得外部可以继续使用该钩子返回的结果值 接收一个返回 promise 的方法 异步请求方法里可以手动传入请求参数
+  // 该方法自动 调用该异步方法 并且调用钩子的系统处理函数自动 保存到钩子的state 数据里
   const req = async request => {
     console.log(' req request ： ', request, http, configs);
     setIsLoading(true);
-    const res = await request();
-    handleRes(res);
+    if (request) {
+      handleRes(await request());
+    }
   };
 
+  // 挂载默认请求钩子
   useEffect(() => {
     console.log(' useHttp useEffect  ： ', params);
     if (!noMountFetch && ifReq) {
-      const asyncFn = async () => {
-        const res = await http();
-        handleRes(res);
-      };
+      const asyncFn = async () => handleRes(await http());
       asyncFn();
     }
   }, []);

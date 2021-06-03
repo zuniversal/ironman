@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm';
+import { cameraSystemConfig } from '@/configs';
 
 const PlatformConfigForm = props => {
   console.log(' PlatformConfigForm ： ', props);
@@ -8,33 +9,35 @@ const PlatformConfigForm = props => {
     {
       itemProps: {
         label: '自定义名称',
-        name: '',
+        name: 'name',
       },
     },
     {
       formType: 'Search',
-      selectData: props.xx,
+      selectData: cameraSystemConfig,
       itemProps: {
         label: '平台类型',
-        name: '',
+        name: 'system',
       },
     },
     {
       itemProps: {
-        label: '服务地址(元)',
-        name: '',
+        label: '服务地址',
+        name: 'home_url',
       },
     },
     {
       itemProps: {
         label: '账号',
-        name: '',
+        label: 'app_secret',
+        name: 'app_secret',
       },
     },
     {
       itemProps: {
         label: '密码',
-        name: '',
+        label: 'app_key',
+        name: 'app_key',
       },
     },
   ];

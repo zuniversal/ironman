@@ -742,6 +742,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '总容量',
         // name: ['powerData', 'id'],
@@ -750,6 +751,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '实际总容量',
         name: ['powerData', 'real_capacity'],
@@ -772,6 +774,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '倍率',
         name: ['powerData', 'multiplying_power'],
@@ -779,6 +782,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '考核功率因数',
         name: ['powerData', 'power_factor'],
@@ -786,6 +790,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '总有功(02)',
         name: ['powerData', 'total_active_power'],
@@ -796,6 +801,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '峰(03)',
         name: ['powerData', 'peak'],
@@ -803,6 +809,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '平1 (41)',
         name: ['powerData', 'flat_1'],
@@ -810,6 +817,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '平2 (42)',
         name: ['powerData', 'flat_2'],
@@ -817,6 +825,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '谷(05)',
         name: ['powerData', 'valley'],
@@ -824,6 +833,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '峰MD1(61)',
         name: ['powerData', 'peak_md'],
@@ -834,6 +844,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '平1MD(62)',
         name: ['powerData', 'flat_1_md'],
@@ -844,6 +855,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '平2MD(63)',
         name: ['powerData', 'flat_2_md'],
@@ -854,6 +866,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '谷MD(64)',
         name: ['powerData', 'valley_md'],
@@ -864,6 +877,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '最大MD',
         name: ['powerData', 'max_md'],
@@ -871,6 +885,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '本月申报MD',
         name: ['powerData', 'declare_md'],
@@ -878,6 +893,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '无功1(07)',
         name: ['powerData', 'reactive_power_2'],
@@ -885,6 +901,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '无功(08)',
         name: ['powerData', 'reactive_power_1'],
@@ -895,6 +912,7 @@ const InspectRecordForm = props => {
     },
     {
       noRule: true,
+      formType: 'InputNumber',
       itemProps: {
         label: '实际功率因素',
         name: ['powerData', 'real_power_factor'],
@@ -1089,6 +1107,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '温度',
         name: ['spectOut', 'temperature'],
@@ -1146,6 +1165,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电压表AB',
         name: ['spectOut', 'switch_v_ab'],
@@ -1158,6 +1178,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电压表BC',
         name: ['spectOut', 'switch_v_bc'],
@@ -1170,6 +1191,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电压表CA',
         name: ['spectOut', 'switch_v_ca'],
@@ -1183,6 +1205,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电流表A',
         name: ['spectOut', 'switch_ia'],
@@ -1195,6 +1218,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电流表B',
         name: ['spectOut', 'switch_ib'],
@@ -1207,6 +1231,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '电流表C',
         name: ['spectOut', 'switch_ic'],
@@ -1220,6 +1245,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: 'A相温度',
         name: ['spectOut', 'temperature_a'],
@@ -1232,6 +1258,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: 'B相温度',
         name: ['spectOut', 'temperature_b'],
@@ -1244,6 +1271,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: 'C相温度',
         name: ['spectOut', 'temperature_c'],
@@ -1256,6 +1284,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '有功kWh',
         name: 'power',
@@ -1268,6 +1297,7 @@ const InspectRecordForm = props => {
     {
       noRule: true,
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: 'cosΦ',
         name: 'cos',
@@ -1377,6 +1407,7 @@ const InspectRecordForm = props => {
     },
     {
       flexRow: 4,
+      formType: 'InputNumber',
       itemProps: {
         label: '温度',
         name: 'temperature',
@@ -1388,6 +1419,7 @@ const InspectRecordForm = props => {
     },
     {
       flexRow: 3,
+      formType: 'InputNumber',
       itemProps: {
         label: '湿度',
         name: 'humidity',
@@ -1631,6 +1663,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '电池电压',
         name: 'battery_voltage',
@@ -1640,6 +1673,7 @@ const InspectRecordForm = props => {
       },
     },
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '控母电压',
         name: 'direct_voltage',

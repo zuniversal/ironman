@@ -10,7 +10,6 @@ import { monitorDeviceStatusConfig, networkTypeConfig } from '@/configs';
 import { formatSelectList, filterObjSame } from '@/utils';
 
 const MonitorDeviceForm = props => {
-
   const commonParams = {
     init: [],
     format: res => formatSelectList(res),
@@ -32,8 +31,10 @@ const MonitorDeviceForm = props => {
     },
   );
 
-  const manufacturerModelList = []
-  manufacturerList.forEach(v => manufacturerModelList.push(...formatSelectList(v.models)))
+  const manufacturerModelList = [];
+  manufacturerList.forEach(v =>
+    manufacturerModelList.push(...formatSelectList(v.models)),
+  );
   console.log(' MonitorDeviceForm ： ', props, manufacturerModelList);
 
   const config = [
@@ -68,7 +69,7 @@ const MonitorDeviceForm = props => {
     {
       // noRule: true,
       itemProps: {
-        label: 'IEMI号',
+        label: 'IMEI号',
         name: 'imei',
       },
     },
@@ -106,7 +107,13 @@ const MonitorDeviceForm = props => {
   // sim
   // monitor_point_id
 
-  const { status, model, manufacturer, network_type, monitor_point_id } = props.init;
+  const {
+    status,
+    model,
+    manufacturer,
+    network_type,
+    monitor_point_id,
+  } = props.init;
 
   return (
     <div className={'monitorDeviceForm '}>

@@ -166,7 +166,7 @@ class SmartModal extends PureComponent {
 
 // 默认属性
 SmartModal.defaultProps = {
-  title: '默认标题',
+  title: '弹框标题',
   okTxt: '确定',
   cancelTxt: '取消',
   className: '',

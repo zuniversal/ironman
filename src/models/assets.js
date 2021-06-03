@@ -3,6 +3,7 @@ import * as services from '@/services/assets';
 import * as powerStationServices from '@/services/powerStation';
 import * as houseNoServices from '@/services/houseNo';
 import * as clientServices from '@/services/client';
+import * as assetsServices from '@/services/assets';
 import { formatSelectList, filterObjSame } from '@/utils';
 import moment from 'moment';
 
@@ -10,14 +11,15 @@ const namespace = 'assets';
 const { createActions } = init(namespace);
 
 const otherActions = [
-  'syncOAAsync',
   'uploadFileAsync',
   'exportDataAsync',
   'getTemplatAsync',
   'getPowerAsync',
   'getHouseNoAsync',
   'getClientAsync',
-  'getAssetDeviceAsync',
+  'getClientRelativedAsync',
+  'getAssetListAsync',
+  'getAssetDetailAsync',
 ];
 
 const batchTurnActions = [
@@ -27,6 +29,7 @@ const batchTurnActions = [
   'onInputChange',
   'addTreeStruct',
   'changeAction',
+  'getListFilter',
 ];
 
 export const actions = {
@@ -54,7 +57,7 @@ export const newTreeNode = {
 };
 
 export const recursiveResetAssets = (data = [], { indexes, pid } = {}) => {
-  console.log('treeDatas  recursiveResetAssets   ,   ： ', data, indexes, pid);
+  // console.log('treeDatas  recursiveResetAssets   ,   ： ', data, indexes, pid);
   // return data.map((v, i) => ({...v,}));
   return data.map((v, i) => {
     const item = {
@@ -89,6 +92,21 @@ export const recursiveAssets = (data = [], { indexes, pid } = {}) => {
   });
 };
 
+const resetData = {
+  type: undefined,
+  name: undefined,
+  manufacturer: undefined,
+  model: undefined,
+  production_code: undefined,
+  voltage: undefined,
+  current: undefined,
+  production_date: undefined,
+  operation_date: undefined,
+  service_life: undefined,
+  capacity: undefined,
+  real_capacity: undefined,
+};
+
 const initialState = {
   action: '',
   isShowModal: false,
@@ -98,13 +116,20 @@ const initialState = {
   d_id: '',
   searchInfo: {},
 
-  syncOAData: [],
   powerList: [],
   houseNoList: [],
   clientList: [],
+  clientCount: 0,
   treeDatas: [],
-  assetDeviceList: [],
   selectItem: {},
+
+  assetsSearchInfo: {},
+
+  assetList: [],
+  subAssetList: [],
+  selectItem: {},
+  assetDetail: {},
+  subAssetTreeList: [],
 };
 
 export default {
@@ -127,19 +152,6 @@ export default {
         ...state,
         isShowModal: false,
         itemDetail: {},
-      };
-    },
-    getList(state, { payload, type }) {
-      console.log(' getList 修改  ： ', state, payload, type); //
-      return {
-        ...state,
-        treeDatas: recursiveAssets(payload.list),
-        count: payload.rest.count,
-        isShowModal: false,
-        searchInfo: payload.searchInfo,
-        selectItem: {},
-        itemDetail: {},
-        action: '',
       };
     },
     getItem(state, { payload, type }) {
@@ -169,18 +181,6 @@ export default {
         isShowModal: true,
         d_id: payload.payload.d_id,
         powerList: filterObjSame([...powerList, stationItem]),
-      };
-    },
-    getItem(state, { payload, type }) {
-      action;
-      console.log(' getItem 修改  ： ', state, payload, payload.action, type);
-      return {
-        ...state,
-        itemDetail: {
-          ...payload.bean,
-        },
-        action: payload.payload.action,
-        selectItem: payload.payload.selectItem,
       };
     },
     addItem(state, { payload, type }) {
@@ -221,19 +221,6 @@ export default {
         ),
       };
     },
-
-    syncOA(state, { payload, type }) {
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
-    getPortrait(state, { payload, type }) {
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
     getPower(state, { payload, type }) {
       return {
         ...state,
@@ -250,6 +237,16 @@ export default {
       return {
         ...state,
         clientList: formatSelectList(payload.list, 'name'),
+        // clientCount: payload.rest.count,
+      };
+    },
+    getClientRelatived(state, { payload, type }) {
+      const clientList = formatSelectList(payload.list, 'name');
+      return {
+        ...state,
+        clientList,
+        clientListFilter: clientList,
+        clientCount: payload.rest.count,
       };
     },
     editItems(state, { payload, type }) {
@@ -258,20 +255,7 @@ export default {
       //   manufacturer: '11111',
       // });
       // payload.form.resetFields();
-      payload?.form.setFieldsValue({
-        type: undefined,
-        name: undefined,
-        manufacturer: undefined,
-        model: undefined,
-        production_code: undefined,
-        voltage: undefined,
-        current: undefined,
-        production_date: undefined,
-        operation_date: undefined,
-        service_life: undefined,
-        capacity: undefined,
-        real_capacity: undefined,
-      });
+      payload?.form.setFieldsValue(resetData);
       return {
         ...state,
         action: payload.action,
@@ -280,14 +264,48 @@ export default {
       };
     },
 
-    getAssetDevice(state, { payload, type }) {
-      // console.log(' getAssetDevice 修改  ： ', state, payload, type);
+    getList(state, { payload, type }) {
+      console.log(' getList 修改  ： ', state, payload, type); //
       return {
         ...state,
-        assetDeviceList: payload.list,
+        treeDatas: recursiveAssets(payload.list),
+        count: payload.rest.count,
+        isShowModal: false,
+        searchInfo: payload.searchInfo,
+        action: state.action === 'edit' ? 'detail' : state.action,
+        // selectItem: {},
+        // itemDetail: {},
+        // action: '',
+      };
+    },
+    getItem(state, { payload, type }) {
+      action;
+      console.log(' getItem 修改  ： ', state, payload, payload.action, type);
+      return {
+        ...state,
+        itemDetail: {
+          ...payload.bean,
+        },
+        action: payload.payload.action,
+        selectItem: payload.payload.selectItem,
       };
     },
 
+    changeAction(state, { payload, type }) {
+      console.log(' changeAction 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.action,
+      };
+    },
+    onInputChange(state, { payload, type }) {
+      // console.log(' onInputChange 修改  ： ', state, payload, type);
+      // const treeDatas = editTreeAttr(payload)
+      return {
+        ...state,
+        treeDatas: payload.treeDatas,
+      };
+    },
     addTreeStruct(state, { payload, type }) {
       console.log(' addTreeStruct 修改  ： ', state, payload, type);
       return {
@@ -304,31 +322,11 @@ export default {
         itemDetail: {},
       };
     },
-    changeAction(state, { payload, type }) {
-      console.log(' changeAction 修改  ： ', state, payload, type);
-      return {
-        ...state,
-        action: payload.action,
-      };
-    },
     addTreeNode(state, { payload, type }) {
       console.log(' addTreeNode 修改  ： ', state, payload, type);
       // const treeDatas = addTreeAttr(payload)
       // console.log(' treeDatas ： ', treeDatas,  )//
-      payload.form.setFieldsValue({
-        type: undefined,
-        name: undefined,
-        manufacturer: undefined,
-        model: undefined,
-        production_code: undefined,
-        voltage: undefined,
-        current: undefined,
-        production_date: undefined,
-        operation_date: undefined,
-        service_life: undefined,
-        capacity: undefined,
-        real_capacity: undefined,
-      });
+      payload.form.setFieldsValue(resetData);
       return {
         ...state,
         action: payload.action,
@@ -348,12 +346,62 @@ export default {
         selectItem: payload.selectItem,
       };
     },
-    onInputChange(state, { payload, type }) {
-      // console.log(' onInputChange 修改  ： ', state, payload, type);
-      // const treeDatas = editTreeAttr(payload)
+
+    getAssetList(state, { payload, type }) {
+      console.log(' getAssetList 修改  ： ', state, payload, type); //
+      const assetList = recursiveAssets(payload.list);
+      console.log(' assetList ： ', assetList); //
+      const subAssetList = assetList[0].children;
       return {
         ...state,
-        treeDatas: payload.treeDatas,
+        assetList,
+        assetList: assetList,
+        selectItem: assetList[0],
+        subAssetList,
+        subAssetTreeList: subAssetList.map(v => ({ tab: v.name, key: v.id })),
+        assetsSearchInfo: payload.payload,
+      };
+    },
+    getAssetDetail(state, { payload, type }) {
+      console.log(' getAssetDetail 修改  ： ', state, payload, type); //
+      return {
+        ...state,
+        // assetItemDetail: recursiveAssets(payload.list),
+        // subAssetList: payload.payload.selectItem ? payload.payload.selectItem.children.map((v) => ({tab: v.name, key: v.id, })) : state.subAssetList,
+        assetDetail: payload.bean,
+        selectItem: payload.payload.selectItem ?? state.selectItem,
+        subAssetList: payload.payload.subAssetList ?? state.subAssetList,
+        subAssetTreeList: payload.payload.subAssetList
+          ? payload.payload.subAssetList.map(v => ({ tab: v.name, key: v.id }))
+          : state.subAssetTreeList,
+      };
+    },
+
+    getListFilter(state, { payload, type }) {
+      console.log(' getListFilter 修改  ： ', state, payload, type); //
+      const { clientList } = state;
+      // const filterKey = [
+      //   'name',
+      // ];
+      // const clientListFilter = clientList.filter(v => {
+      //   const isInclude = filterKey.some(key =>
+      //     `${v[key]}`.includes(payload.keyword),
+      //   );
+      //   // console.log('  isInclude ：', isInclude,  )//
+      //   return isInclude;
+      // })
+      // const houseNoList = [];
+      // clientListFilter.forEach(v => houseNoList.push(...v.electricity_users));
+      // console.log(' getListFilter ： ', state, payload, clientListFilter, houseNoList, );
+
+      const clientListFilter = clientList.filter(
+        v => v.id == payload.customer_id,
+      );
+
+      return {
+        ...state,
+        clientListFilter,
+        // houseNoList: formatSelectList(houseNoList, 'number'),
       };
     },
   },
@@ -375,25 +423,25 @@ export default {
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      console.log(' getItemAsync ： ', payload, type);
-      const res = yield call(services.getItem, { id: payload.d_id });
-      yield put(action({ ...res, payload }));
-    },
-    *addItemAsync({ payload, action, type }, { call, put }) {
-      // console.log(' addItemAsync ： ', payload, type,     )//
-      const res = yield call(services.addItem, formatParams(payload));
-      console.log('  addItem res ：', res);
-      // yield put(action(res));
-      yield put({ type: 'getListAsync' });
-    },
-    *editItemAsync({ payload, action, type }, { call, put }) {
-      // console.log(' editItemAsync ： ', payload, type,     )//
-      const res = yield call(services.editItem, formatParams(payload));
-      console.log('  editItem res ：', res);
-      // yield put(action({ ...res, payload }));
-      yield put({ type: 'getListAsync' });
-    },
+    // *getItemAsync({ payload, action, type }, { call, put }) {
+    //   console.log(' getItemAsync ： ', payload, type);
+    //   const res = yield call(services.getItem, { id: payload.d_id });
+    //   yield put(action({ ...res, payload }));
+    // },
+    // *addItemAsync({ payload, action, type }, { call, put }) {
+    //   // console.log(' addItemAsync ： ', payload, type,     )//
+    //   const res = yield call(services.addItem, formatParams(payload));
+    //   console.log('  addItem res ：', res);
+    //   // yield put(action(res));
+    //   yield put({ type: 'getListAsync' });
+    // },
+    // *editItemAsync({ payload, action, type }, { call, put }) {
+    //   // console.log(' editItemAsync ： ', payload, type,     )//
+    //   const res = yield call(services.editItem, formatParams(payload));
+    //   console.log('  editItem res ：', res);
+    //   // yield put(action({ ...res, payload }));
+    //   yield put({ type: 'getListAsync' });
+    // },
     *getItemAsync({ payload, action, type }, { call, put }) {
       console.log(' getItemAsync ： ', payload, type);
       // const res = yield call(services.getItem, payload);
@@ -447,21 +495,6 @@ export default {
       // yield put(action({ ...res, payload }));
       yield put({ type: 'getListAsync' });
     },
-    *getAssetDeviceAsync({ payload, action, type }, { call, put }) {
-      console.log(' getAssetDeviceAsync ： ', payload, type);
-      const res = yield call(services.getAssetDevice, payload);
-      yield put(action({ ...res, payload }));
-    },
-
-    *uploadFile({ payload, action, type }, { call, put }) {
-      // console.log(' uploadFile ： ', payload, type,     )//
-      const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res);
-      // yield put({
-      //   type: 'getList',
-      //   payload: res,
-      // });
-    },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
       return res;
@@ -483,6 +516,64 @@ export default {
     *getClientAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientServices.getList, { keyword: payload });
       yield put(action({ ...res, payload }));
+    },
+    *getClientRelativedAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientServices.getRelatived, { keyword: payload });
+      yield put(action({ ...res, payload }));
+    },
+    *getAssetListAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' getAssetListAsyncgetAssetListAsync ： ', payload, type);
+      const res = yield call(assetsServices.getList, payload);
+      // const res = yield call(assetsServices.getList, {
+      //   electricity_user_id: '6464',
+      //   customer_id: '6464',
+      // },);
+      console.log(' getAssetListAsyncgetAssetListAsync res ： ', res); //
+      let d_id;
+      const selectItem = recursiveAssets(res.list)[0];
+      if (selectItem) {
+        if (selectItem.equipment_data_id) {
+          console.log(' 111 ： '); //
+          d_id = selectItem.id;
+        }
+        if (
+          selectItem.children.length > 0 &&
+          selectItem.children[0]?.equipment_data_id
+        ) {
+          console.log(' 222 ： '); //
+          d_id = selectItem.children[0].id;
+        }
+
+        if (
+          selectItem.children.length > 0 &&
+          selectItem.children[0].children.length > 0 &&
+          selectItem.children[0].children[0].equipment_data_id
+        ) {
+          console.log(' 333 ： '); //
+          d_id = selectItem.children[0].children[0].id;
+        }
+        console.log(' d_id ： ', d_id); //
+        yield put({
+          type: 'getAssetDetailAsync',
+          payload: {
+            selectItem,
+            d_id,
+            subAssetList: selectItem.children,
+          },
+        });
+      }
+      yield put({ type: 'getAssetList', payload: { ...res, payload } });
+    },
+    *getAssetDetailAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' getAssetDetailAsync ： ', payload, type);
+      const res = payload.d_id
+        ? yield call(assetsServices.getItem, {
+            d_id: payload.d_id,
+          })
+        : {
+            bean: {},
+          };
+      yield put({ type: 'getAssetDetail', payload: { ...res, payload } });
     },
   },
 };

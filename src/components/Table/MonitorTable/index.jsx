@@ -37,7 +37,7 @@ const MonitorTable = props => {
       title: '设备类型',
     },
     {
-      title: 'IEMI号',
+      title: 'IMEI号',
     },
     {
       title: '状态',

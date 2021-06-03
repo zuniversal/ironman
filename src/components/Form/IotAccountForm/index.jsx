@@ -23,6 +23,7 @@ const IotAccountForm = props => {
         disabled: true,
         checkedChildren: '激活',
         unCheckedChildren: '未激活',
+        // valuePropName: 'checked',
       },
     },
     {
@@ -71,6 +72,7 @@ const IotAccountForm = props => {
       },
     },
     {
+      formType: 'InputNumber',
       itemProps: {
         label: '套餐流量',
         name: 'flow',

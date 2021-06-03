@@ -20,8 +20,6 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  upload: `文件上传`,
-  down: `文件下载`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,

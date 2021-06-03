@@ -8,16 +8,24 @@ import {
   FixedCameraConfigTable,
   HeadCameraConfigTable,
 } from '@/components/Table/CameraConfigTable';
+import ClientForm from '@/components/Form/ClientForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
+import SmartVideo from '@/common/SmartVideo';
+import SmartVideos from '@/common/SmartVideo/SmartVideos';
+import FlvVideoPlayer from '@/components/Video/FlvVideoPlayer';
 
 import { actions, mapStateToProps } from '@/models/cameraConfig';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { cameraTypeConfig, CAMERA1, CAMERA2 } from '@/configs';
 
 const { TabPane } = Tabs;
 
 const cameraTabsConfig = [
-  { label: '固定摄像头', value: 'FixedCameraConfigTable' },
-  { label: '头戴摄像头', value: 'HeadCameraConfigTable' },
+  // { label: '固定摄像头', value: 'FixedCameraConfigTable' },
+  // { label: '头戴摄像头', value: 'HeadCameraConfigTable' },
+  { label: '固定摄像头', value: '2' },
+  { label: '头戴摄像头', value: '1' },
 ];
 
 const TITLE = '摄像头';
@@ -26,8 +34,14 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  upload: `文件上传`,
-  down: `文件下载`,
+  showCameraVideo: `摄像头视频`,
+  clientDetailAsync: `客户详情`,
+  powerStationDetailAsync: `电站详情`,
+};
+
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+  powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
@@ -36,6 +50,9 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
+  getListParams: {
+    type: CAMERA1,
+  },
 })
 class CameraConfig extends PureComponent {
   constructor(props) {
@@ -64,8 +81,8 @@ class CameraConfig extends PureComponent {
         // className={'fje'}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        keyword={'name'}
-        label={'名称'}
+        keyword={'keyword'}
+        label={'关键字'}
         noLabel
       ></SearchKwForm>
     );
@@ -88,12 +105,23 @@ class CameraConfig extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+
+      type: this.props.type,
+      getCameraVideoAsync: this.props.getCameraVideoAsync,
     };
 
     const CameraConfigTable = {
-      FixedCameraConfigTable,
-      HeadCameraConfigTable,
-    }[this.props.tableType];
+      [CAMERA2]: FixedCameraConfigTable,
+      [CAMERA1]: HeadCameraConfigTable,
+    }[this.props.type];
+    console.log(
+      ' onCameraTabsChange this.props.type    ： ',
+      this.props,
+      this.props.type,
+      CameraConfigTable,
+      CAMERA1,
+      CAMERA2,
+    );
 
     return <CameraConfigTable {...tableProps}></CameraConfigTable>;
   };
@@ -114,6 +142,14 @@ class CameraConfig extends PureComponent {
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
+          type: this.props.type,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...res,
+          type: itemDetail.type,
+          d_id: itemDetail.id,
         });
       }
     } catch (error) {
@@ -129,12 +165,44 @@ class CameraConfig extends PureComponent {
       userList: this.props.userList,
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
+      type: this.props.type,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
-    if (action === 'showVideoAsync') {
-      return <div>showVideoAsync</div>;
+    if (action === 'showCameraVideo') {
+      return (
+        <div className={`dfc`}>
+          {/* <SmartVideo
+          className={`videoWrapper`} 
+          src={
+            'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
+          }
+          src={this.props.videoUrl}
+        ></SmartVideo> */}
+          {/* <SmartVideos
+          className={`videoWrapper`} 
+          src={
+            'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
+          }
+          // src={this.props.videoUrl}
+        ></SmartVideos> */}
+          {this.props.videoUrl ? (
+            <FlvVideoPlayer
+              playKey={
+                'at.3ktc2rfo1icq87uf9o9e1ena0tauvl98-708yyuhsby-0etlckc-7mjvgvihc'
+              }
+              src={'ezopen://open.ys7.com/D70019019/1.hd.live'}
+              playKey={this.props.extraPayload.video_token}
+              playKey={this.props.token}
+              src={this.props.videoUrl}
+              hasKey
+            />
+          ) : (
+            <div className={`dfc`}>该设备暂无视频</div>
+          )}
+        </div>
+      );
     }
     console.log(' formComProps ： ', formComProps);
     return <CameraConfigForm {...formComProps}></CameraConfigForm>;
@@ -154,10 +222,31 @@ class CameraConfig extends PureComponent {
     );
   };
 
-  onCameraTabsChange = params => {
-    console.log('    onCameraTabsChange ： ', params);
-    this.props.onCameraTabsChange({ tableType: params });
+  renderCommonModal = params => {
+    const DetailForm = detailFormMap[this.props.common.action];
+    return (
+      <SmartFormModal
+        show={this.props.common.isShowCommonModal}
+        action={this.props.common.action}
+        titleMap={titleMap}
+        onOk={this.props.closeCommonModal}
+        onCancel={this.props.closeCommonModal}
+      >
+        {DetailForm && (
+          <DetailForm
+            init={this.props.common.itemDetail}
+            action={'detail'}
+          ></DetailForm>
+        )}
+      </SmartFormModal>
+    );
+  };
+
+  onCameraTabsChange = type => {
+    console.log('    onCameraTabsChange ： ', type);
+    this.props.onCameraTabsChange({ type });
     this.props.getListAsync({
+      type,
       page: 1,
     });
   };
@@ -165,7 +254,7 @@ class CameraConfig extends PureComponent {
   renderTabPanes = params => (
     <div className="w100">
       <Tabs defaultActiveKey="0" onChange={this.onCameraTabsChange}>
-        {cameraTabsConfig.map((v, i) => (
+        {cameraTypeConfig.map((v, i) => (
           <TabPane tab={v.label} key={v.value}></TabPane>
         ))}
       </Tabs>
@@ -188,6 +277,8 @@ class CameraConfig extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderCommonModal()}
       </div>
     );
   }

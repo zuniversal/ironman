@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-  Tabs,
-  Tree,
-} from 'antd';
+import { Tabs, Tree } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
 import SmartForm from '@/common/SmartForm';
 import { treeList } from '@/configs';
+import { recursiveKeys } from '@/utils';
 
 const { TabPane } = Tabs;
 
@@ -57,56 +42,56 @@ const treeData = [
 
 // }
 
-const RoleTab = props => {
-  console.log(' RoleTab   props,  ,   ： ', props);
-  const [expandedKeys, setExpandedKeys] = useState(['sys', 'om']);
-  const [checkedKeys, setCheckedKeys] = useState(['sys']);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
+// const RoleTab = props => {
+//   console.log(' RoleTab   props,  ,   ： ', props);
+//   const [expandedKeys, setExpandedKeys] = useState(['sys', 'om']);
+//   const [checkedKeys, setCheckedKeys] = useState(['sys']);
+//   const [selectedKeys, setSelectedKeys] = useState([]);
+//   const [autoExpandParent, setAutoExpandParent] = useState(true);
 
-  const onExpand = expandedKeys => {
-    console.log('onExpand', expandedKeys);
+//   const onExpand = expandedKeys => {
+//     console.log('onExpand', expandedKeys);
 
-    setExpandedKeys(expandedKeys);
-    setAutoExpandParent(false);
-  };
+//     setExpandedKeys(expandedKeys);
+//     setAutoExpandParent(false);
+//   };
 
-  const onCheck = checkedKeys => {
-    console.log('onCheck', checkedKeys);
-    setCheckedKeys(checkedKeys);
-  };
+//   const onCheck = checkedKeys => {
+//     console.log('onCheck', checkedKeys);
+//     setCheckedKeys(checkedKeys);
+//   };
 
-  const onSelect = (selectedKeys, info) => {
-    console.log('onSelect', info);
-    setSelectedKeys(selectedKeys);
-  };
+//   const onSelect = (selectedKeys, info) => {
+//     console.log('onSelect', info);
+//     setSelectedKeys(selectedKeys);
+//   };
 
-  const tabConfig = [
-    { tab: '菜单权限' },
-    { tab: '操作权限', disabled: true },
-    { tab: '字典权限', disabled: true },
-  ];
+//   const tabConfig = [
+//     { tab: '菜单权限' },
+//     { tab: '操作权限', disabled: true },
+//     { tab: '字典权限', disabled: true },
+//   ];
 
-  return (
-    <Tabs defaultActiveKey="0">
-      {tabConfig.map((v, i) => (
-        <TabPane tab={v.tab} key={v.tab} disabled={v.disabled}>
-          <Tree
-            checkable
-            onExpand={onExpand}
-            expandedKeys={expandedKeys}
-            autoExpandParent={autoExpandParent}
-            onCheck={onCheck}
-            checkedKeys={checkedKeys}
-            onSelect={onSelect}
-            selectedKeys={selectedKeys}
-            treeData={treeData}
-          />
-        </TabPane>
-      ))}
-    </Tabs>
-  );
-};
+//   return (
+//     <Tabs defaultActiveKey="0">
+//       {tabConfig.map((v, i) => (
+//         <TabPane tab={v.tab} key={v.tab} disabled={v.disabled}>
+//           <Tree
+//             checkable
+//             onExpand={onExpand}
+//             expandedKeys={expandedKeys}
+//             autoExpandParent={autoExpandParent}
+//             onCheck={onCheck}
+//             checkedKeys={checkedKeys}
+//             onSelect={onSelect}
+//             selectedKeys={selectedKeys}
+//             treeData={treeData}
+//           />
+//         </TabPane>
+//       ))}
+//     </Tabs>
+//   );
+// };
 
 const RoleForm = props => {
   const { formBtn, init, permsData = [], ...rest } = props;
@@ -116,6 +101,10 @@ const RoleForm = props => {
   const onSelect = (selectedKeys, info) => {
     console.log('onSelect', info);
   };
+
+  // const expandedKeys = [];
+  // recursiveKeys(props.permission, expandedKeys);
+  // console.log('  expandedKeys ：', expandedKeys); //
 
   const config = [
     {
@@ -199,7 +188,7 @@ const RoleForm = props => {
     },
     {
       formType: 'CustomCom',
-      CustomCom: (
+      CustomCom: props.permission ? (
         <Tree
           checkable
           // onExpand={onExpand}
@@ -211,6 +200,7 @@ const RoleForm = props => {
           // onSelect={onSelect}
           // selectedKeys={perms_codes}
           defaultExpandedKeys={['all']}
+          // defaultExpandedKeys={expandedKeys}
           checkedKeys={props.permsData}
           // checkedKeys={[...permsData, 190000]}
           onCheck={props.onPermsCheck}
@@ -220,7 +210,7 @@ const RoleForm = props => {
           // defaultExpandAll
           // checkStrictly
         />
-      ),
+      ) : null,
       itemProps: {
         label: '',
       },

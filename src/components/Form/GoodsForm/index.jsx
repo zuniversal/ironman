@@ -18,6 +18,7 @@ export const config = [
     },
   },
   {
+    formType: 'InputNumber',
     itemProps: {
       label: '单价(元)',
       name: 'price',

@@ -27,6 +27,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   approval: `监控审批单`,
   approvalPass: `审批通过`,
+  getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   PowerStationDetailAsync: `电站详情`,

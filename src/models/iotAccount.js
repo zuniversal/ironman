@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/iotAccount';
 import { formatSelectList, nowYearMonth } from '@/utils';
-import { validityPeriodMap } from '@/configs';
+import { validityPeriodMap, validityPeriodConfig } from '@/configs';
 import moment from 'moment';
 
 const namespace = 'iotAccount';
@@ -71,9 +71,9 @@ export default {
       if (activate_time && validity_period) {
         const periodTime = validityPeriodConfig.find(
           v => v.value == validity_period,
-        ).time;
+        )?.time;
         endTime = moment(activate_time)
-          .add(periodTime, 'days')
+          .add(periodTime || 0, 'days')
           .format('YYYY-MM-DD HH:mm:ss');
         console.log(' getItemgetItem ： ', payload, periodTime, endTime);
       }

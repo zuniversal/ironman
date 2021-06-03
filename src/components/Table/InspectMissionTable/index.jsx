@@ -21,6 +21,11 @@ const InspectMissionTable = props => {
       dataIndex: 'id',
       // d_item: 'id',
       className: 'textCenter',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'inspectMissionDetailAsync',
+          d_id: record.id,
+        }),
     },
     // {
     //   title: '名称',

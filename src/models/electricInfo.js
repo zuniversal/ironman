@@ -59,6 +59,7 @@ export default {
     subAssetList: [],
     selectItem: {},
     assetDetail: {},
+    subAssetTreeList: [],
   },
 
   reducers: {
@@ -274,7 +275,6 @@ export default {
 
       if (
         selectItem.children.length > 0 &&
-        selectItem.children[0].children.length > 0 &&
         selectItem.children[0].children.length > 0 &&
         selectItem.children[0].children[0].equipment_data_id
       ) {

@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Tree, Input, Row, Col, Button, Tooltip, Form } from 'antd';
 import { recursiveResetAssets } from '@/models/assets'; //
-import { num2Str } from '@/utils';
+import { num2Str, recursiveKeys } from '@/utils';
 const { DirectoryTree } = Tree;
 
 const SaveBtn = props => {
@@ -65,15 +65,6 @@ const EmptyAsset = props => {
   );
 };
 
-const AssetForm = props => (
-  <AssetsForm
-    flexRow={2}
-    formBtn={props.renderFormBtn}
-    key={props.init.id}
-    {...props}
-  ></AssetsForm>
-);
-
 const recursiveHandle = recursiveResetAssets;
 const recursiveHandle2 = (data = [], params = {}) => {
   console.log('treeData  recursiveHandle   ,   ： ', data, params);
@@ -97,17 +88,6 @@ const recursiveHandle2 = (data = [], params = {}) => {
         })
       : [];
     return item;
-  });
-};
-
-export const recursiveKeys = (data = [], allKeys = []) => {
-  // console.log('treeData  recursiveKeys   ,   ： ', data, allKeys);
-  // return data.map((v, i) => ({...v,}));
-  data.forEach((v, i) => {
-    allKeys.push(v.key);
-    if (v.children) {
-      recursiveKeys(v.children, allKeys);
-    }
   });
 };
 
@@ -376,10 +356,16 @@ const AssetTree = props => {
               // if (props.selectItem.isEdit) {
               // if (Object.keys(props.itemDetail).length) {
               if (item.isNew) {
-                props.saveTreeNodeAsync({
+                // props.saveTreeNodeAsync({
+                //   ...props.searchInfo,
+                //   pid: props.selectItem.id, // 新增发父级的id
+                //   // pid: 0,
+                //   name: item.title,
+                // });
+                props.addItemAsync({
+                  action: 'saveTreeNodeAsync',
                   ...props.searchInfo,
-                  pid: props.selectItem.id, // 新增发父级的id
-                  // pid: 0,
+                  pid: props.selectItem.id || 0,
                   name: item.title,
                 });
                 return;
@@ -554,9 +540,9 @@ const AssetTree = props => {
       <Tree
         // expandedKeys={['0-0-0', '0-0-1']}
         defaultExpandedKeys={expandedKeys}
-        defaultExpandAll={true}
-        autoExpandParent={true}
-        // showLine={true}
+        defaultExpandAll
+        autoExpandParent
+        // showLine
         treeData={loop(treeData, {
           ...props,
           onInputChange,
@@ -590,23 +576,31 @@ const AssetTree = props => {
         real_capacity: props.itemDetail.real_capacity ?? null,
       };
       console.log(' params ： ', params); //
-      if (props.action === 'edit') {
-        props.editItemAsync({
-          ...props.searchInfo,
-          pid: props.selectItem.pid,
-          name: props.selectItem.title || params.name,
-          data: {
-            ...params,
-            real_capacity: null,
-          },
-          d_id: props.itemDetail.id,
-          d_id: props.selectItem.id,
-        });
-        return;
-      }
-      // if (props.action === 'add') {
+      // if (props.action === 'edit') {
+      //   props.editItemAsync({
+      //     ...props.searchInfo,
+      //     pid: props.selectItem.pid,
+      //     name: props.selectItem.title || params.name,
+      //     data: {
+      //       ...params,
+      //       real_capacity: null,
+      //     },
+      //     d_id: props.itemDetail.id,
+      //     d_id: props.selectItem.id,
+      //   });
+      //   return;
       // }
-      props.addItemAsync({
+
+      // props.addItemAsync({
+      //   ...props.searchInfo,
+      //   pid: props.selectItem.pid,
+      //   name: props.selectItem.title || params.name,
+      //   data: {
+      //     ...params,
+      //     real_capacity: null,
+      //   },
+      // });
+      props.editItemAsync({
         ...props.searchInfo,
         pid: props.selectItem.pid,
         name: props.selectItem.title || params.name,
@@ -614,6 +608,7 @@ const AssetTree = props => {
           ...params,
           real_capacity: null,
         },
+        d_id: props.selectItem.id,
       });
     } catch (error) {
       console.log(' error ： ', error);
@@ -676,7 +671,7 @@ const AssetTree = props => {
                   init={num2Str(props.itemDetail, ['type'])}
                   propsForm={form}
                   action={props.action}
-                  // changeWidth
+                  changeWidth
                   // action={'detail'}
                   // key={props.itemDetail.id}
                   // key={props.itemDetail.id || props.formTypes}

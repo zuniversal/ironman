@@ -70,6 +70,12 @@ export default [
     title: '资产管理',
   },
   {
+    path: '/om/assetsDetail',
+    authKey: 'assetManageModel',
+    component: '@/pages/om/AssetsDetail',
+    title: '资产详情',
+  },
+  {
     path: '/om/assetsList',
     authKey: 'assetManageModel',
     component: '@/pages/om/AssetsList',
@@ -127,7 +133,7 @@ export default [
 
   {
     path: '/om/iotAccount',
-    authKey: 'ICCIDManageModel',
+    authKey: 'ICCIDModel',
     component: '@/pages/om/IotAccount',
     title: '物联网卡台账',
   },

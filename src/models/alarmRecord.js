@@ -5,7 +5,7 @@ import { formatSelectList } from '@/utils';
 const namespace = 'alarmRecord';
 const { createActions } = init(namespace);
 
-const otherActions = [];
+const otherActions = ['handleAlarmAsync'];
 
 const batchTurnActions = [];
 
@@ -47,7 +47,10 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          duration: `${(v.duration / 60).toFixed(2)}` + ' 分钟',
+        })),
         count: payload.rest.count,
         isShowModal: false,
       };
@@ -111,6 +114,11 @@ export default {
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
+    },
+
+    *handleAlarmAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.editItem, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

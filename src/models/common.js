@@ -290,7 +290,8 @@ export default {
         customer: payload.bean.customer?.name,
         inspection_type: payload.bean.inspection_type ?? 0,
         end_time: payload.bean.end_time
-          ? moment(payload.bean.end_time).format('YYYY-MM-DD')
+          ? // ? moment(payload.bean.end_time).format('YYYY-MM-DD')
+            moment(payload.bean.end_time)
           : null,
       };
 
@@ -446,6 +447,7 @@ export default {
         created_time = '',
         start_time = '',
         end_time = '',
+        assign_date = '',
         status,
       } = payload.bean;
       return {
@@ -457,6 +459,7 @@ export default {
           created_time: created_time ? created_time.split('T')[0] : '',
           start_time: start_time ? start_time.split('T')[0] : '',
           end_time: end_time ? end_time.split('T')[0] : '',
+          assign_date: assign_date ? assign_date.split('T')[0] : '',
           status: inspectMissionsStatusMap[status],
         },
       };
