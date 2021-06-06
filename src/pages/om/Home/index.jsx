@@ -87,14 +87,14 @@ class Home extends PureComponent {
         {...this.props}
         title={this.pageTitle}
         showSetting={this.showSetting}
-        right={
-          <div className="settingWrapper dfc" onClick={this.showSetting}>
-            {/* <Icon icon={'setting'} ></Icon> */}
-            <Icon icon={'setting'} className={'setting'}></Icon>
-            {/* <SettingOutlined className={'setting'} /> */}
-            <div className="settingText">首页设置</div>
-          </div>
-        }
+        // right={
+        //   <div className="settingWrapper dfc" onClick={this.showSetting}>
+        //     {/* <Icon icon={'setting'} ></Icon> */}
+        //     <Icon icon={'setting'} className={'setting'}></Icon>
+        //     {/* <SettingOutlined className={'setting'} /> */}
+        //     <div className="settingText">首页设置</div>
+        //   </div>
+        // }
       ></HomeTitleRow>
     );
   };

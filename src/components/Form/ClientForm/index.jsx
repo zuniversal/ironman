@@ -664,7 +664,7 @@ const ClientForm = props => {
       formType: 'Search',
       selectData: props.provinceList,
       itemProps: {
-        label: '省1',
+        label: '省',
         name: 'province',
         // ...addrLayout1,
       },

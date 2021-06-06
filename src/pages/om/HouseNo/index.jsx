@@ -120,13 +120,13 @@ class HouseNo extends PureComponent {
         {/* <Button type="primary" onClick={this.props.syncOAAsync}>
           同步OA
         </Button> */}
-        <Button
+        {/* <Button
           type="primary"
           // onClick={() => this.props.showUploadModal({ action: 'uploadFile' })}
           onClick={() => tips('暂未开发！')}
         >
           Excel导入
-        </Button>
+        </Button> */}
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}

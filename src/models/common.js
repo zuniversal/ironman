@@ -279,6 +279,7 @@ export default {
         isShowCommonModal: true,
         itemDetail: {
           ...payload.bean,
+          type: payload.bean.type ? `${payload.bean.type}` : null,
           list: payload.bean,
         },
       };

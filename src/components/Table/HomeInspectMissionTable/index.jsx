@@ -82,6 +82,7 @@ const HomeInspectMissionTable = props => {
       noActionCol
       noDefault
       rowSelection={null}
+      size={'small'}
       {...props}
     ></SmartTable>
   );

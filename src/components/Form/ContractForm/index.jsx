@@ -19,7 +19,7 @@ import {
 } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm';
-import { regoins } from '@/configs';
+import { contractTypeConfig, regoins } from '@/configs';
 import { formatConfig, reportRadioOp, mockFormData } from '@/utils';
 import UploadCom from '@/components/Widgets/UploadCom';
 
@@ -84,6 +84,8 @@ export const config = [
     },
   },
   {
+    formType: 'Search',
+    selectData: contractTypeConfig,
     itemProps: {
       label: '合同类型',
       name: 'type',
