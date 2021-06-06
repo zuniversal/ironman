@@ -11,7 +11,7 @@ const AlarmRecordHandleForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: '处理信息',
-        name: '',
+        name: 'comments',
       },
       comProps: {
         className: 'w-280',

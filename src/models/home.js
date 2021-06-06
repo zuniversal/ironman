@@ -111,7 +111,7 @@ export default {
     editItem(state, { payload, type }) {
       return {
         ...state,
-        dataList: state.dataList.map(v => ({
+        dataList: state.dataList?.map(v => ({
           ...(v.id !== payload.payload.d_id ? payload : v),
         })),
         isShowModal: false,
@@ -182,7 +182,7 @@ export default {
       console.log(' getPendingOrders ： ', state, payload);
       return {
         ...state,
-        pendingOrdersList: payload.list.map(v => ({
+        pendingOrdersList: payload.list?.map(v => ({
           ...v,
           created_time: v.created_time.split('T')[0],
         })),
@@ -195,7 +195,7 @@ export default {
       console.log(' getInspectionTasks ： ', state, payload);
       return {
         ...state,
-        inspectionTasksList: payload.list.map(v => ({
+        inspectionTasksList: payload.list?.map(v => ({
           ...v,
           created_time: v.created_time.split('T')[0],
         })),
@@ -221,12 +221,14 @@ export default {
       {
         payload = {
           requestFn: 'getInspectionsChart',
+          type: 'week',
         },
         action,
         type,
       },
       { call, put },
     ) {
+      console.log(' getChartAsync ： ', payload, action, type);
       const res = yield call(services[payload.requestFn], payload);
       yield put(action({ ...res, payload }));
     },

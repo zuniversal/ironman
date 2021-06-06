@@ -23,21 +23,21 @@ const ClientReportTable = props => {
     {
       title: '户号',
       dataIndex: 'number',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'houseNoDetailAsync',
-      //     d_id: record.number,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          d_id: record.electricity_user_id,
+        }),
     },
     {
       title: '客户名称',
       dataIndex: 'name',
       noCutText: true,
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'clientDetailAsync',
-      //     d_id: record.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '客户代表',

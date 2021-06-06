@@ -43,8 +43,14 @@ const HomeWorkOrderTable = props => {
         }),
     },
     {
+      noCutText: true,
       title: '客户名称',
       dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
     {
       title: '工单类型',

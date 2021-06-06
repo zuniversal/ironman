@@ -23,12 +23,26 @@ export const FixedCameraConfigTable = props => {
   const columns = [
     ...cameraCommonCol,
     {
+      noCutText: true,
+      width: 320,
       title: '所属电站',
       dataIndex: ['station', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.station.id,
+        }),
     },
     {
+      noCutText: true,
+      width: 320,
       title: '客户',
       dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
   ];
 

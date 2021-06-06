@@ -105,6 +105,7 @@ class CameraConfig extends PureComponent {
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
+      showItemAsync: this.props.showItemAsync,
 
       type: this.props.type,
       getCameraVideoAsync: this.props.getCameraVideoAsync,

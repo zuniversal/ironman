@@ -166,6 +166,9 @@ class AlarmRecord extends PureComponent {
       if (action === 'handleAlarm') {
         this.props.handleAlarmAsync({
           ...res,
+          status: 1,
+          d_id: this.props.d_id,
+          alarm_id: this.props.d_id,
         });
       }
     } catch (error) {

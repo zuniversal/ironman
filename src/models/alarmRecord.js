@@ -25,6 +25,7 @@ export default {
     dataList: [],
     count: 0,
     itemDetail: {},
+    d_id: '',
   },
 
   reducers: {
@@ -34,6 +35,7 @@ export default {
         ...state,
         isShowModal: true,
         action: payload.action,
+        d_id: payload.d_id,
       };
     },
     onCancel(state, { payload, type }) {

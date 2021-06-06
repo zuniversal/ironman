@@ -23,6 +23,8 @@ import Icon from '@/components/Widgets/Icons';
 import WorkOrderForm from '@/components/Form/WorkOrderForm';
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
 import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionForm';
+import ClientForm from '@/components/Form/ClientForm';
+import PowerStationForm from '@/components/Form/PowerStationForm';
 
 export const TITLE = '首页';
 
@@ -37,11 +39,15 @@ const titleMap = {
   addTicket: `添加工作票`,
   workOrderDetailAsync: `工单详情`,
   inspectMissionDetailAsync: `巡检任务详情`,
+  clientDetailAsync: `客户详情`,
+  powerStationDetailAsync: `电站详情`,
 };
 
 const detailFormMap = {
   workOrderDetailAsync: WorkOrderForm,
   inspectMissionDetailAsync: InspectMissionDetailForm,
+  clientDetailAsync: ClientForm,
+  powerStationDetailAsync: PowerStationForm,
 };
 
 // const mapStateToProps = ({ home, }) => home;

@@ -32,12 +32,24 @@ const HomeInspectMissionTable = props => {
         }),
     },
     {
+      noCutText: true,
       title: '电站',
       dataIndex: ['plan', 'station', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'powerStationDetailAsync',
+          d_id: record.plan.station.id,
+        }),
     },
     {
+      noCutText: true,
       title: '客户名称',
       dataIndex: ['customer', 'name'],
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.id,
+        }),
     },
     {
       title: '当前状态',
