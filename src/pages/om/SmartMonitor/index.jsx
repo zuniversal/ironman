@@ -16,6 +16,7 @@ import EnergyChart from './EnergyChart';
 import RealData from './RealData';
 import ChartPeak from './ChartPeak';
 import ChartLine from './ChartLine';
+import ChartLine2 from './ChartLine2';
 import * as services from '@/services/smartMonitor';
 import styles from './index.less';
 
@@ -26,12 +27,193 @@ const REAL_DATA = 'REAL_DATA';
 const ENERGY_CHART = 'ENERGY_CHART';
 const toPercent = val => (isNumber(val) ? val * 100 : val);
 
+const AlarmMonitor = React.memo(function SmartMonitor(props) {
+  const {
+    match: {
+      params: { stationId },
+    },
+    location: {
+      query: {
+        type,
+        point_id,
+        // startTime,
+        // endTime,
+      },
+    },
+  } = props;
+  console.log(' propspropspropsprops ： ', props); //
+
+  // const { data: points, loading: pointsLoading } = useRequest(
+  //   () => services.getMonitorPoints({point_id}, ),
+  //   {
+  //     formatResult(res) {
+  //       return get(res, 'list', []);
+  //     },
+  //     ready: !!number,
+  //   },
+  // );
+
+  const [point, setPoint] = React.useState();
+  const [tab, setTab] = React.useState(REAL_DATA);
+  const [hackValue, setHackValue] = React.useState();
+  const [date, setDate] = React.useState([
+    moment(moment().format('YYYY-MM-DD')),
+    moment(),
+  ]);
+
+  const onChange = item => {
+    setPoint(item);
+  };
+
+  // React.useEffect(() => {
+  //   if (points && points.length) {
+  //     setPoint(points[0].line);
+  //   }
+  // }, [points]);
+
+  const paramProps = {
+    // number,
+    // stationId,
+    // point,
+    point_id,
+    startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
+    endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+  };
+
+  const disabledDate = current => {
+    const limit = 30;
+    const tooLate = date[0] && current.diff(date[0], 'days') > limit;
+    const tooEarly = date[1] && date[1].diff(current, 'days') > limit;
+
+    return tooEarly || tooLate || current > moment().endOf('day');
+  };
+
+  const onOpenChange = open => {
+    if (open) {
+      setHackValue([]);
+      setDate([]);
+    } else {
+      setHackValue(undefined);
+    }
+  };
+  const hiddenDate = tab === REAL_DATA || tab === ENERGY_CHART;
+
+  return (
+    <div className={styles.container}>
+      <Container emptyText="暂无电站信息，无法展示监控数据">
+        <PageTitle title="智能监控" />
+        <div className={styles.subtitleBox}>
+          <div className={styles.date}>
+            <div>选择时间：</div>
+            <RangePicker
+              allowClear={false}
+              onChange={setDate}
+              onOpenChange={onOpenChange}
+              onCalendarChange={val => setDate(val)}
+              disabledDate={disabledDate}
+              value={hackValue || date}
+              dropdownClassName={styles.datepicker}
+              // bordered={false}
+            />
+          </div>
+        </div>
+        <Container
+          // empty={!get(points, 'length')}
+          emptyText="暂无监控点信息，无法展示监控数据"
+        >
+          <Tabs onChange={val => setTab(val)}>
+            <TabPane tab="电压" key="u">
+              <ChartLine2
+                {...paramProps}
+                unit="V"
+                min={200}
+                load={tab === 'u'}
+                fields={[
+                  {
+                    name: 'A相电压',
+                    value: 'ua',
+                  },
+                  {
+                    name: 'B相电压',
+                    value: 'ub',
+                  },
+                  {
+                    name: 'C相电压',
+                    value: 'uc',
+                  },
+                ]}
+              />
+            </TabPane>
+            <TabPane tab="电流" key="a">
+              <ChartLine2
+                {...paramProps}
+                unit="A"
+                load={tab === 'a'}
+                fields={[
+                  {
+                    name: 'A相电流',
+                    value: 'ia',
+                  },
+                  {
+                    name: 'B相电流',
+                    value: 'ib',
+                  },
+                  {
+                    name: 'C相电流',
+                    value: 'ic',
+                  },
+                ]}
+              />
+            </TabPane>
+            <TabPane tab="MD" key="md">
+              <ChartLine2
+                {...paramProps}
+                unit="KW"
+                load={tab === 'md'}
+                fields={[
+                  {
+                    name: '有功需量',
+                    value: 'px',
+                  },
+                ]}
+              />
+            </TabPane>
+            <TabPane tab="变压器负载率" key="lb">
+              <ChartLine2
+                {...paramProps}
+                unit="%"
+                load={tab === 'lb'}
+                fields={[
+                  {
+                    name: '变压器负载率',
+                    value: 'p_rate',
+                  },
+                ]}
+                formatter={v => toPercent(v)}
+              />
+            </TabPane>
+          </Tabs>
+        </Container>
+      </Container>
+    </div>
+  );
+});
+
 export default React.memo(function SmartMonitor(props) {
   const {
     match: {
       params: { stationId },
     },
+    location: {
+      query: { type },
+    },
   } = props;
+  console.log(' propspropspropsprops ： ', props); //
+
+  if (type === 'alarmRecord') {
+    return <AlarmMonitor {...props}></AlarmMonitor>;
+  }
+
   const { data: stationData, loading: stationLoading } = useRequest(
     () => services.getStationInfo(stationId),
     {
