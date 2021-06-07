@@ -23,7 +23,7 @@ const coverImgConfig = [
   },
 ];
 
-const legend = ['趋势'];
+const legend = ['工单数'];
 
 const xAxis = [
   '10月',

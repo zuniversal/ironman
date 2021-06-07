@@ -663,11 +663,11 @@ class SmartTable extends PureComponent {
       paginationConfig,
       searchInfo,
       pageSize,
-      this.state,
-      this.props,
       history,
       this.isShowLoading,
       this.props.animation,
+      this.state,
+      this.props,
     );
 
     const realData = this.dataFilter();

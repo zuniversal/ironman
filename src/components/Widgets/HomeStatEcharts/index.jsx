@@ -84,7 +84,7 @@ const StatTabPanes = props => {
           <TabPane tab={v.tab} key={i}>
             <Row gutter={24}>
               <Col span={16} className={`${ANIMATE.slideInLeft} `}>
-                <div className="homeTitle">趋势</div>
+                <div className="homeTitle">工单数</div>
                 <HomeBar
                   // {...props}
                   data={countData}

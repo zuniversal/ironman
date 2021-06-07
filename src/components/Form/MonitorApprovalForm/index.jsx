@@ -273,7 +273,7 @@ const MonitorApprovalForm = props => {
   const showPowerNumber = () => {
     const { electrical_info_id } = props.propsForm.getFieldsValue();
     if (!electrical_info_id) {
-      tips('请选择后再查看详情！', 1);
+      tips('请选择后再查看详情！', 2);
       return;
     }
     const res = powerInfoList.filter(v => v.id == electrical_info_id);
@@ -320,7 +320,7 @@ const MonitorApprovalForm = props => {
         <a
           onClick={() => {
             if (!props.propsForm.getFieldsValue().customer_id) {
-              tips('请选择后再查看详情！', 1);
+              tips('请选择后再查看详情！', 2);
               return;
             }
             props.propsForm.getFieldsValue().customer_id &&
@@ -354,7 +354,7 @@ const MonitorApprovalForm = props => {
         <a
           onClick={() => {
             if (!props.propsForm.getFieldsValue().electricity_user_id) {
-              tips('请选择后再查看详情！', 1);
+              tips('请选择后再查看详情！', 2);
               return;
             }
             props.propsForm.getFieldsValue().electricity_user_id &&

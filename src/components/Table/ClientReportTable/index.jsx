@@ -36,7 +36,7 @@ const ClientReportTable = props => {
       detailFn: record =>
         props.showItemAsync({
           action: 'clientDetailAsync',
-          d_id: record.id,
+          d_id: record.customer_id,
         }),
     },
     {

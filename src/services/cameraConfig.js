@@ -14,3 +14,6 @@ export const getDeviceEntityList = p =>
   req.noTipsGet(`console/video_management/device_entities`, p);
 export const getCameraVideo = p =>
   req.post(`console/video_management/device/${p.d_id}/video_url`, p);
+
+export const getVideoPreview = p =>
+  req.noTipsPost(`console/video_management/entity/video_url`, p);

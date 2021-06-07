@@ -102,7 +102,6 @@ const PowerStationTable = props => {
       </a>
       <a
         onClick={() => {
-          console.log('Received values of form: ', props);
           history.push(`/om/powerStation/smartMonitor/${record.id}`);
         }}
       >
@@ -110,7 +109,6 @@ const PowerStationTable = props => {
       </a>
       <a
         onClick={() => {
-          console.log('Received values of form: ', props);
           props.showQRCode({
             title: `${record.name}`,
             record,

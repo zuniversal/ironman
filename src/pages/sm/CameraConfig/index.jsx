@@ -158,6 +158,42 @@ class CameraConfig extends PureComponent {
     }
   };
 
+  renderVideo = e => {
+    console.log('    renderVideo ： ', e);
+    return (
+      <div className={`dfc`}>
+        {/* <SmartVideo
+      className={`videoWrapper`} 
+      src={
+        'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
+      }
+      src={this.props.videoUrl}
+    ></SmartVideo> */}
+        {/* <SmartVideos
+      className={`videoWrapper`} 
+      src={
+        'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
+      }
+      // src={this.props.videoUrl}
+    ></SmartVideos> */}
+        {this.props.videoUrl ? (
+          <FlvVideoPlayer
+            playKey={
+              'at.3ktc2rfo1icq87uf9o9e1ena0tauvl98-708yyuhsby-0etlckc-7mjvgvihc'
+            }
+            src={'ezopen://open.ys7.com/D70019019/1.hd.live'}
+            playKey={this.props.extraPayload.video_token}
+            playKey={this.props.token}
+            src={this.props.videoUrl}
+            hasKey
+          />
+        ) : (
+          <div className={`dfc`}>该设备暂无视频</div>
+        )}
+      </div>
+    );
+  };
+
   renderModalContent = e => {
     const { action } = this.props;
     const formComProps = {
@@ -167,43 +203,13 @@ class CameraConfig extends PureComponent {
       getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       type: this.props.type,
+      getVideoPreviewAsync: this.props.getVideoPreviewAsync,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
     if (action === 'showCameraVideo') {
-      return (
-        <div className={`dfc`}>
-          {/* <SmartVideo
-          className={`videoWrapper`} 
-          src={
-            'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
-          }
-          src={this.props.videoUrl}
-        ></SmartVideo> */}
-          {/* <SmartVideos
-          className={`videoWrapper`} 
-          src={
-            'http://hls01open.ys7.com/openlive/cc9073571e0c471ca4224debb3ac5eca.m3u8'
-          }
-          // src={this.props.videoUrl}
-        ></SmartVideos> */}
-          {this.props.videoUrl ? (
-            <FlvVideoPlayer
-              playKey={
-                'at.3ktc2rfo1icq87uf9o9e1ena0tauvl98-708yyuhsby-0etlckc-7mjvgvihc'
-              }
-              src={'ezopen://open.ys7.com/D70019019/1.hd.live'}
-              playKey={this.props.extraPayload.video_token}
-              playKey={this.props.token}
-              src={this.props.videoUrl}
-              hasKey
-            />
-          ) : (
-            <div className={`dfc`}>该设备暂无视频</div>
-          )}
-        </div>
-      );
+      return this.renderVideo();
     }
     console.log(' formComProps ： ', formComProps);
     return <CameraConfigForm {...formComProps}></CameraConfigForm>;
@@ -219,6 +225,26 @@ class CameraConfig extends PureComponent {
         onCancel={this.props.onCancel}
       >
         {this.renderModalContent()}
+      </SmartFormModal>
+    );
+  };
+
+  renderModalContent2 = e => {
+    const { action2 } = this.props;
+    if (action2 === 'showCameraVideo') {
+      return this.renderVideo();
+    }
+  };
+  renderSmartFormModal2 = params => {
+    return (
+      <SmartFormModal
+        show={this.props.isShowModal2}
+        action={this.props.action2}
+        titleMap={this.state.titleMap}
+        onOk={this.props.onCancel2}
+        onCancel={this.props.onCancel2}
+      >
+        {this.renderModalContent2()}
       </SmartFormModal>
     );
   };
@@ -278,6 +304,8 @@ class CameraConfig extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderSmartFormModal2()}
 
         {this.renderCommonModal()}
       </div>

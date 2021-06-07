@@ -24,6 +24,7 @@ import { tips, getItems } from '@/utils';
 const { Header, Sider, Content } = Layout;
 
 const Layouts = props => {
+  const [collapsed, setCollapsed] = useState(false);
   const [settings, setSetting] = useState(undefined);
   const comRef = useRef(() => <></>);
   const Com = comRef.current;
@@ -62,7 +63,7 @@ const Layouts = props => {
       <div className={`logoWrapper dfc`}>
         <LogoCom className={`logoClass`}></LogoCom>
       </div>
-      {system != CS_SYSTEM && (
+      {system != CS_SYSTEM && !collapsed && (
         <SearchForm
           suffixIcon={<SwapOutlined />}
           selectData={platformSelectConfig}
@@ -101,6 +102,7 @@ const Layouts = props => {
       <div className={'layoutContainer'}>
         <ProLayout
           {...(system == 'CS' ? csRoutes : getRoutes)}
+          onCollapse={setCollapsed}
           location={{
             pathname: path,
           }}

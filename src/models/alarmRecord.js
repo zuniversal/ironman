@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/alarmRecord';
 import { formatSelectList } from '@/utils';
+import moment from 'dayjs';
 
 const namespace = 'alarmRecord';
 const { createActions } = init(namespace);
@@ -51,6 +52,9 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
+          created_time: v.created_time
+            ? moment(v.created_time).format('YYYY-MM-DD')
+            : null,
           duration: `${(v.duration / 60).toFixed(2)}` + ' 分钟',
         })),
         count: payload.rest.count,

@@ -5,7 +5,7 @@ import useHttp from '@/hooks/useHttp';
 import { getRelatived } from '@/services/client';
 import { getDeviceEntityList } from '@/services/cameraConfig';
 import { getList as getPlaftformConfigList } from '@/services/platformConfig';
-import { formatSelectList } from '@/utils';
+import { tips, formatSelectList } from '@/utils';
 import {
   cameraDeviceConfig,
   cameraTypeConfig,
@@ -95,6 +95,9 @@ const CameraConfigForm = props => {
     // getDeviceEntityListReq(item.system);
     // getDeviceEntityListReq(item.id);
     getDeviceEntityListReq(val);
+    props.propsForm.setFieldsValue({
+      deviceSerial: null,
+    });
   };
   const onDeviceChange = (val, item) => {
     console.log(' onDeviceChange   val, item,   ： ', val, item);
@@ -172,7 +175,7 @@ const CameraConfigForm = props => {
       // selectData: cameraSystemConfig,
       selectData: plaftformConfigList,
       itemProps: {
-        label: '平台名称',
+        label: '选择平台',
         // name: props.action === 'edit' ? 'video_system' : 'system',
         name: 'system',
       },
@@ -191,7 +194,44 @@ const CameraConfigForm = props => {
       comProps: {
         onChange: onDeviceChange,
       },
-      itemPropsCls: 'hidden',
+      extra: (
+        <a
+          onClick={() => {
+            const { system, deviceSerial } = props.propsForm.getFieldsValue();
+            if (!(system && deviceSerial)) {
+              tips('请选择平台和关联摄像头后再摄像头名称！', 2);
+              return;
+            }
+            const channelVal = plaftformConfigList.find(v => v.value == system)
+              .system;
+            const channelMap = {
+              1: 0,
+              2: 1,
+            };
+            const channel = channelMap[channelVal];
+            console.log(
+              ' showCameraVideo   system,   ： ',
+              system,
+              deviceEntityList,
+              plaftformConfigList,
+              channel,
+              channelVal,
+            );
+            // return
+            props.getVideoPreviewAsync({
+              action: 'showCameraVideo',
+              system_id: system,
+              deviceSerial,
+              channel,
+              // extraPayload: record,
+              type: 1,
+            });
+          }}
+          className="m-l-5"
+        >
+          视频预览
+        </a>
+      ),
     },
     {
       itemProps: {

@@ -82,7 +82,10 @@ const HomeInspectMissionTable = props => {
       noActionCol
       noDefault
       rowSelection={null}
-      size={'small'}
+      paginationConfig={{
+        size: 'small',
+        showSizeChanger: false,
+      }}
       {...props}
     ></SmartTable>
   );

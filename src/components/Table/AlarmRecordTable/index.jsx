@@ -15,6 +15,7 @@ import {
   alarmRecordStatusMap,
   alarmRecordTypeMap,
 } from '@/configs';
+import { history } from 'umi';
 
 const AlarmRecordTable = props => {
   const { showModal, edit, remove, tdClick } = props;
@@ -80,7 +81,7 @@ const AlarmRecordTable = props => {
     {
       title: '开始时间',
       dataIndex: 'created_time',
-      day: 'YYYY-MM-DD HH:mm:ss',
+      // day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '备注',
@@ -99,6 +100,15 @@ const AlarmRecordTable = props => {
           处理
         </a>
       )}
+      <a
+        onClick={() => {
+          history.push(
+            `/om/powerStation/smartMonitor/${record.id}?created_time=${record.created_time}&end_time=${record.end_time}`,
+          );
+        }}
+      >
+        智能监控
+      </a>
       {/* <a
         onClick={() => props.showFormModal({ action: 'notifyClient', record })}
       >

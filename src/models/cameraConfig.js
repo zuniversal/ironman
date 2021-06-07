@@ -1,14 +1,14 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/cameraConfig';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import { CAMERA1 } from '@/configs';
 
 const namespace = 'cameraConfig';
 const { createActions } = init(namespace);
 
-const otherActions = ['getCameraVideoAsync'];
+const otherActions = ['getCameraVideoAsync', 'getVideoPreviewAsync'];
 
-const batchTurnActions = ['onCameraTabsChange'];
+const batchTurnActions = ['onCameraTabsChange', 'onCancel2'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -34,6 +34,9 @@ export default {
     videoUrl: '',
     token: '',
     extraPayload: {},
+
+    isShowModal2: false,
+    action2: '',
   },
 
   reducers: {
@@ -127,6 +130,24 @@ export default {
         extraPayload: payload.payload.extraPayload,
       };
     },
+
+    onCancel2(state, { payload, type }) {
+      console.log(' onCancel2 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        isShowModal2: false,
+      };
+    },
+    getVideoPreview(state, { payload, type }) {
+      console.log(' getVideoPreview ： ', payload);
+      return {
+        ...state,
+        videoUrl: payload.list[0].url,
+        token: payload.list[0].token,
+        action2: 'showCameraVideo',
+        isShowModal2: true,
+      };
+    },
   },
 
   effects: {
@@ -166,6 +187,14 @@ export default {
       const res = yield call(services.getCameraVideo, payload);
       yield put({ type: 'getCameraVideo', payload: { ...res, payload } });
       // yield put({ type: 'getCameraVideo',  });
+    },
+    *getVideoPreviewAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getVideoPreview, payload);
+      if (res.list) {
+        yield put({ type: 'getVideoPreview', payload: { ...res, payload } });
+      } else {
+        tips('无视频可以预览！', 2);
+      }
     },
   },
 };
