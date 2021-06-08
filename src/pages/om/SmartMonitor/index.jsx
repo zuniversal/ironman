@@ -1,6 +1,6 @@
 import React from 'react';
-import { useRequest } from 'umi';
-import { Tabs, DatePicker, Select } from 'antd';
+import { useRequest, history } from 'umi';
+import { Tabs, DatePicker, Select, Button } from 'antd';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
@@ -36,6 +36,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
       query: {
         type,
         point_id,
+        day,
         // startTime,
         // endTime,
       },
@@ -54,11 +55,11 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   // );
 
   const [point, setPoint] = React.useState();
-  const [tab, setTab] = React.useState(REAL_DATA);
+  const [tab, setTab] = React.useState('u');
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
-    moment(moment().format('YYYY-MM-DD')),
-    moment(),
+    moment(moment(day).format('YYYY-MM-DD')),
+    moment(day),
   ]);
 
   const onChange = item => {
@@ -79,7 +80,13 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
     endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
   };
-
+  console.log(
+    ' hackValue || date ： ',
+    hackValue,
+    date,
+    paramProps,
+    moment('2021-05-17'),
+  ); //
   const disabledDate = current => {
     const limit = 30;
     const tooLate = date[0] && current.diff(date[0], 'days') > limit;
@@ -101,7 +108,14 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   return (
     <div className={styles.container}>
       <Container emptyText="暂无电站信息，无法展示监控数据">
-        <PageTitle title="智能监控" />
+        <div className="fsb ">
+          <PageTitle title="智能监控" />
+          <div className=" dfc">
+            <Button type="primary" onClick={history.goBack}>
+              返回
+            </Button>
+          </div>
+        </div>
         <div className={styles.subtitleBox}>
           <div className={styles.date}>
             <div>选择时间：</div>
@@ -123,74 +137,82 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
         >
           <Tabs onChange={val => setTab(val)}>
             <TabPane tab="电压" key="u">
-              <ChartLine2
-                {...paramProps}
-                unit="V"
-                min={200}
-                load={tab === 'u'}
-                fields={[
-                  {
-                    name: 'A相电压',
-                    value: 'ua',
-                  },
-                  {
-                    name: 'B相电压',
-                    value: 'ub',
-                  },
-                  {
-                    name: 'C相电压',
-                    value: 'uc',
-                  },
-                ]}
-              />
+              {tab === 'u' ? (
+                <ChartLine2
+                  {...paramProps}
+                  unit="V"
+                  min={200}
+                  load={tab === 'u'}
+                  fields={[
+                    {
+                      name: 'A相电压',
+                      value: 'ua',
+                    },
+                    {
+                      name: 'B相电压',
+                      value: 'ub',
+                    },
+                    {
+                      name: 'C相电压',
+                      value: 'uc',
+                    },
+                  ]}
+                />
+              ) : null}
             </TabPane>
             <TabPane tab="电流" key="a">
-              <ChartLine2
-                {...paramProps}
-                unit="A"
-                load={tab === 'a'}
-                fields={[
-                  {
-                    name: 'A相电流',
-                    value: 'ia',
-                  },
-                  {
-                    name: 'B相电流',
-                    value: 'ib',
-                  },
-                  {
-                    name: 'C相电流',
-                    value: 'ic',
-                  },
-                ]}
-              />
+              {tab === 'a' ? (
+                <ChartLine2
+                  {...paramProps}
+                  unit="A"
+                  load={tab === 'a'}
+                  fields={[
+                    {
+                      name: 'A相电流',
+                      value: 'ia',
+                    },
+                    {
+                      name: 'B相电流',
+                      value: 'ib',
+                    },
+                    {
+                      name: 'C相电流',
+                      value: 'ic',
+                    },
+                  ]}
+                />
+              ) : null}
             </TabPane>
             <TabPane tab="MD" key="md">
-              <ChartLine2
-                {...paramProps}
-                unit="KW"
-                load={tab === 'md'}
-                fields={[
-                  {
-                    name: '有功需量',
-                    value: 'px',
-                  },
-                ]}
-              />
+              {tab === 'md' ? (
+                <ChartLine2
+                  {...paramProps}
+                  unit="KW"
+                  load={tab === 'md'}
+                  fields={[
+                    {
+                      name: '有功需量',
+                      value: 'px',
+                    },
+                  ]}
+                />
+              ) : null}
             </TabPane>
             <TabPane tab="变压器负载率" key="lb">
-              <ChartLine2
-                {...paramProps}
-                unit="%"
-                load={tab === 'lb'}
-                fields={[
-                  {
-                    name: '变压器负载率',
-                    value: 'p_rate',
-                  },
-                ]}
-                formatter={v => toPercent(v)}
-              />
+              {tab === 'lb' ? (
+                <ChartLine2
+                  {...paramProps}
+                  unit="%"
+                  load={tab === 'lb'}
+                  fields={[
+                    {
+                      name: '变压器负载率',
+                      value: 'p_rate',
+                    },
+                  ]}
+                  formatter={v => toPercent(v)}
+                />
+              ) : null}
             </TabPane>
           </Tabs>
         </Container>

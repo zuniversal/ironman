@@ -85,9 +85,11 @@ export const getLiveVideo = () =>
   request('console/OMS/dashboard/monitor/videos');
 export const getStationInfo = id => request(`console/OMS/powerstation/${id}`);
 
-// export const getAlarmCurveList = p => request(`/console/OMS/dashboard/monitor/range_data?point_id=1&start_time=2021-06-07 00:00:00&end_time=2021-06-07 23:59:59`, p);
-export const getAlarmCurveList = p =>
-  request(
-    `/console/OMS/dashboard/monitor/range_data?point_id=5095&start_time=2021-06-01&end_time=2021-06-02&value=ua&value=ub&value=uc&value=p_rate`,
-  );
+export const getAlarmCurveList = p => request(`console/monitor/range_data${p}`);
+// export const getAlarmCurveList = p =>
+//   request(
+//     `console/monitor/range_data?point_id=5095&start_time=2021-06-01&end_time=2021-06-02&value=ua&value=ub&value=uc&value=p_rate`,
+//   );
+
+// getAlarmCurveList()
 // export const getAlarmCurveList = p => request(`/console/OMS/dashboard/monitor/range_data`, p);

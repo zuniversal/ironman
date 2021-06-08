@@ -103,7 +103,7 @@ const AlarmRecordTable = props => {
       <a
         onClick={() => {
           history.push(
-            `/om/powerStation/smartMonitor/${record.id}?created_time=${record.created_time}&end_time=${record.end_time}`,
+            `/om/powerStation/smartMonitor/${record.id}?type=alarmRecord&point_id=${record.monitor_point_id}&day=${record.created_time}&created_time=${record.created_time}&end_time=${record.end_time}`,
           );
         }}
       >

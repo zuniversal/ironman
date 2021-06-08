@@ -747,6 +747,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
+      noRule: true,
       itemProps: {
         label: '行政区域编码',
         // name: 'adcode',
@@ -761,6 +762,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
+      noRule: true,
       itemProps: {
         label: '经度',
         // name: 'longitude',
@@ -775,6 +777,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
+      noRule: true,
       itemProps: {
         label: '纬度',
         // name: 'latitude',

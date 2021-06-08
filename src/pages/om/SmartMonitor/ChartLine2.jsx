@@ -95,6 +95,9 @@ const getOption = (data = [], config = {}) => {
         //   color: '#ffffff',
         // },
       },
+      axisLabel: {
+        formatter: (value, index) => value.toFixed(3),
+      },
       splitLine: {
         lineStyle: {
           color: '#222E34',
@@ -132,21 +135,29 @@ export default React.memo(function ChartLine(props) {
   const query = fields.map(item => `&value=${item.value}`).join('');
   const { data, loading } = useRequest(
     () => {
-      if (!startTime || !endTime || !load) {
+      if (!startTime || !endTime) {
         return '';
       }
+      // const query = {}
+      // fields.forEach((v, i) => {
+      //   console.log(' query ： ', fields, query, v, )//
+      //   query[v.value] = v.value
+      // })
+      const queryParams = `?point_id=${point_id}&startTime=${startTime}&endTime=${endTime}${query}`;
+      console.log(' query ： ', fields, query, queryParams); //
+      return services.getAlarmCurveList(queryParams);
       return services.getAlarmCurveList({
         point_id,
         startTime,
         endTime,
-        query,
+        ...query,
       });
     },
     {
       formatResult(res) {
         return get(res, 'list', []);
       },
-      // refreshDeps: [point_id, startTime, endTime, load],
+      refreshDeps: [point_id, startTime, endTime, load],
       // ready: point_id && startTime && endTime,
     },
   );
