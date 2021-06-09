@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap } from '@/configs';
 
 const WeakTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -136,10 +134,6 @@ const WeakTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-WeakTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default WeakTable;

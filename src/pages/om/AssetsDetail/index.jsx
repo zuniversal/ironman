@@ -78,7 +78,6 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: AssetsForm,
   noMountFetch: true,
 })
 class Assets extends PureComponent {

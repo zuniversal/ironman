@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const AssessmentTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -34,10 +32,6 @@ const AssessmentTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-AssessmentTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default AssessmentTable;

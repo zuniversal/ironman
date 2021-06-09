@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const MsgTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -36,10 +34,6 @@ const MsgTable = props => {
   ];
 
   return <SmartTable noDefault columns={columns} {...props}></SmartTable>;
-};
-
-MsgTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default MsgTable;

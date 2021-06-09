@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { notifyTypeConfig } from '@/configs';
 
 const AlarmTemplateTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -53,10 +51,6 @@ const AlarmTemplateTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-AlarmTemplateTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default AlarmTemplateTable;

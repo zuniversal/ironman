@@ -14,8 +14,6 @@ import { missionsTypeMap, missionsStatusMap } from '@/configs';
 import { tips } from '@/utils';
 
 const BussniessRecordTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '订单ID',
@@ -84,10 +82,6 @@ const BussniessRecordTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-BussniessRecordTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default BussniessRecordTable;

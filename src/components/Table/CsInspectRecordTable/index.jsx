@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap } from '@/configs';
 
 const CsInspectRecordTable = props => {
-  const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props;
-
   const columns = [
     {
       title: '名称',
@@ -82,10 +80,6 @@ const CsInspectRecordTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-CsInspectRecordTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default CsInspectRecordTable;

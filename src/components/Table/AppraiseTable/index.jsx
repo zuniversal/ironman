@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const AppraiseTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -71,10 +69,6 @@ const AppraiseTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-AppraiseTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default AppraiseTable;

@@ -14,8 +14,6 @@ import SmartTable from '@/common/SmartTable';
 import { Link } from 'umi';
 
 const ShiftsManageTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '班组名称',
@@ -80,10 +78,6 @@ const ShiftsManageTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-ShiftsManageTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default ShiftsManageTable;

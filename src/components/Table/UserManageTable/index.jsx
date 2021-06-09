@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const UserManageTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -47,10 +45,6 @@ const UserManageTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-UserManageTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default UserManageTable;

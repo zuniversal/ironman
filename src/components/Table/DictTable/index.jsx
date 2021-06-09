@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const DictTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -42,10 +40,6 @@ const DictTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-DictTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default DictTable;

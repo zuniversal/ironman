@@ -13,14 +13,7 @@ import { onDutyTypeMap } from '@/configs';
 import SmartTable from '@/common/SmartTable';
 
 const ShiftsTransferTable = props => {
-  const {
-    showModal,
-    edit,
-    remove,
-    tdClick,
-    showTransferDetail,
-    showDetail,
-  } = props;
+  const { showModal, edit, remove, showTransferDetail, showDetail } = props;
 
   const columns = [
     {
@@ -88,10 +81,6 @@ const ShiftsTransferTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-ShiftsTransferTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default ShiftsTransferTable;

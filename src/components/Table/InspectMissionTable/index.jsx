@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap, inspectModelRadioMap } from '@/configs';
 
 const InspectMissionTable = props => {
-  const { showModal, edit, remove, tdClick, assignMission, editDate } = props;
-
   const columns = [
     {
       title: 'id',
@@ -117,10 +115,6 @@ const InspectMissionTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-InspectMissionTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default InspectMissionTable;

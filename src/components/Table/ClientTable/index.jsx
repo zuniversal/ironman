@@ -8,8 +8,6 @@ import { industryTypeMap, clientLevelMap } from '@/configs';
 import { history } from 'umi';
 
 const ClientTable = props => {
-  const { tdClick, showDetail } = props;
-
   const columns = [
     // {
     //   title: '客户编号',

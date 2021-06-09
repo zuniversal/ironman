@@ -28,7 +28,6 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: BussniessRecordForm,
 })
 class BussniessRecord extends PureComponent {
   constructor(props) {

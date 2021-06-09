@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const CsMonitorTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -27,10 +25,6 @@ const CsMonitorTable = props => {
   ];
 
   return <SmartTable noDefault columns={columns} {...props}></SmartTable>;
-};
-
-CsMonitorTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default CsMonitorTable;

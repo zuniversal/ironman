@@ -14,8 +14,6 @@ import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap } from '@/configs';
 
 const CsHomeStationTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props;
-
   const columns = [
     {
       title: '巡检ID',

@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const NewsKnowTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '标题',
@@ -36,10 +34,6 @@ const NewsKnowTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-NewsKnowTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default NewsKnowTable;

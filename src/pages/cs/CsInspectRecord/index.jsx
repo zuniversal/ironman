@@ -37,7 +37,6 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: InspectMissionDetailForm,
 })
 class CsInspectRecord extends PureComponent {
   constructor(props) {

@@ -14,8 +14,6 @@ import SmartTable from '@/common/SmartTable';
 import { ANIMATE } from '@/constants';
 
 const CsHomeTabsTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props;
-
   const columns = [
     {
       title: '监控设备编号(变压器编号)',
@@ -101,8 +99,6 @@ const CsHomeTabsTable = props => {
 };
 
 const CsHomeAssetsTable = props => {
-  const { showModal, edit, remove, tdClick, complete } = props;
-
   const columns = [
     {
       title: '出厂设备编号',
@@ -182,10 +178,6 @@ const CsHomeTableCom = props => {
       </Tabs>
     </div>
   );
-};
-
-CsHomeTableCom.defaultProps = {
-  tdClick: () => {},
 };
 
 export default CsHomeTableCom;

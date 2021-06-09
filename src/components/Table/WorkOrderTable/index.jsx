@@ -22,7 +22,6 @@ const WorkOrderTable = props => {
     showModal,
     edit,
     remove,
-    tdClick,
     dispatchOrder,
     exportData,
     showDetail,
@@ -144,10 +143,6 @@ const WorkOrderTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-WorkOrderTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default WorkOrderTable;

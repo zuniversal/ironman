@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const ArrangeTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -36,10 +34,6 @@ const ArrangeTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-ArrangeTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default ArrangeTable;

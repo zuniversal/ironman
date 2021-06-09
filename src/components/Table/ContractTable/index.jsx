@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { contractTypeMap } from '@/configs';
 
 const ContractTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '所属客户',
@@ -124,12 +122,6 @@ const ContractTable = props => {
       noDefault
     ></SmartTable>
   );
-};
-
-ContractTable.defaultProps = {
-  // showModal: () => {},
-  tdClick: () => {},
-  // remove: () => {},
 };
 
 export default ContractTable;

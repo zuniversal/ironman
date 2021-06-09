@@ -18,8 +18,6 @@ import {
 import { history } from 'umi';
 
 const AlarmRecordTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -125,10 +123,6 @@ const AlarmRecordTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-AlarmRecordTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default AlarmRecordTable;

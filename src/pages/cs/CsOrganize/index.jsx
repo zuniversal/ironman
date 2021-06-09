@@ -25,7 +25,6 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: CsOrganizeForm,
 })
 class CsOrganize extends PureComponent {
   constructor(props) {

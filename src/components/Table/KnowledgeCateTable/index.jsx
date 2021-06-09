@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const KnowledgeCateTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '知识库名称',
@@ -40,10 +38,6 @@ const KnowledgeCateTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-KnowledgeCateTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default KnowledgeCateTable;

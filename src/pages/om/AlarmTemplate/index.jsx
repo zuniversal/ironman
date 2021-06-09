@@ -26,7 +26,6 @@ const titleMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: AlarmTemplateForm,
 })
 class AlarmTemplate extends PureComponent {
   constructor(props) {

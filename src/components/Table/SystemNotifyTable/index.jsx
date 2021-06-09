@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const WeakTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       noCutText: true,
@@ -45,10 +43,6 @@ const WeakTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-WeakTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default WeakTable;

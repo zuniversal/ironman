@@ -21,7 +21,6 @@ const TicketCeopleChangeTable = props => {
     showModal,
     edit,
     remove,
-    tdClick,
     dispatchOrder,
     exportData,
     showDetail,

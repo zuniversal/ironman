@@ -14,8 +14,6 @@ import { history } from 'umi';
 import { DRAW_PANEL } from '@/constants';
 
 const PowerStationTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     // {
     //   title: '序号',
@@ -141,12 +139,6 @@ const PowerStationTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-PowerStationTable.defaultProps = {
-  // showModal: () => {},
-  tdClick: () => {},
-  // remove: () => {},
 };
 
 export default PowerStationTable;

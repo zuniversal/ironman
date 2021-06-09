@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const InspectPlanTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     // {
     //   title: '电站',
@@ -45,10 +43,6 @@ const InspectPlanTable = props => {
   ];
 
   return <SmartTable columns={columns} noDefault {...props}></SmartTable>;
-};
-
-InspectPlanTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default InspectPlanTable;

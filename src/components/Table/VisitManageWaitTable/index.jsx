@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const VisitManageWaitTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -72,10 +70,6 @@ const VisitManageWaitTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-VisitManageWaitTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default VisitManageWaitTable;

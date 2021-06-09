@@ -16,8 +16,6 @@ import { voltageLevelMap } from '@/configs';
 import { downLoad } from '@/utils';
 
 const CsClientReportTable = props => {
-  const { tdClick, add, edit, showDetail } = props;
-
   const columns = [
     {
       title: '户号',

@@ -17,7 +17,6 @@ const HomeWorkOrderTable = props => {
     showModal,
     edit,
     remove,
-    tdClick,
     dispatchOrder,
     exportData,
     addTicket,
@@ -104,10 +103,6 @@ const HomeWorkOrderTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-HomeWorkOrderTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default HomeWorkOrderTable;

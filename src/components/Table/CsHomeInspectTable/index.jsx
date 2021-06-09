@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const CsHomeInspectTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '巡检ID',
@@ -65,10 +63,6 @@ const CsHomeInspectTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-CsHomeInspectTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default CsHomeInspectTable;

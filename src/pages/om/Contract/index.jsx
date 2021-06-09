@@ -66,7 +66,6 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: ContractForm,
 })
 class Contract extends PureComponent {
   constructor(props) {

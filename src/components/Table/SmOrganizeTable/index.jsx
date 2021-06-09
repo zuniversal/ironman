@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const SmOrganizeTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '部门',
@@ -32,10 +30,6 @@ const SmOrganizeTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-SmOrganizeTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default SmOrganizeTable;

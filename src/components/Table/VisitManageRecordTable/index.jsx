@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const VisitManageRecordTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -76,10 +74,6 @@ const VisitManageRecordTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-VisitManageRecordTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default VisitManageRecordTable;

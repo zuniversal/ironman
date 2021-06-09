@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const CsOrganizeTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '账号(登录名)',
@@ -36,10 +34,6 @@ const CsOrganizeTable = props => {
   return (
     <SmartTable columns={columns} {...props} rowKey={'user_id'}></SmartTable>
   );
-};
-
-CsOrganizeTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default CsOrganizeTable;

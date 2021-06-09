@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { workOrderStatusMap } from '@/configs';
 
 const InspectRecordTable = props => {
-  const { showModal, edit, remove, tdClick, showDetail, inspectReport } = props;
-
   const columns = [
     {
       title: 'id',
@@ -125,10 +123,6 @@ const InspectRecordTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-InspectRecordTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default InspectRecordTable;

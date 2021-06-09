@@ -18,7 +18,6 @@ const MissionsManageTable = props => {
     showModal,
     edit,
     remove,
-    tdClick,
     startWorkOrder,
     linkContract,
     schedule,
@@ -311,10 +310,6 @@ const MissionsManageTable = props => {
       {...props}
     ></SmartTable>
   );
-};
-
-MissionsManageTable.defaultProps = {
-  tdClick: () => {},
 };
 
 export default MissionsManageTable;

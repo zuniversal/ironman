@@ -13,8 +13,6 @@ import SmartTable from '@/common/SmartTable';
 import { electricTypeMap } from '@/configs';
 
 const HouseNoTable = props => {
-  const { tdClick } = props;
-
   const columns = [
     {
       title: '户号',
@@ -77,12 +75,6 @@ const HouseNoTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-HouseNoTable.defaultProps = {
-  // showModal: () => {},
-  tdClick: () => {},
-  // remove: () => {},
 };
 
 export default HouseNoTable;

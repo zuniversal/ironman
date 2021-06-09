@@ -12,8 +12,6 @@ import './style.less';
 import SmartTable from '@/common/SmartTable';
 
 const ShiftsArrangeTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: 'id',
@@ -38,12 +36,6 @@ const ShiftsArrangeTable = props => {
   ];
 
   return <SmartTable columns={columns} {...props}></SmartTable>;
-};
-
-ShiftsArrangeTable.defaultProps = {
-  // showModal: () => {},
-  tdClick: () => {},
-  // remove: () => {},
 };
 
 export default ShiftsArrangeTable;

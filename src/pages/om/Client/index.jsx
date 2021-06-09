@@ -36,7 +36,6 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: ClientForm,
   // noMountFetch: true,
 })
 class Client extends PureComponent {

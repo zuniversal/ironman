@@ -16,8 +16,6 @@ import { voltageLevelConfig, voltageLevelMap } from '@/configs';
 import PowerStationTable from '../PowerStationTable';
 
 export const DeviceInfoTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '设备编号',
@@ -53,8 +51,6 @@ export const DeviceInfoTable = props => {
 };
 
 export const WatchInfoTable = props => {
-  const { showModal, edit, remove, tdClick } = props;
-
   const columns = [
     {
       title: '监控点编号',
@@ -66,7 +62,6 @@ export const WatchInfoTable = props => {
     },
     {
       // title: '统计数量',
-      // render: (text, record, index) => <a onClick={() => tdClick({action: 'detail'})}>{text}</a>,
       title: '监控设备',
       dataIndex: '',
     },
@@ -193,7 +188,7 @@ export const TableInput = props => {
 };
 
 export const PowerStationDetailTable = props => {
-  const { showModal, edit, remove, tdClick, isDisabledAll } = props;
+  const { showModal, edit, isDisabledAll } = props;
   console.log(
     ' %c PowerStationDetailTable 组件 ： ',
     `color: #333; font-weight: bold`,

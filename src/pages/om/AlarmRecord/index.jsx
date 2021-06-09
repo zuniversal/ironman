@@ -39,7 +39,6 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
-  modalForm: AlarmRecordForm,
 })
 class AlarmRecord extends PureComponent {
   constructor(props) {
