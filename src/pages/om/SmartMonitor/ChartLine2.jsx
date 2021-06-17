@@ -143,7 +143,7 @@ export default React.memo(function ChartLine(props) {
       //   console.log(' query ： ', fields, query, v, )//
       //   query[v.value] = v.value
       // })
-      const queryParams = `?point_id=${point_id}&startTime=${startTime}&endTime=${endTime}${query}`;
+      const queryParams = `?point_id=${point_id}&start_time=${startTime}&end_time=${endTime}${query}`;
       console.log(' query ： ', fields, query, queryParams); //
       return services.getAlarmCurveList(queryParams);
       return services.getAlarmCurveList({

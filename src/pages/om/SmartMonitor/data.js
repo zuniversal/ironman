@@ -134,6 +134,7 @@ export const getShowRealData = data => {
     if (!isNaN(item.value)) {
       value = Number(item.value.toFixed(3));
     }
+    console.log(' valuevalue ： ', value, item); //
     if (typeof item.value === 'function') {
       value = item.value();
     } else {

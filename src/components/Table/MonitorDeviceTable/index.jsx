@@ -60,6 +60,24 @@ const MonitorDeviceTable = props => {
     //   title: '流变',
     //   dataIndex: 'current_ratio',
     // },
+
+    // {
+    //   title: '户号',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '安装点位',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '电源编号',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '出库登记',
+    //   dataIndex: '',
+    // },
+
     {
       title: '网络类型',
       dataIndex: 'network_type',

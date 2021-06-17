@@ -69,6 +69,7 @@ export default {
     electricBillList: [],
     pdfDataList: [],
     extraData: {},
+    electricity_user_id: '',
   },
 
   reducers: {
@@ -492,6 +493,7 @@ export default {
           electrical_id: payload.payload?.electrical_info?.power_number,
           billing_method: payload.payload.billing_method,
         },
+        electricity_user_id: payload.payload.electricity_user_id,
       };
     },
     batchExportPDF(state, { payload, type }) {

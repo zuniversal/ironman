@@ -19,4 +19,4 @@ export const removeItem = p => remove(`console/OMS/spect/defect/${p.d_id}`, p);
 
 export const handleWeak = p => put(`console/OMS/spect/defect/${p.d_id}`, p);
 
-export const exportData = p => noTipsGet(`console/OMS/team/handover/files`, p);
+export const exportData = p => noTipsPost(`console/OMS/spect/defect/export`, p);

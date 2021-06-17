@@ -145,6 +145,7 @@ export default {
     },
     *exportDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.exportData, payload);
+      console.log('exportDataAsync', payload, action, type);
       return res;
     },
   },

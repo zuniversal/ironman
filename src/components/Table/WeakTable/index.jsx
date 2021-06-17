@@ -101,7 +101,7 @@ const WeakTable = props => {
       {/* <a onClick={() => tdClick({ action: 'showList' })}>通知客户</a> */}
       {/* <a onClick={() => props.exportDataAsync({ action: 'showList' })}>导出</a> */}
       {/* <a onClick={() => props.showExportPdf({ action: 'detail', extraAction: 'showExportPdf', d_id: record.id })} > */}
-      <a
+      {/* <a
         onClick={() =>
           props.edit({
             action: 'detail',
@@ -111,7 +111,20 @@ const WeakTable = props => {
         }
       >
         导出
+      </a> */}
+      <a
+        onClick={
+          () =>
+            props.exportDataAsync({
+              action: 'exportData',
+              team_id: record.team.id,
+            })
+          // tips('暂无接口！', 2)
+        }
+      >
+        导出
       </a>
+
       {/* <a
         onClick={() =>
           props.exportPdf({

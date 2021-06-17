@@ -57,6 +57,20 @@ const MonitorApprovalTable = props => {
       title: '额定功率',
       dataIndex: 'power',
     },
+
+    // {
+    //   title: '汇报时间',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '上线时间',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '审批通过时间',
+    //   dataIndex: '',
+    // },
+
     {
       title: '施工人员',
       dataIndex: 'worker_name',

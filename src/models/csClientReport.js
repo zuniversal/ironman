@@ -61,6 +61,7 @@ export default {
     clientList,
     pdfDataList: [],
     extraData: {},
+    electricity_user_id: '',
   },
 
   reducers: {

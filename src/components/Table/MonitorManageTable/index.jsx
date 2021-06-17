@@ -7,6 +7,8 @@ import { monitorDeviceStatusMap, deviceFrequencyMap } from '@/configs';
 const MonitorManageTable = props => {
   const columns = [
     {
+      noCutText: true,
+      width: 300,
       title: '所属客户',
       dataIndex: 'customer_name',
       detailFn: record =>
@@ -56,6 +58,7 @@ const MonitorManageTable = props => {
     //   dataIndex: '',
     // },
     {
+      width: 160,
       title: 'IMEI号',
       dataIndex: 'imei',
     },
@@ -68,6 +71,16 @@ const MonitorManageTable = props => {
       title: 'ICCID号',
       dataIndex: 'iccid',
     },
+
+    // {
+    //   title: '电源编号',
+    //   dataIndex: '',
+    // },
+    // {
+    //   title: '设备厂商',
+    //   dataIndex: '',
+    // },
+
     {
       title: '上线时间',
       dataIndex: 'created_time',

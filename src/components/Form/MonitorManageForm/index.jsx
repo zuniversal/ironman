@@ -21,7 +21,7 @@ import {
   deviceFrequencyConfig,
   changeNumberProps,
 } from '@/configs';
-import { formatSelectList, filterObjSame } from '@/utils';
+import { formatSelectList, filterObjSame, tips } from '@/utils';
 
 // 下拉项关系  户号跟客户 电站跟户号 设备跟户号 请求数据
 
@@ -597,6 +597,24 @@ const MonitorManageForm = props => {
         label: '告警模板',
         name: 'template_id',
       },
+      extra: (
+        <a
+          onClick={() => {
+            // if (!props.propsForm.getFieldsValue().customer_id) {
+            //   tips('请选择后再查看详情！', 2);
+            //   return;
+            // }
+            // props.propsForm.getFieldsValue().customer_id &&
+            //   props.showItemAsync({
+            //     action: 'clientDetailAsync',
+            //     d_id: props.propsForm.getFieldsValue().customer_id,
+            //   });
+          }}
+          className="m-l-5"
+        >
+          查看详情
+        </a>
+      ),
     },
     {
       noRule: true,

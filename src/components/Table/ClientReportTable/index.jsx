@@ -178,6 +178,7 @@ const ClientReportTable = props => {
               d_id: record.d_id,
               billing_method: record.billing_method,
               year_month: record.year_month,
+              electricity_user_id: record.electricity_user_id,
             })
           }
         >

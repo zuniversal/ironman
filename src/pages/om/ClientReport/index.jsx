@@ -206,6 +206,7 @@ class ClientReport extends PureComponent {
       clientList: this.props.clientList,
       electricBillList: this.props.electricBillList,
       init: this.props.itemDetail,
+      electricity_user_id: this.props.electricity_user_id,
       onOk: this.onOk,
     };
     // if (action !== 'add') {

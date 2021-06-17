@@ -640,6 +640,7 @@ const MonitorApprovalForm = props => {
       }}
       init={props.init}
       formAction={props.action}
+      noRule
     ></UploadCom>,
   ];
 

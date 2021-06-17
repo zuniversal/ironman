@@ -109,7 +109,7 @@ class Weak extends PureComponent {
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
       handleWeakAsync: this.props.handleWeakAsync,
-      exportDataAsync: this.props.exportDataAsync,
+      exportDataAsync: this.props.exportData,
       showExportPdf: this.showExportPdf,
       handleAction: this.handleAction,
     };
