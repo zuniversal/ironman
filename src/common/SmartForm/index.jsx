@@ -628,10 +628,11 @@ const SmartForm = (props, state) => {
       formType !== 'rowText' &&
       (formType !== 'CustomCom' || item.withFlex)
     ) {
+      // console.log('  withFlexwithFlex ：', props, item);
       // if (flexRows && formType !== 'rowText') {
       const colForm = (
         <Col
-          span={24 / Number(flexRows)}
+          span={24 / Number(flexRows || item.span)}
           className={`flexRowsCls ${items.colCls ?? ''}  ${itemPropsCls}`}
           key={itemProps.key}
         >

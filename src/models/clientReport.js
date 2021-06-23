@@ -69,7 +69,6 @@ export default {
     electricBillList: [],
     pdfDataList: [],
     extraData: {},
-    electricity_user_id: '',
   },
 
   reducers: {
@@ -83,6 +82,7 @@ export default {
           customer: payload.record.name,
           electrical_id: `${payload.record.id}`,
           year_month: state.searchInfo.year_month,
+          electricity_user_id: payload.electricity_user_id,
         };
       }
       if (payload.action === 'getClientReportUpgradeAsync') {
@@ -492,8 +492,8 @@ export default {
           // electrical_id: payload.payload.d_id,
           electrical_id: payload.payload?.electrical_info?.power_number,
           billing_method: payload.payload.billing_method,
+          electricity_user_id: payload.payload.electricity_user_id,
         },
-        electricity_user_id: payload.payload.electricity_user_id,
       };
     },
     batchExportPDF(state, { payload, type }) {

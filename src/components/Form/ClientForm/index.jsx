@@ -877,6 +877,8 @@ const ClientForm = props => {
     },
     {
       noRule: true,
+      formType: 'Search',
+      selectData: electricTypeConfig,
       itemProps: {
         label: '用电类型',
         name: 'type',

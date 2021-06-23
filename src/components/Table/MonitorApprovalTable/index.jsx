@@ -113,7 +113,8 @@ const MonitorApprovalTable = props => {
       )}
       <a
         onClick={() => {
-          props.showItemAsync({
+          // props.showItemAsync({
+          props.edit({
             action: 'monitorApprovalDetailAsync',
             d_id: record.id,
           });

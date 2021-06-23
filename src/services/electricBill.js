@@ -19,3 +19,6 @@ export const removeItem = p =>
 
 export const getBillType = p =>
   noTipsGet(`console/electricity_bill/customer_billing_type`, p);
+
+// export const addElectricBillItem = p => post(`console/electricity_bill/create`, p);
+// export const editElectricBillItem = p => put(`console/electricity_bill/${p.d_id}/edit`, p);

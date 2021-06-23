@@ -84,6 +84,7 @@ export const guestModeRedirectMap = {
   customer: CS_HOME,
 };
 
+export const INIT_BILL_TYPE = '16';
 export const SIM_XLSX = '/sim.xlsx';
 
 const animations = [

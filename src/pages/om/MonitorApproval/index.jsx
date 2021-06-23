@@ -142,13 +142,22 @@ class MonitorApproval extends PureComponent {
         worker_id,
       });
     }
-    if (['getRealDataAsync'].includes(action)) {
+    if (['getRealDataAsync', 'monitorApprovalDetailAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (typeof res.other_img !== 'string') {
+        if (res.other_img && res.other_img.fileList.length > 0) {
+          const fileList = res.other_img.fileList;
+          res.other_img = fileList[fileList.length - 1].response.url;
+        } else {
+          res.other_img = '';
+        }
+      }
+      // return
       if (action === 'exportDutyData') {
         this.props.exportData({
           reqMethod: 'exportDutyDataAsync',
@@ -208,6 +217,9 @@ class MonitorApproval extends PureComponent {
     }
     if (action === 'getRealDataAsync') {
       return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
+    }
+    if (action === 'monitorApprovalDetailAsync') {
+      formComProps.action = 'detail';
     }
     return <MonitorApprovalForm {...formComProps}></MonitorApprovalForm>;
   };

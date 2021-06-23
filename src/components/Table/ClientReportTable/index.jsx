@@ -165,7 +165,11 @@ const ClientReportTable = props => {
       {record.finish == 0 ? (
         <a
           onClick={() =>
-            props.showFormModal({ action: 'addElectricBillItemAsync', record })
+            props.showFormModal({
+              action: 'addElectricBillItemAsync',
+              record,
+              electricity_user_id: record.electricity_user_id,
+            })
           }
         >
           录入

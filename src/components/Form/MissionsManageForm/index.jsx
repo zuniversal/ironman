@@ -1,4 +1,4 @@
-import React, { Component, useRef, useState } from 'react';
+import React, { Component, useRef, useState, useEffect } from 'react';
 import './style.less';
 import { Steps, Button } from 'antd';
 import SmartForm from '@/common/SmartForm';
@@ -18,9 +18,11 @@ import {
 } from '@/components/Form/MissionsManageActionForm';
 import SmartShowPDF from '@/common/SmartShowPDF';
 import SmartModal from '@/common/SmartModal';
-import { tips } from '@/utils';
 import { getPdf } from '@/services/contract';
+import useHttp from '@/hooks/useHttp';
+import { getRelatived } from '@/services/client';
 import moment from 'moment';
+import { formatSelectList, tips } from '@/utils';
 
 const { Step } = Steps;
 
@@ -55,8 +57,47 @@ const MissionsManageForm = props => {
   const [current, setCurrent] = useState(isDetail ? 1 : 0);
   const [simpleMission, setSimpleMission] = useState(isDetail ? true : false);
   const [formKey, setFormKey] = useState(0);
+  // const [powerStationList, setPowerStationList] = useState([]);
 
   const completeIndex = useRef(0);
+
+  const { data: clientList, req: getClientAsync } = useHttp(getRelatived);
+  // const { customer, } = props.propsForm.getFieldsValue();
+  const formDatas = props.propsForm.getFieldsValue();
+  const { customer } = formDatas;
+  let powerStationList = [];
+  if (props.clientItem.id) {
+    const filterId =
+      props.action === 'edit' && props.init.customer?.id
+        ? props.init.customer?.id
+        : props.clientItem.id;
+    console.log(
+      ' clientList 副作用 表格  ： ',
+      props.action,
+      filterId,
+      props.clientItem.id,
+    ); //
+    const powerList = [];
+    const matchItem = clientList
+      .find(v => v.value == filterId)
+      ?.electricity_users.forEach((v, i) => powerList.push(...v.stations));
+    console.log(
+      ' clientList  副作用副作用： ',
+      matchItem,
+      clientList,
+      powerList,
+    ); //
+    powerStationList = formatSelectList(powerList);
+  }
+  console.log(
+    '  clientList 副作用 数据值 ： ',
+    clientList,
+    powerStationList,
+    customer,
+    formDatas,
+    simpleMission,
+    props.clientItem.id,
+  );
 
   const formInit = simpleMission
     ? {
@@ -285,8 +326,9 @@ const MissionsManageForm = props => {
     {
       noRule: true,
       formType: 'Search',
-      selectSearch: props.getPowerAsync,
-      selectData: props.powerList,
+      // selectSearch: props.getPowerAsync,
+      // selectData: props.powerList,
+      selectData: powerStationList,
       itemProps: {
         label: '实施电站',
         name: 'station_id',

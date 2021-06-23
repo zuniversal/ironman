@@ -100,40 +100,6 @@ const placeholderItem = {
 
 export const placeholderItems = [placeholderItem, placeholderItem];
 
-const calcAllMoenyVal = props => {
-  const basic_volume = props.basic_volume ?? 0;
-  const basic_price = props.basic_price ?? 0;
-  const tip_volume = props.tip_volume ?? 0;
-  const tip_price = props.tip_price ?? 0;
-  const peak_volume = props.peak_volume ?? 0;
-  const peak_price = props.peak_price ?? 0;
-  const usual_volume = props.usual_volume ?? 0;
-  const usual_price = props.usual_price ?? 0;
-  const valley_volume = props.valley_volume ?? 0;
-  const valley_price = props.valley_price ?? 0;
-  const tip_volume2 = props.tip_volume2 ?? 0;
-  const tip_price2 = props.tip_price2 ?? 0;
-  const peak_volume2 = props.peak_volume2 ?? 0;
-  const peak_price2 = props.peak_price2 ?? 0;
-  const usual_volume2 = props.usual_volume2 ?? 0;
-  const usual_price2 = props.usual_price2 ?? 0;
-  const valley_volume2 = props.valley_volume2 ?? 0;
-  const valley_price2 = props.valley_price2 ?? 0;
-  const other_volume = props.other_volume ?? 0;
-
-  return {
-    basicMoney: Number((basic_volume * basic_price).toFixed(2)),
-    tip_price_money: Number((tip_volume * tip_price).toFixed(2)),
-    peak_price_money: Number((peak_volume * peak_price).toFixed(2)),
-    usual_price_money: Number((usual_volume * usual_price).toFixed(2)),
-    valley_price_money: Number((valley_volume * valley_price).toFixed(2)),
-    tip_price2_money: Number((tip_volume2 * tip_price2).toFixed(2)),
-    peak_price2_money: Number((peak_volume2 * peak_price2).toFixed(2)),
-    usual_price2_money: Number((usual_volume2 * usual_price2).toFixed(2)),
-    valley_price2_money: Number((valley_volume2 * valley_price2).toFixed(2)),
-  };
-};
-
 const calcMoenyVal = props => {
   const tip_volume = props.tip_volume ? props.tip_volume : 0;
   const tip_price = props.tip_price ? props.tip_price : 0;
@@ -152,7 +118,7 @@ const calcMoenyVal = props => {
   const valley_volume2 = props.valley_volume2 ? props.valley_volume2 : 0;
   const valley_price2 = props.valley_price2 ? props.valley_price2 : 0;
   const other_volume = props.other_volume ? props.other_volume : 0;
-  // const other_price = props.other_price ? props.other_price : 0;
+  const other_price = props.other_price ? props.other_price : 0;
 
   const calcRes =
     tip_volume * tip_price +
@@ -162,23 +128,10 @@ const calcMoenyVal = props => {
     tip_volume2 * tip_price2 +
     peak_volume2 * peak_price2 +
     usual_volume2 * usual_price2 +
-    valley_volume2 * valley_price2;
-  // + other_volume * other_price;
+    valley_volume2 * valley_price2 +
+    other_volume * other_price;
   console.log(' calcMoenyVal   props,   ： ', props, calcRes);
   return calcRes;
-};
-
-const mdKeyConfig = ['peak_md', 'usual_md1', 'usual_md2', 'valley_md'];
-
-const calcMaxMd = params => {
-  const { changeKey, formValues } = params;
-  const isChangeMdItem = mdKeyConfig.some(v => v == changeKey);
-  console.log(' calcMaxMd   props,   ： ', params, isChangeMdItem);
-  const maxMDValArr = [];
-  mdKeyConfig.forEach(v => maxMDValArr.push(formValues[v]));
-  const maxMDVal = Math.max(...maxMDValArr);
-  console.log(' calcMaxMd   maxMDValArr,   ： ', maxMDValArr, maxMDVal);
-  return isChangeMdItem ? maxMDVal : formValues.max_md;
 };
 
 const calcTotalPower = props => {
@@ -200,8 +153,8 @@ const calcTotalPower = props => {
     tip_volume2 +
     peak_volume2 +
     usual_volume2 +
-    valley_volume2;
-  // + other_volume;
+    valley_volume2 +
+    other_volume;
   console.log(' calcTotalPower   props,   ： ', props, calcRes);
   return calcRes;
 };
@@ -250,16 +203,7 @@ const ClientReportForm = props => {
     ...props.init,
     billing_method: '3',
     billing_type: initBillType,
-    amount_adjust: props.init.amount_adjust ?? 0,
-
-    refund_and_supplement_of_difference:
-      props.init.refund_and_supplement_of_difference ?? 0,
-    epidemic_discount: props.init.epidemic_discount ?? 0,
-    other_amount: props.init.other_amount ?? 0,
-    peak_md: props.init.peak_md ?? 0,
-    usual_md1: props.init.usual_md1 ?? 0,
-    usual_md2: props.init.usual_md2 ?? 0,
-    valley_md: props.init.valley_md ?? 0,
+    amount_adjust: props.init.amount_adjust ? props.init.amount_adjust : 0,
   });
 
   const onFieldChange = params => {
@@ -395,13 +339,9 @@ const ClientReportForm = props => {
       billing_method,
       max_md,
       report_md,
-      basic_volume,
       basic_price,
       idle_volume = 0,
       capacity,
-      refund_and_supplement_of_difference,
-      epidemic_discount,
-      other_amount,
     } = formValues;
 
     let basePriceRes = 0;
@@ -440,39 +380,18 @@ const ClientReportForm = props => {
     // 拿到对应的  力率 栏 和 值
     // const factorRow = powerRateMap['0.90']
     const factorRow = powerRateMap[calcRealFactorRes];
-
-    const calcAllMoenyValRes = calcAllMoenyVal(formValues);
-    console.log('  calcAllMoenyValRes ：', calcAllMoenyValRes); //
-    const initFields = {
-      calcMoeny: calcRes,
-      ...calcAllMoenyValRes,
-    };
     const setFields = {
-      ...initFields,
       calcMoeny: changeKey === 'calcMoeny' ? calcMoeny : calcRes,
       // power_factor_real:
       //   changeKey === 'power_factor_real'
       //     ? power_factor_real
       //     : calcRealFactorRes,
       power_factor_real: calcRealFactorRes,
-      max_md: calcMaxMd({
-        formValues,
-        changeKey,
-      }),
     };
-
-    // 如果是初始化 计算 小计金额
-    if (changeKey === 'init') {
-      props.propsForm.setFieldsValue(initFields);
-      console.log(' 初始化 计算  ： ', initFields);
-      return;
-    }
 
     console.log(
       ' calcRes, , , ,  ： ',
-      billing_method,
       formValues,
-      calcMoeny,
       calcRes,
       calcTotalPowerRes,
       capcitySum,
@@ -497,13 +416,7 @@ const ClientReportForm = props => {
         ? amount_adjust
         : (((Number(calcRes) - levy_fee) / 100) * factorRes).toFixed(2);
     // 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
-    const amountRes = (
-      Number(calcRes) +
-      Number(amountAdjust) +
-      Number(refund_and_supplement_of_difference) +
-      Number(epidemic_discount) +
-      Number(other_amount)
-    ).toFixed(2);
+    const amountRes = (Number(calcRes) + Number(amountAdjust)).toFixed(2);
     setFields.amount_adjust =
       changeKey === 'amount_adjust'
         ? amount_adjust
@@ -522,9 +435,6 @@ const ClientReportForm = props => {
       amountAdjust,
       amountRes,
       factorRes,
-      refund_and_supplement_of_difference,
-      epidemic_discount,
-      other_amount,
     );
     // }
     // }
@@ -557,8 +467,8 @@ const ClientReportForm = props => {
     console.log('  getBillTypeReq  ：', props); //
     const res = (
       await getBillType({
-        ele_user: props.init.electricity_user_id,
-        // ele_user: props.electricity_user_id,
+        // ele_user: props.init.electricity_user_id,
+        ele_user: props.electricity_user_id,
       })
     ).bean;
 
@@ -588,7 +498,6 @@ const ClientReportForm = props => {
     }
 
     // autoCalc();
-    autoCalc('init');
   };
 
   useEffect(() => {
@@ -620,13 +529,6 @@ const ClientReportForm = props => {
     // }
   };
 
-  console.log(
-    ' ClientReportFormClientReportForm ： ',
-    props,
-    dataInit,
-    props.propsForm.getFieldsValue(),
-  );
-
   const config = [
     {
       noRule: true,
@@ -639,7 +541,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -653,7 +555,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -674,7 +576,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -690,7 +592,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -704,7 +606,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -718,7 +620,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -747,7 +649,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
+        className: 'w-180 resetCls',
       },
     },
     {
@@ -759,6 +661,48 @@ const ClientReportForm = props => {
       itemProps: {
         label: '力率（%）',
         name: 'power_factor_adjust',
+      },
+      comProps: {
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '契约限额',
+        name: 'xxx',
+      },
+      comProps: {
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '申报MD',
+        name: 'report_md',
+      },
+      comProps: {
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '实际MD',
+        name: 'max_md',
       },
       comProps: {
         className: 'w-180 ',
@@ -784,48 +728,6 @@ const ClientReportForm = props => {
       withFlex: true,
       flexRow: 2,
       colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '契约限额',
-        name: 'report_md',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    // {
-    //   noRule: true,
-    //   withFlex: true,
-    //   flexRow: 2,
-    //   colCls: 'dif w50',
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '申报MD',
-    //     name: 'report_md',
-    //   },
-    //   comProps: {
-    //     className: 'w-180 ',
-    //   },
-    // },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '实际MD',
-        name: 'max_md',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       formType: 'MonthPicker',
       itemProps: {
         label: '年月',
@@ -836,50 +738,26 @@ const ClientReportForm = props => {
         className: 'w-180 ',
       },
     },
+
     // {
+    //   // colCls: 'hidden',
+    //   noRule: true,
     //   noRule: true,
     //   withFlex: true,
     //   flexRow: 2,
     //   colCls: 'dif w50',
-    //   formType: 'plainText',
+    //   formType: 'Select',
+    //   selectData: billTypeConfig,
     //   itemProps: {
-    //     label: '',
+    //     label: '基本电价计费方式',
+    //     name: 'billing_method',
     //   },
     //   comProps: {
-    //     className: 'w-180 ',
+    //     // disabled: true,
+    //     onChange: onBillTypeChange,
+    //     className: 'w-180 resetCls',
     //   },
     // },
-
-    // {
-    //   colCls: 'hidden',
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '基本电价单价',
-    //     name: 'basic_price',
-    //   },
-    //   comProps: {},
-    // },
-
-    {
-      // colCls: 'hidden',
-      noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'Select',
-      selectData: billTypeConfig,
-      itemProps: {
-        label: '基本电价计费方式',
-        name: 'billing_method',
-      },
-      comProps: {
-        // disabled: true,
-        onChange: onBillTypeChange,
-        className: 'w-180 ',
-      },
-    },
 
     {
       formType: 'plainText',
@@ -926,35 +804,16 @@ const ClientReportForm = props => {
       formType: 'plainText',
       itemProps: {
         label: '基本电价单价',
-        label: '基本电费计费',
+        name: '',
       },
     },
-    // ...placeholderItems,
+    ...placeholderItems,
     {
       noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '',
-        name: 'basic_volume',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_price',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basicMoney',
-      },
-      comProps: {
-        disabled: true,
+        name: 'xxx',
       },
     },
 
@@ -987,7 +846,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'peak_price_money',
+        name: 'peak_price_momeny',
       },
       comProps: {
         disabled: true,
@@ -1022,7 +881,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'usual_price_money',
+        name: 'usual_price_momeny',
       },
       comProps: {
         disabled: true,
@@ -1057,7 +916,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'valley_price_money',
+        name: 'valley_price_momeny',
       },
       comProps: {
         disabled: true,
@@ -1092,7 +951,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'tip_price_money',
+        name: 'tip_price_momeny',
       },
       comProps: {
         disabled: true,
@@ -1127,7 +986,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'peak_price2_money',
+        name: 'peak_price2_momeny',
       },
       comProps: {
         disabled: true,
@@ -1162,7 +1021,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'usual_price2_money',
+        name: 'usual_price2_momeny',
       },
       comProps: {
         disabled: true,
@@ -1197,7 +1056,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'valley_price2_money',
+        name: 'valley_price2_momeny',
       },
       comProps: {
         disabled: true,
@@ -1232,7 +1091,7 @@ const ClientReportForm = props => {
       noRule: true,
       itemProps: {
         label: '',
-        name: 'tip_price2_money',
+        name: 'tip_price2_momeny',
       },
       comProps: {
         disabled: true,
@@ -1415,67 +1274,6 @@ const ClientReportForm = props => {
     {
       formType: 'plainText',
       itemProps: {
-        label: '峰md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'peak_md',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平1md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md1',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平2md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md2',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '谷md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'valley_md',
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
         label: '小计金额',
       },
     },
@@ -1531,7 +1329,7 @@ const ClientReportForm = props => {
       formType: 'InputNumber',
       itemProps: {
         label: '',
-        name: 'epidemic_discount',
+        name: '',
       },
     },
     {
@@ -1546,13 +1344,13 @@ const ClientReportForm = props => {
       formType: 'InputNumber',
       itemProps: {
         label: '',
-        name: 'refund_and_supplement_of_difference',
+        name: '',
       },
     },
     {
       formType: 'plainText',
       itemProps: {
-        label: '其他电费',
+        label: '其他电价',
       },
     },
     ...placeholderItems,
@@ -1561,28 +1359,12 @@ const ClientReportForm = props => {
       formType: 'InputNumber',
       itemProps: {
         label: '',
-        name: 'other_amount',
+        name: 'other_price',
       },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'other_price'),
+      // },
     },
-
-    // {
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '其他电价',
-    //   },
-    // },
-    // ...placeholderItems,
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '',
-    //     name: 'other_price',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'other_price'),
-    //   // },
-    // },
     {
       formType: 'plainText',
       itemProps: {

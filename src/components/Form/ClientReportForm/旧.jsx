@@ -6,7 +6,6 @@ import useHttp from '@/hooks/useHttp';
 import { getBillType } from '@/services/electricBill';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { Form } from 'antd';
-import { INIT_BILL_TYPE } from '@/constants';
 
 // ** 如果有改变计算公式涉及到的输入框的值 就以当前输入的值计算
 
@@ -37,21 +36,10 @@ import { INIT_BILL_TYPE } from '@/constants';
 
 const billFormLayouts = {
   labelCol: {
-    sm: { flexRow: 4 }, //
+    sm: { span: 4 }, //
   },
   wrapperCol: {
-    sm: { flexRow: 20 }, //
-  },
-};
-
-const formLayouts = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 12 }, //
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 12 }, //
+    sm: { span: 20 }, //
   },
 };
 
@@ -90,50 +78,6 @@ export const priceConfig2 = [
   },
 ];
 
-const placeholderItem = {
-  noRule: true,
-  formType: 'plainText',
-  itemProps: {
-    label: '',
-  },
-};
-
-export const placeholderItems = [placeholderItem, placeholderItem];
-
-const calcAllMoenyVal = props => {
-  const basic_volume = props.basic_volume ?? 0;
-  const basic_price = props.basic_price ?? 0;
-  const tip_volume = props.tip_volume ?? 0;
-  const tip_price = props.tip_price ?? 0;
-  const peak_volume = props.peak_volume ?? 0;
-  const peak_price = props.peak_price ?? 0;
-  const usual_volume = props.usual_volume ?? 0;
-  const usual_price = props.usual_price ?? 0;
-  const valley_volume = props.valley_volume ?? 0;
-  const valley_price = props.valley_price ?? 0;
-  const tip_volume2 = props.tip_volume2 ?? 0;
-  const tip_price2 = props.tip_price2 ?? 0;
-  const peak_volume2 = props.peak_volume2 ?? 0;
-  const peak_price2 = props.peak_price2 ?? 0;
-  const usual_volume2 = props.usual_volume2 ?? 0;
-  const usual_price2 = props.usual_price2 ?? 0;
-  const valley_volume2 = props.valley_volume2 ?? 0;
-  const valley_price2 = props.valley_price2 ?? 0;
-  const other_volume = props.other_volume ?? 0;
-
-  return {
-    basicMoney: Number((basic_volume * basic_price).toFixed(2)),
-    tip_price_money: Number((tip_volume * tip_price).toFixed(2)),
-    peak_price_money: Number((peak_volume * peak_price).toFixed(2)),
-    usual_price_money: Number((usual_volume * usual_price).toFixed(2)),
-    valley_price_money: Number((valley_volume * valley_price).toFixed(2)),
-    tip_price2_money: Number((tip_volume2 * tip_price2).toFixed(2)),
-    peak_price2_money: Number((peak_volume2 * peak_price2).toFixed(2)),
-    usual_price2_money: Number((usual_volume2 * usual_price2).toFixed(2)),
-    valley_price2_money: Number((valley_volume2 * valley_price2).toFixed(2)),
-  };
-};
-
 const calcMoenyVal = props => {
   const tip_volume = props.tip_volume ? props.tip_volume : 0;
   const tip_price = props.tip_price ? props.tip_price : 0;
@@ -152,7 +96,7 @@ const calcMoenyVal = props => {
   const valley_volume2 = props.valley_volume2 ? props.valley_volume2 : 0;
   const valley_price2 = props.valley_price2 ? props.valley_price2 : 0;
   const other_volume = props.other_volume ? props.other_volume : 0;
-  // const other_price = props.other_price ? props.other_price : 0;
+  const other_price = props.other_price ? props.other_price : 0;
 
   const calcRes =
     tip_volume * tip_price +
@@ -162,23 +106,10 @@ const calcMoenyVal = props => {
     tip_volume2 * tip_price2 +
     peak_volume2 * peak_price2 +
     usual_volume2 * usual_price2 +
-    valley_volume2 * valley_price2;
-  // + other_volume * other_price;
+    valley_volume2 * valley_price2 +
+    other_volume * other_price;
   console.log(' calcMoenyVal   props,   ： ', props, calcRes);
   return calcRes;
-};
-
-const mdKeyConfig = ['peak_md', 'usual_md1', 'usual_md2', 'valley_md'];
-
-const calcMaxMd = params => {
-  const { changeKey, formValues } = params;
-  const isChangeMdItem = mdKeyConfig.some(v => v == changeKey);
-  console.log(' calcMaxMd   props,   ： ', params, isChangeMdItem);
-  const maxMDValArr = [];
-  mdKeyConfig.forEach(v => maxMDValArr.push(formValues[v]));
-  const maxMDVal = Math.max(...maxMDValArr);
-  console.log(' calcMaxMd   maxMDValArr,   ： ', maxMDValArr, maxMDVal);
-  return isChangeMdItem ? maxMDVal : formValues.max_md;
 };
 
 const calcTotalPower = props => {
@@ -200,8 +131,8 @@ const calcTotalPower = props => {
     tip_volume2 +
     peak_volume2 +
     usual_volume2 +
-    valley_volume2;
-  // + other_volume;
+    valley_volume2 +
+    other_volume;
   console.log(' calcTotalPower   props,   ： ', props, calcRes);
   return calcRes;
 };
@@ -218,7 +149,7 @@ const ClientReportForm = props => {
   console.log(' ClientReportForm ： ', props);
 
   const initBillType =
-    props.action === 'addElectricBillItemAsync' ? INIT_BILL_TYPE : null;
+    props.action === 'addElectricBillItemAsync' ? '16' : null;
 
   const [dataInit, setDataInit] = useState({
     // tip_volume: 0,
@@ -250,16 +181,7 @@ const ClientReportForm = props => {
     ...props.init,
     billing_method: '3',
     billing_type: initBillType,
-    amount_adjust: props.init.amount_adjust ?? 0,
-
-    refund_and_supplement_of_difference:
-      props.init.refund_and_supplement_of_difference ?? 0,
-    epidemic_discount: props.init.epidemic_discount ?? 0,
-    other_amount: props.init.other_amount ?? 0,
-    peak_md: props.init.peak_md ?? 0,
-    usual_md1: props.init.usual_md1 ?? 0,
-    usual_md2: props.init.usual_md2 ?? 0,
-    valley_md: props.init.valley_md ?? 0,
+    amount_adjust: props.init.amount_adjust ? props.init.amount_adjust : 0,
   });
 
   const onFieldChange = params => {
@@ -395,13 +317,9 @@ const ClientReportForm = props => {
       billing_method,
       max_md,
       report_md,
-      basic_volume,
       basic_price,
       idle_volume = 0,
       capacity,
-      refund_and_supplement_of_difference,
-      epidemic_discount,
-      other_amount,
     } = formValues;
 
     let basePriceRes = 0;
@@ -440,39 +358,18 @@ const ClientReportForm = props => {
     // 拿到对应的  力率 栏 和 值
     // const factorRow = powerRateMap['0.90']
     const factorRow = powerRateMap[calcRealFactorRes];
-
-    const calcAllMoenyValRes = calcAllMoenyVal(formValues);
-    console.log('  calcAllMoenyValRes ：', calcAllMoenyValRes); //
-    const initFields = {
-      calcMoeny: calcRes,
-      ...calcAllMoenyValRes,
-    };
     const setFields = {
-      ...initFields,
       calcMoeny: changeKey === 'calcMoeny' ? calcMoeny : calcRes,
       // power_factor_real:
       //   changeKey === 'power_factor_real'
       //     ? power_factor_real
       //     : calcRealFactorRes,
       power_factor_real: calcRealFactorRes,
-      max_md: calcMaxMd({
-        formValues,
-        changeKey,
-      }),
     };
-
-    // 如果是初始化 计算 小计金额
-    if (changeKey === 'init') {
-      props.propsForm.setFieldsValue(initFields);
-      console.log(' 初始化 计算  ： ', initFields);
-      return;
-    }
 
     console.log(
       ' calcRes, , , ,  ： ',
-      billing_method,
       formValues,
-      calcMoeny,
       calcRes,
       calcTotalPowerRes,
       capcitySum,
@@ -497,13 +394,7 @@ const ClientReportForm = props => {
         ? amount_adjust
         : (((Number(calcRes) - levy_fee) / 100) * factorRes).toFixed(2);
     // 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
-    const amountRes = (
-      Number(calcRes) +
-      Number(amountAdjust) +
-      Number(refund_and_supplement_of_difference) +
-      Number(epidemic_discount) +
-      Number(other_amount)
-    ).toFixed(2);
+    const amountRes = (Number(calcRes) + Number(amountAdjust)).toFixed(2);
     setFields.amount_adjust =
       changeKey === 'amount_adjust'
         ? amount_adjust
@@ -522,9 +413,6 @@ const ClientReportForm = props => {
       amountAdjust,
       amountRes,
       factorRes,
-      refund_and_supplement_of_difference,
-      epidemic_discount,
-      other_amount,
     );
     // }
     // }
@@ -557,8 +445,8 @@ const ClientReportForm = props => {
     console.log('  getBillTypeReq  ：', props); //
     const res = (
       await getBillType({
-        ele_user: props.init.electricity_user_id,
-        // ele_user: props.electricity_user_id,
+        // ele_user: props.init.electricity_user_id,
+        ele_user: props.electricity_user_id,
       })
     ).bean;
 
@@ -588,7 +476,6 @@ const ClientReportForm = props => {
     }
 
     // autoCalc();
-    autoCalc('init');
   };
 
   useEffect(() => {
@@ -600,7 +487,7 @@ const ClientReportForm = props => {
     );
     // autoCalc();
     if (props.action === 'addElectricBillItemAsync') {
-      onFieldChange({ value: { type: INIT_BILL_TYPE } });
+      onFieldChange({ value: { type: '16' } });
     }
     getBillTypeReq();
   }, []);
@@ -620,40 +507,25 @@ const ClientReportForm = props => {
     // }
   };
 
-  console.log(
-    ' ClientReportFormClientReportForm ： ',
-    props,
-    dataInit,
-    props.propsForm.getFieldsValue(),
-  );
-
   const config = [
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '客户名称',
         name: 'customer',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '倍率',
         name: 'magnification',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
@@ -665,81 +537,307 @@ const ClientReportForm = props => {
           label: props.init.power_number,
         },
       ],
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '电源编号',
         name: 'electrical_id',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
       formType: 'Select',
       selectData: props.electricBillList,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '电价类型',
         name: 'billing_type',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '装接总容量',
         name: 'transformer_capacity',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       itemProps: {
         label: '实际总容量',
         name: 'capacity',
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '申报MD',
+        name: 'report_md',
+      },
+      comProps: {},
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '基本电价单价',
+        name: 'basic_price',
+      },
+      comProps: {},
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '尖电量1',
+        name: 'tip_volume',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'tip_volume'),
+      // },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '尖电价1',
+        name: 'tip_price',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '峰电量1',
+        name: 'peak_volume',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'peak_volume'),
+      // },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '峰电价1',
+        name: 'peak_price',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '平电量1',
+        name: 'usual_volume',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'usual_volume'),
+      // },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '平电价1',
+        name: 'usual_price',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '谷电量1',
+        name: 'valley_volume',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'valley_volume'),
+      // },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '谷电价1',
+        name: 'valley_price',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '尖电量2',
+        name: 'tip_volume2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'tip_volume2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '尖电价2',
+        name: 'tip_price2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'tip_price2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '峰电量2',
+        name: 'peak_volume2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'peak_volume2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '峰电价2',
+        name: 'peak_price2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'peak_price2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '平电量2',
+        name: 'usual_volume2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'usual_volume2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '平电价2',
+        name: 'usual_price2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'usual_price2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '谷电量2',
+        name: 'valley_volume2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'valley_volume2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '谷电价2',
+        name: 'valley_price2',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'valley_price2'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '其他电量',
+        name: 'other_volume',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'other_volume'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '其他电价',
+        name: 'other_price',
+      },
+      // comProps: {
+      //   onChange: e => onUnitChange(e, 'other_price'),
+      // },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '实际MD',
+        name: 'max_md',
+      },
+    },
+    {
+      noRule: props.action === 'editElectricBillItemAsync',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '小计金额',
+        name: 'calcMoeny',
+      },
+    },
+    {
+      formType: 'InputNumber',
+      itemProps: {
+        label: '代征费用',
+        name: 'levy_fee',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '力率调整',
+        name: 'amount_adjust',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '无功电量',
+        name: 'idle_volume',
+      },
+    },
+    {
+      noRule: true,
       formType: 'InputNumber',
       itemProps: {
         label: '功率因数实际值',
         name: 'power_factor_real',
       },
-      comProps: {
-        className: 'w-180 ',
-      },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
         label: '功率因数考核值',
@@ -747,854 +845,21 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
       },
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
         label: '力率（%）',
         name: 'power_factor_adjust',
       },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '无功电量',
-        name: 'idle_volume',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '契约限额',
-        name: 'report_md',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    // {
-    //   noRule: true,
-    //   withFlex: true,
-    //   flexRow: 2,
-    //   colCls: 'dif w50',
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '申报MD',
-    //     name: 'report_md',
-    //   },
-    //   comProps: {
-    //     className: 'w-180 ',
-    //   },
-    // },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '实际MD',
-        name: 'max_md',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'MonthPicker',
-      itemProps: {
-        label: '年月',
-        name: 'year_month',
-      },
-      comProps: {
-        disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    // {
-    //   noRule: true,
-    //   withFlex: true,
-    //   flexRow: 2,
-    //   colCls: 'dif w50',
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '',
-    //   },
-    //   comProps: {
-    //     className: 'w-180 ',
-    //   },
-    // },
-
-    // {
-    //   colCls: 'hidden',
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '基本电价单价',
-    //     name: 'basic_price',
-    //   },
-    //   comProps: {},
-    // },
-
-    {
-      // colCls: 'hidden',
-      noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'Select',
-      selectData: billTypeConfig,
-      itemProps: {
-        label: '基本电价计费方式',
-        name: 'billing_method',
-      },
-      comProps: {
-        // disabled: true,
-        onChange: onBillTypeChange,
-        className: 'w-180 ',
-      },
-    },
-
-    {
-      formType: 'plainText',
-      colCls: '',
-      itemProps: {
-        label: '电价分类',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      colCls: 'plainTextItem',
-      itemProps: {
-        label: '计费（千瓦时）',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      colCls: 'plainTextItem',
-      itemProps: {
-        label: '单价',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      colCls: 'plainTextItem',
-      itemProps: {
-        label: '金额',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '基本电价单价',
-        label: '基本电费计费',
-      },
-    },
-    // ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_volume',
-      },
     },
     {
       noRule: true,
       formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_price',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basicMoney',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '峰1',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'peak_volume',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'peak_price',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'peak_price_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平1',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_volume',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'usual_price',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'usual_price_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '谷1',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'valley_volume',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'valley_price',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'valley_price_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '尖1',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'tip_volume',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'tip_price',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'tip_price_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '峰2',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'peak_volume2',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'peak_price2',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'peak_price2_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平2',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_volume2',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'usual_price2',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'usual_price2_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '谷2',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'valley_volume2',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'valley_price2',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'valley_price2_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '尖2',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'tip_volume2',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'tip_price2',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      noRule: true,
-      itemProps: {
-        label: '',
-        name: 'tip_price2_money',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '尖电量1',
-    //     name: 'tip_volume',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'tip_volume'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '尖电价1',
-    //     name: 'tip_price',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '峰电量1',
-    //     name: 'peak_volume',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'peak_volume'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '峰电价1',
-    //     name: 'peak_price',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '平电量1',
-    //     name: 'usual_volume',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'usual_volume'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '平电价1',
-    //     name: 'usual_price',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '谷电量1',
-    //     name: 'valley_volume',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'valley_volume'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '谷电价1',
-    //     name: 'valley_price',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '尖电量2',
-    //     name: 'tip_volume2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'tip_volume2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '尖电价2',
-    //     name: 'tip_price2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'tip_price2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '峰电量2',
-    //     name: 'peak_volume2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'peak_volume2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '峰电价2',
-    //     name: 'peak_price2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'peak_price2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '平电量2',
-    //     name: 'usual_volume2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'usual_volume2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '平电价2',
-    //     name: 'usual_price2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'usual_price2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '谷电量2',
-    //     name: 'valley_volume2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'valley_volume2'),
-    //   // },
-    // },
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '谷电价2',
-    //     name: 'valley_price2',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'valley_price2'),
-    //   // },
-    // },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '峰md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'peak_md',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平1md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md1',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平2md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md2',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '谷md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'valley_md',
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '小计金额',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: props.action === 'editElectricBillItemAsync',
-      formType: 'InputNumber',
-      itemProps: {
-        // label: '小计金额',
-        label: '',
-        name: 'calcMoeny',
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '代征费用',
-      },
-    },
-    ...placeholderItems,
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'levy_fee',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '力率调整',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'amount_adjust',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '防疫优惠',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'epidemic_discount',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '市场化差额退补',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'refund_and_supplement_of_difference',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '其他电费',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'other_amount',
-      },
-    },
-
-    // {
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '其他电价',
-    //   },
-    // },
-    // ...placeholderItems,
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '',
-    //     name: 'other_price',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'other_price'),
-    //   // },
-    // },
-    {
-      formType: 'plainText',
       itemProps: {
         label: '应付账款',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
         name: 'amount',
         tooltip: 'Tips: 键盘回车相当于点击确认按钮！',
       },
@@ -1605,39 +870,51 @@ const ClientReportForm = props => {
           }),
       },
     },
-
-    // {
-    //   noRule: true,
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '其他电量',
-    //     name: 'other_volume',
-    //   },
-    //   // comProps: {
-    //   //   onChange: e => onUnitChange(e, 'other_volume'),
-    //   // },
-    // },
+    {
+      noRule: true,
+      formType: 'MonthPicker',
+      itemProps: {
+        label: '年月',
+        name: 'year_month',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+    {
+      // colCls: 'hidden',
+      noRule: true,
+      formType: 'Select',
+      selectData: billTypeConfig,
+      itemProps: {
+        label: '基本电价计费方式',
+        name: 'billing_method',
+      },
+      comProps: {
+        // disabled: true,
+        onChange: onBillTypeChange,
+      },
+    },
   ].map(v => ({
     ...v,
-    // comProps: { className: 'w-240', ...v.comProps },
-    comProps: { className: `w-90 ${v.comProps?.className}`, ...v.comProps },
+    comProps: { className: 'w-240', ...v.comProps },
   }));
 
   return (
-    <div className={'clientReportForm'}>
-      {/* <SmartForm
+    <div className={''}>
+      <SmartForm
         config={selectConfig}
         onFieldChange={onFieldChange}
         className={`billForm`}
         init={{
-          // type: INIT_BILL_TYPE,
+          // type: '16',
           type: initBillType,
         }}
         propsForm={form}
-      ></SmartForm> */}
+      ></SmartForm>
 
       <SmartForm
-        flexRow={4}
+        flexRow={2}
         {...props}
         config={config}
         init={dataInit}
@@ -1648,7 +925,6 @@ const ClientReportForm = props => {
           // idle_volume: 10,
           // levy_fee: 100,
         }}
-        formLayouts={formLayouts}
         onFieldChange={onFormFieldChange}
       ></SmartForm>
     </div>

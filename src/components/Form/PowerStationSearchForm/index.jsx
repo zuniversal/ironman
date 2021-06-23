@@ -5,10 +5,23 @@ import SmartForm, { SearchForm } from '@/common/SmartForm';
 import ProvinceForm, {
   provinceFormConfig,
 } from '@/components/Form/ProvinceForm';
+import useHttp from '@/hooks/useHttp';
+import { formatSelectList } from '@/utils';
+import { getList as getHouseNoList } from '@/services/houseNo';
 
 const PowerStationSearchForm = props => {
   console.log(' PowerStationSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
+
+  const { data: houseNoList, req: getHouseNoListAsync } = useHttp(
+    // () => {
+    //   console.log(' houseNoList1111 ： ', );
+    //   getHouseNoList()
+    // },
+    getHouseNoList,
+    {
+      format: res => formatSelectList(res, 'number', 'number'),
+    },
+  );
 
   const config = [
     {
@@ -28,6 +41,14 @@ const PowerStationSearchForm = props => {
         name: 'customer_name',
       },
     },
+    {
+      formType: 'Search',
+      selectData: houseNoList,
+      itemProps: {
+        label: '户号',
+        name: 'ele_user',
+      },
+    },
     ...provinceFormConfig(props),
     // {
     //   formType: 'Divider',
@@ -39,14 +60,7 @@ const PowerStationSearchForm = props => {
 
   return (
     <div className={'fsb  '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
+      <SearchForm config={config} noRuleAll {...props}></SearchForm>
     </div>
   );
 };

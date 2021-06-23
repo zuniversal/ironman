@@ -177,6 +177,7 @@ class ClientReport extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      // return
       if (action === 'addElectricBillItemAsync') {
         this.props.addElectricBillItemAsync({
           ...res,
@@ -206,7 +207,6 @@ class ClientReport extends PureComponent {
       clientList: this.props.clientList,
       electricBillList: this.props.electricBillList,
       init: this.props.itemDetail,
-      electricity_user_id: this.props.electricity_user_id,
       onOk: this.onOk,
     };
     // if (action !== 'add') {
