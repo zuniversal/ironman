@@ -295,7 +295,8 @@ class SmartTable extends PureComponent {
     if (day) {
       mapText = dayjs(mapText).format(day || 'YYYY-MM-DD');
     }
-    let txt = !noCutText ? foramtText(mapText) : mapText;
+    // let txt = !noCutText ? foramtText(mapText) : mapText;
+    let txt = mapText;
 
     // const txt = textLength > lengthLimit ? `${text}`.slice(0, lengthLimit) + '...' : text
 
@@ -715,9 +716,9 @@ class SmartTable extends PureComponent {
           columns={cols}
           // className={`smartTable ${className} ${animation || slideInUp} `}
           className={`smartTable ${className}  `}
-          scroll={{
-            y: 700,
-          }}
+          // scroll={{
+          //   y: 700,
+          // }}
         />
 
         {this.renderRemoveModal()}

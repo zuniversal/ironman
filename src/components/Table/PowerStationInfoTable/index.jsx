@@ -108,7 +108,7 @@ export const selectCom = props => {
 };
 
 export const getWidget = props => {
-  console.log(' getWidget   props,   ： ', props);
+  // console.log(' getWidget   props,   ： ', props);
   const {
     formType = 'Input',
     comProps,
@@ -175,7 +175,7 @@ export const getWidget = props => {
 
 export const TableInput = props => {
   const { text, record, index, keys, dataMap } = props;
-  console.log(' TableInput ： ', props, props.record.isEdit);
+  // console.log(' TableInput ： ', props, props.record.isEdit);
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,

@@ -69,6 +69,7 @@ const PowerStationForm = props => {
           getPowerInfo({
             station_id: props.init.id,
           }),
+    // getPowerInfo,
     {
       ...commonParams,
       format: res => formatSelectList(res, 'power_number'),
@@ -81,6 +82,9 @@ const PowerStationForm = props => {
     inspection_type,
     props,
     inspectMode,
+    powerInfoList,
+    props.init.id,
+    powerInfoList.filter(v => v.powerStation == props.init.id),
   );
   const onInspectModeChange = e => {
     console.log(

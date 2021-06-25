@@ -20,6 +20,7 @@ const PowerStationTable = props => {
     //   dataIndex: 'id',
     // },
     {
+      noCutText: true,
       title: '电站名称',
       dataIndex: 'name',
       detailFn: record =>

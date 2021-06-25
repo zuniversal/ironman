@@ -161,15 +161,11 @@ export const getWidget = props => {
 
 export const TableInput = props => {
   const { text, record, index, keys } = props;
-  // console.log(
-  //   ' %c TableInput 组件 ： ',
-  //   `color: #333; font-weight: bold`,
-  //   props,
-  // );
-  // console.log(' TableInput mapText, dataMap ：', props );
+  console.log(' TableInput mapText, dataMap ：', props);
   let txt = text;
-  if (props.config.dataMap) {
+  if (props.config.dataMap && !props.record.isEdit) {
     if (Array.isArray(text)) {
+      console.log(' 映射 ： ', text, props); //
       txt = text.map(v => props.config.dataMap[v]).join(' , ');
     } else {
       txt = props.config.dataMap[text];
