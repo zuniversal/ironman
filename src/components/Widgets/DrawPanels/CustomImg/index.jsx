@@ -8,7 +8,7 @@ const { Search } = Input;
 const defImg =
   'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg';
 
-const CustomImg = () => {
+const CustomImg = React.memo(() => {
   const [visible, setVisible] = useState(false);
   const [url, setUrl] = useState(
     // 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2957705046,1654500225&fm=26&gp=0.jpg'
@@ -37,15 +37,15 @@ const CustomImg = () => {
     };
   }
 
-  const onHandleSubmitForm = () => {
-    getBase64(url, data => {
-      console.log(' data ： ', data);
-      const _data = [...list];
-      _data.push(data);
-      setList(_data);
-      setVisible(false);
-    });
-  };
+  // const onHandleSubmitForm = () => {
+  //   getBase64(url, data => {
+  //     console.log(' data ： ', data);
+  //     const _data = [...list];
+  //     _data.push(data);
+  //     setList(_data);
+  //     setVisible(false);
+  //   });
+  // };
 
   const onDrag = (event, image) => {
     console.log(' onDrag ： ', event, image);
@@ -153,6 +153,6 @@ const CustomImg = () => {
       </Modal> */}
     </div>
   );
-};
+});
 
 export default CustomImg;

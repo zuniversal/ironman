@@ -21,7 +21,7 @@ import {
   deviceFrequencyConfig,
   changeNumberProps,
 } from '@/configs';
-import { formatSelectList, filterObjSame, tips } from '@/utils';
+import { formatSelectList, filterObjSame, tips, num2Str } from '@/utils';
 
 // 下拉项关系  户号跟客户 电站跟户号 设备跟户号 请求数据
 
@@ -600,15 +600,15 @@ const MonitorManageForm = props => {
       extra: (
         <a
           onClick={() => {
-            // if (!props.propsForm.getFieldsValue().customer_id) {
-            //   tips('请选择后再查看详情！', 2);
-            //   return;
-            // }
-            // props.propsForm.getFieldsValue().customer_id &&
-            //   props.showItemAsync({
-            //     action: 'clientDetailAsync',
-            //     d_id: props.propsForm.getFieldsValue().customer_id,
-            //   });
+            if (!props.propsForm.getFieldsValue().template_id) {
+              tips('请选择后再查看详情！', 2);
+              return;
+            }
+            props.propsForm.getFieldsValue().template_id &&
+              props.showItemAsync({
+                action: 'alarmTemplateDetailAsync',
+                d_id: props.propsForm.getFieldsValue().template_id,
+              });
           }}
           className="m-l-5"
         >
@@ -675,6 +675,7 @@ const MonitorManageForm = props => {
           ...props.init,
           frequency: `${props.init?.frequency ??
             deviceFrequencyConfig[0].value}`,
+          ...num2Str(props.init, ['template_id']),
         }}
         // onFieldChange={onFieldChange}
       ></SmartForm>

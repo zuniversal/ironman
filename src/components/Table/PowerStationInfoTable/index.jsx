@@ -151,6 +151,7 @@ export const getWidget = props => {
       <InputNumber
         allowClear
         maxLength={32}
+        defaultValue={text}
         onChange={value =>
           props.modifyPowerInfo({
             action: 'edit',
@@ -174,13 +175,13 @@ export const getWidget = props => {
 
 export const TableInput = props => {
   const { text, record, index, keys, dataMap } = props;
-  console.log(' TableInput ： ', props);
+  console.log(' TableInput ： ', props, props.record.isEdit);
   // console.log(
   //   ' %c TableInput 组件 ： ',
   //   `color: #333; font-weight: bold`,
   //   props,
   // );
-  if (dataMap && text) {
+  if (dataMap && text && !props.record.isEdit) {
     return dataMap[text];
   }
 
@@ -277,7 +278,7 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'magnification'}
-          // formType={'InputNumber'}
+          formType={'InputNumber'}
         ></TableInput>
       ),
     },
@@ -291,6 +292,7 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'transformer_capacity'}
+          formType={'InputNumber'}
         ></TableInput>
       ),
     },
@@ -304,7 +306,7 @@ export const PowerStationDetailTable = props => {
           index={index}
           {...props}
           keys={'real_capacity'}
-          // formType={'InputNumber'}
+          formType={'InputNumber'}
         ></TableInput>
       ),
     },
@@ -450,4 +452,79 @@ export const PowerStationDetailTable = props => {
 
 PowerStationTable.defaultProps = {
   dataSource: [],
+};
+
+export const MeterTable = props => {
+  console.log(
+    ' %c MeterTable 组件 ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  );
+
+  const columns = [
+    {
+      title: '编译器编号',
+      dataIndex: 'name',
+      // render: (text, record, index, config) => (
+      //   <TableInput
+      //     text={text}
+      //     record={record}
+      //     index={index}
+      //     {...props}
+      //     keys={'name'}
+      //   ></TableInput>
+      // ),
+    },
+    {
+      title: '变压器容量',
+      dataIndex: 'capacity',
+      // render: (text, record, index, config) => (
+      //   <TableInput
+      //     text={text}
+      //     record={record}
+      //     index={index}
+      //     {...props}
+      //     keys={'capacity'}
+      //   ></TableInput>
+      // ),
+    },
+    {
+      title: '实际使用容量',
+      dataIndex: 'real_capacity',
+      // render: (text, record, index, config) => (
+      //   <TableInput
+      //     text={text}
+      //     record={record}
+      //     index={index}
+      //     {...props}
+      //     keys={'real_capacity'}
+      //   ></TableInput>
+      // ),
+    },
+    {
+      title: '备注',
+      dataIndex: 'comments',
+      // render: (text, record, index, config) => (
+      //   <TableInput
+      //     text={text}
+      //     record={record}
+      //     index={index}
+      //     {...props}
+      //     keys={'comments'}
+      //   ></TableInput>
+      // ),
+    },
+  ];
+
+  return (
+    <SmartTable
+      columns={columns}
+      noActionCol
+      {...props}
+      rowKey={'key'}
+      className={'powerStationDetailTable modalTable'}
+      pagination={false}
+      rowSelection={null}
+    ></SmartTable>
+  );
 };

@@ -103,6 +103,7 @@ const Layouts = props => {
         <ProLayout
           {...(system == 'CS' ? csRoutes : getRoutes)}
           onCollapse={setCollapsed}
+          collapsed={collapsed}
           location={{
             pathname: path,
           }}

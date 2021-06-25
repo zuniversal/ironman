@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'dva';
 import './style.less';
 
-const OperationTips = props => {
+const OperationTips = React.memo(props => {
   return (
     <div className="tipsWrapper">
       {/* <div className={'tips'}>小提示</div> */}
@@ -32,8 +32,6 @@ const OperationTips = props => {
       </div>
     </div>
   );
-};
-
-OperationTips.defaultProps = {};
+});
 
 export default OperationTips;

@@ -20,7 +20,7 @@ import {
   toArrowConfig,
 } from '../configs';
 
-const LineAttrForm = props => {
+const LineAttrForm = React.memo(props => {
   console.log(' LineAttrForm   props, ,   ： ', props);
   const { data, onFormValueChange } = props;
 
@@ -384,6 +384,6 @@ const LineAttrForm = props => {
       </div>
     </div>
   );
-};
+});
 
 export default LineAttrForm;

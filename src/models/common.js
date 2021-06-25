@@ -54,6 +54,7 @@ import * as electricBillServices from '@/services/electricBill';
 
 import * as monitorDeviceServices from '@/services/monitorDevice'; // 同一份请求
 import * as monitorApprovalServices from '@/services/monitorApproval';
+import * as meterNumberServices from '@/services/meterNumber';
 
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import moment from 'moment';
@@ -136,6 +137,7 @@ const serviceConfigMap = {
   monitorDeviceServices,
   monitorApprovalServices,
   powerNumberServices: () => {},
+  meterNumberServices,
 };
 
 const removeParams = (params, keys = []) => {
@@ -201,6 +203,46 @@ export default {
         isShowCommonModal: false,
         itemDetail: {},
         commonModalContent: null,
+      };
+    },
+    alarmTemplateDetail(state, { payload, type }) {
+      console.log(' alarmTemplateDetail ： ', state, payload);
+      const [one, two, three] = payload.bean.role;
+      const role = {
+        one: {
+          ...one,
+          range: {
+            0: one.range['0'],
+            1: one.range['1'],
+          },
+        },
+        two: {
+          ...two,
+          range: {
+            0: two.range['0'],
+            1: two.range['1'],
+          },
+        },
+        three,
+      };
+      const itemDetail = {
+        ...payload.bean,
+        role,
+      };
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail,
+      };
+    },
+    meterNumberDetail(state, { payload, type }) {
+      console.log(' meterNumberDetail ： ', state, payload);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: payload.bean,
       };
     },
     monitorApprovalDetail(state, { payload, type }) {

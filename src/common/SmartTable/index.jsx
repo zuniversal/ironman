@@ -273,6 +273,10 @@ class SmartTable extends PureComponent {
       dayFn,
     } = config;
 
+    if (render) {
+      return render(text, record, index, config);
+    }
+
     const { showDetail, rowKey } = this.props;
 
     // const handledText = isMoment ? text.format('YYYY-MM-DD') : text;//
@@ -335,16 +339,16 @@ class SmartTable extends PureComponent {
       //   content = (
       //     <a onClick={detailFn}>{txt}</a>
       //   );
-    } else if (render) {
-      // console.log(
-      //   ' texttext || render ： ',
-      //   text,
-      //   record,
-      //   text !== undefined,
-      //   content,
-      // );
-      content = render(text, record, index, config);
-      // return content;
+      // } else if (render) {
+      //   // console.log(
+      //   //   ' texttext || render ： ',
+      //   //   text,
+      //   //   record,
+      //   //   text !== undefined,
+      //   //   content,
+      //   // );
+      //   content = render(text, record, index, config);
+      //   // return content;
     } else if (detailFn) {
       content = (
         <a

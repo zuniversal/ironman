@@ -47,6 +47,7 @@ const MonitorApprovalForm = props => {
       : [],
   );
   const [outlineList, setOutlineList] = useState([]);
+  const [meterNumberList, setMeterNumberList] = useState([]);
 
   const { imei } = props.init; //
 
@@ -147,6 +148,7 @@ const MonitorApprovalForm = props => {
     clientList,
     props,
     manufacturerModelList,
+    meterNumberList,
   );
 
   const onClientChange = (params, rest) => {
@@ -162,6 +164,7 @@ const MonitorApprovalForm = props => {
     console.log(' res  clientList.filter v ： ', res, formatRes);
     setHouseNoList(formatRes);
     setPowerNumberList([]);
+    setMeterNumberList([]);
     setOutlineList([]);
     props.propsForm.setFieldsValue({
       electricity_user_id: null,
@@ -172,7 +175,7 @@ const MonitorApprovalForm = props => {
 
   const onHouseNoChange = params => {
     console.log(
-      ' onHouseNoChange  ： ',
+      ' onHouseNoChange2onHouseNoChange2  ： ',
       params,
       houseNoList,
       props.propsForm.getFieldsValue(),
@@ -186,25 +189,31 @@ const MonitorApprovalForm = props => {
       'power_number',
       'electrical_info_id',
     );
+    const formatMeterRes = formatSelectList(
+      res,
+      'meter_number',
+      'electrical_info_id',
+    );
     const formatOutlineRes = formatSelectList(
       res,
       'outline_name',
       'outline_id',
     );
     console.log(
-      ' res  houseNoList.filter v ： ',
+      ' res  onHouseNoChange2 houseNoList.filter v ： ',
       res,
       formatRes,
+      formatMeterRes,
       formatOutlineRes,
     );
     setPowerNumberList(formatRes);
+    setMeterNumberList(formatMeterRes);
     setOutlineList(formatOutlineRes);
   };
   const onHouseNoChangeHandle = (params, houseNoList) => {
     console.log(
-      ' onHouseNoChange  ： ',
+      ' onHouseNoChangeHandle  ： ',
       params,
-      houseNoList,
       houseNoList,
       props.propsForm.getFieldsValue(),
     );
@@ -217,18 +226,26 @@ const MonitorApprovalForm = props => {
       'power_number',
       'electrical_info_id',
     );
+    const formatMeterRes = formatSelectList(
+      res,
+      'meter_number',
+      'electrical_info_id',
+    );
+    console.log(' onHouseNoChangeHandle formatMeterRes ： ', formatMeterRes); //
     const formatOutlineRes = formatSelectList(
       res,
       'outline_name',
       'outline_id',
     );
     console.log(
-      ' res  houseNoList.filter v ： ',
+      ' res  onHouseNoChangeHandle houseNoList.filter v ： ',
       res,
       formatRes,
+      formatMeterRes,
       formatOutlineRes,
     );
     setPowerNumberList(formatRes);
+    setMeterNumberList(formatMeterRes);
     setOutlineList(formatOutlineRes);
   };
 
@@ -285,6 +302,24 @@ const MonitorApprovalForm = props => {
         noActionCol: true,
       },
       noReq: true,
+    });
+  };
+  const showMeterNumber = () => {
+    const { electrical_info_id } = props.propsForm.getFieldsValue();
+    if (!electrical_info_id) {
+      tips('请选择后再查看详情！', 2);
+      return;
+    }
+    const res = powerInfoList.filter(v => v.id == electrical_info_id);
+    console.log(
+      ' res  electrical_info_id.filter v ： ',
+      res,
+      powerInfoList,
+      electrical_info_id,
+    );
+    props.showItemAsync({
+      action: 'meterNumberDetailAsync',
+      d_id: electrical_info_id,
     });
   };
 
@@ -371,31 +406,48 @@ const MonitorApprovalForm = props => {
         </a>
       ),
     },
+    // {
+    //   noRule: true,
+    //   formType: 'Search',
+    //   // selectData: powerNumberList.length > 0 ? powerNumberList : [
+    //   //   {
+    //   //     value: props.init.electrical_info_id,
+    //   //     label: props.init.power_number,
+    //   //   },
+    //   // ],
+    //   selectData: powerNumberList,
+    //   itemProps: {
+    //     label: '电站',
+    //     label: '电源编号',
+    //     name: 'electrical_info_id',
+    //   },
+    //   comProps: {
+    //     onSelect: onPowerNumberChange,
+    //   },
+    //   extra: (
+    //     <a
+    //       // onClick={() => props.propsForm.getFieldsValue().customer_id && props.showItemAsync({ action: 'powerNumberDetailAsync',
+    //       // d_id: props.propsForm.getFieldsValue().customer_id, })}
+    //       onClick={showPowerNumber}
+    //       className="m-l-5"
+    //     >
+    //       查看详情
+    //     </a>
+    //   ),
+    // },
     {
       noRule: true,
       formType: 'Search',
-      // selectData: powerNumberList.length > 0 ? powerNumberList : [
-      //   {
-      //     value: props.init.electrical_info_id,
-      //     label: props.init.power_number,
-      //   },
-      // ],
-      selectData: powerNumberList,
+      selectData: meterNumberList,
       itemProps: {
-        label: '电站',
-        label: '电源编号',
+        label: '电表号',
         name: 'electrical_info_id',
       },
       comProps: {
         onSelect: onPowerNumberChange,
       },
       extra: (
-        <a
-          // onClick={() => props.propsForm.getFieldsValue().customer_id && props.showItemAsync({ action: 'powerNumberDetailAsync',
-          // d_id: props.propsForm.getFieldsValue().customer_id, })}
-          onClick={showPowerNumber}
-          className="m-l-5"
-        >
+        <a onClick={showMeterNumber} className="m-l-5">
           查看详情
         </a>
       ),
@@ -501,13 +553,13 @@ const MonitorApprovalForm = props => {
         disabled: true,
       },
     },
-    {
-      noRule: true,
-      itemProps: {
-        label: '电表号',
-        name: 'meter_number',
-      },
-    },
+    // {
+    //   noRule: true,
+    //   itemProps: {
+    //     label: '电表号',
+    //     name: 'meter_number',
+    //   },
+    // },
     {
       noRule: true,
       itemProps: {

@@ -67,9 +67,9 @@ const CanvasContextMenu = props => {
     canvas.render(true);
   };
 
-  const onCopyImage = params => {
-    console.log(' onCopyImage   params,   ： ', params);
-  };
+  // const onCopyImage = params => {
+  //   console.log(' onCopyImage   params,   ： ', params);
+  // };
 
   const handleDispatch = key => {
     console.log(' handleDispatch ： ', key, props);

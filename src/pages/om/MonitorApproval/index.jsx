@@ -17,6 +17,7 @@ import { monitorApprovalImgConfig, PASS_APPROVAL } from '@/configs';
 import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
+import MeterForm from '@/components/Form/MeterForm';
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 
 const TITLE = '监控审批单';
@@ -32,10 +33,13 @@ const titleMap = {
   houseNoDetailAsync: `户号详情`,
   PowerStationDetailAsync: `电站详情`,
   powerNumberDetailAsync: `电源编号详情`,
+  meterNumberDetailAsync: `电表号详情`,
   monitorApprovalDetailAsync: `${TITLE}详情`,
 };
 
 const detailFormMap = {
+  meterNumberDetailAsync: () => <div></div>,
+  meterNumberDetailAsync: MeterForm,
   monitorApprovalDetailAsync: MonitorApprovalForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,

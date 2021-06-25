@@ -573,7 +573,8 @@ export const tips = (msg, type = 1, time = 3, cb) => {
     1: 'success',
     2: 'warn',
   }[type];
-  message[msgMap](msg ?? '操作成功', time, cb);
+  // message[msgMap](msg ?? '操作成功', time, cb);
+  message[msgMap](msg, time, cb);
 };
 
 // export const isNoTips = res => JSON.parse(res.config.data).noTips

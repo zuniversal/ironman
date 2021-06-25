@@ -148,7 +148,7 @@ const getRoutesMap = (text, dataMap) => {
 
 const getRoutes = (props = {}) => {
   const userInfo = getItem('userInfo') ?? {};
-  console.log(' userInfo ： ', userInfo, props); //
+  // console.log(' userInfo ： ', userInfo, props); //
   // const routes = isDev
   //   ? [...managerRoutes, ...customerRoutes]
   //   : // ? [...customerRoutes]
@@ -162,7 +162,7 @@ const getRoutes = (props = {}) => {
   //   props,
   // );
   const { platform = PLATFORM } = props; //
-  console.log(' platform ： ', platform); //
+  // console.log(' platform ： ', platform); //
   // const routesConfig = recursiveAuth(routes, authData);
   const routesConfig = recursiveAuth(routes, flatAuth(props?.perms)).map(v => ({
     ...v,

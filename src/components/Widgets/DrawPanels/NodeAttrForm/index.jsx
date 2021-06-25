@@ -15,7 +15,345 @@ import {
   imgAlignConfig,
 } from '../configs';
 
-const NodeAttrForm = props => {
+const styleConfig = [
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: 'X(px)',
+  //     name: ['rect', 'x'],
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: 'Y(px)',
+  //     name: ['rect', 'y'],
+  //   },
+  // },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '宽(px)',
+      name: ['rect', 'width'],
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '高(px)',
+      name: ['rect', 'height'],
+    },
+  },
+
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '圆角',
+      name: 'borderRadius',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '旋转',
+      name: 'rotate',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '左边距',
+      name: 'paddingLeft',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '右边距',
+      name: 'paddingRight',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '上边距',
+      name: 'paddingTop',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '下边距',
+      name: 'paddingBottom',
+    },
+  },
+];
+
+const lineConfig = [
+  {
+    formType: 'Select',
+    selectData: lineTypeConfig,
+    itemProps: {
+      label: '线条样式',
+      name: 'dash',
+    },
+  },
+  {
+    itemProps: {
+      label: '线条颜色',
+      name: 'strokeStyle',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '线条宽度',
+      name: 'lineWidth',
+    },
+  },
+  {
+    itemProps: {
+      label: '背景颜色',
+      name: 'fillStyle',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '透明度（0 - 1）',
+      name: 'globalAlpha',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '角度',
+      name: 'gradientAngle',
+    },
+  },
+  // {
+  //   itemProps: {
+  //     label: '背景颜色',
+  //     name: 'fillStyle',
+  //   },
+  // },
+  {
+    itemProps: {
+      label: '开始颜色',
+      name: 'gradientFromColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+  {
+    itemProps: {
+      label: '结束颜色',
+      name: 'gradientToColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+];
+
+const textConfig = [
+  // {
+  //   itemProps: {
+  //     label: '字体类型',
+  //     name: ['font', 'fontFamily'],
+  //   },
+  // },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '字体大小',
+      name: ['font', 'fontSize'],
+    },
+  },
+  {
+    itemProps: {
+      label: '字体颜色',
+      name: ['font', 'color'],
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '背景颜色',
+      name: ['font', 'background'],
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+  {
+    formType: 'Select',
+    selectData: fontStyleConfig,
+    itemProps: {
+      label: '倾斜',
+      name: ['font', 'fontStyle'],
+    },
+  },
+
+  {
+    formType: 'Select',
+    selectData: fontWeightConfig,
+    itemProps: {
+      label: '加粗',
+      name: ['font', 'fontWeight'],
+    },
+  },
+  {
+    formType: 'Select',
+    selectData: fontHorizontalConfig,
+    itemProps: {
+      label: '水平对齐',
+      name: ['font', 'textAlign'],
+    },
+  },
+
+  {
+    formType: 'Select',
+    selectData: fontVerticalConfig,
+    itemProps: {
+      label: '垂直对齐',
+      name: ['font', 'textBaseline'],
+    },
+  },
+
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '行高',
+      name: ['font', 'lineHeight'],
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '最大行数',
+      name: ['font', 'textMaxLine'],
+    },
+  },
+
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '水平偏移',
+      name: 'textOffsetX',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '垂直偏移',
+      name: 'textOffsetY',
+    },
+  },
+  {
+    formType: 'TextArea',
+    itemProps: {
+      label: '内容',
+      name: 'text',
+    },
+  },
+];
+
+const imgConfig = [
+  {
+    itemProps: {
+      label: '图片选择',
+      name: 'image',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '图形icon',
+      name: 'icon',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '图形大小',
+      name: 'iconSize',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '图形颜色',
+      name: 'iconColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '图形旋转',
+      name: 'iconRotate',
+    },
+  },
+
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '宽（px）',
+      name: 'imageWidth',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '高（px）',
+      name: 'imageHeight',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '保存图片比例',
+      name: 'imageRatio',
+    },
+  },
+
+  {
+    formType: 'Select',
+    selectData: imgAlignConfig,
+    itemProps: {
+      label: '图片对齐',
+      name: 'imageAlign',
+    },
+  },
+
+  {
+    itemProps: {
+      label: 'Markdown',
+      name: 'markdown',
+    },
+  },
+  {
+    itemProps: {
+      label: '原生title',
+      name: 'title',
+    },
+  },
+];
+
+const NodeAttrForm = React.memo(props => {
   console.log(' NodeAttrForm   props, ,   ： ', props);
   const { node } = props.data;
 
@@ -240,343 +578,6 @@ const NodeAttrForm = props => {
     },
   ];
 
-  const styleConfig = [
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: 'X(px)',
-    //     name: ['rect', 'x'],
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: 'Y(px)',
-    //     name: ['rect', 'y'],
-    //   },
-    // },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '宽(px)',
-        name: ['rect', 'width'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '高(px)',
-        name: ['rect', 'height'],
-      },
-    },
-
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '圆角',
-        name: 'borderRadius',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '旋转',
-        name: 'rotate',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '左边距',
-        name: 'paddingLeft',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '右边距',
-        name: 'paddingRight',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '上边距',
-        name: 'paddingTop',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '下边距',
-        name: 'paddingBottom',
-      },
-    },
-  ];
-
-  const lineConfig = [
-    {
-      formType: 'Select',
-      selectData: lineTypeConfig,
-      itemProps: {
-        label: '线条样式',
-        name: 'dash',
-      },
-    },
-    {
-      itemProps: {
-        label: '线条颜色',
-        name: 'strokeStyle',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '线条宽度',
-        name: 'lineWidth',
-      },
-    },
-    {
-      itemProps: {
-        label: '背景颜色',
-        name: 'fillStyle',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '透明度（0 - 1）',
-        name: 'globalAlpha',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '角度',
-        name: 'gradientAngle',
-      },
-    },
-    // {
-    //   itemProps: {
-    //     label: '背景颜色',
-    //     name: 'fillStyle',
-    //   },
-    // },
-    {
-      itemProps: {
-        label: '开始颜色',
-        name: 'gradientFromColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      itemProps: {
-        label: '结束颜色',
-        name: 'gradientToColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-  ];
-
-  const textConfig = [
-    // {
-    //   itemProps: {
-    //     label: '字体类型',
-    //     name: ['font', 'fontFamily'],
-    //   },
-    // },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '字体大小',
-        name: ['font', 'fontSize'],
-      },
-    },
-    {
-      itemProps: {
-        label: '字体颜色',
-        name: ['font', 'color'],
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '背景颜色',
-        name: ['font', 'background'],
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      formType: 'Select',
-      selectData: fontStyleConfig,
-      itemProps: {
-        label: '倾斜',
-        name: ['font', 'fontStyle'],
-      },
-    },
-
-    {
-      formType: 'Select',
-      selectData: fontWeightConfig,
-      itemProps: {
-        label: '加粗',
-        name: ['font', 'fontWeight'],
-      },
-    },
-    {
-      formType: 'Select',
-      selectData: fontHorizontalConfig,
-      itemProps: {
-        label: '水平对齐',
-        name: ['font', 'textAlign'],
-      },
-    },
-
-    {
-      formType: 'Select',
-      selectData: fontVerticalConfig,
-      itemProps: {
-        label: '垂直对齐',
-        name: ['font', 'textBaseline'],
-      },
-    },
-
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '行高',
-        name: ['font', 'lineHeight'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '最大行数',
-        name: ['font', 'textMaxLine'],
-      },
-    },
-
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '水平偏移',
-        name: 'textOffsetX',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '垂直偏移',
-        name: 'textOffsetY',
-      },
-    },
-    {
-      formType: 'TextArea',
-      itemProps: {
-        label: '内容',
-        name: 'text',
-      },
-    },
-  ];
-
-  const imgConfig = [
-    {
-      itemProps: {
-        label: '图片选择',
-        name: 'image',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '图标icon',
-        name: 'icon',
-      },
-    },
-    {
-      itemProps: {
-        label: '图标大小',
-        name: 'iconSize',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '图标颜色',
-        name: 'iconColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '图标旋转',
-        name: 'iconRotate',
-      },
-    },
-
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '宽（px）',
-        name: 'imageWidth',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '高（px）',
-        name: 'imageHeight',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '保存图片比例',
-        name: 'imageRatio',
-      },
-    },
-
-    {
-      formType: 'Select',
-      selectData: imgAlignConfig,
-      itemProps: {
-        label: '图片对齐',
-        name: 'imageAlign',
-      },
-    },
-
-    {
-      itemProps: {
-        label: 'Markdown',
-        name: 'markdown',
-      },
-    },
-    {
-      itemProps: {
-        label: '原生title',
-        name: 'title',
-      },
-    },
-  ];
-
   const formItemConfig = [
     ...pointConfig,
     {
@@ -702,6 +703,6 @@ const NodeAttrForm = props => {
       {/* {formItems} */}
     </div>
   );
-};
+});
 
 export default NodeAttrForm;

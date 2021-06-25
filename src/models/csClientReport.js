@@ -23,7 +23,7 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 const clientList = formatSelectList(getUserInfo()?.enterprises[0]?.customers);
-console.log(' clientList ： ', clientList, getUserInfo()); //
+// console.log(' clientList ： ', clientList, getUserInfo()); //
 
 export const formatSearch = data => {
   console.log(' formatSearch ： ', data);

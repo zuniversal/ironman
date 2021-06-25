@@ -48,6 +48,7 @@ import { Tools } from './tools';
 // import customIcons from './icons.json';
 import ltdxIcons from './ltdx.json';
 import lteeIcons from './ltee.json';
+import PowerIcons from './power.json';
 import './styles/ltdx.css';
 import './styles/ltee.css';
 import './Plugin/canvas2svg';
@@ -74,38 +75,44 @@ function showConfirm(props) {
   });
 }
 
-const CustomTools = props => (
-  <div>
-    <div className={'styles.title title'}>
-      自定义组件 ({props.glyphs.length})
+const CustomTools = React.memo(props => {
+  const { filterName, glyphs } = props; //
+  const data = filterName
+    ? glyphs.filter(v => v.name.includes(filterName))
+    : glyphs; //
+  return (
+    <div>
+      <div className={'styles.title title'}>
+        国家电网元器件 ({props.glyphs.length})
+      </div>
+      <div className={'styles.buttons widget'}>
+        {data.map((btn, i) => {
+          return (
+            <a
+              key={i}
+              className={`iconWidget`}
+              title={btn.name}
+              draggable={true}
+              onDragStart={ev => {
+                props.onCustomDrag(ev, {
+                  ...btn,
+                  iconFamily: props.font_family,
+                });
+              }}
+            >
+              <i
+                className={`${props.font_family} icons icon- ${props.css_prefix_text}${btn.font_class}`}
+              />
+            </a>
+          );
+        })}
+      </div>
     </div>
-    <div className={'styles.buttons widget'}>
-      {props.glyphs.map((btn, i) => {
-        return (
-          <a
-            key={i}
-            className={`iconWidget`}
-            title={btn.name}
-            draggable={true}
-            onDragStart={ev => {
-              props.onCustomDrag(ev, {
-                ...btn,
-                iconFamily: props.font_family,
-              });
-            }}
-          >
-            <i
-              className={`${props.font_family} icons icon- ${props.css_prefix_text}${btn.font_class}`}
-            />
-          </a>
-        );
-      })}
-    </div>
-  </div>
-);
+  );
+});
 
 const DrawTool = React.memo(props => {
-  console.log(' DrawTool   props,   ： ', props);
+  // console.log(' DrawTool   props,   ： ', props);
   return Tools.map((item, index) => {
     return (
       <div key={index}>
@@ -185,6 +192,7 @@ const DrawPanel = props => {
   const [previewData, setPreviewData] = useState(null);
   const [drawId, setDrawId] = useState(props.circuitList[0]?.id);
   const [drawData, setDrawData] = useState(props.circuitList[0]?.draw);
+  const [filterName, setFilterName] = useState(null);
 
   useEffect(() => {
     console.log('  对吗  props.circuitList.length ', props.circuitList);
@@ -232,6 +240,7 @@ const DrawPanel = props => {
 
   console.log(
     ' DrawPanel   props, ,   ： ',
+    filterName,
     canvas,
     props,
     data,
@@ -980,20 +989,34 @@ const DrawPanel = props => {
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="系统组件" key="1">
           <div className={`toolWrapper`}>
+            <Input
+              placeholder="请输入图标名称"
+              onChange={e => setFilterName(e.target.value)}
+              // onPressEnter={onSave}
+              allowClear
+            />
             <DrawTool onDrag={onDrag}></DrawTool>
-            {!isDev && (
+            {/* {!isDev && ( */}
+            {true && (
               <>
-                <CustomTools
+                {/* <CustomTools
                   onCustomDrag={onCustomDrag}
                   font_family={lteeIcons.font_family}
                   css_prefix_text={lteeIcons.css_prefix_text}
                   glyphs={lteeIcons.glyphs}
-                ></CustomTools>
-                <CustomTools
+                ></CustomTools> */}
+                {/* <CustomTools
                   onCustomDrag={onCustomDrag}
                   font_family={ltdxIcons.font_family}
                   css_prefix_text={ltdxIcons.css_prefix_text}
                   glyphs={ltdxIcons.glyphs}
+                ></CustomTools> */}
+                <CustomTools
+                  onCustomDrag={onCustomDrag}
+                  font_family={PowerIcons.font_family}
+                  css_prefix_text={PowerIcons.css_prefix_text}
+                  glyphs={PowerIcons.glyphs}
+                  filterName={filterName}
                 ></CustomTools>
               </>
             )}

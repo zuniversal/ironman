@@ -6,6 +6,7 @@ import SmartFormModal from '@/common/SmartFormModal';
 import DrawPanels from '@/components/Widgets/DrawPanels';
 import Preview from '@/components/Widgets/DrawPanels/Preview';
 import { CloseCircleOutlined } from '@ant-design/icons';
+import CreatePortal from '@/components/Portal/CreatePortal';
 import { actions, mapStateToProps } from '@/models/drawPanel';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -158,17 +159,19 @@ class DrawPanel extends PureComponent {
 
   render() {
     return (
-      <div className="drawPanel">
-        {/* {this.renderSearchForm()}
+      <CreatePortal show={true}>
+        <div className="drawPanel">
+          {/* {this.renderSearchForm()}
 
-        {this.renderTable()} */}
+          {this.renderTable()} */}
 
-        {this.renderPreview()}
+          {this.renderPreview()}
 
-        {/* {this.renderSmartFormModal()} */}
+          {/* {this.renderSmartFormModal()} */}
 
-        {this.renderDrawPanel()}
-      </div>
+          {this.renderDrawPanel()}
+        </div>
+      </CreatePortal>
     );
   }
 }

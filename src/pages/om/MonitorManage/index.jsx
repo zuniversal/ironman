@@ -12,6 +12,7 @@ import HouseNoForm from '@/components/Form/HouseNoForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 import MonitorDeviceForm from '@/components/Form/MonitorDeviceForm';
 import AssetsForm from '@/components/Form/AssetsForm';
+import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm';
 
 import { actions, mapStateToProps } from '@/models/monitorManage';
 import SmartHOC from '@/common/SmartHOC';
@@ -33,9 +34,11 @@ const titleMap = {
   powerStationDetailAsync: `电站详情`,
   assetsDetailAsync: `设备详情`,
   monitorDeviceDetailAsync: `监控设备详情`,
+  alarmTemplateDetailAsync: `监控模板详情`,
 };
 
 const detailFormMap = {
+  alarmTemplateDetailAsync: AlarmTemplateForm,
   monitorManageAsync: MonitorManageDetailForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
@@ -197,6 +200,7 @@ class MonitorManage extends PureComponent {
     const formComProps = {
       action,
       init: this.props.itemDetail,
+      showItemAsync: this.props.showItemAsync,
     };
     // if (action !== 'add') {
     //   formComProps.init = this.props.itemDetail;

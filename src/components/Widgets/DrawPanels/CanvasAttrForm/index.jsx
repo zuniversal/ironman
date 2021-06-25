@@ -32,7 +32,148 @@ const animateTypeconfig = [
   },
 ];
 
-const CanvasAttrForm = props => {
+const config = [
+  // {
+  //   formType: 'rowText',
+  //   itemProps: {
+  //     label: '画布设置',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '最大宽度',
+  //     value: 'maxWidth',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '节点宽度',
+  //     value: 'nodeWidth',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '节点高度',
+  //     value: 'nodeHeight',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '水平个数',
+  //     value: 'maxCount',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '水平间距',
+  //     value: 'spaceWidth',
+  //   },
+  // },
+  // {
+  //   formType: 'InputNumber',
+  //   itemProps: {
+  //     label: '垂直间距',
+  //     value: 'spaceHeight',
+  //   },
+  // },
+
+  {
+    formType: 'rowText',
+    itemProps: {
+      label: '排版布局',
+    },
+  },
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '缩放大小',
+      name: 'scaleTo',
+    },
+  },
+  {
+    // formType: 'TextArea',
+    itemProps: {
+      label: '背景图片',
+      name: 'bkImage',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '背景颜色',
+      name: 'bkColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+
+  {
+    formType: 'Switch',
+    itemProps: {
+      label: '背景网格',
+      name: 'grid',
+    },
+  },
+  {
+    itemProps: {
+      label: '网格颜色',
+      name: 'gridColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+
+  {
+    formType: 'InputNumber',
+    itemProps: {
+      label: '网格大小',
+      name: 'gridSize',
+    },
+  },
+
+  {
+    itemProps: {
+      label: '标尺颜色',
+      name: 'ruleColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+  {
+    formType: 'Switch',
+    itemProps: {
+      label: '标尺',
+      name: 'rule',
+    },
+  },
+  {
+    itemProps: {
+      label: '整体颜色',
+      name: 'allColor',
+    },
+    comProps: {
+      type: 'color',
+    },
+  },
+
+  {
+    formType: 'Switch',
+    itemProps: {
+      label: '锁定拖动',
+      name: 'locked',
+    },
+  },
+];
+
+const CanvasAttrForm = React.memo(props => {
   console.log(' CanvasAttrForm   props, ,   ： ', props, canvas);
   // const {canvas,  } = props
 
@@ -97,147 +238,6 @@ const CanvasAttrForm = props => {
     // }
   };
 
-  const config = [
-    // {
-    //   formType: 'rowText',
-    //   itemProps: {
-    //     label: '画布设置',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '最大宽度',
-    //     value: 'maxWidth',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '节点宽度',
-    //     value: 'nodeWidth',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '节点高度',
-    //     value: 'nodeHeight',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '水平个数',
-    //     value: 'maxCount',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '水平间距',
-    //     value: 'spaceWidth',
-    //   },
-    // },
-    // {
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '垂直间距',
-    //     value: 'spaceHeight',
-    //   },
-    // },
-
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '排版布局',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '缩放大小',
-        name: 'scaleTo',
-      },
-    },
-    {
-      // formType: 'TextArea',
-      itemProps: {
-        label: '背景图片',
-        name: 'bkImage',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '背景颜色',
-        name: 'bkColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-
-    {
-      formType: 'Switch',
-      itemProps: {
-        label: '背景网格',
-        name: 'grid',
-      },
-    },
-    {
-      itemProps: {
-        label: '网格颜色',
-        name: 'gridColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '网格大小',
-        name: 'gridSize',
-      },
-    },
-
-    {
-      itemProps: {
-        label: '标尺颜色',
-        name: 'ruleColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-    {
-      formType: 'Switch',
-      itemProps: {
-        label: '标尺',
-        name: 'rule',
-      },
-    },
-    {
-      itemProps: {
-        label: '整体颜色',
-        name: 'allColor',
-      },
-      comProps: {
-        type: 'color',
-      },
-    },
-
-    {
-      formType: 'Switch',
-      itemProps: {
-        label: '锁定拖动',
-        name: 'locked',
-      },
-    },
-  ];
-
   return (
     <div className="canvasAttrForm attrFormWrapper">
       <div className={`attr`}>
@@ -264,6 +264,6 @@ const CanvasAttrForm = props => {
       </div>
     </div>
   );
-};
+});
 
 export default CanvasAttrForm;

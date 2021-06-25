@@ -375,7 +375,7 @@ class PowerStation extends PureComponent {
     // this.props.showFormModal({
     //   action: 'exportDutyData',
     // });
-    this.props.getPowerInfoAsync({});
+    // this.props.getPowerInfoAsync({});
     // setTimeout(() => {
     //   console.log('  延时器 ： ');
     //   this.props.getListAsync({

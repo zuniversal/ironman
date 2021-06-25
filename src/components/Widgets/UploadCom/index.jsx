@@ -41,7 +41,7 @@ const formatFileList = fileData => {
       ? [{ uid: fileData, url: fileData }]
       : formatFile(fileData);
   const resFileData = Array.isArray(fileData) ? fileData : [fileData];
-  console.log(' formatFileList   e,   ： ', fileData, fileList, resFileData);
+  // console.log(' formatFileList   e,   ： ', fileData, fileList, resFileData);
   return formatFile(resFileData);
   // return fileData ? formatFile([fileData]) : []
 };
@@ -57,7 +57,7 @@ const getBase64 = file => {
 };
 
 const UploadCom = props => {
-  console.log(' UploadCom   props, ,   ： ', props);
+  // console.log(' UploadCom   props, ,   ： ', props);
   const {
     label,
     isInputUpload,

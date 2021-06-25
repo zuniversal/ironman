@@ -171,7 +171,7 @@ export class Request {
         } else if (config.method !== 'put') {
           config.data = config.params = rest;
         }
-        console.log(' 发送请求   ： ', config, formatParams);
+        // console.log(' 发送请求   ： ', config, formatParams);
         return config;
       },
       err => Promise.reject(err),

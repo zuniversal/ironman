@@ -504,13 +504,13 @@ export default ({
 
     getList = (params = {}) => {
       // getList = (params = { page: 1, page_size: 10 }) => {
-      console.log(
-        '    getList page: 1, page_size: 10： ',
-        actions.getListAsync,
-        params,
-        this.state,
-        this.props,
-      );
+      // console.log(
+      //   '    getList page: 1, page_size: 10： ',
+      //   actions.getListAsync,
+      //   params,
+      //   this.state,
+      //   this.props,
+      // );
       const { dispatch } = this.props;
       dispatch(actions.getListAsync(params));
     };

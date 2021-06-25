@@ -10,11 +10,14 @@ import { INIT_BILL_TYPE } from '@/constants';
 
 // ** 如果有改变计算公式涉及到的输入框的值 就以当前输入的值计算
 
+// 应付账款 = 市场化差额退补 + 防疫优惠电费 + 其他金额 + 小计金额 + 利率调整
+// 基本电费金额 = 基本电费计费 * 基本电价单价
+
 // 小计金额=所有的电量*电价的和+ 基本电费
 // 总有功=峰平谷尖+其他电量的和
 // 实际考核功率因素=总有功 / 开根号（ 无功电量 绝对值的平方 + 总有功的平方 ）
 // 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100  +  基本电费
-// 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
+// 总金额 即 应付账款  = 小计金额 + 力率调整  +  基本电费
 
 // 根据返回的 billing_method  这个 就是 基本电价计费方式 0和1不需要计算基本电费
 // 基本电费 =
@@ -303,6 +306,7 @@ const ClientReportForm = props => {
     }
     console.log(' setFields ： ', setFields);
     props.propsForm.setFieldsValue(setFields);
+    autoCalc();
   };
 
   const [form] = Form.useForm();
@@ -381,6 +385,7 @@ const ClientReportForm = props => {
   const factor = factorRow['0.90'];
   console.log(' factor ： ', factorRow, factor);
 
+  // 如果有 changeKey 对应的改变键 那以输入的改变的该值进行设置
   const autoCalc = changeKey => {
     console.log(' autoCalc   ,   ： ', changeKey);
     const formValues = props.propsForm.getFieldsValue();
@@ -404,6 +409,7 @@ const ClientReportForm = props => {
       other_amount,
     } = formValues;
 
+    // 旧版 基本电费计算公式
     let basePriceRes = 0;
     if (billing_method == '2') {
       basePriceRes = capacity * basic_price;
@@ -422,8 +428,14 @@ const ClientReportForm = props => {
       basePriceRes = 0;
     }
 
+    const calcAllMoenyValRes = calcAllMoenyVal(formValues);
+    console.log('  calcAllMoenyValRes ：', calcAllMoenyValRes); //
+
     // 小计金额=所有的电量*电价的和+ 基本电费
-    const calcRes = (calcMoenyVal(formValues) + basePriceRes).toFixed(2);
+    // const calcRes = (calcMoenyVal(formValues) + Number(calcAllMoenyValRes.basicMoney) + basePriceRes).toFixed(2);
+    const calcRes = (
+      calcMoenyVal(formValues) + Number(calcAllMoenyValRes.basicMoney)
+    ).toFixed(2);
     // 总有功=峰平谷尖+其他电量的和
     const calcTotalPowerRes = calcTotalPower(formValues);
     // 实际考核功率因素=总有功/开根号（ 无功电量 绝对值的平方+总有功的平方）
@@ -441,8 +453,6 @@ const ClientReportForm = props => {
     // const factorRow = powerRateMap['0.90']
     const factorRow = powerRateMap[calcRealFactorRes];
 
-    const calcAllMoenyValRes = calcAllMoenyVal(formValues);
-    console.log('  calcAllMoenyValRes ：', calcAllMoenyValRes); //
     const initFields = {
       calcMoeny: calcRes,
       ...calcAllMoenyValRes,
@@ -488,15 +498,19 @@ const ClientReportForm = props => {
       changeKey === 'power_factor_adjust'
         ? power_factor_adjust
         : (factorRow && factorRow[`${power_factor}`]) || power_factor_adjust;
+
     setFields.power_factor_adjust =
       changeKey === 'power_factor_adjust' ? power_factor_adjust : factorRes;
+
     // if (factorRes) {
     // 力率调整 = （ 小计金额 - 代征费用 ） * 力率 / 100  +  基本电费
     const amountAdjust =
       changeKey === 'amount_adjust'
         ? amount_adjust
         : (((Number(calcRes) - levy_fee) / 100) * factorRes).toFixed(2);
-    // 总金额 - 应付账款  = 小计金额 + 力率调整  +  基本电费
+
+    // 总金额 即 应付账款  = 小计金额 + 力率调整  +  基本电费
+    // 应付账款 = 市场化差额退补 + 防疫优惠电费 + 其他金额 + 小计金额 + 利率调整
     const amountRes = (
       Number(calcRes) +
       Number(amountAdjust) +
@@ -504,6 +518,7 @@ const ClientReportForm = props => {
       Number(epidemic_discount) +
       Number(other_amount)
     ).toFixed(2);
+
     setFields.amount_adjust =
       changeKey === 'amount_adjust'
         ? amount_adjust
@@ -511,8 +526,10 @@ const ClientReportForm = props => {
         ? amountAdjust
         : amount_adjust;
     setFields.amount = changeKey === 'amount' ? amount : amountRes;
+
     console.log(
       ' power_factor, levy_fee, idle_volume ： ',
+      Number(calcAllMoenyValRes.basicMoney),
       Number(calcRes),
       Number(amountAdjust),
       basePriceRes,
@@ -1625,7 +1642,7 @@ const ClientReportForm = props => {
 
   return (
     <div className={'clientReportForm'}>
-      {/* <SmartForm
+      <SmartForm
         config={selectConfig}
         onFieldChange={onFieldChange}
         className={`billForm`}
@@ -1634,7 +1651,7 @@ const ClientReportForm = props => {
           type: initBillType,
         }}
         propsForm={form}
-      ></SmartForm> */}
+      ></SmartForm>
 
       <SmartForm
         flexRow={4}
