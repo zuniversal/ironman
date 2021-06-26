@@ -140,7 +140,7 @@ export default {
         ...outLineTableItem,
       },
     ],
-    // outLineTableData: [],
+    outLineTableData: [],
     powerInfoList: [],
   },
 
@@ -260,7 +260,8 @@ export default {
         powerInfoData: datas,
         outLineTableData: outline_set.map(v => ({
           ...v,
-          power_number: v.power_number.split(','),
+          // power_number: v.power_number.split(','),
+          power_number: v.power_number ? `${v.power_number.id}` : null,
           key: Math.random(),
         })),
         houseNoList: houseNoListData,
@@ -507,6 +508,9 @@ export default {
             ? {
                 ...v,
                 ...payload.list[0],
+                power_number: payload.bean.power_number
+                  ? `${payload.bean.power_number.id}`
+                  : null,
                 // ...payload.bean,
                 isEdit: false,
               }
@@ -533,6 +537,7 @@ export default {
             ? {
                 ...v,
                 ...payload.bean,
+                power_number: `${payload.bean.power_number.id}`,
                 isEdit: false,
               }
             : v;
@@ -973,7 +978,7 @@ export default {
           {
             ...payload,
             powerstation: itemDetail.id,
-            power_number: payload.power_number.join(','),
+            // power_number: payload.power_number.join(','),
           },
         ],
       };
@@ -997,7 +1002,7 @@ export default {
       // };
       const params = {
         ...payload,
-        power_number: payload.power_number.join(','),
+        // power_number: payload.power_number.join(','),
       };
       const res = yield call(services.editOutLine, params);
       yield put(

@@ -694,7 +694,11 @@ const NodeAttrForm = React.memo(props => {
           flexRow={2}
           layout={'vertical'}
           formLayouts={halfFormLayouts}
-          init={props.data?.node}
+          init={{
+            ...props.data?.node,
+            iconSize: props.data?.node?.iconSize ?? 0,
+            iconSize: 0,
+          }}
           onFieldChange={onFormLayoutChange}
           key={props.data.node?.id}
         ></SmartForm>

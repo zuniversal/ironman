@@ -62,6 +62,14 @@ const PowerStationForm = props => {
   };
 
   const isAdd = props.action === 'add';
+  const outlineSetArr = isAdd
+    ? []
+    : props.init.outline_set
+        .filter(v => v.power_number)
+        .map(v => ({
+          value: `${v.power_number.id}`,
+          label: v.power_number.power_number,
+        }));
   const { data: powerInfoList, req: getPowerInfoAsync } = useHttp(
     isAdd
       ? getPowerInfo
@@ -514,6 +522,7 @@ const PowerStationForm = props => {
 
   const outLineConfig = [
     {
+      forShow: true,
       itemProps: {
         label: '出线侧编号',
         name: 'id',
@@ -529,16 +538,16 @@ const PowerStationForm = props => {
       formType: 'Search',
       // selectSearch: props.getPowerInfoAsync,
       // selectData: props.powerInfoList,
-      selectData: powerInfoList,
+      selectData: filterObjSame([...powerInfoList, ...outlineSetArr], 'value'),
       // dataMap: arrMapObj(props.powerInfoList),
-      dataMap: arrMapObj(powerInfoList),
+      dataMap: arrMapObj(outlineSetArr),
       itemProps: {
         label: '电源编号',
         name: 'power_number',
       },
-      comProps: {
-        mode: 'multiple',
-      },
+      // comProps: {
+      //   mode: 'multiple',
+      // },
     },
   ];
 
@@ -546,7 +555,13 @@ const PowerStationForm = props => {
     action === 'detail' ? props.init.powerInfoData : props.powerInfoData;
   const outLineTableData =
     action === 'detail' ? props.init.outLineTableData : props.outLineTableData;
-  console.log('  outLineTableData ：', powerInfoData, outLineTableData);
+  console.log(
+    '  outLineTableData ：',
+    arrMapObj(outlineSetArr),
+    outlineSetArr,
+    powerInfoData,
+    outLineTableData,
+  );
 
   return (
     <div className={`powerStationForm`}>

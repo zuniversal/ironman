@@ -161,7 +161,6 @@ export const getWidget = props => {
 
 export const TableInput = props => {
   const { text, record, index, keys } = props;
-  console.log(' TableInput mapText, dataMap ：', props);
   let txt = text;
   if (props.config.dataMap && !props.record.isEdit) {
     if (Array.isArray(text)) {
@@ -171,8 +170,11 @@ export const TableInput = props => {
       txt = props.config.dataMap[text];
     }
   }
+  // console.log(' TableInput mapText, dataMap ：', props, txt);
 
-  return props.record.isEdit ? getWidget(props) : txt;
+  return props.record.isEdit && !props.config.forShow
+    ? getWidget(props)
+    : txt ?? '';
 };
 
 // export const TableInput = props => {
@@ -205,11 +207,11 @@ export const TableInput = props => {
 
 const ReduxTable = props => {
   const { edit, remove, config, isDisabledAll } = props;
-  // console.log(
-  //   ' %c ReduxTable 组件 ： ',
-  //   `color: #333; font-weight: bold`,
-  //   props,
-  // );
+  console.log(
+    ' %c ReduxTable 组件 ： ',
+    `color: #333; font-weight: bold`,
+    props,
+  );
 
   const columns = config.map(v => ({
     title: v.label,
