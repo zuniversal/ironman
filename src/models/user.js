@@ -394,7 +394,7 @@ export default {
       setItem('platform', platform);
       cookie.remove('enterprise_id');
       if (enterprise.enterprise_id) {
-        cookie.save('enterprise_id', enterprise.enterprise_id);
+        // cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo);
@@ -462,7 +462,7 @@ export default {
       };
       cookie.remove('enterprise_id');
       if (enterprise.enterprise_id) {
-        cookie.save('enterprise_id', enterprise.enterprise_id);
+        // cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
       // console.log(' userInfo2 ： ', userInfo);
