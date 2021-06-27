@@ -19,7 +19,7 @@ import {
   Modal,
 } from 'antd';
 import { UploadOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons';
-import { tips } from '@/utils';
+import { getItem, getToken, tips } from '@/utils';
 import { REQUIRE } from '@/constants';
 import SmartImg from '@/common/SmartImg';
 
@@ -219,6 +219,9 @@ const UploadCom = props => {
           //    console.log(' file, listType ： ', file, listType,  )//
           //   return <SmartImg src={file.thumbUrl}></SmartImg>
           // }}
+          headers={{
+            Authorization: getToken(),
+          }}
           {...uploadProps}
         >
           {isHide || formAction !== 'detail' ? (

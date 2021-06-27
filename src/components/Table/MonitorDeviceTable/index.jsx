@@ -83,20 +83,20 @@ const MonitorDeviceTable = props => {
       // width: 400,
       title: '所属客户',
       dataIndex: 'customer_name',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'clientDetailAsync',
-      //     d_id: record.customer.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer_id,
+        }),
     },
     {
       title: '所属户号',
       dataIndex: 'number',
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'houseNoDetailAsync',
-      //     d_id: record.electricity_user.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'houseNoDetailAsync',
+          d_id: record.electricity_user_id,
+        }),
     },
     {
       title: '电源编号',
