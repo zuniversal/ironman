@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import MonitorApprovalTable from '@/components/Table/MonitorApprovalTable';
 import MonitorApprovalForm from '@/components/Form/MonitorApprovalForm';
+import { MonitorApprovalRemarkForm } from '@/components/Form/MonitorApprovalActionForm';
 import SmartFormModal from '@/common/SmartFormModal';
 
 import {
@@ -35,10 +36,12 @@ const titleMap = {
   powerNumberDetailAsync: `电源编号详情`,
   meterNumberDetailAsync: `电表号详情`,
   monitorApprovalDetailAsync: `${TITLE}详情`,
+  monitorApprovalRemarkAsync: `监控审备注`,
 };
 
 const detailFormMap = {
   meterNumberDetailAsync: () => <div></div>,
+  monitorApprovalRemarkAsync: MonitorApprovalRemarkForm,
   meterNumberDetailAsync: MeterForm,
   monitorApprovalDetailAsync: MonitorApprovalForm,
   clientDetailAsync: ClientForm,
@@ -105,6 +108,7 @@ class MonitorApproval extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+      remarkAsync: this.props.remarkAsync,
     };
 
     return <MonitorApprovalTable {...tableProps}></MonitorApprovalTable>;
@@ -199,6 +203,13 @@ class MonitorApproval extends PureComponent {
           worker_id,
         });
       }
+      if (action === 'monitorApprovalRemarkAsync') {
+        this.props.monitorApprovalRemarkAsync({
+          ...res,
+          d_id: this.props.itemDetail.id,
+          record_id: this.props.itemDetail.id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -225,11 +236,20 @@ class MonitorApproval extends PureComponent {
     if (action === 'monitorApprovalDetailAsync') {
       formComProps.action = 'detail';
     }
+    if (action === 'monitorApprovalRemarkAsync') {
+      return (
+        <MonitorApprovalRemarkForm
+          {...formComProps}
+        ></MonitorApprovalRemarkForm>
+      );
+    }
     return <MonitorApprovalForm {...formComProps}></MonitorApprovalForm>;
   };
   get size() {
     // console.log(' get 取属 size ： ', this.state, this.props);
-    return ['approvalPass'].some(v => v === this.props.action)
+    return ['approvalPass', 'monitorApprovalRemarkAsync'].some(
+      v => v === this.props.action,
+    )
       ? 'small'
       : 'default';
   }

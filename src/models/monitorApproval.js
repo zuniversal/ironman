@@ -7,7 +7,11 @@ import { deviceFrequencyConfig } from '@/configs';
 const namespace = 'monitorApproval';
 const { createActions } = init(namespace);
 
-const otherActions = ['approvalAsync', 'approvalPassAsync'];
+const otherActions = [
+  'approvalAsync',
+  'approvalPassAsync',
+  'monitorApprovalRemarkAsync',
+];
 
 const batchTurnActions = [];
 
@@ -55,6 +59,11 @@ export default {
       return {
         ...state,
         dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          approval_time:
+            v.approval_time !== 'NaT' ? v.approval_time : undefined,
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -196,7 +205,9 @@ export default {
       console.log(' approvalAsync deviceRes ： ', deviceRes); //
       // const { , ...rest  } = payload
       // const res = yield call(services.editItem, payload);
-      yield put({ type: 'approvalPassAsync', payload });
+
+      // yield put({ type: 'approvalPassAsync', payload });
+
       // const res = yield call(services.editItem, {
       //   ...payload,
       //   record_id: id,
@@ -204,6 +215,11 @@ export default {
       // });
       // console.log(' approvalAsync res ： ', res); //
       // yield put({ type: 'getListAsync' });
+    },
+    *monitorApprovalRemarkAsync({ payload, action, type }, { call, put }) {
+      console.log(' monitorApprovalRemarkAsync ： ', payload); //
+      const res = yield call(services.remark, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

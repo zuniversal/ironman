@@ -80,6 +80,25 @@ const MonitorApprovalTable = props => {
       dataIndex: 'status',
       dataMap: monitorApprovalMap,
     },
+    {
+      title: '汇报时间',
+      dataIndex: 'created_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
+    },
+    {
+      title: '上线时间',
+      dataIndex: 'online_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
+    },
+    {
+      title: '审批通过',
+      dataIndex: 'approval_time',
+      day: 'YYYY-MM-DD HH:mm:ss',
+    },
+    {
+      title: '备注',
+      dataIndex: 'comments',
+    },
   ];
 
   // 待上线—待审批—已通过
@@ -121,6 +140,16 @@ const MonitorApprovalTable = props => {
         }}
       >
         详情
+      </a>
+      <a
+        onClick={() => {
+          props.edit({
+            action: 'monitorApprovalRemarkAsync',
+            d_id: record.id,
+          });
+        }}
+      >
+        备注
       </a>
       <a
         onClick={() => {

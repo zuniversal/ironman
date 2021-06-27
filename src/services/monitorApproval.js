@@ -9,4 +9,7 @@ export const editItem = p =>
 export const removeItem = p =>
   req.remove(`console/monitor/devices/record/${p.d_id}`, p);
 
+export const remark = p =>
+  req.put(`console/monitor/devices/record/${p.d_id}`, p);
+
 export const uploadImg = p => req.post(`console/monitor/devices/upload`, p);
