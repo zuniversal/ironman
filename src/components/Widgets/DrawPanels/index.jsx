@@ -183,6 +183,10 @@ const canvasRegister = () => {
 export let canvas = {};
 const canvasOptions = {
   rotateCursor: '/img/rotate.cur',
+  data: {
+    lineName: 'lineName',
+    toArrow: null,
+  },
 };
 
 const DrawPanel = props => {
@@ -716,6 +720,9 @@ const DrawPanel = props => {
     canvas = new Topology('topology-canvas', canvasOptions);
     canvas.grid = true;
     canvas.rule = true;
+    canvas.data.lineName = 'line';
+    canvas.data.toArrow = 'circleSolid';
+    console.log(' canvascanvas ： ', canvas); //
 
     canvas.open(drawData);
 
