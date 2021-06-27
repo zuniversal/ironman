@@ -79,6 +79,35 @@ const MonitorDeviceTable = props => {
     // },
 
     {
+      // noCutText: true,
+      // width: 400,
+      title: '所属客户',
+      dataIndex: 'customer_name',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'clientDetailAsync',
+      //     d_id: record.customer.id,
+      //   }),
+    },
+    {
+      title: '所属户号',
+      dataIndex: 'number',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'houseNoDetailAsync',
+      //     d_id: record.electricity_user.id,
+      //   }),
+    },
+    {
+      title: '电源编号',
+      dataIndex: 'power_number',
+    },
+    {
+      title: '安装点位',
+      dataIndex: 'monitor_point_name',
+    },
+
+    {
       title: '网络类型',
       dataIndex: 'network_type',
       dataMap: networkTypeMap,
