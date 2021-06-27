@@ -582,26 +582,31 @@ const ClientReportForm = props => {
     if (res) {
       const { billing_method, billing_type } = res;
 
-      console.log('  getBillTypeReq res await 结果  ：', res); //
+      console.log(
+        '  getBillTypeReq res await 结果  ：',
+        res,
+        billing_type && billing_type.name,
+      ); //
       // return
       if (billing_type && billing_type.name) {
         props.propsForm.setFieldsValue({
-          // basic_price: billing_type.base_prise,
-          // tip_price: billing_type.tip_prise,
-          // peak_price: billing_type.peak_prise,
-          // usual_price: billing_type.flat_prise,
-          // valley_price: billing_type.valley_prise,
-          // tip_price2: billing_type.tip_prise,
-          // peak_price2: billing_type.peak_prise,
-          // usual_price2: billing_type.flat_prise,
-          // valley_price2: billing_type.valley_prise,
+          basic_price: billing_type.base_prise,
+          tip_price: billing_type.tip_prise,
+          peak_price: billing_type.peak_prise,
+          usual_price: billing_type.flat_prise,
+          valley_price: billing_type.valley_prise,
+          tip_price2: billing_type.tip_prise,
+          peak_price2: billing_type.peak_prise,
+          usual_price2: billing_type.flat_prise,
+          valley_price2: billing_type.valley_prise,
           // billing_type: billing_type.name,
           billing_type: `${billing_type.id}`,
         });
+        form.setFieldsValue({ type: `${billing_type.id}` });
       }
-      if (billing_method) {
-        form.setFieldsValue({ type: `${billing_method}` });
-      }
+      // if (billing_method) {
+      //   form.setFieldsValue({ type: `${billing_method}` });
+      // }
     }
 
     // autoCalc();

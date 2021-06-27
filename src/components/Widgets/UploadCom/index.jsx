@@ -114,6 +114,7 @@ const UploadCom = props => {
 
     if (e.file.status === 'done') {
       tips(`${e.file.name} 上传成功！`, 1);
+      props.succ && props.succ();
     } else if (e.file.status === 'error') {
       tips(`${e.file.name} 上传失败！`, 0);
     }

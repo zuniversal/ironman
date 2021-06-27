@@ -179,7 +179,9 @@ class MonitorManage extends PureComponent {
       console.log(' error ： ', error);
     }
   };
-
+  succ = params => {
+    console.log(' succ,  , ： ', params);
+  };
   renderModalContent = e => {
     const { action } = this.props;
     const formComProps = {
@@ -219,6 +221,7 @@ class MonitorManage extends PureComponent {
               'text/csv,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           }}
           formItemLayout={smallLayout}
+          succ={this.succ}
         ></UploadCom>
       );
     }
