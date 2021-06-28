@@ -666,20 +666,6 @@ const ClientReportForm = props => {
     },
     {
       noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      itemProps: {
-        label: '倍率',
-        name: 'magnification',
-      },
-      comProps: {
-        disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
       formType: 'Select',
       selectData: [
         {
@@ -740,49 +726,6 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '功率因数实际值',
-        name: 'power_factor_real',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '功率因数考核值',
-        name: 'power_factor',
-      },
-      comProps: {
-        disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '力率（%）',
-        name: 'power_factor_adjust',
-      },
-      comProps: {
         className: 'w-180 ',
       },
     },
@@ -938,42 +881,6 @@ const ClientReportForm = props => {
       colCls: 'plainTextItem',
       itemProps: {
         label: '金额',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '基本电价单价',
-        label: '基本电费计费',
-      },
-    },
-    // ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_volume',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_price',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basicMoney',
       },
       comProps: {
         disabled: true,
@@ -1486,6 +1393,42 @@ const ClientReportForm = props => {
     {
       formType: 'plainText',
       itemProps: {
+        label: '基本电价单价',
+        label: '基本电费计费',
+      },
+    },
+    // ...placeholderItems,
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basic_volume',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basic_price',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basicMoney',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+
+    {
+      formType: 'plainText',
+      itemProps: {
         label: '小计金额',
       },
     },
@@ -1596,23 +1539,35 @@ const ClientReportForm = props => {
     //   //   onChange: e => onUnitChange(e, 'other_price'),
     //   // },
     // },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '应付账款',
-      },
-    },
-    ...placeholderItems,
+
     {
       noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      itemProps: {
+        label: '倍率',
+        name: 'magnification',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
-        label: '',
+        label: '应付账款',
         name: 'amount',
         tooltip: 'Tips: 键盘回车相当于点击确认按钮！',
       },
       comProps: {
         disabled: true,
+        className: 'w-180 ',
         onPressEnter: () =>
           props.onOk({
             form: props.propsForm,
@@ -1620,6 +1575,57 @@ const ClientReportForm = props => {
       },
     },
 
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '功率因数实际值',
+        name: 'power_factor_real',
+      },
+      comProps: {
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '功率因数考核值',
+        name: 'power_factor',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-180 ',
+      },
+    },
+    // {
+    //   noRule: true,
+    //   withFlex: true,
+    //   flexRow: 2,
+    //   colCls: 'dif w50',
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '力率（%）',
+    //     name: 'power_factor_adjust',
+    //   },
+    //   comProps: {
+    //     className: 'w-180 ',
+    //   },
+    // },
+
+    // {
+    //   formType: 'plainText',
+    //   itemProps: {
+    //     label: '应付账款',
+    //   },
+    // },
+    // ...placeholderItems,
     // {
     //   noRule: true,
     //   formType: 'InputNumber',

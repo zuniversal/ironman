@@ -40,8 +40,8 @@ const Login = props => {
         <div className="f1"></div>
         <div className="loginForm">
           <div className="loginRow">
-            <img src={loginAvatar} className="loginAvatar" />
-            <div className="sysystemTitle">欢迎登录电管家平台</div>
+            {/* <img src={loginAvatar} className="loginAvatar" /> */}
+            <div className="sysystemTitle">欢迎登录</div>
           </div>
 
           <LoginForm

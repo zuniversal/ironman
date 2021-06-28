@@ -259,7 +259,8 @@ export default React.memo(function SmartMonitor(props) {
   );
 
   const [point, setPoint] = React.useState();
-  const [tab, setTab] = React.useState(REAL_DATA);
+  // const [tab, setTab] = React.useState(REAL_DATA);
+  const [tab, setTab] = React.useState(HISTORY);
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
     moment(moment().format('YYYY-MM-DD')),
@@ -352,6 +353,12 @@ export default React.memo(function SmartMonitor(props) {
           emptyText="暂无监控点信息，无法展示监控数据"
         >
           <Tabs onChange={val => setTab(val)}>
+            <TabPane tab="历史" key={HISTORY}>
+              <RealDataTableCom
+                {...paramProps}
+                load={tab === HISTORY}
+              ></RealDataTableCom>
+            </TabPane>
             <TabPane tab="实时监控数据" key={REAL_DATA}>
               <RealData {...paramProps} load={tab === REAL_DATA} />
             </TabPane>
@@ -468,12 +475,6 @@ export default React.memo(function SmartMonitor(props) {
             </TabPane>
             <TabPane tab="峰平谷" key="peak">
               <ChartPeak {...paramProps} load={tab === 'peak'} />
-            </TabPane>
-            <TabPane tab="历史" key={HISTORY}>
-              <RealDataTableCom
-                {...paramProps}
-                load={tab === HISTORY}
-              ></RealDataTableCom>
             </TabPane>
           </Tabs>
         </Container>

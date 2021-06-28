@@ -100,15 +100,15 @@ export const getShowRealData = data => {
       value: 'eq2',
     },
     {
-      label: '环境温度°C',
+      label: '环境温度',
       value: 't',
     },
     {
-      label: '环境湿度%',
+      label: '环境湿度',
       value: 's',
     },
     {
-      label: '温度（柜体）°C',
+      label: '温度（柜体）',
       value: 'tc',
     },
     {
@@ -117,7 +117,7 @@ export const getShowRealData = data => {
     },
     {
       label: '有功需量kW',
-      value: 'px',
+      value: 'p_d',
     },
     {
       label: '数据时间',

@@ -60,19 +60,21 @@ const Layouts = props => {
 
   const menuHeaderRender = () => (
     <div className={`menuHeaderWrapper`}>
-      <div className={`logoWrapper dfc`}>
+      {/* <div className={`logoWrapper dfc`}>
         <LogoCom className={`logoClass`}></LogoCom>
+      </div> */}
+      <div className={`logoWrapper dfc`}>
+        {system != CS_SYSTEM && !collapsed && (
+          <SearchForm
+            suffixIcon={<SwapOutlined />}
+            selectData={platformSelectConfig}
+            placeholder={'请选择平台'}
+            value={plaformFormat(platform)}
+            onChange={onPlatformChange}
+            disabled={system == CS_SYSTEM}
+          ></SearchForm>
+        )}
       </div>
-      {system != CS_SYSTEM && !collapsed && (
-        <SearchForm
-          suffixIcon={<SwapOutlined />}
-          selectData={platformSelectConfig}
-          placeholder={'请选择平台'}
-          value={plaformFormat(platform)}
-          onChange={onPlatformChange}
-          disabled={system == CS_SYSTEM}
-        ></SearchForm>
-      )}
     </div>
   );
 

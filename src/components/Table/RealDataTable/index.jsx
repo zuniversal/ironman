@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.less';
 import SmartTable from '@/common/SmartTable';
 import { Button } from 'antd';
 import useHttp from '@/hooks/useHttp';
-import {
-  getManufacturerList,
-  getList as getMonitorPointList,
-} from '@/services/monitorManage';
+import { getList as getMonitorPointList } from '@/services/monitorManage';
+import { getAlarmCurveList } from '@/services/smartMonitor';
 import { formatSelectList } from '@/utils';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
+import { editPowerInfo } from '@/services/powerStation';
 
 const RealDataTable = props => {
   console.log(' RealDataTable ： ', props);
@@ -92,7 +91,7 @@ const RealDataTable = props => {
     },
     {
       title: '有功需量',
-      dataIndex: 'px',
+      dataIndex: 'p_d',
     },
 
     {
@@ -108,16 +107,16 @@ const RealDataTable = props => {
       dataIndex: 'ep',
     },
     {
-      title: '温度（柜体）°C',
+      title: '温度（柜体）',
       dataIndex: 'tc',
     },
 
     {
-      title: '环境温度°C',
+      title: '环境温度',
       dataIndex: 't',
     },
     {
-      title: '环境湿度%',
+      title: '环境湿度',
       dataIndex: 's',
     },
     // {
@@ -131,15 +130,57 @@ const RealDataTable = props => {
 
 export default RealDataTable;
 
+const formatParams = params => {
+  console.log(' formatParams   params,   ： ', params);
+  // const query = fields.map(item => `&value=${item.value}`).join('');
+  const query = '';
+  const queryParams = `?alarm=1&point_id=${params.point_id}&start_time=${
+    params.startTime
+  }&end_time=${'2021-06-29 00:00:00'}${query}`;
+  console.log(' query ： ', query, queryParams); //
+  return queryParams;
+};
+
 export const RealDataTableCom = props => {
-  const { data: manufacturerList, req: getManufacturerListAsync } = useHttp(
-    getManufacturerList,
+  const { data: alarmCurveList, req: getAlarmCurveListAsync } = useHttp(
+    getAlarmCurveList,
     {
-      format: res => formatSelectList(res, 'manufacturer'),
+      format: res => formatSelectList(res),
+      noMountFetch: true,
+    },
+  );
+  const { data: monitorPointList, req: getMonitorPointListAsync } = useHttp(
+    () =>
+      getMonitorPointList({
+        station_id: props.stationId,
+        station_id: 5831,
+      }),
+    {
+      format: res => {
+        console.log('  副作用 对吗  res.length ', res);
+        if (res.length > 0) {
+          getAlarmCurveListAsync(() =>
+            getAlarmCurveList(
+              formatParams({
+                ...props,
+                point_id: res[0].id,
+              }),
+            ),
+          );
+        }
+        return formatSelectList(res);
+      },
     },
   );
 
-  console.log(' RealDataTableCom ： ', props, manufacturerList);
+  useEffect(() => {
+    console.log(' 副作用 ： ', props, monitorPointList); //
+    // getAlarmCurveListAsync(() => getAlarmCurveList({
+
+    // }))
+  }, [monitorPointList]);
+
+  console.log(' RealDataTableCom 副作用 ： ', props, monitorPointList);
 
   const onFieldChange = params => {
     console.log(
@@ -149,14 +190,26 @@ export const RealDataTableCom = props => {
       params.formData,
       props,
     );
-    const { time } = params.value;
-    const [day1, day2] = time;
-    const formatDay1 = day1.format('YYYY-MM-DD');
-    const formatDay2 = day2.format('YYYY-MM-DD');
-    console.log(' formatDay1 ： ', formatDay1, formatDay2);
-    // getManufacturerListAsync({
-    //   formatDay1, formatDay2,
-    // })
+    const { time = [], point_id } = params.formData;
+    console.log('  对吗  time.length ', time.length);
+    if (time.length > 0) {
+      const [day1, day2] = time;
+      const startTime = day1.format('YYYY-MM-DD HH:mm:ss');
+      const endTime = day2.format('YYYY-MM-DD HH:mm:ss');
+      console.log(' startTime ： ', time, point_id, startTime, endTime);
+      if (point_id && startTime && endTime) {
+        getAlarmCurveListAsync(() =>
+          getAlarmCurveList(
+            formatParams({
+              ...props,
+              startTime,
+              endTime,
+              point_id,
+            }),
+          ),
+        );
+      }
+    }
   };
 
   const config = [
@@ -167,37 +220,47 @@ export const RealDataTableCom = props => {
         name: 'time',
       },
     },
+    {
+      noRule: true,
+      formType: 'Search',
+      selectData: monitorPointList,
+      itemProps: {
+        label: '检测点',
+        name: 'point_id',
+      },
+    },
   ];
 
   const tableProps = {
-    dataSource: [
-      {
-        ua: 'ua',
-        ub: 'ub',
-        uc: 'uc',
-        ia: 'ia',
-        ib: 'ib',
-        ic: 'ic',
-        pa: 'pa',
-        pb: 'pb',
-        pc: 'pc',
-        psum: 'psum',
-        qa: 'qa',
-        qb: 'qb',
-        qc: 'qc',
-        qsum: 'qsum',
-        pfa: 'pfa',
-        pfb: 'pfb',
-        pfc: 'pfc',
-        pfsum: 'pfsum',
-        fr: 'fr',
-        px: 'px',
-        eq1: 'eq1',
-        eq2: 'eq2',
-        ep: 'ep',
-        tc: 'tc',
-      },
-    ],
+    // dataSource: [
+    //   {
+    //     ua: 'ua',
+    //     ub: 'ub',
+    //     uc: 'uc',
+    //     ia: 'ia',
+    //     ib: 'ib',
+    //     ic: 'ic',
+    //     pa: 'pa',
+    //     pb: 'pb',
+    //     pc: 'pc',
+    //     psum: 'psum',
+    //     qa: 'qa',
+    //     qb: 'qb',
+    //     qc: 'qc',
+    //     qsum: 'qsum',
+    //     pfa: 'pfa',
+    //     pfb: 'pfb',
+    //     pfc: 'pfc',
+    //     pfsum: 'pfsum',
+    //     fr: 'fr',
+    //     px: 'px',
+    //     eq1: 'eq1',
+    //     eq2: 'eq2',
+    //     ep: 'ep',
+    //     tc: 'tc',
+    //   },
+    // ],
+    dataSource: alarmCurveList,
     // count: props.count,
     title: () => (
       <div className={'fsb'}>
@@ -206,12 +269,12 @@ export const RealDataTableCom = props => {
           // init={this.props.searchInfo}
           onFieldChange={onFieldChange}
         ></SearchForm>
-        <Button
+        {/* <Button
           type="primary"
           // onClick={() => this.props.exportData()}
         >
           导出Excel
-        </Button>
+        </Button> */}
       </div>
     ),
   };
@@ -222,3 +285,5 @@ export const RealDataTableCom = props => {
     </div>
   );
 };
+
+RealDataTableCom.defaultProps = {};
