@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.less';
-import { Button } from 'antd';
+import { Button, Form } from 'antd';
 import SmartForm from '@/common/SmartForm';
 import { halfFormLayouts } from '@/configs';
 import { layout } from '@topology/layout';
@@ -19,9 +19,11 @@ import {
   fromArrowConfig,
   toArrowConfig,
 } from '../configs';
+import { useEffect } from 'react';
 
 const LineAttrForm = React.memo(props => {
   console.log(' LineAttrForm   props, ,   ： ', props);
+  const [form] = Form.useForm();
   const { data, onFormValueChange } = props;
 
   const onFormLayoutChange = params => {
@@ -30,6 +32,15 @@ const LineAttrForm = React.memo(props => {
     const keys = Object.keys(value)[0];
     onFormValueChange(params.formData);
   };
+
+  // useEffect(() => {
+  //   const formValues = form.getFieldsValue();
+  //   console.log(' LineAttrForm formValues ： ', formValues, props )//
+  //   onFormValueChange({
+  //     ...formValues,
+  //     toArrow: '',
+  //   });
+  // }, [])
 
   const config = [
     {
@@ -380,6 +391,7 @@ const LineAttrForm = React.memo(props => {
           formLayouts={halfFormLayouts}
           init={data?.line}
           onFieldChange={onFormLayoutChange}
+          propsForm={form}
         ></SmartForm>
       </div>
     </div>

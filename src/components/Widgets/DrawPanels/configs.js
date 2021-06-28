@@ -220,6 +220,10 @@ export const fromArrowConfig = [
 
 export const toArrowConfig = [
   {
+    label: '空',
+    value: '',
+  },
+  {
     label: '实心三角形',
     value: 'triangleSolid',
   },

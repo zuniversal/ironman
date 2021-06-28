@@ -184,8 +184,8 @@ export let canvas = {};
 const canvasOptions = {
   rotateCursor: '/img/rotate.cur',
   data: {
-    lineName: 'lineName',
-    toArrow: null,
+    // lineName: 'lineName',
+    toArrow: '',
   },
 };
 
@@ -720,11 +720,20 @@ const DrawPanel = props => {
     canvas = new Topology('topology-canvas', canvasOptions);
     canvas.grid = true;
     canvas.rule = true;
-    canvas.data.lineName = 'line';
-    canvas.data.toArrow = 'circleSolid';
+    // canvas.data.lineName = '';
+    canvas.data.toArrow = '';
     console.log(' canvascanvas ： ', canvas); //
 
     canvas.open(drawData);
+
+    setTimeout(() => {
+      console.log('  延时器 canvascanvas ： ');
+      // canvas.updateProps({
+      //   toArrow: "diamond",
+      // });
+      canvas.data.toArrow = '';
+      console.log('  延时器 canvascanvas ： ', canvas);
+    }, 0);
 
     document.onclick = event => {
       // console.log(' document ： ', event);

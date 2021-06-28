@@ -1140,9 +1140,6 @@ const ClientReportForm = props => {
         label: '',
         name: 'peak_price2',
       },
-      comProps: {
-        disabled: true,
-      },
     },
 
     {
@@ -1174,9 +1171,6 @@ const ClientReportForm = props => {
       itemProps: {
         label: '',
         name: 'usual_price2',
-      },
-      comProps: {
-        disabled: true,
       },
     },
 
@@ -1210,9 +1204,6 @@ const ClientReportForm = props => {
         label: '',
         name: 'valley_price2',
       },
-      comProps: {
-        disabled: true,
-      },
     },
 
     {
@@ -1244,9 +1235,6 @@ const ClientReportForm = props => {
       itemProps: {
         label: '',
         name: 'tip_price2',
-      },
-      comProps: {
-        disabled: true,
       },
     },
 
@@ -1510,6 +1498,9 @@ const ClientReportForm = props => {
         label: '',
         name: 'calcMoeny',
       },
+      comProps: {
+        disabled: true,
+      },
     },
 
     {
@@ -1621,6 +1612,7 @@ const ClientReportForm = props => {
         tooltip: 'Tips: 键盘回车相当于点击确认按钮！',
       },
       comProps: {
+        disabled: true,
         onPressEnter: () =>
           props.onOk({
             form: props.propsForm,

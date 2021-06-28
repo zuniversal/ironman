@@ -18,11 +18,13 @@ import ChartPeak from './ChartPeak';
 import ChartLine from './ChartLine';
 import ChartLine2 from './ChartLine2';
 import * as services from '@/services/smartMonitor';
+import { RealDataTableCom } from '@/components/Table/RealDataTable';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 
+const HISTORY = 'HISTORY';
 const REAL_DATA = 'REAL_DATA';
 const ENERGY_CHART = 'ENERGY_CHART';
 const toPercent = val => (isNumber(val) ? val * 100 : val);
@@ -298,7 +300,8 @@ export default React.memo(function SmartMonitor(props) {
       setHackValue(undefined);
     }
   };
-  const hiddenDate = tab === REAL_DATA || tab === ENERGY_CHART;
+  const hiddenDate =
+    tab === REAL_DATA || tab === ENERGY_CHART || tab === HISTORY;
 
   return (
     <div className={styles.container}>
@@ -465,6 +468,12 @@ export default React.memo(function SmartMonitor(props) {
             </TabPane>
             <TabPane tab="峰平谷" key="peak">
               <ChartPeak {...paramProps} load={tab === 'peak'} />
+            </TabPane>
+            <TabPane tab="历史" key={HISTORY}>
+              <RealDataTableCom
+                {...paramProps}
+                load={tab === HISTORY}
+              ></RealDataTableCom>
             </TabPane>
           </Tabs>
         </Container>

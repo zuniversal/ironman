@@ -195,7 +195,7 @@ class Assets extends PureComponent {
     };
     return (
       <div className="assetInfoWrapper">
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} className="w100">
           <Col span={8}>
             <ClientSimpleTable {...tableProps}></ClientSimpleTable>
           </Col>

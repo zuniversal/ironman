@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import './style.less';
 import { FileOutlined, InfoCircleOutlined } from '@ant-design/icons';
@@ -153,7 +153,7 @@ const Headers = props => {
   console.log(' HeadersHeaders ： ', props); //
   const onMenuClick = event => {
     const { key } = event;
-
+    console.log(' onMenuClick ： ', key); //
     if (!key) {
       return;
     }
@@ -188,6 +188,12 @@ const Headers = props => {
 
   const { data = {} } = props.canvas;
   const { lineName = 'curve' } = data;
+
+  // useEffect(() => {
+  //   console.log(' useEffect副作用  ： ',  props, canvas )//
+  //   // canvas.data.toArrow = ''
+  //   // canvas.render();
+  // }, [])
 
   const scale = data.scale ? Math.floor(data.scale * 100) : 100;
   console.log(' HeadersHeaders ： ', props, data);
