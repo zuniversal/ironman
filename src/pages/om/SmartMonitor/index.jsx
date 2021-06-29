@@ -194,7 +194,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
                   fields={[
                     {
                       name: '有功需量',
-                      value: 'px',
+                      value: 'p_d',
                     },
                   ]}
                 />
@@ -259,25 +259,31 @@ export default React.memo(function SmartMonitor(props) {
   );
 
   const [point, setPoint] = React.useState();
-  // const [tab, setTab] = React.useState(REAL_DATA);
-  const [tab, setTab] = React.useState(HISTORY);
+  const [imei, setImei] = React.useState(null);
+
+  const [tab, setTab] = React.useState(REAL_DATA);
+  // const [tab, setTab] = React.useState(HISTORY);
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
     moment(moment().format('YYYY-MM-DD')),
     moment(),
   ]);
 
-  const onChange = item => {
+  const onChange = (item, rest) => {
+    console.log(' onChange   ： ', item, rest); //
     setPoint(item);
+    setImei(rest.imei);
   };
 
   React.useEffect(() => {
     if (points && points.length) {
       setPoint(points[0].line);
+      setImei(points[0].imei);
     }
   }, [points]);
 
   const paramProps = {
+    imei,
     number,
     stationId,
     point,
@@ -324,6 +330,7 @@ export default React.memo(function SmartMonitor(props) {
             options={map(points, item => ({
               label: item.name,
               value: item.line,
+              imei: item.imei,
             }))}
             value={point}
           />
@@ -353,12 +360,6 @@ export default React.memo(function SmartMonitor(props) {
           emptyText="暂无监控点信息，无法展示监控数据"
         >
           <Tabs onChange={val => setTab(val)}>
-            <TabPane tab="历史" key={HISTORY}>
-              <RealDataTableCom
-                {...paramProps}
-                load={tab === HISTORY}
-              ></RealDataTableCom>
-            </TabPane>
             <TabPane tab="实时监控数据" key={REAL_DATA}>
               <RealData {...paramProps} load={tab === REAL_DATA} />
             </TabPane>
@@ -475,6 +476,13 @@ export default React.memo(function SmartMonitor(props) {
             </TabPane>
             <TabPane tab="峰平谷" key="peak">
               <ChartPeak {...paramProps} load={tab === 'peak'} />
+            </TabPane>
+            <TabPane tab="历史" key={HISTORY}>
+              <RealDataTableCom
+                {...paramProps}
+                load={tab === HISTORY}
+                time={date}
+              ></RealDataTableCom>
             </TabPane>
           </Tabs>
         </Container>

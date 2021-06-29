@@ -27,6 +27,7 @@ export default {
     count: 0,
     itemDetail: {},
     d_id: '',
+    searchInfo: {},
   },
 
   reducers: {
@@ -59,6 +60,7 @@ export default {
         })),
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {

@@ -4,64 +4,96 @@ import moment from 'moment';
 export const getShowRealData = data => {
   const mapping = [
     {
-      label: 'AB线电压V',
-      value: () => transNumber(get(data, 'ua') * Math.sqrt(3)),
+      label: 'IMEI号',
+      value: 'imei',
     },
     {
-      label: 'BC线电压V',
-      value: () => transNumber(get(data, 'ub') * Math.sqrt(3)),
-    },
-    {
-      label: 'CA线电压V',
-      value: () => transNumber(get(data, 'uc') * Math.sqrt(3)),
-    },
-    {
-      label: 'A相电压V',
+      label: 'A相电流',
       value: 'ua',
     },
     {
-      label: 'B相电压V',
+      label: 'B相电流',
       value: 'ub',
     },
     {
-      label: 'C相电压V',
+      label: 'C相电流',
       value: 'uc',
     },
     {
-      label: 'A相电流A',
+      label: 'AB线电压',
+      value: 'uab',
+    },
+    {
+      label: 'BC线电压',
+      value: 'ubc',
+    },
+    {
+      label: 'CA线电压',
+      value: 'uca',
+    },
+    {
+      label: 'A相电流',
       value: 'ia',
     },
     {
-      label: 'B相电流A',
+      label: 'B相电流',
       value: 'ib',
     },
     {
-      label: 'C相电流A',
+      label: 'C相电流',
       value: 'ic',
     },
     {
-      label: 'A相有功功率kW',
+      label: '剩余电流',
+      value: 'ir',
+    },
+    {
+      label: 'A相有功功率',
       value: 'pa',
     },
     {
-      label: 'B相有功功率kW',
+      label: 'B相有功功率',
       value: 'pb',
     },
     {
-      label: 'C相有功功率kW',
+      label: 'C相有功功率',
       value: 'pc',
     },
     {
-      label: 'A相无功功率Kvar',
+      label: '总有功功率',
+      value: 'p',
+    },
+    {
+      label: 'A相无功功率',
       value: 'qa',
     },
     {
-      label: 'B相无功功率Kvar',
+      label: 'B相无功功率',
       value: 'qb',
     },
     {
-      label: 'C相无功功率Kvar',
+      label: 'C相无功功率',
       value: 'qc',
+    },
+    {
+      label: '总无功功率',
+      value: 'q',
+    },
+    {
+      label: 'A相视在功率',
+      value: 'sa',
+    },
+    {
+      label: 'A相视在功率',
+      value: 'sb',
+    },
+    {
+      label: 'A相视在功率',
+      value: 'sc',
+    },
+    {
+      label: 'A相视在功率',
+      value: 's',
     },
     {
       label: 'A相功率因数',
@@ -76,56 +108,80 @@ export const getShowRealData = data => {
       value: 'pfc',
     },
     {
-      label: '总有功功率kW',
-      value: 'psum',
-    },
-    {
-      label: '总无功功率Kvar',
-      value: 'qsum',
-    },
-    {
       label: '总功率因数',
-      value: 'pfsum',
+      value: 'pf',
     },
     {
-      label: '总有功电度kWh',
-      value: 'ep',
+      label: '电源频率',
+      value: 'f',
     },
     {
-      label: '感性无功电度kVarh',
-      value: 'eq1',
+      label: '总有功电能',
+      value: 'ept',
     },
     {
-      label: '容性无功电度kVarh',
-      value: 'eq2',
+      label: '正向无功电能',
+      value: 'eqi',
     },
     {
-      label: '环境温度',
-      value: 't',
+      label: '反向无功电能',
+      value: 'eqe',
     },
     {
-      label: '环境湿度',
-      value: 's',
-    },
-    {
-      label: '温度（柜体）',
-      value: 'tc',
-    },
-    {
-      label: '电网频率HZ',
-      value: 'fr',
-    },
-    {
-      label: '有功需量kW',
+      label: '总有功功率实时需量',
       value: 'p_d',
     },
     {
-      label: '数据时间',
-      value: () => {
-        const val = get(data, 'tm');
-        // return val ? moment(val).format('YYYY-MM-DD hh:mm:ss') : '-';
-        return val ? val.split('T').join(' ') : '-';
-      },
+      label: '三相电压不平衡度',
+      value: 'lvur',
+    },
+    {
+      label: '三相电流不平衡度',
+      value: 'iur',
+    },
+    {
+      label: 'A相电压总谐波畸变率',
+      value: 'ua_thd',
+    },
+    {
+      label: 'B相电压总谐波畸变率',
+      value: 'ub_thd',
+    },
+    {
+      label: 'C相电压总谐波畸变率',
+      value: 'uc_thd',
+    },
+    {
+      label: 'A相电流总谐波畸变率',
+      value: 'ia_thd',
+    },
+    {
+      label: 'B相电流总谐波畸变率',
+      value: 'ib_thd',
+    },
+    {
+      label: 'C相电流总谐波畸变率',
+      value: 'ic_thd',
+    },
+    {
+      label: '温度1',
+      value: 't1',
+    },
+    {
+      label: '温度2',
+      value: 't2',
+    },
+    {
+      label: '温度3',
+      value: 't3',
+    },
+    {
+      label: '温度4',
+      value: 't4',
+    },
+    {
+      label: '负载率',
+      value: 'p_rate',
     },
   ];
   return mapping.map(item => {

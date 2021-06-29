@@ -455,6 +455,7 @@ const ClientReportForm = props => {
 
     const initFields = {
       calcMoeny: calcRes,
+      calcTotalPowerRes,
       ...calcAllMoenyValRes,
     };
     const setFields = {
@@ -701,63 +702,6 @@ const ClientReportForm = props => {
         className: 'w-180 ',
       },
     },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      itemProps: {
-        label: '装接总容量',
-        name: 'transformer_capacity',
-      },
-      comProps: {
-        disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      itemProps: {
-        label: '实际总容量',
-        name: 'capacity',
-      },
-      comProps: {
-        disabled: true,
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '无功电量',
-        name: 'idle_volume',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '契约限额',
-        name: 'report_md',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
     // {
     //   noRule: true,
     //   withFlex: true,
@@ -801,19 +745,6 @@ const ClientReportForm = props => {
         className: 'w-180 ',
       },
     },
-    // {
-    //   noRule: true,
-    //   withFlex: true,
-    //   flexRow: 2,
-    //   colCls: 'dif w50',
-    //   formType: 'plainText',
-    //   itemProps: {
-    //     label: '',
-    //   },
-    //   comProps: {
-    //     className: 'w-180 ',
-    //   },
-    // },
 
     // {
     //   colCls: 'hidden',
@@ -843,6 +774,62 @@ const ClientReportForm = props => {
         // disabled: true,
         onChange: onBillTypeChange,
         className: 'w-180 ',
+      },
+    },
+    // {
+    //   noRule: true,
+    //   withFlex: true,
+    //   flexRow: 2,
+    //   colCls: 'dif w50',
+    //   formType: 'plainText',
+    //   itemProps: {
+    //     label: '',
+    //   },
+    //   comProps: {
+    //     className: 'w-180 ',
+    //   },
+    // },
+
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 3,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '契约限额',
+        name: 'report_md',
+      },
+      comProps: {
+        className: 'w-120 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 3,
+      colCls: 'dif w50',
+      itemProps: {
+        label: '装接总容量',
+        name: 'transformer_capacity',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-120 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 3,
+      colCls: 'dif w50',
+      itemProps: {
+        label: '实际总容量',
+        name: 'capacity',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-120 ',
       },
     },
 
@@ -1542,6 +1529,37 @@ const ClientReportForm = props => {
 
     {
       noRule: true,
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '有功电量',
+        name: 'calcTotalPowerRes',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '无功电量',
+        name: 'idle_volume',
+      },
+      comProps: {
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
       withFlex: true,
       flexRow: 2,
       colCls: 'dif w50',
@@ -1582,6 +1600,21 @@ const ClientReportForm = props => {
       colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
+        label: '功率因数考核值',
+        name: 'power_factor',
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
         label: '功率因数实际值',
         name: 'power_factor_real',
       },
@@ -1596,28 +1629,13 @@ const ClientReportForm = props => {
       colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
-        label: '功率因数考核值',
-        name: 'power_factor',
+        label: '力率（%）',
+        name: 'power_factor_adjust',
       },
       comProps: {
-        disabled: true,
         className: 'w-180 ',
       },
     },
-    // {
-    //   noRule: true,
-    //   withFlex: true,
-    //   flexRow: 2,
-    //   colCls: 'dif w50',
-    //   formType: 'InputNumber',
-    //   itemProps: {
-    //     label: '力率（%）',
-    //     name: 'power_factor_adjust',
-    //   },
-    //   comProps: {
-    //     className: 'w-180 ',
-    //   },
-    // },
 
     // {
     //   formType: 'plainText',

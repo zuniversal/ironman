@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './style.less';
 import SmartTable from '@/common/SmartTable';
-import { Button } from 'antd';
+import { Button, Form } from 'antd';
 import useHttp from '@/hooks/useHttp';
 import { getList as getMonitorPointList } from '@/services/monitorManage';
 import { getAlarmCurveList } from '@/services/smartMonitor';
@@ -14,60 +14,96 @@ const RealDataTable = props => {
 
   const columns = [
     {
-      title: 'A相电压V',
+      title: 'IMEI号',
+      dataIndex: 'imei',
+    },
+    {
+      title: 'A相电流',
       dataIndex: 'ua',
     },
     {
-      title: 'B相电压V',
+      title: 'B相电流',
       dataIndex: 'ub',
     },
     {
-      title: 'C相电压V',
+      title: 'C相电流',
       dataIndex: 'uc',
     },
     {
-      title: 'A相电流A',
+      title: 'AB线电压',
+      dataIndex: 'uab',
+    },
+    {
+      title: 'BC线电压',
+      dataIndex: 'ubc',
+    },
+    {
+      title: 'CA线电压',
+      dataIndex: 'uca',
+    },
+    {
+      title: 'A相电流',
       dataIndex: 'ia',
     },
     {
-      title: 'B相电流A',
+      title: 'B相电流',
       dataIndex: 'ib',
     },
     {
-      title: 'C相电流A',
+      title: 'C相电流',
       dataIndex: 'ic',
     },
     {
-      title: 'A相有功',
+      title: '剩余电流',
+      dataIndex: 'ir',
+    },
+    {
+      title: 'A相有功功率',
       dataIndex: 'pa',
     },
     {
-      title: 'B相有功',
+      title: 'B相有功功率',
       dataIndex: 'pb',
     },
     {
-      title: 'C相有功',
+      title: 'C相有功功率',
       dataIndex: 'pc',
     },
     {
       title: '总有功功率',
-      dataIndex: 'psum',
+      dataIndex: 'p',
     },
     {
-      title: 'A相无功',
+      title: 'A相无功功率',
       dataIndex: 'qa',
     },
     {
-      title: 'B相无功',
+      title: 'B相无功功率',
       dataIndex: 'qb',
     },
     {
-      title: 'C相无功',
+      title: 'C相无功功率',
       dataIndex: 'qc',
     },
     {
       title: '总无功功率',
-      dataIndex: 'qsum',
+      dataIndex: 'q',
+    },
+    {
+      title: 'A相视在功率',
+      dataIndex: 'sa',
+    },
+    {
+      title: 'A相视在功率',
+      dataIndex: 'sb',
+    },
+    {
+      title: 'A相视在功率',
+      dataIndex: 'sc',
+    },
+    {
+      title: 'A相视在功率',
+      dataIndex: 's',
     },
     {
       title: 'A相功率因数',
@@ -83,46 +119,80 @@ const RealDataTable = props => {
     },
     {
       title: '总功率因数',
-      dataIndex: 'pfsum',
+      dataIndex: 'pf',
     },
     {
-      title: '电网频率',
-      dataIndex: 'fr',
+      title: '电源频率',
+      dataIndex: 'f',
     },
     {
-      title: '有功需量',
+      title: '总有功电能',
+      dataIndex: 'ept',
+    },
+    {
+      title: '正向无功电能',
+      dataIndex: 'eqi',
+    },
+    {
+      title: '反向无功电能',
+      dataIndex: 'eqe',
+    },
+    {
+      title: '总有功功率实时需量',
       dataIndex: 'p_d',
     },
-
     {
-      title: '感性无功电度',
-      dataIndex: 'eq1',
+      title: '三相电压不平衡度',
+      dataIndex: 'lvur',
     },
     {
-      title: '容性无功电度',
-      dataIndex: 'eq2',
+      title: '三相电流不平衡度',
+      dataIndex: 'iur',
     },
     {
-      title: '总有功电度',
-      dataIndex: 'ep',
+      title: 'A相电压总谐波畸变率',
+      dataIndex: 'ua_thd',
     },
     {
-      title: '温度（柜体）',
-      dataIndex: 'tc',
-    },
-
-    {
-      title: '环境温度',
-      dataIndex: 't',
+      title: 'B相电压总谐波畸变率',
+      dataIndex: 'ub_thd',
     },
     {
-      title: '环境湿度',
-      dataIndex: 's',
+      title: 'C相电压总谐波畸变率',
+      dataIndex: 'uc_thd',
     },
-    // {
-    //   title: '数据接收时间',
-    //   dataIndex: '',
-    // },
+    {
+      title: 'A相电流总谐波畸变率',
+      dataIndex: 'ia_thd',
+    },
+    {
+      title: 'B相电流总谐波畸变率',
+      dataIndex: 'ib_thd',
+    },
+    {
+      title: 'C相电流总谐波畸变率',
+      dataIndex: 'ic_thd',
+    },
+    {
+      title: '温度1',
+      dataIndex: 't1',
+    },
+    {
+      title: '温度2',
+      dataIndex: 't2',
+    },
+    {
+      title: '温度3',
+      dataIndex: 't3',
+    },
+    {
+      title: '温度4',
+      dataIndex: 't4',
+    },
+    {
+      title: '负载率',
+      dataIndex: 'p_rate',
+    },
   ];
 
   return <SmartTable columns={columns} {...props} noActionCol></SmartTable>;
@@ -134,51 +204,55 @@ const formatParams = params => {
   console.log(' formatParams   params,   ： ', params);
   // const query = fields.map(item => `&value=${item.value}`).join('');
   const query = '';
-  const queryParams = `?alarm=1&point_id=${params.point_id}&start_time=${
-    params.startTime
-  }&end_time=${'2021-06-29 00:00:00'}${query}`;
+  const queryParams = `?point_id=${params.point_id}&start_time=${params.startTime}&end_time=${params.endTime}${query}`;
   console.log(' query ： ', query, queryParams); //
   return queryParams;
 };
 
 export const RealDataTableCom = props => {
-  const { data: alarmCurveList, req: getAlarmCurveListAsync } = useHttp(
-    getAlarmCurveList,
-    {
-      format: res => formatSelectList(res),
-      noMountFetch: true,
-    },
-  );
+  const [form] = Form.useForm();
+
+  const {
+    data: alarmCurveList,
+    isLoading,
+    req: getAlarmCurveListAsync,
+  } = useHttp(getAlarmCurveList, {
+    format: res => formatSelectList(res),
+    noMountFetch: true,
+  });
   const { data: monitorPointList, req: getMonitorPointListAsync } = useHttp(
     () =>
       getMonitorPointList({
         station_id: props.stationId,
-        station_id: 5831,
+        // station_id: 5831,
       }),
     {
       format: res => {
         console.log('  副作用 对吗  res.length ', res);
         if (res.length > 0) {
-          getAlarmCurveListAsync(() =>
-            getAlarmCurveList(
+          getAlarmCurveListAsync(() => {
+            form.setFieldsValue({
+              point_id: `${res[0].id}`,
+            });
+            return getAlarmCurveList(
               formatParams({
                 ...props,
                 point_id: res[0].id,
               }),
-            ),
-          );
+            );
+          });
         }
         return formatSelectList(res);
       },
     },
   );
 
-  useEffect(() => {
-    console.log(' 副作用 ： ', props, monitorPointList); //
-    // getAlarmCurveListAsync(() => getAlarmCurveList({
+  // useEffect(() => {
+  //   console.log(' 副作用 ： ', props, monitorPointList); //
+  //   // getAlarmCurveListAsync(() => getAlarmCurveList({
 
-    // }))
-  }, [monitorPointList]);
+  //   // }))
+  // }, [monitorPointList]);
 
   console.log(' RealDataTableCom 副作用 ： ', props, monitorPointList);
 
@@ -262,12 +336,14 @@ export const RealDataTableCom = props => {
     // ],
     dataSource: alarmCurveList,
     // count: props.count,
+    loading: isLoading,
     title: () => (
       <div className={'fsb'}>
         <SearchForm
           config={config}
-          // init={this.props.searchInfo}
+          init={{ time: props.time }}
           onFieldChange={onFieldChange}
+          propsForm={form}
         ></SearchForm>
         {/* <Button
           type="primary"
