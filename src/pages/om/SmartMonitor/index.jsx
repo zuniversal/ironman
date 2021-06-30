@@ -60,7 +60,11 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   const [tab, setTab] = React.useState('u');
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
-    moment(moment(day).format('YYYY-MM-DD')),
+    moment(
+      moment(day)
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD'),
+    ),
     moment(day),
   ]);
 
@@ -79,8 +83,10 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     // stationId,
     // point,
     point_id,
-    startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
-    endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+    // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
+    // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+    startTime: date[0] ? date[0].format('YYYY-MM-DD HH:mm:ss') : null,
+    endTime: date[1] ? date[1].format('YYYY-MM-DD HH:mm:ss') : null,
   };
   console.log(
     ' hackValue || date ： ',
@@ -129,6 +135,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
               disabledDate={disabledDate}
               value={hackValue || date}
               dropdownClassName={styles.datepicker}
+              showTime
               // bordered={false}
             />
           </div>

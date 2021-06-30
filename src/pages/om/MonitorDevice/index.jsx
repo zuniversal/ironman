@@ -15,6 +15,7 @@ import { actions, mapStateToProps } from '@/models/monitorDevice';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
+import UploadCom from '@/components/Widgets/UploadCom';
 
 const TITLE = '监控';
 
@@ -24,6 +25,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  uploadFile: `文件上传`,
   monitorManageAsync: `${TITLE}详情`,
   getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
@@ -67,6 +69,12 @@ class MonitorManage extends PureComponent {
           disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
+        </Button>
+        <Button
+          type="primary"
+          onClick={() => this.props.showFormModal({ action: 'uploadFile' })}
+        >
+          Excel导入
         </Button>
       </div>
     );
@@ -197,8 +205,42 @@ class MonitorManage extends PureComponent {
       };
       return <RealDataImei {...this.props.realDataParams}></RealDataImei>;
     }
+    if (action === 'uploadFile') {
+      const smallLayout = {
+        labelCol: {
+          sm: { span: 5 }, //
+        },
+        wrapperCol: {
+          sm: { span: 19 }, //
+        },
+      };
+      return (
+        <UploadCom
+          label={this.state.titleMap[action]}
+          action={'file'}
+          isInputUpload
+          contentClass={'dfc'}
+          formItemCls={'assetsUpload'}
+          action={'/api/v1/upload'}
+          name={'file'}
+          extra={'支持扩展名:xls、xlsx、csv'}
+          uploadProps={{
+            accept:
+              'text/csv,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          }}
+          formItemLayout={smallLayout}
+          succ={this.succ}
+        ></UploadCom>
+      );
+    }
     return <MonitorDeviceForm {...formComProps}></MonitorDeviceForm>;
   };
+  get size() {
+    if (this.props.action === 'uploadFile') {
+      return 'small';
+    }
+    return 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -207,6 +249,7 @@ class MonitorManage extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>
