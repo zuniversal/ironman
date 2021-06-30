@@ -29,6 +29,4 @@ const GoodsTable = props => {
   return <SmartTable columns={columns} {...props}></SmartTable>;
 };
 
-GoodsTable.defaultProps = {};
-
 export default GoodsTable;

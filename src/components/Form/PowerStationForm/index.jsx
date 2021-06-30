@@ -39,6 +39,8 @@ import {
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
 import ReduxTable from '@/common/ReduxTable';
+import PowerNumberTable from '@/components/Table/PowerNumberTable';
+import OutlineTable from '@/components/Table/OutlineTable';
 import useHttp from '@/hooks/useHttp';
 import { getPowerInfo } from '@/services/powerStation';
 import { history } from 'umi';
@@ -64,11 +66,15 @@ const PowerStationForm = props => {
   const isAdd = props.action === 'add';
   const outlineSetArr = isAdd
     ? []
-    : props.init.outline_set
-        .filter(v => v.power_number)
+    : // : props.init.outline_set
+      props.outLineTableData
+        // .filter(v => v.power_number)
+        .filter(v => v.power_number_id)
         .map(v => ({
-          value: `${v.power_number.id}`,
-          label: v.power_number.power_number,
+          // value: `${v.power_number.id}`,
+          // label: v.power_number.power_number,
+          value: `${v.power_number_id}`,
+          label: v.power_number_name,
         }));
   const { data: powerInfoList, req: getPowerInfoAsync } = useHttp(
     isAdd
@@ -91,6 +97,7 @@ const PowerStationForm = props => {
     props,
     inspectMode,
     powerInfoList,
+    outlineSetArr,
     props.init.id,
     powerInfoList.filter(v => v.powerStation == props.init.id),
   );
@@ -520,12 +527,20 @@ const PowerStationForm = props => {
 
   const config = action !== 'detail' ? actionConfig : detailConfig;
 
+  const powerNumberList = filterObjSame(
+    [...powerInfoList, ...outlineSetArr],
+    'value',
+  );
+
   const outLineConfig = [
     {
-      forShow: true,
+      // forShow: true,
       itemProps: {
         label: '出线侧编号',
         name: 'id',
+      },
+      comProps: {
+        disabled: true,
       },
     },
     {
@@ -538,7 +553,7 @@ const PowerStationForm = props => {
       formType: 'Search',
       // selectSearch: props.getPowerInfoAsync,
       // selectData: props.powerInfoList,
-      selectData: filterObjSame([...powerInfoList, ...outlineSetArr], 'value'),
+      selectData: powerNumberList,
       // dataMap: arrMapObj(props.powerInfoList),
       dataMap: arrMapObj(outlineSetArr),
       itemProps: {
@@ -563,6 +578,29 @@ const PowerStationForm = props => {
     outLineTableData,
   );
 
+  const commonProps = {
+    noPad: true,
+    rowSelection: null,
+    pagination: false,
+    showFormModal2: props.showFormModal2,
+  };
+
+  const powerNumberTableProps = {
+    ...commonProps,
+    dataSource: powerInfoData,
+    edit: props.showFormModal2,
+    remove: props.removePowerInfoAsync,
+  };
+
+  const outLineTableProps = {
+    ...commonProps,
+    dataSource: outLineTableData,
+    edit: props.showFormModal2,
+    remove: props.removeOutlineAsync,
+    powerNumberList,
+    outlineSetArr,
+  };
+
   return (
     <div className={`powerStationForm`}>
       <SmartForm
@@ -581,7 +619,7 @@ const PowerStationForm = props => {
 
       {extra}
 
-      <PowerStationDetailTable
+      {/* <PowerStationDetailTable
         addPowerInfoAsync={props.addPowerInfoAsync}
         editPowerInfoAsync={props.editPowerInfoAsync}
         removePowerInfoAsync={props.removePowerInfoAsync}
@@ -608,13 +646,45 @@ const PowerStationForm = props => {
         noLimitAdd
         // hideSaveEdit={['add'].includes(action)}
         addText={'新增出线侧'}
-      ></ReduxTable>
+      ></ReduxTable> */}
+
+      <div className={'fje'}>
+        <Button
+          type="primary"
+          onClick={() => {
+            props.showFormModal2({
+              action: 'addPowerNumberAsync',
+            });
+          }}
+        >
+          新增电源编号
+        </Button>
+      </div>
+      <PowerNumberTable {...powerNumberTableProps}></PowerNumberTable>
+
+      <div className={'fje'}>
+        <Button
+          type="primary"
+          onClick={() => {
+            props.showFormModal2({
+              action: 'addOutlineAsync',
+              extraData2: {
+                powerNumberList,
+              },
+            });
+          }}
+        >
+          新增出线侧
+        </Button>
+      </div>
+      <OutlineTable {...outLineTableProps}></OutlineTable>
     </div>
   );
 };
 
 PowerStationForm.defaultProps = {
   init: {},
+  outLineTableData: [],
 };
 
 PowerStationForm.propTypes = {

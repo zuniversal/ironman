@@ -1451,19 +1451,27 @@ export const alarmRecordLevelMap = arrMapObj(alarmRecordLevelConfig);
 export const alarmRecordTypeConfig = [
   {
     value: '1',
-    label: '电压',
+    label: '电压异常',
   },
   {
     value: '2',
-    label: '电流',
+    label: '电流异常',
   },
   {
     value: '3',
-    label: '负载',
+    label: '负载异常',
   },
   {
     value: '4',
-    label: '失电',
+    label: '设备断电',
+  },
+  {
+    value: '5',
+    label: '设备失联',
+  },
+  {
+    value: '6',
+    label: '单日上传率异常',
   },
 ];
 

@@ -84,19 +84,19 @@ class AlarmRecord extends PureComponent {
       ></AlarmRecordSearchForm>
     );
   };
-  renderSearchForm = params => {
-    return (
-      <SearchKwForm
-        formBtn={this.renderFormBtn}
-        className={'fje'}
-        init={this.props.searchInfo}
-        onFieldChange={this.onFieldChange}
-        label={'监控点名称、告警名，户号，客户名，imei'}
-        keyword={'keyword'}
-        noLabel
-      ></SearchKwForm>
-    );
-  };
+  // renderSearchForm = params => {
+  //   return (
+  //     <SearchKwForm
+  //       formBtn={this.renderFormBtn}
+  //       className={'fje'}
+  //       init={this.props.searchInfo}
+  //       onFieldChange={this.onFieldChange}
+  //       label={'监控点名称、告警名，户号，客户名，imei'}
+  //       keyword={'keyword'}
+  //       noLabel
+  //     ></SearchKwForm>
+  //   );
+  // };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);

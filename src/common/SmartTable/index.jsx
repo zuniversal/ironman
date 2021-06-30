@@ -689,7 +689,7 @@ class SmartTable extends PureComponent {
           loading={this.isShowLoading}
           locale={{
             emptyText: (
-              <div className={`noData`}>
+              <div className={`noData ${!this.props.noPad && 'pad'}`}>
                 <img src={noData} className={`noDataImg`} />
                 <div className={`text`}>暂无数据</div>
               </div>

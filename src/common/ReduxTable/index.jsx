@@ -35,6 +35,7 @@ export const InputCom = props => {
   } = config;
 
   const realComProps = {
+    ...comProps,
     defaultValue: text,
     placeholder: itemProps?.label ? INPUT_TXT + itemProps?.label : placeholder,
     onChange: e =>

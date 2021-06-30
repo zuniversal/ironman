@@ -12,7 +12,7 @@ import {
 } from '@/utils';
 import moment from 'dayjs';
 
-const namespace = 'powerStation';
+const namespace = 'powerStation2';
 const { createActions } = init(namespace);
 
 const otherActions = [
@@ -38,12 +38,6 @@ const otherActions = [
   'addCircuitItemAsync',
   'editCircuitItemAsync',
   'removeCircuitItemAsync',
-
-  'addPowerNumberAsync',
-  'editPowerNumberAsync',
-  'addOutlineAsync',
-  'editOutlineAsync',
-  'removeOutlineAsync',
 ];
 
 const batchTurnActions = [
@@ -153,8 +147,7 @@ export default {
     ],
     outLineTableData: [],
     powerInfoList: [],
-    extraData2: {},
-    record: {},
+    extraData: {},
   },
 
   reducers: {
@@ -165,6 +158,7 @@ export default {
         isShowModal: true,
         action: payload.action,
         d_id: payload.d_id,
+        extraData: payload.extraData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -185,7 +179,6 @@ export default {
         isShowModal: false,
         searchInfo: payload.searchInfo,
         powerInfoData: [],
-        outLineTableData: [],
       };
     },
     getItem(state, { payload, type }) {
@@ -371,6 +364,7 @@ export default {
             ? {
                 ...v,
                 ...payload.bean,
+                isEdit: false,
               }
             : v;
         }),
@@ -399,95 +393,6 @@ export default {
       return {
         ...state,
         powerInfoData: newData,
-      };
-    },
-    addPowerInfo(state, { payload, type }) {
-      const { powerInfoData } = state;
-      console.log(' addPowerInfo ： ', state, payload, powerInfoData);
-      return {
-        ...state,
-        isShowModal2: false,
-        powerInfoData: [...powerInfoData, payload.list[0]],
-      };
-    },
-    editPowerInfo(state, { payload, type }) {
-      const { powerInfoData } = state;
-      console.log(' editPowerInfo ： ', state, payload, powerInfoData);
-      return {
-        ...state,
-        isShowModal2: false,
-        powerInfoData: powerInfoData.map((v, i) => {
-          return v.id === payload.payload.id
-            ? {
-                ...v,
-                ...payload.bean,
-              }
-            : v;
-        }),
-      };
-    },
-    removePowerInfo(state, { payload, type }) {
-      console.log(' removePowerInfo ： ', state, payload);
-      const { powerInfoData } = state;
-      return {
-        ...state,
-        powerInfoData: powerInfoData.filter(v => {
-          console.log(
-            ' v.id != payload.id ： ',
-            v.id != payload.payload.id,
-            v.id,
-            payload.id,
-          );
-          return v.id != payload.payload.id;
-        }),
-      };
-    },
-    addOutline(state, { payload, type }) {
-      const { outLineTableData } = state;
-      console.log(' addOutline ： ', state, payload, outLineTableData);
-      return {
-        ...state,
-        isShowModal2: false,
-        outLineTableData: [
-          ...outLineTableData,
-          {
-            ...payload.bean,
-            power_number: `${payload.bean.power_number.id}`,
-          },
-        ],
-      };
-    },
-    editOutline(state, { payload, type }) {
-      const { outLineTableData } = state;
-      console.log(' editOutline ： ', state, payload, outLineTableData);
-      return {
-        ...state,
-        isShowModal2: false,
-        outLineTableData: outLineTableData.map((v, i) => {
-          return v.id === payload.payload.id
-            ? {
-                ...v,
-                ...payload.bean,
-                power_number: `${payload.bean.power_number.id}`,
-              }
-            : v;
-        }),
-      };
-    },
-    removeOutline(state, { payload, type }) {
-      console.log(' removeOutline ： ', state, payload);
-      const { outLineTableData } = state;
-      return {
-        ...state,
-        outLineTableData: outLineTableData.filter(v => {
-          console.log(
-            ' v.id != payload.id ： ',
-            v.id != payload.payload.id,
-            v.id,
-            payload.id,
-          );
-          return v.id != payload.payload.id;
-        }),
       };
     },
     modifyPowerInfo(state, { payload, type }) {
@@ -605,8 +510,7 @@ export default {
         ...state,
         isShowModal2: true,
         action2: payload.action,
-        record: payload.record,
-        extraData2: payload.extraData2,
+        extraData2: payload.extraData,
       };
     },
     onCancel2(state, { payload, type }) {
@@ -1087,47 +991,6 @@ export default {
       console.log(' getDistrictAsync ： ', payload, type);
       const res = yield call(clientServices.getDistrict, payload);
       console.log('  getDistrictAsync res ：', res);
-      yield put(
-        action({
-          ...res,
-          payload,
-        }),
-      );
-    },
-
-    *addPowerNumberAsync({ payload, action, type }, { call, put }) {
-      console.log(' addOutLineTableItemAsync ： ', payload);
-      const res = yield call(services.addOutLine, payload);
-      yield put(
-        action({
-          ...res,
-          payload,
-        }),
-      );
-    },
-    *addOutlineAsync({ payload, action, type }, { call, put }) {
-      console.log(' addOutlineAsync ： ', payload);
-      const res = yield call(services.addOutLine, payload);
-      yield put(
-        action({
-          ...res,
-          payload,
-        }),
-      );
-    },
-    *editOutlineAsync({ payload, action, type }, { call, put }) {
-      console.log(' editOutlineAsync ： ', payload);
-      const res = yield call(services.editOutLine, payload);
-      yield put(
-        action({
-          ...res,
-          payload,
-        }),
-      );
-    },
-    *removeOutlineAsync({ payload, action, type }, { call, put }) {
-      console.log(' removeOutlineAsync ： ', payload);
-      const res = yield call(services.removeOutLine, payload);
       yield put(
         action({
           ...res,

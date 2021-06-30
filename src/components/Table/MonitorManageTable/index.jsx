@@ -96,14 +96,16 @@ const MonitorManageTable = props => {
   const extra = (text, record, index, props) => (
     <>
       <a
+        disabled={!record.imei}
         onClick={() => {
-          props.showFormModal({
-            // props.getRealDataAsync({
-            action: 'getRealDataAsync',
-            realDataParams: {
-              imei: record.imei,
-            },
-          });
+          record.imei &&
+            props.showFormModal({
+              // props.getRealDataAsync({
+              action: 'getRealDataAsync',
+              realDataParams: {
+                imei: record.imei,
+              },
+            });
           // props.showItemAsync({
           //   // props.getRealDataAsync({
           //   action: 'getRealDataAsync',

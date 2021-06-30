@@ -34,7 +34,7 @@ export default React.memo(function RealData(props) {
   }, []);
 
   return (
-    <Container loading={listLoading}>
+    <Container>
       <div className={styles.list}>
         {getShowRealData(list).map((item, index) => {
           return (

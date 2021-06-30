@@ -15,6 +15,8 @@ import { tips } from '@/utils';
 import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
+import PowerNumberForm from '@/components/Form/PowerNumberForm';
+import OutlineForm from '@/components/Form/OutlineForm';
 
 const TITLE = '电站';
 
@@ -29,6 +31,13 @@ const titleMap = {
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
   inspectDetailAsync: `巡检详情`,
+
+  powerNumberForm: `电源编号`,
+  outlineForm: `出线侧`,
+  addPowerNumberAsync: '电源编号',
+  editPowerNumberAsync: '电源编号',
+  addOutlineAsync: `出线侧`,
+  editOutlineAsync: `出线侧`,
 };
 
 const detailFormMap = {
@@ -277,6 +286,8 @@ class PowerStation extends PureComponent {
       houseNoList: this.props.houseNoList,
       getTeamAsync: params => this.props.getTeamAsync({ name: params }),
       teamList: this.props.teamList,
+      showFormModal2: this.props.showFormModal2,
+      removeOutlineAsync: this.props.removeOutlineAsync,
       // editPowerInfo: this.props.editPowerInfo,
       // addPowerInfoAsync: this.props.addPowerInfoAsync,
       // editPowerInfo: this.props.editPowerInfo,
@@ -284,24 +295,33 @@ class PowerStation extends PureComponent {
       // removePowerInfoAsync: this.props.removePowerInfoAsync,
     };
 
+    const powerNumberFormProps = {};
+    const outlineFormProps = {};
+
     if (action === 'exportDutyData') {
       return <PowerstationMonthForm></PowerstationMonthForm>;
+    }
+    if (action === 'powerNumberForm') {
+      return <PowerNumberForm {...powerNumberFormProps}></PowerNumberForm>;
+    }
+    if (action === 'outlineForm') {
+      return <OutlineForm {...outlineFormProps}></OutlineForm>;
     }
 
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
-    const powerTable = (
-      <PowerStationDetailTable
-        addPowerInfoAsync={this.props.addPowerInfoAsync}
-        editPowerInfoAsync={this.props.editPowerInfoAsync}
-        removePowerInfoAsync={this.props.removePowerInfoAsync}
-        modifyPowerInfo={this.props.modifyPowerInfo}
-        dataSource={this.props.powerInfoData}
-        init={this.props.itemDetail}
-      ></PowerStationDetailTable>
-    );
+    // const powerTable = (
+    //   <PowerStationDetailTable
+    //     addPowerInfoAsync={this.props.addPowerInfoAsync}
+    //     editPowerInfoAsync={this.props.editPowerInfoAsync}
+    //     removePowerInfoAsync={this.props.removePowerInfoAsync}
+    //     modifyPowerInfo={this.props.modifyPowerInfo}
+    //     dataSource={this.props.powerInfoData}
+    //     init={this.props.itemDetail}
+    //   ></PowerStationDetailTable>
+    // );
     return (
       <PowerStationForm
         {...formComProps}
@@ -310,7 +330,6 @@ class PowerStation extends PureComponent {
         removePowerInfoAsync={this.props.removePowerInfoAsync}
         modifyPowerInfo={this.props.modifyPowerInfo}
         powerInfoData={this.props.powerInfoData}
-        init={this.props.itemDetail}
         // extra={powerTable}
 
         getPowerInfoAsync={this.getPowerInfoAsync}
@@ -360,6 +379,117 @@ class PowerStation extends PureComponent {
         isNoForm={this.isNoForm}
       >
         {this.renderModalContent()}
+      </SmartFormModal>
+    );
+  };
+
+  onOk2 = async props => {
+    console.log(' onOk2 ： ', props, this.state, this.props);
+    const { action2, record } = this.props;
+    const { form } = props;
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action2);
+      if (action2 === 'addPowerNumberAsync') {
+        const { itemDetail } = this.props;
+        const params = {
+          ...record,
+          ...res,
+          // powerstation: itemDetail.id,
+        };
+        console.log(' params ： ', params); //
+        this.props.addPowerInfoAsync(params);
+      }
+      if (action2 === 'editPowerNumberAsync') {
+        const { itemDetail } = this.props;
+        const params = {
+          ...record,
+          ...res,
+          // powerstation: itemDetail.id,
+        };
+        console.log(' params ： ', params); //
+        this.props.editPowerInfoAsync(params);
+      }
+      if (action2 === 'addOutlineAsync') {
+        const { itemDetail } = this.props;
+        const params = {
+          outline_list: [
+            {
+              ...res,
+              powerstation: itemDetail.id,
+            },
+          ],
+        };
+        console.log(' params ： ', params); //
+        this.props.addOutlineAsync(params);
+      }
+      if (action2 === 'editOutlineAsync') {
+        const { itemDetail } = this.props;
+        const params = {
+          ...res,
+          d_id: res.id,
+          powerstation: record.id,
+        };
+        console.log(' params ： ', params); //
+        this.props.editOutlineAsync(params);
+      }
+      // if (action2 === 'edit') {
+      //   this.props.editItemAsync({
+      //     ...params,
+      //   });
+      // }
+    } catch (error) {
+      console.log(' error ： ', error);
+    }
+  };
+  renderModalContent2 = e => {
+    const { action2 } = this.props;
+    const formComProps = {
+      action: action2,
+      getClientAsync: params => this.props.getClientAsync({ name: params }),
+      clientList: this.props.clientList,
+      getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
+      houseNoList: this.props.houseNoList,
+      getTeamAsync: params => this.props.getTeamAsync({ name: params }),
+      teamList: this.props.teamList,
+      showFormModal2: this.props.showFormModal2,
+      // editPowerInfo: this.props.editPowerInfo,
+      // addPowerInfoAsync: this.props.addPowerInfoAsync,
+      // editPowerInfo: this.props.editPowerInfo,
+      // dataSource: this.props.powerInfoData,
+      // removePowerInfoAsync: this.props.removePowerInfoAsync,
+    };
+
+    const powerNumberFormProps = {
+      init: this.props.record,
+    };
+    const outlineFormProps = {
+      init: this.props.record,
+      ...this.props.extraData2,
+    };
+    console.log(
+      ' %c renderModalContent2 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
+    if (['addPowerNumberAsync', 'editPowerNumberAsync'].includes(action2)) {
+      return <PowerNumberForm {...powerNumberFormProps}></PowerNumberForm>;
+    }
+    if (['addOutlineAsync', 'editOutlineAsync'].includes(action2)) {
+      return <OutlineForm {...outlineFormProps}></OutlineForm>;
+    }
+  };
+  renderSmartFormModal2 = params => {
+    return (
+      <SmartFormModal
+        show={this.props.isShowModal2}
+        action={this.props.action2}
+        titleMap={this.state.titleMap}
+        onOk={this.onOk2}
+        onCancel={this.props.onCancel2}
+      >
+        {this.renderModalContent2()}
       </SmartFormModal>
     );
   };
@@ -417,6 +547,8 @@ class PowerStation extends PureComponent {
         {this.renderTable()}
 
         {this.renderSmartFormModal()}
+
+        {this.renderSmartFormModal2()}
 
         {this.renderCommonModal()}
       </div>

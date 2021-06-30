@@ -365,7 +365,12 @@ export default {
           })),
           outLineTableData: payload.bean.outline_set.map(v => ({
             ...v,
-            power_number: v.power_number.split(','),
+            // power_number: v.power_number.split(','),
+            power_number: v.power_number ? `${v.power_number.id}` : null,
+            power_number_id: v.power_number ? `${v.power_number.id}` : null,
+            power_number_name: v.power_number
+              ? `${v.power_number.power_number}`
+              : null,
             key: Math.random(),
           })),
         },
