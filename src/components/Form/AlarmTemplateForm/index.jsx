@@ -69,6 +69,18 @@ const AlarmTemplateForm = props => {
       },
     },
     {
+      noRule: true,
+      formType: 'Checkbox',
+      checkboxData: checkboxData,
+      opType: 'item',
+      itemProps: {
+        label: '是否发送到对应客户',
+        name: ['role', 'one', 'send'],
+        valuePropName: 'checked',
+      },
+    },
+
+    {
       formType: 'rowText',
       itemProps: {
         label: '电压阈值',
@@ -112,7 +124,7 @@ const AlarmTemplateForm = props => {
       opType: 'item',
       itemProps: {
         label: '是否发送到对应客户',
-        name: 'sends',
+        name: ['role', 'two', 'send'],
         valuePropName: 'checked',
       },
     },
@@ -120,7 +132,7 @@ const AlarmTemplateForm = props => {
     //   formType: 'CheckboxItem',
     //   itemProps: {
     //     label: '是否发送到对应客户',
-    //     name: 'sends',
+    //     name: 'send',
     //     valuePropName: "checked"
     //   },
     // },
@@ -159,6 +171,17 @@ const AlarmTemplateForm = props => {
       itemProps: {
         label: '持续时间',
         name: ['role', 'three', 'duration'],
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Checkbox',
+      checkboxData: checkboxData,
+      opType: 'item',
+      itemProps: {
+        label: '是否发送到对应客户',
+        name: ['role', 'three', 'send'],
+        valuePropName: 'checked',
       },
     },
   ];

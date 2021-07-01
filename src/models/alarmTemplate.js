@@ -82,7 +82,7 @@ export default {
       const itemDetail = {
         ...payload.bean,
         role,
-        sends: !!payload.bean.sends,
+        alarmTemplate: !!payload.bean.alarmTemplate,
       };
       console.log(' itemDetail ： ', itemDetail);
       return {
