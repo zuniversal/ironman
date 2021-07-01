@@ -1,8 +1,8 @@
 {
   "id": "2644099",
-  "name": "电网",
-  "font_family": "iconfont",
-  "css_prefix_text": "icon-",
+  "name": "power",
+  "font_family": "power",
+  "css_prefix_text": "power-",
   "description": "",
   "glyphs": [
     {

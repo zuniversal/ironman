@@ -49,6 +49,7 @@ import { Tools } from './tools';
 import ltdxIcons from './ltdx.json';
 import lteeIcons from './ltee.json';
 import PowerIcons from './power.json';
+import IconfontIcons from './iconfont.json';
 import './styles/ltdx.css';
 import './styles/ltee.css';
 import './Plugin/canvas2svg';
@@ -1032,6 +1033,13 @@ const DrawPanel = props => {
                   font_family={PowerIcons.font_family}
                   css_prefix_text={PowerIcons.css_prefix_text}
                   glyphs={PowerIcons.glyphs}
+                  filterName={filterName}
+                ></CustomTools>
+                <CustomTools
+                  onCustomDrag={onCustomDrag}
+                  font_family={IconfontIcons.font_family}
+                  css_prefix_text={IconfontIcons.css_prefix_text}
+                  glyphs={IconfontIcons.glyphs}
                   filterName={filterName}
                 ></CustomTools>
               </>
