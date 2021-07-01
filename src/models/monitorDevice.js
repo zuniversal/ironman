@@ -1,13 +1,13 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/monitorDevice';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 
 const namespace = 'monitorDevice';
 const { createActions } = init(namespace);
 
-const otherActions = ['getRealDataAsync'];
+const otherActions = ['getRealDataAsync', 'handleFileAsync', 'uploadFileAsync'];
 
-const batchTurnActions = [];
+const batchTurnActions = ['setIsImporting'];
 
 export const actions = {
   ...createActions(otherActions, batchTurnActions),
@@ -16,6 +16,29 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 
 export const mapStateToProps = state => state[namespace];
+
+const loopUpload = ({ res, cb }) => {
+  let timer = null;
+  const { record_id } = res.bean;
+  console.log(' loopUpload   ,   ： ', res, record_id, timer);
+
+  const handleRequest = async () => {
+    const res = await services.handleFile({ d_id: record_id });
+    const { status } = res.bean;
+    console.log(' handleRes    res await 结果  ：', res, timer, status); //
+    if (status == 1) {
+      const statusMap = {
+        0: '文件上传中！',
+        1: '文件上传完成！',
+        2: '文件上传失败！',
+      };
+      tips(`${statusMap[status]}`, status);
+      cb({ isImporting: false, importStatus: statusMap[status] });
+      clearInterval(timer);
+    }
+  };
+  timer = setInterval(handleRequest, 2000);
+};
 
 export default {
   namespace,
@@ -27,6 +50,8 @@ export default {
     count: 0,
     itemDetail: {},
     realDataParams: {},
+    isImporting: false,
+    importStatus: '',
   },
 
   reducers: {
@@ -51,7 +76,11 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list,
+        dataList: payload.list.map(v => ({
+          ...v,
+          approval_time:
+            v.approval_time !== 'NaT' ? v.approval_time : undefined,
+        })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -128,6 +157,14 @@ export default {
         },
       };
     },
+    setIsImporting(state, { payload, type }) {
+      console.log(' setIsImporting ： ', payload); //
+      return {
+        ...state,
+        isImporting: payload.isImporting,
+        importStatus: payload.importStatus,
+      };
+    },
   },
 
   effects: {
@@ -164,6 +201,22 @@ export default {
       yield put({ type: 'getListAsync' });
     },
 
+    *handleFileAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.handleFile, payload);
+    },
+    *uploadFileAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.uploadFile, payload);
+      console.log(' handleRes res   e,   ： ', res);
+      // const handleRes = yield call(services.handleFile, {d_id: res.bean.record_id});
+      // console.log(' handleRes   e,   ： ', handleRes);
+      yield put({
+        type: 'setIsImporting',
+        payload: {
+          isImporting: true,
+        },
+      });
+      loopUpload({ res, cb: payload.cb });
+    },
     *getRealDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getRealData, payload);
       yield put(action({ ...res, payload }));

@@ -24,6 +24,9 @@ const layoutObj = {
   },
 };
 
+// const checkboxData = [{ label: '', value: true, key: 'true' }];
+const checkboxData = { label: '', value: 1, key: 'true' };
+
 const AlarmTemplateForm = props => {
   console.log(' AlarmTemplateForm ： ', props);
   const { formBtn, ...rest } = props;
@@ -101,6 +104,27 @@ const AlarmTemplateForm = props => {
         name: ['role', 'two', 'duration'],
       },
     },
+
+    {
+      noRule: true,
+      formType: 'Checkbox',
+      checkboxData: checkboxData,
+      opType: 'item',
+      itemProps: {
+        label: '是否发送到对应客户',
+        name: 'sends',
+        valuePropName: 'checked',
+      },
+    },
+    // {
+    //   formType: 'CheckboxItem',
+    //   itemProps: {
+    //     label: '是否发送到对应客户',
+    //     name: 'sends',
+    //     valuePropName: "checked"
+    //   },
+    // },
+
     {
       formType: 'rowText',
       itemProps: {

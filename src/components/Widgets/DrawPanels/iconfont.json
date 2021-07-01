@@ -1,0 +1,16 @@
+{
+  "id": "2644099",
+  "name": "电网",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "19624186",
+      "name": "断路器",
+      "font_class": "duanluqi",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

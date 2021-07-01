@@ -50,7 +50,9 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          notificationType: v.notification_type.map(v => notifyTypeMap[v]),
+          notificationType: v.notification_type
+            .map(v => notifyTypeMap[v])
+            .join(', '),
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -80,6 +82,7 @@ export default {
       const itemDetail = {
         ...payload.bean,
         role,
+        sends: !!payload.bean.sends,
       };
       console.log(' itemDetail ： ', itemDetail);
       return {

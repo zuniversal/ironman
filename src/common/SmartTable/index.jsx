@@ -468,6 +468,7 @@ class SmartTable extends PureComponent {
 
     // 通用操作列
     const actionCol = {
+      fixed: 'right',
       title: '操作',
       className: 'actionCol',
       render: (text, record, index) => {
@@ -719,6 +720,10 @@ class SmartTable extends PureComponent {
           // scroll={{
           //   y: 700,
           // }}
+          // scroll={{
+          //   x: 1200,
+          // }}
+          // sticky
         />
 
         {this.renderRemoveModal()}

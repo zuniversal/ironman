@@ -120,6 +120,7 @@ export const getLabel = (label, key) => {
     Cascader: SELECT_TXT + label,
     AutoComplete: INPUT_TXT + label,
     Checkbox: SELECT_TXT + label,
+    CheckboxItem: SELECT_TXT + label,
     Radio: SELECT_TXT + label,
     DatePicker: SELECT_TXT + label,
     MonthPicker: SELECT_TXT + label,
@@ -539,6 +540,7 @@ const SmartForm = (props, state) => {
         isDisabledAll,
         comProps: realComProps,
       }),
+      CheckboxItem: <Checkbox {...realComProps} />,
       Radio: renderRadioOp(radioData, {
         opType,
         isDisabledAll,

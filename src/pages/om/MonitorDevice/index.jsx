@@ -16,6 +16,7 @@ import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 import UploadCom from '@/components/Widgets/UploadCom';
+import { MONITOR_DEVICE_TPL } from '@/constants';
 
 const TITLE = '监控';
 
@@ -25,7 +26,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
-  uploadFile: `文件上传`,
+  uploadFile: `设备清单导入`,
   monitorManageAsync: `${TITLE}详情`,
   getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
@@ -76,6 +77,9 @@ class MonitorManage extends PureComponent {
         >
           Excel导入
         </Button>
+        <a href={MONITOR_DEVICE_TPL}>
+          <Button type="primary">下载模板</Button>
+        </a>
       </div>
     );
   };
@@ -157,7 +161,7 @@ class MonitorManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['getRealDataAsync'].includes(action)) {
+    if (['getRealDataAsync', 'uploadFile'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -215,25 +219,40 @@ class MonitorManage extends PureComponent {
         },
       };
       return (
-        <UploadCom
-          label={this.state.titleMap[action]}
-          action={'file'}
-          isInputUpload
-          contentClass={'dfc'}
-          formItemCls={'assetsUpload'}
-          action={'/api/v1/upload'}
-          name={'file'}
-          extra={'支持扩展名:xls、xlsx、csv'}
-          uploadProps={{
-            accept:
-              'text/csv,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          }}
-          formItemLayout={smallLayout}
-          succ={this.succ}
-        ></UploadCom>
+        <>
+          <UploadCom
+            label={'文件'}
+            action={'file'}
+            // contentClass={'dfc'}
+            // formItemCls={'assetsUpload'}
+            action={'/api/v1/upload'}
+            name={'file'}
+            extra={'支持扩展名:xls、xlsx'}
+            uploadProps={{
+              accept:
+                'application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            }}
+            formItemLayout={smallLayout}
+            succ={this.succ}
+            // succExtraText={'正在导入，请不要关闭对话框！'}
+          ></UploadCom>
+          {this.props.isImporting && (
+            <div className={`dfc dangerText`}>正在导入，请不要关闭对话框！</div>
+          )}
+          {this.props.importStatus && (
+            <div className={`dfc `}>{this.props.importStatus}</div>
+          )}
+        </>
       );
     }
     return <MonitorDeviceForm {...formComProps}></MonitorDeviceForm>;
+  };
+  succ = e => {
+    console.log(' succ ： ', e, this.state, this.props);
+    this.props.uploadFileAsync({
+      url: e.file.response.url,
+      cb: this.props.setIsImporting,
+    });
   };
   get size() {
     if (this.props.action === 'uploadFile') {

@@ -112,9 +112,10 @@ class AlarmTemplate extends PureComponent {
       const data = {
         ...res,
         role,
+        sends: res.sends == 1 ? true : false,
       };
-      console.log(' role ： ', role, data);
-      // return
+      console.log(' xxxxxxx ： ', role, data);
+      return;
       if (action === 'add') {
         this.props.addItemAsync(data);
       }

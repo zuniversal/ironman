@@ -281,6 +281,7 @@ export const mockFormData = (config, init) => {
         Cascader: [label],
         AutoComplete: label,
         Checkbox: true,
+        CheckboxItem: true,
         CheckboxGroup: label,
 
         Radio: 'no',

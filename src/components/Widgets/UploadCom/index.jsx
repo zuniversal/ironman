@@ -73,6 +73,7 @@ const UploadCom = props => {
     formItemLayout,
     isHide,
     formAction,
+    succExtraText,
   } = props;
 
   const [state, setState] = useState({});
@@ -114,9 +115,12 @@ const UploadCom = props => {
 
     if (e.file.status === 'done') {
       tips(`${e.file.name} 上传成功！`, 1);
-      props.succ && props.succ();
+      props.succ && props.succ(e);
+      props.finish && props.finish(e);
     } else if (e.file.status === 'error') {
       tips(`${e.file.name} 上传失败！`, 0);
+      props.fail && props.fail(e);
+      props.finish && props.finish(e);
     }
     // if (!noTips) {
     //   const item = e.fileList[e.fileList.length - 1];

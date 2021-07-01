@@ -64,6 +64,8 @@ const PowerStationForm = props => {
   };
 
   const isAdd = props.action === 'add';
+  const isDetail = props.action === 'detail';
+
   const outlineSetArr = isAdd
     ? []
     : // : props.init.outline_set
@@ -97,7 +99,6 @@ const PowerStationForm = props => {
     props,
     inspectMode,
     powerInfoList,
-    outlineSetArr,
     props.init.id,
     powerInfoList.filter(v => v.powerStation == props.init.id),
   );
@@ -555,7 +556,8 @@ const PowerStationForm = props => {
       // selectData: props.powerInfoList,
       selectData: powerNumberList,
       // dataMap: arrMapObj(props.powerInfoList),
-      dataMap: arrMapObj(outlineSetArr),
+      // dataMap: arrMapObj(outlineSetArr),
+      dataMap: arrMapObj(powerInfoData),
       itemProps: {
         label: '电源编号',
         name: 'power_number',
@@ -566,16 +568,19 @@ const PowerStationForm = props => {
     },
   ];
 
-  const powerInfoData =
-    action === 'detail' ? props.init.powerInfoData : props.powerInfoData;
+  const powerInfoData = formatSelectList(
+    action === 'detail' ? props.init.powerInfoData : props.powerInfoData,
+    'power_number',
+  );
   const outLineTableData =
     action === 'detail' ? props.init.outLineTableData : props.outLineTableData;
   console.log(
     '  outLineTableData ：',
     arrMapObj(outlineSetArr),
     outlineSetArr,
-    powerInfoData,
     outLineTableData,
+    powerInfoData,
+    powerNumberList,
   );
 
   const commonProps = {
@@ -584,6 +589,9 @@ const PowerStationForm = props => {
     pagination: false,
     showFormModal2: props.showFormModal2,
   };
+  if (isDetail) {
+    commonProps.noActionCol = true;
+  }
 
   const powerNumberTableProps = {
     ...commonProps,
@@ -598,7 +606,7 @@ const PowerStationForm = props => {
     edit: props.showFormModal2,
     remove: props.removeOutlineAsync,
     powerNumberList,
-    outlineSetArr,
+    powerInfoData,
   };
 
   return (
@@ -648,35 +656,43 @@ const PowerStationForm = props => {
         addText={'新增出线侧'}
       ></ReduxTable> */}
 
-      <div className={'fje'}>
-        <Button
-          type="primary"
-          onClick={() => {
-            props.showFormModal2({
-              action: 'addPowerNumberAsync',
-            });
-          }}
-        >
-          新增电源编号
-        </Button>
-      </div>
+      {!isDetail && (
+        <div className={'fje'}>
+          <Button
+            type="primary"
+            onClick={() => {
+              props.showFormModal2({
+                action: 'addPowerNumberAsync',
+              });
+            }}
+          >
+            新增电源编号
+          </Button>
+        </div>
+      )}
       <PowerNumberTable {...powerNumberTableProps}></PowerNumberTable>
 
-      <div className={'fje'}>
-        <Button
-          type="primary"
-          onClick={() => {
-            props.showFormModal2({
-              action: 'addOutlineAsync',
-              extraData2: {
-                powerNumberList,
-              },
-            });
-          }}
-        >
-          新增出线侧
-        </Button>
-      </div>
+      {!isDetail && (
+        <div className={'fje'}>
+          <Button
+            type="primary"
+            onClick={() => {
+              props.showFormModal2({
+                action: 'addOutlineAsync',
+                extraData2: {
+                  // powerNumberList,
+                  powerNumberList: formatSelectList(
+                    powerInfoData,
+                    'power_number',
+                  ),
+                },
+              });
+            }}
+          >
+            新增出线侧
+          </Button>
+        </div>
+      )}
       <OutlineTable {...outLineTableProps}></OutlineTable>
     </div>
   );

@@ -2,6 +2,8 @@ import { animate, createProperty } from '@/utils';
 
 export const isDev = process.env.NODE_ENV === 'development';
 
+export const MONITOR_DEVICE_TPL =
+  'https://upload-1302976931.cos.ap-shanghai.myqcloud.com/excel_import/devices_demo.xlsx';
 export const PDF_URL =
   'https://report-1302976931.cos.ap-shanghai.myqcloud.com/'; //
 export const MINI_POWER = 'http://81.68.221.146/#/home';

@@ -757,25 +757,26 @@ const ClientReportForm = props => {
     //   comProps: {},
     // },
 
-    {
-      // colCls: 'hidden',
-      noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'Select',
-      selectData: billTypeConfig,
-      itemProps: {
-        label: '基本电价计费方式',
-        name: 'billing_method',
-      },
-      comProps: {
-        // disabled: true,
-        onChange: onBillTypeChange,
-        className: 'w-180 ',
-      },
-    },
+    // {
+    //   // colCls: 'hidden',
+    //   noRule: true,
+    //   noRule: true,
+    //   withFlex: true,
+    //   flexRow: 2,
+    //   colCls: 'dif w50',
+    //   formType: 'Select',
+    //   selectData: billTypeConfig,
+    //   itemProps: {
+    //     label: '基本电价计费方式',
+    //     name: 'billing_method',
+    //   },
+    //   comProps: {
+    //     // disabled: true,
+    //     onChange: onBillTypeChange,
+    //     className: 'w-180 ',
+    //   },
+    // },
+
     // {
     //   noRule: true,
     //   withFlex: true,
@@ -793,7 +794,7 @@ const ClientReportForm = props => {
     {
       noRule: true,
       withFlex: true,
-      flexRow: 3,
+      flexRow: 2,
       colCls: 'dif w50',
       formType: 'InputNumber',
       itemProps: {
@@ -807,7 +808,7 @@ const ClientReportForm = props => {
     {
       noRule: true,
       withFlex: true,
-      flexRow: 3,
+      flexRow: 2,
       colCls: 'dif w50',
       itemProps: {
         label: '装接总容量',
@@ -815,7 +816,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-120 ',
+        className: 'w-180 ',
       },
     },
     {
@@ -829,7 +830,7 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
-        className: 'w-120 ',
+        className: 'w-180 ',
       },
     },
 
@@ -868,6 +869,119 @@ const ClientReportForm = props => {
       colCls: 'plainTextItem',
       itemProps: {
         label: '金额',
+      },
+      comProps: {
+        disabled: true,
+      },
+    },
+
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '峰MD',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'peak_md',
+      },
+    },
+    ...placeholderItems,
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '平1MD',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'usual_md1',
+      },
+    },
+    ...placeholderItems,
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '平2MD',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'usual_md2',
+      },
+    },
+    ...placeholderItems,
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '谷MD',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'valley_md',
+      },
+    },
+    ...placeholderItems,
+
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '无功电量',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'idle_volume',
+      },
+    },
+    ...placeholderItems,
+
+    {
+      formType: 'plainText',
+      itemProps: {
+        label: '基本电价单价',
+        label: '基本电费计费',
+      },
+    },
+    // ...placeholderItems,
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basic_volume',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basic_price',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'InputNumber',
+      itemProps: {
+        label: '',
+        name: 'basicMoney',
       },
       comProps: {
         disabled: true,
@@ -1319,103 +1433,6 @@ const ClientReportForm = props => {
     {
       formType: 'plainText',
       itemProps: {
-        label: '峰md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'peak_md',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平1md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md1',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '平2md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'usual_md2',
-      },
-    },
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '谷md',
-      },
-    },
-    ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'valley_md',
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
-        label: '基本电价单价',
-        label: '基本电费计费',
-      },
-    },
-    // ...placeholderItems,
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_volume',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basic_price',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '',
-        name: 'basicMoney',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-
-    {
-      formType: 'plainText',
-      itemProps: {
         label: '小计金额',
       },
     },
@@ -1529,7 +1546,6 @@ const ClientReportForm = props => {
 
     {
       noRule: true,
-      noRule: true,
       withFlex: true,
       flexRow: 2,
       colCls: 'dif w50',
@@ -1545,21 +1561,6 @@ const ClientReportForm = props => {
     },
     {
       noRule: true,
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '无功电量',
-        name: 'idle_volume',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
       withFlex: true,
       flexRow: 2,
       colCls: 'dif w50',
@@ -1569,6 +1570,20 @@ const ClientReportForm = props => {
       },
       comProps: {
         disabled: true,
+        className: 'w-180 ',
+      },
+    },
+    {
+      noRule: true,
+      withFlex: true,
+      flexRow: 2,
+      colCls: 'dif w50',
+      formType: 'InputNumber',
+      itemProps: {
+        label: '力率（%）',
+        name: 'power_factor_adjust',
+      },
+      comProps: {
         className: 'w-180 ',
       },
     },
@@ -1617,20 +1632,6 @@ const ClientReportForm = props => {
       itemProps: {
         label: '功率因数实际值',
         name: 'power_factor_real',
-      },
-      comProps: {
-        className: 'w-180 ',
-      },
-    },
-    {
-      noRule: true,
-      withFlex: true,
-      flexRow: 2,
-      colCls: 'dif w50',
-      formType: 'InputNumber',
-      itemProps: {
-        label: '力率（%）',
-        name: 'power_factor_adjust',
       },
       comProps: {
         className: 'w-180 ',

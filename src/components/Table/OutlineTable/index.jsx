@@ -16,7 +16,8 @@ const OutlineTable = props => {
     {
       title: '电源编号',
       dataIndex: 'power_number',
-      dataMap: arrMapObj(props.outlineSetArr),
+      // dataMap: arrMapObj(props.outlineSetArr),
+      dataMap: arrMapObj(props.powerInfoData),
     },
   ];
 

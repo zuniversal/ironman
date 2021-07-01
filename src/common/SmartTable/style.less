@@ -2,6 +2,7 @@
 
 .smartTable {
   margin: 15px 0;
+  overflow-x: auto;
   // margin-bottom: 20px;
 
   // .actionCol a {
@@ -10,6 +11,12 @@
   //   border-right: 2px solid @primary;
   //   display: inline-block;
   // }
+
+  .ant-table-cell {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
   .ant-input[disabled] {
     color: black;
   }
@@ -27,7 +34,9 @@
   }
 
   .actionCol {
-    min-width: 100px;
+    min-width: 120px;
+    width: 120px;
+    white-space: normal;
   }
   th.actionCol {
     text-align: center !important;

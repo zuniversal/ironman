@@ -73,7 +73,7 @@ class MonitorManage extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           // onClick={() => this.props.exportData()}
         >
@@ -84,7 +84,7 @@ class MonitorManage extends PureComponent {
           // onClick={() => this.props.exportData()}
         >
           导出{TITLE}设备数据
-        </Button>
+        </Button> */}
       </div>
     );
   };

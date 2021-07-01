@@ -79,7 +79,7 @@ const AlarmRecordTable = props => {
     {
       title: '开始时间',
       dataIndex: 'created_time',
-      // day: 'YYYY-MM-DD HH:mm:ss',
+      day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
       title: '备注',
