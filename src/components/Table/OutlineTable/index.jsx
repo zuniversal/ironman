@@ -30,7 +30,7 @@ const OutlineTable = props => {
             record,
             d_id: `${record.id}`,
             extraData2: {
-              powerNumberList: props.powerNumberList,
+              powerInfoData: props.powerInfoData,
             },
           })
         }

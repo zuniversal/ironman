@@ -33,7 +33,6 @@ export const removeItems = p => remove(`console/OMS/equipment/deletes`, p);
 export const getAssetDevice = ({ query = '', ...p }) =>
   noTipsGet(`console/OMS/equipment${query}`, p);
 
-// export const syncOA = p => noTipsGet(`console/OMS/equipment/OA/`, p);
 export const createQRCode = p =>
   noTipsGet(`console/OMS/equipment/qrcode/${p.d_id}`, p);
 
@@ -43,5 +42,3 @@ export const getTemplate = p =>
 export const uploadFile = parseUrl('console/OMS/equipment/upload');
 export const getTransformer = p =>
   noTipsGet('console/OMS/equipment/transformer', p);
-
-export const syncOA = p => noTipsGet(`console/OMS/equipment/OA`, p);

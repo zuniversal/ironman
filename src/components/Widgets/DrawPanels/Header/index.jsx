@@ -2,12 +2,23 @@ import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import './style.less';
 import { FileOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Menu, Button, Popover, Select } from 'antd';
+import { Menu, Button, Popover, Select, Modal } from 'antd';
 import { useState } from 'react';
 import { canvas } from '../index';
 import OperationTips from '../OperationTips';
 
 const { SubMenu } = Menu;
+const { confirm } = Modal;
+const confirmBack = props => {
+  confirm({
+    title: '是否确认不保存直接返回?',
+    content: '请确认是否保存线路图',
+    onOk() {
+      props.onOk();
+    },
+    onCancel() {},
+  });
+};
 
 const lineNames = {
   curve: '曲线',
@@ -106,8 +117,11 @@ const HeaderMenuLeft = React.memo(props => {
       {/* <Menu.Item className={''}>
         <div>视图：{scale}%</div>
       </Menu.Item> */}
-      {/* <SubMenu title={`默认连线类型：${lineNames[lineName]}`} className={''}> */}
-      <SubMenu title={`默认连线类型：直线`} className={''}>
+      <SubMenu
+        title={`默认连线类型：${lineNames[props.lineName]}`}
+        className={''}
+      >
+        {/* <SubMenu title={`默认连线类型：直线`} className={''}> */}
         <Menu.Item className={''} key="curve">
           曲线
         </Menu.Item>
@@ -295,9 +309,17 @@ const Headers = props => {
   //   </Menu>
   // );
 
+  const onOk = () => {
+    props.clearCircurt();
+    history.back();
+  };
+
   return (
     <div className={`headerWrapper`}>
-      <HeaderMenuLeft onMenuClick={onMenuClick}></HeaderMenuLeft>
+      <HeaderMenuLeft
+        onMenuClick={onMenuClick}
+        lineName={lineName}
+      ></HeaderMenuLeft>
 
       <div className="right">
         提示：
@@ -320,8 +342,9 @@ const Headers = props => {
         </Button>
         <Button
           onClick={() => {
-            props.clearCircurt();
-            history.back();
+            confirmBack({
+              onOk,
+            });
           }}
           size={'small'}
         >

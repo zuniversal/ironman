@@ -117,9 +117,6 @@ class HouseNo extends PureComponent {
         {/* <DropDownBtn menuConfig={menuConfig} menuClick={this.menuClick}>
           Excel导入
         </DropDownBtn> */}
-        {/* <Button type="primary" onClick={this.props.syncOAAsync}>
-          同步OA
-        </Button> */}
         {/* <Button
           type="primary"
           // onClick={() => this.props.showUploadModal({ action: 'uploadFile' })}

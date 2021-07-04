@@ -15,12 +15,7 @@ import {
 const namespace = 'shiftsArrange';
 const { createAction, createCRUD, batchTurn } = init(namespace);
 
-const otherActions = [
-  'syncOAAsync',
-  'getTeamAsync',
-  'exportDataAsync',
-  'setSearchAsync',
-];
+const otherActions = ['getTeamAsync', 'exportDataAsync', 'setSearchAsync'];
 
 const batchTurnActions = ['setSearchInfo', 'onChoiceRadio', 'onCheck'];
 
@@ -74,7 +69,6 @@ export default {
     dataList: [],
     itemDetail: {},
 
-    syncOAData: {},
     portraitData: {},
     userList: [
       // { label: 'zyb', value: 'zyb1' },

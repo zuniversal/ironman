@@ -99,6 +99,12 @@ export default [
     component: '@/pages/om/ClientReport',
     title: '客户报告',
   },
+  {
+    path: '/om/groupReport',
+    authKey: '',
+    component: '@/pages/om/GroupReport',
+    title: '集团报告',
+  },
 
   // {
   //   path: '/om/shiftsManage/:id',

@@ -266,6 +266,13 @@ export const bpRoutes = [
     icon: <Icon icon={'systemManage'} />,
   },
   {
+    platform: 'bp',
+    authKey: 'reportModel',
+    path: '/om/groupReport',
+    name: '集团报告',
+    icon: <Icon icon={'systemManage'} />,
+  },
+  {
     platform: 'bussniess',
     platform: 'bp',
     authKey: 'assetManageModel',

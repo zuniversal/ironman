@@ -4,7 +4,7 @@ import { init, action } from '@/utils/createAction';
 const namespace = 'layout';
 const { createAction, createCRUD, batchTurn } = init(namespace);
 
-const otherActions = ['syncOAAsync', 'getPortraitAsync'];
+const otherActions = ['getPortraitAsync'];
 
 const batchTurnActions = ['setPathname', 'setTitle'];
 

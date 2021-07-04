@@ -1,24 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-  Upload,
-  Result,
-} from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 import SmartForm from '@/common/SmartForm';
 import {
@@ -29,13 +12,7 @@ import {
 import UploadCom from '@/components/Widgets/UploadCom';
 import { inspectTemplateConfig, inspectModelRadio, dayHours } from '@/configs';
 import { DRAW_PANEL } from '@/constants';
-import {
-  formatConfig,
-  reportRadioOp,
-  arrMapObj,
-  formatSelectList,
-  filterObjSame,
-} from '@/utils';
+import { arrMapObj, formatSelectList } from '@/utils';
 import { ImgBlock } from '@/components/Temp';
 import SmartImg from '@/common/SmartImg';
 import ReduxTable from '@/common/ReduxTable';
@@ -57,7 +34,6 @@ const PowerStationForm = props => {
   const { inspection_type = 0 } = props.init;
 
   const [inspectMode, setInspectMode] = useState(inspection_type);
-  // const [powerInfoList, setPowerInfoList] = useState([]);
   const commonParams = {
     init: [],
     format: res => formatSelectList(res),
@@ -66,41 +42,12 @@ const PowerStationForm = props => {
   const isAdd = props.action === 'add';
   const isDetail = props.action === 'detail';
 
-  const outlineSetArr = isAdd
-    ? []
-    : // : props.init.outline_set
-      props.outLineTableData
-        // .filter(v => v.power_number)
-        .filter(v => v.power_number_id)
-        .map(v => ({
-          // value: `${v.power_number.id}`,
-          // label: v.power_number.power_number,
-          value: `${v.power_number_id}`,
-          label: v.power_number_name,
-        }));
-  const { data: powerInfoList, req: getPowerInfoAsync } = useHttp(
-    isAdd
-      ? getPowerInfo
-      : () =>
-          getPowerInfo({
-            station_id: props.init.id,
-          }),
-    // getPowerInfo,
-    {
-      ...commonParams,
-      format: res => formatSelectList(res, 'power_number'),
-      // noMountFetch: isAdd,
-    },
-  );
-
   console.log(
     ' PowerStationForm  inspectModeinspectModeinspectMode ： ',
     inspection_type,
     props,
     inspectMode,
-    powerInfoList,
     props.init.id,
-    powerInfoList.filter(v => v.powerStation == props.init.id),
   );
   const onInspectModeChange = e => {
     console.log(
@@ -118,16 +65,6 @@ const PowerStationForm = props => {
     // setInspectMode(inspectMode == 0 ? 1 : 0);
   };
 
-  const onPowerStationChange = e => {
-    console.log(
-      ' PowerStationForm onPowerStationChange   e, 改变设置  ： ',
-      e,
-      e.target.value,
-    );
-    // getPowerInfoAsync(() => getPowerInfo({}))
-  };
-
-  // const formConfig = formatConfig(config);
   const deciveRow = {
     formType: 'rowText',
     itemProps: {
@@ -202,13 +139,6 @@ const PowerStationForm = props => {
   ];
 
   let typeCols = [];
-
-  // if (action === 'add') {
-  //   typeCols = addCol
-  // } else if (action === 'edit') {
-  //   typeCols = editCol
-  // }
-
   if (action === 'add') {
     typeCols = addCol;
   } else {
@@ -297,9 +227,6 @@ const PowerStationForm = props => {
         label: '电站名称',
         name: 'name',
       },
-      // comProps: {
-      //   onChange: onPowerStationChange,
-      // },
     },
     {
       // noRule: true,
@@ -324,14 +251,6 @@ const PowerStationForm = props => {
     //   itemProps: {
     //     label: '运行等级',
     //     name: 'operation_level',
-    //   },
-    // },
-    // {
-    //   formType: 'Search',
-    //   selectData: inspectTemplateConfig,
-    //   itemProps: {
-    //     label: '巡检模板',
-    //     name: '巡检模板',
     //   },
     // },
 
@@ -366,43 +285,6 @@ const PowerStationForm = props => {
       action={'/api/v1/upload'}
       name={'file'}
       key={'file'}
-      extra={
-        <div className={`extraWrapper`}>
-          {/* <Button
-            type="primary"
-            onClick={() => {
-              console.log(' xxxx ： ',    )// 
-              history.push(DRAW_PANEL)
-            }}
-            size={'small'}
-          >
-            编辑
-          </Button>
-          <Button
-            type="wa"
-            onClick={() => props.removeCircuitItem()}
-            size={'small'}
-          >
-            删除
-          </Button> */}
-
-          {/* <a
-            className={`actionBtn`}
-            onClick={() => {
-              console.log(' xxxx ： ');
-              history.push(`${DRAW_PANEL}?powerstation_id=${props.init.id}`);
-            }}
-          >
-            编辑
-          </a>
-          <a
-            className={`actionBtn removeBtn`}
-            onClick={() => props.removeCircuitItemAsync()}
-          >
-            删除
-          </a> */}
-        </div>
-      }
       init={props.init}
       formAction={props.action}
       formItemProps={{
@@ -528,60 +410,13 @@ const PowerStationForm = props => {
 
   const config = action !== 'detail' ? actionConfig : detailConfig;
 
-  const powerNumberList = filterObjSame(
-    [...powerInfoList, ...outlineSetArr],
-    'value',
-  );
-
-  const outLineConfig = [
-    {
-      // forShow: true,
-      itemProps: {
-        label: '出线侧编号',
-        name: 'id',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      itemProps: {
-        label: '出线侧名称',
-        name: 'name',
-      },
-    },
-    {
-      formType: 'Search',
-      // selectSearch: props.getPowerInfoAsync,
-      // selectData: props.powerInfoList,
-      selectData: powerNumberList,
-      // dataMap: arrMapObj(props.powerInfoList),
-      // dataMap: arrMapObj(outlineSetArr),
-      dataMap: arrMapObj(powerInfoData),
-      itemProps: {
-        label: '电源编号',
-        name: 'power_number',
-      },
-      // comProps: {
-      //   mode: 'multiple',
-      // },
-    },
-  ];
-
   const powerInfoData = formatSelectList(
     action === 'detail' ? props.init.powerInfoData : props.powerInfoData,
     'power_number',
   );
   const outLineTableData =
     action === 'detail' ? props.init.outLineTableData : props.outLineTableData;
-  console.log(
-    '  outLineTableData ：',
-    arrMapObj(outlineSetArr),
-    outlineSetArr,
-    outLineTableData,
-    powerInfoData,
-    powerNumberList,
-  );
+  console.log('  outLineTableData ：', outLineTableData, powerInfoData);
 
   const commonProps = {
     noPad: true,
@@ -605,7 +440,6 @@ const PowerStationForm = props => {
     dataSource: outLineTableData,
     edit: props.showFormModal2,
     remove: props.removeOutlineAsync,
-    powerNumberList,
     powerInfoData,
   };
 
@@ -613,9 +447,7 @@ const PowerStationForm = props => {
     <div className={`powerStationForm`}>
       <SmartForm
         config={config}
-        // config={configs}
-
-        isDisabledAll={action === 'detail'}
+        // isDisabledAll={action === 'detail'}
         {...props}
         init={{
           // inspection_type: 0,
@@ -624,37 +456,6 @@ const PowerStationForm = props => {
           ...props.init,
         }}
       ></SmartForm>
-
-      {extra}
-
-      {/* <PowerStationDetailTable
-        addPowerInfoAsync={props.addPowerInfoAsync}
-        editPowerInfoAsync={props.editPowerInfoAsync}
-        removePowerInfoAsync={props.removePowerInfoAsync}
-        modifyPowerInfo={props.modifyPowerInfo}
-        dataSource={powerInfoData}
-        init={props.init}
-        isDisabledAll={!['add', 'edit'].includes(action)}
-        showAdd
-      ></PowerStationDetailTable>
-
-      <ReduxTable
-        key={'outLineFormTable'}
-        config={outLineConfig.map(v => ({
-          ...v,
-          ...v.itemProps,
-          isEdit: true,
-        }))}
-        addTableItemAsync={props.addOutLineTableItemAsync}
-        editTableItemAsync={props.editOutLineTableItemAsync}
-        removeTableItemAsync={props.removeOutLineTableItemAsync}
-        modifyTableItem={props.modifyOutLineTableItem}
-        dataSource={outLineTableData}
-        isDisabledAll={!['add', 'edit'].includes(action)}
-        noLimitAdd
-        // hideSaveEdit={['add'].includes(action)}
-        addText={'新增出线侧'}
-      ></ReduxTable> */}
 
       {!isDetail && (
         <div className={'fje'}>
@@ -680,8 +481,7 @@ const PowerStationForm = props => {
               props.showFormModal2({
                 action: 'addOutlineAsync',
                 extraData2: {
-                  // powerNumberList,
-                  powerNumberList: formatSelectList(
+                  powerInfoData: formatSelectList(
                     powerInfoData,
                     'power_number',
                   ),

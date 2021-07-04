@@ -83,9 +83,11 @@ const CustomTools = React.memo(props => {
     : glyphs; //
   return (
     <div>
-      <div className={'styles.title title'}>
-        国家电网元器件 ({props.glyphs.length})
-      </div>
+      {!props.noTitle && (
+        <div className={'styles.title title'}>
+          国家电网元器件 ({props.glyphs.length})
+        </div>
+      )}
       <div className={'styles.buttons widget'}>
         {data.map((btn, i) => {
           return (
@@ -1041,6 +1043,7 @@ const DrawPanel = props => {
                   css_prefix_text={IconfontIcons.css_prefix_text}
                   glyphs={IconfontIcons.glyphs}
                   filterName={filterName}
+                  noTitle
                 ></CustomTools>
               </>
             )}

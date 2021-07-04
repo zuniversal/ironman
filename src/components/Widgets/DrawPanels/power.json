@@ -1840,13 +1840,6 @@
       "unicode_decimal": 59555
     },
     {
-      "icon_id": "20539695",
-      "name": "两相四端绕组02",
-      "font_class": "liangxiangsiduanraozu02",
-      "unicode": "e8a5",
-      "unicode_decimal": 59557
-    },
-    {
       "icon_id": "20539696",
       "name": "两相四端绕组",
       "font_class": "liangxiangsiduanraozu",

@@ -7,12 +7,10 @@ import PowerStationSearchForm from '@/components/Form/PowerStationSearchForm';
 import SmartFormModal from '@/common/SmartFormModal';
 import { PowerstationMonthForm } from '@/components/Form/PowerStationActionForm';
 
-import { commonActions } from '@/models/common';
 import { actions, mapStateToProps } from '@/models/powerStation';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { tips } from '@/utils';
-import { PowerStationDetailTable } from '@/components/Table/PowerStationInfoTable';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
 import PowerNumberForm from '@/components/Form/PowerNumberForm';
@@ -54,10 +52,6 @@ const detailFormMap = {
 
 @connect(mapStateToProps)
 @SmartHOC({
-  // actions: {
-  //   ...actions,
-  //   // ...commonActions,
-  // },
   actions,
   titleMap,
   modalForm: PowerStationForm,
@@ -80,13 +74,6 @@ class PowerStation extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        {/* <Button
-          type="primary"
-          htmlType="submit"
-          onClick={this.props.syncOAAsync}
-        >
-          同步OA
-        </Button> */}
         <Button type="primary" onClick={() => this.props.exportData()}>
           导出Excel
         </Button>
@@ -312,51 +299,40 @@ class PowerStation extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
-    // const powerTable = (
-    //   <PowerStationDetailTable
-    //     addPowerInfoAsync={this.props.addPowerInfoAsync}
-    //     editPowerInfoAsync={this.props.editPowerInfoAsync}
-    //     removePowerInfoAsync={this.props.removePowerInfoAsync}
-    //     modifyPowerInfo={this.props.modifyPowerInfo}
-    //     dataSource={this.props.powerInfoData}
-    //     init={this.props.itemDetail}
-    //   ></PowerStationDetailTable>
-    // );
     return (
       <PowerStationForm
         {...formComProps}
         addPowerInfoAsync={this.props.addPowerInfoAsync}
         editPowerInfoAsync={this.props.editPowerInfoAsync}
         removePowerInfoAsync={this.props.removePowerInfoAsync}
-        modifyPowerInfo={this.props.modifyPowerInfo}
         powerInfoData={this.props.powerInfoData}
-        // extra={powerTable}
-
-        getPowerInfoAsync={this.getPowerInfoAsync}
-        powerInfoList={this.props.powerInfoList}
-        addOutLineTableItemAsync={this.props.addOutLineTableItemAsync}
-        editOutLineTableItemAsync={this.props.editOutLineTableItemAsync}
-        removeOutLineTableItemAsync={this.props.removeOutLineTableItemAsync}
-        modifyOutLineTableItem={this.props.modifyOutLineTableItem}
         outLineTableData={this.props.outLineTableData}
-        removeCircuitItemAsync={this.removeCircuitItemAsync}
+
+        // modifyPowerInfo={this.props.modifyPowerInfo}
+        // getPowerInfoAsync={this.getPowerInfoAsync}
+        // powerInfoList={this.props.powerInfoList}
+        // addOutLineTableItemAsync={this.props.addOutLineTableItemAsync}
+        // editOutLineTableItemAsync={this.props.editOutLineTableItemAsync}
+        // removeOutLineTableItemAsync={this.props.removeOutLineTableItemAsync}
+        // modifyOutLineTableItem={this.props.modifyOutLineTableItem}
+        // removeCircuitItemAsync={this.removeCircuitItemAsync}
       ></PowerStationForm>
     );
   };
-  removeCircuitItemAsync = params => {
-    console.log(
-      ' removeCircuitItemAsync ： ',
-      params,
-      this.props,
-      this.props.location.query.powerstation_id,
-    );
-    this.props.removeCircuitItemAsync({
-      power_station_id: this.props.location.query.powerstation_id,
-      circuit_id: params.circuit_id,
-    });
-  };
-  getPowerInfoAsync = params =>
-    this.props.getPowerInfoAsync({ power_number: params });
+  // removeCircuitItemAsync = params => {
+  //   console.log(
+  //     ' removeCircuitItemAsync ： ',
+  //     params,
+  //     this.props,
+  //     this.props.location.query.powerstation_id,
+  //   );
+  //   this.props.removeCircuitItemAsync({
+  //     power_station_id: this.props.location.query.powerstation_id,
+  //     circuit_id: params.circuit_id,
+  //   });
+  // };
+  // getPowerInfoAsync = params =>
+  //   this.props.getPowerInfoAsync({ power_number: params });
   get size() {
     return ['removeStation', 'exportDutyData'].some(
       v => v === this.props.action,
@@ -527,13 +503,6 @@ class PowerStation extends PureComponent {
   }
 
   render() {
-    // return <PowerStationDetailTable
-    //   addPowerInfoAsync={this.props.addPowerInfoAsync}
-    //   editPowerInfoAsync={this.props.editPowerInfoAsync}
-    //   removePowerInfoAsync={this.props.removePowerInfoAsync}
-    //   modifyPowerInfo={this.props.modifyPowerInfo}
-    //   dataSource={this.props.powerInfoData}
-    // ></PowerStationDetailTable>
     console.log(
       ' %c PowerStation 组件 this.state, this.props ： ',
       `color: #333; font-weight: bold`,

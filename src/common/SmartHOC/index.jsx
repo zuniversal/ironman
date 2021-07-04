@@ -483,12 +483,6 @@ export default ({
 
       // tips('模拟导出成功！');
     };
-    syncOAAsync = params => {
-      console.log(' syncOAAsync,  , ： ', params);
-      const { dispatch } = this.props;
-      tips('正在同步OA！');
-      // dispatch(actions.syncOAAsync({}));
-    };
     search = async params => {
       console.log('    search ： ', params);
       const { form } = params;

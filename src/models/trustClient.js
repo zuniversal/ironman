@@ -17,7 +17,6 @@ const namespace = 'trustClient';
 const { createActions } = init(namespace);
 
 const otherActions = [
-  'syncOAAsync',
   'getPortraitAsync',
   'getUserAsync',
   'addUserAsync',
@@ -77,7 +76,6 @@ export default {
     d_id: '',
     searchInfo: {},
 
-    syncOAData: [],
     portraitData: {},
     userList: [
       // { label: 'zyb', value: 'value1' },
@@ -270,13 +268,6 @@ export default {
       };
     },
 
-    syncOA(state, { payload, type }) {
-      // console.log(' syncOA 修改  ： ', state, payload, type,     )//
-      return {
-        ...state,
-        // portraitData: payload.,
-      };
-    },
     getPortrait(state, { payload, type }) {
       // console.log(' getPortrait 修改  ： ', state, payload, type,     )//
       return {
@@ -566,15 +557,6 @@ export default {
       yield put({ type: 'getListAsync' });
     },
 
-    *syncOAAsync({ payload, action, type }, { call, put }) {
-      // console.log(' syncOAAsync ： ', payload, type,     )//
-      const res = yield call(services.syncOA, payload);
-      console.log('  syncOA res ：', res);
-      yield put({
-        type: 'getList',
-        payload: res,
-      });
-    },
     *getPortraitAsync({ payload, action, type }, { call, put }) {
       // console.log(' getPortraitAsync ： ', payload, type,     )//
       const res = yield call(services.getPortrait, payload);

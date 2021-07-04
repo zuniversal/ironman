@@ -99,13 +99,6 @@ class Client extends PureComponent {
         {/* <Button type="primary" onClick={() => this.props.search(params)}>
           搜索
         </Button> */}
-        {/* <Button
-          type="primary"
-          htmlType="submit"
-          onClick={this.props.syncOAAsync}
-        >
-          同步OA
-        </Button> */}
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}

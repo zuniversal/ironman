@@ -336,71 +336,71 @@ export default {
         powerInfoList: formatSelectList(payload.list, 'power_number'),
       };
     },
-    addPowerInfo(state, { payload, type }) {
-      const { powerInfoData } = state;
-      console.log(' addPowerInfo ： ', state, payload, powerInfoData);
-      return {
-        ...state,
-        // powerInfoData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
-        powerInfoData: powerInfoData.map((v, i) => {
-          console.log(
-            ' v.key === payload.payload.key ： ',
-            v.key === payload.payload.key,
-          );
-          return v.key === payload.payload.key
-            ? {
-                ...v,
-                ...payload.list[0],
-                isEdit: false,
-              }
-            : v;
-        }),
-      };
-    },
-    editPowerInfo(state, { payload, type }) {
-      const { powerInfoData } = state;
-      console.log(' editPowerInfo ： ', state, payload, powerInfoData);
-      return {
-        ...state,
-        powerInfoData: powerInfoData.map((v, i) => {
-          console.log(
-            ' v.key === payload.payload.key ： ',
-            v.key === payload.payload.key,
-          );
-          return v.key === payload.payload.key
-            ? {
-                ...v,
-                ...payload.bean,
-              }
-            : v;
-        }),
-      };
-    },
-    removePowerInfo(state, { payload, type }) {
-      console.log(' removePowerInfo ： ', state, payload);
-      const { powerInfoData } = state;
-      const { action, key, index, value } = payload.payload;
-      let newData = [];
-      // if (action === 'localRemove') {
-      //   newData = powerInfoData.filter((v, i) => v.key != key);
-      // } else {
-      //   newData = payload.list.filter(v => v.id != payload.payload.id);
-      // }
-      newData = powerInfoData.filter(v => {
-        console.log(
-          ' v.id != payload.id ： ',
-          v.id != payload.payload.id,
-          v.id,
-          payload.id,
-        );
-        return v.id != payload.payload.id;
-      });
-      console.log(' newData ： ', newData);
-      return {
-        ...state,
-        powerInfoData: newData,
-      };
-    },
+    // addPowerInfo(state, { payload, type }) {
+    //   const { powerInfoData } = state;
+    //   console.log(' addPowerInfo ： ', state, payload, powerInfoData);
+    //   return {
+    //     ...state,
+    //     // powerInfoData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
+    //     powerInfoData: powerInfoData.map((v, i) => {
+    //       console.log(
+    //         ' v.key === payload.payload.key ： ',
+    //         v.key === payload.payload.key,
+    //       );
+    //       return v.key === payload.payload.key
+    //         ? {
+    //             ...v,
+    //             ...payload.list[0],
+    //             isEdit: false,
+    //           }
+    //         : v;
+    //     }),
+    //   };
+    // },
+    // editPowerInfo(state, { payload, type }) {
+    //   const { powerInfoData } = state;
+    //   console.log(' editPowerInfo ： ', state, payload, powerInfoData);
+    //   return {
+    //     ...state,
+    //     powerInfoData: powerInfoData.map((v, i) => {
+    //       console.log(
+    //         ' v.key === payload.payload.key ： ',
+    //         v.key === payload.payload.key,
+    //       );
+    //       return v.key === payload.payload.key
+    //         ? {
+    //             ...v,
+    //             ...payload.bean,
+    //           }
+    //         : v;
+    //     }),
+    //   };
+    // },
+    // removePowerInfo(state, { payload, type }) {
+    //   console.log(' removePowerInfo ： ', state, payload);
+    //   const { powerInfoData } = state;
+    //   const { action, key, index, value } = payload.payload;
+    //   let newData = [];
+    //   // if (action === 'localRemove') {
+    //   //   newData = powerInfoData.filter((v, i) => v.key != key);
+    //   // } else {
+    //   //   newData = payload.list.filter(v => v.id != payload.payload.id);
+    //   // }
+    //   newData = powerInfoData.filter(v => {
+    //     console.log(
+    //       ' v.id != payload.id ： ',
+    //       v.id != payload.payload.id,
+    //       v.id,
+    //       payload.id,
+    //     );
+    //     return v.id != payload.payload.id;
+    //   });
+    //   console.log(' newData ： ', newData);
+    //   return {
+    //     ...state,
+    //     powerInfoData: newData,
+    //   };
+    // },
     addPowerInfo(state, { payload, type }) {
       const { powerInfoData } = state;
       console.log(' addPowerInfo ： ', state, payload, powerInfoData);
@@ -479,15 +479,9 @@ export default {
       const { outLineTableData } = state;
       return {
         ...state,
-        outLineTableData: outLineTableData.filter(v => {
-          console.log(
-            ' v.id != payload.id ： ',
-            v.id != payload.payload.id,
-            v.id,
-            payload.id,
-          );
-          return v.id != payload.payload.id;
-        }),
+        outLineTableData: outLineTableData.filter(
+          v => v.id != payload.payload.id,
+        ),
       };
     },
     modifyPowerInfo(state, { payload, type }) {
@@ -735,25 +729,6 @@ export default {
       return {
         ...state,
         outLineTableData: newData,
-      };
-    },
-
-    addCircuitItem(state, { payload, type }) {
-      console.log(' addCircuitItem ： ', state, payload);
-      return {
-        ...state,
-      };
-    },
-    editCircuitItem(state, { payload, type }) {
-      console.log(' editCircuitItem ： ', state, payload);
-      return {
-        ...state,
-      };
-    },
-    removeCircuitItem(state, { payload, type }) {
-      console.log(' removeCircuitItem ： ', state, payload);
-      return {
-        ...state,
       };
     },
   },
@@ -1200,18 +1175,18 @@ export default {
       );
     },
 
-    *addCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.addCircuitItem, payload);
-      yield put({ type: 'addCircuitItem' });
-    },
-    *editCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.editCircuitItem, payload);
-      yield put({ type: 'editCircuitItem' });
-    },
-    *removeCircuitItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.removeCircuitItem, payload);
-      yield put({ type: 'removeCircuitItem' });
-    },
+    // *addCircuitItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.addCircuitItem, payload);
+    //   yield put({ type: 'addCircuitItem' });
+    // },
+    // *editCircuitItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.editCircuitItem, payload);
+    //   yield put({ type: 'editCircuitItem' });
+    // },
+    // *removeCircuitItemAsync({ payload, action, type }, { call, put }) {
+    //   const res = yield call(services.removeCircuitItem, payload);
+    //   yield put({ type: 'removeCircuitItem' });
+    // },
   },
   // subscriptions: {
   //   setup: (props) => {

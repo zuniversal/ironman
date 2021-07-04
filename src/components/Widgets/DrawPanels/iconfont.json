@@ -6,11 +6,11 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "19624186",
-      "name": "断路器",
-      "font_class": "duanluqi",
-      "unicode": "e60e",
-      "unicode_decimal": 58894
+      "icon_id": "22616813",
+      "name": "抽屉式断路器1",
+      "font_class": "a-choutishiduanluqi-21",
+      "unicode": "e600",
+      "unicode_decimal": 58880
     }
   ]
 }
