@@ -150,7 +150,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
                 <ChartLine2
                   {...paramProps}
                   unit="V"
-                  min={200}
+                  // min={200}
                   load={tab === 'u'}
                   fields={[
                     {
@@ -377,7 +377,7 @@ export default React.memo(function SmartMonitor(props) {
               <ChartLine
                 {...paramProps}
                 unit="V"
-                min={200}
+                // min={200}
                 load={tab === 'u'}
                 fields={[
                   {

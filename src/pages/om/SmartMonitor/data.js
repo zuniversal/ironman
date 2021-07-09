@@ -8,15 +8,15 @@ export const getShowRealData = data => {
       value: 'imei',
     },
     {
-      label: 'A相电流',
+      label: 'A相电压',
       value: 'ua',
     },
     {
-      label: 'B相电流',
+      label: 'B相电压',
       value: 'ub',
     },
     {
-      label: 'C相电流',
+      label: 'C相电压',
       value: 'uc',
     },
     {
@@ -182,6 +182,14 @@ export const getShowRealData = data => {
     {
       label: '负载率',
       value: 'p_rate',
+    },
+    {
+      label: '数据时间',
+      value: () => {
+        const val = get(data, 'tm');
+        // return val ? moment(val).format('YYYY-MM-DD hh:mm:ss') : '-';
+        return val ? val.split('T').join(' ') : '-';
+      },
     },
   ];
   return mapping.map(item => {

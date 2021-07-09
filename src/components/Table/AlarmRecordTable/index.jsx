@@ -80,6 +80,17 @@ const AlarmRecordTable = props => {
       title: '开始时间',
       dataIndex: 'created_time',
       day: 'YYYY-MM-DD HH:mm:ss',
+      sorter: true,
+      sortKey: 'number',
+      // sortDirections: ['descend', 'ascend'],
+      // sorter: (a, b) => {
+      //   const res = a.created_time.length - b.created_time.length
+      //   console.log('a, b', a, b, props, res)
+      //   return res
+      // },
+      // // sorter: true,
+      // autoSorter: true,
+      // sortDirections: ['descend', 'ascend'],
     },
     {
       title: '备注',

@@ -63,7 +63,7 @@ class SmartTable extends PureComponent {
       pageSizeOptions: [10, 20, 50],
       total: count,
       size: 'default',
-      onChange: this.onPageChange,
+      // onChange: this.onPageChange,
       ...paginationConfig,
     };
     console.log(' SmartTableSmartTable ： ', this.state, this.props);
@@ -410,7 +410,7 @@ class SmartTable extends PureComponent {
       pageSize: page_size,
     };
     console.log(
-      ' onPageChange,  , ： ',
+      ' onTableChange onPageChange,  , ： ',
       page,
       page_size,
       this.state,
@@ -496,6 +496,19 @@ class SmartTable extends PureComponent {
     };
 
     return actionCol;
+  };
+  onTableChange = (pagination, filters, sorter) => {
+    console.log('    onTableChange ： ', pagination, filters, sorter);
+    const { order, column: { sortKey } = {} } = sorter;
+    const { current: page, pageSize: page_size } = pagination;
+    if (!this.props.noRequest && this.props.getListAsync) {
+      const params = {
+        page,
+        page_size,
+      };
+      params[sortKey] = order;
+      this.props.getListAsync(params);
+    }
   };
 
   renderRemoveModal = params => {
@@ -648,6 +661,7 @@ class SmartTable extends PureComponent {
       dataIndex: v.dataIndex ? v.dataIndex : `field${i}`,
       ...v,
       render: (...rest) => this.renderCol(...rest, v),
+      // sorter: v.autoSorter ? this.autoSorter : null,
       // ...(v.noFilter ? null : this.autoFilter(v.dataIndex)),
     }));
 
@@ -717,6 +731,7 @@ class SmartTable extends PureComponent {
           columns={cols}
           // className={`smartTable ${className} ${animation || slideInUp} `}
           className={`smartTable ${className}  `}
+          onChange={this.onTableChange}
           // scroll={{
           //   y: 700,
           // }}
