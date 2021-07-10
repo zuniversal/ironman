@@ -1749,7 +1749,7 @@ const InspectRecordForm = props => {
               <div>
                 {file.map((v, i) => (
                   // <img src={v} className={`hotImg`} key={i} />
-                  <SmartImg src={v} key={i} />
+                  <SmartImg src={v} key={i} format />
                 ))}
               </div>
             ),
@@ -1773,7 +1773,7 @@ const InspectRecordForm = props => {
       CustomCom: (
         <>
           {image.map((v, i) => (
-            <SmartImg src={v} key={i} />
+            <SmartImg src={v} key={i} format />
           ))}
         </>
       ),
