@@ -166,7 +166,9 @@ const getRoutes = (props = {}) => {
   // const routesConfig = recursiveAuth(routes, authData);
   const routesConfig = recursiveAuth(routes, flatAuth(props?.perms)).map(v => ({
     ...v,
-    hideInMenu: (v.platform && v.platform !== platform) || v.hideInMenu,
+    hideInMenu: v.platform
+      ? (v.platform && v.platform !== platform) || v.hideInMenu
+      : false,
   }));
   const routesData = {
     route: {
@@ -334,7 +336,9 @@ export default {
         return {
           ...v,
           // hideInMenu: v.platform && v.platform !== platform ? true : false,
-          hideInMenu: (v.platform && v.platform !== platform) || v.hideInMenu,
+          hideInMenu: v.platform
+            ? (v.platform && v.platform !== platform) || v.hideInMenu
+            : false,
           // hideInMenu: isDev
           //   ? false
           //   : v.platform && v.platform !== platform

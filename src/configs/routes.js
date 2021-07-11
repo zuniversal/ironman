@@ -305,6 +305,7 @@ export const bpRoutes = [
     ],
   },
   {
+    platform: 'bussniess',
     authKey: 'alarmRecordModel',
     path: '/om/alarmRecord',
     name: '告警记录',
