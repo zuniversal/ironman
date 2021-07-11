@@ -114,7 +114,22 @@ export default {
       return {
         ...state,
         // statisticData: { month, today, yesterday, lastMonth },
-        statisticData: payload.bean,
+        // statisticData: payload.bean,
+        statisticData: {
+          ...payload.bean,
+          today: payload.bean.today
+            ? payload.bean.today.toFixed(2)
+            : payload.bean.today,
+          yestoday: payload.bean.yestoday
+            ? payload.bean.yestoday.toFixed(2)
+            : payload.bean.yestoday,
+          this_month: payload.bean.this_month
+            ? payload.bean.this_month.toFixed(2)
+            : payload.bean.this_month,
+          last_month: payload.bean.last_month
+            ? payload.bean.last_month.toFixed(2)
+            : payload.bean.last_month,
+        },
       };
     },
     getPowerData(state, { payload, type }) {
