@@ -31,12 +31,36 @@
       }
     }
   }
+  .collapseWrapper {
+    // flex: 1;
+    white-space: nowrap;
+  }
+
+  .tabWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    .tabItem {
+      flex: 1;
+      display: flex;
+      white-space: nowrap;
+      margin-right: 20px;
+      font-size: 16px;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+      justify-content: center;
+      &.activeTab {
+        border-bottom: 3px solid #1fc270;
+      }
+    }
+  }
 
   .assetsInfoWrapper {
     display: flex;
     flex: 1;
     flex-direction: column;
-    margin-left: 30px;
+    padding-left: 30px;
+    width: 100%;
     // justify-content: center;
     .assetsInfoTabs {
       // display: inline-block;

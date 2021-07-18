@@ -31,6 +31,11 @@ import { regoins } from '@/configs';
 
 // 主要作用是转发创建的表单
 
+import { connect } from 'umi';
+const mapStateToProps = ({ loading }) => ({ loadingData: loading });
+
+const okDisableConfig = ['add', 'edit'];
+
 const SmartFormModal = props => {
   const {
     // modalProps,
@@ -72,7 +77,7 @@ const SmartFormModal = props => {
   // }
 
   console.log(
-    ' SmartFormModal ： ',
+    ' SmartFormModalSmartFormModal ： ',
     props,
     form,
     modalProps,
@@ -95,12 +100,25 @@ const SmartFormModal = props => {
     onCancel && onCancel({ e, form });
   };
 
+  // 确认按钮是否禁用
+  let isOkDisabled = false;
+  props.okDisableConfig.forEach((v, i) => {
+    Object.keys(props.loadingData.effects).forEach((item, index) => {
+      // console.log(' SmartFormModalSmartFormModal Object.keys(props.loadingData.effects) item ： ', props.loadingData.effects[item], item, index, item.includes(v), )
+      if (item.includes(v) && props.loadingData.effects[item]) {
+        isOkDisabled = true;
+      }
+    });
+  });
+  console.log(' SmartFormModalSmartFormModal isOkDisabled ： ', isOkDisabled); //
+
   return (
     <SmartModal
       show={show}
       onOk={handleOk}
       onCancel={close}
       form={form}
+      isOkDisabled={isOkDisabled}
       {...modalProps}
     >
       {/* <SmartForm
@@ -153,11 +171,14 @@ const SmartFormModal = props => {
 SmartFormModal.defaultProps = {
   show: false,
   formComProps: {},
+  okDisableConfig,
 };
 
 SmartFormModal.propTypes = {
   show: PropTypes.bool,
   formComProps: PropTypes.object,
+  okDisableConfig: PropTypes.array,
 };
 
-export default SmartFormModal;
+// export default SmartFormModal;
+export default connect(mapStateToProps)(SmartFormModal);

@@ -40,6 +40,10 @@ const AssetsListTable = props => {
       dataMap: assetTypeMap,
     },
     {
+      title: '容量',
+      dataIndex: 'real_capacity',
+    },
+    {
       title: '厂商',
       dataIndex: 'manufacturer',
     },

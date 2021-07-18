@@ -144,7 +144,7 @@ export default {
         action: payload.payload.action,
         isShowPdfDetail: isExportPdf,
         isShowExportPdf: isExportPdf,
-        isShowModal: isExportPdf ? false : true,
+        isShowModal: !isExportPDF,
         d_id: payload.payload.d_id,
         itemDetail: itemDetail,
         itemDetailCopy: itemDetail,
@@ -218,26 +218,5 @@ export default {
       const res = yield call(services.getItem, payload);
       yield put(action({ ...res, payload }));
     },
-    // *addItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.addItem, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *editItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.editItem, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-    // *removeItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.removeItem, payload);
-    //   yield put(action({ ...res, payload }));
-    // },
-
-    // *getMissionItemAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.getMissionItem, payload);
-    //   yield put({ type: 'getItem', payload: { ...res, payload } });
-    // },
-    // *confirmInspectAsync({ payload, action, type }, { call, put }) {
-    //   const res = yield call(services.confirmInspect, payload);
-    //   yield put({ type: 'getItem', payload: { ...res, payload } });
-    // },
   },
 };

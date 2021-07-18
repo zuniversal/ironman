@@ -31,7 +31,7 @@ const useSmartExportPdf = props => {
       pagebreak: {
         mode: ['avoid-all', 'css', 'legacy'],
       },
-      // margin: [0, 1],
+      margin: [0.3, 0.2],
       filename,
       image: { type: 'jpeg', quality: 1 }, // 导出的图片质量和格式
       html2canvas: { scale: 2, useCORS: true }, // useCORS很重要，解决文档中图片跨域问题
@@ -49,8 +49,8 @@ const useSmartExportPdf = props => {
           console.log(' finish res  ： ', res);
           tips(tipsText);
           return res;
-        });// 导出
-      console.log(' finish ： ', props.finish);
+        }); // 导出
+      console.log(' finish ： ', props, props.finish);
       props.finish && props.finish();
       setIsExport(false);
     }
@@ -58,6 +58,7 @@ const useSmartExportPdf = props => {
 
   useEffect(() => {
     if (props.isExportPDF && !isExport) {
+      console.log(' finishfinish ： ', props, isExport);
       // setTimeout(() => {
       setIsExport(true);
       exportPdf(props);

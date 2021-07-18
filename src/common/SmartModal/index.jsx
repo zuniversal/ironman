@@ -147,6 +147,7 @@ class SmartModal extends PureComponent {
               onClick={this.onOk}
               type="primary"
               // icon={<SmileOutlined />}
+              disabled={this.props.isOkDisabled}
             >
               {okTxt}
             </Button>
@@ -178,6 +179,7 @@ SmartModal.defaultProps = {
   titleMap: {}, // 模态框的标题映射 自动根据 相应actions 类型 自动获取标题
   size: 'default',
   extraBtn: () => {},
+  isOkDisabled: false,
 };
 
 SmartModal.propTypes = {

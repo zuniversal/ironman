@@ -102,7 +102,7 @@ export const isTips = res => {
     if (code === AUTH_FAIL && !isDev) {
       history.push(LOGIN);
     }
-    console.log(' codecode ： ', msg_show, msg_show ?? '操作成功', codeMsg); //
+    // console.log(' codecode ： ', msg_show, msg_show ?? '操作成功', codeMsg); //
     tips(msg_show || codeMsg, 2);
     // if (!codeMsg) {
     //   tips(codeMsg, 2);

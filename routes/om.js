@@ -218,6 +218,12 @@ export default [
     component: '@/pages/om/AlarmRecord',
     title: '告警记录',
   },
+  {
+    path: '/iot/alarmRecord',
+    authKey: 'alarmRecordModel',
+    component: '@/pages/om/AlarmRecord',
+    title: '告警记录',
+  },
 
   {
     path: '/om/newsKnow',

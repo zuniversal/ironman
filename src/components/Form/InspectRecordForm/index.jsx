@@ -1883,6 +1883,7 @@ const InspectRecordForm = props => {
         }
       : props.toggleExportPDF;
   // const finish = props.type === 'comExportPdf' ? setModalExport : props.toggleExportPDF
+  console.log(' finishfinish props ： ', props);
 
   useExportPdf({
     // element: document.getElementsByClassName('inspectRecordForm')[0],

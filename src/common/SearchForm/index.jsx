@@ -95,12 +95,7 @@ class SearchForm extends PureComponent {
       children,
       ...rest
     } = this.props;
-    console.log(
-      ' %c SearchForm 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
+
     const prop = {
       placeholder: defPh ? placeholder + word : placeholder,
     };

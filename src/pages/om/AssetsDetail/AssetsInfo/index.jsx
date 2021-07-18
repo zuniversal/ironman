@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './style.less';
 import AssetTree from '../AssetTree';
 import AssetsForm from '@/components/Form/AssetsForm';
-import { List, Collapse, Tabs, Form, Row, Col } from 'antd';
+import { List, Collapse, Tabs, Form, Row, Col, Divider } from 'antd';
 import { num2Str } from '@/utils';
 import { assetFormTypeMap, assetTypeMap } from '@/configs';
+import { ANIMATE } from '@/constants';
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
@@ -88,21 +89,54 @@ const assetFormConfig = [
   },
 ];
 
+// const RenderTabs = props => {
+//   console.log(' RenderTabs ： ', props);
+//   const onChange = val => {
+//     console.log(' onChange   ,   ： ', val);
+//   };
+//   const onTabClick = (val, i) => {
+//     console.log(' onTabClick   ,   ： ', val, i);
+//   };
+//   return (
+//     // <Tabs defaultActiveKey="1" onChange={props.onChange}>
+//     <Tabs defaultActiveKey={props.config[0]?.key} onChange={props.onChange}>
+//       {props.config.map((v, i) => (
+//         <TabPane {...v}></TabPane>
+//       ))}
+//     </Tabs>
+//   );
+// };
+
 const RenderTabs = props => {
-  console.log(' RenderTabs ： ', props);
-  const onChange = val => {
-    console.log(' onChange   ,   ： ', val);
-  };
-  const onTabClick = (val, i) => {
-    console.log(' onTabClick   ,   ： ', val, i);
+  console.log(' RenderTabs ： ', props, props.config[0]?.key);
+  if (!config.length) {
+    return null;
+  }
+
+  const [activeTab, setActiveTab] = useState(props.config[0]?.key);
+  const onChange = item => {
+    console.log(' onChange   ,   ： ', item);
+    setActiveTab(item.key);
+    props.onChange(item.key);
   };
   return (
-    // <Tabs defaultActiveKey="1" onChange={props.onChange}>
-    <Tabs defaultActiveKey={props.config[0]?.key} onChange={props.onChange}>
-      {props.config.map((v, i) => (
-        <TabPane {...v}></TabPane>
-      ))}
-    </Tabs>
+    !!config.length && (
+      <div className="tabWrapper">
+        {props.config.map((v, i) => (
+          <div
+            key={v.key}
+            className={
+              v.key == (activeTab || props.config[0]?.key)
+                ? 'activeTab tabItem'
+                : 'tabItem'
+            }
+            onClick={() => onChange(v)}
+          >
+            {v.tab}
+          </div>
+        ))}
+      </div>
+    )
   );
 };
 
@@ -326,11 +360,17 @@ const AssetsInfo = props => {
 
         {/* <Col span={18} className={``}> */}
         <div className="assetsInfoWrapper">
+          {/* <RenderTabs
+            config={props.subAssetTreeList}
+            onChange={onChange}
+          ></RenderTabs> */}
           <div className="assetsInfoTabs">
             <RenderTabs
               config={props.subAssetTreeList}
               onChange={onChange}
+              key={props.subAssetTreeList}
             ></RenderTabs>
+            <Divider />
             {/* {selectData.length > 0 ? <RenderTabs config={selectData} onChange={onThirdChange} key={selectData[0].key}  ></RenderTabs> : null} */}
             {selectData ? (
               <RenderTabs
@@ -343,7 +383,10 @@ const AssetsInfo = props => {
               <RenderTabs config={electricCtrlConfig}></RenderTabs> */}
           </div>
           {/* <div className="dfc"> */}
-          <div className="listWrapper">
+          <div
+            className={`listWrapper ${ANIMATE.bounceIn}`}
+            key={props.assetDetail.id}
+          >
             {/* <RenderList dataSource={data} header={'相排'}></RenderList>
                 <RenderList dataSource={data} header={'地排'}></RenderList> */}
             {/* <RenderList dataSource={props.assetDetail} header={'相排'}></RenderList> */}

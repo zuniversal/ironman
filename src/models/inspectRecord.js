@@ -98,8 +98,8 @@ export default {
         spect_out = [],
         safety_equirpment = {},
       } = payload.bean;
-      console.log(' getItemgetItem ： ', payload);
-      const isExportPdf = payload.payload.extraAction === 'showExportPdf';
+      const isExportPDF = payload.payload.extraAction === 'showExportPdf';
+      console.log(' getItemgetItem ： ', payload, isExportPDF);
       const spectInData = [];
       power_data?.forEach(v =>
         v?.spect_in.forEach(item => spectInData.push(item)),
@@ -154,9 +154,10 @@ export default {
       return {
         ...state,
         action: payload.payload.action,
-        isShowPdfDetail: isExportPdf,
-        isShowExportPdf: isExportPdf,
-        isShowModal: isExportPdf ? false : true,
+        isShowPdfDetail: isExportPDF,
+        isShowExportPdf: isExportPDF,
+        isShowModal: !isExportPDF,
+        isExportPDF: isExportPDF,
         d_id: payload.payload.d_id,
         itemDetail: itemDetail,
         itemDetailCopy: itemDetail,
@@ -241,7 +242,7 @@ export default {
       };
     },
     toggleExportPDF(state, { payload, type }) {
-      console.log(' toggleExportPDF ： ', payload);
+      console.log(' finish  toggleExportPDF ： ', payload, state);
       return {
         ...state,
         isExportPDF: !state.isExportPDF,

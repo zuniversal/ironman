@@ -1782,7 +1782,8 @@ const ClientForm = props => {
       key={'AdminCollapseCom'}
     ></CollapseCom>
   );
-  if (action !== 'detail') config.push(AdminCollapseCom);
+  // if (action !== 'detail') config.push(AdminCollapseCom);
+  config.push(AdminCollapseCom);
 
   const houseNoFormConfig = [
     { label: '', name: '', rowTitle: true },

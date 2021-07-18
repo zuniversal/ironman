@@ -162,6 +162,4 @@ const ClientReportSearchForm = props => {
   );
 };
 
-ClientReportSearchForm.defaultProps = {};
-
 export default ClientReportSearchForm;

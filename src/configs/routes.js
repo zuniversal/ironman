@@ -265,13 +265,13 @@ export const bpRoutes = [
     name: '报告管理',
     icon: <Icon icon={'systemManage'} />,
   },
-  {
-    platform: 'bp',
-    authKey: 'reportModel',
-    path: '/om/groupReport',
-    name: '集团报告',
-    icon: <Icon icon={'systemManage'} />,
-  },
+  // {
+  //   platform: 'bp',
+  //   authKey: 'reportModel',
+  //   path: '/om/groupReport',
+  //   name: '集团报告',
+  //   icon: <Icon icon={'systemManage'} />,
+  // },
   {
     platform: 'bussniess',
     platform: 'bp',
@@ -305,7 +305,7 @@ export const bpRoutes = [
     ],
   },
   {
-    platform: 'bussniess',
+    platform: 'bp',
     authKey: 'alarmRecordModel',
     path: '/om/alarmRecord',
     name: '告警记录',
@@ -427,6 +427,13 @@ export const iotRoutes = [
     name: '其他loT设备',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
+  },
+  {
+    platform: 'iot',
+    authKey: 'alarmRecordModel',
+    path: '/iot/alarmRecord',
+    name: '告警记录',
+    icon: <Icon icon={'shiftsManage'} />,
   },
 ];
 

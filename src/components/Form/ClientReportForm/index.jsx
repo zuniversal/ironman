@@ -137,7 +137,7 @@ const calcAllMoenyVal = props => {
   };
 };
 
-const calcMoenyVal = props => {
+const calcMoenyVal2 = props => {
   const tip_volume = props.tip_volume ? props.tip_volume : 0;
   const tip_price = props.tip_price ? props.tip_price : 0;
   const peak_volume = props.peak_volume ? props.peak_volume : 0;
@@ -166,6 +166,21 @@ const calcMoenyVal = props => {
     peak_volume2 * peak_price2 +
     usual_volume2 * usual_price2 +
     valley_volume2 * valley_price2;
+  // + other_volume * other_price;
+  console.log(' calcMoenyVal   props,   ： ', props, calcRes);
+  return calcRes;
+};
+
+const calcMoenyVal = props => {
+  const calcRes =
+    props.tip_price_money +
+    props.peak_price_money +
+    props.usual_price_money +
+    props.valley_price_money +
+    props.tip_price2_money +
+    props.peak_price2_money +
+    props.usual_price2_money +
+    props.valley_price2_money;
   // + other_volume * other_price;
   console.log(' calcMoenyVal   props,   ： ', props, calcRes);
   return calcRes;
@@ -434,7 +449,7 @@ const ClientReportForm = props => {
     // 小计金额=所有的电量*电价的和+ 基本电费
     // const calcRes = (calcMoenyVal(formValues) + Number(calcAllMoenyValRes.basicMoney) + basePriceRes).toFixed(2);
     const calcRes = (
-      calcMoenyVal(formValues) + Number(calcAllMoenyValRes.basicMoney)
+      calcMoenyVal(calcAllMoenyValRes) + Number(calcAllMoenyValRes.basicMoney)
     ).toFixed(2);
     // 总有功=峰平谷尖+其他电量的和
     const calcTotalPowerRes = calcTotalPower(formValues);

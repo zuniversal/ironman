@@ -285,7 +285,13 @@ export default {
           ...payload.bean,
           customer_admin:
             customer_admin && customer_admin.length > 0
-              ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
+              ? // ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
+                customer_admin.map(v => ({
+                  ...v,
+                  nickname: v.name,
+                  phone: v.phone,
+                  tags: v.tags ?? [],
+                }))
               : [{}],
           // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
