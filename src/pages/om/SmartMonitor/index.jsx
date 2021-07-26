@@ -88,10 +88,14 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
     // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
     startTime: date[0]
-      ? date[0].subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')
+      ? moment(date[0])
+          .subtract(1, 'hours')
+          .format('YYYY-MM-DD HH:mm:ss')
       : null,
     endTime: date[1]
-      ? date[1].add(1, 'hours').format('YYYY-MM-DD HH:mm:ss')
+      ? moment(date[1])
+          .add(1, 'hours')
+          .format('YYYY-MM-DD HH:mm:ss')
       : null,
   };
   console.log(

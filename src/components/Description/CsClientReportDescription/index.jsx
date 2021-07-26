@@ -506,9 +506,10 @@ const MonthPowerReport = props => {
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{billFooterData[v.key]}</div>
-          {!props.isSendClientReportDetailPdf && (
+          {/* {!props.isSendClientReportDetailPdf && (
             <img src={stamp} className="stamp " />
-          )}
+          )} */}
+          <img src={stamp} className="stamp " />
         </DescItem>
       ))}
     </Descriptions>
@@ -692,9 +693,10 @@ const MonthStationReport = props => {
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{v.val ?? data[v.key]}</div>
-          {!props.isSendClientReportDetailPdf && (
+          {/* {!props.isSendClientReportDetailPdf && (
             <img src={stamp} className="stamp " />
-          )}
+          )} */}
+          <img src={stamp} className="stamp " />
         </DescItem>
       ))}
     </Descriptions>
