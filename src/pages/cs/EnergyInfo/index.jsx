@@ -227,7 +227,7 @@ class EnergyInfo extends PureComponent {
     };
     return (
       <>
-        <PageTitle title={'近6日用电曲线'}></PageTitle>
+        <PageTitle title={'近6月用电曲线'}></PageTitle>
         <LineEcharts {...config}></LineEcharts>
       </>
     );

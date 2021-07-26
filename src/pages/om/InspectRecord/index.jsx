@@ -259,6 +259,7 @@ class InspectRecord extends PureComponent {
           ></ExportHeader>
         )} */}
         <InspectRecordForm
+          extraAction={this.props.extraAction}
           init={this.props.itemDetail}
           closeExportPdf={this.closeExportPdf}
           toggleExportPDF={this.props.toggleExportPDF}

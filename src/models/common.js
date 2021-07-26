@@ -245,6 +245,38 @@ export default {
         itemDetail: payload.bean,
       };
     },
+    monitorManageDetail(state, { payload, type }) {
+      console.log(' monitorManageDetail ： ', payload);
+      const {
+        customer_id,
+        station_id,
+        electricity_user_id,
+        equipment_id,
+        device_id,
+        frequency,
+        electrical_info_id,
+        outline_id,
+      } = payload.bean;
+
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowCommonModal: true,
+        itemDetail: {
+          ...payload.bean,
+          customer_id: `${customer_id}`,
+          electricity_user_id: `${electricity_user_id}`,
+          station_id: `${station_id}`,
+          equipment_id: equipment_id ? `${equipment_id}` : equipment_id,
+          device_id: `${device_id}`,
+          electrical_info_id: electrical_info_id
+            ? `${electrical_info_id}`
+            : electrical_info_id,
+          outline_id: outline_id ? `${outline_id}` : outline_id,
+          frequency: frequency ? `${frequency}` : frequency,
+        },
+      };
+    },
     monitorApprovalDetail(state, { payload, type }) {
       console.log(' monitorApprovalDetail ： ', state, payload);
       return {

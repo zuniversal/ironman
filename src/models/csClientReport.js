@@ -100,7 +100,7 @@ export default {
       console.log(' getListAsync res ： ', dataList, state, payload);
       return {
         ...state,
-        dataList: dataList,
+        dataList: dataList.map((v, index) => ({ ...v, index })),
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -113,6 +113,7 @@ export default {
 
       const itemDetail = {
         ...payload.bean,
+        reportId: payload.payload.reportId,
         bill: bill.map(v => {
           const volumeAll =
             v.peak_volume + v.usual_volume + v.valley_volume + v.other_volume;

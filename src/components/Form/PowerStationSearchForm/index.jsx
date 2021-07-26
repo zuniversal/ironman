@@ -41,9 +41,15 @@ const PowerStationSearchForm = props => {
         name: 'customer_name',
       },
     },
+    // {
+    //   formType: 'Search',
+    //   selectData: houseNoList,
+    //   itemProps: {
+    //     label: '户号',
+    //     name: 'ele_user',
+    //   },
+    // },
     {
-      formType: 'Search',
-      selectData: houseNoList,
       itemProps: {
         label: '户号',
         name: 'ele_user',

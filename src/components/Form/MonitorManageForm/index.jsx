@@ -318,7 +318,6 @@ const MonitorManageForm = props => {
       ' onHouseNoChange  ： ',
       params,
       houseNoList,
-      houseNoList,
       props.propsForm.getFieldsValue(),
     );
     // const res = houseNoList.find(v => v.value == params);
@@ -367,6 +366,19 @@ const MonitorManageForm = props => {
     powerNumberList,
     outlineList,
   );
+
+  clientList.forEach((v, i) => {
+    if (v.customer_id == 58361) {
+      console.log(
+        ' clientListclientList v ： ',
+        v,
+        i,
+        v.customer_id == 58361,
+        v.customer_id,
+        houseNoList,
+      );
+    }
+  });
 
   const onPowerNumberChange = params => {
     console.log(
@@ -673,8 +685,11 @@ const MonitorManageForm = props => {
           template_id: null,
           comments: null,
           ...props.init,
-          frequency: `${props.init?.frequency ??
-            deviceFrequencyConfig[0].value}`,
+          frequency: `${
+            props.init.frequency
+              ? props.init.frequency
+              : deviceFrequencyConfig[0].value
+          }`,
           ...num2Str(props.init, ['template_id']),
         }}
         // onFieldChange={onFieldChange}

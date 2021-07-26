@@ -517,7 +517,7 @@ const SmartForm = (props, state) => {
       TextArea: (
         <TextArea
           autoSize={{
-            minRows: 3,
+            minRows: 4,
             // maxRows: 5
           }}
           allowClear

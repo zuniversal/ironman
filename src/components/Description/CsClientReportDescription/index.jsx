@@ -3,6 +3,8 @@ import './style.less';
 import { Descriptions, Button } from 'antd';
 import CsClientReportPie from '@/components/Echarts/CsClientReportPie';
 import useExportPdf from '@/hooks/useExportPdf';
+import { uploadFile } from '@/services/common';
+import { uploadPDF } from '@/services/clientReport';
 import CsHomeLine from '@/components/Echarts/CsHomeLine';
 import SmartEcharts from '@/common/SmartEcharts';
 import stamp from '@/static/assets/stamp.png';
@@ -425,7 +427,7 @@ const MonthPowerReport = props => {
     name: `${v.name} ${props.data[v.key]} %`,
   }));
   console.log(' pieData1 ： ', pieData1, pieData2);
-  const domRef = useRef();
+  // const domRef = useRef();
 
   // const pieData2 = [
   //   { value: 335, name: '访问直接' },
@@ -499,12 +501,14 @@ const MonthPowerReport = props => {
     provider: '电管家能源管理(上海)有限公司',
   };
 
-  const footerCom = (
+  const FooterCom = props => (
     <Descriptions column={2} className="footerWrapper">
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{billFooterData[v.key]}</div>
-          <img src={stamp} className="stamp " />
+          {!props.isSendClientReportDetailPdf && (
+            <img src={stamp} className="stamp " />
+          )}
         </DescItem>
       ))}
     </Descriptions>
@@ -636,7 +640,9 @@ const MonthPowerReport = props => {
       {headerCom}
       {basePowerCom}
       {appraisalCom}
-      {footerCom}
+      <FooterCom
+        isSendClientReportDetailPdf={props.isSendClientReportDetailPdf}
+      ></FooterCom>
     </div>
   );
 };
@@ -681,17 +687,19 @@ const MonthStationReport = props => {
     },
   ];
 
-  const footerCom = (
+  const FooterCom = props => (
     <Descriptions column={2} className="footerWrapper" colon={false}>
       {footerConfig.map((v, i) => (
         <DescItem label={v.label} key={i}>
           <div className="signLine">{v.val ?? data[v.key]}</div>
-          <img src={stamp} className="stamp " />
+          {!props.isSendClientReportDetailPdf && (
+            <img src={stamp} className="stamp " />
+          )}
         </DescItem>
       ))}
     </Descriptions>
   );
-  console.log(' footerConfig ： ', footerConfig, footerCom);
+  console.log(' footerConfig ： ', footerConfig, FooterCom);
 
   const config1 = [
     {
@@ -1037,7 +1045,9 @@ const MonthStationReport = props => {
       {deviceStatusCom}
       <div className="noBreak">
         {facilityCom}
-        {footerCom}
+        <FooterCom
+          isSendClientReportDetailPdf={props.isSendClientReportDetailPdf}
+        ></FooterCom>
       </div>
     </div>
   );
@@ -1045,7 +1055,8 @@ const MonthStationReport = props => {
 
 const CsClientReportDescription = props => {
   console.log(' CsClientReportDescription ：', props);
-
+  const isSendClientReportDetailPdf =
+    props.action === 'sendClientReportDetailPdf';
   // useEffect(() => {
   //   console.log(' ExportPdf useEffect ： ', );
   //   props.onChildLoad(true)
@@ -1079,6 +1090,7 @@ const CsClientReportDescription = props => {
       data={v}
       key={i}
       reportTime={props.data?.year_month}
+      isSendClientReportDetailPdf={isSendClientReportDetailPdf}
     ></MonthPowerReport>
   ));
   const com2 = props.data?.inspect?.map((v, i) => (
@@ -1086,8 +1098,47 @@ const CsClientReportDescription = props => {
       data={v}
       key={i}
       reportTime={v.end_time?.split(' ')[0]}
+      isSendClientReportDetailPdf={isSendClientReportDetailPdf}
     ></MonthStationReport>
   ));
+
+  const finish = () => {
+    console.log(' finishfinishfinishfinish   ,   ： ');
+    props.onCancel();
+  };
+  const uploadCb = async ({ file }) => {
+    console.log(' uploadCb file ： ', file); //
+    // return
+    // setTimeout(async () => {
+    console.log('  延时器 ： ');
+    const formData = new FormData();
+    formData.append('file', file); // 文件对象
+    console.log(' formData ： ', formData, formData.get('file')); //
+    const res = await uploadFile(formData);
+    // return
+    const uploadPDFRes = await uploadPDF({
+      customer_id: props.data.customer_id,
+      report_id: props.data.reportId,
+      year_month: props.data?.year_month,
+      url: res.rest.url,
+    });
+    console.log('  res await 结果  ：', res, uploadPDFRes); //
+    // }, 6000)
+  };
+  useExportPdf({
+    isExportPDF: isSendClientReportDetailPdf,
+    // isExportPDF: trye,
+    element: 'csClientReportDescription',
+    finish: finish,
+    filename: 'formTitle',
+    isUpload: isSendClientReportDetailPdf,
+    // isUpload: true,
+    uploadCb,
+    // exportText: 'PDF导出生成中，请稍等。请勿关闭弹框，上传成功自动关闭！',
+    option: {
+      margin: 0,
+    },
+  });
 
   return (
     <div className={`csClientReportDescription ${props.className}`}>
@@ -1102,7 +1153,7 @@ const CsClientReportDescription = props => {
           导出PDF
         </Button>
       </div> */}
-      {props.top}
+      {!isSendClientReportDetailPdf && props.top}
       <ReportCover data={props.data}></ReportCover>
       {com1}
       {com2}

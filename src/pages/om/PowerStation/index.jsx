@@ -74,9 +74,9 @@ class PowerStation extends PureComponent {
         >
           新增{TITLE}
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        {/* <Button type="primary" onClick={() => this.props.exportData()}>
           导出Excel
-        </Button>
+        </Button> */}
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
         <Button
           type="primary"

@@ -57,10 +57,34 @@ const WeakForm = props => {
         name: 'content',
       },
     },
+    // {
+    //   itemProps: {
+    //     label: '使用耗材',
+    //     name: '',
+    //   },
+    // },
     {
       itemProps: {
-        label: '使用耗材',
-        name: '',
+        label: '缺陷等级',
+        name: 'level',
+      },
+    },
+    {
+      itemProps: {
+        label: '整改意见',
+        name: 'proposal',
+      },
+    },
+    {
+      itemProps: {
+        label: '缺陷后果',
+        name: 'possible_result',
+      },
+    },
+    {
+      itemProps: {
+        label: '业务跟进情况',
+        name: 'follow_up',
       },
     },
     {
@@ -77,13 +101,13 @@ const WeakForm = props => {
         label: '图片',
       },
     },
-    {
-      formType: 'TextArea',
-      itemProps: {
-        label: '备注',
-        name: 'remark',
-      },
-    },
+    // {
+    //   formType: 'TextArea',
+    //   itemProps: {
+    //     label: '备注',
+    //     name: 'remark',
+    //   },
+    // },
   ];
 
   return (

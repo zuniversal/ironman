@@ -2,7 +2,7 @@ import { init, action } from '@/utils/createAction';
 import * as services from '@/services/inspectRecord';
 import * as clientServices from '@/services/client';
 import * as powerStationServices from '@/services/powerStation';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import { missionsStatusMap, inspectRecordDateConfig } from '@/configs';
 import moment from 'moment';
 
@@ -98,7 +98,9 @@ export default {
         spect_out = [],
         safety_equirpment = {},
       } = payload.bean;
-      const isExportPDF = payload.payload.extraAction === 'showExportPdf';
+      const isExportPDF =
+        payload.payload.extraAction === 'showExportPdf' ||
+        payload.payload.extraAction === 'sendExportPdf';
       console.log(' getItemgetItem ： ', payload, isExportPDF);
       const spectInData = [];
       power_data?.forEach(v =>
@@ -151,10 +153,15 @@ export default {
         index: 0,
       };
 
+      if (!itemDetail.id) {
+        tips('没有详情内容可以导出！', 1);
+      }
+
       return {
         ...state,
         action: payload.payload.action,
-        isShowPdfDetail: isExportPDF,
+        extraAction: payload.payload.extraAction,
+        isShowPdfDetail: isExportPDF && itemDetail.id,
         isShowExportPdf: isExportPDF,
         isShowModal: !isExportPDF,
         isExportPDF: isExportPDF,

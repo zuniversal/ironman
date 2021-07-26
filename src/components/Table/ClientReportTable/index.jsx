@@ -189,6 +189,25 @@ const ClientReportTable = props => {
           修改
         </a>
       )}
+      <a
+        onClick={() => {
+          // props.showExportPdf({
+          //   action: 'detail',
+          //   extraAction: 'sendExportPdf',
+          //   d_id: record.id,
+          // });
+          props.showDetail({
+            action: 'sendClientReportDetailPdf',
+            d_id: record.electricity_user_id,
+            year_month: props.searchInfo.year_month
+              ? props.searchInfo.year_month.format('YYYY-MM')
+              : '',
+            reportId: record.id,
+          });
+        }}
+      >
+        发送客户
+      </a>
       {/* <a onClick={() => showDetail({ action: 'detail' })}>查看加急账单</a> */}
       {/* <a onClick={() => add({ action: 'add' })}>录入</a>
       <a onClick={() => edit({ action: 'edit' })}>修改</a>
@@ -200,6 +219,7 @@ const ClientReportTable = props => {
     <SmartTable
       columns={columns}
       extra={extra}
+      rowKey={'index'}
       noDefault
       {...props}
     ></SmartTable>

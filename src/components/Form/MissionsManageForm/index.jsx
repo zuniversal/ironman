@@ -1,6 +1,6 @@
 import React, { Component, useRef, useState, useEffect } from 'react';
 import './style.less';
-import { Steps, Button } from 'antd';
+import { Steps, Button, Rate } from 'antd';
 import SmartForm from '@/common/SmartForm';
 import {
   missionsTypeConfig,
@@ -426,6 +426,20 @@ const MissionsManageForm = props => {
       },
       comProps: {
         mode: 'tags',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <div>
+          <Rate disabled defaultValue={props.init.score} />
+          <div className="">
+            {props.init.appraise} {props.init.appraise_time}
+          </div>
+        </div>
+      ),
+      itemProps: {
+        label: '服务评分',
       },
     },
     {

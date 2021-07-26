@@ -170,6 +170,7 @@ const getRoutes = (props = {}) => {
       ? (v.platform && v.platform !== platform) || v.hideInMenu
       : false,
   }));
+  console.log(' routesConfig   ,   ： ', routesConfig);
   const routesData = {
     route: {
       path: '/',

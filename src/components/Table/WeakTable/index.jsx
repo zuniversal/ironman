@@ -22,7 +22,7 @@ const WeakTable = props => {
 
     {
       title: '缺陷描述',
-      dataIndex: 'name',
+      dataIndex: 'content',
       detailFn: record =>
         props.showItemAsync({
           action: 'weakDetailAsync',

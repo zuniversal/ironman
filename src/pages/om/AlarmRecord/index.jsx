@@ -9,6 +9,7 @@ import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecord
 import SmartFormModal from '@/common/SmartFormModal';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import ClientForm from '@/components/Form/ClientForm';
+import MonitorManageForm from '@/components/Form/MonitorManageForm';
 
 import { actions, mapStateToProps } from '@/models/alarmRecord';
 import SmartHOC from '@/common/SmartHOC';
@@ -26,9 +27,11 @@ const titleMap = {
   handleAlarm: `确认处理`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
+  monitorManageDetailAsync: `监控点详情`,
 };
 
 const detailFormMap = {
+  monitorManageDetailAsync: MonitorManageForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
 };
@@ -135,6 +138,7 @@ class AlarmRecord extends PureComponent {
           <DetailForm
             init={this.props.common.itemDetail}
             action={'detail'}
+            showItemAsync={this.props.showItemAsync}
           ></DetailForm>
         )}
       </SmartFormModal>
@@ -165,7 +169,7 @@ class AlarmRecord extends PureComponent {
       if (action === 'handleAlarm') {
         this.props.handleAlarmAsync({
           ...res,
-          status: 1,
+          status: 2,
           d_id: this.props.d_id,
           alarm_id: this.props.d_id,
         });

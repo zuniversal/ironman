@@ -102,15 +102,6 @@ export default defineConfig({
       //   '^/api': '',
       // },
     },
-    '/proapi': {
-      target: 'https://epk.faladi.cn:31009',
-      // target: 'http://192.168.124.14:8001',
-      changeOrigin: true,
-      secure: false,
-      pathRewrite: {
-        '^/api': '/api',
-      },
-    },
     // '/api': {
     //   target: 'https://epk.faladi.cn:31009',
     //   changeOrigin: true,

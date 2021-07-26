@@ -48,6 +48,11 @@ const MonitorManageTable = props => {
     {
       title: '监控点',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'monitorManageDetailAsync',
+          d_id: record.id,
+        }),
     },
     {
       title: '额定功率',

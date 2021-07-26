@@ -39,6 +39,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
         type,
         point_id,
         day,
+        duration,
         // startTime,
         // endTime,
       },
@@ -62,10 +63,11 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   const [date, setDate] = React.useState([
     moment(
       moment(day)
-        .subtract(1, 'days')
-        .format('YYYY-MM-DD'),
+        // .subtract(1, 'days')
+        .format('YYYY-MM-DD  HH:mm:ss'),
     ),
-    moment(day),
+    moment(day).add(duration, 'seconds'),
+    // .add(3000, 'seconds'),
   ]);
 
   const onChange = item => {
@@ -85,8 +87,12 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     point_id,
     // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
     // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
-    startTime: date[0] ? date[0].format('YYYY-MM-DD HH:mm:ss') : null,
-    endTime: date[1] ? date[1].format('YYYY-MM-DD HH:mm:ss') : null,
+    startTime: date[0]
+      ? date[0].subtract(1, 'hours').format('YYYY-MM-DD HH:mm:ss')
+      : null,
+    endTime: date[1]
+      ? date[1].add(1, 'hours').format('YYYY-MM-DD HH:mm:ss')
+      : null,
   };
   console.log(
     ' hackValue || date ： ',
@@ -94,6 +100,10 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     date,
     paramProps,
     moment('2021-05-17'),
+    moment(day),
+    moment(day)
+      // .add(duration, 'seconds')
+      .add(3000, 'seconds'),
   ); //
   const disabledDate = current => {
     const limit = 30;
@@ -272,9 +282,10 @@ export default React.memo(function SmartMonitor(props) {
   // const [tab, setTab] = React.useState(HISTORY);
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
-    moment(moment().format('YYYY-MM-DD')),
+    moment(moment().format('YYYY-MM-DD HH:mm:ss')),
     moment(),
   ]);
+  console.log(' date ： ', date); //
 
   const onChange = (item, rest) => {
     console.log(' onChange   ： ', item, rest); //
@@ -294,8 +305,8 @@ export default React.memo(function SmartMonitor(props) {
     number,
     stationId,
     point,
-    startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
-    endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
+    startTime: date[0] ? `${date[0].format('YYYY-MM-DD HH:mm:ss')}` : null,
+    endTime: date[1] ? `${date[1].format('YYYY-MM-DD HH:mm:ss')}` : null,
   };
 
   const disabledDate = current => {
@@ -358,6 +369,7 @@ export default React.memo(function SmartMonitor(props) {
               value={hackValue || date}
               dropdownClassName={styles.datepicker}
               // bordered={false}
+              showTime
             />
           </div>
         </div>

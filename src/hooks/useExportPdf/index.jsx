@@ -3,7 +3,7 @@ import './style.less';
 // import html2canvas from 'html2canvas';
 // import jsPDF from 'jspdf';
 import html2pdf from 'html2pdf.js';
-import { tips } from '@/utils';
+import { tips, dataURLtoFile } from '@/utils';
 
 const useSmartExportPdf = props => {
   const [isExport, setIsExport] = useState(false);
@@ -20,6 +20,7 @@ const useSmartExportPdf = props => {
       tipsText = 'PDF导出成功！',
       filename = 'PDF文件',
       option = {},
+      isUpload,
     } = props;
     const idEle = document.getElementById(ele);
     const clsEle = document.getElementsByClassName(ele)[0];
@@ -40,16 +41,91 @@ const useSmartExportPdf = props => {
       ...option,
     };
     tips(exportText);
+    // return
     if (element) {
-      html2pdf()
-        .set(opt)
-        .from(element)
-        .save()
-        .then(res => {
-          console.log(' finish res  ： ', res);
-          tips(tipsText);
-          return res;
-        }); // 导出
+      if (props.isUpload) {
+        console.log(' finishfinish propsprops 结果 ： ', props);
+        html2pdf()
+          .set(opt)
+          .from(element)
+          .outputPdf('datauristring')
+          // .save()
+          .then(res => {
+            console.log(' finishfinish res 结果 ： ', res);
+            // let a = document.createElement('embed');
+            // a.type="application/pdf"
+            // a.src = res; // 设置下载的文件名，默认是'下载'
+            // document.body.appendChild(a);
+
+            const file = dataURLtoFile(res, filename + '.pdf'); //调用一下下面的转文件流函数
+            console.log(' file ： ', file); //
+            props.uploadCb({ file });
+          });
+      } else {
+        html2pdf()
+          .set(opt)
+          .from(element)
+          .save()
+          .then(res => {
+            console.log(' finish res  ： ', res);
+            tips(tipsText);
+            return res;
+          }) // 导出
+          .outputPdf(res => {
+            console.log(' outputPdf finish res  ： ', res);
+            tips(tipsText);
+            return res;
+          });
+      }
+
+      // const worker = html2pdf()
+      //   .set(opt)
+      //   .from(element)
+
+      // worker.toPdf().get('pdf').then(function (pdfObj) {
+      //   console.log(' finish  finishfinish ： ', props, pdfObj,  );
+      //   const perBlob = pdfObj.output('blob');
+      //   var formData = new FormData();
+      //   // 这里调用后端接口
+      // });
+
+      // const worker = html2pdf()
+      //   .set(opt)
+      //   .from(element)
+      //   // .save()
+      //   .toPdf()
+      //   .get('pdf')
+      //   .then(pdfObj => {
+      //     console.log(' finish res  ： ', res);
+      //     pdfObj.autoPrint();
+      //     pdfObj.output('dataurlnewwindow');
+      //   });
+
+      // var worker
+      //   = html2pdf(element).toPdf()
+      //   // .output(function (pdf) {
+      //   .output("datauristring")
+      //   .then(function (pdf) {
+      //     console.log(' finish res222  ： ', res);
+      //     pdf.save('filename');
+      // });
+      // = html2pdf(element).toPdf().get('pdf').then(function(pdf) {
+      //     console.log(' finish res222  ： ', res);
+      //     pdf.save('filename');
+      // });
+      // = html2pdf()
+      //   .set(opt)
+      //   .from(element)
+      //   // .toPdf()
+      //   // .output("datauristring")
+
+      //   .outputPdf()
+      //   .then(pdfObj => {
+      //     console.log(' finish res  ： ', res);
+      //     pdfObj.autoPrint();
+      //     pdfObj.output('dataurlnewwindow');
+      //   });
+
       console.log(' finish ： ', props, props.finish);
       props.finish && props.finish();
       setIsExport(false);

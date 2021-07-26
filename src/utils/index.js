@@ -419,6 +419,21 @@ export const downLoadFile = (clickItem, { downEle = 'qrCode' }) => {
   clickItem.download = '二维码'; // 图片name
 };
 
+// 把base64 转 file文件
+export const dataURLtoFile = (dataurl, filename) => {
+  console.log(' dataURLtoFile ： ', filename); //
+  var arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  console.log(' u8arr ： ', u8arr); //
+  return new File([u8arr], filename, { type: mime });
+};
+
 export const createIndexArr = (length = 6) =>
   Array.from({ length }, (_, index) => index);
 

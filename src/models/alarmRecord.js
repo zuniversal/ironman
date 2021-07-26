@@ -56,7 +56,7 @@ export default {
           // created_time: v.created_time
           //   ? moment(v.created_time).format('YYYY-MM-DD')
           //   : null,
-          duration: `${(v.duration / 60).toFixed(2)}` + ' 分钟',
+          durationFormat: `${(v.duration / 60).toFixed(2)}` + ' 分钟',
         })),
         count: payload.rest.count,
         isShowModal: false,

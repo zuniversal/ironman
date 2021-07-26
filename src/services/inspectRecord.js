@@ -19,3 +19,4 @@ export const removeItem = p => remove(`console/OMS/spect/record/${p.d_id}`, p);
 
 export const getMissionItem = p =>
   noTipsGet(`console/OMS/spect/task/${p.d_id}`, p);
+export const uploadPDF = p => post(`console/OMS/spect/report/send`, p);

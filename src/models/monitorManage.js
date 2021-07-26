@@ -69,7 +69,7 @@ export default {
         electricity_user_id,
         equipment_id,
         device_id,
-        template_id,
+        frequency,
         electrical_info_id,
         outline_id,
       } = payload.bean;

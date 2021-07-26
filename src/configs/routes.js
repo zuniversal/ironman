@@ -68,7 +68,7 @@ export const customerInformation = {
 
 export const carManage = {
   platform: 'base',
-  path: '/carManage',
+  path: '/om/carManage',
   authKey: 'carManageModel',
   authKey: 'carInfoModel',
   name: '车辆管理',
@@ -414,7 +414,7 @@ export const iotRoutes = [
     platform: 'iot',
     authKey: 'inspectionRobotManageModel',
     authKey: 'inspectionRobotModel',
-    path: '/巡检机器人',
+    path: 'iot/inspectRobot',
     name: '巡检机器人',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
@@ -423,7 +423,7 @@ export const iotRoutes = [
     platform: 'iot',
     authKey: 'otherIOTDevicesManageModel',
     authKey: 'otherIOTDevicesModel',
-    path: '/其他loT设备',
+    path: 'iot/otherIOT',
     name: '其他loT设备',
     icon: <Icon icon={'systemManage'} />,
     routes: [],
@@ -434,6 +434,129 @@ export const iotRoutes = [
     path: '/iot/alarmRecord',
     name: '告警记录',
     icon: <Icon icon={'shiftsManage'} />,
+  },
+];
+
+export const crmRoutes = [
+  {
+    platform: 'crm',
+    // authKey: '',
+    hideInMenu: false,
+    name: '客户管理',
+    icon: <Icon icon={'alarmManage'} />,
+    routes: [
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/clientList',
+        name: '客户列表',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/clientClue',
+        name: '客户线索',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/clientPortrait',
+        name: '客户画像',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/clientLevel',
+        name: '客户等级',
+      },
+    ],
+  },
+  {
+    platform: 'crm',
+    // authKey: '',
+    hideInMenu: false,
+    name: '任务管理',
+    icon: <Icon icon={'alarmManage'} />,
+    routes: [
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/myTask',
+        name: '我的任务',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/approvalMangement',
+        name: '审批管理',
+      },
+    ],
+  },
+  {
+    platform: 'crm',
+    // authKey: '',
+    hideInMenu: false,
+    name: '统计分析',
+    icon: <Icon icon={'alarmManage'} />,
+    routes: [
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/turnRate',
+        name: '转化率',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/saleData',
+        name: '销售数据',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/satisfactionDegree',
+        name: '满意度',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/saleClue',
+        name: '销售线索',
+      },
+    ],
+  },
+  {
+    platform: 'crm',
+    // authKey: '',
+    hideInMenu: false,
+    name: '营销人员管理',
+    icon: <Icon icon={'alarmManage'} />,
+    routes: [
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/salemanMangement',
+        name: '营销人员管理',
+      },
+      {
+        platform: 'crm',
+        // authKey: '',
+        hideInMenu: false,
+        path: '/crm/clientInfoNotify',
+        name: '客户信息通知',
+      },
+    ],
   },
 ];
 
@@ -476,6 +599,7 @@ export const managerRoutes = [
   ...basePlatformRoutes,
   ...bpRoutes,
   ...iotRoutes,
+  ...crmRoutes,
 
   // {
   //   path: '/kpi',
@@ -660,6 +784,13 @@ export const platformSelectConfig = [
     authKey: 'businessPlatform',
     routes: bpRoutes,
   },
+  // {
+  //   value: 'crm',
+  //   label: 'CRM平台',
+  //   name: 'CRM平台',
+  //   authKey: 'businessPlatform',
+  //   routes: crmRoutes,
+  // },
 ];
 
 export const bussniessTabConfig = [

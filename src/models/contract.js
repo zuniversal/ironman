@@ -70,6 +70,7 @@ export default {
         dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
+        searchInfo: payload.searchInfo,
       };
     },
     getItem(state, { payload, type }) {
@@ -111,10 +112,21 @@ export default {
   },
 
   effects: {
-    *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsync ： ', payload, action, type);
-      const res = yield call(services.getList, payload);
-      yield put(action({ ...res, payload }));
+    *getListAsync({ payload, action, type }, { call, put, select }) {
+      const { searchInfo } = yield select(state => state[namespace]);
+      const params = {
+        ...searchInfo,
+        ...payload,
+      };
+      console.log(
+        ' getListAsync  payload ： ',
+        payload,
+        searchInfo,
+        action,
+        params,
+      );
+      const res = yield call(services.getList, params);
+      yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, { id: payload.d_id });

@@ -2,8 +2,6 @@ import React from 'react';
 import { SearchForm } from '@/common/SmartForm';
 
 const GroupReportSearchForm = props => {
-  console.log(' GroupReportSearchForm ： ', props);
-
   const config = [
     {
       formType: 'MonthPicker',

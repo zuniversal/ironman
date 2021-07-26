@@ -1,5 +1,10 @@
 export default [
   {
+    path: '/om/carManage',
+    component: '@/pages/om/CarManage',
+    title: '车辆管理',
+  },
+  {
     path: '/om/drawPanel',
     component: '@/pages/om/DrawPanel',
     title: '一次系统图',

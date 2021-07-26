@@ -46,6 +46,11 @@ const AlarmRecordTable = props => {
     {
       title: '监控点',
       dataIndex: 'monitor_point_name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'monitorManageDetailAsync',
+          d_id: record.monitor_point_id,
+        }),
     },
     {
       title: '告警详情',
@@ -73,7 +78,7 @@ const AlarmRecordTable = props => {
     },
     {
       title: '持续时长',
-      dataIndex: 'duration',
+      dataIndex: 'durationFormat',
       // render: (text, record, index) => `${(text / 60)}`.toFixed(2) + ' 分钟',
     },
     {
@@ -100,7 +105,8 @@ const AlarmRecordTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      {record.status == 0 && (
+      {/* {record.status == 0 && ( */}
+      {record.status == 1 && (
         <a
           onClick={() =>
             props.showFormModal({ action: 'handleAlarm', d_id: record.id })
@@ -112,7 +118,7 @@ const AlarmRecordTable = props => {
       <a
         onClick={() => {
           history.push(
-            `/om/powerStation/smartMonitor/${record.id}?type=alarmRecord&point_id=${record.monitor_point_id}&day=${record.created_time}&created_time=${record.created_time}&end_time=${record.end_time}`,
+            `/om/powerStation/smartMonitor/${record.id}?type=alarmRecord&point_id=${record.monitor_point_id}&day=${record.created_time}&created_time=${record.created_time}&end_time=${record.end_time}&duration=${record.duration}`,
           );
         }}
       >

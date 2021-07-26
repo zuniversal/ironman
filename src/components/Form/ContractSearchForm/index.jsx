@@ -38,6 +38,12 @@ const ContractSearchForm = props => {
         name: 'type',
       },
     },
+    {
+      itemProps: {
+        label: '客户名称',
+        name: 'customer',
+      },
+    },
   ];
 
   return (

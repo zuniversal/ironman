@@ -9,7 +9,7 @@ const ElectricInfoTable = props => {
   console.log(' ElectricInfoTableElectricInfoTable,   , ： ', props);
   const getListAsync = async () => {
     const res = await monitorManageServices.getList({
-      keyword: props.houseNo,
+      electricity_user_id: props.houseNo,
     });
     console.log(' ElectricInfoTable ElectricInfoTableres,  , ： ', res);
     setDataList(res.list);

@@ -30,6 +30,8 @@ import {
   inspectRecordDateConfig,
   pressureCheckConfig,
 } from '@/configs';
+import { uploadFile } from '@/services/common';
+import { uploadPDF } from '@/services/inspectRecord';
 
 const { TabPane } = Tabs;
 
@@ -135,7 +137,7 @@ const electricFormLayouts = {
 
 const StatusSelect = props => {
   const { selectData = normalConfig, comProps = {} } = props;
-  console.log(' StatusSelect   config,   ： ', props);
+  // console.log(' StatusSelect   config,   ： ', props);
   return (
     <Form.Item name={props.name} noStyle>
       <Select className="select-before" {...comProps}>
@@ -229,6 +231,11 @@ const createFormList = props => {
                       {props?.dataInit?.spect_out[index]?.outlineName}
                     </Divider>
                   ),
+                  rowDividerCom: props.rowDividerCom
+                    ? props?.rowDividerCom({
+                        index,
+                      })
+                    : null,
                   // rowDivider: <Divider className={'rowDivider'} key={`${index}-${i}`}>{props.rowCom}</Divider>,
                   // rowDivider: v.rowCom,
                 };
@@ -622,7 +629,7 @@ const InspectRecordForm = props => {
   });
 
   const powerDataConfig = [
-    { label: '电源编号', name: '', type: 'rowDivider' },
+    { label: '电源编号', name: '', type: 'rowDividerCom' },
     { label: '电源编号', name: '', type: 'rowTitle' },
     { label: '电压等级', name: 'voltage_level' },
     { label: '总容量', name: 'total_capacity' },
@@ -645,6 +652,7 @@ const InspectRecordForm = props => {
     { label: '无功1(07)', name: 'reactive_power_1' },
     { label: '无功(08)', name: 'reactive_power_2' },
     { label: '实际功率因素', name: 'real_power_factor' },
+    { label: '失压检测', name: 'pressure_check' },
     { label: '', name: '', type: 'rowText' },
   ];
 
@@ -652,6 +660,21 @@ const InspectRecordForm = props => {
     disabled: !isEdit,
     config: powerDataConfig,
     name: 'power_data',
+    rowDividerCom: params => {
+      // console.log(
+      //   ' rowDividerCom ： ',
+      //   params,
+      //   dataInit,
+      // );
+      return (
+        <Divider
+          className={'rowDivider'}
+          key={`${dataInit?.power_data[params.index]?.power_number}}`}
+        >
+          电源编号-{dataInit?.power_data[params.index]?.power_number}
+        </Divider>
+      );
+    },
   });
 
   const onMaxMdChange = (e, keys) => {
@@ -1688,7 +1711,8 @@ const InspectRecordForm = props => {
     // ...(isDev ? [] : topConfig),
     ...topConfig,
 
-    ...(isExport ? [powerDataItem] : powerDataDetail),
+    // ...(isExport ? [powerDataItem] : powerDataDetail),
+    ...(true ? [powerDataItem] : powerDataDetail),
 
     // {
     //   formType: 'CustomCom',
@@ -1806,7 +1830,7 @@ const InspectRecordForm = props => {
               ...safety_equirpment,
             };
             inspectRecordDateConfig.forEach((v, i) => {
-              console.log(' inspectRecordDateConfig v ： ', v, i);
+              // console.log(' inspectRecordDateConfig v ： ', v, i);
               safetyEquirpment[v] = safety_equirpment[v].format('YYYY-MM-DD');
             });
             const setData = mergeData({
@@ -1885,6 +1909,19 @@ const InspectRecordForm = props => {
   // const finish = props.type === 'comExportPdf' ? setModalExport : props.toggleExportPDF
   console.log(' finishfinish props ： ', props);
 
+  const uploadCb = async ({ file }) => {
+    console.log(' uploadCb file ： ', file); //
+    const formData = new FormData();
+    formData.append('file', file); // 文件对象
+    console.log(' formData ： ', formData, formData.get('file')); //
+    const res = await uploadFile(formData);
+    const uploadPDFRes = await uploadPDF({
+      task_id: props.init.inspection_task.id,
+      url: res.rest.url,
+    });
+    console.log('  res await 结果  ：', res, uploadPDFRes); //
+  };
+
   useExportPdf({
     // element: document.getElementsByClassName('inspectRecordForm')[0],
     isExportPDF: isExport,
@@ -1892,6 +1929,8 @@ const InspectRecordForm = props => {
     // finish: props.toggleExportPDF,
     finish: finish,
     filename: formTitle,
+    isUpload: props.extraAction === 'sendExportPdf',
+    uploadCb,
   });
 
   const confirmBtn = (

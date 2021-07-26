@@ -28,3 +28,5 @@ export const removeItems = p => remove(`console/OMS/report/`, p);
 
 export const getClientReportUpgrade = p =>
   noTipsGet(`console/OMS/spect/report`, p);
+
+export const uploadPDF = p => post(`console/OMS/customer/report/send`, p);

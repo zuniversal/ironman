@@ -1423,12 +1423,20 @@ export const deviceFrequencyConfig = [
 export const deviceFrequencyMap = arrMapObj(deviceFrequencyConfig);
 
 export const alarmRecordStatusConfig = [
+  // {
+  //   value: '0',
+  //   label: '未处理',
+  // },
+  // {
+  //   value: '1',
+  //   label: '已处理',
+  // },
   {
-    value: '0',
+    value: '1',
     label: '未处理',
   },
   {
-    value: '1',
+    value: '2',
     label: '已处理',
   },
 ];
@@ -1857,4 +1865,56 @@ export const cameraTypeConfig = [
 
 export const cameraTypeMap = arrMapObj(cameraTypeConfig);
 
+export const CLIENTLIST_PRIVATE = 'private'; //
+export const CLIENTLIST_PUBLIC = 'public'; //
+export const clientListTabConfig = [
+  {
+    tab: '客户私海',
+    key: CLIENTLIST_PRIVATE,
+  },
+  {
+    tab: '客户过海',
+    key: CLIENTLIST_PUBLIC,
+  },
+];
+
+export const clientPortraitSpreadConfig = [
+  {
+    label: '地区分布',
+    value: '地区分布',
+  },
+  {
+    label: '行业分布',
+    value: '行业分布',
+  },
+  {
+    label: '企业规模分布',
+    value: '企业规模分布',
+  },
+  {
+    label: '资产规模分布',
+    value: '资产规模分布',
+  },
+];
+
+export const clientListPlanTypeConfig = [
+  {
+    value: '抢修',
+    label: '抢修',
+  },
+  {
+    value: '电气试验',
+    label: '电气试验',
+  },
+  {
+    value: '电力施工',
+    label: '电力施工',
+  },
+  {
+    value: '托管',
+    label: '托管',
+  },
+];
+
+export const clientListPlanTypeMap = arrMapObj(clientListPlanTypeConfig);
 //

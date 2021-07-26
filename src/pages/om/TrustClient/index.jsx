@@ -106,9 +106,9 @@ class Client extends PureComponent {
         >
           新增客户
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        {/* <Button type="primary" onClick={() => this.props.exportData()}>
           导出{TITLE}数据
-        </Button>
+        </Button> */}
         {/* <Button type="primary" onClick={() => this.props.onBatchRemove()}> */}
         <Button
           type="primary"

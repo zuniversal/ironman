@@ -28,6 +28,7 @@ const titleMap = {
   down: `文件下载`,
   pdf: `月报`,
   clientReportDetailPdf: `月报`,
+  sendClientReportDetailPdf: `月报`,
   batchClientReportDetailPdf: `月报`,
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
@@ -230,7 +231,9 @@ class ClientReport extends PureComponent {
         ></SmartShowPDF>
       );
     }
-    if (['clientReportDetailPdf'].includes(action)) {
+    if (
+      ['clientReportDetailPdf', 'sendClientReportDetailPdf'].includes(action)
+    ) {
       // return <ClientReportPdf></ClientReportPdf>;
       return this.renderExportPdf(this.props.itemDetail);
       // return <div ref={ref => (this.ref = ref)} >
@@ -309,6 +312,8 @@ class ClientReport extends PureComponent {
       >
         {this.props.pdfDataList.length == 0 ? (
           <CsClientReportDescription
+            onCancel={this.props.onCancel}
+            action={this.props.action}
             data={this.props.itemDetail}
             data={data}
             closeExportPdf={this.closeExportPdf}
@@ -338,6 +343,8 @@ class ClientReport extends PureComponent {
         ) : (
           this.props.pdfDataList.map(v => (
             <CsClientReportDescription
+              onCancel={this.props.onCancel}
+              action={this.props.action}
               data={this.props.itemDetail}
               data={v}
               key={Math.random()}

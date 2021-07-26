@@ -119,12 +119,13 @@ export default {
         text: v.name,
         type: `${v.id}`,
       }));
-      console.log('  getRelatived ：', clientPowerList, stationList); //
+      console.log('  getRelatived ：', payload, clientPowerList, stationList); //
       return {
         ...state,
         clientPowerList: clientPowerList,
         stationList: stationList,
-        houseNo: `${clientPowerList[0].number}`,
+        // houseNo: `${clientPowerList[0].number}`,
+        houseNo: `${clientPowerList[0].id}`,
         stationId: stationList[0].type,
         powerInfo: payload.powerInfo,
         canvasData: payload.canvasData,

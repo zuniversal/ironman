@@ -168,6 +168,9 @@ export default React.memo(function ChartLine(props) {
       data: data
         ? data.map((i, index) => {
             time[index] = moment(i.tm).format('YYYY-MM-DD HH:mm:ss');
+            if (item.value === 'p_rate') {
+              return i[item.value] * 100;
+            }
             return formatter(i[item.value]) || '-';
           })
         : [],
@@ -175,6 +178,7 @@ export default React.memo(function ChartLine(props) {
       time,
     };
   });
+  // console.log(' chartData ： ', fields, chartData, getOption(chartData, { yAxis: { name: unit, min } }), ); //
   return (
     <Container loading={loading} empty={isEmpty(data)}>
       <ReactEchartsCore

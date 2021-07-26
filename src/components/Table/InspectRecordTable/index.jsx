@@ -112,6 +112,17 @@ const InspectRecordTable = props => {
       >
         导出巡检报告
       </a>
+      <a
+        onClick={() => {
+          props.showExportPdf({
+            action: 'detail',
+            extraAction: 'sendExportPdf',
+            d_id: record.id,
+          });
+        }}
+      >
+        发送客户
+      </a>
     </>
   );
 

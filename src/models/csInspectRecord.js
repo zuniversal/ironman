@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/csInspectRecord';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { formatSelectList, nowYearMonth, tips } from '@/utils';
 import { missionsStatusMap, inspectRecordDateConfig } from '@/configs';
 import moment from 'moment';
 
@@ -87,7 +87,9 @@ export default {
         safety_equirpment = {},
       } = payload.bean;
       console.log(' getItemgetItem ： ', payload);
-      const isExportPdf = payload.payload.extraAction === 'showExportPdf';
+      const isExportPDF =
+        payload.payload.extraAction === 'showExportPdf' ||
+        payload.payload.extraAction === 'sendExportPdf';
       const spectInData = [];
       power_data?.forEach(v =>
         v?.spect_in.forEach(item => spectInData.push(item)),
@@ -139,11 +141,16 @@ export default {
         index: 0,
       };
 
+      if (!itemDetail.id) {
+        tips('没有详情内容可以导出！', 1);
+      }
+
       return {
         ...state,
+        extraAction: payload.payload.extraAction,
         action: payload.payload.action,
-        isShowPdfDetail: isExportPdf,
-        isShowExportPdf: isExportPdf,
+        isShowPdfDetail: isExportPDF && itemDetail.id,
+        isShowExportPdf: isExportPDF,
         isShowModal: !isExportPDF,
         d_id: payload.payload.d_id,
         itemDetail: itemDetail,

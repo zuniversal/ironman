@@ -166,8 +166,9 @@ export class Request {
         //   const { noTips, ...rest } = config.params;
         //   config.data = config.params = rest;
         // }
+        console.log(' config ： ', config); //
         if (config.method === 'post') {
-          config.data = rest; // 支持 delete 传递 body 参数
+          // config.data = rest; // 支持 delete 传递 body 参数
         } else if (config.method !== 'put') {
           config.data = config.params = rest;
         }

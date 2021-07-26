@@ -19,14 +19,12 @@ import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 
-const TITLE = '监控';
+const TITLE = '监控点';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  upload: `文件上传`,
-  down: `文件下载`,
   monitorManageAsync: `${TITLE}详情`,
   getRealDataAsync: `监控数据`,
   clientDetailAsync: `客户详情`,
@@ -35,9 +33,11 @@ const titleMap = {
   assetsDetailAsync: `设备详情`,
   monitorDeviceDetailAsync: `监控设备详情`,
   alarmTemplateDetailAsync: `监控模板详情`,
+  monitorManageDetailAsync: `监控点详情`,
 };
 
 const detailFormMap = {
+  monitorManageDetailAsync: MonitorManageForm,
   alarmTemplateDetailAsync: AlarmTemplateForm,
   monitorManageAsync: MonitorManageDetailForm,
   clientDetailAsync: ClientForm,
@@ -161,6 +161,7 @@ class MonitorManage extends PureComponent {
           <DetailForm
             init={this.props.common.itemDetail}
             action={'detail'}
+            showItemAsync={this.props.showItemAsync}
           ></DetailForm>
         )}
       </SmartFormModal>
