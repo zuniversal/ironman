@@ -1,27 +1,10 @@
 import React from 'react';
-import './style.less';
 import SmartEchart from '@/common/SmartEchart';
 
-const optionHandle = params => {
-  // const {
-  //   data = [],
-  //   chartTimeData,
-  //   yAxisTitle = '有功电量:kWh',
-  //   yAxisTitle2 = '单价:元',
-  //   legendData = ['平', '电度电量'],
-  //   yAxisTitleArr = [],
-  //   lineNameArr = [],
-  //   yAxisIndex,
-  // } = params;
-  // console.log(' optionoption ： ', params); //
-  // const xAxisMap = {
-  //   day: dayHoursArr,
-  //   week: chartTimeData,
-  //   month: chartTimeData,
-  //   week: weekArr,
-  // };
-  // const xAxis = params.xAxis ?? xAxisMap['week'] ?? dayHoursArr;
+const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
+const option = params => {
+  const { data } = params;
   return {
     title: {
       text: '总数',
@@ -53,7 +36,7 @@ const optionHandle = params => {
       {
         name: '访问来源',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['55%', '70%'],
         avoidLabelOverlap: false,
         label: {
           show: false,
@@ -82,9 +65,12 @@ const optionHandle = params => {
 };
 
 const RingPieEcharts = props => {
-  const option = optionHandle(props);
-  console.log(' RingPieEcharts   ： ', props, option); //
-  return <SmartEchart {...props} option={option}></SmartEchart>;
+  return (
+    <SmartEchart
+      // {...props}
+      option={option(props)}
+    ></SmartEchart>
+  );
 };
 
 export default RingPieEcharts;

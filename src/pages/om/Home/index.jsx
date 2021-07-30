@@ -26,7 +26,20 @@ import { WorkOrderDispatchOrderForm } from '@/components/Form/WorkOrderActionFor
 import ClientForm from '@/components/Form/ClientForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 
-export const TITLE = '首页';
+const statConfig = [
+  {
+    tab: '巡检统计',
+    requestFn: 'getInspectionsChart',
+    // num: '126560',
+  },
+  {
+    tab: '工单统计',
+    requestFn: 'getOrdersChart',
+    // num: '126560',
+  },
+];
+
+const TITLE = '首页';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -140,6 +153,7 @@ class Home extends PureComponent {
         <HomeStatEcharts
           // ordersChartList={this.props.ordersChartList}
           // inspectionsChartList={this.props.inspectionsChartList}
+          homeTitle={'工单数'}
           barData={barData}
           // chartData={this.props.chartData}
           // barData={this.props.chartData.order_data}
@@ -148,6 +162,7 @@ class Home extends PureComponent {
           getEchartData={this.getEchartData}
           onOptionChange={this.onOptionChange}
           homeSettings={this.props.homeSettings}
+          statConfig={statConfig}
         ></HomeStatEcharts>
       </Spin>
     );

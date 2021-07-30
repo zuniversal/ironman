@@ -80,11 +80,11 @@ const StatTabPanes = props => {
           ></TimeChoice>
         }
       >
-        {statConfig.map((v, i) => (
+        {props.statConfig.map((v, i) => (
           <TabPane tab={v.tab} key={i}>
             <Row gutter={24}>
               <Col span={16} className={`${ANIMATE.slideInLeft} `}>
-                <div className="homeTitle">工单数</div>
+                <div className="homeTitle">{props.homeTitle}</div>
                 <HomeBar
                   // {...props}
                   data={countData}
@@ -103,10 +103,14 @@ const StatTabPanes = props => {
                 span={8}
                 className={`rankWrapper df ${ANIMATE.slideInRight} `}
               >
-                <div className="homeGroupRankWrapper">
+                {/* <div className="homeGroupRankWrapper">
                   <div className="homeTitle">小组排名</div>
                   <HomeGroupRank data={props.rankData}></HomeGroupRank>
-                </div>
+                </div> */}
+                <HomeGroupRank
+                  data={props.rankData}
+                  groupTitle={props.groupTitle}
+                ></HomeGroupRank>
               </Col>
             </Row>
           </TabPane>
@@ -118,6 +122,12 @@ const StatTabPanes = props => {
 
 StatTabPanes.defaultProps = {
   barData: [],
+  statConfig: [
+    {
+      tab: '',
+      requestFn: '',
+    },
+  ],
 };
 
 const HomeStatEcharts = props => {

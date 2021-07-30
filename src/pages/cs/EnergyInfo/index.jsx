@@ -49,7 +49,7 @@ class EnergyInfo extends PureComponent {
         dataKey: 'today',
         title: '今日用电量',
         val: '10',
-        unit: 'kw',
+        unit: 'kWh',
         style: {
           background: 'linear-gradient(135deg, #FEB833 0%, #FE9833 100%)',
           boxShadow: '0px 5px 10px rgba(253, 156, 51, 0.5)',
@@ -60,7 +60,7 @@ class EnergyInfo extends PureComponent {
         dataKey: 'yestoday',
         title: '昨日用电量',
         val: '10',
-        unit: 'kw',
+        unit: 'kWh',
         style: {
           background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
           boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
@@ -71,7 +71,7 @@ class EnergyInfo extends PureComponent {
         dataKey: 'this_month',
         title: '本月用电量',
         val: '10',
-        unit: 'kw',
+        unit: 'kWh',
         style: {
           background: 'linear-gradient(135deg, #31C8FF 0%, #009DFF 100%)',
           boxShadow: '0px 5px 10px rgba(27, 163, 252, 0.5)',
@@ -82,7 +82,7 @@ class EnergyInfo extends PureComponent {
         dataKey: 'last_month',
         title: '上月用电量',
         val: '10',
-        unit: 'kw',
+        unit: 'kWh',
         style: {
           background: 'linear-gradient(135deg, #3CD07F 0%, #1AB460 100%)',
           boxShadow: '0px 5px 10px #1AB460',

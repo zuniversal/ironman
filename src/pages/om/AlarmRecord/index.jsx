@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import AlarmRecordTable from '@/components/Table/AlarmRecordTable';
 import AlarmRecordForm from '@/components/Form/AlarmRecordForm';
+import AlarmTemplateForm from '@/components/Form/AlarmTemplateForm';
 import AlarmRecordSearchForm from '@/components/Form/AlarmRecordForm/AlarmRecordSearchForm';
 import AlarmRecordHandleForm from '@/components/Form/AlarmRecordForm/AlarmRecordHandleForm';
 import SmartFormModal from '@/common/SmartFormModal';
@@ -28,9 +29,11 @@ const titleMap = {
   clientDetailAsync: `客户详情`,
   houseNoDetailAsync: `户号详情`,
   monitorManageDetailAsync: `监控点详情`,
+  alarmTemplateDetailAsync: `监控模板详情`,
 };
 
 const detailFormMap = {
+  alarmTemplateDetailAsync: AlarmTemplateForm,
   monitorManageDetailAsync: MonitorManageForm,
   clientDetailAsync: ClientForm,
   houseNoDetailAsync: HouseNoForm,
@@ -196,6 +199,9 @@ class AlarmRecord extends PureComponent {
     }
     if (action === 'notifyClient') {
       return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;
+    }
+    if (action === 'alarmTemplateDetailAsync') {
+      return <AlarmTemplateForm {...formComProps}></AlarmTemplateForm>;
     }
     console.log(' formComProps ： ', formComProps);
     return <AlarmRecordForm {...formComProps}></AlarmRecordForm>;

@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button, Row, Col, Divider } from 'antd';
+import RingPieEchart from '@/components/Echarts/RingPieEchart';
 import ClientPortraitSearchForm from '@/components/Form/ClientPortraitSearchForm';
 // import ClientPortraitForm from '@/components/Form/ClientPortraitForm';
 // import ClientPortraitTable from '@/components/Table/ClientPortraitTable';
-import RingPieEcharts from './RingPieEcharts';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/client';
 import SmartHOC from '@/common/SmartHOC';
@@ -145,9 +145,9 @@ class ClientPortrait extends PureComponent {
         <Row gutter={[24, 16]}>
           {clientPortraitSpreadConfig.map((v, i) => (
             <Col span={12} {...v}>
-              <div className={`title`}>{v.label}</div>
+              <div className={`homeTitle`}>{v.label}</div>
               <Divider />
-              <RingPieEcharts />
+              <RingPieEchart />
             </Col>
           ))}
         </Row>

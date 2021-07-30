@@ -5,7 +5,7 @@ const ApprovalMangementTable = props => {
   const columns = [
     {
       title: '公司名称',
-      dataIndex: '',
+      // dataIndex: '',
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',
@@ -14,25 +14,43 @@ const ApprovalMangementTable = props => {
     },
     {
       title: '类型',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '进度',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '状态',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '提交人',
-      dataIndex: '',
+      // dataIndex: '',
+    },
+    {
+      title: '审批人',
+      // dataIndex: '',
     },
     {
       title: '提交时间',
-      dataIndex: '',
+      // dataIndex: '',
     },
   ];
+
+  const extra = (text, record, index, props) => (
+    <>
+      {record.status == 1 && (
+        <a
+          onClick={() =>
+            props.showFormModal({ action: 'handleAlarm', d_id: record.id })
+          }
+        >
+          查看
+        </a>
+      )}
+    </>
+  );
 
   return (
     <SmartTable

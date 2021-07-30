@@ -3,6 +3,7 @@ import { TabletOutlined, ScheduleFilled } from '@ant-design/icons';
 import Icon from '@/components/Widgets/Icons';
 import { LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm';
+import { isDev } from '@/constants';
 
 const placeIcon = <Icon icon={''} className={'subIcon'} />;
 
@@ -784,14 +785,17 @@ export const platformSelectConfig = [
     authKey: 'businessPlatform',
     routes: bpRoutes,
   },
-  // {
-  //   value: 'crm',
-  //   label: 'CRM平台',
-  //   name: 'CRM平台',
-  //   authKey: 'businessPlatform',
-  //   routes: crmRoutes,
-  // },
 ];
+
+if (isDev) {
+  platformSelectConfig.push({
+    value: 'crm',
+    label: 'CRM平台',
+    name: 'CRM平台',
+    authKey: 'businessPlatform',
+    routes: crmRoutes,
+  });
+}
 
 export const bussniessTabConfig = [
   {

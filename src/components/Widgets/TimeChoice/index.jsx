@@ -19,7 +19,7 @@ const TimeChoice = props => {
   const timeClick = (v, i) => {
     console.log(' timeClick   v, i,   ： ', activeItem, v, i);
     setActiveItem(i);
-    props.onOptionChange({ type: v.type });
+    props.onOptionChange(v);
   };
   const onDayChange = (momentArr, timeArr) => {
     console.log(

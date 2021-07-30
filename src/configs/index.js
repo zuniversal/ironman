@@ -376,7 +376,10 @@ export const noShowTitlePath = [
   '/om/home',
   '/cs/home',
   '/cs/energyInfo',
-  '/cs/electricInfo',
+  '/crm/turnRate',
+  '/crm/saleData',
+  '/crm/satisfactionDegree',
+  '/crm/saleClue',
   // '/om/shiftsArrangeDetail'
 ];
 
@@ -1878,6 +1881,19 @@ export const clientListTabConfig = [
   },
 ];
 
+export const MYTASK_PENDING_APPROVE = 'pending_approve'; //
+export const MYTASK_COMPLETE = 'complete'; //
+export const mytaskTabConfig = [
+  {
+    tab: '待审批',
+    key: MYTASK_PENDING_APPROVE,
+  },
+  {
+    tab: '已完成',
+    key: MYTASK_COMPLETE,
+  },
+];
+
 export const clientPortraitSpreadConfig = [
   {
     label: '地区分布',
@@ -1917,4 +1933,14 @@ export const clientListPlanTypeConfig = [
 ];
 
 export const clientListPlanTypeMap = arrMapObj(clientListPlanTypeConfig);
-//
+
+export const saleDataEchartsConfig = [
+  {
+    label: '销售额地区占比',
+    value: '销售额地区占比',
+  },
+  {
+    label: '销售额行业占比',
+    value: '销售额行业占比',
+  },
+];

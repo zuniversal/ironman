@@ -5,11 +5,11 @@ const ClientClueTable = props => {
   const columns = [
     {
       title: 'id',
-      dataIndex: 'id',
+      // dataIndex: 'id',
     },
     {
       title: '客户名称',
-      dataIndex: '',
+      // dataIndex: '',
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',
@@ -18,36 +18,38 @@ const ClientClueTable = props => {
     },
     {
       title: '客户等级',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '户号数',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '客户类型',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '当前状态',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '客户地址',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '提交人',
-      dataIndex: '',
+      // dataIndex: '',
     },
     {
       title: '状态',
-      dataIndex: '',
+      // dataIndex: '',
       // dataMap: ,
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  return (
+    <SmartTable rowSelection={null} columns={columns} {...props}></SmartTable>
+  );
 };
 
 export default ClientClueTable;

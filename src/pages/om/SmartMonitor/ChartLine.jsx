@@ -49,7 +49,7 @@ const getOption = (data = [], config = {}) => {
       // },
     },
     grid: {
-      left: '2%',
+      left: 30,
       right: 40,
       bottom: 50,
       containLabel: true,
@@ -86,6 +86,7 @@ const getOption = (data = [], config = {}) => {
       //   interval: 0,
       // },
       data: date,
+      interval: 15,
     },
     yAxis: {
       type: 'value',
@@ -104,14 +105,18 @@ const getOption = (data = [], config = {}) => {
     },
     series: data.map((item, index) => ({
       type: 'line',
-      showSymbol: false,
-      smooth: true,
+      // showSymbol: false,
+      // smooth: true,
+      symbol: 'circle',
+      lineStyle: {
+        width: 1,
+      },
       // animationDelay: 1000,
       // animationDuration: 1500,
       // animationThreshold: 3000,
-      areaStyle: {
-        color: areaColor[index],
-      },
+      // areaStyle: {
+      //   color: areaColor[index],
+      // },
       ...item,
     })),
   };
@@ -161,7 +166,7 @@ export default React.memo(function ChartLine(props) {
       data: data
         ? data.map((i, index) => {
             time[index] = moment(i.tm).format('YYYY-MM-DD HH:mm:ss');
-            return formatter(i[item.value]) || '-';
+            return formatter(i[item.value]).toFixed(2) || 0;
           })
         : [],
       ...item,

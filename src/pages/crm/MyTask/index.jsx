@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button } from 'antd';
+import { Button, Tabs } from 'antd';
 import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
 // import MyTaskForm from '@/components/Form/MyTaskForm';
 import MyTaskTable from '@/components/Table/MyTaskTable';
@@ -7,6 +7,9 @@ import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/clientList';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
+import { mytaskTabConfig } from '@/configs';
+
+const { TabPane } = Tabs;
 
 const TITLE = '';
 
@@ -46,7 +49,11 @@ class MyTask extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return <MyTaskSearchForm formBtn={this.renderFormBtn}></MyTaskSearchForm>;
+    return (
+      <MyTaskSearchForm
+      // formBtn={this.renderFormBtn}
+      ></MyTaskSearchForm>
+    );
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
@@ -131,10 +138,21 @@ class MyTask extends PureComponent {
       </SmartFormModal>
     );
   };
+  renderTabPanes = params => (
+    <div className={'tabWrapper'}>
+      <Tabs defaultActiveKey="0" onChange={this.onTabChange}>
+        {mytaskTabConfig.map((v, i) => (
+          <TabPane {...v}></TabPane>
+        ))}
+      </Tabs>
+    </div>
+  );
 
   render() {
     return (
       <div className="">
+        {this.renderTabPanes()}
+
         {this.renderSearchForm()}
 
         {this.renderTable()}

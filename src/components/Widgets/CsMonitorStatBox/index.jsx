@@ -98,7 +98,8 @@ StatBoxCom.defaultProps = {
 const CsMonitorStatBox = props => {
   // console.log(' CsMonitorStatBox   props, ,   ： ', props);
   return (
-    <div className="csMonitorStatBoxWrapper dfc">
+    // <div className="csMonitorStatBoxWrapper dfc">
+    <div className="csMonitorStatBoxWrapper df">
       {props.config.map((v, i) => (
         <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
       ))}

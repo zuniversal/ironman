@@ -36,32 +36,36 @@ const rankIconMap = {
 
 const HomeGroupRank = props => {
   return (
-    <div className={'homeGroupRank '}>
-      {props.data.length ? (
-        props.data.map((v, i) => (
-          <div className={`rowWrapper ${ANIMATE.flipInX} `} key={i}>
-            <div className="left">
-              {i < 3 ? (
-                <img src={rankIconMap[i]} className="iconMg" />
-              ) : (
-                <div className="iconMg iconBall">{i + 1}</div>
-              )}
-              {v.name}
+    <div className="homeGroupRankWrapper">
+      <div className="homeTitle">{props.groupTitle}</div>
+      <div className={'homeGroupRank '}>
+        {props.data.length ? (
+          props.data.map((v, i) => (
+            <div className={`rowWrapper ${ANIMATE.flipInX} `} key={i}>
+              <div className="left">
+                {i < 3 ? (
+                  <img src={rankIconMap[i]} className="iconMg" />
+                ) : (
+                  <div className="iconMg iconBall">{i + 1}</div>
+                )}
+                {v.name}
+              </div>
+              <div className={`right val${i < 3 ? i : ''}`}>
+                <Statistic value={v.count} />
+              </div>
             </div>
-            <div className={`right val${i < 3 ? i : ''}`}>
-              <Statistic value={v.count} />
-            </div>
-          </div>
-        ))
-      ) : (
-        <Empty image={noData} />
-      )}
+          ))
+        ) : (
+          <Empty image={noData} />
+        )}
+      </div>
     </div>
   );
 };
 
 HomeGroupRank.defaultProps = {
   data: groupData,
+  groupTitle: '小组排名',
 };
 
 HomeGroupRank.propTypes = {

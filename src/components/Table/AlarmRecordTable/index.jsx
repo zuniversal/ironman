@@ -28,6 +28,8 @@ const AlarmRecordTable = props => {
       width: 200,
       title: '客户',
       dataIndex: 'customer_name',
+      sorter: true,
+      sortKey: 'customer_id',
       detailFn: record =>
         props.showItemAsync({
           action: 'clientDetailAsync',
@@ -37,6 +39,8 @@ const AlarmRecordTable = props => {
     {
       title: '户号',
       dataIndex: 'number',
+      sorter: true,
+      sortKey: 'number',
       detailFn: record =>
         props.showItemAsync({
           action: 'houseNoDetailAsync',
@@ -64,11 +68,15 @@ const AlarmRecordTable = props => {
       title: '告警状态',
       title: '处理状态',
       dataIndex: 'status',
+      sorter: true,
+      sortKey: 'status',
       dataMap: alarmRecordStatusMap,
     },
     {
       title: '告警等级',
       dataIndex: 'level',
+      sorter: true,
+      sortKey: 'level',
       dataMap: alarmRecordLevelMap,
     },
     {
@@ -79,14 +87,16 @@ const AlarmRecordTable = props => {
     {
       title: '持续时长',
       dataIndex: 'durationFormat',
+      sorter: true,
+      sortKey: 'duration',
       // render: (text, record, index) => `${(text / 60)}`.toFixed(2) + ' 分钟',
     },
     {
       title: '开始时间',
       dataIndex: 'created_time',
-      day: 'YYYY-MM-DD HH:mm:ss',
       sorter: true,
-      sortKey: 'number',
+      sortKey: 'tm',
+      day: 'YYYY-MM-DD HH:mm:ss',
       // sortDirections: ['descend', 'ascend'],
       // sorter: (a, b) => {
       //   const res = a.created_time.length - b.created_time.length

@@ -1352,6 +1352,12 @@ const InspectRecordForm = props => {
     },
   ];
 
+  const saftyDateCom = isExport ? (
+    <Input disabled={!isEdit} />
+  ) : (
+    <DatePicker disabled={!isEdit} />
+  );
+
   const topConfig = [
     // {
     //   // formType: 'plainText',
@@ -1536,8 +1542,14 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'electroprobe_status']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'es_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'es_check_date' : 'es_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
@@ -1563,8 +1575,14 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'ground_wire']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'gw_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'gw_check_date' : 'gw_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
@@ -1590,8 +1608,14 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'insulating_mat']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'im_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'im_check_date' : 'im_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
@@ -1617,8 +1641,14 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'insulating_gloves']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'ig_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'ig_check_date' : 'ig_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
@@ -1644,8 +1674,14 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'insulating_shoes']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'is_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'is_check_date' : 'is_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
@@ -1671,12 +1707,27 @@ const InspectRecordForm = props => {
             name={['safety_equirpment', 'extinguisher']}
             comProps={{ disabled: !isEdit }}
           ></StatusSelect>
-          <Form.Item name={['safety_equirpment', 'ex_check_date']} noStyle>
-            <DatePicker disabled={!isEdit} />
+          <Form.Item
+            name={[
+              'safety_equirpment',
+              isExport ? 'ex_check_date' : 'ex_check_date_m',
+            ]}
+            noStyle
+          >
+            {saftyDateCom}
           </Form.Item>
         </div>
       ),
     },
+    // {
+    //   itemProps: {
+    //     label: '灭火器压力',
+    //     name: ['safety_equirpment', 'ex_check_date'],
+    //   },
+    //   comProps: {
+    //     addonBefore: ['safety_equirpment', 'extinguisher'],
+    //   },
+    // },
 
     {
       formType: 'rowText',
@@ -1903,7 +1954,7 @@ const InspectRecordForm = props => {
           setTimeout(() => {
             console.log('  延时器 ： ');
             setModalExport(!modalExport);
-          }, 2000);
+          }, 3000);
         }
       : props.toggleExportPDF;
   // const finish = props.type === 'comExportPdf' ? setModalExport : props.toggleExportPDF

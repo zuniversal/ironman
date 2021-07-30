@@ -49,7 +49,7 @@ const getOption = (data = [], config = {}) => {
       // },
     },
     grid: {
-      left: '2%',
+      left: 30,
       right: 40,
       bottom: 50,
       containLabel: true,
@@ -86,6 +86,7 @@ const getOption = (data = [], config = {}) => {
       //   interval: 0,
       // },
       data: date,
+      interval: 15,
     },
     yAxis: {
       type: 'value',
@@ -107,14 +108,18 @@ const getOption = (data = [], config = {}) => {
     },
     series: data.map((item, index) => ({
       type: 'line',
-      showSymbol: false,
-      smooth: true,
+      // showSymbol: false,
+      // smooth: true,
+      symbol: 'circle',
+      lineStyle: {
+        width: 1,
+      },
       // animationDelay: 1000,
       // animationDuration: 1500,
       // animationThreshold: 3000,
-      areaStyle: {
-        color: areaColor[index],
-      },
+      // areaStyle: {
+      //   color: areaColor[index],
+      // },
       ...item,
     })),
   };
@@ -144,7 +149,7 @@ export default React.memo(function ChartLine(props) {
       //   query[v.value] = v.value
       // })
       const queryParams = `?point_id=${point_id}&start_time=${startTime}&end_time=${endTime}${query}`;
-      console.log(' query ： ', fields, query, queryParams); //
+      console.log(' query ： ', props, point_id, fields, query, queryParams); //
       return services.getAlarmCurveList(queryParams);
       return services.getAlarmCurveList({
         point_id,
@@ -157,7 +162,12 @@ export default React.memo(function ChartLine(props) {
       formatResult(res) {
         return get(res, 'list', []);
       },
-      refreshDeps: [point_id, startTime, endTime, load],
+      refreshDeps: [
+        point_id,
+        startTime,
+        endTime,
+        // load
+      ],
       // ready: point_id && startTime && endTime,
     },
   );
@@ -169,16 +179,22 @@ export default React.memo(function ChartLine(props) {
         ? data.map((i, index) => {
             time[index] = moment(i.tm).format('YYYY-MM-DD HH:mm:ss');
             if (item.value === 'p_rate') {
-              return i[item.value] * 100;
+              return (i[item.value] * 100).toFixed(2);
             }
-            return formatter(i[item.value]) || '-';
+            return formatter(i[item.value]).toFixed(2) || 0;
           })
         : [],
       ...item,
       time,
     };
   });
-  // console.log(' chartData ： ', fields, chartData, getOption(chartData, { yAxis: { name: unit, min } }), ); //
+  console.log(
+    ' chartData ： ',
+    props,
+    fields,
+    chartData,
+    getOption(chartData, { yAxis: { name: unit, min } }),
+  ); //
   return (
     <Container loading={loading} empty={isEmpty(data)}>
       <ReactEchartsCore

@@ -54,3 +54,6 @@ export const removeCircuitItem = p =>
     `console/OMS/powerstation/${p.power_station_id}/circuit/${p.circuit_id}`,
     p,
   );
+
+export const getPowerstationPoints = p =>
+  noTipsGet(`console/OMS/powerstation/${p.d_id}/monitor/points`, p);

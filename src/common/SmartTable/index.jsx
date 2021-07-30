@@ -506,7 +506,11 @@ class SmartTable extends PureComponent {
         page,
         page_size,
       };
-      params[sortKey] = order;
+      // params[sortKey] = order;
+      if (sortKey) {
+        params['_sort'] = `${order === 'descend' ? '-' : ''}${sortKey}`;
+      }
+
       this.props.getListAsync(params);
     }
   };

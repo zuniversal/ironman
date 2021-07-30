@@ -3,6 +3,7 @@ import SmartTable from '@/common/SmartTable';
 import { monitorDeviceStatusMap, deviceFrequencyMap } from '@/configs';
 import * as monitorManageServices from '@/services/monitorManage';
 import './style.less';
+import { tips } from '@/utils';
 
 const ElectricInfoTable = props => {
   const [dataList, setDataList] = useState();
@@ -88,13 +89,18 @@ const ElectricInfoTable = props => {
     <>
       <a
         onClick={() => {
-          props.showFormModal({
-            // props.getRealDataAsync({
-            action: 'getRealDataAsync',
-            realDataParams: {
-              imei: record.imei,
-            },
-          });
+          if (record.imei) {
+            props.showFormModal({
+              // props.getRealDataAsync({
+              action: 'getRealDataAsync',
+              realDataParams: {
+                imei: record.imei,
+              },
+            });
+          } else {
+            tips('没有IMEI号可以查看监控数据！');
+          }
+
           // props.showItemAsync({
           //   // props.getRealDataAsync({
           //   action: 'getRealDataAsync',

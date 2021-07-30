@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Button } from 'antd';
 import ClientListSearchForm from '@/components/Form/ClientListSearchForm';
 // import ClientClueForm from '@/components/Form/ClientClueForm';
-// import ClientClueTable from '@/components/Table/ClientClueTable';
+import ClientClueTable from '@/components/Table/ClientClueTable';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/client';
 import SmartHOC from '@/common/SmartHOC';
@@ -70,7 +70,7 @@ class ClientClue extends PureComponent {
       showItemAsync: this.props.showItemAsync,
     };
 
-    // return <ClientClueTable {...tableProps}></ClientClueTable>;
+    return <ClientClueTable {...tableProps}></ClientClueTable>;
   };
 
   renderCommonModal = params => {

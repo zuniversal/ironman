@@ -18,6 +18,11 @@ const RealDataTable = props => {
       dataIndex: 'imei',
     },
     {
+      title: '时间',
+      dataIndex: 'tm',
+      day: 'YYYY-MM-DD HH:mm:ss',
+    },
+    {
       title: 'A相电流',
       dataIndex: 'ua',
     },

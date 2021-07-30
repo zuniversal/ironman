@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
-// import ApprovalMangementSearchForm from '@/components/Form/ApprovalMangementSearchForm';
+import ApprovalMangementSearchForm from '@/components/Form/ApprovalMangementSearchForm';
 // import ApprovalMangementForm from '@/components/Form/ApprovalMangementForm';
-// import ApprovalMangementTable from '@/components/Table/ApprovalMangementTable';
+import ApprovalMangementTable from '@/components/Table/ApprovalMangementTable';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/client';
 import SmartHOC from '@/common/SmartHOC';
@@ -46,12 +46,11 @@ class ApprovalMangement extends PureComponent {
     );
   };
   renderSearchForm = params => {
-    return this.renderFormBtn();
-    // return (
-    //   <ApprovalMangementSearchForm
-    //     formBtn={this.renderFormBtn}
-    //   ></ApprovalMangementSearchForm>
-    // );
+    return (
+      <ApprovalMangementSearchForm
+        formBtn={this.renderFormBtn}
+      ></ApprovalMangementSearchForm>
+    );
   };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
@@ -73,7 +72,7 @@ class ApprovalMangement extends PureComponent {
       showItemAsync: this.props.showItemAsync,
     };
 
-    // return <ApprovalMangementTable {...tableProps}></ApprovalMangementTable>;
+    return <ApprovalMangementTable {...tableProps}></ApprovalMangementTable>;
   };
 
   renderCommonModal = params => {

@@ -18,6 +18,7 @@ import ChartPeak from './ChartPeak';
 import ChartLine from './ChartLine';
 import ChartLine2 from './ChartLine2';
 import * as services from '@/services/smartMonitor';
+import { getPowerstationPoints } from '@/services/powerStation';
 import { RealDataTableCom } from '@/components/Table/RealDataTable';
 import styles from './index.less';
 
@@ -64,9 +65,12 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     moment(
       moment(day)
         // .subtract(1, 'days')
+        .subtract(1, 'hours')
         .format('YYYY-MM-DD  HH:mm:ss'),
     ),
-    moment(day).add(duration, 'seconds'),
+    moment(day)
+      .add(1, 'hours')
+      .add(duration, 'seconds'),
     // .add(3000, 'seconds'),
   ]);
 
@@ -87,16 +91,8 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     point_id,
     // startTime: date[0] ? `${date[0].format('YYYY-MM-DD')} 00:00:00` : null,
     // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
-    startTime: date[0]
-      ? moment(date[0])
-          .subtract(1, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss')
-      : null,
-    endTime: date[1]
-      ? moment(date[1])
-          .add(1, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss')
-      : null,
+    startTime: date[0] ? moment(date[0]).format('YYYY-MM-DD HH:mm:ss') : null,
+    endTime: date[1] ? moment(date[1]).format('YYYY-MM-DD HH:mm:ss') : null,
   };
   console.log(
     ' hackValue || date ： ',
@@ -254,6 +250,7 @@ export default React.memo(function SmartMonitor(props) {
     },
   } = props;
   console.log(' propspropspropsprops ： ', props); //
+  const [point, setPoint] = React.useState();
 
   if (type === 'alarmRecord') {
     return <AlarmMonitor {...props}></AlarmMonitor>;
@@ -270,16 +267,20 @@ export default React.memo(function SmartMonitor(props) {
   const number = get(stationData, 'electricity_user.number');
   console.log('stationData==', stationData, number);
   const { data: points, loading: pointsLoading } = useRequest(
-    () => services.getMonitorPoints(number, stationId),
+    // () => services.getMonitorPoints(number, stationId),
+    () => getPowerstationPoints({ d_id: stationId }),
     {
       formatResult(res) {
+        if (!!res.list.length) {
+          setPoint(res.list[0].id);
+          setImei(res.list[0].imei);
+        }
         return get(res, 'list', []);
       },
       ready: !!number,
     },
   );
 
-  const [point, setPoint] = React.useState();
   const [imei, setImei] = React.useState(null);
 
   const [tab, setTab] = React.useState(REAL_DATA);
@@ -297,18 +298,20 @@ export default React.memo(function SmartMonitor(props) {
     setImei(rest.imei);
   };
 
-  React.useEffect(() => {
-    if (points && points.length) {
-      setPoint(points[0].line);
-      setImei(points[0].imei);
-    }
-  }, [points]);
+  // React.useEffect(() => {
+  //   if (points && points.length) {
+  //     // setPoint(points[0].line);
+  //     setPoint(points[0].id);
+  //     setImei(points[0].imei);
+  //   }
+  // }, [points]);
 
   const paramProps = {
     imei,
     number,
     stationId,
     point,
+    point_id: point,
     startTime: date[0] ? `${date[0].format('YYYY-MM-DD HH:mm:ss')}` : null,
     endTime: date[1] ? `${date[1].format('YYYY-MM-DD HH:mm:ss')}` : null,
   };
@@ -352,6 +355,7 @@ export default React.memo(function SmartMonitor(props) {
             options={map(points, item => ({
               label: item.name,
               value: item.line,
+              value: item.id,
               imei: item.imei,
             }))}
             value={point}
@@ -390,7 +394,7 @@ export default React.memo(function SmartMonitor(props) {
               <EnergyChart {...paramProps} load={tab === ENERGY_CHART} />
             </TabPane>
             <TabPane tab="电压" key="u">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
                 unit="V"
                 // min={200}
@@ -412,7 +416,7 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="电流" key="a">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
                 unit="A"
                 load={tab === 'a'}
@@ -433,7 +437,7 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="MD" key="md">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
                 unit="KW"
                 load={tab === 'md'}
@@ -446,7 +450,7 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="负荷" key="payload">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
                 unit="KW"
                 load={tab === 'payload'}
@@ -459,7 +463,7 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="变压器负载率" key="lb">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
                 unit="%"
                 load={tab === 'lb'}
@@ -473,9 +477,9 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="功率因数" key="num">
-              <ChartLine
+              <ChartLine2
                 {...paramProps}
-                unit="A"
+                // unit="A"
                 load={tab === 'num'}
                 fields={[
                   {

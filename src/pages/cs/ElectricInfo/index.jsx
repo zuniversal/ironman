@@ -73,6 +73,14 @@ class ElectricInfo extends PureComponent {
     };
   }
 
+  onOptionChange = params => {
+    console.log('  onOptionChange  ：', params);
+    this.props.showItemAsync({
+      action: 'powerStationDetailAsync',
+      d_id: params.id,
+    });
+  };
+
   renderTable = params => {
     const tableProps = {
       showFormModal: this.props.showFormModal,
@@ -85,7 +93,11 @@ class ElectricInfo extends PureComponent {
     return (
       <>
         <PageTitle title={'电站信息'}>
-          <TimeChoice noPicker config={this.props.stationList}></TimeChoice>
+          <TimeChoice
+            noPicker
+            config={this.props.stationList}
+            onOptionChange={this.onOptionChange}
+          ></TimeChoice>
         </PageTitle>
         <ElectricInfoTable {...tableProps}></ElectricInfoTable>
       </>

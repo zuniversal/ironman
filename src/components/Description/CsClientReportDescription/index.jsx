@@ -1121,7 +1121,8 @@ const CsClientReportDescription = props => {
     const uploadPDFRes = await uploadPDF({
       customer_id: props.data.customer_id,
       report_id: props.data.reportId,
-      year_month: props.data?.year_month,
+      ele_user_id: props.data.electricity_user_id,
+      year_month: props.data.year_month,
       url: res.rest.url,
     });
     console.log('  res await 结果  ：', res, uploadPDFRes); //

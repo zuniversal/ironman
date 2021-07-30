@@ -107,7 +107,7 @@ export default {
       };
       inspectRecordDateConfig.forEach((v, i) => {
         console.log(' inspectRecordDateConfig v ： ', safety_equirpment, v, i);
-        safetyEquirpment[v] = moment(safety_equirpment[v]);
+        safetyEquirpment[`${v}_m`] = moment(safety_equirpment[v]);
       });
       console.log(' safetyEquirpment ： ', safetyEquirpment, safety_equirpment);
 

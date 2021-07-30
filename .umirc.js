@@ -102,11 +102,14 @@ export default defineConfig({
       //   '^/api': '',
       // },
     },
-    // '/api': {
-    //   target: 'https://epk.faladi.cn:31009',
-    //   changeOrigin: true,
-    //   secure: false,
-    // },
+    '/api': {
+      target: 'https://epk.faladi.cn:31009',
+      changeOrigin: true,
+      secure: false,
+      // pathRewrite: {
+      //   '^/poapi': '/api',
+      // },
+    },
     '/wsocket': {
       target: 'ws://119.3.123.144:8008/websocket',
       changeOrigin: true,
