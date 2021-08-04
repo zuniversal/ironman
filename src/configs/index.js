@@ -601,6 +601,15 @@ export const notifyTypeConfig = [
   },
 ];
 
+export const notifyTypeWithAllConfig = [
+  ...notifyTypeConfig,
+  {
+    label: '全选',
+    value: 'all',
+    key: 'all',
+  },
+];
+
 export const notifyTypeMap = arrMapObj(notifyTypeConfig);
 
 export const clientLevelConfig = [
@@ -1883,10 +1892,15 @@ export const clientListTabConfig = [
 
 export const MYTASK_PENDING_APPROVE = 'pending_approve'; //
 export const MYTASK_COMPLETE = 'complete'; //
+export const MYTASK_APPROVING = 'approving'; //
 export const mytaskTabConfig = [
   {
-    tab: '待审批',
+    tab: '待处理',
     key: MYTASK_PENDING_APPROVE,
+  },
+  {
+    tab: '审批中',
+    key: MYTASK_APPROVING,
   },
   {
     tab: '已完成',
@@ -1942,5 +1956,81 @@ export const saleDataEchartsConfig = [
   {
     label: '销售额行业占比',
     value: '销售额行业占比',
+  },
+];
+
+export const notifyClientEventConfig = [
+  {
+    label: '客户负责小欧手变更',
+    value: '客户负责小欧手变更',
+    key: '客户负责小欧手变更',
+  },
+  {
+    label: '客户签约',
+    value: '客户签约',
+    key: '客户签约',
+  },
+  {
+    label: '客户合同到期',
+    value: '客户合同到期',
+    key: '客户合同到期',
+  },
+  {
+    label: '客户出现报警',
+    value: '客户出现报警',
+    key: '客户出现报警',
+  },
+  {
+    label: '全选',
+    value: '全选',
+    key: '全选',
+  },
+];
+
+export const notifyClientLinkConfig = [
+  {
+    label: '自动关联负责人',
+    value: '自动关联负责人',
+    key: '自动关联负责人',
+  },
+];
+
+export const planContractStepConfig = [
+  {
+    title: '信息补充',
+    value: '信息补充',
+  },
+  {
+    title: '方案阶段',
+    value: '方案阶段',
+  },
+  {
+    title: '合同阶段',
+    value: '合同阶段',
+  },
+];
+
+export const planContractDescConfig = [
+  {
+    label: '提交人',
+    value: '提交人',
+  },
+  {
+    label: '联系电话',
+    value: '联系电话',
+  },
+  {
+    label: '提交时间',
+    value: '提交时间',
+  },
+  {
+    label: '所属计划',
+    value: '所属计划',
+    span: 3,
+  },
+  {
+    label: '方案详情',
+    value: '方案详情',
+    span: 3,
   },
 ];

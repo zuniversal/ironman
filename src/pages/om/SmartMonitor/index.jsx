@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRequest, history } from 'umi';
 import { Tabs, DatePicker, Select, Button } from 'antd';
+import 'echarts/lib/chart/scatter';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
@@ -84,6 +85,17 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   //   }
   // }, [points]);
 
+  const d1 = moment(date[0], 'YYYY-MM-DD');
+  const d2 = moment(date[1], 'YYYY-MM-DD');
+  const dayRange = [];
+  for (let i = 1; i <= d2.diff(d1, 'minutes'); i += 1) {
+    dayRange.push({
+      tm: moment(date[0])
+        .add(i, 'minutes')
+        .format('YYYY-MM-DD HH:mm'),
+    });
+  }
+
   const paramProps = {
     // number,
     // stationId,
@@ -93,6 +105,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
     // endTime: date[1] ? `${date[1].format('YYYY-MM-DD')} 23:59:59` : null,
     startTime: date[0] ? moment(date[0]).format('YYYY-MM-DD HH:mm:ss') : null,
     endTime: date[1] ? moment(date[1]).format('YYYY-MM-DD HH:mm:ss') : null,
+    dayRange,
   };
   console.log(
     ' hackValue || date ： ',
@@ -114,6 +127,7 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
   };
 
   const onOpenChange = open => {
+    console.log(' onOpenChange ： ', open); //
     if (open) {
       setHackValue([]);
       setDate([]);
@@ -139,7 +153,10 @@ const AlarmMonitor = React.memo(function SmartMonitor(props) {
             <div>选择时间：</div>
             <RangePicker
               allowClear={false}
-              onChange={setDate}
+              onChange={e => {
+                console.log(' onChange ： ', e); //
+                setDate(e);
+              }}
               onOpenChange={onOpenChange}
               onCalendarChange={val => setDate(val)}
               disabledDate={disabledDate}
@@ -266,7 +283,7 @@ export default React.memo(function SmartMonitor(props) {
   );
   const number = get(stationData, 'electricity_user.number');
   console.log('stationData==', stationData, number);
-  const { data: points, loading: pointsLoading } = useRequest(
+  const { data: points = [], loading: pointsLoading } = useRequest(
     // () => services.getMonitorPoints(number, stationId),
     () => getPowerstationPoints({ d_id: stationId }),
     {
@@ -283,12 +300,16 @@ export default React.memo(function SmartMonitor(props) {
 
   const [imei, setImei] = React.useState(null);
 
-  const [tab, setTab] = React.useState(REAL_DATA);
-  // const [tab, setTab] = React.useState(HISTORY);
+  // const [tab, setTab] = React.useState(REAL_DATA);
+  const [tab, setTab] = React.useState('u');
   const [hackValue, setHackValue] = React.useState();
   const [date, setDate] = React.useState([
-    moment(moment().format('YYYY-MM-DD HH:mm:ss')),
-    moment(),
+    // moment(moment().format('YYYY-MM-DD HH:mm:ss')),
+    // moment(),
+    moment(moment().format('YYYY-MM-DD') + ' 00:00:00'),
+    moment(moment().format('YYYY-MM-DD') + ' 23:59:59'),
+    // moment(moment('2021-7-1 00:00:00').format('YYYY-MM-DD HH:mm:ss')),
+    // moment('2021-7-4 23:59:59'),
   ]);
   console.log(' date ： ', date); //
 
@@ -306,6 +327,17 @@ export default React.memo(function SmartMonitor(props) {
   //   }
   // }, [points]);
 
+  const d1 = moment(date[0], 'YYYY-MM-DD');
+  const d2 = moment(date[1], 'YYYY-MM-DD');
+  const dayRange = [];
+  for (let i = 1; i <= d2.diff(d1, 'minutes'); i += 1) {
+    dayRange.push({
+      tm: moment(date[0])
+        .add(i, 'minutes')
+        .format('YYYY-MM-DD HH:mm'),
+    });
+  }
+
   const paramProps = {
     imei,
     number,
@@ -314,6 +346,7 @@ export default React.memo(function SmartMonitor(props) {
     point_id: point,
     startTime: date[0] ? `${date[0].format('YYYY-MM-DD HH:mm:ss')}` : null,
     endTime: date[1] ? `${date[1].format('YYYY-MM-DD HH:mm:ss')}` : null,
+    dayRange,
   };
 
   const disabledDate = current => {
@@ -325,6 +358,7 @@ export default React.memo(function SmartMonitor(props) {
   };
 
   const onOpenChange = open => {
+    console.log(' onOpenChange ： ', open); //
     if (open) {
       setHackValue([]);
       setDate([]);
@@ -347,19 +381,24 @@ export default React.memo(function SmartMonitor(props) {
           <div className={styles.subtitle}>
             电站名称：{get(stationData, 'name', '-')}
           </div>
-          <div style={{ marginLeft: 30 }}>监控点：</div>
-          <Select
-            className={styles.select}
-            onChange={onChange}
-            notFoundContent="暂无监控点"
-            options={map(points, item => ({
-              label: item.name,
-              value: item.line,
-              value: item.id,
-              imei: item.imei,
-            }))}
-            value={point}
-          />
+
+          {![HISTORY].includes(tab) && (
+            <>
+              <div style={{ marginLeft: 30 }}>监控点：</div>
+              <Select
+                className={styles.select}
+                onChange={onChange}
+                notFoundContent="暂无监控点"
+                options={map(points, item => ({
+                  label: item.name,
+                  value: item.line,
+                  value: item.id,
+                  imei: item.imei,
+                }))}
+                value={point}
+              />
+            </>
+          )}
           <div
             className={styles.date}
             style={{
@@ -370,7 +409,10 @@ export default React.memo(function SmartMonitor(props) {
             <div>选择时间：</div>
             <RangePicker
               allowClear={false}
-              onChange={setDate}
+              onChange={e => {
+                console.log(' onChange ： ', e); //
+                setDate(e);
+              }}
               onOpenChange={onOpenChange}
               onCalendarChange={val => setDate(val)}
               disabledDate={disabledDate}
@@ -391,7 +433,22 @@ export default React.memo(function SmartMonitor(props) {
               <RealData {...paramProps} load={tab === REAL_DATA} />
             </TabPane>
             <TabPane tab="能耗曲线" key={ENERGY_CHART}>
-              <EnergyChart {...paramProps} load={tab === ENERGY_CHART} />
+              <EnergyChart
+                {...paramProps}
+                load={tab === ENERGY_CHART}
+                value={'power_curve'}
+              />
+              {/* <ChartLine2
+                {...paramProps}
+                unit=""
+                load={tab === ENERGY_CHART}
+                fields={[
+                  {
+                    name: '',
+                    value: 'power_curve',
+                  },
+                ]}
+              /> */}
             </TabPane>
             <TabPane tab="电压" key="u">
               <ChartLine2
@@ -502,14 +559,20 @@ export default React.memo(function SmartMonitor(props) {
               />
             </TabPane>
             <TabPane tab="峰平谷" key="peak">
-              <ChartPeak {...paramProps} load={tab === 'peak'} />
+              <ChartPeak
+                {...paramProps}
+                load={tab === 'peak'}
+                value={'price'}
+              />
             </TabPane>
             <TabPane tab="历史" key={HISTORY}>
-              <RealDataTableCom
-                {...paramProps}
-                load={tab === HISTORY}
-                time={date}
-              ></RealDataTableCom>
+              {tab === HISTORY && (
+                <RealDataTableCom
+                  {...paramProps}
+                  load={tab === HISTORY}
+                  time={date}
+                ></RealDataTableCom>
+              )}
             </TabPane>
           </Tabs>
         </Container>

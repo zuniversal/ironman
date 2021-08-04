@@ -229,7 +229,7 @@ export const renderCheckboxOp = (
     : [];
   // return <CheckboxGroup>{CheckboxItems}</CheckboxGroup>;
   return opType === 'group' ? (
-    <CheckboxGroup>
+    <CheckboxGroup className={`checkboxWrapper`}>
       {Array.isArray(configs)
         ? configs.map(v =>
             v.CustomCom ? (

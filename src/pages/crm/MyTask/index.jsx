@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, Tabs } from 'antd';
+import PlanContractStep from './PlanContractStep';
 import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
 // import MyTaskForm from '@/components/Form/MyTaskForm';
 import MyTaskTable from '@/components/Table/MyTaskTable';
@@ -151,6 +152,7 @@ class MyTask extends PureComponent {
   render() {
     return (
       <div className="">
+        <PlanContractStep></PlanContractStep>
         {this.renderTabPanes()}
 
         {this.renderSearchForm()}

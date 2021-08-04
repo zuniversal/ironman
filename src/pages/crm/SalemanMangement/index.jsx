@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import SalemanMangementSearchForm from '@/components/Form/SalemanMangementSearchForm';
 import SalemanMangementForm from '@/components/Form/SalemanMangementForm';
 import SalemanMangementTable from '@/components/Table/SalemanMangementTable';
+import SalemanMangementClientTable from '@/components/Table/SalemanMangementClientTable';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/clientList';
 import SmartHOC from '@/common/SmartHOC';
@@ -14,6 +15,7 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  responsibleClientAsync: `负责客户详情`,
 };
 
 const detailFormMap = {};
@@ -38,7 +40,7 @@ class SalemanMangement extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
-          disabled={this.props.authInfo.create !== true}
+          // disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
@@ -109,7 +111,7 @@ class SalemanMangement extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['other'].includes(action)) {
+    if (['responsibleClientAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -128,6 +130,13 @@ class SalemanMangement extends PureComponent {
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'responsibleClientAsync') {
+      return (
+        <SalemanMangementClientTable
+          {...formComProps}
+        ></SalemanMangementClientTable>
+      );
     }
     console.log(' formComProps ： ', formComProps);
     return <SalemanMangementForm {...formComProps}></SalemanMangementForm>;

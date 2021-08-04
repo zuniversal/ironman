@@ -57,19 +57,37 @@ const getOption = ({ data = [], name = '', unit = '' }) => {
 };
 
 export default React.memo(function ChartPeak(props) {
-  const { number, stationId, point, startTime, endTime, load } = props;
+  const {
+    number,
+    stationId,
+    point,
+    startTime,
+    endTime,
+    load,
+    value,
+    point_id,
+  } = props;
   const { data, loading } = useRequest(
     () => {
       if (!startTime || !endTime || !load) {
         return '';
       }
-      return services.getPeakData({
-        number,
-        stationId,
-        point,
+      // return services.getPeakData({
+      //   number,
+      //   stationId,
+      //   point,
+      //   startTime,
+      //   endTime,
+      // });
+      const params = {
         startTime,
         endTime,
-      });
+        value: props.value,
+        point_id: point,
+      };
+      const queryParams = `?point_id=${point_id}&start_time=${startTime}&end_time=${endTime}&value=${value}`;
+      console.log(' query ： ', props, point_id, queryParams); //
+      return services.getAlarmCurveList(queryParams);
     },
     {
       formatResult(res) {

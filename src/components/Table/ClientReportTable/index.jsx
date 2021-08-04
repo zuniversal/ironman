@@ -219,7 +219,7 @@ const ClientReportTable = props => {
     <SmartTable
       columns={columns}
       extra={extra}
-      rowKey={'index'}
+      // rowKey={'index'}
       noDefault
       {...props}
     ></SmartTable>

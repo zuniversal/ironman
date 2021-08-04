@@ -44,8 +44,8 @@ const getOption = (_data = []) => {
       itemHeight: 10,
       selected: {
         当日实时用电量: true,
-        近2个休息日平均能耗: false,
-        近5个工作日平均能耗: false,
+        近2个休息日平均能耗: true,
+        近5个工作日平均能耗: true,
       },
       data: [
         {
@@ -178,17 +178,36 @@ const handleTransData = (data = []) => {
 };
 
 export default React.memo(function EnergyChart(props) {
-  const { number, stationId, point, load } = props;
+  const {
+    number,
+    stationId,
+    point,
+    load,
+    startTime,
+    endTime,
+    value,
+    point_id,
+  } = props;
 
   const { data, loading } = useRequest(
     () => {
       if (!load) {
         return '';
       }
+      const params = {
+        startTime,
+        endTime,
+        value: props.value,
+        point_id: point,
+      };
+      const queryParams = `?point_id=${point_id}&start_time=${startTime}&end_time=${endTime}&value=${value}`;
+      console.log(' query ： ', props, point_id, queryParams); //
+      return services.getAlarmCurveList(queryParams);
       return services.getEnergy({ number, stationId, point });
     },
     {
       formatResult(res) {
+        return res;
         return get(res, 'bean', null);
       },
       refreshDeps: [point, load],
@@ -196,9 +215,10 @@ export default React.memo(function EnergyChart(props) {
     },
   );
 
-  const today = handleTransData(get(data, 'power_curve.today', ['-']));
-  const weekend = handleTransData(get(data, 'power_curve.rest_day', ['-']));
-  const work = handleTransData(get(data, 'power_curve.working_day', ['-']));
+  const today = handleTransData(get(data, 'bean.today', ['-']));
+  const weekend = handleTransData(get(data, 'bean.rest_day', ['-']));
+  const work = handleTransData(get(data, 'bean.working_day', ['-']));
+  // console.log(' today, weekend, work ： ', data, today, weekend, work,  )//
 
   return (
     <Container loading={loading} empty={isEmpty(data)}>

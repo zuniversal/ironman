@@ -203,7 +203,7 @@ export const getShowRealData = data => {
     } else {
       value = get(data, item.value, '-');
     }
-    console.log(' valuevalue ： ', value, item); //
+    // console.log(' valuevalue ： ', value, item); //
     return {
       label: item.label,
       value,

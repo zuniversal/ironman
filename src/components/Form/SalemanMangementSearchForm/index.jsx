@@ -14,6 +14,14 @@ const SalemanMangementSearchForm = props => {
       },
     },
     {
+      // formType: 'Search',
+      // selectData: ,
+      itemProps: {
+        label: '状态',
+        name: '',
+      },
+    },
+    {
       itemProps: {
         label: '姓名',
         name: '',

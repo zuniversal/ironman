@@ -4,7 +4,12 @@ import SmartTable from '@/common/SmartTable';
 const SalemanMangementTable = props => {
   const columns = [
     {
+      title: '人员编号',
+      // dataIndex: '',
+    },
+    {
       title: '姓名',
+      // dataIndex: '',
       // dataIndex: '',
       // detailFn: record =>
       //   props.showItemAsync({
@@ -32,11 +37,34 @@ const SalemanMangementTable = props => {
       title: '邮箱',
       // dataIndex: '',
     },
+    {
+      title: '状态',
+      // dataIndex: '',
+    },
   ];
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => props.xxx}>查看客户</a>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'responsibleClientAsync',
+            d_id: record.id,
+          })
+        }
+      >
+        查看客户
+      </a>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'noEffect',
+            d_id: record.id,
+          })
+        }
+      >
+        失效
+      </a>
     </>
   );
 

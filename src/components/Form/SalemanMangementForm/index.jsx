@@ -3,6 +3,11 @@ import SmartForm from '@/common/SmartForm';
 import useHttp from '@/hooks/useHttp';
 import { getList } from '@/services/clientList';
 
+const choiceRadios = [
+  { label: '是', value: true, key: 'yes' },
+  { label: '否', value: false, key: 'no' },
+];
+
 const SalemanMangementForm = props => {
   console.log(' SalemanMangementForm ： ', props); //
 
@@ -85,6 +90,14 @@ const SalemanMangementForm = props => {
         label: '个人照片',
         name: '',
       },
+    },
+    {
+      formType: 'Radio',
+      itemProps: {
+        label: '新建法拉第平台用户',
+        name: '',
+      },
+      radioData: choiceRadios,
     },
   ];
 

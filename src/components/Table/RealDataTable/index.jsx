@@ -23,15 +23,15 @@ const RealDataTable = props => {
       day: 'YYYY-MM-DD HH:mm:ss',
     },
     {
-      title: 'A相电流',
+      title: 'A相电压',
       dataIndex: 'ua',
     },
     {
-      title: 'B相电流',
+      title: 'B相电压',
       dataIndex: 'ub',
     },
     {
-      title: 'C相电流',
+      title: 'C相电压',
       dataIndex: 'uc',
     },
     {
@@ -200,7 +200,14 @@ const RealDataTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props} noActionCol></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      {...props}
+      noActionCol
+      rowKey={'index'}
+    ></SmartTable>
+  );
 };
 
 export default RealDataTable;
@@ -222,7 +229,7 @@ export const RealDataTableCom = props => {
     isLoading,
     req: getAlarmCurveListAsync,
   } = useHttp(getAlarmCurveList, {
-    format: res => formatSelectList(res),
+    format: res => formatSelectList(res).map((v, index) => ({ ...v, index })),
     noMountFetch: true,
   });
   const { data: monitorPointList, req: getMonitorPointListAsync } = useHttp(
@@ -233,16 +240,17 @@ export const RealDataTableCom = props => {
       }),
     {
       format: res => {
-        console.log('  副作用 对吗  res.length ', res);
+        console.log('  副作用 对吗  res.length ', res, props);
         if (res.length > 0) {
           getAlarmCurveListAsync(() => {
-            form.setFieldsValue({
-              point_id: `${res[0].id}`,
-            });
+            // form.setFieldsValue({
+            //   point_id: `${res[0].id}`,
+            // });
             return getAlarmCurveList(
               formatParams({
                 ...props,
-                point_id: res[0].id,
+                // point_id: res[0].id,
+                // point_id: props.point_id,
               }),
             );
           });
@@ -257,7 +265,7 @@ export const RealDataTableCom = props => {
   //   // getAlarmCurveListAsync(() => getAlarmCurveList({
 
   //   // }))
-  // }, [monitorPointList]);
+  // }, [props.point_id]);
 
   console.log(' RealDataTableCom 副作用 ： ', props, monitorPointList);
 
@@ -346,7 +354,12 @@ export const RealDataTableCom = props => {
       <div className={'fsb'}>
         <SearchForm
           config={config}
-          init={{ time: props.time }}
+          init={{
+            time: props.time,
+            // point_id: props.point_id
+            point_id: props.point_id ? `${props.point_id}` : null,
+            // point_id: '5262'
+          }}
           onFieldChange={onFieldChange}
           propsForm={form}
         ></SearchForm>
