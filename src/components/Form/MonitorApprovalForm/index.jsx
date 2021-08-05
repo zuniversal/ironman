@@ -212,7 +212,7 @@ const MonitorApprovalForm = props => {
   };
   const onHouseNoChangeHandle = (params, houseNoList) => {
     console.log(
-      ' onHouseNoChangeHandle  ： ',
+      ' onHouseNoChangeHandle 方法 ： ',
       params,
       houseNoList,
       props.propsForm.getFieldsValue(),
@@ -231,7 +231,10 @@ const MonitorApprovalForm = props => {
       'meter_number',
       'electrical_info_id',
     );
-    console.log(' onHouseNoChangeHandle formatMeterRes ： ', formatMeterRes); //
+    console.log(
+      ' onHouseNoChangeHandle formatMeterRes 户号 ： ',
+      formatMeterRes,
+    ); //
     const formatOutlineRes = formatSelectList(
       res,
       'outline_name',
@@ -350,6 +353,7 @@ const MonitorApprovalForm = props => {
       },
       comProps: {
         onSelect: onClientChange,
+        dropdownClassName: 'monitorApprovalClientSelect',
       },
       extra: (
         <a
@@ -600,7 +604,8 @@ const MonitorApprovalForm = props => {
       noRule: true,
       itemProps: {
         label: '施工人员',
-        name: 'user',
+        // name: 'user',
+        name: 'worker_name',
       },
       comProps: {
         disabled: true,
@@ -696,7 +701,7 @@ const MonitorApprovalForm = props => {
     ></UploadCom>,
   ];
 
-  const userInfo = getItem('userInfo');
+  // const userInfo = getItem('userInfo');
 
   const {
     manufacturer,
@@ -726,7 +731,7 @@ const MonitorApprovalForm = props => {
         model: model ? `${model}` : null,
         updated_time: updated_time ? moment(updated_time) : null,
         // updated_time: updated_time ? dayjs(updated_time) : null,
-        user: userInfo?.nickname,
+        // user: userInfo?.nickname,
       }}
       className={`monitorApprovalForm`}
     ></SmartForm>

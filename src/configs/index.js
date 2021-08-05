@@ -2032,5 +2032,6 @@ export const planContractDescConfig = [
     label: '方案详情',
     value: '方案详情',
     span: 3,
+    type: 'showPDF',
   },
 ];

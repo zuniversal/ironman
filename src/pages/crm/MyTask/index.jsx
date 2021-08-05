@@ -5,7 +5,7 @@ import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
 // import MyTaskForm from '@/components/Form/MyTaskForm';
 import MyTaskTable from '@/components/Table/MyTaskTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/clientList';
+import { actions, mapStateToProps } from '@/models/myTask';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { mytaskTabConfig } from '@/configs';
@@ -74,6 +74,7 @@ class MyTask extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+      taskType: this.props.tabType,
     };
 
     return <MyTaskTable {...tableProps}></MyTaskTable>;
@@ -138,6 +139,14 @@ class MyTask extends PureComponent {
         {this.renderModalContent()}
       </SmartFormModal>
     );
+  };
+  onTabChange = tabType => {
+    console.log('    onTabChange ： ', tabType);
+    this.props.onTabChange({ tabType });
+    this.props.getListAsync({
+      tabType,
+      page: 1,
+    });
   };
   renderTabPanes = params => (
     <div className={'tabWrapper'}>

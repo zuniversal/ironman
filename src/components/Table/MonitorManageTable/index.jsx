@@ -35,6 +35,10 @@ const MonitorManageTable = props => {
           d_id: record.station_id,
         }),
     },
+    // {
+    //   title: '电源编号',
+    //   dataIndex: '',
+    // },
     {
       title: '关联设备名称',
       dataIndex: 'equipment_name',
@@ -44,6 +48,10 @@ const MonitorManageTable = props => {
           d_id: record.equipment_id,
           id: record.device_id,
         }),
+    },
+    {
+      title: '电源编号',
+      dataIndex: 'power_number',
     },
     {
       title: '监控点',
@@ -58,10 +66,10 @@ const MonitorManageTable = props => {
       title: '额定功率',
       dataIndex: 'power',
     },
-    // {
-    //   title: '设备类型',
-    //   dataIndex: '',
-    // },
+    {
+      title: '设备类型',
+      dataIndex: 'manufacturer',
+    },
     {
       width: 160,
       title: 'IMEI号',

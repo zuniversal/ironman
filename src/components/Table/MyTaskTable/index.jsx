@@ -7,6 +7,7 @@ import {
 } from '@/configs';
 
 const MyTaskTable = props => {
+  console.log(' MyTaskTable   props,   ： ', props);
   const columns = [
     {
       title: '公司名称',
