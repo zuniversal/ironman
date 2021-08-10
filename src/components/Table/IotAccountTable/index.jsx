@@ -15,6 +15,28 @@ const IotAccountTable = props => {
       dataIndex: 'sim_number',
     },
     {
+      title: 'IMEI',
+      dataIndex: 'imei',
+    },
+    {
+      title: '所属客户',
+      dataIndex: 'name',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'clientDetailAsync',
+      //     d_id: record.customer_id,
+      //   }),
+    },
+    {
+      title: '所属户号',
+      dataIndex: 'number',
+      // detailFn: record =>
+      //   props.showItemAsync({
+      //     action: 'houseNoDetailAsync',
+      //     d_id: record.electricity_user_id,
+      //   }),
+    },
+    {
       title: '开户时间',
       dataIndex: 'start_time',
       day: 'YYYY-MM-DD HH:mm:ss',
@@ -45,15 +67,36 @@ const IotAccountTable = props => {
       title: '激活时间',
       dataIndex: 'activate_time',
       day: 'YYYY-MM-DD HH:mm:ss',
+      sorter: true,
+      sortKey: 'activate_time',
+      paramKey: 'order_by',
     },
     {
       title: '到期时间',
       dataIndex: 'end_time',
       day: 'YYYY-MM-DD HH:mm:ss',
+      sorter: true,
+      sortKey: 'end_time',
+      paramKey: 'order_by',
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() => {
+          props.getMonitorDeviceDetailAsync({
+            action: 'getMonitorDeviceDetailAsync',
+            keyword: record.sim_number,
+          });
+        }}
+      >
+        设备台账
+      </a>
+    </>
+  );
+
+  return <SmartTable columns={columns} extra={extra} {...props}></SmartTable>;
 };
 
 IotAccountTable.defaultProps = {};

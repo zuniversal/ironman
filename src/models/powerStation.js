@@ -91,7 +91,7 @@ export const getIsRight = (
   data.forEach((item, i) => {
     console.log(' powerInfoData v ： ', item);
     validateConfig.forEach(key => {
-      if (!item[key]) {
+      if (!item[key] && item[key] != 0) {
         isRight = {
           i,
           key,

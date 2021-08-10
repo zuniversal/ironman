@@ -201,6 +201,12 @@ class Client extends PureComponent {
           is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
           is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
         })),
+        customer_admin: !!res.customer_admin.length
+          ? res.customer_admin.map(v => ({
+              ...v,
+              password: v.password ? v.password : null,
+            }))
+          : [],
       };
       // if (typeof res.file !== 'string') {
       // if (res.file && res.file.length > 0) {
@@ -248,8 +254,28 @@ class Client extends PureComponent {
       }
       params.enterprise.file = params.file;
       params.enterprise.logo = params.logo;
+      console.log(' itemDetailitemDetail ： ', itemDetail, params); //
 
       const datas = formatClientFormData(params);
+      if (action === 'edit') {
+        datas.enterprise.id = itemDetail.enterprise.id;
+        datas.enterprise_id = itemDetail.enterprise.id;
+        delete params.last_service_staff_name;
+        delete datas.service_staff_name;
+        delete datas.service_organization_name;
+        delete datas.file;
+        delete datas.logo;
+        delete datas.contract;
+        delete datas.electricity_user;
+        delete datas.last_service_staff_id;
+      }
+
+      const isUrgeRes = datas.contact.filter(v => v.is_urge);
+      console.log(' paramsparams ： ', params, datas, isUrgeRes);
+      if (isUrgeRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
 
       // const datas = format2Null(params, [
       //   'last_service_staff',
@@ -258,7 +284,6 @@ class Client extends PureComponent {
       //   'asset',
       //   'covered_area',
       // ]);
-      console.log(' params ： ', params, datas);
       actionFn(datas);
       // const { dispatch } = this.props;
       // dispatch(
@@ -737,6 +762,8 @@ class Client extends PureComponent {
       //     value: '泉港区',
       //   }
       // ],
+      removeContactAsync: this.props.removeContactAsync,
+      removeClientAdminAsync: this.props.removeClientAdminAsync,
     };
 
     if (action !== 'add') {

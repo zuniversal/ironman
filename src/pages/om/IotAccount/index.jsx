@@ -3,11 +3,13 @@ import './style.less';
 import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import SmartFormModal from '@/common/SmartFormModal';
+import IotAccountSearchForm from '@/components/Form/IotAccountSearchForm';
 import IotAccountForm from '@/components/Form/IotAccountForm';
 import IotAccountTable from '@/components/Table/IotAccountTable';
 import ClientForm from '@/components/Form/ClientForm';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import PowerStationForm from '@/components/Form/PowerStationForm';
+import MonitorDeviceForm from '@/components/Form/MonitorDeviceForm';
 import AssetsForm from '@/components/Form/AssetsForm';
 import UploadCom from '@/components/Widgets/UploadCom';
 
@@ -31,6 +33,7 @@ const titleMap = {
   houseNoDetailAsync: `户号详情`,
   powerStationDetailAsync: `电站详情`,
   assetsDetailAsync: `设备详情`,
+  getMonitorDeviceDetailAsync: `监控设备详情`,
 };
 
 const detailFormMap = {
@@ -48,7 +51,7 @@ const detailFormMap = {
   actions,
   titleMap,
 })
-class MonitorManage extends PureComponent {
+class IotAccount extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +97,15 @@ class MonitorManage extends PureComponent {
       ></SearchKwForm>
     );
   };
+  renderSearchForm = params => {
+    return (
+      <IotAccountSearchForm
+        formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+      ></IotAccountSearchForm>
+    );
+  };
   onFieldChange = params => {
     console.log(' onFieldChange,  , ： ', params);
     this.props.getListAsync(params.formData);
@@ -113,6 +125,8 @@ class MonitorManage extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+
+      getMonitorDeviceDetailAsync: this.props.getMonitorDeviceDetailAsync,
     };
 
     return <IotAccountTable {...tableProps}></IotAccountTable>;
@@ -149,7 +163,7 @@ class MonitorManage extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['uploadFile'].includes(action)) {
+    if (['uploadFile', 'getMonitorDeviceDetailAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -196,6 +210,10 @@ class MonitorManage extends PureComponent {
       return (
         <MonitorManageDetailForm {...formComProps}></MonitorManageDetailForm>
       );
+    }
+    if (action === 'getMonitorDeviceDetailAsync') {
+      formComProps.action = 'detail';
+      return <MonitorDeviceForm {...formComProps}></MonitorDeviceForm>;
     }
     if (action === 'uploadFile') {
       const smallLayout = {
@@ -263,4 +281,4 @@ class MonitorManage extends PureComponent {
   }
 }
 
-export default MonitorManage;
+export default IotAccount;

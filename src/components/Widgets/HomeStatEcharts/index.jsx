@@ -67,7 +67,38 @@ const StatTabPanes = props => {
   const xAxisData = props.barData.map(v => v.date);
   // console.log(' countData  .map v ： ', props.barData, countData, xAxisData);
 
-  return (
+  const barGroupRankCom = (
+    <Row gutter={24}>
+      <Col span={16} className={`${ANIMATE.slideInLeft} `}>
+        <div className="homeTitle">{props.homeTitle}</div>
+        <HomeBar
+          // {...props}
+          data={countData}
+          xAxisData={xAxisData}
+        ></HomeBar>
+        {/* <SmartEcharts
+        data={[]}
+        type="bar"
+        legend={legend}
+        xAxis={xAxis}
+        noToolBox
+        {...props}
+      ></SmartEcharts> */}
+      </Col>
+      <Col span={8} className={`rankWrapper df ${ANIMATE.slideInRight} `}>
+        {/* <div className="homeGroupRankWrapper">
+        <div className="homeTitle">小组排名</div>
+        <HomeGroupRank data={props.rankData}></HomeGroupRank>
+      </div> */}
+        <HomeGroupRank
+          data={props.rankData}
+          groupTitle={props.groupTitle}
+        ></HomeGroupRank>
+      </Col>
+    </Row>
+  );
+
+  const withTabPanes = (
     <div className="statTabPanes">
       <Tabs
         // defaultActiveKey="0"
@@ -82,42 +113,18 @@ const StatTabPanes = props => {
       >
         {props.statConfig.map((v, i) => (
           <TabPane tab={v.tab} key={i}>
-            <Row gutter={24}>
-              <Col span={16} className={`${ANIMATE.slideInLeft} `}>
-                <div className="homeTitle">{props.homeTitle}</div>
-                <HomeBar
-                  // {...props}
-                  data={countData}
-                  xAxisData={xAxisData}
-                ></HomeBar>
-                {/* <SmartEcharts
-                  data={[]}
-                  type="bar"
-                  legend={legend}
-                  xAxis={xAxis}
-                  noToolBox
-                  {...props}
-                ></SmartEcharts> */}
-              </Col>
-              <Col
-                span={8}
-                className={`rankWrapper df ${ANIMATE.slideInRight} `}
-              >
-                {/* <div className="homeGroupRankWrapper">
-                  <div className="homeTitle">小组排名</div>
-                  <HomeGroupRank data={props.rankData}></HomeGroupRank>
-                </div> */}
-                <HomeGroupRank
-                  data={props.rankData}
-                  groupTitle={props.groupTitle}
-                ></HomeGroupRank>
-              </Col>
-            </Row>
+            {barGroupRankCom}
           </TabPane>
         ))}
       </Tabs>
     </div>
   );
+
+  if (props.withTabpanes) {
+    return withTabPanes;
+  }
+
+  return barGroupRankCom;
 };
 
 StatTabPanes.defaultProps = {

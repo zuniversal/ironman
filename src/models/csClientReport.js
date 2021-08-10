@@ -89,7 +89,12 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      let dataList = payload.list;
+      let originData = payload.list.map((v, index) => ({
+        ...v,
+        index,
+        key: index,
+      }));
+      let dataList = originData;
       if (payload.searchInfo.filter) {
         dataList = payload.list.filter(v =>
           filterKey.some(key =>
@@ -100,11 +105,11 @@ export default {
       console.log(' getListAsync res ： ', dataList, state, payload);
       return {
         ...state,
-        dataList: dataList.map((v, index) => ({ ...v, index })),
+        dataList: dataList,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
-        originData: payload.list,
+        originData,
       };
     },
     getItem(state, { payload, type }) {

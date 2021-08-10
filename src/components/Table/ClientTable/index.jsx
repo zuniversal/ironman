@@ -128,7 +128,7 @@ const ClientTable = props => {
 
   return (
     <SmartTable
-      noEdit
+      // noEdit
       columns={columns}
       extra={extra}
       {...props}

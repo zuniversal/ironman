@@ -18,6 +18,14 @@ import { downLoad } from '@/utils';
 
 const ClientReportTable = props => {
   const columns = [
+    // {
+    //   title: 'id',
+    //   dataIndex: 'id',
+    // },
+    // {
+    //   title: 'index',
+    //   dataIndex: 'index',
+    // },
     {
       title: '户号',
       dataIndex: 'number',
@@ -219,7 +227,8 @@ const ClientReportTable = props => {
     <SmartTable
       columns={columns}
       extra={extra}
-      // rowKey={'index'}
+      rowKey={'index'}
+      uniqueKey={'id'}
       noDefault
       {...props}
     ></SmartTable>

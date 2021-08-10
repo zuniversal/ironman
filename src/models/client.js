@@ -32,6 +32,8 @@ const otherActions = [
   'getOrganizeAsync',
   'getGeoAsync',
   'getRegionAsync',
+  'removeContactAsync',
+  'removeClientAdminAsync',
 ];
 const batchTurnActions = ['onAdminChange', 'modifyTableItem'];
 
@@ -90,6 +92,7 @@ export default {
 
     tableData: [initItem],
     contactTableData: [contactInitItem],
+    contactTableData: [],
     tagsList: [],
     organizeList: [],
     geoList: [],
@@ -145,7 +148,7 @@ export default {
         service_organization_name,
         enterprise,
       } = payload.bean;
-      const { userList, adminList } = state;
+      const { userList } = state;
       const serviceStaff = {
         ...service_staff,
         value: `${service_staff?.id}`,
@@ -161,6 +164,17 @@ export default {
         serviceStaff,
         lastServiceStaff,
       );
+      const adminList =
+        customer_admin && customer_admin.length > 0
+          ? customer_admin.map(v => ({
+              ...v,
+              tags: v.tags ?? [],
+              password: v.password ? v.password : null,
+              wechat: v.wechat ? v.wechat : null,
+              email: v.email ? v.email : null,
+            }))
+          : // : [{}]
+            null;
       return {
         ...state,
         action: payload.payload.action,
@@ -168,10 +182,7 @@ export default {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          customer_admin:
-            customer_admin && customer_admin.length > 0
-              ? customer_admin.map(v => ({ ...v, tags: v.tags ?? [] }))
-              : [{}],
+          customer_admin: adminList,
           d_id: payload.payload.d_id,
           service_staff: service_staff?.id,
           last_service_staff:
@@ -184,20 +195,42 @@ export default {
             ...enterprise,
             file: enterprise?.file ? enterprise?.file.split(',') : [],
             logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
+            tax_num: enterprise.tax_num ? enterprise.tax_num : null,
+            legal_person: enterprise.legal_person
+              ? enterprise.legal_person
+              : null,
+            legal_person_phone: enterprise.legal_person_phone
+              ? enterprise.legal_person_phone
+              : null,
+            industry: enterprise.industry ? enterprise.industry : null,
+            asset: enterprise.asset ? enterprise.asset : null,
+            covered_area: enterprise.covered_area
+              ? enterprise.covered_area
+              : null,
+            parent_enterprise_id: enterprise.parent_enterprise_id
+              ? enterprise.parent_enterprise_id
+              : null,
           },
 
           contact: contact.map(v => ({
             ...v,
-            is_urge: [v.is_urge],
-            is_quit: [v.is_quit],
+            is_urge: v.is_urge ? [v.is_urge] : [],
+            is_quit: v.is_quit ? [v.is_quit] : [],
             tags: v.tags.map(v => `${v.id}`) ?? [],
+            comments: v.comments ? v.comments : null,
+            phone: v.phone ? v.phone : null,
+            tel: v.tel ? v.tel : null,
+            qq: v.qq ? v.qq : null,
+            wechat: v.wechat ? v.wechat : null,
+            email: v.email ? v.email : null,
           })),
           service_staff: `${service_staff_name}`,
           last_service_staff: `${last_service_staff_name}`,
-          service_organization_id: service_organization_name ?? '',
+          // service_organization_id: service_organization_name ?? null,
         },
         // adminList: [payload.bean.customer_admin],
         adminList: payload.bean.customer_admin,
+        adminList,
         tableData: payload.bean.customer_admin.map(v => ({
           ...v,
           // acount:
@@ -693,6 +726,16 @@ export default {
       const res = yield call(commonServices.getRegion, payload);
       // yield put(action({ ...res, payload }));
       return res.list;
+    },
+    *removeContactAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeContactAsync ： ', payload);
+      const res = yield call(services.removeContact, payload);
+      // yield put(action({ ...res, payload }));
+    },
+    *removeClientAdminAsync({ payload, action, type }, { call, put }) {
+      console.log(' removeClientAdminAsync ： ', payload);
+      const res = yield call(services.removeClientAdmin, payload);
+      // yield put(action({ ...res, payload }));
     },
   },
 };

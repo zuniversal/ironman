@@ -79,10 +79,13 @@ export const ClientListPullContractForm = props => {
         label: '合同',
         name: '',
       },
+      comProps: {
+        className: 'w-280',
+      },
     },
   ];
 
-  return <SmartForm config={config} {...props}></SmartForm>;
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };
 
 export const ClientListRemarkForm = props => {
@@ -96,5 +99,5 @@ export const ClientListRemarkForm = props => {
     },
   ];
 
-  return <SmartForm config={config} {...props}></SmartForm>;
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };

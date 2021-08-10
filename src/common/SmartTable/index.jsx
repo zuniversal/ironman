@@ -161,7 +161,11 @@ class SmartTable extends PureComponent {
   // 可关闭相关 mock 模拟数据
   dataFilter = () => {
     const { searchKey, searchText } = this.state;
-    const { dataSource, noMock, rowLength, newTbData, rowKey } = this.props;
+    const { dataSource, noMock, rowLength, newTbData } = this.props;
+
+    const rowKey = this.props.uniqueKey
+      ? this.props.uniqueKey
+      : this.props.rowKey; //
 
     // const mpckAddData = newTbData.filter((v) => typeof v !== 'object')
     const mpckAddData = {};
@@ -277,7 +281,10 @@ class SmartTable extends PureComponent {
       return render(text, record, index, config);
     }
 
-    const { showDetail, rowKey } = this.props;
+    const { showDetail } = this.props;
+    const rowKey = this.props.uniqueKey
+      ? this.props.uniqueKey
+      : this.props.rowKey; //
 
     // const handledText = isMoment ? text.format('YYYY-MM-DD') : text;//
 
@@ -499,7 +506,7 @@ class SmartTable extends PureComponent {
   };
   onTableChange = (pagination, filters, sorter) => {
     console.log('    onTableChange ： ', pagination, filters, sorter);
-    const { order, column: { sortKey } = {} } = sorter;
+    const { order, column: { sortKey, paramKey = '_sort' } = {} } = sorter;
     const { current: page, pageSize: page_size } = pagination;
     if (!this.props.noRequest && this.props.getListAsync) {
       const params = {
@@ -508,7 +515,7 @@ class SmartTable extends PureComponent {
       };
       // params[sortKey] = order;
       if (sortKey) {
-        params['_sort'] = `${order === 'descend' ? '-' : ''}${sortKey}`;
+        params[paramKey] = `${order === 'descend' ? '-' : ''}${sortKey}`;
       }
 
       this.props.getListAsync(params);

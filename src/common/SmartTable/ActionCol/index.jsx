@@ -24,6 +24,10 @@ const ActionCol = props => {
     index,
   } = props;
   // console.log(' ActionCol props ： ', props);
+
+  const rowKey = props.uniqueKey ? props.uniqueKey : props.rowKey; //
+  // console.log('  rowKey ：', props, rowKey,  )//
+
   return (
     <span>
       {!props.noDefault && (
@@ -37,7 +41,7 @@ const ActionCol = props => {
                   ? edit({
                       action: 'edit',
                       // ...record,
-                      d_id: record[props.rowKey],
+                      d_id: record[rowKey],
                     })
                   : props.showFormModal({
                       action: 'add',
@@ -55,7 +59,7 @@ const ActionCol = props => {
             <a
               onClick={() => {
                 console.log(' removeremove ： ', props);
-                remove({ record: formatData(record, props.rowKey) });
+                remove({ record: formatData(record, rowKey) });
               }}
               // disabled={isDev ? false : authInfo.delete}
               disabled={isDev ? false : authInfo.delete !== true}

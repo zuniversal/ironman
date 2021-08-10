@@ -74,7 +74,7 @@ const AlarmTemplateForm = props => {
       checkboxData: checkboxData,
       opType: 'item',
       itemProps: {
-        label: '是否发送到对应客户',
+        label: '是否发送短信',
         name: ['role', 'one', 'send'],
         valuePropName: 'checked',
       },
@@ -123,7 +123,7 @@ const AlarmTemplateForm = props => {
       checkboxData: checkboxData,
       opType: 'item',
       itemProps: {
-        label: '是否发送到对应客户',
+        label: '是否发送短信',
         name: ['role', 'two', 'send'],
         valuePropName: 'checked',
       },
@@ -131,7 +131,7 @@ const AlarmTemplateForm = props => {
     // {
     //   formType: 'CheckboxItem',
     //   itemProps: {
-    //     label: '是否发送到对应客户',
+    //     label: '是否发送短信',
     //     name: 'send',
     //     valuePropName: "checked"
     //   },
@@ -179,7 +179,7 @@ const AlarmTemplateForm = props => {
       checkboxData: checkboxData,
       opType: 'item',
       itemProps: {
-        label: '是否发送到对应客户',
+        label: '是否发送短信',
         name: ['role', 'three', 'send'],
         valuePropName: 'checked',
       },

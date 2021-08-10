@@ -817,7 +817,7 @@ const ClientReportForm = props => {
         name: 'report_md',
       },
       comProps: {
-        className: 'w-120 ',
+        className: 'w-180 ',
       },
     },
     {
@@ -837,7 +837,7 @@ const ClientReportForm = props => {
     {
       noRule: true,
       withFlex: true,
-      flexRow: 3,
+      flexRow: 2,
       colCls: 'dif w50',
       itemProps: {
         label: '实际总容量',

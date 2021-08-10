@@ -780,7 +780,7 @@ export const format2Null = (data = {}, keys = []) => {
   const formatObj = {
     ...data,
   };
-  keys.forEach(k => (formatObj[k] = data[k] ? data[k] : null));
+  keys.forEach(k => (formatObj[k] = !data[k] && data[k] != 0 ? null : data[k]));
   return formatObj;
 };
 

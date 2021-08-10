@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
+import './style.less';
 import { Button, Spin, Row, Col, Divider, Progress } from 'antd';
 import PageTitle from '@/components/Widgets/PageTitle';
+import TimeChoice from '@/components/Widgets/TimeChoice';
 import RingPieEchart from '@/components/Echarts/RingPieEchart';
 import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
+import TurnRateSearchForm from '@/components/Form/TurnRateSearchForm';
 import {
   actions,
   // mapStateToProps
@@ -69,22 +72,32 @@ class TurnRate extends PureComponent {
       },
     ];
     return (
-      <div className={``}>
+      <div className={`progressWrappper`}>
+        <div className={`fsb`}>
+          <TurnRateSearchForm
+            init={this.props.searchInfo}
+            onFieldChange={this.onFieldChange}
+          ></TurnRateSearchForm>
+          <TimeChoice></TimeChoice>
+        </div>
         <PageTitle title={'转化率'}></PageTitle>
         {turnRateBarConfig.map((v, i) => (
           <Row gutter={[24, 16]} key={i}>
-            <Col span={2} className={`t-r`}>
+            <Col span={3} className={`t-r`}>
               {v.label}
             </Col>
-            <Col span={22}>
+            <Col span={21}>
               <Progress
                 percent={v.value}
                 strokeColor={v.color}
                 status="active"
+                width={80}
               />
             </Col>
           </Row>
         ))}
+
+        <Divider />
       </div>
     );
   };
@@ -115,9 +128,10 @@ class TurnRate extends PureComponent {
     const isLoading = false;
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
-        {/* <div className={`fje`}>
+        <div className={`fsb`}>
+          <PageTitle title={'客户签约'}></PageTitle>
           <TimeChoice></TimeChoice>
-        </div> */}
+        </div>
         {/* <HomeGroupRank></HomeGroupRank> */}
         {/* <PageTitle title={'客户签约'}></PageTitle> */}
         <HomeStatEcharts
@@ -136,7 +150,7 @@ class TurnRate extends PureComponent {
 
   render() {
     return (
-      <div className="">
+      <div className="turnRate">
         {this.renderRateBar()}
 
         {this.renderStatEcharts()}

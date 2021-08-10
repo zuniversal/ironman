@@ -117,9 +117,32 @@ const MonitorDeviceTable = props => {
       dataIndex: 'status',
       dataMap: monitorDeviceStatusMap,
     },
+    {
+      title: '备注',
+      dataIndex: 'comments',
+    },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        disabled={!record.imei}
+        onClick={() => {
+          record.imei &&
+            props.showFormModal({
+              action: 'getRealDataAsync',
+              realDataParams: {
+                imei: record.imei,
+              },
+            });
+        }}
+      >
+        监控数据
+      </a>
+    </>
+  );
+
+  return <SmartTable columns={columns} extra={extra} {...props}></SmartTable>;
 };
 
 MonitorDeviceTable.defaultProps = {};

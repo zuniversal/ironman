@@ -69,6 +69,11 @@ const genExtra = () => (
   />
 );
 
+const contactCheckboxData = [
+  { label: <span className={`dangerText`}>只能勾选1个！</span>, value: 1 },
+  // { label: '是否', value: false,  },
+];
+
 const checkboxData = [
   { label: '', value: 1 },
   // { label: '是否', value: false,  },
@@ -460,7 +465,22 @@ const FormListCom = props => {
                   <Button
                     shape="circle"
                     icon={<MinusOutlined />}
-                    onClick={() => remove(field.name)}
+                    onClick={() => {
+                      console.log(
+                        ' 删除 ： ',
+                        field,
+                        fields,
+                        props,
+                        props.form.getFieldsValue(),
+                        props.removeCb,
+                      ); //
+                      if (props.removeCb) {
+                        props.removeCb({
+                          field,
+                        });
+                      }
+                      remove(field.name);
+                    }}
                   ></Button>
                 </div>
               );
@@ -476,7 +496,7 @@ const FormListCom = props => {
                     fieldKey={[field.fieldKey, v.name]}
                     className={`formItems listFormItem  ${
                       v.type !== 'rowText' ? 'ant-col ant-col-12' : ''
-                    }`}
+                    } ${v.formItemCls ?? ''}`}
                     rules={
                       v.noRule || v.noRuleAll
                         ? undefined
@@ -1406,6 +1426,14 @@ const ClientForm = props => {
     //   },
     // },
     {
+      noRule: true,
+      itemProps: {
+        label: 'id',
+        name: 'id',
+        formItemCls: 'hiddenmp',
+      },
+    },
+    {
       // noRule: true,
       itemProps: {
         label: '姓名',
@@ -1450,6 +1478,14 @@ const ClientForm = props => {
 
   const clientContactConfig = [
     {
+      noRule: true,
+      itemProps: {
+        label: 'id',
+        name: 'id',
+        formItemCls: 'hiddenmp',
+      },
+    },
+    {
       itemProps: {
         label: '联系人名字',
         name: 'name',
@@ -1459,7 +1495,7 @@ const ClientForm = props => {
       noRule: true,
       formType: 'Checkbox',
       // opType: 'option',
-      checkboxData: checkboxData,
+      checkboxData: contactCheckboxData,
       itemProps: {
         label: '催款联系人',
         name: 'is_urge',
@@ -1622,7 +1658,7 @@ const ClientForm = props => {
         // electricity_user: [{}],
         // enterprise: { address: '泉港区' },
         ...objNum2str(props.init, [
-          'service_organization_id',
+          // 'service_organization_id',
           'service_staff_id',
           'last_service_staff_id',
           'service_enterprise_id',
@@ -1744,11 +1780,24 @@ const ClientForm = props => {
   const ClientContactItem = (
     <FormListCom
       {...{
+        form: props.propsForm,
         rowText: { label: '联系人', name: '', rowTitle: true },
         config: clientContactFormConfig,
         name: 'contact',
         extra: ContactExtra,
         isDisabledAll: action === 'detail',
+        removeCb: ({ field }) => {
+          const { name } = field;
+          const { contact } = props.propsForm.getFieldsValue();
+          const item = contact[name];
+          console.log(' itemitemitem 删除客户 ： ', item); //
+          if (item.id) {
+            props.removeContactAsync({
+              customer_id: props.init.id,
+              contact_id: item.id,
+            });
+          }
+        },
       }}
     ></FormListCom>
   );
@@ -1768,10 +1817,24 @@ const ClientForm = props => {
   const AdminItem = (
     <FormListCom
       {...{
+        form: props.propsForm,
+        removeCb: 'remove',
         rowText: { label: '客户管理员', name: '', rowTitle: true },
         config: adminFormConfig,
         name: 'customer_admin',
         isDisabledAll: action === 'detail',
+        removeCb: ({ field }) => {
+          const { name } = field;
+          const { customer_admin } = props.propsForm.getFieldsValue();
+          const item = customer_admin[name];
+          console.log(' itemitemitem 删除客户 ： ', item); //
+          if (item.id) {
+            props.removeClientAdminAsync({
+              customer_id: props.init.id,
+              user_id: item.id,
+            });
+          }
+        },
       }}
     ></FormListCom>
   );
@@ -1793,6 +1856,7 @@ const ClientForm = props => {
   const HouseNoItem = (
     <FormListCom
       {...{
+        form: props.propsForm,
         rowText: { label: '户号', name: '', rowTitle: true },
         config: houseNoFormConfig,
         name: 'electricity_user',
@@ -1808,7 +1872,7 @@ const ClientForm = props => {
       key={'HouseNoCollapseCom'}
     ></CollapseCom>
   );
-  if (action !== 'detail') config.push(HouseNoCollapseCom);
+  if (action === 'add') config.push(HouseNoCollapseCom);
 
   const { propsForm, ...restProps } = props;
 

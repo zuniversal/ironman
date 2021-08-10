@@ -86,6 +86,7 @@ export default React.memo(function ChartPeak(props) {
         point_id: point,
       };
       const queryParams = `?point_id=${point_id}&start_time=${startTime}&end_time=${endTime}&value=${value}`;
+      // const queryParams = `?point_id=${1755}&start_time=${startTime}&end_time=${endTime}&value=${value}`;
       console.log(' query ： ', props, point_id, queryParams); //
       return services.getAlarmCurveList(queryParams);
     },
@@ -102,14 +103,14 @@ export default React.memo(function ChartPeak(props) {
   }
 
   const chartCount = [
-    { name: '平时电量', value: get(data, 'consumption.usual', 0) },
-    { name: '峰时电量', value: get(data, 'consumption.peak', 0) },
-    { name: '谷时电量', value: get(data, 'consumption.valley', 0) },
+    { name: '平时电量', value: get(data, 'ele.usual', 0) },
+    { name: '峰时电量', value: get(data, 'ele.peak', 0) },
+    { name: '谷时电量', value: get(data, 'ele.valley', 0) },
   ];
   const chartCost = [
-    { name: '平时电费', value: get(data, 'cost.usual', 0) },
-    { name: '峰时电费', value: get(data, 'cost.peak', 0) },
-    { name: '谷时电费', value: get(data, 'cost.valley', 0) },
+    { name: '平时电费', value: get(data, 'fee.usual', 0) },
+    { name: '峰时电费', value: get(data, 'fee.peak', 0) },
+    { name: '谷时电费', value: get(data, 'fee.valley', 0) },
   ];
   const totalCount = chartCount.reduce((count, cur) => {
     return count + cur.value;

@@ -107,7 +107,12 @@ export default {
       };
     },
     getList(state, { payload, type }) {
-      let dataList = payload.list;
+      let originData = payload.list.map((v, index) => ({
+        ...v,
+        index,
+        key: index,
+      }));
+      let dataList = originData;
       if (payload.searchInfo.filter) {
         dataList = payload.list.filter(v =>
           filterKey.some(key =>
@@ -270,11 +275,11 @@ export default {
             year_month: '2021-04',
           },
         ],
-        dataList: dataList.map((v, index) => ({ ...v, index })),
+        dataList: dataList,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
-        originData: payload.list,
+        originData,
       };
     },
     getItem(state, { payload, type }) {
@@ -490,8 +495,10 @@ export default {
           ...payload.bean,
           ...payload.bean?.electrical_info,
           year_month: moment(payload.bean.year_month),
-          // electrical_id: payload.payload.d_id,
-          electrical_id: payload.payload?.electrical_info?.power_number,
+          electrical_id: payload.payload.d_id
+            ? `${payload.payload.d_id}`
+            : null,
+          // electrical_id: payload.payload?.electrical_info?.power_number,
           billing_method: payload.payload.billing_method,
           electricity_user_id: payload.payload.electricity_user_id,
         },

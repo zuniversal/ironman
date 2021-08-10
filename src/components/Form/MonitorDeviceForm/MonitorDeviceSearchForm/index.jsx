@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
-import { weakStatusConfig } from '@/configs';
+import { weakStatusConfig, monitorDeviceStatusConfig } from '@/configs';
 import { Form } from 'antd';
 import useHttp from '@/hooks/useHttp';
 import { formatSelectList } from '@/utils';
@@ -65,13 +65,21 @@ const MonitorDeviceSearchForm = props => {
     {
       noLabel: true,
       itemProps: {
-        label: 'IMEI号、sim号',
+        label: 'IMEI号、sim号、备注',
         name: 'keyword',
       },
       comProps: {
         className: 'lastFormItem',
       },
       searchSuffix: true,
+    },
+    {
+      formType: 'Search',
+      selectData: monitorDeviceStatusConfig,
+      itemProps: {
+        label: '状态',
+        name: 'status',
+      },
     },
   ];
 

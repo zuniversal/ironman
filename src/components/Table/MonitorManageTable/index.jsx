@@ -2,7 +2,7 @@ import React from 'react';
 import './style.less';
 
 import SmartTable from '@/common/SmartTable';
-import { monitorDeviceStatusMap, deviceFrequencyMap } from '@/configs';
+import { monitorPointStatusMap, deviceFrequencyMap } from '@/configs';
 
 const MonitorManageTable = props => {
   const columns = [
@@ -67,7 +67,7 @@ const MonitorManageTable = props => {
       dataIndex: 'power',
     },
     {
-      title: '设备类型',
+      title: '设备厂商',
       dataIndex: 'manufacturer',
     },
     {
@@ -102,7 +102,7 @@ const MonitorManageTable = props => {
     {
       title: '状态',
       dataIndex: 'status',
-      dataMap: monitorDeviceStatusMap,
+      dataMap: monitorPointStatusMap,
     },
   ];
 

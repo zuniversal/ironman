@@ -18,7 +18,7 @@ import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
 import UploadCom from '@/components/Widgets/UploadCom';
 import { MONITOR_DEVICE_TPL } from '@/constants';
 
-const TITLE = '监控';
+const TITLE = '监控设备';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -102,7 +102,6 @@ class MonitorManage extends PureComponent {
         formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        init={this.props.searchInfo}
       ></MonitorDeviceSearchForm>
     );
   };

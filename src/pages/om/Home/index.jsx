@@ -163,6 +163,7 @@ class Home extends PureComponent {
           onOptionChange={this.onOptionChange}
           homeSettings={this.props.homeSettings}
           statConfig={statConfig}
+          withTabpanes
         ></HomeStatEcharts>
       </Spin>
     );

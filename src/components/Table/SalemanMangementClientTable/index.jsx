@@ -17,7 +17,14 @@ const SalemanMangementClientTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} noActionCol {...props}></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      noActionCol
+      rowSelection={null}
+      {...props}
+    ></SmartTable>
+  );
 };
 
 export default SalemanMangementClientTable;

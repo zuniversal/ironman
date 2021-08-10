@@ -1,5 +1,6 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/iotAccount';
+import * as monitorDeviceServices from '@/services/monitorDevice';
 import { formatSelectList, nowYearMonth } from '@/utils';
 import { validityPeriodMap, validityPeriodConfig } from '@/configs';
 import moment from 'moment';
@@ -7,7 +8,7 @@ import moment from 'moment';
 const namespace = 'iotAccount';
 const { createActions } = init(namespace);
 
-const otherActions = ['getRealDataAsync'];
+const otherActions = ['getRealDataAsync', 'getMonitorDeviceDetailAsync'];
 
 const batchTurnActions = [];
 
@@ -136,6 +137,22 @@ export default {
         },
       };
     },
+    getMonitorDeviceDetail(state, { payload, type }) {
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        itemDetail: {
+          ...payload.list[0],
+          // customer_id: `${customer_id}`,
+          // electricity_user_id: `${electricity_user_id}`,
+          // station_id: `${station_id}`,
+          // equipment_id: `${equipment_id}`,
+          // device_id: `${device_id}`,
+          // template_id: `${template_id}`,
+        },
+      };
+    },
   },
 
   effects: {
@@ -144,6 +161,10 @@ export default {
       const params = {
         ...searchInfo,
         ...payload,
+        end_time:
+          payload && payload.end_time
+            ? payload.end_time.format('YYYY-MM')
+            : null,
       };
       console.log(
         ' getListAsync  payload ： ',
@@ -175,6 +196,11 @@ export default {
 
     *getRealDataAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getRealData, payload);
+      yield put(action({ ...res, payload }));
+    },
+    *getMonitorDeviceDetailAsync({ payload, action, type }, { call, put }) {
+      console.log(' getMonitorDeviceDetailAsync ： ', payload); //
+      const res = yield call(monitorDeviceServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
   },

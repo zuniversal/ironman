@@ -46,7 +46,6 @@ class GroupReport extends PureComponent {
         formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        init={this.props.searchInfo}
       ></GroupReportSearchForm>
     );
   };

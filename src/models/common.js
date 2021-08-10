@@ -324,7 +324,8 @@ export default {
                   phone: v.phone,
                   tags: v.tags ?? [],
                 }))
-              : [{}],
+              : // : [{}],
+                null,
           // electricityuser: electricityuser.map(v => v.number).join(','),
           file: file ? file.split(',') : [],
           enterprise: {

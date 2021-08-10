@@ -100,6 +100,14 @@ const MonitorDeviceForm = props => {
         name: 'monitor_point_id',
       },
     },
+    {
+      formType: 'TextArea',
+      noRule: true,
+      itemProps: {
+        label: '备注',
+        name: 'comments',
+      },
+    },
   ];
   // model
   // imei

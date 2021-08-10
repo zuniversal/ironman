@@ -1385,7 +1385,7 @@ export const networkTypeConfig = [
 
 export const networkTypeMap = arrMapObj(networkTypeConfig);
 
-export const monitorDeviceStatusConfig = [
+export const monitorPointStatusConfig = [
   {
     value: '0',
     label: '异常',
@@ -1397,6 +1397,23 @@ export const monitorDeviceStatusConfig = [
   {
     value: '2',
     label: '断电',
+  },
+];
+
+export const monitorPointStatusMap = arrMapObj(monitorPointStatusConfig);
+
+export const monitorDeviceStatusConfig = [
+  {
+    value: '1',
+    label: '正常',
+  },
+  {
+    value: '2',
+    label: '断电',
+  },
+  {
+    value: '3',
+    label: '已拆回',
   },
 ];
 
