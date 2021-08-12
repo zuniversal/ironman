@@ -11,7 +11,7 @@ import {
   DEF_BUSSNIESS_TAB,
   isSmartOMS,
 } from '@/configs/routes';
-import { Tag, Tooltip } from 'antd';
+import { Tag, Tooltip, Badge } from 'antd';
 const { CheckableTag } = Tag;
 
 const BussniessTab = props => {
@@ -72,7 +72,9 @@ const HeaderWidget = props => {
         userInfo={props.userInfo}
         userMsg={props.userMsg}
       >
-        <Icon icon={'bell'} className={' '} />
+        <Badge dot>
+          <Icon icon={'bell'} className={' '} />
+        </Badge>
       </DropdownNotice>
       <span className="yAxis actionItem"></span>
       {!props.isGuestMode && haveScreenAuth && (

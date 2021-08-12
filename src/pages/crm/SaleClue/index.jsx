@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Spin, Row, Col, Divider, Progress } from 'antd';
 import PageTitle from '@/components/Widgets/PageTitle';
+import TimeChoice from '@/components/Widgets/TimeChoice';
 import RingPieEchart from '@/components/Echarts/RingPieEchart';
 import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
@@ -78,6 +79,7 @@ class SaleClue extends PureComponent {
           data={this.props.statisticData}
           config={statConfig}
         ></CsMonitorStatBox>
+        <Divider className={''} />
       </>
     );
   };
@@ -108,9 +110,9 @@ class SaleClue extends PureComponent {
     const isLoading = false;
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
-        {/* <div className={`fje`}>
+        <div className={`fje`}>
           <TimeChoice></TimeChoice>
-        </div> */}
+        </div>
         {/* <HomeGroupRank></HomeGroupRank> */}
 
         <HomeStatEcharts

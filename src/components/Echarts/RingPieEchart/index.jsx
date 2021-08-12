@@ -3,9 +3,19 @@ import SmartEchart from '@/common/SmartEchart';
 
 const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
+export const crmColorConfig = [
+  '#00B460',
+  '#5E81F4',
+  '#FC4949',
+  '#36C7EA',
+  '#F569CA',
+  '#FCA149',
+];
+
 const option = params => {
   const { data } = params;
   return {
+    color: crmColorConfig,
     title: {
       text: '总数',
       subtext: '111',
@@ -31,6 +41,9 @@ const option = params => {
       top: '25%',
       borderRadius: 100,
       // left: 'center'
+      formatter(name) {
+        return 'Legend ' + name;
+      },
     },
     series: [
       {
@@ -45,7 +58,7 @@ const option = params => {
         emphasis: {
           label: {
             show: true,
-            fontSize: '40',
+            fontSize: '20',
             fontWeight: 'bold',
           },
         },

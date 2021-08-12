@@ -43,7 +43,7 @@ const PlanContractStep = props => {
   return (
     <div className={`planContractStepWrappper`}>
       {planContractStep}
-      {/* {current === 0 ? <MyTaskForm></MyTaskForm> : planContractDesc} */}
+      {current === 0 ? <MyTaskForm></MyTaskForm> : planContractDesc}
     </div>
   );
 };

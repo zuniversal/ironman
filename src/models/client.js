@@ -168,7 +168,8 @@ export default {
         customer_admin && customer_admin.length > 0
           ? customer_admin.map(v => ({
               ...v,
-              tags: v.tags ?? [],
+              // tags: v.tags ?? [],
+              tags: v.tags.map(v => `${v.id}`) ?? [],
               password: v.password ? v.password : null,
               wechat: v.wechat ? v.wechat : null,
               email: v.email ? v.email : null,

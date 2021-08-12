@@ -24,17 +24,13 @@ import {
   getItem,
   objNum2str,
 } from '@/utils';
-import SmartFormTable from '@/common/SmartFormTable';
-import ReduxTable from '@/common/ReduxTable';
-
 import {
   SettingOutlined,
   PlusOutlined,
   MinusOutlined,
 } from '@ant-design/icons';
 import { getLabel } from '@/common/SmartForm';
-import { REQUIRE, SELECT_TXT } from '@/constants';
-import debounce from 'lodash/debounce';
+import { REQUIRE } from '@/constants';
 
 import useHttp from '@/hooks/useHttp';
 import { getServiceStaff } from '@/services/userManage';
@@ -50,29 +46,10 @@ function callback(key) {
   console.log(key);
 }
 
-const genExtra = () => (
-  <SettingOutlined
-    onClick={event => {
-      event.stopPropagation();
-    }}
-  />
-);
-
 const checkboxData = [
   { label: '', value: 1 },
   // { label: '是否', value: false,  },
 ];
-
-const rowLayout = {
-  labelCol: {
-    xs: { span: 0 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 18 },
-  },
-};
 
 const addrLayout = {
   labelCol: {
@@ -166,14 +143,6 @@ export const SelectCom = props => {
     ...comProps,
   };
 
-  if (formType === 'Search') {
-    // selectProps.optionFilterProp = 'children';
-    if (props.selectSearch) {
-      // 注意 不要对 onSelect 方法 修改 否则会导致 字段无法设置值
-      // selectProps.onChange = debounce(props.selectSearch, 1500);
-    }
-  }
-
   return <Select {...selectProps}>{renderSelectOp(selectData)}</Select>;
 };
 
@@ -198,14 +167,6 @@ export const getWidget = props => {
     ...comProps,
   };
 
-  if (formType === 'Search') {
-    // selectProps.optionFilterProp = 'children';
-    if (props.selectSearch) {
-      // 注意 不要对 onSelect 方法 修改 否则会导致 字段无法设置值
-      // selectProps.onChange = debounce(props.selectSearch, 1500);
-    }
-  }
-
   const formItemMap = {
     rowText: label,
     Label: LabelCom,
@@ -220,10 +181,7 @@ export const getWidget = props => {
       isDisabledAll: props.isDisabledAll,
       comProps: comProps,
     }),
-    // Checkbox: <Checkbox>是1</Checkbox>,
-    // Input: <Input className={'w-200'} disabled={props.isDisabledAll} {...comProps} />,
     Input: <Input disabled={props.isDisabledAll} {...comProps} />,
-    // InputNumber: <InputNumber allowClear maxLength={32} {...comProps} />,
     Select: (
       <Select {...selectProps} disabled={props.isDisabledAll}>
         {renderSelectOp(props.selectData)}
@@ -234,8 +192,6 @@ export const getWidget = props => {
         {renderSelectOp(props.selectData)}
       </Select>
     ),
-    // Select: <SelectCom {...props} comProps={comProps} disabled={props.isDisabledAll}></SelectCom>,
-    // Search: <SelectCom {...props} comProps={comProps} disabled={props.isDisabledAll}></SelectCom>,
   };
 
   const formItemCom = formItemMap[formType];
@@ -258,7 +214,6 @@ const FormListCom = props => {
                 } ${rowText.rowTitle ? 'rowTitle' : 'rowItem'}`}
               >
                 <div className={``}>{rowText.label ? rowText.label : ''}</div>
-                {/* {props.renderHeaderRight && props.renderHeaderRight({ add, remove, })} */}
                 <Button
                   shape="circle"
                   icon={<PlusOutlined />}
@@ -270,8 +225,6 @@ const FormListCom = props => {
             {fields.map((field, index) => {
               const actionBtn = props.isDisabledAll ? null : (
                 <div className="btnWrapper">
-                  {/* <Button shape="circle" icon={<PlusOutlined />} type="primary" onClick={add} >新增</Button>
-                <Button shape="circle" icon={<PlusOutlined />} onClick={remove}>删除</Button> */}
                   {props.extra
                     ? props.extra({
                         add,
@@ -281,14 +234,6 @@ const FormListCom = props => {
                         index,
                       })
                     : null}
-                  {/* <Button
-                    shape="circle"
-                    icon={<PlusOutlined />}
-                    type="primary"
-                    onClick={() => add()}
-                  ></Button> */}
-                  {/* {(!props.isLimitOne && fields.length > 1) && (
-                  )} */}
                   <Button
                     shape="circle"
                     icon={<MinusOutlined />}
@@ -349,9 +294,7 @@ const FormListCom = props => {
   return formListCom;
 };
 
-FormListCom.defaultProps = {
-  // renderHeaderRight: () => {},
-};
+FormListCom.defaultProps = {};
 
 const MyTaskForm = props => {
   console.log(' MyTaskForm ： ', props, props.init);
@@ -374,64 +317,6 @@ const MyTaskForm = props => {
     },
   );
   console.log(' userList ： ', userList); //
-
-  const adminItem = {
-    formType: 'Dynamic',
-    // noLabel: true,
-    itemProps: {
-      // label: '',
-      label: '用户名',
-      name: 'customer_admin', //
-      className: 'noMargin',
-    },
-    comProps: {
-      extra: true,
-      labelCol: {
-        xs: { span: 0 },
-        sm: { span: 0 }, //
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 24 }, //
-      },
-      // noRule: true,
-      // formType: 'DynamicArr',
-      config: [
-        {
-          itemProps: {
-            label: '用户名',
-            name: 'nickname',
-          },
-          comProps: {
-            className: 'w-320',
-          },
-        },
-        {
-          itemProps: {
-            label: '密码',
-            name: 'password',
-          },
-
-          // noRule: true,
-        },
-        {
-          itemProps: {
-            label: '手机号',
-            name: 'phone',
-          },
-
-          // noRule: true,
-        },
-      ],
-      itemProps: {
-        name: 'nickname',
-        label: '用户名',
-      },
-      comProps: {
-        className: 'w-320',
-      },
-    },
-  };
 
   const regionConfig = [
     {
@@ -623,227 +508,56 @@ const MyTaskForm = props => {
     },
   ];
 
-  const houseNoConfig = [
-    {
-      itemProps: {
-        label: '户号',
-        name: 'number',
-      },
-    },
-    {
-      flexRow: 1,
-      itemProps: {
-        label: '地址',
-        name: 'addr',
-        ...addrLayout,
-      },
-      // comProps: {
-      //   onChange: props.onAddrChange,
-      // },
-      // onComChange: (e) => props.onAddrChange({e, propsForm: props.propsForm, }),
-      onComChange: props.onAddrChange,
-      extraParams: {
-        form: props.propsForm,
-      },
-    },
-    ...(action === 'detail' ? [] : houseNoRegionConfig),
-    // ...houseNoRegionConfig,
-    {
-      itemProps: {
-        label: '区域编码',
-        name: 'ad_code',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      itemProps: {
-        label: '城市编码',
-        name: 'city_code',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      itemProps: {
-        label: '经度',
-        name: 'longitude',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      itemProps: {
-        label: '纬度',
-        name: 'latitude',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '变压器容量',
-        name: 'transformer_capacity',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '实际容量',
-        name: 'real_capacity',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      selectData: voltageLevelConfig,
-      itemProps: {
-        label: '电压等级',
-        name: 'voltage_level',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      selectData: electricTypeConfig,
-      itemProps: {
-        label: '用电类型',
-        name: 'type',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '电功率考核因素',
-        name: 'ep_factor',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '托管电站数',
-        name: 'trusteeship_num',
-      },
-    },
-  ];
-
   const clientInfoConfig = [
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '基本信息',
-        className: 'w100',
-      },
-    },
-    {
-      flexRow: 1,
-      itemProps: {
-        label: '客户名称',
-        name: 'name',
-        ...addrLayout,
-      },
-      comProps: {
-        className: 'address ',
-      },
-    },
-    {
-      flexRow: 1,
-      formType: 'Search',
-      // selectData: props.enterpriseList,
-      selectData: enterpriseList,
-      itemProps: {
-        label: '服务企业',
-        name: 'service_enterprise_id',
-        ...addrLayout,
-      },
-      comProps: {
-        className: 'address ',
-      },
-    },
-    ...(props.action === 'detail'
-      ? [
-          {
-            noRule: true,
-            itemProps: {
-              label: '客户编码',
-              name: 'code',
-            },
-          },
-        ]
-      : []),
-    {
-      formType: 'Select',
-      selectData: clientLevelConfig,
-      itemProps: {
-        label: '客户等级',
-        name: 'level',
-      },
-    },
-    {
-      // noRule: true,
-      formType: 'Search',
-      selectData: customerTypeConfig,
-      itemProps: {
-        label: '客户类型',
-        name: 'type',
-      },
-      comProps: {
-        mode: 'multiple',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      // selectSearch: props.getUserAsync,
-      // selectData: props.userList,
-      selectData: userList,
-      itemProps: {
-        label: '上一任客户代表',
-        name: 'last_service_staff',
-        name: 'last_service_staff_id',
-      },
-      comProps: {
-        disabled: action !== 'add',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      // selectSearch: props.getUserAsync,
-      // selectData: props.userList,
-      selectData: userList,
-      itemProps: {
-        label: '客户代表',
-        name: 'service_staff',
-        name: 'service_staff_id',
-      },
-    },
-
     // {
-    //   noRule: true,
-    //   formType: 'Search',
-    //   // selectSearch: props.getOrganizeAsync,
-    //   selectData: props.organizeList,
+    //   flexRow: 1,
     //   itemProps: {
-    //     label: '组织',
-    //     name: 'service_organization_id',
+    //     label: '客户名称',
+    //     name: 'name',
+    //     ...addrLayout,
+    //   },
+    //   comProps: {
+    //     className: 'rowInput ',
     //   },
     // },
     {
       noRule: true,
-      formType: 'TreeSelect',
+      flexRow: 3,
+      formType: 'plainText',
+      colCls: 'plainTextItem',
       itemProps: {
-        label: '组织',
-        name: 'service_organization_id',
+        label: '提交人:',
+        name: '',
       },
-      comProps: {
-        // treeData: props.organizeList,
-        treeData: organizeList,
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'plainText',
+      colCls: 'plainTextItem',
+      itemProps: {
+        label: '联系电话:',
+        name: '',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'plainText',
+      colCls: 'plainTextItem',
+      itemProps: {
+        label: '提交时间:',
+        name: '',
+      },
+    },
+    {
+      noRule: true,
+      flexRow: 3,
+      formType: 'plainText',
+      colCls: 'plainTextItem',
+      itemProps: {
+        label: '所属计划:',
+        name: '',
       },
     },
   ];
@@ -865,7 +579,7 @@ const MyTaskForm = props => {
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
       },
     },
     // {
@@ -876,19 +590,19 @@ const MyTaskForm = props => {
     //     name: ['enterprise', 'level'],
     //   },
     // },
-    ...(action === 'detail' ? [] : regionConfig),
+    // ...(action === 'detail' ? [] : regionConfig),
     {
       flexRow: 1,
       // formType: 'Search',
       // selectSearch: props.getGeoAsync,
       // selectData: props.geoList,
       itemProps: {
-        label: '详细地址',
+        label: '联系地址',
         name: ['enterprise', 'address'],
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
         // onChange: props.onAddressChange,
       },
     },
@@ -905,7 +619,26 @@ const MyTaskForm = props => {
     {
       noRule: true,
       itemProps: {
-        label: '法人',
+        label: '户号',
+        name: ['enterprise', ''],
+      },
+    },
+    {
+      // noRule: true,
+      formType: 'Search',
+      selectData: customerTypeConfig,
+      itemProps: {
+        label: '客户类型',
+        name: 'type',
+      },
+      comProps: {
+        mode: 'multiple',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '户号',
         name: ['enterprise', 'legal_person'],
       },
     },
@@ -1014,7 +747,7 @@ const MyTaskForm = props => {
     ...enterpriseConfig,
 
     <UploadCom
-      label={'企业Logo'}
+      label={'门脸图'}
       key={'logo'}
       action={'/api/v1/upload'}
       name={'logo'}
@@ -1056,56 +789,7 @@ const MyTaskForm = props => {
       formItemCls={'w100'}
     ></UploadCom>,
   ];
-
-  const userCaptureInfo = [
-    {
-      noRule: true,
-      formType: 'plainText',
-      plainText: (
-        <div className="textInput w-320 linking">
-          {/* {props.init?.electricityuser} */}
-          {props.init?.electricityuser?.map((v, i) => (
-            <div
-              className="linking"
-              key={i}
-              onClick={() => {
-                props.showItemAsync({
-                  action: 'houseNoDetailAsync',
-                  d_id: v.id,
-                });
-              }}
-            >
-              {v.number}
-            </div>
-          ))}
-        </div>
-      ),
-      itemProps: {
-        label: '下属户号',
-        name: 'electricityuser',
-        colon: false,
-      },
-      extra: (
-        <Button
-          onClick={() => {
-            console.log(' getCapture ： ', getCapture);
-            return getCapture && getCapture({ action: 'userCapture' });
-          }}
-          className="m-l-5"
-        >
-          用户画像
-        </Button>
-      ),
-    },
-    // {
-    //   itemProps: {
-    //     label: '附件',
-    //     name: 'attach',
-    //   },
-    // },
-  ];
-
-  config.push(...attach);
+  // config.push(...attach);
 
   const adminConfig = [
     {
@@ -1219,25 +903,6 @@ const MyTaskForm = props => {
         name: 'wechat',
       },
     },
-    // action === 'detail' ? {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '职位',
-    //     name: 'tags',
-    //   },
-    // } : {
-    //   // noRule: true,
-    //   formType: 'Select',
-    //   selectSearch: props.getTagsAsync,
-    //   selectData: props.tagsList,
-    //   itemProps: {
-    //     label: '职位',
-    //     name: 'tags',
-    //   },
-    //   comProps: {
-    //     mode: 'multiple',
-    //   },
-    // },
     {
       // noRule: true,
       formType: 'Search',
@@ -1261,69 +926,13 @@ const MyTaskForm = props => {
     },
   ];
 
-  const dataSource =
-    action === 'detail' ? props.init.customer_admin : props.tableData;
-
-  const contactDataSource =
-    action === 'detail' ? props.init.customer_admin : props.contactTableData;
-
-  // const adminFormTable = [
-  //   {
-  //     formType: 'rowText',
-  //     itemProps: {
-  //       label: '管理员信息',
-  //       className: 'w100',
-  //     },
-  //   },
-  //   <ReduxTable
-  //     key={'adminFormTable'}
-  //     config={adminConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
-  //     addTableItemAsync={props.addTableItemAsync}
-  //     editTableItemAsync={props.editTableItemAsync}
-  //     removeTableItemAsync={props.removeTableItemAsync}
-  //     modifyTableItem={props.modifyTableItem}
-  //     dataSource={dataSource}
-  //     isDisabledAll={!['add', 'edit'].includes(action)}
-  //     noLimitAdd
-  //     // hideSaveEdit={['add'].includes(action)}
-  //   ></ReduxTable>,
-  // ];
-
-  // const clientContactFormTable = [
-  //   {
-  //     formType: 'rowText',
-  //     itemProps: {
-  //       label: '客户联系人信息',
-  //       className: 'w100',
-  //     },
-  //   },
-  //   <ReduxTable
-  //     key={'clientContactFormTable'}
-  //     config={clientContactConfig.map(v => ({ ...v.itemProps, isEdit: true }))}
-  //     addTableItemAsync={props.addTableItemAsync}
-  //     editTableItemAsync={props.editTableItemAsync}
-  //     removeTableItemAsync={props.removeTableItemAsync}
-  //     modifyTableItem={props.modifyTableItem}
-  //     dataSource={contactDataSource}
-  //     isDisabledAll={!['add', 'edit'].includes(action)}
-  //     noLimitAdd
-  //     // hideSaveEdit={['add'].includes(action)}
-  //   ></ReduxTable>,
-  // ];
-
-  // config.push(...adminFormTable);
-  // config.push(...clientContactFormTable);
-
   const formCom = (
     <SmartForm
       config={config}
       isDisabledAll={action === 'detail'}
       {...props}
       init={{
-        // customer_admin: [{}],
         contact: [{}],
-        // electricity_user: [{}],
-        // enterprise: { address: '泉港区' },
         ...objNum2str(props.init, [
           'service_organization_id',
           'service_staff_id',
@@ -1331,51 +940,12 @@ const MyTaskForm = props => {
           'service_enterprise_id',
           'tags',
         ]),
-        // customer_admin: [
-        //   {
-        //     nickname: 'nickname1',
-        //     username: 'username1',
-        //     password: 'password1',
-        //     phone: 'phone1',
-        //     email: 'email1',
-        //     wechat: 'wechat1',
-        //   },
-        //   {
-        //     nickname: 'nickname2',
-        //     username: 'username2',
-        //     password: 'password2',
-        //     phone: 'phone2',
-        //     email: 'email2',
-        //     wechat: 'wechat2',
-        //   },
-        // ],
-        // contact: [
-        //   {
-        //     is_urge: [true],
-        //     is_quit: [true],
-        //   },
-        // ],
-        // electricity_user: [
-        //   {},
-        // ],
-        // customer_admin: [{}],
       }}
       formLayouts={formLayouts}
       flexRow={2}
     ></SmartForm>
   );
 
-  const formCollapseCom = (
-    <Collapse
-      defaultActiveKey={['1']}
-      onChange={callback}
-      expandIconPosition={'left'}
-    >
-      <Panel header={'客户信息'} key="1" extra={genExtra()}>
-        {formCom}
-      </Panel>
-    </Collapse>
-  );
   console.log(' configconfig ： ', config);
 
   const copy2Admin = params => {
@@ -1431,14 +1001,6 @@ const MyTaskForm = props => {
     tips('地址信息复制成功！');
     props.propsForm.setFieldsValue(setFields);
   };
-  const HouseNoExtra = params => {
-    console.log(' HouseNoExtra   params,   ： ', params);
-    return (
-      <Button type="primary" onClick={() => copy2HouseNo(params)}>
-        复制公司地址信息
-      </Button>
-    );
-  };
 
   const clientContactFormConfig = [
     { label: '', name: '', rowTitle: true },
@@ -1487,42 +1049,9 @@ const MyTaskForm = props => {
   );
   config.push(AdminCollapseCom);
 
-  const houseNoFormConfig = [
-    { label: '', name: '', rowTitle: true },
-    // { label: '电压表', name: '', type: 'rowText' },
-    ...houseNoConfig.map(v => ({ ...v.itemProps, ...v })),
-  ];
-  const HouseNoItem = (
-    <FormListCom
-      {...{
-        rowText: { label: '户号', name: '', rowTitle: true },
-        config: houseNoFormConfig,
-        name: 'electricity_user',
-        extra: HouseNoExtra,
-        isDisabledAll: action === 'detail',
-      }}
-    ></FormListCom>
-  );
-  const HouseNoCollapseCom = (
-    <CollapseCom
-      com={HouseNoItem}
-      header={'户号列表'}
-      key={'HouseNoCollapseCom'}
-    ></CollapseCom>
-  );
-  if (action !== 'detail') config.push(HouseNoCollapseCom);
-
-  const { propsForm, ...restProps } = props;
-
   return (
     <div className="myTaskForm">
-      <Form.Provider
-        onFormFinish={(name, { values, forms }) => {
-          console.log(' name, values, forms ： ', name, values, forms);
-        }}
-      >
-        {formCom}
-      </Form.Provider>
+      <Form.Provider>{formCom}</Form.Provider>
     </div>
   );
 };

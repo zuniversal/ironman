@@ -31,6 +31,8 @@ import cookie from 'react-cookies';
 import io from 'socket.io-client';
 import authData from '@/configs/auth';
 import { notifyWs } from '@/services/common';
+import { notification } from 'antd';
+import moment from 'dayjs';
 const namespace = 'user';
 const { createActions } = init(namespace);
 
@@ -318,7 +320,7 @@ export default {
     getUserMsg(state, { payload, type }) {
       return {
         ...state,
-        userMsg: payload.list,
+        userMsg: payload,
       };
     },
     onPlatformChange(state, { payload, type }) {
@@ -403,7 +405,7 @@ export default {
         // cookie.save('enterprise_id', enterprise.enterprise_id);
       }
       setItem('userInfo', userInfo);
-      // console.log(' userInfo2 ： ', userInfo);
+      console.log(' userInfo2 ： ', userInfo);
       yield put({
         type: 'login',
         payload: userInfo,
@@ -492,30 +494,60 @@ export default {
     },
 
     *getUserMsgAsync({ payload, action, type }, { call, put }) {
-      // console.log(' getUserMsgAsync ： ', payload, action, type);
       // const res = yield call(services.getUserMsg, payload);
       const res = yield call(services.getUserMsg, {
         page_size: 5,
       });
+      console.log(' getUserMsgAsync ： ', payload, action, type, res);
+      const data = res.list.map(v => ({
+        ...v,
+        time: moment(v.timestamp).format('YYYY-MM-DD'),
+      }));
+      data.map(v =>
+        notification.info({
+          message: (
+            <div>
+              <div>{v.time}</div>
+              <div>{v.verb}</div>
+            </div>
+          ),
+          description: v.description,
+          className: 'userMsgNotice',
+        }),
+      );
       // yield put(action({ ...res, payload }));
       yield put({
         type: 'getUserMsg',
-        payload: res,
+        payload: data,
       });
     },
   },
 
   subscriptions: {
     setup: props => {
-      // console.log(' 用户 setup ： ', props, this);
+      console.log(' 用户 setup ： ', props, this);
       const { dispatch, history } = props;
 
-      dispatch({
-        type: 'getUserMsgAsync',
-        payload: {
-          user_id: 1,
-        },
-      });
+      setInterval(() => {
+        const userInfo = getItem('userInfo');
+        console.log('  延时获取信息 ： ', userInfo);
+        if (userInfo.id) {
+          dispatch({
+            type: 'getUserMsgAsync',
+            payload: {
+              user_id: userInfo.id,
+            },
+          });
+        }
+      }, 60 * 1000);
+      // }, 3 * 1000);
+
+      // dispatch({
+      //   type: 'getUserMsgAsync',
+      //   payload: {
+      //     user_id: 1,
+      //   },
+      // });
 
       history.listen(location => {
         // console.log(' 监听路由 匹配 ： ', history, location);

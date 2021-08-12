@@ -56,7 +56,7 @@ class SaleData extends PureComponent {
     const statConfig = [
       {
         dataKey: 'this_month',
-        title: '签约额',
+        title: '总线索数',
         val: '10',
         unit: 'kWh',
         style: {
@@ -66,24 +66,26 @@ class SaleData extends PureComponent {
         iconCom: <img src={power1} className="icon" />,
       },
       {
-        dataKey: 'yestoday',
-        title: '签约合同数',
-        val: '10',
-        unit: 'kWh',
+        dataKey: 'task_data',
+        title: '总线索转化率',
+        val: '23 / 88',
+        unit: 'G',
+        day: '日环比 ',
         style: {
-          background: 'linear-gradient(135deg, #FF8E8E 0%, #FF6969 100%)',
-          boxShadow: '0px 5px 10px rgba(252, 27, 27, 0.3)',
+          background: 'linear-gradient(135deg, #FEB833 0%, #FE9833 100%)',
+          boxShadow: '0px 5px 10px rgba(253, 156, 51, 0.5)',
         },
-        iconCom: <img src={power3} className="icon" />,
+        icon: 'csMonitorRAM',
       },
     ];
     return (
       <>
-        <PageTitle title={'线索数'}></PageTitle>
+        <PageTitle title={'销售额'}></PageTitle>
         <CsMonitorStatBox
           data={this.props.statisticData}
           config={statConfig}
         ></CsMonitorStatBox>
+        <Divider className={''} />
       </>
     );
   };
@@ -118,9 +120,9 @@ class SaleData extends PureComponent {
     const isLoading = false;
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
-        {/* <div className={`fje`}>
+        <div className={`fje`}>
           <TimeChoice></TimeChoice>
-        </div> */}
+        </div>
         {/* <HomeGroupRank></HomeGroupRank> */}
 
         <HomeStatEcharts

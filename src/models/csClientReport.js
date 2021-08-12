@@ -125,7 +125,7 @@ export default {
           const priceAll =
             v.peak_price + v.usual_price + v.valley_price + v.other_price;
           const calcAll = v.basic_price
-            ? (v.max_md * v.basic_price).toFixed(2)
+            ? (v.basic_volume * v.basic_price).toFixed(2)
             : 0;
           const nowAvg = v.volume ? (v.amount / v.volume).toFixed(2) : 0;
           const oldAvg = v.old_volume
@@ -318,7 +318,7 @@ export default {
               const priceAll =
                 v.peak_price + v.usual_price + v.valley_price + v.other_price;
               const calcAll = v.basic_price
-                ? (v.max_md * v.basic_price).toFixed(2)
+                ? (v.basic_volume * v.basic_price).toFixed(2)
                 : 0;
               const nowAvg = v.volume ? (v.amount / v.volume).toFixed(2) : 0;
               const oldAvg = v.old_volume

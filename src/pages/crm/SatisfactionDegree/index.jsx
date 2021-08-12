@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Spin, Row, Col, Divider, Progress } from 'antd';
 import PageTitle from '@/components/Widgets/PageTitle';
+import TimeChoice from '@/components/Widgets/TimeChoice';
 import RingPieEchart from '@/components/Echarts/RingPieEchart';
 import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
@@ -96,9 +97,9 @@ class SatisfactionDegree extends PureComponent {
     const isLoading = false;
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
-        {/* <div className={`fje`}>
+        <div className={`fje`}>
           <TimeChoice></TimeChoice>
-        </div> */}
+        </div>
         {/* <HomeGroupRank></HomeGroupRank> */}
 
         <HomeStatEcharts
@@ -110,7 +111,7 @@ class SatisfactionDegree extends PureComponent {
           groupTitle={'销售满意度排名'}
         ></HomeStatEcharts>
 
-        <Divider />
+        <Divider className={''} />
       </Spin>
     );
   };

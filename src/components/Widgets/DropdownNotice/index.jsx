@@ -63,6 +63,7 @@ const DropdownNotice = props => {
   };
   const clearNotice = e => {
     console.log(' clearNotice   e,   ： ', e);
+    e.stopPropagation();
     props.clearNotice(e);
   };
 
@@ -114,7 +115,8 @@ const DropdownNotice = props => {
       </Menu.ItemGroup>
       <Menu.Item key={'footer'}>
         <div className="footer">
-          <div className="clearText" onClick={props.clearNotice}>
+          {/* <div className="clearText" onClick={props.clearNotice}> */}
+          <div className="clearText" onClick={clearNotice}>
             清空通知
           </div>
         </div>

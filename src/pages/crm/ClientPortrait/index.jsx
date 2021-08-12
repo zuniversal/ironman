@@ -60,24 +60,6 @@ class ClientPortrait extends PureComponent {
     this.props.getListAsync(params.formData);
   };
 
-  renderTable = params => {
-    const tableProps = {
-      onSelectChange: this.props.onSelectChange,
-      dataSource: this.props.dataList,
-
-      count: this.props.count,
-      authInfo: this.props.authInfo,
-      searchInfo: this.props.searchInfo,
-      getListAsync: this.props.getListAsync,
-      edit: this.props.getItemAsync,
-      remove: this.onRemove,
-      showFormModal: this.props.showFormModal,
-      showItemAsync: this.props.showItemAsync,
-    };
-
-    // return <ClientPortraitTable {...tableProps}></ClientPortraitTable>;
-  };
-
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
     return (
@@ -160,13 +142,11 @@ class ClientPortrait extends PureComponent {
       <div className="clientPortrait">
         {this.renderSearchForm()}
 
-        {/* {this.renderTable()} */}
+        {this.renderEcharts()}
 
         {this.renderSmartFormModal()}
 
         {this.renderCommonModal()}
-
-        {this.renderEcharts()}
       </div>
     );
   }

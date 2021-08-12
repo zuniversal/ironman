@@ -80,6 +80,7 @@ export default {
           ...v,
           approval_time:
             v.approval_time !== 'NaT' ? v.approval_time : undefined,
+          real_tm: v.real_tm !== 'NaT' ? v.real_tm : undefined,
         })),
         count: payload.rest.count,
         isShowModal: false,

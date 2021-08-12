@@ -561,7 +561,7 @@ const ClientForm = props => {
       format: res => recursiveHandle(res),
     },
   );
-  console.log(' userList ： ', userList); //
+  console.log(' userList ： ', tagsList, userList); //
 
   const adminItem = {
     formType: 'Dynamic',
@@ -936,7 +936,7 @@ const ClientForm = props => {
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
       },
     },
     {
@@ -950,7 +950,7 @@ const ClientForm = props => {
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
       },
     },
     ...(props.action === 'detail'
@@ -1053,7 +1053,7 @@ const ClientForm = props => {
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
       },
     },
     // {
@@ -1076,7 +1076,7 @@ const ClientForm = props => {
         ...addrLayout,
       },
       comProps: {
-        className: 'address ',
+        className: 'rowInput ',
         // onChange: props.onAddressChange,
       },
     },
@@ -1472,6 +1472,17 @@ const ClientForm = props => {
       itemProps: {
         label: '微信',
         name: 'wechat',
+      },
+    },
+    {
+      formType: 'Search',
+      selectData: tagsList,
+      itemProps: {
+        label: '职位',
+        name: 'tags',
+      },
+      comProps: {
+        mode: 'multiple',
       },
     },
   ];

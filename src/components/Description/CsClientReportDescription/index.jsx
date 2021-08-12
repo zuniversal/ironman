@@ -120,7 +120,7 @@ const mdConfig2 = [
   },
   {
     label: '计费(千瓦)',
-    key: 'max_md',
+    key: 'basic_volume',
   },
   {
     label: '单价(元)',

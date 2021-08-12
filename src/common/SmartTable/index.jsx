@@ -374,7 +374,8 @@ class SmartTable extends PureComponent {
     if (notTooltip) {
       return content;
     }
-    const tooltipText = dataMap ? txt : text;
+    // const tooltipText = dataMap ? txt : text;
+    const tooltipText = txt;
     // console.log(' text ： ', text, this.props )//
     const tdCom = (
       <Tooltip
