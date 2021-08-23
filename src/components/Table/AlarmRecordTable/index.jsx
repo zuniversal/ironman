@@ -86,7 +86,7 @@ const AlarmRecordTable = props => {
     },
     {
       title: '持续时长',
-      dataIndex: 'durationFormat',
+      dataIndex: 'formatDuring',
       sorter: true,
       sortKey: 'duration',
       // render: (text, record, index) => `${(text / 60)}`.toFixed(2) + ' 分钟',

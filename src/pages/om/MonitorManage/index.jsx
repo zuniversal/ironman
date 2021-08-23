@@ -18,6 +18,7 @@ import { actions, mapStateToProps } from '@/models/monitorManage';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import RealDataImei from '@/pages/om/SmartMonitor/RealDataImei';
+import { tips } from '@/utils';
 
 const TITLE = '监控点';
 
@@ -179,6 +180,37 @@ class MonitorManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      console.log(
+        '  对吗  res.phone_list.length ',
+        res.phone_list,
+        !!res.phone_list?.length,
+        res.phone_list?.length,
+      );
+      let isLength11 = false;
+      let isNumber = false;
+      if (!!res.phone_list?.length) {
+        res.phone_list.some(v => {
+          if (`${v}`.length !== 11) {
+            isLength11 = true;
+          }
+          if (isNaN(v)) {
+            isNumber = true;
+          }
+        });
+      }
+      if (isNumber) {
+        tips('手机号必须是数字！', 2);
+        return;
+      }
+      if (isLength11) {
+        tips('手机号必须是11位！', 2);
+        return;
+      }
+
+      res.phone_list = !!res.phone_list?.length
+        ? res.phone_list.join(',')
+        : null;
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

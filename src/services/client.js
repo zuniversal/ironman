@@ -20,6 +20,7 @@ export const removeItems = p => remove(`console/OMS/customer/`, p);
 
 export const getRelatived = p => noTipsGet('console/OMS/customer/map', p);
 export const getClientPower = p => noTipsGet('console/OMS/customer/ele_map', p);
+export const getInfoList = p => noTipsGet('console/OMS/customer/map_list', p);
 export const getDistrict = p => noTipsGet('console/OMS/customer/district', p);
 export const exportData = p => get('console/OMS/customer/file', p);
 export const getPortrait = p =>

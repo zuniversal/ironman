@@ -457,7 +457,7 @@ const MonitorApprovalForm = props => {
       ),
     },
     {
-      // noRule: true,
+      noRule: true,
       formType: 'Search',
       selectData: filterObjSame(
         [

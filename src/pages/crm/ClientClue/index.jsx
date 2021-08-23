@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
 import ClientListSearchForm from '@/components/Form/ClientListSearchForm';
-// import ClientClueForm from '@/components/Form/ClientClueForm';
+import ClientClueForm from '@/components/Form/ClientClueForm';
 import ClientClueTable from '@/components/Table/ClientClueTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/client';
+import { actions, mapStateToProps } from '@/models/clientClue';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '';
+const TITLE = '客户线索';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -38,7 +38,7 @@ class ClientClue extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
-          disabled={this.props.authInfo.create !== true}
+          // disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
@@ -73,6 +73,14 @@ class ClientClue extends PureComponent {
     return <ClientClueTable {...tableProps}></ClientClueTable>;
   };
 
+  onRemove = params => {
+    console.log(' onRemove    ： ', params);
+    // this.props.removeItemAsync({ d_id: `${params.record.id}` });
+    this.props.onRemove({
+      d_id: `${params.record.id}`,
+    });
+  };
+
   renderCommonModal = params => {
     const DetailForm = detailFormMap[this.props.common.action];
     return (
@@ -104,6 +112,57 @@ class ClientClue extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+
+      const params = {
+        ...init,
+        ...res,
+        contact: res.contact.map(v => ({
+          ...v,
+          is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
+          is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+        })),
+      };
+      if (res.file) {
+        if (res.file && res.file.fileList && res.file.fileList.length > 0) {
+          const fileList = res.file.fileList;
+          console.log(' fileList ： ', fileList);
+          params.file = fileList.map(v => v.response.url).join(',');
+        } else {
+          params.file = null;
+        }
+      } else {
+        params.file = null;
+      }
+      if (res.file) {
+        if (res.logo && res.logo.fileList && res.logo.fileList.length > 0) {
+          const fileList = res.logo.fileList;
+          console.log(' fileList ： ', fileList);
+          params.logo = fileList.map(v => v.response.url).join(',');
+        } else {
+          params.logo = null;
+        }
+      } else {
+        params.logo = null;
+      }
+
+      const isUrgeRes = params.contact.filter(v => v.is_urge);
+      console.log(' paramsparams ： ', params, isUrgeRes);
+      if (isUrgeRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
+
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...params,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...params,
+          d_id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -118,7 +177,7 @@ class ClientClue extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
-    // return <ClientClueForm {...formComProps}></ClientClueForm>;
+    return <ClientClueForm {...formComProps}></ClientClueForm>;
   };
   renderSmartFormModal = params => {
     return (

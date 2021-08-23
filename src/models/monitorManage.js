@@ -72,6 +72,7 @@ export default {
         frequency,
         electrical_info_id,
         outline_id,
+        phone_list,
       } = payload.bean;
 
       return {
@@ -90,6 +91,7 @@ export default {
             ? `${electrical_info_id}`
             : electrical_info_id,
           outline_id: outline_id ? `${outline_id}` : outline_id,
+          phone_list: phone_list?.split(','),
         },
       };
     },

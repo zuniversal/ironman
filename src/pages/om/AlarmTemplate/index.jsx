@@ -100,16 +100,20 @@ class AlarmTemplate extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      const { one, two, three } = res.role;
+      const {
+        // one,
+        two,
+        three,
+      } = res.role;
       const role = [
         // res.role['0'],
         // res.role['1'],
         // res.role['2'],
-        {
-          ...one,
-          range: [one.range['0'], one.range['1']],
-          send: one.send ? 1 : 0,
-        },
+        // {
+        //   ...one,
+        //   range: [one.range['0'], one.range['1']],
+        //   send: one.send ? 1 : 0,
+        // },
         {
           ...two,
           range: [two.range['0'], two.range['1']],

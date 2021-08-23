@@ -1,15 +1,16 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
+import { clientClueLevelMap, clientClueStatusMap } from '@/configs';
 
 const ClientClueTable = props => {
   const columns = [
     {
       title: 'id',
-      // dataIndex: 'id',
+      dataIndex: 'id',
     },
     {
       title: '客户名称',
-      // dataIndex: '',
+      dataIndex: 'name',
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',
@@ -18,32 +19,33 @@ const ClientClueTable = props => {
     },
     {
       title: '客户等级',
-      // dataIndex: '',
+      dataIndex: 'level',
+      dataMap: clientClueLevelMap,
     },
     {
       title: '户号数',
-      // dataIndex: '',
+      dataIndex: 'ele_user_count',
     },
-    {
-      title: '客户类型',
-      // dataIndex: '',
-    },
-    {
-      title: '当前状态',
-      // dataIndex: '',
-    },
+    // {
+    //   title: '客户类型',
+    //   // dataIndex: '',
+    // },
+    // {
+    //   title: '当前状态',
+    //   dataIndex: 'status',
+    // },
     {
       title: '客户地址',
-      // dataIndex: '',
+      dataIndex: 'address',
     },
     {
       title: '提交人',
-      // dataIndex: '',
+      dataIndex: 'salesman_name',
     },
     {
       title: '状态',
-      // dataIndex: '',
-      // dataMap: ,
+      dataIndex: 'status',
+      dataMap: clientClueStatusMap,
     },
   ];
 

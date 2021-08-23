@@ -167,6 +167,7 @@ class MonitorManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      res.monitor_point_id = res.monitor_point_id ? res.monitor_point_id : null;
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,

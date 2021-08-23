@@ -57,6 +57,7 @@ const HeaderWidget = props => {
     const path = `${csSystemNotify}id=${params.key}`;
     console.log(' menuClick   params,   ： ', params);
     history.push(path);
+    props.menuClick(params);
   };
 
   const avatar = (
@@ -71,10 +72,20 @@ const HeaderWidget = props => {
         menuClick={menuClick}
         userInfo={props.userInfo}
         userMsg={props.userMsg}
+        clearNotice={props.clearNotice}
+        goPage={goPage}
       >
-        <Badge dot>
+        {/* <Badge size="small" offset={[10, ]} overflowCount={10} count={props.userMsg[0] ? props.userMsg[0]?.count : 0} key={props.userMsg[0]?.count} >
+          <Icon icon={'bell'} className={' '} 
+          />
+        </Badge> */}
+        {props.userMsg[0]?.count ? (
+          <Badge size="small" offset={[10]} count={props.userMsg[0]?.count}>
+            <Icon icon={'bell'} className={' '} />
+          </Badge>
+        ) : (
           <Icon icon={'bell'} className={' '} />
-        </Badge>
+        )}
       </DropdownNotice>
       <span className="yAxis actionItem"></span>
       {!props.isGuestMode && haveScreenAuth && (
@@ -133,6 +144,10 @@ const HeaderWidget = props => {
       {headerWidget}
     </div>
   );
+};
+
+HeaderWidget.propTypes = {
+  menuClick: () => {},
 };
 
 export default HeaderWidget;

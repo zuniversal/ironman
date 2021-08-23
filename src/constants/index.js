@@ -51,6 +51,18 @@ export const BASE_URL = isDev ? PROXY_URL : TEST_URL;
 export const URL = `${BASE_URL}`;
 
 export const PRIMARY = '#00B460';
+export const DANGER = 'red'; //
+export const WARN = '#f50'; //
+export const INFO = '#108ee9'; //
+export const SUB = 'cyan'; //
+
+export const tagColorMap = {
+  0: DANGER,
+  1: PRIMARY,
+  2: WARN,
+  3: INFO,
+  4: SUB,
+};
 
 // const account = 'admin'
 // const pwd = 'afafa'

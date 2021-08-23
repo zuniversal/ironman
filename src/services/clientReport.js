@@ -30,3 +30,5 @@ export const getClientReportUpgrade = p =>
   noTipsGet(`console/OMS/spect/report`, p);
 
 export const uploadPDF = p => post(`console/OMS/customer/report/send`, p);
+export const batchGetReport = p =>
+  noTipsPost(`console/OMS/customer/report/export`, p);

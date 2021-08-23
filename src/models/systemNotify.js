@@ -1,6 +1,7 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/systemNotify';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import { systemNotifyMap } from '@/configs';
 
 const namespace = 'systemNotify';
 const { createActions } = init(namespace);
@@ -59,33 +60,13 @@ export default {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
-      };
-    },
-    addItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
-      };
-    },
-    editItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
-        isShowModal: false,
-      };
-    },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
-      return {
-        ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
+        itemDetail: {
+          ...payload.bean,
+          createdTime: payload.bean.created_time
+            ? payload.bean.created_time.split('T').join(' ')
+            : '',
+          typeMap: systemNotifyMap[payload.bean.type],
+        },
       };
     },
   },
@@ -98,6 +79,10 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
+      console.log(' editItemAsync ： ', payload, action, type, res);
+      const isReadHandle = res.bean.is_read == 0 ? services.readMsg : () => {}; //
+      console.log('  isReadHandle ：', isReadHandle); //
+      const res2 = yield call(isReadHandle, payload);
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
@@ -106,7 +91,7 @@ export default {
     },
     *editItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editItem, payload);
-      yield put(action({ ...res, payload }));
+      // yield put(action({ ...res, payload }));
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);

@@ -286,8 +286,8 @@ export default ({
     renderRemoveModal = params => {
       // console.log(' renderRemoveModal ： ', params, this.state, this.props);
       const { isShowRemoveModal, removeParams } = this.state;
-      // const { removeTitle = '删除操作' } = this.props;
-      const { removeTitle = '删除操作' } = removeParams;
+      // const { removeTitle = '删除提示' } = this.props;
+      const { removeTitle = '删除提示' } = removeParams;
 
       const modalProps = {
         title: removeTitle,

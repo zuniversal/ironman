@@ -99,6 +99,21 @@ const Layouts = props => {
     });
   };
 
+  const clearNotice = path => {
+    console.log(' clearNotice   path,   ： ', path);
+    props.dispatch({
+      type: 'user/readAllMsgAsync',
+    });
+  };
+
+  const readMsgAsync = payload => {
+    console.log(' readMsgAsync   payload,   ： ', payload);
+    props.dispatch({
+      type: 'user/readMsgAsync',
+      payload,
+    });
+  };
+
   return (
     <ErrorBoundary>
       <div className={'layoutContainer'}>
@@ -139,6 +154,8 @@ const Layouts = props => {
               userMsg={userMsg}
               platform={platform}
               onPlatformChange={onPlatformChange}
+              clearNotice={clearNotice}
+              menuClick={readMsgAsync}
             ></HeaderWidget>
           )}
           menuHeaderRender={menuHeaderRender}

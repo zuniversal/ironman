@@ -80,6 +80,16 @@ export const HeadCameraConfigTable = props => {
     <>
       <a
         onClick={() => {
+          props.edit({
+            action: 'bindUser',
+            d_id: record.id,
+          });
+        }}
+      >
+        绑定电工
+      </a>
+      <a
+        onClick={() => {
           props.getCameraVideoAsync({
             action: 'showCameraVideo',
             d_id: record.id,

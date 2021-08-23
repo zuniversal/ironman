@@ -207,15 +207,19 @@ export default {
     },
     alarmTemplateDetail(state, { payload, type }) {
       console.log(' alarmTemplateDetail ： ', state, payload);
-      const [one, two, three] = payload.bean.role;
+      const [
+        // one,
+        two,
+        three,
+      ] = payload.bean.role;
       const role = {
-        one: {
-          ...one,
-          range: {
-            0: one.range['0'],
-            1: one.range['1'],
-          },
-        },
+        // one: {
+        //   ...one,
+        //   range: {
+        //     0: one.range['0'],
+        //     1: one.range['1'],
+        //   },
+        // },
         two: {
           ...two,
           range: {

@@ -6,7 +6,11 @@ import { CAMERA1 } from '@/configs';
 const namespace = 'cameraConfig';
 const { createActions } = init(namespace);
 
-const otherActions = ['getCameraVideoAsync', 'getVideoPreviewAsync'];
+const otherActions = [
+  'getCameraVideoAsync',
+  'getVideoPreviewAsync',
+  'bindUserAsync',
+];
 
 const batchTurnActions = ['onCameraTabsChange', 'onCancel2'];
 
@@ -195,6 +199,10 @@ export default {
       } else {
         tips('无视频可以预览！', 2);
       }
+    },
+    *bindUserAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.bindUser, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

@@ -1,7 +1,7 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/alarmRecord';
-import { formatSelectList } from '@/utils';
-import moment from 'dayjs';
+import { formatSelectList, formatDuring } from '@/utils';
+import moment from 'moment';
 
 const namespace = 'alarmRecord';
 const { createActions } = init(namespace);
@@ -57,6 +57,7 @@ export default {
           //   ? moment(v.created_time).format('YYYY-MM-DD')
           //   : null,
           durationFormat: `${(v.duration / 60).toFixed(2)}` + ' 分钟',
+          formatDuring: formatDuring(v.duration),
         })),
         count: payload.rest.count,
         isShowModal: false,

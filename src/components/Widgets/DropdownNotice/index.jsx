@@ -2,12 +2,13 @@ import React from 'react';
 import './style.less';
 import PropTypes from 'prop-types';
 import { CloseOutlined } from '@ant-design/icons';
-import { Menu, Dropdown, notification, Divider } from 'antd';
+import { Menu, Dropdown, Button, Divider } from 'antd';
 import { history, connect } from 'umi';
 import SmartForm from '@/common/SmartForm';
 import useWebsocket from '@/hooks/useWebsocket';
 import { notifyWs } from '@/services/common';
 import { openNotification } from '@/utils';
+import { csSystemNotify } from '@/constants';
 
 const menuConfig = [
   {
@@ -51,11 +52,17 @@ const DropdownNotice = props => {
     userMsg,
   } = props;
 
-  const handleMenuClick = (item, rest) => {
-    console.log(' handleMenuClick   item, ,   ： ', item, rest, props);
+  const handleMenuClick = (item, data) => {
+    console.log(' handleMenuClick   item, ,   ： ', item, data, props);
     const clickItem = menuConfig.find(v => v.key === item.key);
-    console.log(' clickItem  menuConfig.find v ： ', clickItem);
-    menuClick && menuClick({ ...clickItem, ...item });
+    console.log(
+      ' clickItem  menuConfig.find v ： ',
+      menuConfig,
+      clickItem,
+      item,
+      { ...clickItem, data, ...item },
+    );
+    menuClick && menuClick({ ...clickItem, data, ...item });
   };
   const closeNotice = e => {
     console.log(' closeNotice   e,   ： ', e);
@@ -88,15 +95,28 @@ const DropdownNotice = props => {
       </Menu.Item> */}
       <Menu.ItemGroup
         title={
-          <div className="header divider">
-            <div className="text">通知 ({userMsg.length}) </div>
-            <CloseOutlined className={`closeIcon`} onClick={closeNotice} />
+          <div className="header divider fsb">
+            <div className="text">通知 ({userMsg[0]?.count}) </div>
+            <div>
+              <Button
+                type="primary"
+                onClick={() => props.goPage(csSystemNotify)}
+                className={`m-r-5`}
+              >
+                全部通知
+              </Button>
+              <CloseOutlined className={`closeIcon`} onClick={closeNotice} />
+            </div>
           </div>
         }
       >
-        <Menu.ItemGroup key={'header'}>
+        <Menu.ItemGroup key={'header'} className={`listWrapper`}>
           {userMsg.map((v, i) => (
-            <Menu.Item key={v.id} action={v.action} onClick={handleMenuClick}>
+            <Menu.Item
+              key={v.id}
+              action={v.action}
+              onClick={e => handleMenuClick(e, v)}
+            >
               <div className="menuItem divider">
                 <div className="left">
                   <div className="avatar">
@@ -104,9 +124,12 @@ const DropdownNotice = props => {
                   </div>
                 </div>
                 <div className="right">
-                  <div className="title subText ">{v.verb}</div>
+                  {/* <div className="title subText ">{v.verb}</div>
                   <div className="content ellipsis">{v.description}</div>
-                  <div className="time subText">{v.timestamp}</div>
+                  <div className="time subText">{v.timestamp}</div> */}
+                  <div className="title subText ">{v.title}</div>
+                  <div className="content ">{v.content}</div>
+                  <div className="time subText">{v.created_time}</div>
                 </div>
               </div>
             </Menu.Item>
@@ -130,6 +153,7 @@ const DropdownNotice = props => {
       overlay={menuCom}
       className={`dropdownNotice`}
       overlayClassName={`dropdownNotice`}
+      // placement={'bottomRight'}
     >
       {children}
     </Dropdown>

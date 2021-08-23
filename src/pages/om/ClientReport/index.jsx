@@ -95,28 +95,39 @@ class ClientReport extends PureComponent {
       this.props.selectedRows,
     );
     // if (this.props.selectedRowKeys.length > 0) {
-
-    const datas = (this.props.selectedRows.length > 0
-      ? this.props.selectedRows
-      : this.props.dataList
-    ).filter(v => v.finish == 1);
+    // const datas = (this.props.selectedRows.length > 0
+    //   ? this.props.selectedRows
+    //   // : this.props.dataList
+    //   : []
+    // ).filter(v => v.finish == 1);
+    const datas = this.props.dataList.filter(v => v.finish == 1);
     const filterData = filterObjArr(datas, 'number');
     console.log(' datas ： ', datas, filterData);
 
-    const res = await Promise.allSettled(
-      filterData.map(v =>
-        services.getItem({
-          d_id: v.electricity_user_id,
-          year_month: this.props.searchInfo.year_month
-            ? this.props.searchInfo.year_month.format('YYYY-MM')
-            : '',
-        }),
-      ),
-    );
+    // const res = await Promise.allSettled(
+    //   filterData.map(v =>
+    //     services.getItem({
+    //       d_id: v.electricity_user_id,
+    //       year_month: this.props.searchInfo.year_month
+    //         ? this.props.searchInfo.year_month.format('YYYY-MM')
+    //         : '',
+    //     }),
+    //   ),
+    // );
+    // this.props.batchExportPDF({
+    //   action: 'batchClientReportDetailPdf',
+    //   payload: res.filter(v => v.status === 'fulfilled').map(v => v.value.bean),
+    // });
+    const res = await services.batchGetReport({
+      electrical_user_ids: filterData.map(v => v.electricity_user_id),
+      year_month: this.props.searchInfo.year_month
+        ? this.props.searchInfo.year_month.format('YYYY-MM')
+        : '',
+    });
     console.log(' res ： ', res);
     this.props.batchExportPDF({
       action: 'batchClientReportDetailPdf',
-      payload: res.filter(v => v.status === 'fulfilled').map(v => v.value.bean),
+      payload: res.list,
     });
     // } else {
     //   tips('请勾选打印项！', 2);

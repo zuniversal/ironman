@@ -1,5 +1,6 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/user';
+import * as systemNotifyServices from '@/services/systemNotify';
 import * as userCenterServices from '@/services/userCenter';
 import {
   formatSelectList,
@@ -42,6 +43,7 @@ const otherActions = [
   'getUserInfo',
   'getNotifyAsync',
   'getUserMsgAsync',
+  'readAllMsgAsync',
 ];
 
 const batchTurnActions = ['onPlatformChange'];
@@ -376,6 +378,22 @@ export default {
     //     ...payload,
     //   };
     // },
+    readMsg(state, { payload, type }) {
+      const { userMsg } = state;
+      return {
+        ...state,
+        userMsg: userMsg
+          .filter(v => v.id !== payload.data.id)
+          .map(v => ({ ...v, count: v.count - 1 })),
+      };
+    },
+    readAllMsgAsync(state, { payload, type }) {
+      const { userMsg } = state;
+      return {
+        ...state,
+        userMsg: [],
+      };
+    },
   },
 
   effects: {
@@ -495,30 +513,80 @@ export default {
 
     *getUserMsgAsync({ payload, action, type }, { call, put }) {
       // const res = yield call(services.getUserMsg, payload);
-      const res = yield call(services.getUserMsg, {
-        page_size: 5,
+      // const res = yield call(services.getUserMsg, {
+      const res = yield call(systemNotifyServices.getList, {
+        get_all: 1,
+        is_read: 0,
+        _sort: '-created_time',
       });
       console.log(' getUserMsgAsync ： ', payload, action, type, res);
       const data = res.list.map(v => ({
         ...v,
         time: moment(v.timestamp).format('YYYY-MM-DD'),
+        created_time: moment(v.created_time).format('YYYY-MM-DD'),
+        count: res.rest.count,
       }));
-      data.map(v =>
-        notification.info({
-          message: (
-            <div>
-              <div>{v.time}</div>
-              <div>{v.verb}</div>
-            </div>
-          ),
-          description: v.description,
-          className: 'userMsgNotice',
-        }),
-      );
+
+      const popArr = data.filter(v => v.is_pop);
+
+      if (!payload.noNotify) {
+        popArr.forEach(v => {
+          notification.info({
+            // message: (
+            //   <div>
+            //     <div>{v.time}</div>
+            //     <div>{v.verb}</div>
+            //   </div>
+            // ),
+            message: v.title,
+            description: v.content,
+            className: 'userMsgNotice',
+          });
+          // systemNotifyServices.noPopMsg({d_id: v.id,});
+        });
+      }
+      if (!!popArr.length) {
+        systemNotifyServices.noPopAllMsg();
+      }
       // yield put(action({ ...res, payload }));
       yield put({
         type: 'getUserMsg',
         payload: data,
+      });
+    },
+    *readMsgAsync({ payload, action, type }, { call, put }) {
+      console.log(' readMsgAsync ： ', payload, action, type);
+      const isReadHandle =
+        payload.data.is_read == 0 ? systemNotifyServices.readMsg : () => {}; //
+      console.log('  isReadHandle ：', isReadHandle); //
+      const res = yield call(isReadHandle, { d_id: payload.data.id });
+
+      const userInfo = getItem('userInfo');
+      yield put({
+        type: 'getUserMsgAsync',
+        payload: {
+          user_id: userInfo.id,
+          noNotify: true,
+        },
+      });
+
+      // yield put({
+      //   type: 'readMsg',
+      //   payload,
+      // });
+    },
+    *readAllMsgAsync({ payload, action, type }, { call, put }) {
+      console.log(' readAllMsgAsync ： ', payload, action, type);
+      const res = yield call(systemNotifyServices.readAllMsg);
+      console.log(' readAllMsgAsync res ： ', res);
+
+      const userInfo = getItem('userInfo');
+      yield put({
+        type: 'getUserMsgAsync',
+        payload: {
+          user_id: userInfo.id,
+          noNotify: true,
+        },
       });
     },
   },
@@ -528,10 +596,10 @@ export default {
       console.log(' 用户 setup ： ', props, this);
       const { dispatch, history } = props;
 
-      setInterval(() => {
+      const getUserMsg = params => {
         const userInfo = getItem('userInfo');
         console.log('  延时获取信息 ： ', userInfo);
-        if (userInfo.id) {
+        if (userInfo?.id) {
           dispatch({
             type: 'getUserMsgAsync',
             payload: {
@@ -539,7 +607,11 @@ export default {
             },
           });
         }
-      }, 60 * 1000);
+      };
+
+      getUserMsg();
+
+      setInterval(getUserMsg, 60 * 1000);
       // }, 3 * 1000);
 
       // dispatch({

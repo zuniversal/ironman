@@ -1,9 +1,7 @@
-import { init, action } from '@/utils/createAction';
-import * as services from '@/services/alarmTemplate';
-import { formatSelectList, nowYearMonth } from '@/utils';
-import { notifyTypeMap } from '@/configs';
+import { init } from '@/utils/createAction';
+import * as services from '@/services/clientClue';
 
-const namespace = 'alarmTemplate';
+const namespace = 'clientClue';
 const { createActions } = init(namespace);
 
 const otherActions = [];
@@ -14,19 +12,21 @@ export const actions = {
   ...createActions(otherActions, batchTurnActions),
 };
 
-// console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
+
+const initialState = {
+  action: '',
+  isShowModal: false,
+  dataList: [],
+  count: 0,
+  itemDetail: {},
+  searchInfo: {},
+};
 
 export default {
   namespace,
 
-  state: {
-    action: '',
-    isShowModal: false,
-    dataList: [],
-    count: 0,
-    itemDetail: {},
-  },
+  state: initialState,
 
   reducers: {
     showFormModal(state, { payload, type }) {
@@ -48,12 +48,7 @@ export default {
     getList(state, { payload, type }) {
       return {
         ...state,
-        dataList: payload.list.map(v => ({
-          ...v,
-          notificationType: v.notification_type
-            .map(v => notifyTypeMap[v])
-            .join(', '),
-        })),
+        dataList: payload.list,
         count: payload.rest.count,
         isShowModal: false,
         searchInfo: payload.searchInfo,
@@ -61,66 +56,14 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
-      const [
-        // one,
-        two,
-        three,
-      ] = payload.bean.role;
-      const role = {
-        // one: {
-        //   ...one,
-        //   range: {
-        //     0: one.range['0'],
-        //     1: one.range['1'],
-        //   },
-        // },
-        two: {
-          ...two,
-          range: {
-            0: two.range['0'],
-            1: two.range['1'],
-          },
-        },
-        three,
-      };
-      const itemDetail = {
-        ...payload.bean,
-        role,
-        alarmTemplate: !!payload.bean.alarmTemplate,
-      };
-      console.log(' itemDetail ： ', itemDetail);
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
-        d_id: payload.payload.d_id,
-        itemDetail,
-      };
-    },
-    addItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
-      };
-    },
-    editItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
-        isShowModal: false,
-      };
-    },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
-      return {
-        ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
+        itemDetail: {
+          ...payload.bean,
+          ...payload.bean.content,
+        },
       };
     },
   },
@@ -144,7 +87,7 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getItem', payload: { ...res, payload } });
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);

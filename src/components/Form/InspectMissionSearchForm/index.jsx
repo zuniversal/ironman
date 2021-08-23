@@ -6,8 +6,6 @@ import { inspectMissionsSearchConfig } from '@/configs';
 
 const InspectMissionSearchForm = props => {
   console.log(' InspectMissionSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       // 职位 班组组长
@@ -45,6 +43,14 @@ const InspectMissionSearchForm = props => {
         name: 'station_id',
       },
     },
+    {
+      formType: 'DatePicker',
+      formType: 'MonthPicker',
+      itemProps: {
+        label: '年月',
+        name: 'year_month',
+      },
+    },
     //   formType: 'Divider',
     //   itemProps: {
     //     label: '',
@@ -66,19 +72,7 @@ const InspectMissionSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' InspectMissionSearchForm '}>
-      <SearchForm
-        config={config}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
-
-InspectMissionSearchForm.defaultProps = {};
 
 export default InspectMissionSearchForm;

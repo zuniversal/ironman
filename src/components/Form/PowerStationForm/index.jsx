@@ -274,6 +274,7 @@ const PowerStationForm = props => {
       formType: 'DatePicker',
       itemProps: {
         label: '过期时间',
+        label: '合同到期时间',
         name: 'end_time',
       },
     },

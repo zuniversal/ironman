@@ -1,8 +1,36 @@
+// .dropdownNotice.ant-dropdown{
+//   top: 65px!important;
+// }
+
 .dropdownNotice {
+  &.ant-dropdown {
+    top: 65px !important;
+  }
+  .listWrapper {
+    max-height: 500px;
+    // overflow-y: scroll;
+    overflow-y: auto;
+  }
   .ant-dropdown-menu-item-group-list {
     .ant-dropdown-menu-item-group-title,
     .ant-dropdown-menu-item {
       padding: 0;
+    }
+  }
+
+  .ant-scroll-number {
+    animation: jump 0.5s infinite;
+  }
+
+  @keyframes jump {
+    0% {
+      transform: translate(0px, 0px);
+    }
+    50% {
+      transform: translate(0px, -20px);
+    }
+    100% {
+      transform: translate(0px, 0px);
     }
   }
 
@@ -68,6 +96,7 @@
         }
         .content {
           color: #333;
+          white-space: normal;
         }
         .title {
         }

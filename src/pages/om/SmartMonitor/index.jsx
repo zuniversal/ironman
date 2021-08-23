@@ -376,7 +376,14 @@ export default React.memo(function SmartMonitor(props) {
         empty={!stationData}
         emptyText="暂无电站信息，无法展示监控数据"
       >
-        <PageTitle title="智能监控" />
+        <div className="fsb ">
+          <PageTitle title="智能监控" />
+          <div className=" dfc">
+            <Button type="primary" onClick={history.goBack}>
+              返回
+            </Button>
+          </div>
+        </div>
         <div className={styles.subtitleBox}>
           <div className={styles.subtitle}>
             电站名称：{get(stationData, 'name', '-')}

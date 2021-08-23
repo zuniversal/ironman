@@ -15,7 +15,7 @@ import { getList as getBillTypeList } from '@/services/electricBill';
 const statConfig = [
   [
     {
-      title: '电压器容量',
+      title: '变压器容量',
       dataKey: 'transformer_capacity',
       content: '',
       icon: icon3,
@@ -38,7 +38,7 @@ const statConfig = [
       dataMap: voltageLevelMap,
     },
     {
-      title: '电功率考核因数',
+      title: '功率因数考核值',
       dataKey: 'ep_factor',
       content: '',
       icon: icon6,

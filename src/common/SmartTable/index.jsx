@@ -12,13 +12,14 @@ import {
   Input,
   Tooltip,
   Typography,
+  Tag,
 } from 'antd';
 import SmartModal from '@/common/SmartModal';
 import ActionCol from './ActionCol';
 import QRCodeContent from '@/components/Widgets/QRCodeContent';
 import { RemoveModal } from '@/components/Modal/ResultModal';
-import { SIZE, ANIMATE, INPUT_TXT, PRIMARY } from '@/constants';
-import { tips, mockTbData, foramtText, getDataMap } from '@/utils';
+import { SIZE, ANIMATE, INPUT_TXT, PRIMARY, tagColorMap } from '@/constants';
+import { tips, mockTbData, foramtText, getDataMap, showTotal } from '@/utils';
 import { isLoading } from '@/utils/createAction';
 import { Link, history, connect } from 'umi';
 import noData from '@/static/assets/noData.png';
@@ -57,7 +58,7 @@ class SmartTable extends PureComponent {
       // pageSize: 6,
       showQuickJumper,
       showSizeChanger,
-      // showTotal: showTotal,
+      showTotal: showTotal,
       position: ['bottomCenter'],
       pageSize: Number(size),
       pageSizeOptions: [10, 20, 50],
@@ -300,7 +301,8 @@ class SmartTable extends PureComponent {
       // mapText = dayjs.duration(text).asSeconds()
     }
     if (day) {
-      mapText = dayjs(mapText).format(day || 'YYYY-MM-DD');
+      mapText =
+        mapText !== 'NaT' ? dayjs(mapText).format(day || 'YYYY-MM-DD') : null;
     }
     // let txt = !noCutText ? foramtText(mapText) : mapText;
     let txt = mapText;
@@ -389,7 +391,23 @@ class SmartTable extends PureComponent {
       </Tooltip>
     );
     // return tdCom
-    return text != undefined ? tdCom : text;
+    const val = text != undefined ? tdCom : text;
+
+    let tagColor = PRIMARY;
+    if (config.tagMap) {
+      console.log(' configconfigconfig ： ', config.tagMap, val, text); //
+      tagColor = config.tagMap[text];
+    } else if (config.tags) {
+      tagColor = tagColorMap[text];
+    }
+
+    return (config.tags || config.tagMap) && tagColor ? (
+      <>
+        <Tag color={tagColor}>{val}</Tag>
+      </>
+    ) : (
+      val
+    );
     // <Typography.Paragraph copyable>{text}</Typography.Paragraph>
     // return typeof text !== 'object' && <Tooltip title={text}>{content}</Tooltip>
     // return ((typeof text != null) && Object.keys(text).length > 0) && <Tooltip title={text}>{content}</Tooltip>

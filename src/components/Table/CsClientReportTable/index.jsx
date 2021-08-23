@@ -71,7 +71,11 @@ const CsClientReportTable = props => {
       dataIndex: 'amount_adjust',
     },
     {
-      title: '功率因数',
+      title: '最大MD',
+      dataIndex: 'max_md',
+    },
+    {
+      title: '考核功率因数',
       dataIndex: 'power_factor',
     },
     {

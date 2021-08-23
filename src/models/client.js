@@ -124,7 +124,7 @@ export default {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          admin: v.customer_admin.map(v => v.nickname),
+          // admin: v.customer_admin.map(v => v.nickname),
           // type: customerTypeMap[v.type],
           // type: v.type.split(',').map(v => customerTypeMap[v]),
           type: v.type.map(v => customerTypeMap[v]),

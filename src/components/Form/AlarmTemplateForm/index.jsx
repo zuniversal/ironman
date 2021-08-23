@@ -32,53 +32,53 @@ const AlarmTemplateForm = props => {
   const { formBtn, ...rest } = props;
 
   const ruleConfig = [
-    {
-      formType: 'rowText',
-      itemProps: {
-        label: '电流阈值',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'InputNumber',
-      itemProps: {
-        label: '字段',
-        name: ['role', 'one', 'fields'],
-        className: 'hidden',
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '电流过低',
-        name: ['role', 'one', 'range', '0'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '电流过高',
-        name: ['role', 'one', 'range', '1'],
-      },
-    },
-    {
-      formType: 'InputNumber',
-      itemProps: {
-        label: '持续',
-        name: ['role', 'one', 'duration'],
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Checkbox',
-      checkboxData: checkboxData,
-      opType: 'item',
-      itemProps: {
-        label: '是否发送短信',
-        name: ['role', 'one', 'send'],
-        valuePropName: 'checked',
-      },
-    },
+    // {
+    //   formType: 'rowText',
+    //   itemProps: {
+    //     label: '电流阈值',
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '字段',
+    //     name: ['role', 'one', 'fields'],
+    //     className: 'hidden',
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '电流过低',
+    //     name: ['role', 'one', 'range', '0'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '电流过高',
+    //     name: ['role', 'one', 'range', '1'],
+    //   },
+    // },
+    // {
+    //   formType: 'InputNumber',
+    //   itemProps: {
+    //     label: '持续',
+    //     name: ['role', 'one', 'duration'],
+    //   },
+    // },
+    // {
+    //   noRule: true,
+    //   formType: 'Checkbox',
+    //   checkboxData: checkboxData,
+    //   opType: 'item',
+    //   itemProps: {
+    //     label: '是否发送短信',
+    //     name: ['role', 'one', 'send'],
+    //     valuePropName: 'checked',
+    //   },
+    // },
 
     {
       formType: 'rowText',

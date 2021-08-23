@@ -16,6 +16,8 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `抢修合同通知`,
+  edit: `编辑${TITLE}`,
+  detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
 };
@@ -46,7 +48,7 @@ class SystemNotify extends PureComponent {
   renderSearchForm = params => {
     return (
       <SystemNotifySearchForm
-        formBtn={this.renderFormBtn}
+      // formBtn={this.renderFormBtn}
       ></SystemNotifySearchForm>
     );
   };
@@ -96,15 +98,15 @@ class SystemNotify extends PureComponent {
       clientList: this.props.clientList,
     };
     if (action !== 'add') {
-      // formComProps.init = this.props.itemDetail;
-      formComProps.init = {
-        合同ID: '合同ID',
-        业务员: '业务员',
-        对应抢修单ID: '对应抢修单ID',
-        合同类型: '合同类型',
-        处理时间: '处理时间',
-        关联工单ID: '关联工单ID',
-      };
+      formComProps.init = this.props.itemDetail;
+      // formComProps.init = {
+      //   合同ID: '合同ID',
+      //   业务员: '业务员',
+      //   对应抢修单ID: '对应抢修单ID',
+      //   合同类型: '合同类型',
+      //   处理时间: '处理时间',
+      //   关联工单ID: '关联工单ID',
+      // };
     }
     console.log(' formComProps ： ', formComProps);
     return <SystemNotifyForm {...formComProps}></SystemNotifyForm>;
@@ -114,6 +116,9 @@ class SystemNotify extends PureComponent {
     return ['detail'].some(v => v === this.props.action) ? 'small' : 'default';
   }
   renderSmartFormModal = params => {
+    if (this.props.action === 'detail') {
+      this.state.titleMap.detail = this.props.itemDetail.typeMap;
+    }
     return (
       <SmartFormModal
         show={this.props.isShowModal}
@@ -122,6 +127,7 @@ class SystemNotify extends PureComponent {
         onOk={this.onOk}
         onCancel={this.props.onCancel}
         size={this.size}
+        hideOk={['detail'].some(v => v === this.props.action)}
       >
         {this.renderModalContent()}
       </SmartFormModal>

@@ -3,6 +3,7 @@ import './style.less';
 import { Button, Radio, Tabs } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import SmartFormModal from '@/common/SmartFormModal';
+import { CameraConfigUserForm } from '@/components/Form/CameraConfigActionForm';
 import CameraConfigForm from '@/components/Form/CameraConfigForm';
 import {
   FixedCameraConfigTable,
@@ -140,6 +141,12 @@ class CameraConfig extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'bindUser') {
+        this.props.bindUserAsync({
+          ...res,
+          d_id: itemDetail.id,
+        });
+      }
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
@@ -212,8 +219,16 @@ class CameraConfig extends PureComponent {
       return this.renderVideo();
     }
     console.log(' formComProps ： ', formComProps);
+    if (action === 'bindUser') {
+      return <CameraConfigUserForm {...formComProps}></CameraConfigUserForm>;
+    }
     return <CameraConfigForm {...formComProps}></CameraConfigForm>;
   };
+  get size() {
+    return ['bindUser'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
 
   renderSmartFormModal = params => {
     return (
@@ -223,6 +238,7 @@ class CameraConfig extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

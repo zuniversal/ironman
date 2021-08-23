@@ -1,6 +1,6 @@
 import React, { Component, useRef, useState, useEffect } from 'react';
 import './style.less';
-import { Steps, Button, Rate } from 'antd';
+import { Steps, Button, Rate, Input } from 'antd';
 import SmartForm from '@/common/SmartForm';
 import {
   missionsTypeConfig,
@@ -23,6 +23,7 @@ import useHttp from '@/hooks/useHttp';
 import { getRelatived } from '@/services/client';
 import moment from 'moment';
 import { formatSelectList, tips } from '@/utils';
+import debounce from 'lodash/debounce';
 
 const { Step } = Steps;
 
@@ -623,14 +624,23 @@ const MissionsManageForm = props => {
     </div>
   );
 
+  const onSearchChange = e => {
+    console.log(' onSearchChange   e,   ： ', e, e.target.value);
+    // return () => {
+    //   console.log(' ssssssssssssss ： ',    )//
+    // }
+    return debounce(props.onChange, 1500);
+  };
+
   const houseNotable = (
     <>
-      <SmartInput
+      <Input
         // onChange={props.onChange}
+        onChange={onSearchChange}
         onPressEnter={props.onChange}
         ph={'关键字回车搜索'}
         defaultValue={props.tableProps?.searchInfo?.keyword}
-      ></SmartInput>
+      ></Input>
       <MissionsHouseNoTable {...props.tableProps}></MissionsHouseNoTable>
     </>
   );

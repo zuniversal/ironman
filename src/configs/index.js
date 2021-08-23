@@ -2,7 +2,8 @@
 // console.log(' regions ： ', regions,  )//
 // export const regoins = regions
 
-import { arrMapObj, createIndexArr } from '@/utils';
+import { arrMapObj, arrMapColor, createIndexArr } from '@/utils';
+import { PRIMARY, INFO, SUB, WARN } from '@/constants';
 
 export const expandLoadTreeList = [
   {
@@ -1260,13 +1261,13 @@ export const powerRateMap = {
     '0.90': '+1.00',
     '0.9': '+1.00',
     '0.85': '-0.30',
-    '0.80': '-0,80',
-    '0.8': '-0,80',
+    '0.80': '-0.80',
+    '0.8': '-0.80',
   },
   '0.87': {
     '0.90': '+1.50',
     '0.9': '+1.50',
-    '0.85': '-0,20',
+    '0.85': '-0.20',
     '0.80': '-0.70',
     '0.8': '-0.70',
   },
@@ -2052,3 +2053,60 @@ export const planContractDescConfig = [
     type: 'showPDF',
   },
 ];
+
+export const systemNotifyConfig = [
+  {
+    label: '系统通知',
+    value: '1',
+    color: PRIMARY,
+  },
+  {
+    label: '任务',
+    value: '2',
+    color: INFO,
+  },
+  {
+    label: '巡检任务',
+    value: '3',
+    color: SUB,
+  },
+  {
+    label: '监控告警',
+    value: '4',
+    color: WARN,
+  },
+];
+
+export const systemNotifyMap = arrMapObj(systemNotifyConfig);
+export const systemNotifyColorMap = arrMapColor(systemNotifyConfig);
+console.log(' systemNotifyColorMap ： ', systemNotifyColorMap); //
+
+export const clientClueLevelConfig = [
+  {
+    label: '低价值客户',
+    value: '0',
+  },
+  {
+    label: '中价值客户',
+    value: '1',
+  },
+  {
+    label: '高价值客户',
+    value: '2',
+  },
+];
+
+export const clientClueLevelMap = arrMapObj(clientClueLevelConfig);
+
+export const clientClueStatusConfig = [
+  {
+    label: '待审批',
+    value: '0',
+  },
+  {
+    label: '已审批',
+    value: '1',
+  },
+];
+
+export const clientClueStatusMap = arrMapObj(clientClueStatusConfig);

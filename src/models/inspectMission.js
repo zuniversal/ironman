@@ -28,6 +28,14 @@ export const actions = {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
+export const formatSearch = data => {
+  console.log(' formatSearch ： ', data);
+  return {
+    ...data,
+    year_month: data.year_month ? data.year_month.format('YYYY-MM') : undefined,
+  };
+};
+
 const formatParams = data => {
   console.log(' formatParams data ： ', data);
   const params = {
@@ -76,6 +84,7 @@ export default {
       };
     },
     getList(state, { payload, type }) {
+      console.log(' getList 修改  ： ', state, payload, type);
       return {
         ...state,
         dataList: payload.list.map(v => ({
@@ -189,9 +198,23 @@ export default {
   effects: {
     *getListAsync({ payload, action, type }, { call, put, select }) {
       const { searchInfo } = yield select(state => state[namespace]);
+      let yearMonth = payload.year_month;
+      if (payload.year_month) {
+        const [year, month, day] = payload.year_month
+          .format('YYYY-MM-DD')
+          .split('-');
+        yearMonth = `${year}-${(day > 25 ? `${month * 1 + 1}` : month).padStart(
+          2,
+          '0',
+        )}`;
+        console.log(' year, month, day ： ', year, month, day, yearMonth); //
+      }
+
       const params = {
         ...searchInfo,
         ...payload,
+        // year_month: yearMonth,
+        // year_month: payload.year_month ? payload.year_month.format('YYYY-MM') : payload.year_month,
       };
       console.log(
         ' getListAsync  payload ： ',
@@ -200,7 +223,7 @@ export default {
         action,
         params,
       );
-      const res = yield call(services.getList, params);
+      const res = yield call(services.getList, formatSearch(params));
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
     *getItemAsync({ payload, action, type }, { call, put }) {

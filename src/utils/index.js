@@ -31,11 +31,18 @@ export const openNotification = (
   });
 };
 
-export const arrMapObj = (arr = []) => {
+export const arrMapObj = (
+  arr = [],
+  { key = 'value', label = 'label' } = {},
+) => {
+  // export const arrMapObj = (arr = []) => {
   const obj = {};
-  arr.forEach(v => (obj[v.value] = v.label));
+  arr.forEach(v => (obj[v.value] = v[label]));
   return obj;
 };
+
+export const arrMapColor = arr =>
+  arrMapObj(arr, { key: 'value', label: 'color' });
 
 export const filterObjSame = (data, key = 'id') => {
   const temp = [];
@@ -766,7 +773,7 @@ const extension = window.devToolsExtension;
 // console.log(' extension ： ', extension, extension ? '111' : 222);
 export const tools = extension ? extension() : undefined;
 
-export const showTotal = total => `總共 ${total} 條`;
+export const showTotal = total => `总共 ${total} 条`;
 
 export const pagination = total => ({
   pageSize: SIZE,
@@ -801,4 +808,12 @@ export const recursiveKeys = (data = [], allKeys = []) => {
       recursiveKeys(v.children, allKeys);
     }
   });
+};
+
+export const formatDuring = second => {
+  const days = parseInt(second / (60 * 60 * 24));
+  const hours = parseInt((second % (60 * 60 * 24)) / (60 * 60));
+  const minutes = parseInt((second % (60 * 60)) / 60);
+  const seconds = (second % 60) / 1000;
+  return days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分钟';
 };

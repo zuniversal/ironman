@@ -255,6 +255,7 @@ export const noTipsGet = (url, params) =>
   };
 export const noTipsPost = (url, params) =>
   post(url, { ...params, noTips: true });
+export const noTipsPut = (url, params) => put(url, { ...params, noTips: true });
 export const noTipsPatch = (url, params) =>
   patch(url, { ...params, noTips: true });
 export const noTipsRemove = (url, params) =>
@@ -284,6 +285,7 @@ export const req = {
   remove,
   noTipsGet,
   noTipsPost,
+  noTipsPut,
   noTipsPatch,
   noTipsRemove,
   blobGet,
