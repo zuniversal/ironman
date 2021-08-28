@@ -47,7 +47,10 @@ class ClientClue extends PureComponent {
   };
   renderSearchForm = params => {
     return (
-      <ClientListSearchForm formBtn={this.renderFormBtn}></ClientListSearchForm>
+      <ClientListSearchForm
+        formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
+      ></ClientListSearchForm>
     );
   };
   onFieldChange = params => {
@@ -112,41 +115,57 @@ class ClientClue extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      // const {enterprise, contact,  } = res
 
       const params = {
         ...init,
         ...res,
-        contact: res.contact.map(v => ({
-          ...v,
-          is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
-          is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
-        })),
+        content: {
+          ...res,
+          contact: res.contact.map(v => ({
+            ...v,
+            is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
+            is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+          })),
+        },
+        address: res.enterprise.address,
+        longitude: res.enterprise.longitude,
+        latitude: res.enterprise.latitude,
+        adcode: res.enterprise.adcode,
+        city_code: res.enterprise.city_code,
+        district: res.enterprise.district,
       };
       if (res.file) {
         if (res.file && res.file.fileList && res.file.fileList.length > 0) {
           const fileList = res.file.fileList;
           console.log(' fileList ： ', fileList);
-          params.file = fileList.map(v => v.response.url).join(',');
+          params.content.enterprise.file = fileList
+            .map(v => v.response.url)
+            .join(',');
         } else {
-          params.file = null;
+          params.content.enterprise.file = null;
         }
       } else {
-        params.file = null;
+        params.content.enterprise.file = null;
       }
-      if (res.file) {
+      if (res.logo) {
         if (res.logo && res.logo.fileList && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
           console.log(' fileList ： ', fileList);
-          params.logo = fileList.map(v => v.response.url).join(',');
+          params.content.enterprise.logo = fileList
+            .map(v => v.response.url)
+            .join(',');
         } else {
-          params.logo = null;
+          params.content.enterprise.logo = null;
         }
       } else {
-        params.logo = null;
+        params.content.enterprise.logo = null;
       }
 
       const isUrgeRes = params.contact.filter(v => v.is_urge);
+
       console.log(' paramsparams ： ', params, isUrgeRes);
+      // return
       if (isUrgeRes.length > 1) {
         tips('催款联系人只能勾选1人！', 2);
         return;
@@ -160,7 +179,7 @@ class ClientClue extends PureComponent {
       if (action === 'edit') {
         this.props.editItemAsync({
           ...params,
-          d_id,
+          d_id: this.props.itemDetail.id,
         });
       }
     } catch (error) {

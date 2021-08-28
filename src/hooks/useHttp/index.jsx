@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { tips, formatSelectList, filterObjSame } from '@/utils';
 
+export const formatSelectList2 = (
+  data = [],
+  labelKey = 'name',
+  idKey = 'id',
+) => {
+  console.log(' formatSelectList2 res ： ', data, labelKey, idKey);
+};
+const callFn = (...args) => {
+  console.log(' formatSelectList2 callFn   ', args);
+  formatSelectList2([111], ...args);
+};
+callFn('aa', 'bb');
+
 const useHttp = (http = () => {}, configs = {}) => {
   const {
     init = [], // 数据的初始值

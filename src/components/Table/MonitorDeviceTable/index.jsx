@@ -32,6 +32,10 @@ const MonitorDeviceTable = props => {
       sortKey: 'imei',
     },
     {
+      title: 'sn',
+      dataIndex: 'sim',
+    },
+    {
       title: '厂商',
       dataIndex: 'manufacturer',
       sorter: true,

@@ -23,14 +23,14 @@ const ClientListSearchForm = props => {
         name: 'status',
       },
     },
-    {
-      formType: 'Search',
-      selectData: serviceStaffList,
-      itemProps: {
-        label: '客户代表',
-        name: '',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectData: serviceStaffList,
+    //   itemProps: {
+    //     label: '客户代表',
+    //     name: '',
+    //   },
+    // },
     {
       noLabel: true,
       itemProps: {

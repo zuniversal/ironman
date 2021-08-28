@@ -56,6 +56,8 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
+      const { file, logo } = payload.bean.content.enterprise;
+
       return {
         ...state,
         action: payload.payload.action,
@@ -63,6 +65,8 @@ export default {
         itemDetail: {
           ...payload.bean,
           ...payload.bean.content,
+          file: file ? file.split(',') : [],
+          logo: logo ? logo.split(',') : [],
         },
       };
     },

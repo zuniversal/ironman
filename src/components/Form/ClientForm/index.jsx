@@ -56,10 +56,6 @@ import { formatSelectList, filterObjSame } from '@/utils';
 const { Panel } = Collapse;
 const { Option } = Select;
 
-function callback(key) {
-  console.log(key);
-}
-
 const genExtra = () => (
   <SettingOutlined
     onClick={event => {
@@ -135,7 +131,6 @@ const CollapseCom = props => {
   return (
     <Collapse
       defaultActiveKey={['1']}
-      onChange={callback}
       expandIconPosition={'left'}
       className={`collapseCom`}
     >
@@ -149,7 +144,6 @@ const CollapseCom = props => {
 // const collapseCom = (
 //   <Collapse
 //     defaultActiveKey={['1']}
-//     onChange={callback}
 //     expandIconPosition={'left'}
 //   >
 //     <Panel header="This is panel header 1" key="1" extra={genExtra()}>
@@ -1710,11 +1704,7 @@ const ClientForm = props => {
   );
 
   const formCollapseCom = (
-    <Collapse
-      defaultActiveKey={['1']}
-      onChange={callback}
-      expandIconPosition={'left'}
-    >
+    <Collapse defaultActiveKey={['1']} expandIconPosition={'left'}>
       <Panel header={'客户信息'} key="1" extra={genExtra()}>
         {formCom}
       </Panel>

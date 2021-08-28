@@ -73,13 +73,13 @@ const MonitorDeviceForm = props => {
         name: 'imei',
       },
     },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: 'SIM',
-    //     name: 'sim',
-    //   },
-    // },
+    {
+      noRule: true,
+      itemProps: {
+        label: 'sn',
+        name: 'sim',
+      },
+    },
     {
       noRule: true,
       formType: 'Select',
@@ -116,6 +116,7 @@ const MonitorDeviceForm = props => {
   // monitor_point_id
 
   const {
+    sim,
     status,
     model,
     manufacturer,
@@ -130,6 +131,7 @@ const MonitorDeviceForm = props => {
         {...props}
         init={{
           ...props.init,
+          sim: sim ? `${sim}` : null,
           status: status ? `${status}` : null,
           model: model ? `${model}` : null,
           manufacturer: manufacturer ? `${manufacturer}` : null,

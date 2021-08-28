@@ -505,8 +505,10 @@ class Client extends PureComponent {
     if (params.value.enterprise?.province) {
       console.log(' onFieldChange 清空 province ： ');
       const resetParams = {
-        city: null,
-        area: null,
+        enterprise: {
+          city: null,
+          area: null,
+        },
       };
       form.setFieldsValue(resetParams);
       const { city, area, ...data } = params.formData.enterprise;
@@ -517,7 +519,9 @@ class Client extends PureComponent {
     if (params.value.enterprise?.city) {
       console.log(' onFieldChange 清空 city ： ');
       const resetParams = {
-        area: null,
+        enterprise: {
+          area: null,
+        },
       };
       form.setFieldsValue(resetParams);
       const { area, ...data } = params.formData.enterprise;

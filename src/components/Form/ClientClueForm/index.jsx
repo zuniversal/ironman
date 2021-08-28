@@ -5,24 +5,20 @@ import { Form, Select, Input, Row, Checkbox, Button, Collapse } from 'antd';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import UploadCom from '@/components/Widgets/UploadCom';
 import {
-  regoins,
-  clientLevelConfig,
+  clientClueLevelConfig,
   customerTypeConfig,
-  repairSourceConfig,
   enterpriseScaleConfig,
   enterpriseNatureConfig,
   industryConfig,
   assetScaleConfig,
   corverAreaConfig,
-  voltageLevelConfig,
-  electricTypeConfig,
 } from '@/configs';
 import {
   tips,
   renderCheckboxOp,
   renderSelectOp,
   getItem,
-  objNum2str,
+  formatSelectList,
 } from '@/utils';
 import {
   SettingOutlined,
@@ -36,15 +32,17 @@ import useHttp from '@/hooks/useHttp';
 import { getServiceStaff } from '@/services/userManage';
 import { getList as getTagList } from '@/services/tags';
 import { getList as getOrganize } from '@/services/organize';
+import { getDistrict } from '@/services/client';
+import { getRegion } from '@/services/common';
 import { recursiveHandle } from '@/models/organize';
-import { formatSelectList, filterObjSame } from '@/utils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-function callback(key) {
-  console.log(key);
-}
+const contactCheckboxData = [
+  { label: <span className={`dangerText`}>只能勾选1个！</span>, value: 1 },
+  // { label: '是否', value: false,  },
+];
 
 const checkboxData = [
   { label: '', value: 1 },
@@ -95,7 +93,6 @@ const CollapseCom = props => {
   return (
     <Collapse
       defaultActiveKey={['1']}
-      onChange={callback}
       expandIconPosition={'left'}
       className={`collapseCom`}
     >
@@ -296,13 +293,18 @@ const FormListCom = props => {
 
 FormListCom.defaultProps = {};
 
+const formatItemSelect = data =>
+  data.map(v => ({
+    label: v,
+    value: v,
+  }));
+
 const ClientClueForm = props => {
   console.log(' ClientClueForm ： ', props, props.init);
 
-  const { action, getCapture, addUserAsync } = props;
+  const { action } = props;
 
   const { enterprises = [] } = getItem('userInfo');
-  const enterpriseList = formatSelectList(enterprises);
 
   const { data: userList } = useHttp(getServiceStaff, {
     format: res => formatSelectList(res, 'nickname'),
@@ -310,151 +312,183 @@ const ClientClueForm = props => {
   const { data: tagsList } = useHttp(getTagList, {
     format: res => formatSelectList(res),
   });
-  const { data: organizeList } = useHttp(
-    () => getOrganize({ page_size: 1000 }),
-    {
-      format: res => recursiveHandle(res),
-    },
-  );
-  console.log(' userList ： ', userList); //
+  console.log(' userList ： ', userList, provinceList); //
+
+  const { data: provinceList, req: getProvinceAsync } = useHttp(getRegion, {
+    // format: res => formatItemSelect(res),
+    formatKey: 'name',
+    formatVal: 'name',
+  });
+  const { data: cityList, req: getCityAsync } = useHttp(getRegion, {
+    // format: res => formatItemSelect(res),
+    formatKey: 'name',
+    formatVal: 'name',
+    noMountFetch: true,
+  });
+  const { data: countryList, req: getCountryAsync } = useHttp(getRegion, {
+    // format: res => formatItemSelect(res),
+    formatKey: 'name',
+    formatVal: 'name',
+    noMountFetch: true,
+  });
+  console.log(
+    ' userList ： ',
+    userList,
+    provinceList,
+    props.propsForm.getFieldsValue(),
+  ); //
+
+  const onRegionChange = (changeKey, params, item) => {
+    console.log(
+      ' onRegionChange   changeKey, params, item,   ： ',
+      changeKey,
+      params,
+      item,
+    );
+    props.propsForm.setFieldsValue({
+      enterprise: {
+        [changeKey]: item.adcode,
+      },
+    });
+  };
+
+  const onAreaChange = async params => {
+    console.log('    onAreaChange ： ', params, props);
+    const { form } = params;
+    if (params.value.enterprise?.province) {
+      console.log(' onFieldChange 清空 province ： ');
+      const resetParams = {
+        enterprise: {
+          city: null,
+          area: null,
+        },
+      };
+      props.propsForm.setFieldsValue(resetParams);
+      const { city, area, ...data } = params.formData.enterprise;
+      console.log(' onFieldChange 搜索 province ： ', params.value.province);
+      // getCityAsync(() => getDistrict(data));
+      getCityAsync(() =>
+        getRegion({
+          subdistrict: '1',
+          keywords: params.value?.enterprise?.province,
+        }),
+      );
+      return;
+    }
+    if (params.value.enterprise?.city) {
+      console.log(' onFieldChange 清空 city ： ');
+      const resetParams = {
+        enterprise: {
+          area: null,
+        },
+      };
+      props.propsForm.setFieldsValue(resetParams);
+      const { area, ...data } = params.formData.enterprise;
+      console.log(' onFieldChange 搜索 city ： ', params.value.city);
+      // getCountryAsync(() => getDistrict(data));
+      getCountryAsync(() =>
+        getRegion({
+          subdistrict: '1',
+          keywords: params.value?.enterprise?.city,
+        }),
+      );
+      return;
+    }
+    if (params.value.enterprise?.area) {
+      console.log(' onFieldChange 清空 area ： ');
+      const res = formatSelectList(
+        (
+          await getRegion({
+            subdistrict: '1',
+            keywords: params.value?.enterprise?.area,
+          })
+        ).list,
+        'name',
+      );
+      // const res = await props.getGeoAsync({ address: params.value?.area, })
+      const adcode = res[0]?.adcode;
+      const city_code = res[0]?.citycode;
+      const [longitude, latitude] = res[0]?.center?.split(',');
+      const { province, city, area } = params.formData.enterprise;
+      const address = province + city + area;
+      console.log(
+        '  res await 结果  ：',
+        res,
+        adcode,
+        city_code,
+        address,
+        params,
+      );
+      if (adcode) {
+        props.propsForm.setFieldsValue({
+          // enterprise: { adcode, city_code, address, longitude, latitude, },
+          enterprise: { address, longitude, latitude },
+        });
+      }
+      return;
+    }
+  };
+
+  const onFieldChange = params => {
+    console.log(' onFieldChange  ： ', params, props);
+    onAreaChange(params);
+  };
 
   const regionConfig = [
     {
-      noRule: true,
+      // noRule: true,
       flexRow: 3,
       formType: 'Search',
-      selectData: props.provinceList,
+      selectData: provinceList,
       itemProps: {
         label: '省',
-        // name: 'province',
         name: ['enterprise', 'province'],
         ...addrLayout1,
       },
       comProps: {
         className: 'w-135',
+        onChange: (...arg) => onRegionChange('adcode', ...arg),
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       flexRow: 3,
       formType: 'Search',
-      selectData: props.citytList,
+      selectData: cityList,
       itemProps: {
         label: '市',
-        // name: 'city',
         name: ['enterprise', 'city'],
         ...addrLayout2,
       },
       comProps: {
         className: 'w-135',
+        onChange: (...arg) => onRegionChange('city_code', ...arg),
       },
     },
     {
       noRule: true,
       flexRow: 3,
       formType: 'Search',
-      selectData: props.countryList,
+      selectData: countryList,
       itemProps: {
         label: '县',
-        // name: 'area',
         name: ['enterprise', 'area'],
         ...addrLayout2,
       },
       comProps: {
         className: 'w-135',
-      },
-    },
-  ];
-
-  const onRegionChange = params => {
-    console.log(
-      ' %c onRegionChange 组件 params ： ',
-      `color: #333; font-weight: bold`,
-      params,
-    );
-  };
-
-  const houseNoRegionConfig = [
-    {
-      noRule: true,
-      flexRow: 3,
-      formType: 'Search',
-      selectData: props.provinceList,
-      itemProps: {
-        label: '省',
-        name: 'province',
-        // ...addrLayout1,
-      },
-      onComChange: props.onHouseNoRegionChange,
-      extraParams: {
-        form: props.propsForm,
-        name: 'province',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      formType: 'Search',
-      selectData: props.citytList,
-      itemProps: {
-        label: '市',
-        name: 'city',
-        // ...addrLayout2,
-      },
-      onComChange: props.onHouseNoRegionChange,
-      extraParams: {
-        form: props.propsForm,
-        name: 'city',
-      },
-    },
-    {
-      noRule: true,
-      flexRow: 3,
-      formType: 'Search',
-      selectData: props.countryList,
-      itemProps: {
-        label: '县',
-        name: 'area',
-        // ...addrLayout2,
-      },
-      onComChange: props.onHouseNoRegionChange,
-      extraParams: {
-        form: props.propsForm,
-        name: 'area',
+        onChange: (...arg) => onRegionChange('district', ...arg),
       },
     },
   ];
 
   const areaConfig = [
-    // {
-    //   formType: 'Cascader',
-    //   itemProps: {
-    //     label: '区域',
-    //     name: 'region',
-    //   },
-    //   comProps: {
-    //     options: regoins,
-    //   },
-    // },
-    // {
-    //   noRule: true,
-    //   itemProps: {
-    //     label: '区域',
-    //     name: 'areas',
-    //   },
-    //   comProps: {
-    //     disabled: true,
-    //   },
-    // },
     {
       colCls: 'hidden',
       noRule: true,
-      flexRow: 3,
       itemProps: {
-        label: '城市编码',
-        name: ['enterprise', 'city_code'],
-        ...addrLayout1,
-        // hidden: true,
+        label: 'district',
+        name: ['enterprise', 'district'],
       },
       comProps: {
         disabled: true,
@@ -462,12 +496,22 @@ const ClientClueForm = props => {
       },
     },
     {
+      colCls: 'hidden',
       // noRule: true,
+      itemProps: {
+        label: '城市编码',
+        name: ['enterprise', 'city_code'],
+      },
+      comProps: {
+        disabled: true,
+        className: 'w-135',
+      },
+    },
+    {
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '行政区域编码',
-        // name: 'adcode',
         name: ['enterprise', 'adcode'],
         ...addrLayout1,
       },
@@ -477,12 +521,10 @@ const ClientClueForm = props => {
       },
     },
     {
-      // noRule: true,
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '经度',
-        // name: 'longitude',
         name: ['enterprise', 'longitude'],
         ...addrLayout2,
       },
@@ -492,12 +534,10 @@ const ClientClueForm = props => {
       },
     },
     {
-      // noRule: true,
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '纬度',
-        // name: 'latitude',
         name: ['enterprise', 'latitude'],
         ...addrLayout2,
       },
@@ -509,6 +549,14 @@ const ClientClueForm = props => {
   ];
 
   const clientInfoConfig = [
+    {
+      colCls: 'hidden',
+      noRule: true,
+      itemProps: {
+        label: 'id',
+        name: 'id',
+      },
+    },
     {
       flexRow: 1,
       itemProps: {
@@ -522,14 +570,13 @@ const ClientClueForm = props => {
     },
     {
       formType: 'Select',
-      selectData: clientLevelConfig,
+      selectData: clientClueLevelConfig,
       itemProps: {
         label: '客户等级',
         name: 'level',
       },
     },
     {
-      // noRule: true,
       formType: 'Search',
       selectData: customerTypeConfig,
       itemProps: {
@@ -538,27 +585,6 @@ const ClientClueForm = props => {
       },
       comProps: {
         mode: 'multiple',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      selectData: userList,
-      itemProps: {
-        label: '上一任客户代表',
-        name: 'last_service_staff_id',
-      },
-      comProps: {
-        disabled: action !== 'add',
-      },
-    },
-    {
-      noRule: true,
-      formType: 'Search',
-      selectData: userList,
-      itemProps: {
-        label: '客户代表',
-        name: 'service_staff_id',
       },
     },
   ];
@@ -593,7 +619,6 @@ const ClientClueForm = props => {
       },
       comProps: {
         className: 'rowInput ',
-        // onChange: props.onAddressChange,
       },
     },
     ...areaConfig,
@@ -620,18 +645,6 @@ const ClientClueForm = props => {
         name: ['enterprise', 'legal_person_phone'],
       },
     },
-    // {
-    //   // noRule: true,
-    //   formType: 'Search',
-    //   selectData: customerTypeConfig,
-    //   itemProps: {
-    //     label: '客户类型',
-    //     name: 'type',
-    //   },
-    //   comProps: {
-    //     mode: 'multiple',
-    //   },
-    // },
     {
       noRule: true,
       itemProps: {
@@ -707,8 +720,6 @@ const ClientClueForm = props => {
       },
     },
     {
-      // formType: 'Select',
-      // selectData: ,
       noRule: true,
       itemProps: {
         label: '父级企业',
@@ -758,30 +769,6 @@ const ClientClueForm = props => {
     comProps: { className: `w-200 ${v.comProps?.className}`, ...v.comProps },
   }));
 
-  const attach = [
-    <UploadCom
-      isInputUpload
-      contentClass={'dfc'}
-      label={'附件'}
-      key={'file'}
-      action={'/api/v1/upload'}
-      name={'file'}
-      extra={'支持扩展名:pdf、jpg、png'}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-        multiple: true,
-      }}
-      init={props.init}
-      formItemProps={{
-        rules: null,
-      }}
-      formAction={props.action}
-      formItemCls={'w100'}
-    ></UploadCom>,
-  ];
-  // config.push(...attach);
-
   const clientContactConfig = [
     {
       itemProps: {
@@ -792,8 +779,7 @@ const ClientClueForm = props => {
     {
       noRule: true,
       formType: 'Checkbox',
-      // opType: 'option',
-      checkboxData: checkboxData,
+      checkboxData: contactCheckboxData,
       itemProps: {
         label: '催款联系人',
         name: 'is_urge',
@@ -807,7 +793,6 @@ const ClientClueForm = props => {
     {
       noRule: true,
       formType: 'Checkbox',
-      // opType: 'option',
       checkboxData: checkboxData,
       itemProps: {
         label: '离职',
@@ -881,6 +866,7 @@ const ClientClueForm = props => {
       }}
       formLayouts={formLayouts}
       flexRow={2}
+      onFieldChange={onFieldChange}
     ></SmartForm>
   );
 
