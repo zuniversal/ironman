@@ -1901,12 +1901,18 @@ export const clientListTabConfig = [
   {
     tab: '客户私海',
     key: CLIENTLIST_PRIVATE,
+    value: 0,
   },
   {
     tab: '客户过海',
     key: CLIENTLIST_PUBLIC,
+    value: 1,
   },
 ];
+export const clientListTabMap = arrMapObj(clientListTabConfig, {
+  key: 'key',
+  label: 'value',
+});
 
 export const MYTASK_PENDING_APPROVE = 'pending_approve'; //
 export const MYTASK_COMPLETE = 'complete'; //
@@ -1947,20 +1953,20 @@ export const clientPortraitSpreadConfig = [
 
 export const clientListPlanTypeConfig = [
   {
-    value: '抢修',
-    label: '抢修',
+    value: '1',
+    label: '托管计划',
   },
   {
-    value: '电气试验',
-    label: '电气试验',
-  },
-  {
-    value: '电力施工',
+    value: '2',
     label: '电力施工',
   },
   {
-    value: '托管',
-    label: '托管',
+    value: '3',
+    label: '电气试验',
+  },
+  {
+    value: '4',
+    label: '抢修',
   },
 ];
 
@@ -2016,15 +2022,15 @@ export const notifyClientLinkConfig = [
 export const planContractStepConfig = [
   {
     title: '信息补充',
-    value: '信息补充',
+    value: '1',
   },
   {
     title: '方案阶段',
-    value: '方案阶段',
+    value: '2',
   },
   {
     title: '合同阶段',
-    value: '合同阶段',
+    value: '3',
   },
 ];
 
@@ -2110,3 +2116,20 @@ export const clientClueStatusConfig = [
 ];
 
 export const clientClueStatusMap = arrMapObj(clientClueStatusConfig);
+
+export const myTaskTypeConfig = [
+  {
+    label: '信息补充',
+    value: '1',
+  },
+  {
+    label: '方案阶段',
+    value: '2',
+  },
+  {
+    label: '合同阶段',
+    value: '3',
+  },
+];
+
+export const myTaskTypeMap = arrMapObj(myTaskTypeConfig);

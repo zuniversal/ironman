@@ -4,6 +4,7 @@ import {
   MYTASK_PENDING_APPROVE,
   MYTASK_COMPLETE,
   MYTASK_APPROVING,
+  myTaskTypeMap,
 } from '@/configs';
 
 const MyTaskTable = props => {
@@ -20,7 +21,8 @@ const MyTaskTable = props => {
     },
     {
       title: '类型',
-      // dataIndex: '',
+      dataIndex: 'type',
+      dataMap: myTaskTypeMap,
     },
     {
       title: '进度',
@@ -28,7 +30,7 @@ const MyTaskTable = props => {
     },
     {
       title: '状态',
-      // dataIndex: '',
+      // dataIndex: 'approval_status',
     },
   ];
 

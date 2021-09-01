@@ -160,7 +160,7 @@ export const init = (prefix, noDefault) => {
   return {
     names: 'zyb',
     // customActions,
-    createAction,
+    // createAction,
     transferActions: (config = []) => transferActions(config),
     createCRUD: (config = []) => createCRUD([...isCrudArr, ...config]),
     turnAction,
@@ -169,5 +169,13 @@ export const init = (prefix, noDefault) => {
       ...createCRUD([...isCrudArr, ...asyncConfig]),
       ...batchTurn([...commonConfigs, ...config, 'reset']),
     }),
+    createAction: model => {
+      const actions = Object.keys(model.reducers);
+      const asyncActions = Object.keys(model.effects);
+      return {
+        ...batchTurn(actions),
+        ...createCRUD(asyncActions),
+      };
+    },
   };
 };

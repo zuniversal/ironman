@@ -126,7 +126,7 @@ class ClientPortrait extends PureComponent {
       <div className={`clientPortraitEchartsWrapper`}>
         <Row gutter={[24, 16]}>
           {clientPortraitSpreadConfig.map((v, i) => (
-            <Col span={12} {...v}>
+            <Col span={12} {...v} key={v.value}>
               <div className={`homeTitle`}>{v.label}</div>
               <Divider />
               <RingPieEchart />

@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Tabs } from 'antd';
+import ClientPlanList from './ClientPlanList';
+import ClientForm from '@/components/Form/ClientForm';
 import ClientListSearchForm from '@/components/Form/ClientListSearchForm';
 import ClientListForm from '@/components/Form/ClientListForm';
 import {
@@ -16,12 +18,12 @@ import SmartFormModal from '@/common/SmartFormModal';
 import UploadCom from '@/components/Widgets/UploadCom';
 import { actions, mapStateToProps } from '@/models/clientList';
 import SmartHOC from '@/common/SmartHOC';
-import { clientListTabConfig } from '@/configs';
+import { clientListTabConfig, clientListTabMap } from '@/configs';
 import { connect } from 'umi';
 
 const { TabPane } = Tabs;
 
-const TITLE = '';
+const TITLE = '客户';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -32,6 +34,7 @@ const titleMap = {
   clientListPullContract: `拉取合同`,
   clientListRemark: `添加备注`,
   clientListAsignPeople: `分配人员`,
+  getClientPlanDetailAsync: `${TITLE}计划详情`,
 };
 
 const detailFormMap = {};
@@ -65,7 +68,10 @@ class ClientList extends PureComponent {
   };
   renderSearchForm = params => {
     return (
-      <ClientListSearchForm formBtn={this.renderFormBtn}></ClientListSearchForm>
+      <ClientListSearchForm
+        formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
+      ></ClientListSearchForm>
     );
   };
   onFieldChange = params => {
@@ -86,6 +92,8 @@ class ClientList extends PureComponent {
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
+
+      getClientPlanDetailAsync: this.props.getClientPlanDetailAsync,
     };
 
     const tableMap = {
@@ -128,6 +136,34 @@ class ClientList extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'addClientPlanAsync') {
+        const { duration1, duration2, duration3 } = res;
+        const params = {
+          ...res,
+          customer_id: [this.props.customer_id],
+          plan_code: [
+            {
+              id: 1,
+              index: 1,
+              file: null,
+              duration: duration1,
+            },
+            {
+              id: 2,
+              index: 2,
+              file: null,
+              duration: duration2,
+            },
+            {
+              id: 3,
+              index: 3,
+              file: null,
+              duration: duration3,
+            },
+          ],
+        };
+        this.props.addClientPlanAsync(params);
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -141,6 +177,7 @@ class ClientList extends PureComponent {
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
     }
+    console.log(' formComProps ： ', formComProps, this.props);
     if (action === 'uploadFile') {
       const smallLayout = {
         labelCol: {
@@ -175,7 +212,7 @@ class ClientList extends PureComponent {
         ></ClientListAsignPeopleForm>
       );
     }
-    if (action === 'clientListPlan') {
+    if (action === 'addClientPlanAsync') {
       return <ClientListPlanForm {...formComProps}></ClientListPlanForm>;
     }
     if (action === 'clientListPullContract') {
@@ -188,7 +225,10 @@ class ClientList extends PureComponent {
     if (action === 'clientListRemark') {
       return <ClientListRemarkForm {...formComProps}></ClientListRemarkForm>;
     }
-    console.log(' formComProps ： ', formComProps);
+    if (action === 'getClientPlanDetailAsync') {
+      return <ClientPlanList {...formComProps}></ClientPlanList>;
+    }
+    return <ClientForm {...formComProps}></ClientForm>;
     return <ClientListForm {...formComProps}></ClientListForm>;
   };
   get size() {
@@ -214,10 +254,11 @@ class ClientList extends PureComponent {
   };
 
   onTabChange = tabType => {
-    console.log('    onTabChange ： ', tabType);
+    console.log('    onTabChange ： ', tabType, clientListTabMap);
     this.props.onTabChange({ tabType });
     this.props.getListAsync({
       tabType,
+      is_hub: clientListTabMap[tabType],
       page: 1,
     });
   };

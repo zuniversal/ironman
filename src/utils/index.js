@@ -37,7 +37,7 @@ export const arrMapObj = (
 ) => {
   // export const arrMapObj = (arr = []) => {
   const obj = {};
-  arr.forEach(v => (obj[v.value] = v[label]));
+  arr.forEach(v => (obj[v[key]] = v[label]));
   return obj;
 };
 

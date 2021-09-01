@@ -161,7 +161,7 @@ class MyTask extends PureComponent {
   render() {
     return (
       <div className="">
-        <PlanContractStep></PlanContractStep>
+        {/* <PlanContractStep></PlanContractStep> */}
         {this.renderTabPanes()}
 
         {this.renderSearchForm()}

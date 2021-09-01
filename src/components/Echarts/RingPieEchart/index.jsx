@@ -3,6 +3,8 @@ import SmartEchart from '@/common/SmartEchart';
 
 const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
+const space = `\xa0\xa0\xa0`;
+
 export const crmColorConfig = [
   '#00B460',
   '#5E81F4',
@@ -37,12 +39,14 @@ const option = params => {
       // align: 'right',
       // right: 0,
       // orient: 'vertical',
+      itemGap: 25,
+      icon: 'circle',
       right: 'right',
       top: '25%',
       borderRadius: 100,
       // left: 'center'
       formatter(name) {
-        return 'Legend ' + name;
+        return 'Legend ' + space + name + space + '$xxxxxxx';
       },
     },
     series: [

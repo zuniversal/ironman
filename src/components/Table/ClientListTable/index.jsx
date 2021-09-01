@@ -1,59 +1,70 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
+import { clientClueLevelMap } from '@/configs';
 
 export const ClientListPrivateTable = props => {
   const columns = [
     {
       title: 'id',
-      dataIndex: 'customer_idid',
+      dataIndex: 'id',
     },
     {
       title: '客户名称',
-      dataIndex: 'customer_id',
+      dataIndex: 'name',
     },
     {
       title: '客户等级',
-      dataIndex: 'customer_id',
+      dataIndex: 'level',
+      dataMap: clientClueLevelMap,
     },
     {
       title: '客户代表',
-      dataIndex: 'customer_id',
+      // dataIndex: '',
     },
     {
       title: '户号数',
-      dataIndex: 'customer_id',
+      dataIndex: 'ele_user_count',
     },
     {
       title: '跟进计划',
-      dataIndex: 'customer_id',
-      render: (text, record, index) => (
-        <>
-          <a
-            onClick={() =>
-              props.showFormModal({
-                action: 'clientListPlan',
-                d_id: record.id,
-              })
-            }
-          >
-            计划
-          </a>
-          <a
-            onClick={() =>
-              props.showFormModal({
-                action: 'clientListPlan',
-                d_id: record.id,
-              })
-            }
-          >
-            计划
-          </a>
-        </>
-      ),
+      dataIndex: 'district',
+      // render: (text, record, index) => (
+      //   <>
+      //     <a
+      //       onClick={() =>
+      //         props.showFormModal({
+      //           action: 'addClientPlanAsync',
+      //           d_id: record.id,
+      //         })
+      //       }
+      //     >
+      //       计划
+      //     </a>
+      //     <a
+      //       onClick={() =>
+      //         props.showFormModal({
+      //           action: 'addClientPlanAsync',
+      //           d_id: record.id,
+      //         })
+      //       }
+      //     >
+      //       计划
+      //     </a>
+      //   </>
+      // ),
+      detailFn: record =>
+        // props.showItemAsync({
+        //   action: 'clientPlanDetailAsync',
+        //   d_id: record.id,
+        // }),
+        props.getClientPlanDetailAsync({
+          action: 'getClientPlanDetailAsync',
+          customer_id: record.id,
+        }),
     },
     {
       title: '客户地址',
-      dataIndex: 'customer_id',
+      dataIndex: 'address',
     },
   ];
 
@@ -62,8 +73,9 @@ export const ClientListPrivateTable = props => {
       <a
         onClick={() =>
           props.showFormModal({
-            action: 'clientListPlan',
-            d_id: record.id,
+            action: 'addClientPlanAsync',
+            customer_id: record.id,
+            // record,
           })
         }
       >
@@ -82,7 +94,7 @@ export const ClientListPrivateTable = props => {
       <a
         onClick={() =>
           props.showFormModal({
-            action: 'clientListPullContract',
+            action: 'getClientPlanDetailAsync',
             d_id: record.id,
           })
         }
@@ -133,27 +145,28 @@ export const ClientListPublicTable = props => {
   const columns = [
     {
       title: 'id',
-      dataIndex: 'customer_idid',
+      dataIndex: 'id',
     },
     {
       title: '客户名称',
-      dataIndex: 'customer_id',
+      dataIndex: 'name',
     },
     {
       title: '客户等级',
-      dataIndex: 'customer_id',
+      dataIndex: 'level',
+      dataMap: clientClueLevelMap,
     },
     {
       title: '客户代表',
-      dataIndex: 'customer_id',
+      // dataIndex: '',
     },
     {
       title: '户号数',
-      dataIndex: 'customer_id',
+      dataIndex: 'ele_user_count',
     },
     {
       title: '客户地址',
-      dataIndex: 'customer_id',
+      dataIndex: 'address',
     },
   ];
 
@@ -179,7 +192,7 @@ export const ClientListPublicTable = props => {
         <a
           onClick={() =>
             props.showFormModal({
-              action: 'clientListPlan',
+              action: 'addClientPlanAsync',
               d_id: record.id,
             })
           }

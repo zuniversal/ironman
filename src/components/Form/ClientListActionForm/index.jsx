@@ -30,10 +30,17 @@ export const ClientListAsignPeopleForm = props => {
 
 export const ClientListPlanForm = props => {
   const config = [
+    // {
+    //   itemProps: {
+    //     label: 'customer_id',
+    //     name: 'customer_id',
+    //     className: 'hidden',
+    //   },
+    // },
     {
       itemProps: {
         label: '计划名称',
-        name: '',
+        name: 'name',
       },
     },
     {
@@ -41,27 +48,27 @@ export const ClientListPlanForm = props => {
       selectData: clientListPlanTypeConfig,
       itemProps: {
         label: '计划类型',
-        name: '',
+        name: 'type',
       },
     },
     {
       itemProps: {
         label: '分配客户后',
-        name: '',
+        name: 'duration1',
       },
       extra: <div className="m-l-5">天出方案</div>,
     },
     {
       itemProps: {
         label: '方案审批通过后',
-        name: '',
+        name: 'duration2',
       },
       extra: <div className="m-l-5">天出合同</div>,
     },
     {
       itemProps: {
         label: '合同审批通过后',
-        name: '',
+        name: 'duration3',
       },
       extra: <div className="m-l-5">天签约</div>,
     },

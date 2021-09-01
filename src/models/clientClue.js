@@ -2,15 +2,11 @@ import { init } from '@/utils/createAction';
 import * as services from '@/services/clientClue';
 
 const namespace = 'clientClue';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [];
 
 const batchTurnActions = [];
-
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
 
 export const mapStateToProps = state => state[namespace];
 
@@ -23,7 +19,7 @@ const initialState = {
   searchInfo: {},
 };
 
-export default {
+const model = {
   namespace,
 
   state: initialState,
@@ -107,3 +103,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

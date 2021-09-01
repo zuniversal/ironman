@@ -550,6 +550,13 @@ const ClientClueForm = props => {
 
   const clientInfoConfig = [
     {
+      formType: 'rowText',
+      itemProps: {
+        label: '客户信息',
+        className: 'w100',
+      },
+    },
+    {
       colCls: 'hidden',
       noRule: true,
       itemProps: {
