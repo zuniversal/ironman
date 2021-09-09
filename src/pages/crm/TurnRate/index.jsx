@@ -50,7 +50,11 @@ class TurnRate extends PureComponent {
   }
 
   renderRateBar = params => {
-    console.log(' renderRateBar 修改  ： ', this.props);
+    console.log(
+      ' renderRateBar 修改  ： ',
+      this.props,
+      this.props.turnRateData,
+    );
     const turnRateBarConfig = [
       {
         label: '客户线索',
