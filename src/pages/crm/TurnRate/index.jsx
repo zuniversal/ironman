@@ -10,7 +10,7 @@ import TurnRateSearchForm from '@/components/Form/TurnRateSearchForm';
 import {
   actions,
   // mapStateToProps
-} from '@/models/client';
+} from '@/models/turnRate';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { saleDataEchartsConfig } from '@/configs';
