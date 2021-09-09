@@ -362,6 +362,27 @@ class Assets extends PureComponent {
     // this.props.editTreeNode(params);
   };
   renderAssetTree = params => {
+    return (
+      <AssetTree
+        showFormModal={this.props.showFormModal}
+        editItems={this.props.editItems}
+        action={this.props.action}
+        treeData={this.props.treeDatas}
+        searchInfo={this.props.searchInfo}
+        addItemAsync={this.props.addItemAsync}
+        editItemAsync={this.props.editItemAsync}
+        getItemAsync={this.props.getItemAsync}
+        addTreeNode={this.props.addTreeNode}
+        editTreeNode={this.props.editTreeNode}
+        saveTreeNodeAsync={this.saveTreeNodeAsync}
+        itemDetail={this.props.itemDetail}
+        selectItem={this.props.selectItem}
+        onRemove={this.onRemove}
+        addTreeStruct={this.props.addTreeStruct}
+        changeAction={this.props.changeAction}
+        key={this.props.searchInfo.customer_id}
+      ></AssetTree>
+    );
     return this.props.treeDatas.length > 0 ? (
       <AssetTree
         showFormModal={this.props.showFormModal}

@@ -65,7 +65,7 @@ class Assets extends PureComponent {
           }
           disabled={!customer_id}
         >
-          编辑
+          编辑客户
         </Button>
       </div>
     );

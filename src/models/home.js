@@ -5,7 +5,7 @@ import * as workOrderServices from '@/services/workOrder';
 import { formatSelectList, getItem, setItem } from '@/utils';
 
 const namespace = 'home';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getStatisticAsync',
@@ -20,9 +20,9 @@ const otherActions = [
 
 const batchTurnActions = ['saveHomeSetting'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions, getItem('homeSettings'));
 export const mapStateToProps = state => state[namespace];
@@ -37,7 +37,7 @@ const settingData = [
   'compeleteInspect',
 ];
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -272,3 +272,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

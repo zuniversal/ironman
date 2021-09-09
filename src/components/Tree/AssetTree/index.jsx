@@ -623,28 +623,28 @@ const AssetTree = props => {
         </Col>
         {/* <Col span={16} className={`dfc`}> */}
         <Col span={18} className={``}>
-          {treeData.length > 0 && (
-            <div className={`fje addAssetWrapper`}>
-              <Button
-                type="primary"
-                // onClick={() => {
-                //   console.log(' 111111111 ： ', treeData   )//
-                //   addTreeNode(treeData[0], 0)
-                // }}
-                onClick={props.addTreeStruct}
-                className={`m-l-10`}
-              >
-                新增一级资产结构
-              </Button>
-              {/* <EmptyAsset
+          {/* {treeData.length > 0 && (
+          )} */}
+          <div className={`fje addAssetWrapper`}>
+            <Button
+              type="primary"
+              // onClick={() => {
+              //   console.log(' 111111111 ： ', treeData   )//
+              //   addTreeNode(treeData[0], 0)
+              // }}
+              onClick={props.addTreeStruct}
+              className={`m-l-10`}
+            >
+              新增一级资产结构
+            </Button>
+            {/* <EmptyAsset
               editItems={props.editItems}
               addTreeNode={addTreeNode}
               selectItem={props.selectItem}
               changeAction={props.changeAction}
               form={form}
             ></EmptyAsset>  */}
-            </div>
-          )}
+          </div>
           {props.action ? (
             // {props.formTypes ? (
             // {Object.keys(props.itemDetail).length ? (

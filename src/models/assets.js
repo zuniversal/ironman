@@ -8,7 +8,7 @@ import { formatSelectList, filterObjSame } from '@/utils';
 import moment from 'moment';
 
 const namespace = 'assets';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'uploadFileAsync',
@@ -32,9 +32,9 @@ const batchTurnActions = [
   'getListFilter',
 ];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -132,7 +132,7 @@ const initialState = {
   subAssetTreeList: [],
 };
 
-export default {
+const model = {
   namespace,
 
   state: initialState,
@@ -351,12 +351,13 @@ export default {
       console.log(' getAssetList 修改  ： ', state, payload, type); //
       const assetList = recursiveAssets(payload.list);
       console.log(' assetList ： ', assetList); //
-      const subAssetList = assetList[0].children;
+      const subAssetList = assetList[0] ? assetList[0].children : [];
+      console.log(' subAssetList ： ', subAssetList); //
       return {
         ...state,
         assetList,
         assetList: assetList,
-        selectItem: assetList[0],
+        selectItem: assetList[0] ?? {},
         subAssetList,
         subAssetTreeList: subAssetList.map(v => ({ tab: v.name, key: v.id })),
         assetsSearchInfo: payload.payload,
@@ -577,3 +578,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

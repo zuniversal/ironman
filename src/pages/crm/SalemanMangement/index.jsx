@@ -5,11 +5,11 @@ import SalemanMangementForm from '@/components/Form/SalemanMangementForm';
 import SalemanMangementTable from '@/components/Table/SalemanMangementTable';
 import SalemanMangementClientTable from '@/components/Table/SalemanMangementClientTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/clientList';
+import { actions, mapStateToProps } from '@/models/salemanMangement';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
-const TITLE = '销售人员';
+const TITLE = '营销人员';
 
 const titleMap = {
   add: `新建${TITLE}`,
@@ -128,9 +128,7 @@ class SalemanMangement extends PureComponent {
     const formComProps = {
       action,
     };
-    if (action !== 'add') {
-      formComProps.init = this.props.itemDetail;
-    }
+    formComProps.init = this.props.itemDetail;
     if (action === 'responsibleClientAsync') {
       return (
         <SalemanMangementClientTable

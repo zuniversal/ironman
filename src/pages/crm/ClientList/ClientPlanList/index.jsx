@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.less';
 import ClientClueForm from '@/components/Form/ClientClueForm';
+import PlanContractStep from '@/pages/crm/MyTask/PlanContractStep';
 import { clientListTabConfig, planContractStepConfig } from '@/configs';
 import { Tabs, Steps, Button } from 'antd';
 
@@ -38,7 +39,7 @@ const RenderVerticalStep = props => {
         <Step
           // title={v.created_time.split('T')[0]}
           // description={v.content}
-          // key={i}
+          key={i}
           {...v}
         />
       ))}
@@ -50,8 +51,20 @@ const ClientPlanList = props => {
   console.log(' ClientPlanList ： ', props);
   const [current, setCurrent] = useState(0);
 
-  const onChange = e => {
-    console.log(' onChange e ： ', e); //
+  useEffect(() => {
+    console.log(' ClientPlanList useEffect v ： ', props); //
+    props.propsForm.setFieldsValue(props.init);
+  }, [props.init.id]);
+
+  const onTabChange = v => {
+    console.log(' onTabChange v ： ', v); //
+    props.getClientClueAsync({
+      d_id: v,
+    });
+  };
+
+  const onStepChange = e => {
+    console.log(' onStepChange e ： ', e); //
     setCurrent(e);
   };
 
@@ -64,22 +77,49 @@ const ClientPlanList = props => {
   return (
     <div className={' clientPlanList '}>
       <RenderTabPanes
-        config={clientListTabConfig}
-        onChange={onChange}
+        config={props.clientPlanList.map((v, i) => ({
+          tab: v.name,
+          key: v.id,
+          value: v.id,
+        }))}
+        // config={[
+        //   {
+        //     tab: 'v.name',
+        //     key: 14,
+        //     value: 14,
+        //   },
+        //    {
+        //     tab: 'v.name',
+        //     key: 13,
+        //     value: 13,
+        //   }
+        // ]}
+        onChange={onTabChange}
         tabsProps={{
           tabBarExtraContent: operations,
         }}
       ></RenderTabPanes>
 
-      <div className={'planStepWrapper '}>
+      {/* <div className={'planStepWrapper '}>
         <RenderStep
           config={planContractStepConfig}
-          onChange={onChange}
+          onChange={onStepChange}
           current={current}
         ></RenderStep>
-      </div>
+      </div> */}
 
-      <ClientClueForm {...props}></ClientClueForm>
+      {/* {Object.keys(props.init).length > 0 && <ClientClueForm 
+        {...props}
+        action={'detail'}
+        // key={props.init.id} 
+      ></ClientClueForm>} */}
+      {Object.keys(props.init).length > 0 && (
+        <PlanContractStep
+          {...props}
+          action={'detail'}
+          // key={props.init.id}
+        ></PlanContractStep>
+      )}
 
       <div className={'rowTitle itemtitle'}>
         处理记录：
@@ -88,7 +128,7 @@ const ClientPlanList = props => {
 
       <RenderVerticalStep
         config={planContractStepConfig}
-        onChange={onChange}
+        onChange={onStepChange}
         current={current}
       ></RenderVerticalStep>
     </div>

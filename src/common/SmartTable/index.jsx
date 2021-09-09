@@ -301,8 +301,13 @@ class SmartTable extends PureComponent {
       // mapText = dayjs.duration(text).asSeconds()
     }
     if (day) {
+      console.log('    renderCol mapText： ', mapText, day);
       mapText =
-        mapText !== 'NaT' ? dayjs(mapText).format(day || 'YYYY-MM-DD') : null;
+        mapText !== 'NaT'
+          ? dayjs(mapText).format(
+              day && typeof day === 'string' ? day : 'YYYY-MM-DD HH:mm:ss',
+            )
+          : null;
     }
     // let txt = !noCutText ? foramtText(mapText) : mapText;
     let txt = mapText;

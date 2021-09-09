@@ -3,15 +3,15 @@ import * as services from '@/services/assets';
 import { getClientId } from '@/models/user';
 
 const namespace = 'csAssetsList';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [];
 
 const batchTurnActions = [];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -26,7 +26,7 @@ const initialState = {
   searchInfo: {},
 };
 
-export default {
+const model = {
   namespace,
 
   state: initialState,
@@ -80,3 +80,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

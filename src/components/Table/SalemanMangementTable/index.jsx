@@ -1,16 +1,16 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
+import { userStatusMap } from '@/configs';
 
 const SalemanMangementTable = props => {
   const columns = [
     {
       title: '人员编号',
-      // dataIndex: '',
+      dataIndex: 'id',
     },
     {
       title: '姓名',
-      // dataIndex: '',
-      // dataIndex: '',
+      dataIndex: 'username',
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',
@@ -27,7 +27,7 @@ const SalemanMangementTable = props => {
     },
     {
       title: '手机',
-      // dataIndex: '',
+      dataIndex: 'phone',
     },
     {
       title: '角色',
@@ -35,11 +35,12 @@ const SalemanMangementTable = props => {
     },
     {
       title: '邮箱',
-      // dataIndex: '',
+      dataIndex: 'email',
     },
     {
       title: '状态',
-      // dataIndex: '',
+      dataIndex: 'status',
+      dataMap: userStatusMap,
     },
   ];
 

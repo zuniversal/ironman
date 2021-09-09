@@ -1,17 +1,18 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/myTask';
+import * as clientClueServices from '@/services/clientClue';
 import { MYTASK_PENDING_APPROVE } from '@/configs';
 
 const namespace = 'myTask';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [];
 
 const batchTurnActions = ['onTabChange'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 export const mapStateToProps = state => state[namespace];
 
@@ -23,9 +24,10 @@ const initialState = {
   itemDetail: {},
   searchInfo: {},
   tabType: MYTASK_PENDING_APPROVE,
+  taskInfo: {},
 };
 
-export default {
+const model = {
   namespace,
 
   state: initialState,
@@ -33,10 +35,15 @@ export default {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
+      let taskInfo = [];
+      if (payload.taskInfo) {
+        taskInfo = payload.taskInfo;
+      }
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
+        taskInfo,
       };
     },
     onCancel(state, { payload, type }) {
@@ -58,11 +65,21 @@ export default {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
+      const { file, logo } = payload.clientClueRes.bean.content.enterprise;
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
-        itemDetail: payload.bean,
+        itemDetail: {
+          ...payload.bean,
+          clientClueRes: {
+            ...payload.clientClueRes.bean,
+            ...payload.clientClueRes.bean.content,
+            file: file ? file.split(',') : [],
+            logo: logo ? logo.split(',') : [],
+          },
+        },
       };
     },
     addItem(state, { payload, type }) {
@@ -111,7 +128,20 @@ export default {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put({ type: 'getItem' });
+      // const clientClueRes = yield call(clientClueServices.getItem, payload);
+      const clientClueRes = yield call(clientClueServices.getItem, {
+        d_id: res.bean.customer.id,
+        d_id: 14,
+      });
+      // const clientClueRes = yield put({ type: 'approveTaskAsync', payload: {
+      //   d_id: res.bean.customer.id,
+      //   d_id: 14,
+      // }});
+      console.log(' getItemAsyncgetItemAsync 修改  ： ', clientClueRes);
+      yield put({
+        type: 'getItem',
+        payload: { ...res, payload, clientClueRes },
+      });
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
@@ -125,5 +155,15 @@ export default {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
     },
+
+    *approveTaskAsync({ payload, action, type }, { call, put }) {
+      console.log(' approveTaskAsync 修改  ： ', payload);
+      const res = yield call(services.approveTask, payload);
+      yield put({ type: 'getListAsync' });
+    },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

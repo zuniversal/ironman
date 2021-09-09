@@ -385,9 +385,9 @@ export const noShowTitlePath = [
 ];
 
 export const httpTipsMap = {
-  slow: '阿哦，加载中，请稍后',
-  notNetWork: '阿哦，没有网络，请您检查网络设置',
-  loadError: '阿哦，加载失败了，点击刷新试试（提供刷新按钮）',
+  slow: '阿哦,加载中,请稍后',
+  notNetWork: '阿哦,没有网络,请您检查网络设置',
+  loadError: '阿哦,加载失败了,点击刷新试试（提供刷新按钮）',
 };
 
 export const workTicketExcuteConfig = [
@@ -705,9 +705,13 @@ export const repairSourceConfig = [
 
 export const enterpriseScaleConfig = [
   {
-    label: '特大型',
+    label: '未知',
     value: '0',
   },
+  // {
+  //   label: '特大型',
+  //   value: '0',
+  // },
   {
     label: '大型',
     value: '1',
@@ -728,9 +732,13 @@ export const enterpriseScaleConfig = [
 
 export const enterpriseNatureConfig = [
   {
-    label: '国有企业',
+    label: '',
     value: '0',
   },
+  // {
+  //   label: '国有企业',
+  //   value: '0',
+  // },
   {
     label: '集体所有制企业',
     value: '1',
@@ -1904,7 +1912,7 @@ export const clientListTabConfig = [
     value: 0,
   },
   {
-    tab: '客户过海',
+    tab: '客户公海',
     key: CLIENTLIST_PUBLIC,
     value: 1,
   },
@@ -1914,23 +1922,34 @@ export const clientListTabMap = arrMapObj(clientListTabConfig, {
   label: 'value',
 });
 
-export const MYTASK_PENDING_APPROVE = 'pending_approve'; //
-export const MYTASK_COMPLETE = 'complete'; //
-export const MYTASK_APPROVING = 'approving'; //
+// export const MYTASK_PENDING_APPROVE = 'pending_approve'; //
+// export const MYTASK_COMPLETE = 'complete'; //
+// export const MYTASK_APPROVING = 'approving'; //
+export const MYTASK_PENDING_APPROVE = 'pending'; //
+export const MYTASK_COMPLETE = 'completed'; //
+export const MYTASK_APPROVING = 'pending_approval'; //
 export const mytaskTabConfig = [
   {
     tab: '待处理',
     key: MYTASK_PENDING_APPROVE,
+    label: '待处理',
+    value: MYTASK_PENDING_APPROVE,
   },
   {
     tab: '审批中',
     key: MYTASK_APPROVING,
+    label: '审批中',
+    value: MYTASK_APPROVING,
   },
   {
     tab: '已完成',
     key: MYTASK_COMPLETE,
+    label: '已完成',
+    value: MYTASK_COMPLETE,
   },
 ];
+
+export const mytaskTabMap = arrMapObj(mytaskTabConfig);
 
 export const clientPortraitSpreadConfig = [
   {
@@ -2037,24 +2056,24 @@ export const planContractStepConfig = [
 export const planContractDescConfig = [
   {
     label: '提交人',
-    value: '提交人',
+    value: 'submitterName',
   },
   {
     label: '联系电话',
-    value: '联系电话',
+    value: 'submitterPhone',
   },
   {
     label: '提交时间',
-    value: '提交时间',
+    value: 'createdTime',
   },
   {
     label: '所属计划',
-    value: '所属计划',
+    value: 'planName',
     span: 3,
   },
   {
     label: '方案详情',
-    value: '方案详情',
+    value: 'file',
     span: 3,
     type: 'showPDF',
   },
@@ -2090,15 +2109,15 @@ console.log(' systemNotifyColorMap ： ', systemNotifyColorMap); //
 export const clientClueLevelConfig = [
   {
     label: '低价值客户',
-    value: '0',
+    value: 0,
   },
   {
     label: '中价值客户',
-    value: '1',
+    value: 1,
   },
   {
     label: '高价值客户',
-    value: '2',
+    value: 2,
   },
 ];
 
@@ -2130,6 +2149,92 @@ export const myTaskTypeConfig = [
     label: '合同阶段',
     value: '3',
   },
+  {
+    label: '新客户录入',
+    value: '4',
+  },
+  {
+    label: '投诉',
+    value: '5',
+  },
 ];
 
 export const myTaskTypeMap = arrMapObj(myTaskTypeConfig);
+
+export const credentialsTypeConfig = [
+  {
+    label: '信息补充',
+    value: '1',
+  },
+  {
+    label: '方案阶段',
+    value: '2',
+  },
+  {
+    label: '合同阶段',
+    value: '3',
+  },
+  {
+    label: '新客户录入',
+    value: '4',
+  },
+  {
+    label: '投诉',
+    value: '5',
+  },
+];
+
+export const userStatusConfig = [
+  {
+    label: '在职',
+    value: '1',
+  },
+  {
+    label: '离职',
+    value: '2',
+  },
+];
+
+export const userStatusMap = arrMapObj(userStatusConfig);
+
+export const certificationStatusConfig = [
+  {
+    label: '未认证',
+    value: '0',
+  },
+  {
+    label: '认证',
+    value: '1',
+  },
+];
+
+export const certificationStatusMap = arrMapObj(certificationStatusConfig);
+
+export const certificateTypeConfig = [
+  {
+    label: '身份证',
+    value: '1',
+  },
+  {
+    label: '护照',
+    label: '2',
+  },
+  {
+    label: '港澳居民来往内地通行证',
+    label: '3',
+  },
+  {
+    label: '台湾居民来往大陆通行证',
+    label: '4',
+  },
+  {
+    label: '外国人永久居留身份证',
+    label: '5',
+  },
+  {
+    label: '港澳台居民居住证',
+    label: '6',
+  },
+];
+
+export const certificateTypeMap = arrMapObj(certificateTypeConfig);

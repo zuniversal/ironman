@@ -175,6 +175,7 @@ RenderList.defaultProps = {
 
 const AssetsInfo = props => {
   const [activeItem, setActiveItem] = useState(0);
+  console.log(' AssetsInfoAssetsInfo1  ： ', props);
   const [activeKey, setActiveKey] = useState(props.selectItem[0]?.key);
   const selectData =
     props.selectItem?.children?.length > 0

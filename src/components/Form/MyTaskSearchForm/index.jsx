@@ -1,30 +1,29 @@
 import React from 'react';
 import { SearchForm } from '@/common/SmartForm';
+import { mytaskTabConfig } from '@/configs';
 
 const MyTaskSearchForm = props => {
   const config = [
     {
-      // formType: 'Search',
-      // selectData: ,
       itemProps: {
         label: '提交人',
         name: '',
       },
     },
     {
-      // formType: 'Search',
-      // selectData: ,
+      formType: 'Search',
+      selectData: mytaskTabConfig,
       itemProps: {
         label: '类型',
         name: '',
       },
     },
-    {
-      itemProps: {
-        label: '进度',
-        name: '',
-      },
-    },
+    // {
+    //   itemProps: {
+    //     label: '进度',
+    //     name: '',
+    //   },
+    // },
     {
       noLabel: true,
       itemProps: {

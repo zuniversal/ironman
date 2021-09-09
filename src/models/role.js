@@ -5,15 +5,15 @@ import { formatSelectList, nowYearMonth, copyData } from '@/utils';
 import { platformSelectConfig } from '@/configs/routes';
 
 const namespace = 'role';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = ['getPermissionAsync'];
 
 const batchTurnActions = ['onPermsCheck'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -177,7 +177,7 @@ export const recursiveHandle = (data = [], perms = {}, datas = []) => {
   // return data
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -361,3 +361,7 @@ export default {
   //   },
   // },
 };
+
+export const actions = createAction(model);
+
+export default model;

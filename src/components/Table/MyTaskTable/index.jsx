@@ -5,6 +5,7 @@ import {
   MYTASK_COMPLETE,
   MYTASK_APPROVING,
   myTaskTypeMap,
+  mytaskTabMap,
 } from '@/configs';
 
 const MyTaskTable = props => {
@@ -12,7 +13,7 @@ const MyTaskTable = props => {
   const columns = [
     {
       title: '公司名称',
-      // dataIndex: '',
+      dataIndex: ['customer', 'name'],
       // detailFn: record =>
       //   props.showItemAsync({
       //     action: 'clientDetailAsync',
@@ -24,34 +25,38 @@ const MyTaskTable = props => {
       dataIndex: 'type',
       dataMap: myTaskTypeMap,
     },
-    {
-      title: '进度',
-      // dataIndex: '',
-    },
+    // {
+    //   title: '进度',
+    //   // dataIndex: '',
+    // },
     {
       title: '状态',
-      // dataIndex: 'approval_status',
+      dataIndex: 'status',
+      dataMap: mytaskTabMap,
     },
   ];
 
   const myTaskCol1 = [
     {
       title: '分配人',
-      // dataIndex: '',
+      title: '提交人',
+      dataIndex: ['submitter', 'name'],
     },
     {
       title: '截止时间',
-      // dataIndex: '',
+      dataIndex: 'finish_time',
+      day: true,
     },
   ];
   const myTaskCol2 = [
     {
       title: '提交人',
-      // dataIndex: '',
+      dataIndex: ['submitter', 'name'],
     },
     {
       title: '提交时间',
-      // dataIndex: '',
+      dataIndex: 'created_time',
+      day: true,
     },
   ];
 
@@ -64,7 +69,28 @@ const MyTaskTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a onClick={() => props.xxx}>查看</a>
+      <a
+        onClick={() =>
+          props.getItemAsync({
+            action: 'planContract',
+            d_id: record.id,
+          })
+        }
+      >
+        查看
+      </a>
+      <a
+        onClick={() => {
+          props.showFormModal({
+            action: 'approveTaskAsync',
+            taskInfo: {
+              d_id: record.id,
+            },
+          });
+        }}
+      >
+        审批
+      </a>
     </>
   );
 

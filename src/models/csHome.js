@@ -5,7 +5,7 @@ import * as inspectMissionServices from '@/services/inspectMission';
 import { formatSelectList, nowYearMonth } from '@/utils';
 
 const namespace = 'csHome';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getStatisticAsync',
@@ -16,14 +16,14 @@ const otherActions = [
 
 const batchTurnActions = [];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -192,3 +192,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

@@ -78,12 +78,17 @@ export const ClientListPlanForm = props => {
 };
 
 export const ClientListPullContractForm = props => {
+  // const { data: contractList } = useHttp(getServiceStaff, {
+  //   formatVal: 'nickname',
+  // });
+
   const config = [
     {
       // formType: 'Search',
-      // selectData: ,
+      // selectData: contractList,
       itemProps: {
         label: '合同',
+        label: '计划',
         name: '',
       },
       comProps: {

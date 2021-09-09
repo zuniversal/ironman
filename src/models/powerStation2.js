@@ -13,7 +13,7 @@ import {
 import moment from 'dayjs';
 
 const namespace = 'powerStation2';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'exportDutyDataAsync',
@@ -47,9 +47,9 @@ const batchTurnActions = [
   'onCancel2',
 ];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 const formatPowerList = (data, labelKey = 'label', idKey = 'id') => {
   const res = data.map(v => ({
@@ -118,7 +118,7 @@ const outLineTableItem = {
   isEdit: true,
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -1086,3 +1086,7 @@ export default {
   //   },
   // },
 };
+
+export const actions = createAction(model);
+
+export default model;

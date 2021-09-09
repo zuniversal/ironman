@@ -99,6 +99,12 @@ class ElectricInfo extends PureComponent {
             onOptionChange={this.onOptionChange}
           ></TimeChoice>
         </PageTitle>
+        <div className="">
+          <span className="m-r-30">
+            电站温度：{this.props.stationInfo?.t} ℃
+          </span>
+          <span className="">电站湿度：{this.props.stationInfo?.h}</span>
+        </div>
         <ElectricInfoTable {...tableProps}></ElectricInfoTable>
       </>
     );

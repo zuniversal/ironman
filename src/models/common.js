@@ -175,7 +175,7 @@ const getService = params => {
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -737,3 +737,5 @@ export default {
     },
   },
 };
+
+export default model;

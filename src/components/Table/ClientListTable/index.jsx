@@ -1,6 +1,7 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
 import { clientClueLevelMap } from '@/configs';
+import { formatSelectList } from '@/utils';
 
 export const ClientListPrivateTable = props => {
   const columns = [
@@ -28,39 +29,36 @@ export const ClientListPrivateTable = props => {
     {
       title: '跟进计划',
       dataIndex: 'district',
-      // render: (text, record, index) => (
-      //   <>
-      //     <a
-      //       onClick={() =>
-      //         props.showFormModal({
-      //           action: 'addClientPlanAsync',
-      //           d_id: record.id,
-      //         })
-      //       }
-      //     >
-      //       计划
-      //     </a>
-      //     <a
-      //       onClick={() =>
-      //         props.showFormModal({
-      //           action: 'addClientPlanAsync',
-      //           d_id: record.id,
-      //         })
-      //       }
-      //     >
-      //       计划
-      //     </a>
-      //   </>
-      // ),
-      detailFn: record =>
-        // props.showItemAsync({
-        //   action: 'clientPlanDetailAsync',
-        //   d_id: record.id,
-        // }),
-        props.getClientPlanDetailAsync({
-          action: 'getClientPlanDetailAsync',
-          customer_id: record.id,
-        }),
+      render: (text, record, index) => {
+        const pendingList = record.plan?.filter(v => v.status === 'pending');
+        const completeList = record.plan?.filter(v => v.status === 'complete');
+        // console.log(' res  record.plan.filter v ： ', pendingList, completeList,   )
+        return (
+          <>
+            <div
+              className={`linking`}
+              onClick={() =>
+                props.getClientPlanAsync({
+                  action: 'getClientPlanAsync',
+                  d_id: record.id,
+                })
+              }
+            >
+              (方案中)计划 {pendingList.length}、(已完成)计划{' '}
+              {completeList.length}
+            </div>
+          </>
+        );
+      },
+      // detailFn: record =>
+      //   // props.showItemAsync({
+      //   //   action: 'clientPlanDetailAsync',
+      //   //   d_id: record.id,
+      //   // }),
+      //   props.getClientPlanAsync({
+      //     action: 'getClientPlanAsync',
+      //     customer_id: record.id,
+      //   }),
     },
     {
       title: '客户地址',
@@ -79,9 +77,9 @@ export const ClientListPrivateTable = props => {
           })
         }
       >
-        计划
+        新增计划
       </a>
-      <a
+      {/* <a
         onClick={() =>
           props.showFormModal({
             action: 'uploadFile',
@@ -90,17 +88,18 @@ export const ClientListPrivateTable = props => {
         }
       >
         上传方案
-      </a>
-      <a
+      </a> */}
+      {/* <a
         onClick={() =>
           props.showFormModal({
-            action: 'getClientPlanDetailAsync',
+            action: 'clientListPullContract',
             d_id: record.id,
+            clientPlanList: formatSelectList(record.plan), 
           })
         }
       >
         拉取合同
-      </a>
+      </a> */}
       <a
         onClick={() =>
           props.showFormModal({

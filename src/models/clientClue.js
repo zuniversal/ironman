@@ -17,6 +17,7 @@ const initialState = {
   count: 0,
   itemDetail: {},
   searchInfo: {},
+  formInitData: {},
 };
 
 const model = {
@@ -27,10 +28,15 @@ const model = {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
+      let formInitData = {};
+      if (payload.action === 'approveClientClueAsync') {
+        formInitData = payload;
+      }
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
+        formInitData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -99,6 +105,11 @@ const model = {
     },
     *removeItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.removeItem, payload);
+      yield put({ type: 'getListAsync' });
+    },
+
+    *approveClientClueAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.approveClientClue, payload);
       yield put({ type: 'getListAsync' });
     },
   },

@@ -4,18 +4,18 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 import { missionsTypeMap, missionsStatusMap } from '@/configs';
 
 const namespace = 'bussniessRecord';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = ['confirmAsync'];
 
-export const actions = {
-  ...createActions(otherActions),
-};
+// export const actions = {
+//   ...createActions(otherActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -146,3 +146,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

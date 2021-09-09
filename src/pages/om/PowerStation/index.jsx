@@ -94,7 +94,7 @@ class PowerStation extends PureComponent {
         formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
-        getClientAsync={params => this.props.getClientAsync({ name: params })}
+        // getClientAsync={params => this.props.getClientAsync({ name: params })}
         clientList={this.props.clientList}
         getPowerAsync={params =>
           this.props.getPowerAsync({ name: params, type: '搜索' })
@@ -267,7 +267,7 @@ class PowerStation extends PureComponent {
     const { action } = this.props;
     const formComProps = {
       action,
-      getClientAsync: params => this.props.getClientAsync({ name: params }),
+      // getClientAsync: params => this.props.getClientAsync({ name: params }),
       clientList: this.props.clientList,
       getHouseNoAsync: params => this.props.getHouseNoAsync({ number: params }),
       houseNoList: this.props.houseNoList,
@@ -473,7 +473,7 @@ class PowerStation extends PureComponent {
     // this.props.getBelongHouseNoAsync();
     // this.props.getPowerAsync();
     this.props.getPowerAsync();
-    this.props.getClientAsync();
+    // this.props.getClientAsync();
     this.props.getHouseNoAsync();
     this.props.getTeamAsync();
     this.props.getDistrictAsync({});

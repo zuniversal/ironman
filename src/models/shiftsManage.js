@@ -4,7 +4,7 @@ import * as userServices from '@/services/userManage';
 import { formatSelectList, filterObjSame } from '@/utils';
 
 const namespace = 'shiftsManage';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getUserAsync',
@@ -13,9 +13,9 @@ const otherActions = [
   'getTeamAsync',
 ];
 
-export const actions = {
-  ...createActions(otherActions),
-};
+// export const actions = {
+//   ...createActions(otherActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -30,7 +30,7 @@ const formatUserList = data => {
   return res;
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -247,3 +247,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

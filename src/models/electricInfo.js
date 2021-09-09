@@ -10,7 +10,7 @@ import { handleGuestMode } from '@/models/user';
 import { recursiveAssets } from '@/models/assets';
 
 const namespace = 'electricInfo';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getRelativedAsync',
@@ -22,9 +22,9 @@ const otherActions = [
 
 const batchTurnActions = ['setStationList'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 
@@ -40,7 +40,7 @@ const flatAssets = (data = {}, config = []) => {
   return config;
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -60,6 +60,7 @@ export default {
     selectItem: {},
     assetDetail: {},
     subAssetTreeList: [],
+    stationInfo: {},
   },
 
   reducers: {
@@ -180,6 +181,13 @@ export default {
           : state.subAssetTreeList,
       };
     },
+    getTemperatureInfo(state, { payload, type }) {
+      console.log('  getTemperatureInfo ：', payload); //
+      return {
+        ...state,
+        stationInfo: payload.bean,
+      };
+    },
   },
 
   effects: {
@@ -217,6 +225,12 @@ export default {
             electricity_user_id: res.list[0].electricity_users[0].id,
             // electricity_user_id: '6464',
             // customer_id: '6464',
+          },
+        });
+        yield put({
+          type: 'getTemperatureInfoAsync',
+          payload: {
+            electricity_user_id: res.list[0].electricity_users[0].id,
           },
         });
         console.log(
@@ -304,5 +318,25 @@ export default {
           };
       yield put({ type: 'getAssetDetail', payload: { ...res, payload } });
     },
+    *getTemperatureInfoAsync({ payload, action, type }, { call, put, select }) {
+      console.log(' getTemperatureInfoAsync ： ', payload, type);
+      const pointRes = payload.electricity_user_id
+        ? yield call(monitorManageServices.getPointList, {
+            electricity_user_id: payload.electricity_user_id,
+          })
+        : {
+            list: [],
+          };
+      console.log(' pointRes ： ', pointRes); //
+      const res = yield call(monitorManageServices.getTemperatureInfo, {
+        imei: pointRes.list[0]?.imei,
+        // imei: '085202005090465',
+      });
+      yield put({ type: 'getTemperatureInfo', payload: { ...res, payload } });
+    },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

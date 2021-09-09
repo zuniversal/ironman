@@ -7,7 +7,7 @@ import { formatSelectList, nowYearMonthDay } from '@/utils';
 import moment from 'moment';
 
 const namespace = 'shiftsTransfer';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getTeamAsync',
@@ -16,9 +16,9 @@ const otherActions = [
   'exportDataAsync',
 ];
 
-export const actions = {
-  ...createActions(otherActions),
-};
+// export const actions = {
+//   ...createActions(otherActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -52,7 +52,7 @@ export const formatDetail = data => {
   };
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -218,3 +218,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

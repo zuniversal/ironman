@@ -8,14 +8,14 @@ const otherActions = ['getPortraitAsync'];
 
 const batchTurnActions = ['setPathname', 'setTitle'];
 
-export const actions = {
-  ...batchTurn(batchTurnActions),
-};
+// export const actions = {
+//   ...batchTurn(batchTurnActions),
+// };
 
 // console.log(' history ： ', history, window )//
 export const mapStateToProps = state => state[namespace];
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -60,3 +60,7 @@ export default {
 
   effects: {},
 };
+
+export const actions = createAction(model);
+
+export default model;

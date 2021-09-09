@@ -3,15 +3,15 @@ import * as services from '@/services/monitorDevice';
 import { formatSelectList, nowYearMonth, tips } from '@/utils';
 
 const namespace = 'monitorDevice';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = ['getRealDataAsync', 'handleFileAsync', 'uploadFileAsync'];
 
 const batchTurnActions = ['setIsImporting'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 
@@ -40,7 +40,7 @@ const loopUpload = ({ res, cb }) => {
   timer = setInterval(handleRequest, 2000);
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -224,3 +224,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

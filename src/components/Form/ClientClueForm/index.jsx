@@ -466,7 +466,7 @@ const ClientClueForm = props => {
       },
     },
     {
-      noRule: true,
+      // noRule: true,
       flexRow: 3,
       formType: 'Search',
       selectData: countryList,
@@ -583,17 +583,17 @@ const ClientClueForm = props => {
         name: 'level',
       },
     },
-    {
-      formType: 'Search',
-      selectData: customerTypeConfig,
-      itemProps: {
-        label: '客户类型',
-        name: 'type',
-      },
-      comProps: {
-        mode: 'multiple',
-      },
-    },
+    // {
+    //   formType: 'Search',
+    //   selectData: customerTypeConfig,
+    //   itemProps: {
+    //     label: '客户类型',
+    //     name: 'type',
+    //   },
+    //   comProps: {
+    //     mode: 'multiple',
+    //   },
+    // },
   ];
 
   const enterpriseConfig = [
@@ -921,7 +921,7 @@ const ClientClueForm = props => {
         config: clientContactFormConfig,
         name: 'contact',
         // extra: ContactExtra,
-        isDisabledAll: action === 'detail',
+        isDisabledAll: action === 'detail' && !props.noDisabledContact,
       }}
     ></FormListCom>
   );

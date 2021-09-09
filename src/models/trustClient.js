@@ -14,7 +14,7 @@ import { customerTypeMap } from '@/configs';
 import { recursiveHandle } from '@/models/organize';
 
 const namespace = 'trustClient';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getPortraitAsync',
@@ -35,9 +35,9 @@ const otherActions = [
 ];
 const batchTurnActions = ['onAdminChange', 'modifyTableItem'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 export const mapStateToProps = state => state[namespace];
 
 const initItem = {
@@ -64,7 +64,7 @@ const contactInitItem = {
   tags: '',
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -696,3 +696,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

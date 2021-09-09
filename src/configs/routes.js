@@ -4,11 +4,17 @@ import Icon from '@/components/Widgets/Icons';
 import { LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import SearchForm from '@/common/SearchForm';
 import { isDev } from '@/constants';
+import { getItem } from '@/utils';
 
 const placeIcon = <Icon icon={''} className={'subIcon'} />;
 
+export const CRM = 'crm';
 export const PLATFORM = 'base';
 export const DEF_BUSSNIESS_TAB = 'bp';
+
+export const isPlatform = platform => getItem('platform') === platform;
+export const isPlatformCRM = (platform = CRM) => isPlatform(platform);
+console.log(' isPlatform ： ', isPlatformCRM()); //
 
 export const platformMap = {
   manager: DEF_BUSSNIESS_TAB,
@@ -448,32 +454,32 @@ export const crmRoutes = [
     routes: [
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/clientList',
         name: '客户列表',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/clientClue',
         name: '客户线索',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/clientPortrait',
         name: '客户画像',
       },
-      {
-        platform: 'crm',
-        // authKey: '',
-        hideInMenu: false,
-        path: '/crm/clientLevel',
-        name: '客户等级',
-      },
+      // {
+      //   platform: 'crm',
+      //   authKey: 'customerModel',
+      //   hideInMenu: false,
+      //   path: '/crm/clientLevel',
+      //   name: '客户等级',
+      // },
     ],
   },
   {
@@ -485,14 +491,14 @@ export const crmRoutes = [
     routes: [
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/myTask',
         name: '我的任务',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/approvalMangement',
         name: '审批管理',
@@ -508,28 +514,28 @@ export const crmRoutes = [
     routes: [
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/turnRate',
         name: '转化率',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/saleData',
         name: '销售数据',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/satisfactionDegree',
         name: '满意度',
       },
       {
         platform: 'crm',
-        // authKey: '',
+        authKey: 'customerModel',
         hideInMenu: false,
         path: '/crm/saleClue',
         name: '销售线索',
@@ -561,6 +567,17 @@ export const crmRoutes = [
   },
 ];
 
+export const homeRoutes = [
+  {
+    hideInMenu: isPlatformCRM,
+    cb: isPlatformCRM,
+    noAuth: true,
+    path: '/om/home',
+    name: '首页',
+    icon: <Icon icon={'home'} />,
+  },
+];
+
 export const managerRoutes = [
   // {
   //   path: '/dashBoard',
@@ -577,12 +594,8 @@ export const managerRoutes = [
   //   name: '登录页',
   //   icon: <Icon icon={'home'} />,
   // },
-  {
-    noAuth: true,
-    path: '/om/home',
-    name: '首页',
-    icon: <Icon icon={'home'} />,
-  },
+
+  ...homeRoutes,
 
   // {
   //   noAuth: true,
@@ -787,9 +800,10 @@ export const platformSelectConfig = [
   },
 ];
 
-if (isDev) {
+// if (isDev) {
+if (window.location.protocol === 'http:') {
   platformSelectConfig.push({
-    value: 'crm',
+    value: CRM,
     label: 'CRM平台',
     name: 'CRM平台',
     authKey: 'businessPlatform',

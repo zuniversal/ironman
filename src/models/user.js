@@ -14,6 +14,7 @@ import {
 import { history } from 'umi';
 import {
   HOME,
+  CRM_HOME,
   CS_HOME,
   isDev,
   homeMap,
@@ -26,6 +27,7 @@ import defaultProps, {
   customerRoutes,
   PLATFORM,
   platformMap,
+  isPlatformCRM,
 } from '@/configs/routes';
 import { AUTH_FAIL } from '@/utils/request';
 import cookie from 'react-cookies';
@@ -35,7 +37,7 @@ import { notifyWs } from '@/services/common';
 import { notification } from 'antd';
 import moment from 'dayjs';
 const namespace = 'user';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'loginAsync',
@@ -48,9 +50,9 @@ const otherActions = [
 
 const batchTurnActions = ['onPlatformChange'];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 export const userActions = actions;
 
@@ -170,9 +172,12 @@ const getRoutes = (props = {}) => {
   // const routesConfig = recursiveAuth(routes, authData);
   const routesConfig = recursiveAuth(routes, flatAuth(props?.perms)).map(v => ({
     ...v,
-    hideInMenu: v.platform
+    hideInMenu: v.cb
+      ? v.cb()
+      : v.platform
       ? (v.platform && v.platform !== platform) || v.hideInMenu
-      : false,
+      : // : false,
+        v.hideInMenu,
   }));
   console.log(' routesConfig   ,   ： ', routesConfig);
   const routesData = {
@@ -196,7 +201,7 @@ const getRoutes = (props = {}) => {
 //   flatAuth(authData),
 // );
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -329,6 +334,7 @@ export default {
       console.log(' onPlatformChange   ,   ： ', state, payload);
       const { getRoutes } = state;
       const { platform } = payload;
+      setItem('platform', platform);
       const filteRouteData = getRoutes.route.routes.map(v => {
         // console.log(
         //   ' filteRouteData xxxxxx ： ',
@@ -341,9 +347,12 @@ export default {
         return {
           ...v,
           // hideInMenu: v.platform && v.platform !== platform ? true : false,
-          hideInMenu: v.platform
+          hideInMenu: v.cb
+            ? v.cb()
+            : v.platform
             ? (v.platform && v.platform !== platform) || v.hideInMenu
-            : false,
+            : // : false,
+              false,
           // hideInMenu: isDev
           //   ? false
           //   : v.platform && v.platform !== platform
@@ -351,8 +360,8 @@ export default {
           //   : false,
         };
       });
-      setItem('platform', platform);
-      history.push(HOME);
+      const path = isPlatformCRM() ? CRM_HOME : HOME; //
+      history.push(path);
       console.log(' filteRouteData ： ', state, payload, filteRouteData); //
       return {
         ...state,
@@ -690,3 +699,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

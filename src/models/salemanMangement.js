@@ -1,34 +1,24 @@
-import { init, action } from '@/utils/createAction';
-import * as services from '@/services/electricBill';
-import { formatSelectList, nowYearMonth } from '@/utils';
+import { init } from '@/utils/createAction';
+import * as services from '@/services/salemanMangement';
 
-const namespace = 'electricBill';
+const namespace = 'salemanMangement';
 const { createActions, createAction } = init(namespace);
 
-const otherActions = [];
-
-const batchTurnActions = [];
-
-// export const actions = {
-//   ...createActions(otherActions, batchTurnActions),
-// };
-
-// console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
+
+const initialState = {
+  action: '',
+  isShowModal: false,
+  dataList: [],
+  count: 0,
+  itemDetail: {},
+  searchInfo: {},
+};
 
 const model = {
   namespace,
 
-  state: {
-    action: '',
-    isShowModal: false,
-    dataList: [],
-    count: 0,
-    itemDetail: {},
-    d_id: '',
-
-    searchInfo: {},
-  },
+  state: initialState,
 
   reducers: {
     showFormModal(state, { payload, type }) {
@@ -58,38 +48,14 @@ const model = {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
+
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
-        d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
-      };
-    },
-    addItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: [payload.bean, ...state.dataList],
-        isShowModal: false,
-        count: state.count + 1,
-      };
-    },
-    editItem(state, { payload, type }) {
-      return {
-        ...state,
-        dataList: state.dataList.map(v => ({
-          ...(v.id !== payload.payload.d_id ? payload : v),
-        })),
-        isShowModal: false,
-      };
-    },
-    removeItem(state, { payload, type }) {
-      const removeList = payload.payload.filter(v => v.id);
-      return {
-        ...state,
-        dataList: state.dataList.filter(v =>
-          removeList.some(item => v.id === item),
-        ),
+        itemDetail: {
+          ...payload.bean,
+        },
       };
     },
   },
@@ -113,7 +79,7 @@ const model = {
     },
     *getItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getItem, payload);
-      yield put(action({ ...res, payload }));
+      yield put({ type: 'getItem', payload: { ...res, payload } });
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);

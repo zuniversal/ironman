@@ -506,7 +506,7 @@ export default ({
       //   this.props,
       // );
       const { dispatch } = this.props;
-      dispatch(actions.getListAsync(params));
+      actions.getListAsync && dispatch(actions.getListAsync(params));
     };
     checkQuery = e => {
       const { location, dispatch } = this.props;
@@ -514,7 +514,7 @@ export default ({
         const { query } = location;
         console.log('    checkQuery ： ', e, this.state, this.props, query);
         if (Object.keys(query).length) {
-          dispatch(actions.getListAsync(query));
+          actions.getListAsync && dispatch(actions.getListAsync(query));
         }
       }
     };

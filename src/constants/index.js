@@ -81,6 +81,7 @@ export const TIME_ZERO = ' 00:00:00';
 
 export const LOGIN = '/login';
 export const HOME = '/om/home';
+export const CRM_HOME = '/crm/clientList';
 // export const CS_HOME = '/cs/home';
 export const CS_SYSTEM = 'CS';
 export const DEF_PALTFORM = 'bp';

@@ -32,9 +32,10 @@ const titleMap = {
   uploadFile: `上传方案`,
   clientListPlan: `计划`,
   clientListPullContract: `拉取合同`,
+  clientListPullContract: `拉取计划`,
   clientListRemark: `添加备注`,
   clientListAsignPeople: `分配人员`,
-  getClientPlanDetailAsync: `${TITLE}计划详情`,
+  getClientPlanAsync: `${TITLE}计划详情`,
 };
 
 const detailFormMap = {};
@@ -93,7 +94,7 @@ class ClientList extends PureComponent {
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
 
-      getClientPlanDetailAsync: this.props.getClientPlanDetailAsync,
+      getClientPlanAsync: this.props.getClientPlanAsync,
     };
 
     const tableMap = {
@@ -225,7 +226,9 @@ class ClientList extends PureComponent {
     if (action === 'clientListRemark') {
       return <ClientListRemarkForm {...formComProps}></ClientListRemarkForm>;
     }
-    if (action === 'getClientPlanDetailAsync') {
+    if (action === 'getClientPlanAsync') {
+      formComProps.clientPlanList = this.props.clientPlanList;
+      formComProps.getClientClueAsync = this.props.getClientClueAsync;
       return <ClientPlanList {...formComProps}></ClientPlanList>;
     }
     return <ClientForm {...formComProps}></ClientForm>;

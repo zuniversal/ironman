@@ -732,7 +732,7 @@ const ClientReportForm = props => {
     //   },
     // },
     {
-      noRule: true,
+      // noRule: true,
       withFlex: true,
       flexRow: 2,
       colCls: 'dif w50',

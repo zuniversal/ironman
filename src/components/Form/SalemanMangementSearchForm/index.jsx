@@ -1,5 +1,6 @@
 import React from 'react';
 import { SearchForm } from '@/common/SmartForm';
+import { userStatusConfig } from '@/configs';
 import useHttp from '@/hooks/useHttp';
 import { getList } from '@/services/clientList';
 
@@ -14,8 +15,8 @@ const SalemanMangementSearchForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectData: ,
+      formType: 'Search',
+      selectData: userStatusConfig,
       itemProps: {
         label: '状态',
         name: '',

@@ -7,7 +7,7 @@ import { formatSelectList, nowYearMonth } from '@/utils';
 // import { recursiveHandle } from '@/models/organize';
 
 const namespace = 'msg';
-const { createActions } = init(namespace);
+const { createActions, createAction } = init(namespace);
 
 const otherActions = [
   'getUserManageAsync',
@@ -17,9 +17,9 @@ const otherActions = [
 
 const batchTurnActions = [];
 
-export const actions = {
-  ...createActions(otherActions, batchTurnActions),
-};
+// export const actions = {
+//   ...createActions(otherActions, batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -61,7 +61,7 @@ export const flatOrganize = (data = [], parent_id, init = []) => {
   return init;
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -265,3 +265,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

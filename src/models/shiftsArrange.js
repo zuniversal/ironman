@@ -19,10 +19,10 @@ const otherActions = ['getTeamAsync', 'exportDataAsync', 'setSearchAsync'];
 
 const batchTurnActions = ['setSearchInfo', 'onChoiceRadio', 'onCheck'];
 
-export const actions = {
-  ...createCRUD(otherActions),
-  ...batchTurn(batchTurnActions),
-};
+// export const actions = {
+//   ...createCRUD(otherActions),
+//   ...batchTurn(batchTurnActions),
+// };
 
 // console.log(' actions ： ', actions,  )//
 export const mapStateToProps = state => state[namespace];
@@ -62,7 +62,7 @@ const formatSearch = data => {
   };
 };
 
-export default {
+const model = {
   namespace,
 
   state: {
@@ -300,3 +300,7 @@ export default {
     },
   },
 };
+
+export const actions = createAction(model);
+
+export default model;

@@ -127,7 +127,7 @@ class SaleData extends PureComponent {
 
         <HomeStatEcharts
           barData={barData}
-          rankData={this.props.chartData}
+          // rankData={this.props.chartData}
           onOptionChange={this.onOptionChange}
           getChartAsync={this.props.getChartAsync}
           homeTitle={'销售额趋势'}

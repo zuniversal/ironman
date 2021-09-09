@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Tabs } from 'antd';
 import PlanContractStep from './PlanContractStep';
+import { MyTaskApproveForm } from '@/components/Form/MyTaskActionForm';
 import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
 // import MyTaskForm from '@/components/Form/MyTaskForm';
 import MyTaskTable from '@/components/Table/MyTaskTable';
@@ -12,12 +13,14 @@ import { mytaskTabConfig } from '@/configs';
 
 const { TabPane } = Tabs;
 
-const TITLE = '';
+const TITLE = '任务';
 
 const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  planContract: `${TITLE}详情`,
+  approveTaskAsync: `${TITLE}审核`,
 };
 
 const detailFormMap = {};
@@ -75,6 +78,7 @@ class MyTask extends PureComponent {
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
       taskType: this.props.tabType,
+      getItemAsync: this.props.getItemAsync,
     };
 
     return <MyTaskTable {...tableProps}></MyTaskTable>;
@@ -111,6 +115,14 @@ class MyTask extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'approveTaskAsync') {
+        this.props.approveTaskAsync({
+          d_id: this.props.taskInfo.d_id,
+          result: true,
+          ...res,
+        });
+        return;
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -125,8 +137,19 @@ class MyTask extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
+    if (action === 'approveTaskAsync') {
+      return <MyTaskApproveForm {...formComProps}></MyTaskApproveForm>;
+    }
+    if (action === 'planContract') {
+      return <PlanContractStep {...formComProps}></PlanContractStep>;
+    }
     // return <MyTaskForm {...formComProps}></MyTaskForm>;
   };
+  get size() {
+    return ['approveTaskAsync'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -135,6 +158,7 @@ class MyTask extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
       >
         {this.renderModalContent()}
       </SmartFormModal>

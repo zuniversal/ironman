@@ -85,7 +85,7 @@ const CustomTools = React.memo(props => {
     <div>
       {!props.noTitle && (
         <div className={'styles.title title'}>
-          国家电网元器件 ({props.glyphs.length})
+          {props.name} ({props.glyphs.length})
         </div>
       )}
       <div className={'styles.buttons widget'}>
@@ -1035,6 +1035,7 @@ const DrawPanel = props => {
                   font_family={PowerIcons.font_family}
                   css_prefix_text={PowerIcons.css_prefix_text}
                   glyphs={PowerIcons.glyphs}
+                  name={PowerIcons.name}
                   filterName={filterName}
                 ></CustomTools>
                 <CustomTools
@@ -1042,8 +1043,16 @@ const DrawPanel = props => {
                   font_family={IconfontIcons.font_family}
                   css_prefix_text={IconfontIcons.css_prefix_text}
                   glyphs={IconfontIcons.glyphs}
+                  name={IconfontIcons.name}
                   filterName={filterName}
                   noTitle
+                ></CustomTools>
+                <CustomTools
+                  onCustomDrag={onCustomDrag}
+                  font_family={ltdxIcons.font_family}
+                  css_prefix_text={ltdxIcons.css_prefix_text}
+                  glyphs={ltdxIcons.glyphs}
+                  name={ltdxIcons.name}
                 ></CustomTools>
               </>
             )}

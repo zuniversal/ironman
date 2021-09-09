@@ -49,8 +49,30 @@ const ClientClueTable = props => {
     },
   ];
 
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() =>
+          props.showFormModal({
+            action: 'approveClientClueAsync',
+            d_id: record.id,
+            name: record.name,
+            salesman_id: `${record.salesman_id}`,
+          })
+        }
+      >
+        审批
+      </a>
+    </>
+  );
+
   return (
-    <SmartTable rowSelection={null} columns={columns} {...props}></SmartTable>
+    <SmartTable
+      columns={columns}
+      extra={extra}
+      rowSelection={null}
+      {...props}
+    ></SmartTable>
   );
 };
 

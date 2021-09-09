@@ -26,7 +26,7 @@ const ActionCol = props => {
   // console.log(' ActionCol props ： ', props);
 
   const rowKey = props.uniqueKey ? props.uniqueKey : props.rowKey; //
-  // console.log('  rowKey ：', props, rowKey,  )//
+  // console.log('  rowKey ：', props, rowKey, authInfo, authInfo.edit !== true, authInfo.edit == null )//
 
   return (
     <span>
@@ -49,7 +49,9 @@ const ActionCol = props => {
                     });
               }}
               // disabled={isDev ? false : authInfo.edit}
-              disabled={isDev ? false : authInfo.edit !== true}
+              disabled={
+                isDev ? false : authInfo.edit !== true && authInfo.edit != null
+              }
             >
               编辑
             </a>
@@ -62,7 +64,11 @@ const ActionCol = props => {
                 remove({ record: formatData(record, rowKey) });
               }}
               // disabled={isDev ? false : authInfo.delete}
-              disabled={isDev ? false : authInfo.delete !== true}
+              disabled={
+                isDev
+                  ? false
+                  : authInfo.delete !== true && authInfo.delete != null
+              }
             >
               删除
             </a>

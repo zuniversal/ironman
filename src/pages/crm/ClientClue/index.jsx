@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
+import { ClientClueApproveForm } from '@/components/Form/ClientClueActionForm';
 import ClientListSearchForm from '@/components/Form/ClientListSearchForm';
 import ClientClueForm from '@/components/Form/ClientClueForm';
 import ClientClueTable from '@/components/Table/ClientClueTable';
@@ -14,6 +15,7 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  approveClientClueAsync: `${TITLE}审批`,
 };
 
 const detailFormMap = {};
@@ -115,13 +117,25 @@ class ClientClue extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      // const {enterprise, contact,  } = res
+      if (action === 'approveClientClueAsync') {
+        this.props.approveClientClueAsync(res);
+        return;
+      }
+
+      const { province, city, area, ...enterprise } = res.enterprise;
+      console.log(' enterprise ： ', enterprise);
 
       const params = {
-        ...init,
+        // ...init,
+        id: this.props.itemDetail.id,
         ...res,
         content: {
           ...res,
+          base: {
+            name: res.name,
+            level: res.level,
+          },
+          enterprise,
           contact: res.contact.map(v => ({
             ...v,
             is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
@@ -194,6 +208,10 @@ class ClientClue extends PureComponent {
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
+    }
+    if (action === 'approveClientClueAsync') {
+      formComProps.init = this.props.formInitData;
+      return <ClientClueApproveForm {...formComProps}></ClientClueApproveForm>;
     }
     console.log(' formComProps ： ', formComProps);
     return <ClientClueForm {...formComProps}></ClientClueForm>;

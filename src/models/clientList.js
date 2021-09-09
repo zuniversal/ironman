@@ -1,12 +1,13 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/clientList';
 import * as clientPlanServices from '@/services/clientPlan';
+import * as clientClueServices from '@/services/clientClue';
 import { CLIENTLIST_PRIVATE } from '@/configs';
 
 const namespace = 'clientList';
 const { createActions, createAction } = init(namespace);
 
-const otherActions = ['addClientPlanAsync', 'getClientPlanDetailAsync'];
+const otherActions = ['addClientPlanAsync', 'getClientPlanAsync'];
 
 const batchTurnActions = ['onTabChange'];
 
@@ -32,12 +33,18 @@ const model = {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
+      let clientPlanList = [];
+      if (payload.clientPlanList) {
+        clientPlanList = payload.clientPlanList;
+      }
+
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
         // itemDetail: payload.record ?? {},
         customer_id: payload.customer_id,
+        clientPlanList,
       };
     },
     onCancel(state, { payload, type }) {
@@ -193,13 +200,27 @@ const model = {
       };
     },
 
-    getClientPlanDetail(state, { payload, type }) {
-      console.log(' getClientPlanDetail ： ', payload); //
+    getClientPlan(state, { payload, type }) {
+      console.log(' getClientPlan ： ', payload); //
       return {
         ...state,
         isShowModal: true,
         action: payload.payload.action,
         clientPlanList: payload.list,
+      };
+    },
+    getClientClue(state, { payload, type }) {
+      console.log(' getClientClue ： ', payload);
+      const { file, logo } = payload.bean.content.enterprise;
+
+      return {
+        ...state,
+        itemDetail: {
+          ...payload.bean,
+          ...payload.bean.content,
+          file: file ? file.split(',') : [],
+          logo: logo ? logo.split(',') : [],
+        },
       };
     },
   },
@@ -240,15 +261,26 @@ const model = {
       yield put({ type: 'getListAsync' });
     },
 
-    *getClientPlanDetailAsync({ payload, action, type }, { call, put }) {
-      console.log(' getClientPlanDetailAsync ： ', payload); //
+    *getClientPlanAsync({ payload, action, type }, { call, put }) {
+      console.log(' getClientPlanAsync ： ', payload); //
       const res = yield call(clientPlanServices.getList, payload);
-      yield put({ type: 'getClientPlanDetail', payload: { ...res, payload } });
+      yield put({
+        type: 'getClientClueAsync',
+        payload: {
+          // d_id: res.list[0].customer.id,
+          d_id: 14,
+        },
+      });
+      yield put({ type: 'getClientPlan', payload: { ...res, payload } });
     },
     *addClientPlanAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientPlanServices.addItem, payload);
       // yield put({ type: 'addClientPlan', payload: { ...res, payload, } });
       yield put({ type: 'getListAsync' });
+    },
+    *getClientClueAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(clientClueServices.getItem, payload);
+      yield put({ type: 'getClientClue', payload: { ...res, payload } });
     },
   },
 };
