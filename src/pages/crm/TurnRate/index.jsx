@@ -84,7 +84,7 @@ class TurnRate extends PureComponent {
     return (
       <div className={`progressWrappper`}>
         <PageTitle title={'转化率'}>
-          <div className={`fsb`}>
+          <div className={`fsb turnRateSearchForm`}>
             <TurnRateSearchForm
               init={this.props.searchInfo}
               onFieldChange={this.onFieldChange}
