@@ -39,6 +39,7 @@ const mapStateToProps = ({ home, loading }) => ({
 @SmartHOC({
   actions,
   titleMap,
+  noMountFetch: true,
 })
 class TurnRate extends PureComponent {
   constructor(props) {
