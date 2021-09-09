@@ -7,10 +7,7 @@ import RingPieEchart from '@/components/Echarts/RingPieEchart';
 import CsMonitorStatBox from '@/components/Widgets/CsMonitorStatBox';
 import HomeStatEcharts from '@/components/Widgets/HomeStatEcharts';
 import TurnRateSearchForm from '@/components/Form/TurnRateSearchForm';
-import {
-  actions,
-  // mapStateToProps
-} from '@/models/turnRate';
+import { actions, mapStateToProps } from '@/models/turnRate';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { saleDataEchartsConfig } from '@/configs';
@@ -30,10 +27,10 @@ const titleMap = {
 
 const detailFormMap = {};
 
-const mapStateToProps = ({ home, loading }) => ({
-  ...home,
-  loading,
-});
+// const mapStateToProps = ({ home, loading }) => ({
+//   ...home,
+//   loading,
+// });
 
 @connect(mapStateToProps)
 @SmartHOC({
