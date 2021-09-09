@@ -13,6 +13,8 @@ const initialState = {
   count: 0,
   itemDetail: {},
   searchInfo: {},
+
+  turnRateData: {},
 };
 
 const model = {
@@ -46,16 +48,14 @@ const model = {
         searchInfo: payload.searchInfo,
       };
     },
-    getItem(state, { payload, type }) {
-      console.log(' getItemgetItem ： ', payload);
+    getTurnRateProgress(state, { payload, type }) {
+      console.log(' getTurnRateProgress ： ', payload);
 
       return {
         ...state,
         action: payload.payload.action,
         isShowModal: true,
-        itemDetail: {
-          ...payload.bean,
-        },
+        turnRateData: payload.bean,
       };
     },
   },
@@ -77,9 +77,9 @@ const model = {
       const res = yield call(services.getList, params);
       yield put({ type: 'getList', payload: { ...res, searchInfo: params } });
     },
-    *getItemAsync({ payload, action, type }, { call, put }) {
-      const res = yield call(services.getItem, payload);
-      yield put({ type: 'getItem', payload: { ...res, payload } });
+    *getTurnRateProgressAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getTurnRateProgress, payload);
+      yield put({ type: 'getTurnRateProgress', payload: { ...res, payload } });
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.addItem, payload);
