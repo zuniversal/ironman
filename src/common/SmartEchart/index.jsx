@@ -36,11 +36,11 @@ class SmartEcharts extends React.PureComponent {
     console.log('    onChartLegendselectchanged ： ', e);
   };
   onChartReadyCallback = e => {
-    console.log(
-      '    onChartReadyCallback Com e.getImage() ： ',
-      e,
-      e.getDataURL(),
-    );
+    // console.log(
+    //   '    onChartReadyCallback Com e.getImage() ： ',
+    //   e,
+    //   e.getDataURL(),
+    // );
   };
 
   render() {

@@ -128,7 +128,9 @@ class SalemanMangement extends PureComponent {
     const formComProps = {
       action,
     };
+    // if (action !== 'add') {
     formComProps.init = this.props.itemDetail;
+    // }
     if (action === 'responsibleClientAsync') {
       return (
         <SalemanMangementClientTable

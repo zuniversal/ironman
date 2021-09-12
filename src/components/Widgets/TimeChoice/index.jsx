@@ -7,6 +7,7 @@ const { RangePicker } = DatePicker;
 
 const timeChoices = [
   // '今日',
+  { text: '今天', type: 'day' },
   { text: '本周', type: 'week' },
   { text: '本月', type: 'month' },
   { text: '全年', type: 'year' },
@@ -15,9 +16,9 @@ const timeChoices = [
 //
 const TimeChoice = props => {
   const [activeItem, setActiveItem] = useState(0);
-  // console.log(' TimeChoice   ,   ： ', props, activeItem,   )
+  console.log(' TimeChoice   ,   ： ', props, activeItem);
   const timeClick = (v, i) => {
-    console.log(' timeClick   v, i,   ： ', activeItem, v, i);
+    console.log(' timeClick   v, i,   ： ', activeItem, v, i, props);
     setActiveItem(i);
     props.onOptionChange(v);
   };

@@ -12,6 +12,11 @@ export const ClientListPrivateTable = props => {
     {
       title: '客户名称',
       dataIndex: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer_id,
+        }),
     },
     {
       title: '客户等级',

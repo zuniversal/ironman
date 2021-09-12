@@ -178,7 +178,8 @@ class ElectricInfo extends PureComponent {
       ></HouseNoSearch>
     );
     return (
-      <PageTitle title={'用电户号'}>
+      // <PageTitle title={'用电户号'}>
+      <PageTitle title={'户号'}>
         <SearchForm
           onChange={() => {
             console.log(' onChange ： '); //
@@ -190,7 +191,7 @@ class ElectricInfo extends PureComponent {
   renderStatBox = params => {
     return (
       <>
-        <div className="title">户号信息</div>
+        {/* <div className="title">户号信息</div> */}
         <StatBox data={this.props.powerInfo}></StatBox>
       </>
     );

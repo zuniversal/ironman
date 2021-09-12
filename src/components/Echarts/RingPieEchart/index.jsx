@@ -16,11 +16,13 @@ export const crmColorConfig = [
 
 const option = params => {
   const { data } = params;
+  // const { subtext, } = params.option;
+  const { subtext } = params;
   return {
     color: crmColorConfig,
     title: {
       text: '总数',
-      subtext: '111',
+      subtext,
       left: 'center',
       top: '40%',
       textStyle: {
@@ -76,6 +78,7 @@ const option = params => {
           { value: 484, name: '联盟广告' },
           { value: 300, name: '视频广告' },
         ],
+        data,
       },
     ],
   };

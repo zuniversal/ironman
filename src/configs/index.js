@@ -377,6 +377,7 @@ export const noShowTitlePath = [
   '/om/home',
   '/cs/home',
   '/cs/energyInfo',
+  '/cs/electricInfo',
   '/crm/turnRate',
   '/crm/saleData',
   '/crm/satisfactionDegree',
@@ -1995,10 +1996,14 @@ export const saleDataEchartsConfig = [
   {
     label: '销售额地区占比',
     value: '销售额地区占比',
+    key: 'saleAreaData',
+    subtextKey: 'saleAreaAmount',
   },
   {
     label: '销售额行业占比',
     value: '销售额行业占比',
+    key: 'saleIndustyData',
+    subtextKey: 'saleIndustyAmount',
   },
 ];
 
@@ -2217,23 +2222,23 @@ export const certificateTypeConfig = [
   },
   {
     label: '护照',
-    label: '2',
+    value: '2',
   },
   {
     label: '港澳居民来往内地通行证',
-    label: '3',
+    value: '3',
   },
   {
     label: '台湾居民来往大陆通行证',
-    label: '4',
+    value: '4',
   },
   {
     label: '外国人永久居留身份证',
-    label: '5',
+    value: '5',
   },
   {
     label: '港澳台居民居住证',
-    label: '6',
+    value: '6',
   },
 ];
 

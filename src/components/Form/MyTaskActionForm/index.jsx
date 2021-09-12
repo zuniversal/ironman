@@ -10,7 +10,7 @@ export const MyTaskApproveForm = props => {
   const config = [
     {
       formType: 'TextArea',
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '审批原因',
         name: 'reason',

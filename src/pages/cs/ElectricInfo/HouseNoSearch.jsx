@@ -88,7 +88,8 @@ const HouseNoSearch = props => {
   );
 
   return (
-    <PageTitle title={'用电户号'} className="w100">
+    // <PageTitle title={'用电户号'} className="w100">
+    <PageTitle title={'户号'} className="w100">
       <div className="fsb w100">
         {tabs}
         {/* {searchForm} */}

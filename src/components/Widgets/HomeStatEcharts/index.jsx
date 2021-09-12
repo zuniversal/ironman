@@ -56,6 +56,7 @@ const xAxis = [
 const { TabPane } = Tabs;
 
 const StatTabPanes = props => {
+  console.log(' %c StatTabPanes xx 组件 this.state, this.props ： ', props); //
   const [activeKey, setActiveKey] = useState('0');
   const onChange = index => {
     console.log(' onChange   ,   ： ', index, activeKey);
@@ -63,8 +64,8 @@ const StatTabPanes = props => {
     props.onOptionChange(statConfig[index]);
   };
 
-  const countData = props.barData.map(v => v.count);
-  const xAxisData = props.barData.map(v => v.date);
+  const countData = props.countData ?? props.barData.map(v => v.count);
+  const xAxisData = props.xAxisData ?? props.barData.map(v => v.date);
   // console.log(' countData  .map v ： ', props.barData, countData, xAxisData);
 
   const barGroupRankCom = (

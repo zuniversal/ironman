@@ -58,9 +58,14 @@ const statConfig = [
 
 const StatBoxCom = props => {
   // console.log(' StatBoxCom   props, ,   ： ', props);
-  const { data } = props;
-  const weekDirectionText = data.week_compare >= 0 ? '↑' : '↓';
-  const dayDirectionText = data.day_compare >= 0 ? '↑' : '↓';
+  const {
+    data,
+    rightTopKey = 'week_compare',
+    rightBottomKey = 'day_compare',
+  } = props;
+  const weekDirectionText = data[rightTopKey] >= 0 ? '↑' : '↓';
+  const dayDirectionText = data[rightBottomKey] >= 0 ? '↑' : '↓';
+
   return (
     <StatBox
       {...props}
@@ -83,11 +88,11 @@ const StatBoxCom = props => {
           <div className="stat">
             <div className="statInfo">
               {props.week} {weekDirectionText}{' '}
-              {Math.abs(data.week_compare ?? 1).toFixed(1) * 100}%
+              {Math.abs(data[rightTopKey] ?? 1).toFixed(1) * 100}%
             </div>
             <div className="statInfo">
               {props.day} {dayDirectionText}{' '}
-              {(Math.abs(data.day_compare ?? 1) * 100).toFixed(1)}%
+              {(Math.abs(data[rightBottomKey] ?? 1) * 100).toFixed(1)}%
             </div>
           </div>
         </>
@@ -101,20 +106,28 @@ StatBoxCom.defaultProps = {
 };
 
 const HomeStatBox = props => {
-  // console.log(' HomeStatBox   props, ,   ： ', props);
+  const filterConfig = props.config.filter(
+    v => !v.key || props.homeSettings.includes(v.key),
+  );
+  console.log(
+    ' HomeStatBox   props, ,   ： ',
+    props,
+    !props.homeSettings.length ? props.config : filterConfig,
+  );
   return (
     <div className="homeStatBoxWrapper">
-      {statConfig
-        .filter(v => !v.key || props.homeSettings.includes(v.key))
-        .map((v, i) => (
+      {(!props.homeSettings.length ? props.config : filterConfig).map(
+        (v, i) => (
           <StatBoxCom {...v} data={props.data[v.dataKey]} key={i}></StatBoxCom>
-        ))}
+        ),
+      )}
     </div>
   );
 };
 
 HomeStatBox.defaultProps = {
   homeSettings: [],
+  config: statConfig,
 };
 
 HomeStatBox.propTypes = {};

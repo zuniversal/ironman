@@ -159,10 +159,38 @@ class MyTask extends PureComponent {
         onOk={this.onOk}
         onCancel={this.props.onCancel}
         size={this.size}
+        extraBtn={this.renderExtraBtn}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
+  };
+  confirmHandle = async (params, type) => {
+    console.log('    confirmHandle ： ', params, type, this.props);
+    const { action } = this.props;
+    const { form } = params;
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action);
+      this.props.approveTaskAsync({
+        d_id: this.props.taskInfo.d_id,
+        result: false,
+        ...res,
+      });
+    } catch (error) {
+      console.log(' error ： ', error);
+    }
+  };
+  renderExtraBtn = params => {
+    console.log('    renderExtraBtn ： ', params);
+    if (this.props.action === 'approveTaskAsync') {
+      return (
+        <Button key="reject" onClick={e => this.confirmHandle(params, 'onOk')}>
+          驳回
+        </Button>
+      );
+    }
+    return null;
   };
   onTabChange = tabType => {
     console.log('    onTabChange ： ', tabType);

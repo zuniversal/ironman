@@ -46,6 +46,29 @@ class TurnRate extends PureComponent {
     };
   }
 
+  onTurnRateProgressChange = params => {
+    console.log(
+      ' onTurnRateProgressChange,  , ： ',
+      params,
+      this.props.turnRateSearchInfo,
+      this.state,
+      this.props,
+    );
+    const data = {
+      ...this.props.turnRateSearchInfo,
+      ...params,
+    };
+    if (params.requestFn) {
+      data.start_time = null;
+      data.end_time = null;
+    }
+    console.log(' data ： ', data);
+    this.props.getTurnRateProgressAsync(data);
+  };
+  onFieldChange = params => {
+    console.log(' onFieldChange,  , ： ', params);
+    this.onTurnRateProgressChange(params.formData);
+  };
   renderRateBar = params => {
     console.log(
       ' renderRateBar 修改  ： ',
@@ -56,25 +79,25 @@ class TurnRate extends PureComponent {
       {
         label: '客户线索',
         value: '80',
-        // value: this.props.turnRateData.customer_clue_number,
+        value: this.props.turnRateData.customer_clue_number,
         color: '#36C7EA',
       },
       {
         label: '拜访客户数',
         value: '60',
-        // value: this.props.turnRateData.visit_customer_number,
+        value: this.props.turnRateData.visit_customer_number,
         color: '#FCA149',
       },
       {
         label: '提交方案数',
         value: '50',
-        // value: this.props.turnRateData.scheme_number,
+        value: this.props.turnRateData.scheme_number,
         color: '#00B460',
       },
       {
         label: '已签约',
         value: '30',
-        // value: this.props.turnRateData.contract_number,
+        value: this.props.turnRateData.contract_number,
         color: '#F569CA',
       },
     ];
@@ -86,7 +109,9 @@ class TurnRate extends PureComponent {
               init={this.props.searchInfo}
               onFieldChange={this.onFieldChange}
             ></TurnRateSearchForm>
-            <TimeChoice></TimeChoice>
+            <TimeChoice
+              onOptionChange={this.onClientSignTrendChange}
+            ></TimeChoice>
           </div>
         </PageTitle>
         {turnRateBarConfig.map((v, i) => (
@@ -110,16 +135,16 @@ class TurnRate extends PureComponent {
     );
   };
 
-  onOptionChange = params => {
+  onSaleAmountChange = params => {
     console.log(
-      ' onOptionChange,  , ： ',
+      ' onSaleAmountChange,  , ： ',
       params,
-      this.props.chartSearchInfo,
+      this.props.clientSignSearchInfo,
       this.state,
       this.props,
     );
     const data = {
-      ...this.props.chartSearchInfo,
+      ...this.props.clientSignSearchInfo,
       ...params,
     };
     if (params.requestFn) {
@@ -127,24 +152,23 @@ class TurnRate extends PureComponent {
       data.end_time = null;
     }
     console.log(' data ： ', data);
-    this.props.getChartAsync(data);
+    this.props.getClientSignTrendAsync(data);
   };
   renderStatEcharts = params => {
-    // const barData = this.props.chartData;
-    const barData = [];
+    const barData = this.props.clientSignData.amount;
     // const isLoading = this.props.loading.effects['home/getChartAsync'];
     const isLoading = false;
     return (
       <Spin spinning={isLoading} className={'loadingWrapper'} size="large">
         <div className={`fsb`}>
           <PageTitle title={'客户签约'}></PageTitle>
-          <TimeChoice></TimeChoice>
+          <TimeChoice onOptionChange={this.onSaleAmountChange}></TimeChoice>
         </div>
         {/* <HomeGroupRank></HomeGroupRank> */}
         {/* <PageTitle title={'客户签约'}></PageTitle> */}
         <HomeStatEcharts
           barData={barData}
-          rankData={this.props.chartData}
+          rankData={this.props.clientSignData.rank}
           onOptionChange={this.onOptionChange}
           getChartAsync={this.props.getChartAsync}
           homeTitle={'签约客户转化趋势'}
@@ -158,6 +182,7 @@ class TurnRate extends PureComponent {
 
   componentDidMount() {
     this.props.getTurnRateProgressAsync();
+    this.props.getClientSignTrendAsync();
   }
 
   render() {

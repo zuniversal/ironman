@@ -23,6 +23,7 @@ export default [
     authKey: '',
     component: '@/pages/cs/EnergyInfo',
     title: '用能概况',
+    title: '首页',
   },
   {
     path: '/cs/electricInfo',

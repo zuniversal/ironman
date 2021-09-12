@@ -326,7 +326,7 @@ const model = {
                   ...v,
                   nickname: v.name,
                   phone: v.phone,
-                  tags: v.tags ?? [],
+                  tags: v.tags.map(v => `${v.id}`) ?? [],
                 }))
               : // : [{}],
                 null,

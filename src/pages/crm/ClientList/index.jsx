@@ -36,9 +36,12 @@ const titleMap = {
   clientListRemark: `添加备注`,
   clientListAsignPeople: `分配人员`,
   getClientPlanAsync: `${TITLE}计划详情`,
+  clientDetailAsync: `客户详情`,
 };
 
-const detailFormMap = {};
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
