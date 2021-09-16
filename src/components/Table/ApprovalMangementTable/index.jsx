@@ -57,6 +57,7 @@ const ApprovalMangementTable = props => {
       columns={columns}
       extra={extra}
       noDefault
+      rowSelection={null}
       {...props}
     ></SmartTable>
   );

@@ -258,7 +258,10 @@ class Client extends PureComponent {
 
       const datas = formatClientFormData(params);
       if (action === 'edit') {
+        datas.id = itemDetail.id;
+        datas.d_id = itemDetail.id;
         datas.enterprise.id = itemDetail.enterprise.id;
+        datas.enterprise.parent_enterprise_id = null;
         datas.enterprise_id = itemDetail.enterprise.id;
         delete params.last_service_staff_name;
         delete datas.service_staff_name;

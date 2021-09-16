@@ -17,11 +17,11 @@ export const crmColorConfig = [
 const option = params => {
   const { data } = params;
   // const { subtext, } = params.option;
-  const { subtext } = params;
+  const { text, subtext } = params;
   return {
     color: crmColorConfig,
     title: {
-      text: '总数',
+      text,
       subtext,
       left: 'center',
       top: '40%',
@@ -48,12 +48,16 @@ const option = params => {
       borderRadius: 100,
       // left: 'center'
       formatter(name) {
-        return 'Legend ' + space + name + space + '$xxxxxxx';
+        const match = data.find(v => v.name = name)
+        console.log(' namenamename ： ', name, data, match, params, ); //
+        const {percent, amount, } = match
+        // return 222
+        return name + space + percent + space + '￥ ' + amount;
       },
     },
     series: [
       {
-        name: '访问来源',
+        // name: '访问来源',
         type: 'pie',
         radius: ['55%', '70%'],
         avoidLabelOverlap: false,

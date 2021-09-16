@@ -194,14 +194,6 @@ class Client extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn);
       const { adminList, itemDetail } = this.props;
-      // // if (tableData.length === 0 && action !== 'add') {
-      // // if (tableData.length === 0) {
-      // const adminIdLen = tableData.filter((v) => v.id).length
-      // console.log('  adminIdLen ：', adminIdLen,  )//
-      // if (adminIdLen.length === 0) {
-      //   tips('必须添加管理员信息！', 2);
-      //   return;
-      // }
       const params = {
         ...init,
         ...res,
@@ -211,6 +203,12 @@ class Client extends PureComponent {
           is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
           is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
         })),
+        customer_admin: !!res.customer_admin.length
+          ? res.customer_admin.map(v => ({
+              ...v,
+              password: v.password ? v.password : null,
+            }))
+          : [],
       };
       // if (typeof res.file !== 'string') {
       // if (res.file && res.file.length > 0) {
@@ -229,18 +227,6 @@ class Client extends PureComponent {
       } else {
         params.file = null;
       }
-      // if (typeof res.logo !== 'string') {
-      //   console.log(' logologo ： ', res.logo);
-      //   if (res.logo && res.logo.fileList.length > 0) {
-      //     const fileList = res.logo.fileList;
-      //     params.logo = fileList[fileList.length - 1].response.url;
-      //   } else {
-      //     // tips('logo不能为空！', 2);
-      //     // return;
-      //     console.log(' paramsparamsparams ： ', params);
-      //     params.logo = null;
-      //   }
-      // }
       if (res.file) {
         if (res.logo && res.logo.fileList && res.logo.fileList.length > 0) {
           const fileList = res.logo.fileList;
@@ -258,9 +244,31 @@ class Client extends PureComponent {
       }
       params.enterprise.file = params.file;
       params.enterprise.logo = params.logo;
+      console.log(' itemDetailitemDetail ： ', itemDetail, params); //
 
       const datas = formatClientFormData(params);
+      if (action === 'edit') {
+        datas.id = itemDetail.id;
+        datas.d_id = itemDetail.id;
+        datas.enterprise.id = itemDetail.enterprise.id;
+        datas.enterprise.parent_enterprise_id = null;
+        datas.enterprise_id = itemDetail.enterprise.id;
+        delete params.last_service_staff_name;
+        delete datas.service_staff_name;
+        delete datas.service_organization_name;
+        delete datas.file;
+        delete datas.logo;
+        delete datas.contract;
+        delete datas.electricity_user;
+        delete datas.last_service_staff_id;
+      }
 
+      const isUrgeRes = datas.contact.filter(v => v.is_urge);
+      console.log(' paramsparams ： ', params, datas, isUrgeRes);
+      if (isUrgeRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
       // const datas = format2Null(params, [
       //   'last_service_staff',
       //   'industry',

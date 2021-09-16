@@ -453,6 +453,11 @@ export const dayHours = createIndexArr(24).map(v => ({
   value: `${v}`.padStart(2, '0') + ':00',
 }));
 
+export const dayHoursNum = createIndexArr(24).map(v => ({
+  label: `${v}点`,
+  value: `${v}`.padStart(2, '0'),
+}));
+
 export const contractTypeConfig = [
   {
     label: '托管',
@@ -836,6 +841,8 @@ export const industryConfig = [
     value: 18,
   },
 ];
+
+export const  industryMap = arrMapObj( industryConfig);
 
 export const assetScaleConfig = [
   {
@@ -2243,3 +2250,8 @@ export const certificateTypeConfig = [
 ];
 
 export const certificateTypeMap = arrMapObj(certificateTypeConfig);
+
+export const genderRadios = [
+  { label: '男', value: 1, key: '1' },
+  { label: '女', value: 0, key: '0' },
+];

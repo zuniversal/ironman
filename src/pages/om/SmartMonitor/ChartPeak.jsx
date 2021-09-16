@@ -22,9 +22,17 @@ const getOption = ({ data = [], name = '', unit = '' }) => {
       bottom: 150,
     },
     color: [
-      'rgba(255, 64, 65, 1)',
-      'rgba(14, 244, 245, 1)',
-      'rgba(255, 174, 50, 1)',
+      // 'rgba(255, 64, 65, 1)',
+      // '#65da79',
+      // // 'rgba(255, 174, 50, 1)',
+      // 'rgba(14, 244, 245, 1)',
+      // 'red',
+      // 'green',
+      // 'blue',
+      // 'rgba(14, 244, 245, 1)',
+
+      '#FFC007', '#18B263', '#42A5F5'
+      // '#ea5b65'
     ],
     legend: {
       bottom: 0,
@@ -103,14 +111,14 @@ export default React.memo(function ChartPeak(props) {
   }
 
   const chartCount = [
-    { name: '平时电量', value: get(data, 'ele.usual', 0) },
-    { name: '峰时电量', value: get(data, 'ele.peak', 0) },
-    { name: '谷时电量', value: get(data, 'ele.valley', 0) },
+    { name: '峰', value: get(data, 'ele.peak', 0) },
+    { name: '平', value: get(data, 'ele.usual', 0) },
+    { name: '谷', value: get(data, 'ele.valley', 0) },
   ];
   const chartCost = [
-    { name: '平时电费', value: get(data, 'fee.usual', 0) },
-    { name: '峰时电费', value: get(data, 'fee.peak', 0) },
-    { name: '谷时电费', value: get(data, 'fee.valley', 0) },
+    { name: '峰', value: get(data, 'fee.peak', 0) },
+    { name: '平', value: get(data, 'fee.usual', 0) },
+    { name: '谷', value: get(data, 'fee.valley', 0) },
   ];
   const totalCount = chartCount.reduce((count, cur) => {
     return count + cur.value;

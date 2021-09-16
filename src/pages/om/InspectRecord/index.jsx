@@ -3,6 +3,7 @@ import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import SearchKwForm from '@/components/Form/SearchKwForm';
+import InspectRecordSearchForm from '@/components/Form/InspectRecordSearchForm';
 import InspectRecordForm from '@/components/Form/InspectRecordForm';
 import InspectMissionDetailForm from '@/components/Form/InspectMissionDetailForm';
 import InspectRecordTable from '@/components/Table/InspectRecordTable';
@@ -68,6 +69,15 @@ class InspectRecord extends PureComponent {
         label={'名称'}
         noLabel
       ></SearchKwForm>
+    );
+  };
+  renderSearchForm = params => {
+    return (
+      <InspectRecordSearchForm
+        formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+      ></InspectRecordSearchForm>
     );
   };
   onFieldChange = params => {

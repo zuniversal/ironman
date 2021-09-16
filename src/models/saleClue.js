@@ -29,7 +29,10 @@ const model = {
       console.log(' getSaleClueCount ： ', payload);
       return {
         ...state,
-        saleClueCountData: payload.bean,
+        saleClueCountData: {
+          ...payload.bean,
+          rate: (payload.bean.rate * 100).toFixed(2), 
+        }
       };
     },
     getSaleClueTrend(state, { payload, type }) {

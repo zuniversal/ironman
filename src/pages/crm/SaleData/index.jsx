@@ -64,6 +64,7 @@ class SaleData extends PureComponent {
         icon: completeWorkOrder,
         rightTopKey: 'month_increase_amount',
         rightBottomKey: 'month_compare',
+        numKey: 'amount',
       },
       {
         dataKey: 'contract_number_status',
@@ -79,6 +80,7 @@ class SaleData extends PureComponent {
         icon: completeMissionNum,
         rightTopKey: 'month_increase_number',
         rightBottomKey: 'month_compare',
+        numKey: 'number',
       },
     ];
     return (
@@ -155,6 +157,7 @@ class SaleData extends PureComponent {
                 //   subtext: this.props.saleAreaData[v.subtextKey],
                 // }}
                 subtextKey={this.props.saleAreaData[v.subtextKey]}
+                text={'销售额'}
               />
             </Col>
           ))}

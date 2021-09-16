@@ -370,20 +370,20 @@ export default React.memo(function SmartMonitor(props) {
     tab === REAL_DATA || tab === ENERGY_CHART || tab === HISTORY;
 
   return (
-    <div className={styles.container}>
+    <div className={props.noWrapper ? '' : styles.container}>
       <Container
         loading={stationLoading}
         empty={!stationData}
         emptyText="暂无电站信息，无法展示监控数据"
       >
-        <div className="fsb ">
+        {!props.noTitle && <div className="fsb ">
           <PageTitle title="智能监控" />
           <div className=" dfc">
             <Button type="primary" onClick={history.goBack}>
               返回
             </Button>
           </div>
-        </div>
+        </div>}
         <div className={styles.subtitleBox}>
           <div className={styles.subtitle}>
             电站名称：{get(stationData, 'name', '-')}

@@ -93,6 +93,17 @@ const AssetsListTable = props => {
       >
         详情
       </a>
+      <a
+        onClick={() => {
+          props.showQRCode({
+            title: `${record.name}`,
+            record,
+            d_id: record.id,
+          });
+        }}
+      >
+        生成二维码
+      </a>
     </>
   );
 

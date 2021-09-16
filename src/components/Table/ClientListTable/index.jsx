@@ -107,9 +107,10 @@ export const ClientListPrivateTable = props => {
       </a> */}
       <a
         onClick={() =>
-          props.showFormModal({
+          props.getRemarkAsync({
             action: 'clientListRemark',
             d_id: record.id,
+            record,
           })
         }
       >
@@ -127,6 +128,7 @@ export const ClientListPrivateTable = props => {
           props.showFormModal({
             action: 'clientListAsignPeople',
             d_id: record.id,
+            record,
           })
         }
       >
@@ -139,6 +141,7 @@ export const ClientListPrivateTable = props => {
     <SmartTable
       columns={columns}
       extra={extra}
+      rowSelection={null}
       // noRemove
       {...props}
     ></SmartTable>
@@ -182,6 +185,7 @@ export const ClientListPublicTable = props => {
             props.showFormModal({
               action: 'clientListAsignPeople',
               d_id: record.id,
+              record,
             })
           }
         >
@@ -215,6 +219,7 @@ export const ClientListPublicTable = props => {
     <SmartTable
       columns={columns}
       extra={extra}
+      rowSelection={null}
       noRemove
       {...props}
     ></SmartTable>

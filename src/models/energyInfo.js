@@ -141,7 +141,7 @@ const model = {
           data: payload.bean.data.map(v => v.toFixed(2)),
           // xAxis: payload.bean.time[0].map((v) => v?.split('T')[0]),
           // xAxis: payload.bean?.time[0].map(v => dayjs(v).format('HH:mm')),
-          // xAxis: payload.bean?.time?.map(v => dayjs(v).format('HH:mm')),
+          xAxis: payload.bean?.time[0]?.map(v => dayjs(v).format('HH:mm')),
         },
       };
     },

@@ -13,6 +13,7 @@ import {
   Divider,
 } from 'antd';
 import SearchForm from '@/common/SearchForm';
+import UserCenterForm from '@/components/Form/UserCenterForm';
 import CsUserCenterForm from '@/components/Form/CsUserCenterForm';
 import CsUserCenterEditForm from '@/components/Form/CsUserCenterEditForm';
 import ResultModal from '@/components/Modal/ResultModal';
@@ -62,15 +63,19 @@ class CsUserCenter extends PureComponent {
       // init: this.props.userInfo.user,
       init: this.props.itemDetail,
     };
-    console.log(' formComProps ： ', formComProps);
-    return this.props.isStartEdit ? (
+    console.log(' formComProps ： ', formComProps, !!Object.keys(this.props.itemDetail).length);
+    return !!Object.keys(this.props.itemDetail).length && <UserCenterForm
+      {...formComProps}
+    ></UserCenterForm>
+    const com = this.props.isStartEdit ? (
       <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
     ) : (
       <CsUserCenterForm
         startEdit={this.props.toggleEditInfo}
         {...formComProps}
       ></CsUserCenterForm>
-    );
+    )
+    return !!Object.keys(this.props.itemDetail).length ? com : null;
   };
   handleOk = async props => {
     console.log(' handleOk,  , ： ', props);

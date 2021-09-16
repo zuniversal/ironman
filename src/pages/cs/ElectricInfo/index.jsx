@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
+import SmartMonitor from '@/pages/om/SmartMonitor';
 import ElectricInfoTable from '@/components/Table/ElectricInfoTable';
 import PageTitle from '@/components/Widgets/PageTitle';
 import TimeChoice from '@/components/Widgets/TimeChoice';
@@ -105,7 +106,19 @@ class ElectricInfo extends PureComponent {
           </span>
           <span className="">电站湿度：{this.props.stationInfo?.h}</span>
         </div>
-        <ElectricInfoTable {...tableProps}></ElectricInfoTable>
+        <div className="titleRow fsb stationInfoWrapper">
+          <div className="title">智能监控</div>
+        </div>
+        {/* <ElectricInfoTable {...tableProps}></ElectricInfoTable> */}
+        {this.props.stationId && <SmartMonitor {...this.props}
+          match={{
+            params: { 
+              stationId: this.props.stationId,
+            } 
+          }}
+          noWrapper
+          noTitle
+        ></SmartMonitor>}
       </>
     );
   };

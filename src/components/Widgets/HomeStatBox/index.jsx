@@ -62,6 +62,7 @@ const StatBoxCom = props => {
     data,
     rightTopKey = 'week_compare',
     rightBottomKey = 'day_compare',
+    numKey = 'total_count',
   } = props;
   const weekDirectionText = data[rightTopKey] >= 0 ? '↑' : '↓';
   const dayDirectionText = data[rightBottomKey] >= 0 ? '↑' : '↓';
@@ -78,7 +79,7 @@ const StatBoxCom = props => {
             {props.title}
           </div> */}
             <div className="num">
-              <Statistic title={props.title} value={data.total_count ?? 0} />
+              <Statistic title={props.title} value={data[numKey] ?? 0} />
             </div>
           </div>
         </>

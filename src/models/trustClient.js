@@ -197,7 +197,10 @@ const model = {
           service_organization_id: service_organization_name ?? '',
         },
         // adminList: [payload.bean.customer_admin],
-        adminList: payload.bean.customer_admin,
+        adminList: payload.bean.customer_admin.map(v => ({
+          ...v,
+          tags: v.tags.map(v => `${v.id}`) ?? [],
+        })),
         tableData: payload.bean.customer_admin.map(v => ({
           ...v,
           // acount:
@@ -527,7 +530,7 @@ const model = {
       // console.log(' editItemAsync ： ', payload, type,     )//
       const { itemDetail } = yield select(state => state[namespace]);
       const params = {
-        ...itemDetail,
+        // ...itemDetail,
         ...payload,
         // region: 'xxx',
         // customer_admin: [

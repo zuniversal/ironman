@@ -5,6 +5,7 @@ import * as roleServices from '@/services/role';
 import * as tagsServices from '@/services/tags';
 import { recursiveHandle } from '@/models/organize';
 import { formatSelectList, nowYearMonth } from '@/utils';
+import moment from 'moment';
 
 const namespace = 'userManage';
 const { createActions, createAction } = init(namespace);
@@ -46,10 +47,15 @@ const model = {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
+      let itemDetail = {}
+      if (payload.action === 'changePasswordAsync') {
+        itemDetail = payload.record;
+      }
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
+        itemDetail,
       };
     },
     onCancel(state, { payload, type }) {
@@ -65,9 +71,11 @@ const model = {
         ...state,
         dataList: payload.list.map(v => ({
           ...v,
-          role: v.roles.map(v => v.name),
+          // role: v.roles.map(v => v.name),
+          role: v.role.map(v => v.name),
           tag: v.tags.map(v => v.name),
-          organization: v.organizations.map(v => v.name),
+          // organization: v.organizations.map(v => v.name),
+          organization: v.organization.map(v => v.name),
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -75,9 +83,10 @@ const model = {
       };
     },
     getItem(state, { payload, type }) {
-      const { roles, tags, account } = payload.bean;
+      const { roles, tags, account, role, join_date, } = payload.bean;
       console.log(' getItemgetItem ： ', payload, account);
-      const role_ids = roles[0]?.role_id ? `${roles[0]?.role_id}` : null;
+      // const role_ids = roles[0]?.role_id ? `${roles[0]?.role_id}` : null;
+      const role_ids = role[0]?.role_id ? `${role[0]?.role_id}` : null;
       const tag_ids = tags[0]?.tag_id ? `${tags[0]?.tag_id}` : null;
       return {
         ...state,
@@ -90,12 +99,16 @@ const model = {
           // tag_ids: payload.bean.tags.map(v => `${v.tag_id}`),
           // role_ids: `${payload.bean.roles[0]?.role_id}`,
           // tag_ids: `${payload.bean.tags[0]?.tag_id}`,
-          username: account.username,
+          // username: account.username,
           role_ids,
           tag_ids,
-          organization_ids: payload.bean.organizations.map(
+          // organization_ids: payload.bean.organizations.map(
+          //   v => v.organization_id,
+          // ),
+          organization_ids: payload.bean.organization.map(
             v => v.organization_id,
           ),
+          join_date: join_date ? moment(join_date) : null,
         },
       };
     },
@@ -260,6 +273,10 @@ const model = {
       console.log(' getTagsAsync ： ', payload);
       const res = yield call(tagsServices.getList, payload);
       yield put(action({ ...res, payload }));
+    },
+    *changePasswordAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.changePassword, payload);
+      yield put({ type: 'changePassword', payload: { ...res, payload } });
     },
   },
 };

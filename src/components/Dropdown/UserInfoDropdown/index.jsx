@@ -1,17 +1,24 @@
 import React from 'react';
-import { Menu, Dropdown } from 'antd';
+import { Menu, Dropdown, } from 'antd';
 
 const UserInfoDropdown = props => {
-  const { children = '按钮', menu, config, menuClick } = props;
+  const {
+    children = '按钮',
+    menu,
+    config,
+    menuClick,
+  } = props;
 
   const handleMenuClick = (item, data) => {
     console.log(' handleMenuClick   item, ,   ： ', item, data, props);
     const clickItem = config.find(v => v.key === item.key);
-    console.log(' clickItem  config.find v ： ', config, clickItem, item, {
-      ...clickItem,
-      data,
-      ...item,
-    });
+    console.log(
+      ' clickItem  config.find v ： ',
+      config,
+      clickItem,
+      item,
+      { ...clickItem, data, ...item },
+    );
     menuClick && menuClick({ ...clickItem, data, ...item });
   };
 

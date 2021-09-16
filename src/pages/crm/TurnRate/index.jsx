@@ -155,7 +155,7 @@ class TurnRate extends PureComponent {
     this.props.getClientSignTrendAsync(data);
   };
   renderStatEcharts = params => {
-    const barData = this.props.clientSignData.amount;
+    const barData = this.props.clientSignData.sign_contract_status;
     // const isLoading = this.props.loading.effects['home/getChartAsync'];
     const isLoading = false;
     return (
@@ -173,6 +173,8 @@ class TurnRate extends PureComponent {
           getChartAsync={this.props.getChartAsync}
           homeTitle={'签约客户转化趋势'}
           groupTitle={'员工转化排名'}
+          countData={this.props.clientSignData.sign_contract_status?.data}
+          xAxisData={this.props.clientSignData.sign_contract_status?.date}
         ></HomeStatEcharts>
 
         <Divider />

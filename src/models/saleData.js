@@ -1,5 +1,8 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/saleData';
+import { getRegionOne } from '@/services/common';
+import { arrMapObj } from '@/utils';
+import { industryMap } from '@/configs';
 
 const namespace = 'saleData';
 const { createActions, createAction } = init(namespace);
@@ -46,6 +49,7 @@ const model = {
     },
     getSaleArea(state, { payload, type }) {
       console.log(' getSaleArea ： ', payload);
+      const {reginRes,  } = payload
       let saleAreaAmount = 0;
       payload.bean.area_amount.forEach(
         v => (saleAreaAmount = v.amount + saleAreaAmount),
@@ -61,12 +65,16 @@ const model = {
           saleAreaData: payload.bean.area_amount.map(v => ({
             ...v,
             value: v.amount,
-            name: v.adcode,
+            name: v.adcode ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[v.adcode] : v.industry,
+            // name: 440000 ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[440000] : v.industry,
+            percent: (v.amount / saleAreaAmount).toFixed(2) * 100 + '%', 
           })),
           saleIndustyData: payload.bean.industry_amount.map(v => ({
             ...v,
             value: v.amount,
-            name: v.industry,
+            name: v.industry ? industryMap[v.industry] : v.industry,
+            // name: 1 ? industryMap[1] : v.industry,
+            percent: (v.amount / saleIndustyAmount).toFixed(2) * 100 + '%', 
           })),
           saleAreaAmount,
           saleIndustyAmount,
@@ -88,7 +96,8 @@ const model = {
     },
     *getSaleAreaAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getSaleArea, payload);
-      yield put({ type: 'getSaleArea', payload: { ...res, payload } });
+      const reginRes = yield call(getRegionOne);
+      yield put({ type: 'getSaleArea', payload: { ...res, payload, reginRes } });
     },
   },
 };

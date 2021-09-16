@@ -1,5 +1,4 @@
-import { createLogger } from 'redux-logger';
-import { message } from 'antd';
+﻿import { message } from 'antd';
 
 export const dva = {
   config: {

@@ -64,7 +64,8 @@ const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 
 export const getClientId = props => {
   const userInfo = getItem('userInfo');
-  const customer_id = getItem('guestModeId') || userInfo.id;
+  // const customer_id = getItem('guestModeId') || userInfo.id;
+  const customer_id = getItem('guestModeId') || userInfo.enterprises[0]?.customers[0]?.id;
   return customer_id;
 };
 

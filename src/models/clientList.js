@@ -3,6 +3,7 @@ import * as services from '@/services/clientList';
 import * as clientPlanServices from '@/services/clientPlan';
 import * as clientClueServices from '@/services/clientClue';
 import { CLIENTLIST_PRIVATE } from '@/configs';
+import { tips } from '@/utils';
 
 const namespace = 'clientList';
 const { createActions, createAction } = init(namespace);
@@ -23,6 +24,7 @@ const initialState = {
   tabType: CLIENTLIST_PRIVATE,
   customer_id: null,
   clientPlanList: [],
+  formInitData: {},
 };
 
 const model = {
@@ -37,6 +39,10 @@ const model = {
       if (payload.clientPlanList) {
         clientPlanList = payload.clientPlanList;
       }
+      let formInitData = {};
+      if (payload.action === 'clientListAsignPeople') {
+        formInitData = payload.record;
+      }
 
       return {
         ...state,
@@ -45,6 +51,7 @@ const model = {
         // itemDetail: payload.record ?? {},
         customer_id: payload.customer_id,
         clientPlanList,
+        formInitData,
       };
     },
     onCancel(state, { payload, type }) {
@@ -223,6 +230,32 @@ const model = {
         },
       };
     },
+    
+    getRemark(state, { payload, type }) {
+      console.log(' getRemark ： ', payload);
+      return {
+        ...state,
+        // action: payload.payload.action,
+        action: 'clientListRemark',
+        isShowModal: true,
+        itemDetail: {
+          ...payload.payload.record,
+          ...payload.bean,
+        },
+      };
+    },
+    addRemark(state, { payload, type }) {
+      return {
+        ...state,
+        isShowModal: false,
+      };
+    },
+    editRemark(state, { payload, type }) {
+      return {
+        ...state,
+        isShowModal: false,
+      };
+    },
   },
 
   effects: {
@@ -246,6 +279,11 @@ const model = {
       console.log(' getItemAsync ： '); //
       const res = yield call(services.getItem, payload);
       // yield put({ type: 'getItem' });
+      if (!res.bean) {
+        tips('没有详情数据', 2)
+        return 
+      }
+      
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
@@ -267,8 +305,8 @@ const model = {
       yield put({
         type: 'getClientClueAsync',
         payload: {
-          // d_id: res.list[0].customer.id,
-          d_id: 14,
+          d_id: res.list[0].customer.id,
+          // d_id: 14,
         },
       });
       yield put({ type: 'getClientPlan', payload: { ...res, payload } });
@@ -281,6 +319,22 @@ const model = {
     *getClientClueAsync({ payload, action, type }, { call, put }) {
       const res = yield call(clientClueServices.getItem, payload);
       yield put({ type: 'getClientClue', payload: { ...res, payload } });
+    },
+    
+    *getRemarkAsync({ payload, action, type }, { call, put }) {
+      console.log(' getRemarkAsync ： '); //
+      // yield put({ type: 'getRemark' });
+      const { d_id,  } = payload
+      const res = yield call(services.getRemark, {d_id});
+      yield put({ type: 'getRemark', payload: { ...res, payload } });
+    },
+    *addRemarkAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.addRemark, payload);
+      yield put({ type: 'getListAsync' });
+    },
+    *editRemarkAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.editRemark, payload);
+      yield put({ type: 'getListAsync' });
     },
   },
 };

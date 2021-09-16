@@ -9,7 +9,7 @@ export const ClientListAsignPeopleForm = props => {
     {
       itemProps: {
         label: '客户名称',
-        name: '',
+        name: 'name',
       },
       comProps: {
         disabled: true,
@@ -106,7 +106,7 @@ export const ClientListRemarkForm = props => {
       formType: 'TextArea',
       itemProps: {
         label: '备注',
-        name: '',
+        name: 'content',
       },
     },
   ];

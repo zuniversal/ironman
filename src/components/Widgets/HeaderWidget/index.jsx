@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './style.less';
 import Icon from '@/components/Widgets/Icons';
+import UserInfoDropdown from '@/components/Dropdown/UserInfoDropdown';
 import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
 import { LogoutOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { history, connect } from 'umi';
-import { csSystemNotify, BIG_SCREEN } from '@/constants';
+import { csSystemNotify, BIG_SCREEN, USER_CENTER,  } from '@/constants';
 import {
   bussniessTabConfig,
   DEF_BUSSNIESS_TAB,
@@ -13,6 +14,25 @@ import {
 } from '@/configs/routes';
 import { Tag, Tooltip, Badge } from 'antd';
 const { CheckableTag } = Tag;
+
+
+const menuConfig = [
+  {
+    key: 'userCenter',
+    clickFn: 'userCenter',
+    label: '个人中心',
+    type: 'url',  
+    path: USER_CENTER,
+  },
+  {
+    key: 'changePwd',
+    clickFn: 'changePwd',
+    label: '修改密码',
+    type: 'fn',  
+    type: 'url',  
+    path: `${USER_CENTER}action=pwd`,
+  },
+];
 
 const BussniessTab = props => {
   // console.log(' BussniessTab   ,   ： ', props);
@@ -60,6 +80,17 @@ const HeaderWidget = props => {
     props.menuClick(params);
   };
 
+  const avatarMenuClick = params => {
+    // const path = `${csSystemNotify}${params.url}?id=${params.key}`
+    const {type,  } = params
+    if (type === 'url') {
+      history.push(params.path);
+    } else if (type === 'fn') {
+      props.[params.clickFn](params);
+    } 
+    // props.menuClick(params);
+  };
+
   const avatar = (
     <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
   );
@@ -96,13 +127,19 @@ const HeaderWidget = props => {
       )}
       {avatar}
       {/* <span className="avatars" onClick={logout}></span> */}
-      <span
-        className={'actionItem userName '}
-        onClick={() => goPage('/om/userCenter')}
+      <UserInfoDropdown
+        menuClick={avatarMenuClick}
+        config={props.isGuestMode ? [] : menuConfig}
+        config={menuConfig}
       >
-        {/* {props.userInfo.name} */}
-        {props.userInfo.nickname}
-      </span>
+        <span
+          className={'actionItem userName '}
+          onClick={() => goPage('/om/userCenter')}
+        >
+          {/* {props.userInfo.name} */}
+          {props.userInfo.nickname}
+        </span>
+      </UserInfoDropdown>
       <Tooltip placement="bottom" title={'退出登录'}>
         <LogoutOutlined onClick={props.logout} className={'actionItem  '} />
       </Tooltip>

@@ -768,6 +768,7 @@ export const customerRoutes = [
   {
     noAuth: true,
     path: '/cs/userCenter',
+    path: '/om/userCenter',
     name: '个人中心',
     icon: <Icon icon={'csUserCenter'} />,
   },

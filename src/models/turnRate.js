@@ -41,7 +41,8 @@ const model = {
         clientSignData: {
           ...payload.bean,
           count: payload.bean.data,
-          rank: payload.bean.rank.map(v => ({ ...v, name: v.amount })),
+          rank: payload.bean.person_rank.map(v => ({ ...v, name: v.nickname })),
+          // sign_contract_status: payload.bean.sign_contract_status.map(v => ({ ...v, data: v.data })),
         },
         clientSignSearchInfo: payload.payload,
       };

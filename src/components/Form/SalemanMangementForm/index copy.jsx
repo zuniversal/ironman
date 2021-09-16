@@ -1,18 +1,8 @@
 import React from 'react';
+import './style.less';
 import SmartForm from '@/common/SmartForm';
 import UploadCom from '@/components/Widgets/UploadCom';
 import { certificateTypeConfig, userStatusConfig,  } from '@/configs';
-import useHttp from '@/hooks/useHttp';
-import {
-  getList as getOrganizeList,
-} from '@/services/organize';
-import {
-  getList as getRoleList,
-} from '@/services/role';
-import {
-  getList as getTagsList,
-} from '@/services/tags';
-import { recursiveHandle } from '@/models/organize';
 
 const genderRadios = [
   { label: '男', value: 1, key: '1' },
@@ -21,23 +11,6 @@ const genderRadios = [
 
 const UserManageForm = props => {
   console.log(' UserManageForm ： ', props);
-  const { data: organizeList, req: getOrganizeListAsync } = useHttp(
-    getOrganizeList,
-    {
-      format: res => recursiveHandle(res),
-    },
-  );
-  const { data: roleList, req: getRoleListAsync } = useHttp(
-    () => getRoleList({
-      page_size: 1000,
-    }),
-  );
-  const { data: tagsList, req: getTagsListAsync } = useHttp(
-    () => getTagsList({
-      page_size: 1000,
-    }),
-  );
-
   //  account 对象里的   password    account_type -  客户 管理着 - 默认  certification_status 1
   const config = [
     {
@@ -120,8 +93,7 @@ const UserManageForm = props => {
     {
       formType: 'Search',
       selectSearch: props.getTagsAsync,
-      // selectData: props.tagsList,
-      selectData: tagsList,
+      selectData: props.tagsList,
       itemProps: {
         label: '职位',
         name: 'tag_ids',
@@ -133,8 +105,7 @@ const UserManageForm = props => {
     {
       formType: 'Search',
       selectSearch: props.getRoleAsync,
-      // selectData: props.roleList,
-      selectData: roleList,
+      selectData: props.roleList,
       itemProps: {
         label: '角色',
         name: 'role_ids',
@@ -150,8 +121,7 @@ const UserManageForm = props => {
         name: 'organization_ids',
       },
       comProps: {
-        // treeData: props.organizeList,
-        treeData: organizeList,
+        treeData: props.organizeList,
         multiple: true,
       },
     },

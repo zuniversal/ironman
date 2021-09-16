@@ -98,6 +98,7 @@ class ClientList extends PureComponent {
       showItemAsync: this.props.showItemAsync,
 
       getClientPlanAsync: this.props.getClientPlanAsync,
+      getRemarkAsync: this.props.getRemarkAsync,
     };
 
     const tableMap = {
@@ -168,6 +169,20 @@ class ClientList extends PureComponent {
         };
         this.props.addClientPlanAsync(params);
       }
+
+      if (action === 'clientListRemark') {
+        this.props.addRemarkAsync({
+          ...res,
+          customer_id: this.props.itemDetail.id,
+        });
+      }
+      return  
+      if (action === 'clientListRemark') {
+        this.props.editRemarkAsync({
+          ...res,
+          d_id: this.props.itemDetail.id,
+        });
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -210,6 +225,7 @@ class ClientList extends PureComponent {
       );
     }
     if (action === 'clientListAsignPeople') {
+      formComProps.init = this.props.formInitData
       return (
         <ClientListAsignPeopleForm
           {...formComProps}

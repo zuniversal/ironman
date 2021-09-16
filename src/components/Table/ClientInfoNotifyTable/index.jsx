@@ -25,7 +25,14 @@ const ClientInfoNotifyTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      rowSelection={null}
+      {...props}
+    ></SmartTable>
+  );
 };
+
 
 export default ClientInfoNotifyTable;

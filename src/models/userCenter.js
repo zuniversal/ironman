@@ -112,6 +112,12 @@ const model = {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
     },
+    
+    *changePwdAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.changePwd, payload);
+      // yield put(action({ ...res, payload }));
+      // yield put({ type: 'getListAsync' });
+    },
   },
 };
 

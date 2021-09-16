@@ -3,6 +3,7 @@ import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import UserManageForm from '@/components/Form/UserManageForm';
+import {UserManagePasswordForm} from '@/components/Form/UserManageActionForm';
 import UserManageSearchForm from '@/components/Form/UserManageSearchForm';
 import UserManageTable from '@/components/Table/UserManageTable';
 
@@ -19,6 +20,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   upload: `文件上传`,
   down: `文件下载`,
+  changePasswordAsync: `修改密码`,
 };
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
@@ -132,19 +134,42 @@ class UserManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      const formData = props.form.getFieldsValue();
+      if (action === 'add' && formData.rePassword !== formData.password) {
+        tips('2次密码不一致！', 2)
+        return  
+      }
+      if (action === 'changePasswordAsync') {
+        this.props.changePasswordAsync({
+          ...res,
+          d_id: this.props.itemDetail.id,
+        });
+        return
+      }
+      if (res.head_img && res.head_img.fileList && res.head_img.fileList.length > 0) {
+        const fileList = res.head_img.fileList;
+        console.log(' fileList ： ', fileList);
+        res.head_img = fileList.map(v => v.response.url).join(',');
+      } else {
+        res.head_img = null;
+      }
+      res.join_date = res.join_date ? res.join_date.format('YYYY-MM-DD') : null
+
+      delete res.rePassword
+
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
-          role_ids: [res.role_ids],
-          tag_ids: [res.tag_ids],
+          role_ids: res.role_ids ? [res.role_ids] : [],
+          tag_ids: res.tag_ids ? [res.tag_ids] : [],
         });
       }
       if (action === 'edit') {
         this.props.editItemAsync({
           ...itemDetail,
           ...res,
-          role_ids: [res.role_ids],
-          tag_ids: [res.tag_ids],
+          role_ids: res.role_ids ? [res.role_ids] : [],
+          tag_ids: res.tag_ids ? [res.tag_ids] : [],
           d_id: itemDetail.id,
           account: {
             ...itemDetail.account,
@@ -178,6 +203,9 @@ class UserManage extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
+    if (action === 'changePasswordAsync') {
+      return <UserManagePasswordForm {...formComProps}></UserManagePasswordForm>;
+    }
     return <UserManageForm {...formComProps}></UserManageForm>;
   };
   renderSmartFormModal = params => {
@@ -195,9 +223,9 @@ class UserManage extends PureComponent {
   };
   componentDidMount() {
     this.props.getAllAsync();
-    this.props.getOrganizeAsync({ page_size: 1000 });
-    this.props.getRoleAsync({ page_size: 1000 });
-    this.props.getTagsAsync({ page_size: 1000 });
+    // this.props.getOrganizeAsync({ page_size: 1000 });
+    // this.props.getRoleAsync({ page_size: 1000 });
+    // this.props.getTagsAsync({ page_size: 1000 });
   }
 
   render() {

@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 import './style.less';
 import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
-  Radio,
-  Space,
-  InputNumber,
-  Upload,
-  Result,
+  Form,
 } from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-
 import SmartForm from '@/common/SmartForm';
-import { INPUT_TXT } from '@/utils';
+import UploadCom from '@/components/Widgets/UploadCom';
+import { genderRadios,  } from '@/configs';
 
 const formLayouts = {
   labelCol: {
@@ -31,91 +17,21 @@ const formLayouts = {
   },
 };
 
-const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props);
+export const UserPasswordForm = props => {
+  console.log(' UserPasswordForm ： ', props);
   const [form] = Form.useForm();
-  const [noRule, setNoRule] = useState(false);
-
-  const res = form.getFieldValue('password');
-  console.log('  resresres ：', res, noRule);
 
   const config = [
     {
-      noRule: true,
       itemProps: {
-        label: '姓名',
-        name: 'name',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '角色',
-        name: 'role',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '手机',
-        name: 'phone',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '邮箱',
-        name: 'email',
-      },
-    },
-    {
-      noRule: true,
-      itemProps: {
-        label: '业务部门',
-        name: 'organization',
-      },
-      comProps: {
-        disabled: true,
-      },
-    },
-    {
-      formType: 'Password',
-      noRule: !noRule, //
-      itemProps: {
-        label: '重置密码',
+        label: '密码',
         name: 'password',
       },
-      comProps: {
-        onChange: e => {
-          console.log('  resresres onChange ：', e, e.target.value);
-          setNoRule(e.target.value);
-        },
-      },
     },
     {
-      formType: 'Password',
-      // noRule: noRule,//
       itemProps: {
-        label: '再次输入密码',
-        name: 'rePwd',
-        dependencies: ['password'],
-        rules: [
-          {
-            required: noRule,
-            message: '请再次输入密码',
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(`2次输入密码不一致！`);
-            },
-          }),
-        ],
+        label: '再次确认密码',
+        name: 'rePassword',
       },
     },
   ];
@@ -135,7 +51,7 @@ const UserCenterForm = props => {
           <Button
             className={`editBtn`}
             type="primary"
-            onClick={() => props.handleOk({ form, action: 'edit' })}
+            onClick={() => props.handleOk({ form, action: 'changePwdAsync' })}
           >
             确认修改
           </Button>
@@ -145,6 +61,102 @@ const UserCenterForm = props => {
   );
 };
 
-UserCenterForm.defaultProps = {};
+
+const UserCenterForm = props => {
+  console.log(' UserCenterForm ： ', props);
+  const [form] = Form.useForm();
+
+  const config = [
+    {
+      itemProps: {
+        label: '账号',
+        name: 'username',
+      },
+    },
+    {
+      itemProps: {
+        label: '昵称',
+        name: 'nickname',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '微信',
+        name: 'wechat',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '手机',
+        name: 'phone',
+      },
+    },
+    {
+      noRule: true,
+      itemProps: {
+        label: '邮箱',
+        name: 'email',
+      },
+    },
+    {
+      noRule: true,
+      formType: 'Radio',
+      itemProps: {
+        label: '性别',
+        name: 'gender',
+      },
+      radioData: genderRadios,
+    },
+    <UploadCom
+      label={'头像'}
+      key={'head_img'}
+      action={'/api/v1/upload'}
+      name={'head_img'}
+      extra={'支持扩展名:pdf、jpg、png'}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+        multiple: true,
+      }}
+      init={props.init}
+      formAction={props.action}
+      noRule
+    ></UploadCom>,
+  ];
+
+  const { 
+    gender, 
+  } = props.init; //
+
+  return (
+    <SmartForm
+      config={config}
+      propsForm={form}
+      action={'edit'}
+      noPh
+      formLayouts={formLayouts}
+      className={'userCenterForm'}
+      {...props}
+      init={{
+        ...props.init,
+        gender: gender != undefined ? gender : 1,
+      }}
+    >
+      <Form.Item label={' '} colon={false}>
+        <Form.Item>
+          <Button
+            className={`editBtn`}
+            type="primary"
+            onClick={() => props.handleOk({ form, action: 'edit' })}
+          >
+            确认修改
+          </Button>
+        </Form.Item>
+      </Form.Item>
+    </SmartForm>
+  );
+};
 
 export default UserCenterForm;

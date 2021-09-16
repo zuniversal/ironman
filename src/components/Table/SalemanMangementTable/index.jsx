@@ -56,7 +56,7 @@ const SalemanMangementTable = props => {
       >
         查看客户
       </a>
-      <a
+      {/* <a
         onClick={() =>
           props.showFormModal({
             action: 'noEffect',
@@ -65,11 +65,11 @@ const SalemanMangementTable = props => {
         }
       >
         失效
-      </a>
+      </a> */}
     </>
   );
 
-  return <SmartTable columns={columns} extra={extra} {...props}></SmartTable>;
+  return <SmartTable columns={columns} extra={extra} rowSelection={null} {...props}></SmartTable>;
 };
 
 export default SalemanMangementTable;

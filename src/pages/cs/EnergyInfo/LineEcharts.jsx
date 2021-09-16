@@ -110,6 +110,8 @@ const optionHandle = params => {
     grid: {
       left: '8%',
       right: '5%',
+      left: '15%',
+      right: '8%',
     },
     legend: {
       data: yAxisTitleArr ?? legendData,
@@ -131,6 +133,7 @@ const optionHandle = params => {
             name: v,
             axisLabel: {
               formatter: '{value}',
+              fontSize: 10, 
             },
             axisLine: {
               show: false,
@@ -142,6 +145,7 @@ const optionHandle = params => {
               name: yAxisTitle2,
               axisLabel: {
                 formatter: '{value}',
+                fontSize: 10, 
               },
               axisLine: {
                 show: false,
@@ -197,7 +201,11 @@ const optionHandle = params => {
             yAxisIndex: yAxisIndex ? (i === yAxisIndex ? 1 : 0) : 0,
             // yAxisIndex: 0,
             symbol: 'circle',
-            symbolSize: 8,
+            symbolSize: 4,
+            smooth: true,
+            axisLabel: {
+              fontSize: 10, 
+            },
             // ...areaStyleConfig[i % 2],
             // ...areaStyleConfig[i],
             data: v,
@@ -208,7 +216,11 @@ const optionHandle = params => {
               type: 'line',
               yAxisIndex: 0,
               symbol: 'circle',
-              symbolSize: 8,
+              symbolSize: 4,
+              smooth: true,
+              axisLabel: {
+                fontSize: 10, 
+              },
               itemStyle: {
                 normal: {
                   color: '#1CBB51',

@@ -44,7 +44,25 @@ const UserManageTable = props => {
     },
   ];
 
-  return <SmartTable columns={columns} {...props}></SmartTable>;
+  const extra = (text, record, index, props) => (
+    <>
+      <a
+        onClick={() =>
+          props.showFormModal({ action: 'changePasswordAsync', record, })
+        }
+      >
+        修改密码
+      </a>
+    </>
+  );
+
+  return (
+    <SmartTable
+      columns={columns}
+      extra={extra}
+      {...props}
+    ></SmartTable>
+  );
 };
 
 export default UserManageTable;

@@ -148,7 +148,7 @@ const model = {
         service_organization_name,
         enterprise,
       } = payload.bean;
-      const { userList } = state;
+      const { userList, adminList } = state;
       const serviceStaff = {
         ...service_staff,
         value: `${service_staff?.id}`,
@@ -164,18 +164,6 @@ const model = {
         serviceStaff,
         lastServiceStaff,
       );
-      const adminList =
-        customer_admin && customer_admin.length > 0
-          ? customer_admin.map(v => ({
-              ...v,
-              // tags: v.tags ?? [],
-              tags: v.tags.map(v => `${v.id}`) ?? [],
-              password: v.password ? v.password : null,
-              wechat: v.wechat ? v.wechat : null,
-              email: v.email ? v.email : null,
-            }))
-          : // : [{}]
-            null;
       return {
         ...state,
         action: payload.payload.action,
@@ -183,7 +171,10 @@ const model = {
         d_id: payload.payload.d_id,
         itemDetail: {
           ...payload.bean,
-          customer_admin: adminList,
+          customer_admin:
+            customer_admin && customer_admin.length > 0
+              ? customer_admin.map(v => ({ ...v, tags: [] }))
+              : [{}],
           d_id: payload.payload.d_id,
           service_staff: service_staff?.id,
           last_service_staff:
@@ -196,42 +187,23 @@ const model = {
             ...enterprise,
             file: enterprise?.file ? enterprise?.file.split(',') : [],
             logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
-            tax_num: enterprise.tax_num ? enterprise.tax_num : null,
-            legal_person: enterprise.legal_person
-              ? enterprise.legal_person
-              : null,
-            legal_person_phone: enterprise.legal_person_phone
-              ? enterprise.legal_person_phone
-              : null,
-            industry: enterprise.industry ? enterprise.industry : null,
-            asset: enterprise.asset ? enterprise.asset : null,
-            covered_area: enterprise.covered_area
-              ? enterprise.covered_area
-              : null,
-            parent_enterprise_id: enterprise.parent_enterprise_id
-              ? enterprise.parent_enterprise_id
-              : null,
           },
 
           contact: contact.map(v => ({
             ...v,
-            is_urge: v.is_urge ? [v.is_urge] : [],
-            is_quit: v.is_quit ? [v.is_quit] : [],
+            is_urge: [v.is_urge],
+            is_quit: [v.is_quit],
             tags: v.tags.map(v => `${v.id}`) ?? [],
-            comments: v.comments ? v.comments : null,
-            phone: v.phone ? v.phone : null,
-            tel: v.tel ? v.tel : null,
-            qq: v.qq ? v.qq : null,
-            wechat: v.wechat ? v.wechat : null,
-            email: v.email ? v.email : null,
           })),
           service_staff: `${service_staff_name}`,
           last_service_staff: `${last_service_staff_name}`,
-          // service_organization_id: service_organization_name ?? null,
+          // service_organization_id: service_organization_name ?? '',
         },
         // adminList: [payload.bean.customer_admin],
-        adminList: payload.bean.customer_admin,
-        adminList,
+        adminList: payload.bean.customer_admin.map(v => ({
+          ...v,
+          tags: v.tags.map(v => `${v.id}`) ?? [],
+        })),
         tableData: payload.bean.customer_admin.map(v => ({
           ...v,
           // acount:
@@ -561,7 +533,7 @@ const model = {
       // console.log(' editItemAsync ： ', payload, type,     )//
       const { itemDetail } = yield select(state => state[namespace]);
       const params = {
-        ...itemDetail,
+        // ...itemDetail,
         ...payload,
         // region: 'xxx',
         // customer_admin: [

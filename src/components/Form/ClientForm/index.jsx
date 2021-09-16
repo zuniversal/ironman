@@ -1577,7 +1577,7 @@ const ClientForm = props => {
     //   },
     // },
     {
-      // noRule: true,
+      noRule: true,
       formType: 'Search',
       // selectSearch: props.getTagsAsync,
       // selectData: props.tagsList,

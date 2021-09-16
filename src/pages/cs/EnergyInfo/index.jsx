@@ -6,15 +6,21 @@ import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/energyInfo';
 import LineEcharts, { weekArr } from './LineEcharts';
 import SmartHOC from '@/common/SmartHOC';
-import { recentPowerAxisConfig, powerMoneyAxisConfig } from '@/configs';
+import { recentPowerAxisConfig, powerMoneyAxisConfig, dayHoursNum,  } from '@/configs';
 import { connect } from 'umi';
 
 import power1 from '@/static/assets/cs/power1.png';
 import power2 from '@/static/assets/cs/power2.png';
 import power3 from '@/static/assets/cs/power3.png';
 import power4 from '@/static/assets/cs/power4.png';
-import { Tabs } from 'antd';
+import { 
+  Row,
+  Col,
+  Tabs,
+  Collapse,
+} from 'antd';
 const { TabPane } = Tabs;
+const { Panel } = Collapse;
 
 const TITLE = '';
 
@@ -29,6 +35,24 @@ const titleMap = {
 const detailFormMap = {};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
+
+const CollapseCom = props => {
+  const { com, header = '', extra } = props;
+  console.log(' CollapseCom   props,   ： ', props);
+  return (
+    <Collapse
+      defaultActiveKey={['1']}
+      expandIconPosition={'right'}
+      className={`collapseCom`}
+      showArrow={false}
+      collapsible={false}
+    >
+      <Panel header={header} key="1" extra={extra}>
+        {com}
+      </Panel>
+    </Collapse>
+  );
+};
 
 @connect(mapStateToProps)
 @SmartHOC({
@@ -99,15 +123,32 @@ class EnergyInfo extends PureComponent {
   };
   renderHavePowerEcharts = params => {
     const config = {
-      yAxisTitleArr: ['有功电量:kWh', '单价:元'],
-      xAxis: weekArr,
+      yAxisTitleArr: ['有功电量:kWh', 
+        // '单价:元'
+        '',
+      ],
+      xAxis: this.props.powerData.xAxis,
+      xAxis: dayHoursNum,
       data: [this.props.powerData.data],
       lineNameArr: [],
     };
     console.log(' renderHavePowerEcharts ： ', config); //
+    const tabs = (
+      <Tabs defaultActiveKey="1" onChange={() => {}}>
+        {[
+          {
+            tab: '有功电量',
+            key: 'power_data',
+          },
+        ].map((v, i) => (
+          <TabPane {...v}></TabPane>
+        ))}
+      </Tabs>
+    );
     return (
       <>
-        <PageTitle title={'实时有功电量'}></PageTitle>
+        {/* <PageTitle title={'实时有功电量'}></PageTitle> */}
+        {tabs}
         <LineEcharts {...config}></LineEcharts>
       </>
     );
@@ -163,7 +204,7 @@ class EnergyInfo extends PureComponent {
     );
     return (
       <>
-        <PageTitle title={'本月用电曲线'}></PageTitle>
+        {/* <PageTitle title={'本月用电曲线'}></PageTitle> */}
         {tabs}
         <LineEcharts {...config}></LineEcharts>
       </>
@@ -174,14 +215,17 @@ class EnergyInfo extends PureComponent {
       yAxisTitle2: '电量电费:元',
       xAxis: this.props.recentPower10DayData.xAxis,
       data: this.props.recentPower10DayData.data,
-      yAxisTitleArr: ['有功电量:kWh', '电量电费:元'],
+      yAxisTitleArr: ['有功电量:kWh', 
+        // '电量电费:元'
+        '电价:元'
+      ],
       lineNameArr: powerMoneyAxisConfig,
       yAxisIndex: 3,
     };
     console.log(' render10DayPowerEcharts ： ', config); //
     return (
       <>
-        <PageTitle title={'近10日用电曲线'}></PageTitle>
+        {/* <PageTitle title={'近10日用电曲线'}></PageTitle> */}
         <LineEcharts {...config}></LineEcharts>
       </>
     );
@@ -221,15 +265,58 @@ class EnergyInfo extends PureComponent {
         ],
       ],
       data: this.props.recentPower6MonthData.data,
-      yAxisTitleArr: ['有功电量:kWh', '电量电费:元'],
+      yAxisTitleArr: ['有功电量:kWh', 
+        // '电量电费:元'
+        '电价:元'
+      ],
       lineNameArr: powerMoneyAxisConfig,
       yAxisIndex: 3,
     };
     return (
       <>
-        <PageTitle title={'近6月用电曲线'}></PageTitle>
+        {/* <PageTitle title={'近6月用电曲线'}></PageTitle> */}
         <LineEcharts {...config}></LineEcharts>
       </>
+    );
+  };
+  renderEcharts1 = params => {
+    return (
+      <Row gutter={[10, 10]}>
+        <Col span={12}>
+          <CollapseCom
+            com={this.renderHavePowerEcharts()}
+            header={'实时有功电量'}
+            key={'ContactCollapseCom'}
+          ></CollapseCom>
+        </Col>
+        <Col span={12}>
+          <CollapseCom
+            com={this.renderMonthPowerEcharts()}
+            header={'本月用电曲线'}
+            key={'ContactCollapseCom'}
+          ></CollapseCom>
+        </Col>
+      </Row>
+    );
+  };
+  renderEcharts2 = params => {
+    return (
+      <Row gutter={[10, 10]}>
+        <Col span={12}>
+          <CollapseCom
+            com={this.render10DayPowerEcharts()}
+            header={'实时有功电量'}
+            key={'ContactCollapseCom'}
+          ></CollapseCom>
+        </Col>
+        <Col span={12}>
+          <CollapseCom
+            com={this.render6DayPowerEcharts()}
+            header={'本月用电曲线'}
+            key={'ContactCollapseCom'}
+          ></CollapseCom>
+        </Col>
+      </Row>
     );
   };
   componentDidMount() {
@@ -251,10 +338,8 @@ class EnergyInfo extends PureComponent {
     return (
       <div className="energyInfo">
         {this.renderStatBox()}
-        {this.renderHavePowerEcharts()}
-        {this.renderMonthPowerEcharts()}
-        {this.render10DayPowerEcharts()}
-        {this.render6DayPowerEcharts()}
+        {this.renderEcharts1()}
+        {this.renderEcharts2()}
       </div>
     );
   }
