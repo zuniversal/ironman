@@ -2,9 +2,17 @@ import React from 'react';
 import SmartForm from '@/common/SmartForm';
 import { clientListPlanTypeConfig } from '@/configs';
 import useHttp from '@/hooks/useHttp';
+import { getSalesmanList } from '@/services/salemanMangement';
 import { getList } from '@/services/clientList';
 
-export const ClientListAsignPeopleForm = props => {
+export const ClientListAssignPeopleForm = props => {
+  const { data: salesmanList, req: getSalesmanListAsync } = useHttp(
+    getSalesmanList,
+    {
+      formatVal: 'nickname',
+    },
+  );
+
   const config = [
     {
       itemProps: {
@@ -16,11 +24,13 @@ export const ClientListAsignPeopleForm = props => {
       },
     },
     {
-      // formType: 'Search',
-      // selectData: ,
+      formType: 'Search',
+      selectSearch: e =>
+        getSalesmanListAsync(() => getSalesmanList({ keyword: e })),
+      selectData: salesmanList,
       itemProps: {
         label: '销售',
-        name: '',
+        name: 'salesman_id',
       },
     },
   ];

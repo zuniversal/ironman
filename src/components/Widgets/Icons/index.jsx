@@ -81,6 +81,11 @@ import powerStation from '@/static/sideBarIcon/powerStation.png';
 // import operateRecord from '@/static/sideBarIcon/operateRecord.png';
 // import kpi from '@/static/sideBarIcon/kpi.png';
 
+import clientManage from '@/static/sideBarIcon/crm/clientManage.png';
+import salesManage from '@/static/sideBarIcon/crm/salesManage.png';
+import satisAnalyse from '@/static/sideBarIcon/crm/satisAnalyse.png';
+import taskManage from '@/static/sideBarIcon/crm/taskManage.png';
+
 const iconMap = {
   dog,
   logo,
@@ -140,6 +145,11 @@ const iconMap = {
   // csMonitor,
   // operateRecord,
   // kpi,
+
+  clientManage,
+  salesManage,
+  satisAnalyse,
+  taskManage,
 };
 
 export const Bell = props => {

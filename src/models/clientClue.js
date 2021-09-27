@@ -1,5 +1,6 @@
 import { init } from '@/utils/createAction';
 import * as services from '@/services/clientClue';
+import { formatClientClueDetail } from '@/format/clientClue';
 
 const namespace = 'clientClue';
 const { createActions, createAction } = init(namespace);
@@ -58,7 +59,7 @@ const model = {
     },
     getItem(state, { payload, type }) {
       console.log(' getItemgetItem ： ', payload);
-      const { file, logo } = payload.bean.content.enterprise;
+      const { file, logo, streetscape_img } = payload.bean.content.enterprise;
 
       return {
         ...state,
@@ -69,7 +70,24 @@ const model = {
           ...payload.bean.content,
           file: file ? file.split(',') : [],
           logo: logo ? logo.split(',') : [],
+          streetscape_img: streetscape_img ? streetscape_img.split(',') : [],
+          // contacts: payload.bean.content.contacts.map(v => ({
+          //   ...v,
+          //   is_urge: [v.is_urge ? 1 : 0],
+          //   is_quit: [v.is_quit ? 1 : 0],
+          //   // tags: v.tags?.map(v => `${v.id}`) ?? [],
+          // })),
         },
+      };
+    },
+    getItem(state, { payload, type }) {
+      console.log(' getItem 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: formatClientClueDetail(payload.bean),
       };
     },
   },

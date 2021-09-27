@@ -2,6 +2,7 @@ import React from 'react';
 import SmartTable from '@/common/SmartTable';
 import { clientClueLevelMap } from '@/configs';
 import { formatSelectList } from '@/utils';
+import { tips } from '@/utils';
 
 export const ClientListPrivateTable = props => {
   const columns = [
@@ -25,7 +26,7 @@ export const ClientListPrivateTable = props => {
     },
     {
       title: '客户代表',
-      // dataIndex: '',
+      dataIndex: 'salesman',
     },
     {
       title: '户号数',
@@ -43,10 +44,13 @@ export const ClientListPrivateTable = props => {
             <div
               className={`linking`}
               onClick={() =>
-                props.getClientPlanAsync({
-                  action: 'getClientPlanAsync',
-                  d_id: record.id,
-                })
+                !!pendingList.length || !!completeList.length
+                  ? props.getClientPlanAsync({
+                      action: 'getClientPlanAsync',
+                      d_id: record.id,
+                      customer_id: record.id,
+                    })
+                  : tips('没有计划详情！', 2)
               }
             >
               (方案中)计划 {pendingList.length}、(已完成)计划{' '}
@@ -73,6 +77,19 @@ export const ClientListPrivateTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
+      <a
+        onClick={() => {
+          props.getClientRemarkListAsync({
+            d_id: record.customer_id,
+          });
+          props.edit({
+            action: 'edit',
+            d_id: record.customer_id,
+          });
+        }}
+      >
+        编辑
+      </a>
       <a
         onClick={() =>
           props.showFormModal({
@@ -116,24 +133,28 @@ export const ClientListPrivateTable = props => {
       >
         备注
       </a>
-      <a disabled className={`disabled `}>
-        已分配
-      </a>
-      <a disabled className={`disabled `}>
+      {/* <a disabled className={`disabled `}>
         合同签订
-      </a>
+      </a> */}
 
-      <a
-        onClick={() =>
-          props.showFormModal({
-            action: 'clientListAsignPeople',
-            d_id: record.id,
-            record,
-          })
-        }
-      >
-        分配
-      </a>
+      {record.salesman_id ? (
+        <a disabled className={`disabled `}>
+          已分配
+        </a>
+      ) : (
+        <a
+          onClick={() =>
+            props.showFormModal({
+              action: 'clientListAssignPeople',
+              d_id: record.customer_id,
+              customer_id: record.customer_id,
+              record,
+            })
+          }
+        >
+          分配
+        </a>
+      )}
     </>
   );
 
@@ -143,6 +164,7 @@ export const ClientListPrivateTable = props => {
       extra={extra}
       rowSelection={null}
       // noRemove
+      noDefault
       {...props}
     ></SmartTable>
   );
@@ -165,7 +187,7 @@ export const ClientListPublicTable = props => {
     },
     {
       title: '客户代表',
-      // dataIndex: '',
+      dataIndex: 'salesman',
     },
     {
       title: '户号数',
@@ -179,21 +201,35 @@ export const ClientListPublicTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      {record.aa ? (
+      <a
+        onClick={() => {
+          props.getClientRemarkListAsync({
+            d_id: record.customer_id,
+          });
+          props.edit({
+            action: 'edit',
+            d_id: record.customer_id,
+          });
+        }}
+      >
+        编辑
+      </a>
+      {record.salesman_id ? (
+        <a disabled className={`disabled `}>
+          已分配
+        </a>
+      ) : (
         <a
           onClick={() =>
             props.showFormModal({
-              action: 'clientListAsignPeople',
-              d_id: record.id,
+              action: 'clientListAssignPeople',
+              d_id: record.customer_id,
+              customer_id: record.customer_id,
               record,
             })
           }
         >
           分配
-        </a>
-      ) : (
-        <a disabled className={`disabled `}>
-          已分配
         </a>
       )}
       {record.aa ? (
@@ -220,7 +256,8 @@ export const ClientListPublicTable = props => {
       columns={columns}
       extra={extra}
       rowSelection={null}
-      noRemove
+      // noRemove
+      noDefault
       {...props}
     ></SmartTable>
   );

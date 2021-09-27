@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import ClientInfoNotifyForm from '@/components/Form/ClientInfoNotifyForm';
 import ClientInfoNotifyTable from '@/components/Table/ClientInfoNotifyTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/clientList';
+import { actions, mapStateToProps } from '@/models/clientInfoNotify';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -67,6 +67,7 @@ class ClientInfoNotify extends PureComponent {
       authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
+      showDetail: this.props.getItemAsync,
       edit: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
@@ -107,6 +108,9 @@ class ClientInfoNotify extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'add') {
+        this.props.addItemAsync(res);
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }

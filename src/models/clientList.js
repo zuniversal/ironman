@@ -2,8 +2,11 @@ import { init } from '@/utils/createAction';
 import * as services from '@/services/clientList';
 import * as clientPlanServices from '@/services/clientPlan';
 import * as clientClueServices from '@/services/clientClue';
+import * as clientServices from '@/services/client';
 import { CLIENTLIST_PRIVATE } from '@/configs';
 import { tips } from '@/utils';
+import { formatClientDetail } from '@/format/client';
+import moment from 'moment'; //
 
 const namespace = 'clientList';
 const { createActions, createAction } = init(namespace);
@@ -25,6 +28,7 @@ const initialState = {
   customer_id: null,
   clientPlanList: [],
   formInitData: {},
+  clientRemarkList: [],
 };
 
 const model = {
@@ -40,7 +44,7 @@ const model = {
         clientPlanList = payload.clientPlanList;
       }
       let formInitData = {};
-      if (payload.action === 'clientListAsignPeople') {
+      if (payload.action === 'clientListAssignPeople') {
         formInitData = payload.record;
       }
 
@@ -63,6 +67,7 @@ const model = {
       };
     },
     getList(state, { payload, type }) {
+      console.log(' getListgetList  ： ', state, payload, type);
       return {
         ...state,
         dataList: payload.list,
@@ -79,7 +84,7 @@ const model = {
         last_service_staff,
         electricityuser,
         file,
-        contact,
+        contacts,
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
@@ -150,7 +155,7 @@ const model = {
               : null,
           },
 
-          contact: contact.map(v => ({
+          contacts: contacts.map(v => ({
             ...v,
             is_urge: v.is_urge ? [v.is_urge] : [],
             is_quit: v.is_quit ? [v.is_quit] : [],
@@ -166,19 +171,6 @@ const model = {
           last_service_staff: `${last_service_staff_name}`,
           // service_organization_id: service_organization_name ?? null,
         },
-        // adminList: [payload.bean.customer_admin],
-        adminList: payload.bean.customer_admin,
-        adminList,
-        tableData: payload.bean.customer_admin.map(v => ({
-          ...v,
-          // acount:
-          key: Math.random(),
-          password: '',
-          isEdit: false,
-        })),
-        // adminList: [...adminList, payload.bean.customer_admin],
-        // userList: [serviceStaff, lastServiceStaff, ...userList],
-        userList: filterObjSame([...userList, serviceStaff, lastServiceStaff]),
       };
     },
     addItem(state, { payload, type }) {
@@ -227,10 +219,87 @@ const model = {
           ...payload.bean.content,
           file: file ? file.split(',') : [],
           logo: logo ? logo.split(',') : [],
+          contacts: payload.bean.content.contacts.map(v => ({
+            ...v,
+            is_urge: [v.is_urge ? 1 : 0],
+            is_quit: [v.is_quit ? 1 : 0],
+            tags: v.tags?.map(v => `${v.id}`) ?? [],
+          })),
         },
       };
     },
-    
+    getClient(state, { payload, type }) {
+      console.log(' getClient 修改  ： ', state, payload, type);
+      const {
+        customer_admin,
+        service_staff,
+        last_service_staff,
+        electricityuser,
+        file,
+        contacts,
+        service_staff_name,
+        last_service_staff_name,
+        service_organization_name,
+        enterprise,
+      } = payload.bean;
+      const { userList, adminList } = state;
+      const serviceStaff = {
+        ...service_staff,
+        value: `${service_staff?.id}`,
+        label: service_staff?.nickname,
+      };
+      const lastServiceStaff = {
+        ...last_service_staff,
+        value: `${last_service_staff?.id}`,
+        label: last_service_staff?.nickname,
+      };
+      console.log(
+        ' serviceStaff, lastServiceStaff ： ',
+        serviceStaff,
+        lastServiceStaff,
+      );
+      return {
+        ...state,
+        itemDetail: {
+          ...payload.bean,
+          customer_admin:
+            customer_admin && customer_admin.length > 0
+              ? customer_admin.map(v => ({ ...v, tags: [] }))
+              : [],
+          d_id: payload.payload.d_id,
+          service_staff: service_staff?.id,
+          last_service_staff:
+            last_service_staff && last_service_staff?.id
+              ? last_service_staff?.id
+              : null,
+          // electricityuser: electricityuser.map(v => v.number).join(','),
+          file: file ? file.split(',') : [],
+          enterprise: {
+            ...enterprise,
+            file: enterprise?.file ? enterprise?.file.split(',') : [],
+            logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
+          },
+
+          contacts: contacts.map(v => ({
+            ...v,
+            is_urge: [v.is_urge],
+            is_quit: [v.is_quit],
+            tags: v.tags.map(v => `${v.id}`) ?? [],
+          })),
+          service_staff: `${service_staff_name}`,
+          last_service_staff: `${last_service_staff_name}`,
+          // service_organization_id: service_organization_name ?? '',
+        },
+      };
+    },
+    getClient(state, { payload, type }) {
+      console.log(' getClient 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        itemDetail: formatClientDetail(payload.bean),
+      };
+    },
+
     getRemark(state, { payload, type }) {
       console.log(' getRemark ： ', payload);
       return {
@@ -254,6 +323,15 @@ const model = {
       return {
         ...state,
         isShowModal: false,
+      };
+    },
+    getClientRemarkList(state, { payload, type }) {
+      return {
+        ...state,
+        clientRemarkList: payload.list.map(v => ({
+          ...v,
+          createdTime: moment(v.created_time).format('YYYY-MM-DD HH:mm:ss'),
+        })),
       };
     },
   },
@@ -280,10 +358,10 @@ const model = {
       const res = yield call(services.getItem, payload);
       // yield put({ type: 'getItem' });
       if (!res.bean) {
-        tips('没有详情数据', 2)
-        return 
+        tips('没有详情数据', 2);
+        return;
       }
-      
+
       yield put(action({ ...res, payload }));
     },
     *addItemAsync({ payload, action, type }, { call, put }) {
@@ -302,13 +380,15 @@ const model = {
     *getClientPlanAsync({ payload, action, type }, { call, put }) {
       console.log(' getClientPlanAsync ： ', payload); //
       const res = yield call(clientPlanServices.getList, payload);
-      yield put({
-        type: 'getClientClueAsync',
-        payload: {
-          d_id: res.list[0].customer.id,
-          // d_id: 14,
-        },
-      });
+      // yield put({
+      //   // type: 'getClientClueAsync',
+      //   type: 'getClientAsync',
+      //   payload: {
+      //     // d_id: res.list[0].customer.id,
+      //     d_id: res.list[0].customer.customer_id,
+      //     // d_id: 14,
+      //   },
+      // });
       yield put({ type: 'getClientPlan', payload: { ...res, payload } });
     },
     *addClientPlanAsync({ payload, action, type }, { call, put }) {
@@ -316,16 +396,31 @@ const model = {
       // yield put({ type: 'addClientPlan', payload: { ...res, payload, } });
       yield put({ type: 'getListAsync' });
     },
+    *getClientAsync({ payload, action, type }, { call, put }) {
+      console.log(' getClientAsync ： ', payload); //
+      const res = yield call(clientServices.getItem, payload);
+      if (!res.bean) {
+        tips('没有详情数据', 2);
+        return;
+      }
+      yield put({ type: 'getClient', payload: { ...res, payload } });
+    },
+
     *getClientClueAsync({ payload, action, type }, { call, put }) {
+      console.log(' getClientClueAsync ： ', payload); //
       const res = yield call(clientClueServices.getItem, payload);
+      if (!res.bean) {
+        tips('没有详情数据', 2);
+        return;
+      }
       yield put({ type: 'getClientClue', payload: { ...res, payload } });
     },
-    
+
     *getRemarkAsync({ payload, action, type }, { call, put }) {
       console.log(' getRemarkAsync ： '); //
       // yield put({ type: 'getRemark' });
-      const { d_id,  } = payload
-      const res = yield call(services.getRemark, {d_id});
+      const { d_id } = payload;
+      const res = yield call(services.getRemark, { d_id });
       yield put({ type: 'getRemark', payload: { ...res, payload } });
     },
     *addRemarkAsync({ payload, action, type }, { call, put }) {
@@ -335,6 +430,14 @@ const model = {
     *editRemarkAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.editRemark, payload);
       yield put({ type: 'getListAsync' });
+    },
+    *assignPeopleAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.assignPeople, payload);
+      yield put({ type: 'getListAsync' });
+    },
+    *getClientRemarkListAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.getClientRemarkList, payload);
+      yield put({ type: 'getClientRemarkList', payload: { ...res, payload } });
     },
   },
 };

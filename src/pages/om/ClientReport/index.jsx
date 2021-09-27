@@ -64,7 +64,7 @@ class ClientReport extends PureComponent {
         <ClientReportSearchForm
           init={this.props.searchInfo}
           onFieldChange={this.onFieldChange}
-          table={this.renderTable()}
+          // table={this.renderTable()}
         ></ClientReportSearchForm>
         {/* <div className={'btnWrapper'}>
           <Button

@@ -15,6 +15,7 @@ import { tips, format2Null, getItem, formatSelectList } from '@/utils';
 import { TRUST_CLIENT } from '@/constants';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import { formatClientFormData } from '@/format';
+import { formatClientData } from '@/format/client';
 
 export const TITLE = '客户';
 
@@ -184,6 +185,29 @@ class Client extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn);
       const { adminList, itemDetail } = this.props;
+      const formatRes = formatClientData(res, {
+        itemDetail,
+        action,
+      });
+      console.log(' formatRes ： ', formatRes); //
+      const isUrgeOneRes = formatRes.contacts.filter(v => v.is_urge);
+      console.log(' formatResformatRes ： ', formatRes, res, isUrgeOneRes);
+      if (isUrgeOneRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...formatRes,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...formatRes,
+          d_id: this.props.itemDetail.id,
+        });
+      }
+      return;
       // // if (tableData.length === 0 && action !== 'add') {
       // // if (tableData.length === 0) {
       // const adminIdLen = tableData.filter((v) => v.id).length
@@ -196,17 +220,20 @@ class Client extends PureComponent {
         ...init,
         ...res,
         // customer_admin: tableData,
-        contact: res.contact.map(v => ({
+        contacts: res.contacts.map(v => ({
           ...v,
-          is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
-          is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+          // is_urge: v.is_urge?.length && v.is_urge[0] === 1 ? true : false,
+          // is_quit: v.is_quit?.length && v.is_quit[0] === 1 ? true : false,
+          is_urge: v.is_urge ? true : false,
+          is_quit: v.is_quit ? true : false,
         })),
-        customer_admin: !!res.customer_admin.length
-          ? res.customer_admin.map(v => ({
-              ...v,
-              password: v.password ? v.password : null,
-            }))
-          : [],
+        customer_admin:
+          res.customer_admin && !!res.customer_admin.length
+            ? res.customer_admin.map(v => ({
+                ...v,
+                password: v.password ? v.password : null,
+              }))
+            : [],
       };
       // if (typeof res.file !== 'string') {
       // if (res.file && res.file.length > 0) {
@@ -273,7 +300,7 @@ class Client extends PureComponent {
         delete datas.last_service_staff_id;
       }
 
-      const isUrgeRes = datas.contact.filter(v => v.is_urge);
+      const isUrgeRes = datas.contacts.filter(v => v.is_urge);
       console.log(' paramsparams ： ', params, datas, isUrgeRes);
       if (isUrgeRes.length > 1) {
         tips('催款联系人只能勾选1人！', 2);
@@ -561,49 +588,19 @@ class Client extends PureComponent {
   checkOne = params => {
     console.log(' checkOne,  , ： ', params);
     const { form, formData } = params;
-    if (params.value?.contact) {
-      const isUrge = params.value?.contact[0]?.is_urge;
+    if (params.value?.contacts) {
+      const isUrge = params.value?.contacts[0]?.is_urge;
       console.log(' isUrge ： ', isUrge);
       if (isUrge) {
-        const { contact } = formData;
-        console.log('  formData ：', formData, contact);
+        const { contacts } = formData;
+        console.log('  formData ：', formData, contacts);
         form.setFieldsValue(formData);
       }
     }
   };
-  onCollectorChange = async (e, params, rest) => {
-    console.log(
-      ' onCollectorChange,  , ： ',
-      e,
-      rest,
-      params,
-      e.target.value,
-      params.form.getFieldsValue(),
-      this.props,
-    );
-    // const { form } = params;
-    // const formVal = params
-    // console.log(' params.value?.enterprise ： ', params.value?.enterprise);
-    // if (params.value?.enterprise?.address) {
-    //   console.log(' onFieldChange 清空 address ： ');
-    //   const { address } = params.value.enterprise;
-    //   const res = await this.props.getGeoAsync({ address });
-    //   // const res = await this.props.getGeoAsync({ address: '南山区' })
-    //   const setFields = {
-    //     enterprise: res,
-    //   };
-    //   console.log(' address res ：', res, setFields);
-    //   form.setFieldsValue(setFields);
-    // }
-    // // this.checkOne(params)
-    // this.getDistrictAsync({
-    //   ...params,
-    //   isFormChange: true,
-    // });
-  };
   onClientFormChange = async params => {
     console.log(
-      ' onClientFormChange,  , ： ',
+      // ' onClientFormChange,  , ： ',
       params,
       params.value,
       params.formData,
@@ -720,55 +717,11 @@ class Client extends PureComponent {
     const formComProps = {
       action,
       getCapture: this.showCapture,
-      addUserAsync: this.addUserAsync,
-      getUserAsync: params => this.props.getUserAsync({ value: params }),
       userList: this.props.userList,
-      // saveAdmin: params => {
-      //   console.log(' saveAdmin params ： ', params);
-      //   // this.props.addUserAsync({ customer_admin_list: params.data, })
-      // },
-      adminList: this.props.adminList,
-      saveAdmin: this.saveAdmin,
-      removeAdmin: this.props.removeUserAsync,
-      onAdminChange: (changedFields, allFields) =>
-        this.props.onAdminChange({ changedFields, allFields }),
-
-      addTableItemAsync: this.props.addTableItemAsync,
-      editTableItemAsync: this.props.editTableItemAsync,
-      removeTableItemAsync: this.props.removeTableItemAsync,
-      modifyTableItem: this.props.modifyTableItem,
-      tableData: this.props.tableData,
       showItemAsync: this.props.showItemAsync,
-
-      contactTableData: this.props.contactTableData,
-
-      onCollectorChange: this.onCollectorChange,
       onAddrChange: this.onAddrChange,
       onHouseNoRegionChange: this.onHouseNoRegionChange,
-      getTagsAsync: params => this.props.getTagsAsync({ keyword: params }),
-      tagsList: this.props.tagsList,
-      getOrganizeAsync: params =>
-        this.props.getOrganizeAsync({ keyword: params }),
-      organizeList: this.props.organizeList,
-      getGeoAsync: params => this.props.getGeoAsync({ address: params }),
-      geoList: this.props.geoList,
-      onFieldChange: this.onClientFormChange,
-      // getDistrictAsync: this.props.getDistrictAsync,
-      provinceList: this.props.provinceList,
-      // provinceList: [
-      //   {
-      //     label: '福建省',
-      //     value: '福建省',
-      //   }
-      // ],
-      citytList: this.props.citytList,
-      countryList: this.props.countryList,
-      // countryList: [
-      //   {
-      //     label: '泉港区',
-      //     value: '泉港区',
-      //   }
-      // ],
+      // onFieldChange: this.onClientFormChange,
       removeContactAsync: this.props.removeContactAsync,
       removeClientAdminAsync: this.props.removeClientAdminAsync,
     };
@@ -783,7 +736,7 @@ class Client extends PureComponent {
       // formComProps.init = this.props.itemDetail;
       formComProps.init = {
         ...this.props.itemDetail,
-        customer_admin: this.props.adminList,
+        // customer_admin: this.props.adminList,
       };
     } else {
       const { enterprises = [] } = getItem('userInfo');
@@ -832,7 +785,7 @@ class Client extends PureComponent {
     // this.props.getUserAsync();
     // this.props.getOrganizeAsync({ page_size: 1000 });
 
-    this.props.getDistrictAsync({});
+    // this.props.getDistrictAsync({});
     // this.props.getGeoAsync({ address: '上海浦东' });
     // this.props.getRegionAsync({
     //   subdistrict: '0',

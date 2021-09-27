@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './style.less';
 import ClientClueForm from '@/components/Form/ClientClueForm';
+import ClientForm from '@/components/Form/ClientForm';
 import PlanContractStep from '@/pages/crm/MyTask/PlanContractStep';
-import { clientListTabConfig, planContractStepConfig } from '@/configs';
-import { Tabs, Steps, Button } from 'antd';
+import {
+  clientListTabConfig,
+  planContractStepConfig,
+  planListInfoDescConfig,
+  clientListPlanTypeMap,
+} from '@/configs';
+import { Tabs, Steps, Button, Descriptions } from 'antd';
 
 const { TabPane } = Tabs;
 const { Step } = Steps;
@@ -47,9 +53,25 @@ const RenderVerticalStep = props => {
   );
 };
 
+const formatData = props => {
+  // console.log(' formatData   ,   ： ', props,  )
+  if (!props.plan_code) {
+    return props;
+  }
+  return {
+    ...props,
+    planType: clientListPlanTypeMap[props.type],
+    planTime: props.plan_code[0].duration + ' 天',
+    contractTime: props.plan_code[1].duration + ' 天',
+    signTime: props.plan_code[2].duration + ' 天',
+  };
+};
+
 const ClientPlanList = props => {
   console.log(' ClientPlanList ： ', props);
-  const [current, setCurrent] = useState(0);
+  const params = formatData(props.clientPlanList[0]);
+  const [dataInit, setDataInit] = useState(params);
+  const [current, setCurrent] = useState(props.clientPlanList[0].id);
 
   useEffect(() => {
     console.log(' ClientPlanList useEffect v ： ', props); //
@@ -58,9 +80,16 @@ const ClientPlanList = props => {
 
   const onTabChange = v => {
     console.log(' onTabChange v ： ', v); //
-    props.getClientClueAsync({
-      d_id: v,
-    });
+    const matchItem = props.clientPlanList.find(item => item.id == v);
+    console.log(' matchItem  props.clientPlanList.find v ： ', matchItem);
+    setDataInit(formatData(matchItem));
+    setCurrent(v);
+    // props.getClientAsync({
+    //   d_id: matchItem.customer.customer_id,
+    // });
+    // props.getClientClueAsync({
+    //   d_id: v,
+    // });
   };
 
   const onStepChange = e => {
@@ -74,13 +103,24 @@ const ClientPlanList = props => {
     </Button>
   );
 
+  const planInfoDesc = (
+    <Descriptions>
+      {planListInfoDescConfig.map((v, i) => (
+        <Descriptions.Item {...v} key={i}>
+          {dataInit[v.value]}
+        </Descriptions.Item>
+      ))}
+    </Descriptions>
+  );
+
   return (
     <div className={' clientPlanList '}>
       <RenderTabPanes
         config={props.clientPlanList.map((v, i) => ({
           tab: v.name,
           key: v.id,
-          value: v.id,
+          // key: v.customer.customer_id,
+          value: v.customer.customer_id,
         }))}
         // config={[
         //   {
@@ -95,10 +135,14 @@ const ClientPlanList = props => {
         //   }
         // ]}
         onChange={onTabChange}
-        tabsProps={{
-          tabBarExtraContent: operations,
-        }}
+        tabsProps={
+          {
+            // tabBarExtraContent: operations,
+          }
+        }
       ></RenderTabPanes>
+
+      {planInfoDesc}
 
       {/* <div className={'planStepWrapper '}>
         <RenderStep
@@ -108,18 +152,22 @@ const ClientPlanList = props => {
         ></RenderStep>
       </div> */}
 
-      {/* {Object.keys(props.init).length > 0 && <ClientClueForm 
+      {/* {Object.keys(props.init).length > 0 && ( */}
+      <PlanContractStep
+        {...props}
+        action={'detail'}
+        planStepId={current}
+        // planStepId={3}
+        planStepId={dataInit.id}
+        code_id={dataInit.plan_code[0].code_id}
+        // key={props.init.id}
+      ></PlanContractStep>
+
+      {/* {current === 0 && <ClientForm 
         {...props}
         action={'detail'}
         // key={props.init.id} 
-      ></ClientClueForm>} */}
-      {Object.keys(props.init).length > 0 && (
-        <PlanContractStep
-          {...props}
-          action={'detail'}
-          // key={props.init.id}
-        ></PlanContractStep>
-      )}
+      ></ClientForm>} */}
 
       <div className={'rowTitle itemtitle'}>
         处理记录：

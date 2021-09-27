@@ -7,7 +7,9 @@ import ClientClueTable from '@/components/Table/ClientClueTable';
 import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/clientClue';
 import SmartHOC from '@/common/SmartHOC';
+import { houseNoImgConfig } from '@/configs';
 import { connect } from 'umi';
+import { formatClientClueData } from '@/format/clientClue';
 
 const TITLE = '客户线索';
 
@@ -118,10 +120,36 @@ class ClientClue extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
       if (action === 'approveClientClueAsync') {
-        this.props.approveClientClueAsync(res);
+        const { name, ...rest } = res;
+        this.props.approveClientClueAsync(rest);
         return;
       }
+      const formatRes = formatClientClueData(res, {
+        itemDetail,
+        action,
+      });
+      console.log(' formatRes ： ', formatRes); //
 
+      const isUrgeOneRes = formatRes.content.contacts.filter(v => v.is_urge);
+      console.log(' formatResformatRes ： ', formatRes, res, isUrgeOneRes);
+      if (isUrgeOneRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...formatRes,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...formatRes,
+          d_id: this.props.itemDetail.id,
+        });
+      }
+      return;
+
+      const { ele_user } = res;
       const { province, city, area, ...enterprise } = res.enterprise;
       console.log(' enterprise ： ', enterprise);
 
@@ -136,11 +164,35 @@ class ClientClue extends PureComponent {
             level: res.level,
           },
           enterprise,
-          contact: res.contact.map(v => ({
+          contacts: res.contacts.map(v => ({
             ...v,
-            is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
-            is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+            // is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
+            // is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
+            is_urge: v.is_urge ? true : false,
+            is_quit: v.is_quit ? true : false,
           })),
+          ele_user: ele_user.map(v => {
+            houseNoImgConfig.forEach(({ key, type }) => {
+              if (v[key]) {
+                if (v[key] && v[key].fileList && v[key].fileList.length > 0) {
+                  const fileList = v[key].fileList;
+                  console.log(' fileList ： ', fileList);
+                  v[key] =
+                    type === 'array'
+                      ? fileList.map(v => v.response.url)
+                      : fileList[fileList.length - 1].response.url;
+                  // .join(',');
+                } else {
+                  v[key] = null;
+                }
+              } else {
+                v[key] = null;
+              }
+            });
+            const { province, city, area, ...rest } = v;
+            console.log(' res  houseNoImgConfig.map v ： ', res);
+            return rest;
+          }),
         },
         address: res.enterprise.address,
         longitude: res.enterprise.longitude,
@@ -175,11 +227,39 @@ class ClientClue extends PureComponent {
       } else {
         params.content.enterprise.logo = null;
       }
+      console.log(' paramsparams222 ： ', params, res);
+      if (res.streetscape_img) {
+        if (
+          res.streetscape_img &&
+          res.streetscape_img.fileList &&
+          res.streetscape_img.fileList.length > 0
+        ) {
+          const fileList = res.streetscape_img.fileList;
+          console.log(' fileList ： ', fileList);
+          params.content.enterprise.streetscape_img = fileList
+            .map(v => v.response.url)
+            .join(',');
+        } else {
+          params.content.enterprise.streetscape_img = null;
+        }
+      } else {
+        params.content.enterprise.streetscape_img = null;
+      }
 
-      const isUrgeRes = params.contact.filter(v => v.is_urge);
+      delete params.file;
+      delete params.logo;
+      delete params.streetscape_img;
+      delete params.contacts;
+      delete params.ele_user;
+      delete params.enterprise;
+      delete params.content.file;
+      delete params.content.logo;
+      delete params.content.streetscape_img;
 
+      const isUrgeRes = params.content.contacts.filter(v => v.is_urge);
       console.log(' paramsparams ： ', params, isUrgeRes);
-      // return
+
+      return;
       if (isUrgeRes.length > 1) {
         tips('催款联系人只能勾选1人！', 2);
         return;

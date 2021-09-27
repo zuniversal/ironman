@@ -1,21 +1,29 @@
 import React from 'react';
 import { SearchForm } from '@/common/SmartForm';
-import { mytaskTabConfig } from '@/configs';
+import { myTaskTypeConfig } from '@/configs';
+import useHttp from '@/hooks/useHttp';
+import { getSearchList } from '@/services/userManage';
 
 const MyTaskSearchForm = props => {
+  const { data: userList, req: getSearchListAsync } = useHttp(getSearchList, {
+    formatVal: 'nickname',
+  });
+
   const config = [
     {
+      formType: 'Search',
+      selectData: userList,
       itemProps: {
         label: '提交人',
-        name: '',
+        name: 'user_id',
       },
     },
     {
       formType: 'Search',
-      selectData: mytaskTabConfig,
+      selectData: myTaskTypeConfig,
       itemProps: {
         label: '类型',
-        name: '',
+        name: 'type',
       },
     },
     // {

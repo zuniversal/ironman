@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, Tabs } from 'antd';
+import ClientForm from '@/components/Form/ClientForm';
 import PlanContractStep from './PlanContractStep';
 import { MyTaskApproveForm } from '@/components/Form/MyTaskActionForm';
 import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
@@ -19,11 +20,14 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
-  planContract: `${TITLE}详情`,
+  getPlanContract: `任务详情`,
   approveTaskAsync: `${TITLE}审核`,
+  clientDetailAsync: `客户详情`,
 };
 
-const detailFormMap = {};
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
@@ -31,6 +35,7 @@ const detailFormMap = {};
 @SmartHOC({
   actions,
   titleMap,
+  noMountFetch: true,
 })
 class MyTask extends PureComponent {
   constructor(props) {
@@ -55,7 +60,9 @@ class MyTask extends PureComponent {
   renderSearchForm = params => {
     return (
       <MyTaskSearchForm
-      // formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
       ></MyTaskSearchForm>
     );
   };
@@ -108,7 +115,7 @@ class MyTask extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['other'].includes(action)) {
+    if (['other', 'getPlanContract'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -140,7 +147,9 @@ class MyTask extends PureComponent {
     if (action === 'approveTaskAsync') {
       return <MyTaskApproveForm {...formComProps}></MyTaskApproveForm>;
     }
-    if (action === 'planContract') {
+    if (action === 'getPlanContract') {
+      formComProps.planStepInfo = this.props.planStepInfo;
+      formComProps.planStepId = this.props.planStepId;
       return <PlanContractStep {...formComProps}></PlanContractStep>;
     }
     // return <MyTaskForm {...formComProps}></MyTaskForm>;
@@ -196,7 +205,8 @@ class MyTask extends PureComponent {
     console.log('    onTabChange ： ', tabType);
     this.props.onTabChange({ tabType });
     this.props.getListAsync({
-      tabType,
+      // tabType,
+      status: tabType,
       page: 1,
     });
   };
@@ -209,6 +219,17 @@ class MyTask extends PureComponent {
       </Tabs>
     </div>
   );
+  componentDidMount() {
+    console.log(
+      ' %c MyTask 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
+    this.props.getListAsync({
+      status: this.props.tabType,
+    });
+  }
 
   render() {
     return (

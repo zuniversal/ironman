@@ -6,8 +6,7 @@ const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六',
 
 const option = params => {
   const { data } = params;
-  const xAxisData =
-    params.xAxisData.length > 0 ? params.xAxisData : defaultWeek;
+  const xAxisData = params.xAxisData.length > 0 ? params.xAxisData : [];
   // console.log(' xAxisData xAxisDataxAxisData ：', params, xAxisData);
   return {
     xAxis: [
@@ -16,6 +15,14 @@ const option = params => {
         data: xAxisData,
         axisPointer: {
           type: 'shadow',
+        },
+        axisLabel: {
+          color: '#000',
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#b4b4b4',
+          },
         },
       },
     ],
@@ -26,6 +33,12 @@ const option = params => {
         name: '',
         axisLabel: {
           formatter: '{value}',
+          color: '#000',
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#b4b4b4',
+          },
         },
       },
     ],

@@ -40,6 +40,7 @@ const Layouts = props => {
     getRoutes,
     userMsg,
     platform,
+    isNotice,
   } = props;
   const path = location.pathname;
   const [pathname, setPathname] = useState(path);
@@ -114,6 +115,14 @@ const Layouts = props => {
     });
   };
 
+  const onNoticeChange = payload => {
+    console.log(' onNoticeChange   payload,   ： ', payload);
+    props.dispatch({
+      type: 'user/onNoticeChange',
+      payload,
+    });
+  };
+
   return (
     <ErrorBoundary>
       <div className={'layoutContainer'}>
@@ -156,6 +165,8 @@ const Layouts = props => {
               onPlatformChange={onPlatformChange}
               clearNotice={clearNotice}
               menuClick={readMsgAsync}
+              isNotice={isNotice}
+              onNoticeChange={onNoticeChange}
             ></HeaderWidget>
           )}
           menuHeaderRender={menuHeaderRender}
@@ -202,6 +213,7 @@ const mapStateToProps = ({ loading, user }) => ({
   accountType: user.accountType,
   getRoutes: user.getRoutes,
   userMsg: user.userMsg,
+  isNotice: user.isNotice,
 });
 
 export default connect(mapStateToProps)(Layouts);

@@ -252,7 +252,7 @@ const SmartForm = (props, state) => {
   };
 
   const rules = (params, extra) => {
-    const { items, label, formType } = params;
+    const { items, label, formType, ruleExtra } = params;
     const message = getLabel(label, formType);
     // console.log(' rules   params, extra,  ,   ： ', params, extra, message, label, formType,  );
 
@@ -261,6 +261,7 @@ const SmartForm = (props, state) => {
         required: true,
         message: label + REQUIRE,
       },
+      ...(ruleExtra ? ruleExtra : []),
     ];
   };
 
@@ -356,6 +357,8 @@ const SmartForm = (props, state) => {
       noLabel,
       LabelCom,
       plainText,
+      ruleExtra,
+      formRules,
     } = items;
 
     const flexRows = items.flexRow ? items.flexRow : flexRow;
@@ -408,7 +411,11 @@ const SmartForm = (props, state) => {
       className: `formItems rowText ${bounceIn} ${itemPropsCls}  `,
     };
     const formItemProps = {
-      rules: noRule || noRuleAll ? undefined : rules({ items, label }),
+      rules: formRules
+        ? formRules
+        : noRule || noRuleAll
+        ? undefined
+        : rules({ items, label, ruleExtra }),
       ...formItemCommonProps,
       className: `formItems ${bounceIn} ${itemPropsCls}  `,
     };

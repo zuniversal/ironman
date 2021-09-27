@@ -6,19 +6,19 @@ import SmartFormModal from '@/common/SmartFormModal';
 import { actions, mapStateToProps } from '@/models/energyInfo';
 import LineEcharts, { weekArr } from './LineEcharts';
 import SmartHOC from '@/common/SmartHOC';
-import { recentPowerAxisConfig, powerMoneyAxisConfig, dayHoursNum,  } from '@/configs';
+import {
+  recentPowerAxisConfig,
+  powerMoneyAxisConfig,
+  dayHoursNum,
+} from '@/configs';
 import { connect } from 'umi';
 
 import power1 from '@/static/assets/cs/power1.png';
 import power2 from '@/static/assets/cs/power2.png';
 import power3 from '@/static/assets/cs/power3.png';
 import power4 from '@/static/assets/cs/power4.png';
-import { 
-  Row,
-  Col,
-  Tabs,
-  Collapse,
-} from 'antd';
+import { Row, Col, Tabs, Collapse } from 'antd';
+import { arrMapObj } from '@/utils';
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
@@ -81,7 +81,7 @@ class EnergyInfo extends PureComponent {
         iconCom: <img src={power2} className="icon" />,
       },
       {
-        dataKey: 'yestoday',
+        dataKey: 'yesterday',
         title: '昨日用电量',
         val: '10',
         unit: 'kWh',
@@ -123,7 +123,8 @@ class EnergyInfo extends PureComponent {
   };
   renderHavePowerEcharts = params => {
     const config = {
-      yAxisTitleArr: ['有功电量:kWh', 
+      yAxisTitleArr: [
+        '有功电量:kWh',
         // '单价:元'
         '',
       ],
@@ -158,6 +159,7 @@ class EnergyInfo extends PureComponent {
       {
         tab: '有功电量',
         key: 'power_data',
+        yAxis: '电量:kWh',
       },
       // {
       //   tab: '电量电费',
@@ -166,19 +168,30 @@ class EnergyInfo extends PureComponent {
       {
         tab: '累计有功电量',
         key: 'power',
+        yAxis: '电量:kWh',
       },
       // {
       //   tab: '累计电量电费',
       //   key: '累计电量电费',
       // },
       {
-        tab: '有功功率',
+        tab: '平均有功功率',
         key: 'active_power',
+        yAxis: '功率:kW',
       },
       {
         tab: '功率因数',
         key: 'power_factor',
+        yAxis: '',
       },
+    ];
+    console.log(
+      ' renderMonthPowerEcharts ： ',
+      this.props.recentPowerType,
+      arrMapObj(powerTabConfig, { key: 'key', label: 'yAxis' }),
+    ); //
+    let yAxisTitle = arrMapObj(powerTabConfig, { key: 'key', label: 'yAxis' })[
+      this.props.recentPowerType
     ];
     const onChange = type => {
       console.log(' onChange   ,   ： ', type);
@@ -187,13 +200,19 @@ class EnergyInfo extends PureComponent {
       });
     };
 
+    const lineNameArr =
+      this.props.recentPowerType === 'power'
+        ? ['累计有功电量']
+        : recentPowerAxisConfig;
+
     const config = {
       // yAxisTitle: '',
       yAxisTitle2: '',
       xAxis: this.props.powerUseData.xAxis,
       data: this.props.powerUseData.data,
-      yAxisTitleArr: ['有功电量:kWh'],
+      yAxisTitleArr: [yAxisTitle],
       lineNameArr: recentPowerAxisConfig,
+      lineNameArr,
     };
     const tabs = (
       <Tabs defaultActiveKey="1" onChange={onChange}>
@@ -215,9 +234,10 @@ class EnergyInfo extends PureComponent {
       yAxisTitle2: '电量电费:元',
       xAxis: this.props.recentPower10DayData.xAxis,
       data: this.props.recentPower10DayData.data,
-      yAxisTitleArr: ['有功电量:kWh', 
+      yAxisTitleArr: [
+        '有功电量:kWh',
         // '电量电费:元'
-        '电价:元'
+        '电费:元',
       ],
       lineNameArr: powerMoneyAxisConfig,
       yAxisIndex: 3,
@@ -265,9 +285,10 @@ class EnergyInfo extends PureComponent {
         ],
       ],
       data: this.props.recentPower6MonthData.data,
-      yAxisTitleArr: ['有功电量:kWh', 
+      yAxisTitleArr: [
+        '有功电量:kWh',
         // '电量电费:元'
-        '电价:元'
+        '电费:元',
       ],
       lineNameArr: powerMoneyAxisConfig,
       yAxisIndex: 3,
@@ -305,14 +326,14 @@ class EnergyInfo extends PureComponent {
         <Col span={12}>
           <CollapseCom
             com={this.render10DayPowerEcharts()}
-            header={'实时有功电量'}
+            header={'近10日用电曲线'}
             key={'ContactCollapseCom'}
           ></CollapseCom>
         </Col>
         <Col span={12}>
           <CollapseCom
             com={this.render6DayPowerEcharts()}
-            header={'本月用电曲线'}
+            header={'近6月用电曲线'}
             key={'ContactCollapseCom'}
           ></CollapseCom>
         </Col>

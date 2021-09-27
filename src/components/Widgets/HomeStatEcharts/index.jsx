@@ -109,6 +109,7 @@ const StatTabPanes = props => {
           <TimeChoice
             onOptionChange={props.onOptionChange}
             key={activeKey}
+            activeVal={props.activeVal}
           ></TimeChoice>
         }
       >

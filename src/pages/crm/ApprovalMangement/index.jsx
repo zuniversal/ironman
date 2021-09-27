@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
+import ClientForm from '@/components/Form/ClientForm';
+import PlanContractStep from '@/pages/crm/MyTask/PlanContractStep';
+import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
 import ApprovalMangementSearchForm from '@/components/Form/ApprovalMangementSearchForm';
 // import ApprovalMangementForm from '@/components/Form/ApprovalMangementForm';
 import ApprovalMangementTable from '@/components/Table/ApprovalMangementTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/client';
+import { actions, mapStateToProps } from '@/models/approvalMangement';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 
@@ -14,9 +17,13 @@ const titleMap = {
   add: `新建${TITLE}`,
   edit: `编辑${TITLE}`,
   detail: `${TITLE}详情`,
+  getPlanContract: `任务详情`,
+  clientDetailAsync: `客户详情`,
 };
 
-const detailFormMap = {};
+const detailFormMap = {
+  clientDetailAsync: ClientForm,
+};
 
 // const mapStateToProps = ({ houseNo, }) => houseNo;
 
@@ -47,8 +54,16 @@ class ApprovalMangement extends PureComponent {
   };
   renderSearchForm = params => {
     return (
+      <MyTaskSearchForm
+        // formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
+      ></MyTaskSearchForm>
+    );
+    return (
       <ApprovalMangementSearchForm
         formBtn={this.renderFormBtn}
+        onFieldChange={this.onFieldChange}
       ></ApprovalMangementSearchForm>
     );
   };
@@ -66,7 +81,7 @@ class ApprovalMangement extends PureComponent {
       authInfo: this.props.authInfo,
       searchInfo: this.props.searchInfo,
       getListAsync: this.props.getListAsync,
-      edit: this.props.getItemAsync,
+      getItemAsync: this.props.getItemAsync,
       remove: this.onRemove,
       showFormModal: this.props.showFormModal,
       showItemAsync: this.props.showItemAsync,
@@ -99,7 +114,7 @@ class ApprovalMangement extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['other'].includes(action)) {
+    if (['other', 'getPlanContract'].includes(action)) {
       this.props.onCancel({});
       return;
     }
@@ -120,6 +135,11 @@ class ApprovalMangement extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
+    if (action === 'getPlanContract') {
+      formComProps.planStepInfo = this.props.planStepInfo;
+      formComProps.planStepId = this.props.planStepId;
+      return <PlanContractStep {...formComProps}></PlanContractStep>;
+    }
     // return <ApprovalMangementForm {...formComProps}></ApprovalMangementForm>;
   };
   renderSmartFormModal = params => {

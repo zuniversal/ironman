@@ -47,7 +47,7 @@ export const formatClientFormData = data => {
     enterprise,
     electricity_user = [],
     customer_admin = [],
-    contact = [],
+    contacts = [],
     ...rest
   } = data;
   console.log(
@@ -56,18 +56,18 @@ export const formatClientFormData = data => {
     enterprise,
     electricity_user,
     customer_admin,
-    contact,
+    contacts,
     rest,
   );
   const data1 = format2Null(rest, clientInfoValidates);
   const data2 = format2Null(enterprise, enterpriseValidates);
-  const data5 = contact.map(v => format2Null(v, contactValidates));
+  const data5 = contacts.map(v => format2Null(v, contactValidates));
   const data4 = customer_admin.map(v => format2Null(v, adminValidates));
   const data3 = electricity_user.map(v => format2Null(v, houseNoValidates));
   const newData = {
     ...data1,
     enterprise: data2,
-    contact: data5,
+    contacts: data5,
     customer_admin: data4,
     electricity_user: data3,
   };

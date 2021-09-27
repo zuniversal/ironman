@@ -1,6 +1,6 @@
 import { init, action } from '@/utils/createAction';
 import * as services from '@/services/energyInfo';
-import { formatSelectList } from '@/utils';
+import { getNowMonthDaysPad, toFixed, arrMapObj } from '@/utils';
 import dayjs from 'dayjs'; //
 
 const namespace = 'energyInfo';
@@ -89,6 +89,7 @@ const model = {
       data: [],
       xAxis: [],
     },
+    recentPowerType: 'power_data',
   },
 
   reducers: {
@@ -120,9 +121,9 @@ const model = {
           today: payload.bean.today
             ? payload.bean.today.toFixed(2)
             : payload.bean.today,
-          yestoday: payload.bean.yestoday
-            ? payload.bean.yestoday.toFixed(2)
-            : payload.bean.yestoday,
+          yesterday: payload.bean.yesterday
+            ? payload.bean.yesterday.toFixed(2)
+            : payload.bean.yesterday,
           this_month: payload.bean.this_month
             ? payload.bean.this_month.toFixed(2)
             : payload.bean.this_month,
@@ -138,10 +139,10 @@ const model = {
         ...state,
         powerData: {
           ...state.powerData,
-          data: payload.bean.data.map(v => v.toFixed(2)),
+          data: payload.bean.data.map(v => v?.toFixed(2)),
           // xAxis: payload.bean.time[0].map((v) => v?.split('T')[0]),
           // xAxis: payload.bean?.time[0].map(v => dayjs(v).format('HH:mm')),
-          xAxis: payload.bean?.time[0]?.map(v => dayjs(v).format('HH:mm')),
+          xAxis: payload.bean?.time?.map(v => dayjs(v).format('HH:mm')),
         },
       };
     },
@@ -209,6 +210,32 @@ const model = {
       //         "2021-05-18": 97.15555583106146
       //     }
       // }
+      const nowMonthDaysPad = getNowMonthDaysPad();
+      const fData = {};
+      const uData = {};
+      const vData = {};
+      if (payload.payload.type === 'power') {
+        nowMonthDaysPad.map(v => {
+          fData[v] = payload.bean[v] ?? '-';
+        });
+        // const dataMap = arrMapObj(payload.bean, 'day', 'ept')
+        // nowMonthDaysPad.map((v) => {
+        //   fData[v] = dataMap[v] ?? '-'
+        // })
+        // console.log(' dataMap ： ', dataMap, fData )//
+      } else {
+        nowMonthDaysPad.map(v => {
+          fData[v] = payload.bean?.f[v] ?? '-';
+          uData[v] = payload.bean?.u[v] ?? '-';
+          vData[v] = payload.bean?.v[v] ?? '-';
+        });
+      }
+      console.log(
+        ' Object.values(payload.bean?.f ?? {}) ： ',
+        fData,
+        Object.values(payload.bean?.f ?? {}),
+        Object.values(fData),
+      ); //
       return {
         ...state,
         powerUseData: {
@@ -219,16 +246,27 @@ const model = {
         },
         powerUseData: {
           data: [
-            Object.values(payload.bean?.f ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.u ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.v ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.f ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.u ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.v ?? {}).map(v => v.toFixed(2)),
             // Object.values(bean.f).map((v) => v.toFixed(2)),
             // Object.values(bean.u).map((v) => v.toFixed(2)),
             // Object.values(bean.v).map((v) => v.toFixed(2)),
             // Object.values(bean.u).map((v) => v.toFixed(2)),
+            Object.values(fData).map(v =>
+              typeof v === 'number' ? toFixed(v, 2) : v,
+            ),
+            Object.values(uData).map(v =>
+              typeof v === 'number' ? toFixed(v, 2) : v,
+            ),
+            Object.values(vData).map(v =>
+              typeof v === 'number' ? toFixed(v, 2) : v,
+            ),
           ],
-          xAxis: Object.keys(payload.bean?.f ?? {}),
+          // xAxis: Object.keys(payload.bean?.f ?? {}),
+          xAxis: nowMonthDaysPad,
         },
+        recentPowerType: payload.payload.type,
         // powerUseData: {
         //   data: [
         //     Object.values(bean.f).map((v) => v.toFixed(2)),
@@ -309,6 +347,29 @@ const model = {
           '2021-05': 78473.675625,
         },
       };
+      const xAxis = Object.keys(payload.bean.money).sort();
+      console.log(' xAxisxAxis ： ', payload.bean.money, xAxis); //
+      const fData = {};
+      const uData = {};
+      const vData = {};
+      const moneyData = {};
+      xAxis.map(v => {
+        fData[v] = payload.bean?.power.f[v] ?? '-';
+        uData[v] = payload.bean?.power.u[v] ?? '-';
+        vData[v] = payload.bean?.power.v[v] ?? '-';
+        moneyData[v] = toFixed(payload.bean?.money[v], 2);
+      });
+      const fDatas = xAxis.map(v => fData[v]);
+      const uDatas = xAxis.map(v => uData[v]);
+      const vDatas = xAxis.map(v => vData[v]);
+      const moneyDatas = xAxis.map(v => moneyData[v]);
+      console.log(
+        ' fDatas, uDatas, vDatas  xAxis.map v ： ',
+        fDatas,
+        uDatas,
+        vDatas,
+        moneyDatas,
+      );
       return {
         ...state,
         // recentPower10DayData: {
@@ -340,17 +401,37 @@ const model = {
           data: [
             // Object.values(payload.bean.data.power).map((v) => v.toFixed(2)),
             // Object.values(payload.bean.data.money).map((v) => v.toFixed(2)),
-            Object.values(payload.bean?.power.f ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.power.u ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.power.v ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean.money).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.power.f ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.power.u ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.power.v ?? {}).map(v => v.toFixed(2)),
+            // Object.values(payload.bean.money).map(v => v.toFixed(2)),
+            fDatas,
+            uDatas,
+            vDatas,
+            moneyDatas,
           ],
-          xAxis: Object.keys(payload.bean.money),
+          // xAxis: Object.keys(payload.bean.money),
+          xAxis,
         },
       };
     },
     getRecentPower6Month(state, { payload, type }) {
       const { data } = payload.bean;
+      const xAxis = Object.keys(payload.bean.money).sort();
+      const fData = {};
+      const uData = {};
+      const vData = {};
+      const moneyData = {};
+      xAxis.map(v => {
+        fData[v] = payload.bean?.power.f[v] ?? '-';
+        uData[v] = payload.bean?.power.u[v] ?? '-';
+        vData[v] = payload.bean?.power.v[v] ?? '-';
+        moneyData[v] = toFixed(payload.bean?.money[v], 2);
+      });
+      const fDatas = xAxis.map(v => fData[v]);
+      const uDatas = xAxis.map(v => uData[v]);
+      const vDatas = xAxis.map(v => vData[v]);
+      const moneyDatas = xAxis.map(v => moneyData[v]);
       return {
         ...state,
         // recentPower6MonthData: {
@@ -368,12 +449,19 @@ const model = {
           data: [
             // Object.values(payload.bean.power).map((v) => v.toFixed(2)),
             // Object.values(payload.bean.money).map((v) => v.toFixed(2)),
-            Object.values(payload.bean?.power.f ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.power.u ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean?.power.v ?? {}).map(v => v.toFixed(2)),
-            Object.values(payload.bean.money).map(v => v.toFixed(2)),
+            // Object.values(payload.bean?.power.f ?? {}).map(v => toFixed(v, 2)),
+            // Object.values(payload.bean?.power.u ?? {}).map(v => toFixed(v, 2)),
+            // Object.values(payload.bean?.power.v ?? {}).map(v => toFixed(v, 2)),
+            // Object.values(fData).map(v => toFixed(v, 2)),
+            // Object.values(uData).map(v => toFixed(v, 2)),
+            // Object.values(vData).map(v => toFixed(v, 2)),
+            // Object.values(payload.bean.money).map(v => toFixed(v, 2)),
+            fDatas,
+            uDatas,
+            vDatas,
+            moneyDatas,
           ],
-          xAxis: Object.keys(payload.bean.money),
+          xAxis,
         },
       };
     },

@@ -12,6 +12,7 @@ import * as commonServices from '@/services/common';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { customerTypeMap } from '@/configs';
 import { recursiveHandle } from '@/models/organize';
+import { formatClientDetail } from '@/format/client';
 
 const namespace = 'client';
 const { createActions, createAction } = init(namespace);
@@ -142,7 +143,7 @@ const model = {
         last_service_staff,
         electricityuser,
         file,
-        contact,
+        contacts,
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
@@ -174,7 +175,7 @@ const model = {
           customer_admin:
             customer_admin && customer_admin.length > 0
               ? customer_admin.map(v => ({ ...v, tags: [] }))
-              : [{}],
+              : [],
           d_id: payload.payload.d_id,
           service_staff: service_staff?.id,
           last_service_staff:
@@ -189,10 +190,11 @@ const model = {
             logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
           },
 
-          contact: contact.map(v => ({
+          contacts: contacts.map(v => ({
             ...v,
-            is_urge: [v.is_urge],
-            is_quit: [v.is_quit],
+            // is_urge: [v.is_urge],
+            // is_urge: 0,
+            // is_quit: [v.is_quit],
             tags: v.tags.map(v => `${v.id}`) ?? [],
           })),
           service_staff: `${service_staff_name}`,
@@ -214,6 +216,42 @@ const model = {
         // adminList: [...adminList, payload.bean.customer_admin],
         // userList: [serviceStaff, lastServiceStaff, ...userList],
         userList: filterObjSame([...userList, serviceStaff, lastServiceStaff]),
+      };
+    },
+    getItem(state, { payload, type }) {
+      console.log(' getItem 修改  ： ', state, payload, type);
+      const { service_staff, last_service_staff } = payload.bean;
+      // const { userList,  } = state;
+      // const serviceStaff = {
+      //   ...service_staff,
+      //   value: `${service_staff?.id}`,
+      //   label: service_staff?.nickname,
+      // };
+      // const lastServiceStaff = {
+      //   ...last_service_staff,
+      //   value: `${last_service_staff?.id}`,
+      //   label: last_service_staff?.nickname,
+      // };
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: formatClientDetail(payload.bean),
+        // adminList: payload.bean.customer_admin.map(v => ({
+        //   ...v,
+        //   tags: v.tags.map(v => `${v.id}`) ?? [],
+        // })),
+      };
+    },
+    getItem(state, { payload, type }) {
+      console.log(' getItem 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: formatClientDetail(payload.bean),
       };
     },
     addItem(state, { payload, type }) {
@@ -296,23 +334,23 @@ const model = {
         // adminList: [...state.adminList, ...payload.list, ],
       };
     },
-    addUser(state, { payload, type }) {
-      console.log(' addUseraddUser ： ', payload);
-      return {
-        ...state,
-        // // adminList: [...state.adminList, ...payload.list],
-        // adminList: payload.list,
-        adminList: [...state.adminList, ...payload.bean],
-        // adminList: payload.bean,
-      };
-    },
-    removeUser(state, { payload, type }) {
-      console.log(' removeUseraddUser ： ', payload);
-      return {
-        ...state,
-        adminList: payload.list,
-      };
-    },
+    // addUser(state, { payload, type }) {
+    //   console.log(' addUseraddUser ： ', payload);
+    //   return {
+    //     ...state,
+    //     // // adminList: [...state.adminList, ...payload.list],
+    //     // adminList: payload.list,
+    //     adminList: [...state.adminList, ...payload.bean],
+    //     // adminList: payload.bean,
+    //   };
+    // },
+    // removeUser(state, { payload, type }) {
+    //   console.log(' removeUseraddUser ： ', payload);
+    //   return {
+    //     ...state,
+    //     adminList: payload.list,
+    //   };
+    // },
     getDistrict(state, { payload, type }) {
       let datas = [];
       const data = payload.list.map(v => ({
@@ -387,107 +425,107 @@ const model = {
       };
     },
 
-    addTableItem(state, { payload, type }) {
-      const { tableData } = state;
-      console.log(' addTableItem ： ', state, payload, tableData);
-      return {
-        ...state,
-        // tableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
-        tableData: tableData.map((v, i) => {
-          console.log(
-            ' v.key === payload.payload.key ： ',
-            v.key === payload.payload.key,
-          );
-          return v.key === payload.payload.key
-            ? {
-                ...v,
-                // ...payload.list[0],
-                ...payload.bean,
-                isEdit: false,
-              }
-            : v;
-        }),
-      };
-    },
-    editTableItem(state, { payload, type }) {
-      const { tableData } = state;
-      console.log(' editTableItem ： ', state, payload, tableData);
-      return {
-        ...state,
-        tableData: tableData.map((v, i) => {
-          console.log(
-            ' v.key === payload.payload.key ： ',
-            v.key === payload.payload.key,
-          );
-          return v.key === payload.payload.key
-            ? {
-                ...v,
-                ...payload.bean,
-                isEdit: false,
-              }
-            : v;
-        }),
-      };
-    },
-    removeTableItem(state, { payload, type }) {
-      console.log(' removeTableItem ： ', state, payload);
-      const { tableData } = state;
-      const { action, key, index, value } = payload.payload;
-      let newData = [];
-      // if (action === 'localRemove') {
-      //   newData = tableData.filter((v, i) => v.key != key);
-      // } else {
-      //   newData = payload.list.filter(v => v.id != payload.payload.id);
-      // }
-      newData = tableData.filter(v => {
-        console.log(
-          ' v.id != payload.id ： ',
-          v.id != payload.payload.id,
-          v.id,
-          payload.id,
-        );
-        return v.id != payload.payload.id;
-      });
-      console.log(' newData ： ', newData);
-      return {
-        ...state,
-        tableData: newData,
-      };
-    },
-    modifyTableItem(state, { payload, type }) {
-      console.log(' modifyTableItem ： ', state, payload);
-      const { tableData } = state;
-      const { action, keys, key, index, value } = payload;
-      let newData = [];
-      if (action === 'add') {
-        newData = [
-          {
-            ...initItem,
-            key: Math.random(),
-          },
-          ...tableData,
-        ];
-      } else if (action === 'edit') {
-        newData = tableData.map((v, i) => ({
-          // ...(i === index
-          ...(v.key === payload.key
-            ? {
-                ...v,
-                [keys]: value,
-                isEdit: true,
-              }
-            : v),
-        }));
-      } else if (action === 'remove') {
-        newData = tableData.filter((v, i) => v.key != key);
-      }
+    // addTableItem(state, { payload, type }) {
+    //   const { tableData } = state;
+    //   console.log(' addTableItem ： ', state, payload, tableData);
+    //   return {
+    //     ...state,
+    //     // tableData: payload.list.map(v => ({ ...v, key: Math.random(), isEdit: false, })),
+    //     tableData: tableData.map((v, i) => {
+    //       console.log(
+    //         ' v.key === payload.payload.key ： ',
+    //         v.key === payload.payload.key,
+    //       );
+    //       return v.key === payload.payload.key
+    //         ? {
+    //             ...v,
+    //             // ...payload.list[0],
+    //             ...payload.bean,
+    //             isEdit: false,
+    //           }
+    //         : v;
+    //     }),
+    //   };
+    // },
+    // editTableItem(state, { payload, type }) {
+    //   const { tableData } = state;
+    //   console.log(' editTableItem ： ', state, payload, tableData);
+    //   return {
+    //     ...state,
+    //     tableData: tableData.map((v, i) => {
+    //       console.log(
+    //         ' v.key === payload.payload.key ： ',
+    //         v.key === payload.payload.key,
+    //       );
+    //       return v.key === payload.payload.key
+    //         ? {
+    //             ...v,
+    //             ...payload.bean,
+    //             isEdit: false,
+    //           }
+    //         : v;
+    //     }),
+    //   };
+    // },
+    // removeTableItem(state, { payload, type }) {
+    //   console.log(' removeTableItem ： ', state, payload);
+    //   const { tableData } = state;
+    //   const { action, key, index, value } = payload.payload;
+    //   let newData = [];
+    //   // if (action === 'localRemove') {
+    //   //   newData = tableData.filter((v, i) => v.key != key);
+    //   // } else {
+    //   //   newData = payload.list.filter(v => v.id != payload.payload.id);
+    //   // }
+    //   newData = tableData.filter(v => {
+    //     console.log(
+    //       ' v.id != payload.id ： ',
+    //       v.id != payload.payload.id,
+    //       v.id,
+    //       payload.id,
+    //     );
+    //     return v.id != payload.payload.id;
+    //   });
+    //   console.log(' newData ： ', newData);
+    //   return {
+    //     ...state,
+    //     tableData: newData,
+    //   };
+    // },
+    // modifyTableItem(state, { payload, type }) {
+    //   console.log(' modifyTableItem ： ', state, payload);
+    //   const { tableData } = state;
+    //   const { action, keys, key, index, value } = payload;
+    //   let newData = [];
+    //   if (action === 'add') {
+    //     newData = [
+    //       {
+    //         ...initItem,
+    //         key: Math.random(),
+    //       },
+    //       ...tableData,
+    //     ];
+    //   } else if (action === 'edit') {
+    //     newData = tableData.map((v, i) => ({
+    //       // ...(i === index
+    //       ...(v.key === payload.key
+    //         ? {
+    //             ...v,
+    //             [keys]: value,
+    //             isEdit: true,
+    //           }
+    //         : v),
+    //     }));
+    //   } else if (action === 'remove') {
+    //     newData = tableData.filter((v, i) => v.key != key);
+    //   }
 
-      console.log(' modifyTableItem 修改  ： ', state, payload, type, newData);
-      return {
-        ...state,
-        tableData: newData,
-      };
-    },
+    //   console.log(' modifyTableItem 修改  ： ', state, payload, type, newData);
+    //   return {
+    //     ...state,
+    //     tableData: newData,
+    //   };
+    // },
   },
 
   effects: {

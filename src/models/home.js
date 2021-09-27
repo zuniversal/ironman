@@ -221,7 +221,7 @@ const model = {
       {
         payload = {
           requestFn: 'getInspectionsChart',
-          type: 'week',
+          type: 'month',
         },
         action,
         type,

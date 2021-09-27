@@ -164,6 +164,7 @@ class Home extends PureComponent {
           homeSettings={this.props.homeSettings}
           statConfig={statConfig}
           withTabpanes
+          activeVal={1}
         ></HomeStatEcharts>
       </Spin>
     );

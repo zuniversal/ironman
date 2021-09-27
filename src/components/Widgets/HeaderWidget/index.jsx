@@ -6,7 +6,7 @@ import DropdownNotice from '@/components/Widgets/DropdownNotice';
 // import DropdownNotice from '@/common/DropDownBtn';
 import { LogoutOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { history, connect } from 'umi';
-import { csSystemNotify, BIG_SCREEN, USER_CENTER,  } from '@/constants';
+import { csSystemNotify, BIG_SCREEN, USER_CENTER } from '@/constants';
 import {
   bussniessTabConfig,
   DEF_BUSSNIESS_TAB,
@@ -15,21 +15,20 @@ import {
 import { Tag, Tooltip, Badge } from 'antd';
 const { CheckableTag } = Tag;
 
-
 const menuConfig = [
   {
     key: 'userCenter',
     clickFn: 'userCenter',
     label: '个人中心',
-    type: 'url',  
+    type: 'url',
     path: USER_CENTER,
   },
   {
     key: 'changePwd',
     clickFn: 'changePwd',
     label: '修改密码',
-    type: 'fn',  
-    type: 'url',  
+    type: 'fn',
+    type: 'url',
     path: `${USER_CENTER}action=pwd`,
   },
 ];
@@ -82,18 +81,20 @@ const HeaderWidget = props => {
 
   const avatarMenuClick = params => {
     // const path = `${csSystemNotify}${params.url}?id=${params.key}`
-    const {type,  } = params
+    const { type } = params;
     if (type === 'url') {
       history.push(params.path);
     } else if (type === 'fn') {
-      props.[params.clickFn](params);
-    } 
+      // props[params.clickFn](params);
+    }
     // props.menuClick(params);
   };
 
   const avatar = (
     <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
   );
+
+  console.log(' onClickonClick ： ', props, props.isNotice);
 
   const headerWidget = (
     <div className="headerWidget dfc ">
@@ -105,13 +106,19 @@ const HeaderWidget = props => {
         userMsg={props.userMsg}
         clearNotice={props.clearNotice}
         goPage={goPage}
+        onNoticeChange={props.onNoticeChange}
       >
         {/* <Badge size="small" offset={[10, ]} overflowCount={10} count={props.userMsg[0] ? props.userMsg[0]?.count : 0} key={props.userMsg[0]?.count} >
           <Icon icon={'bell'} className={' '} 
           />
         </Badge> */}
         {props.userMsg[0]?.count ? (
-          <Badge size="small" offset={[10]} count={props.userMsg[0]?.count}>
+          <Badge
+            size="small"
+            offset={[10]}
+            count={props.userMsg[0]?.count}
+            className={props.isNotice ? 'isNotice ' : null}
+          >
             <Icon icon={'bell'} className={' '} />
           </Badge>
         ) : (

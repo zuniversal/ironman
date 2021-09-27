@@ -65,7 +65,8 @@ const userInfo = getItem('userInfo') ? getItem('userInfo') : {};
 export const getClientId = props => {
   const userInfo = getItem('userInfo');
   // const customer_id = getItem('guestModeId') || userInfo.id;
-  const customer_id = getItem('guestModeId') || userInfo.enterprises[0]?.customers[0]?.id;
+  const customer_id =
+    getItem('guestModeId') || userInfo.enterprises[0]?.customers[0]?.id;
   return customer_id;
 };
 
@@ -222,6 +223,7 @@ const model = {
     platform: getItem('platform') || DEF_PALTFORM,
     guestInfo: {},
     isGuestMode: getItem('isGuestMode'),
+    isNotice: false,
   },
 
   reducers: {
@@ -326,9 +328,11 @@ const model = {
       };
     },
     getUserMsg(state, { payload, type }) {
+      const { userMsg } = state;
       return {
         ...state,
         userMsg: payload,
+        isNotice: userMsg.length !== payload.length,
       };
     },
     onPlatformChange(state, { payload, type }) {
@@ -397,11 +401,19 @@ const model = {
           .map(v => ({ ...v, count: v.count - 1 })),
       };
     },
-    readAllMsgAsync(state, { payload, type }) {
+    readAllMsg(state, { payload, type }) {
       const { userMsg } = state;
       return {
         ...state,
         userMsg: [],
+        isNotice: false,
+      };
+    },
+    onNoticeChange(state, { payload, type }) {
+      console.log(' onNoticeChange ： ', payload);
+      return {
+        ...state,
+        isNotice: payload.isNotice,
       };
     },
   },

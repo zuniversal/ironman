@@ -736,6 +736,8 @@ export const enterpriseScaleConfig = [
   },
 ];
 
+export const enterpriseScaleMap = arrMapObj(enterpriseScaleConfig);
+
 export const enterpriseNatureConfig = [
   {
     label: '',
@@ -842,7 +844,7 @@ export const industryConfig = [
   },
 ];
 
-export const  industryMap = arrMapObj( industryConfig);
+export const industryMap = arrMapObj(industryConfig);
 
 export const assetScaleConfig = [
   {
@@ -862,6 +864,8 @@ export const assetScaleConfig = [
     value: 3,
   },
 ];
+
+export const assetScaleMap = arrMapObj(assetScaleConfig);
 
 export const corverAreaConfig = [
   {
@@ -1614,7 +1618,7 @@ export const powerMoneyAxisConfig = [
   '峰电量',
   '平电量',
   '谷电量',
-  '电价',
+  '电费',
   // '峰电价',
   // '平电价',
   // '谷电价',
@@ -1963,18 +1967,22 @@ export const clientPortraitSpreadConfig = [
   {
     label: '地区分布',
     value: '地区分布',
+    key: 'adcodeList',
   },
   {
     label: '行业分布',
     value: '行业分布',
+    key: 'industryList',
   },
   {
     label: '企业规模分布',
     value: '企业规模分布',
+    key: 'saleList',
   },
   {
     label: '资产规模分布',
     value: '资产规模分布',
+    key: 'assetList',
   },
 ];
 
@@ -2085,6 +2093,7 @@ export const planContractDescConfig = [
   },
   {
     label: '方案详情',
+    label: '详情',
     value: 'file',
     span: 3,
     type: 'showPDF',
@@ -2121,15 +2130,15 @@ console.log(' systemNotifyColorMap ： ', systemNotifyColorMap); //
 export const clientClueLevelConfig = [
   {
     label: '低价值客户',
-    value: 0,
+    value: '0',
   },
   {
     label: '中价值客户',
-    value: 1,
+    value: '1',
   },
   {
     label: '高价值客户',
-    value: 2,
+    value: '2',
   },
 ];
 
@@ -2255,3 +2264,79 @@ export const genderRadios = [
   { label: '男', value: 1, key: '1' },
   { label: '女', value: 0, key: '0' },
 ];
+
+export const crmNotifyTypeConfig = [
+  {
+    label: '站内',
+    value: 1,
+    key: 1,
+  },
+  {
+    label: '短信',
+    value: 2,
+    key: 2,
+  },
+];
+
+export const crmNotifyTypeMap = arrMapObj(crmNotifyTypeConfig);
+
+export const crmMsgRadioCofig = [
+  { label: '任务跟进', value: 1, key: '1' },
+  { label: '任务催办', value: 2, key: '2' },
+  { label: '客户投诉', value: 3, key: '3' },
+];
+
+export const crmMsgRadioMap = arrMapObj(crmMsgRadioCofig);
+
+export const houseNoImgConfig = [
+  { key: 'circuit_imgs', type: 'array' },
+  { key: 'station_imgs', type: 'array' },
+  { key: 'bill_imgs', type: 'array' },
+  // {key: 'streetscape_img', type: 'string',},
+];
+
+export const boolConfig = [
+  {
+    label: '是',
+    value: true,
+  },
+  {
+    label: '否',
+    value: false,
+  },
+];
+
+export const boolMap = arrMapObj(boolConfig);
+
+export const planListInfoDescConfig = [
+  {
+    label: '计划名称',
+    value: 'name',
+  },
+  {
+    label: '计划类型',
+    value: 'planType',
+  },
+  {
+    label: '方案时间',
+    value: 'planTime',
+  },
+  {
+    label: '合同时间',
+    value: 'contractTime',
+  },
+  {
+    label: '签约时间',
+    value: 'signTime',
+  },
+];
+
+export const phoneRule = {
+  message: '请输入正确的手机号',
+  pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+};
+
+export const emailRule = {
+  message: '邮箱格式不正确',
+  pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+};

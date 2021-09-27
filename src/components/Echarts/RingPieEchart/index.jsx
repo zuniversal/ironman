@@ -15,6 +15,7 @@ export const crmColorConfig = [
 ];
 
 const option = params => {
+  console.log(' getIndustry  renderEcharts option ： ', params); //
   const { data } = params;
   // const { subtext, } = params.option;
   const { text, subtext } = params;
@@ -48,10 +49,11 @@ const option = params => {
       borderRadius: 100,
       // left: 'center'
       formatter(name) {
-        const match = data.find(v => v.name = name)
-        console.log(' namenamename ： ', name, data, match, params, ); //
-        const {percent, amount, } = match
+        const match = data.find(v => v.name === name);
+        console.log(' namenamename ： ', name, data, match, params); //
+        const { percent, amount, label } = match;
         // return 222
+        // return name;
         return name + space + percent + space + '￥ ' + amount;
       },
     },

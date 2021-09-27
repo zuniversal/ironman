@@ -307,7 +307,7 @@ const model = {
         last_service_staff,
         electricityuser,
         file,
-        contact,
+        contacts,
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
@@ -338,10 +338,10 @@ const model = {
             logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
           },
 
-          contact: contact.map(v => ({
+          contacts: contacts.map(v => ({
             ...v,
-            is_urge: [v.is_urge],
-            is_quit: [v.is_quit],
+            // is_urge: [v.is_urge],
+            // is_quit: [v.is_quit],
             tags: v.tags.map(v => `${v.id}`) ?? [],
           })),
           // service_staff: service_staff?.nickname,

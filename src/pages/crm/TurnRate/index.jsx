@@ -79,25 +79,25 @@ class TurnRate extends PureComponent {
       {
         label: '客户线索',
         value: '80',
-        value: this.props.turnRateData.customer_clue_number,
+        value: this.props.turnRateData.customerCluePercent,
         color: '#36C7EA',
       },
       {
         label: '拜访客户数',
         value: '60',
-        value: this.props.turnRateData.visit_customer_number,
+        value: this.props.turnRateData.visitCustomerPercent,
         color: '#FCA149',
       },
       {
         label: '提交方案数',
         value: '50',
-        value: this.props.turnRateData.scheme_number,
+        value: this.props.turnRateData.schemePercent,
         color: '#00B460',
       },
       {
         label: '已签约',
         value: '30',
-        value: this.props.turnRateData.contract_number,
+        value: this.props.turnRateData.contractPercent,
         color: '#F569CA',
       },
     ];

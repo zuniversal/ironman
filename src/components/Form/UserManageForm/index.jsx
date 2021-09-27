@@ -2,17 +2,17 @@ import React from 'react';
 import './style.less';
 import SmartForm from '@/common/SmartForm';
 import UploadCom from '@/components/Widgets/UploadCom';
-import { certificateTypeConfig, userStatusConfig, genderRadios,  } from '@/configs';
+import {
+  certificateTypeConfig,
+  userStatusConfig,
+  genderRadios,
+  phoneRule,
+  emailRule,
+} from '@/configs';
 import useHttp from '@/hooks/useHttp';
-import {
-  getList as getOrganizeList,
-} from '@/services/organize';
-import {
-  getList as getRoleList,
-} from '@/services/role';
-import {
-  getList as getTagsList,
-} from '@/services/tags';
+import { getList as getOrganizeList } from '@/services/organize';
+import { getList as getRoleList } from '@/services/role';
+import { getList as getTagsList } from '@/services/tags';
 import { recursiveHandle } from '@/models/organize';
 
 const UserManageForm = props => {
@@ -23,13 +23,13 @@ const UserManageForm = props => {
       format: res => recursiveHandle(res),
     },
   );
-  const { data: roleList, req: getRoleListAsync } = useHttp(
-    () => getRoleList({
+  const { data: roleList, req: getRoleListAsync } = useHttp(() =>
+    getRoleList({
       page_size: 1000,
     }),
   );
-  const { data: tagsList, req: getTagsListAsync } = useHttp(
-    () => getTagsList({
+  const { data: tagsList, req: getTagsListAsync } = useHttp(() =>
+    getTagsList({
       page_size: 1000,
     }),
   );
@@ -65,7 +65,7 @@ const UserManageForm = props => {
         label: '再次确认密码',
         name: 'rePassword',
         className: props.action !== 'add' ? 'hidden' : '',
-        // dependencies: 'password', 
+        // dependencies: 'password',
       },
     },
     {
@@ -74,6 +74,7 @@ const UserManageForm = props => {
         label: '手机',
         name: 'phone',
       },
+      formRules: [phoneRule],
     },
     {
       noRule: true,
@@ -88,6 +89,7 @@ const UserManageForm = props => {
         label: '邮箱',
         name: 'email',
       },
+      formRules: [emailRule],
     },
     {
       noRule: true,
@@ -154,14 +156,18 @@ const UserManageForm = props => {
         multiple: true,
       },
     },
-    ...props.action !== 'add' ? [{
-        formType: 'Search',
-        selectData: userStatusConfig,
-        itemProps: {
-          label: '状态',
-          name: 'status',
-        },
-      },] : [],
+    ...(props.action !== 'add'
+      ? [
+          {
+            formType: 'Search',
+            selectData: userStatusConfig,
+            itemProps: {
+              label: '状态',
+              name: 'status',
+            },
+          },
+        ]
+      : []),
     {
       noRule: true,
       formType: 'Radio',
@@ -188,8 +194,10 @@ const UserManageForm = props => {
     ></UploadCom>,
   ];
 
-  const { 
-    gender, cert, status, 
+  const {
+    gender,
+    cert,
+    status,
     tag_ids = null,
     role_ids = null,
     organization_ids = [],
@@ -213,7 +221,7 @@ const UserManageForm = props => {
 };
 
 UserManageForm.defaultProps = {
-  init: {},  
+  init: {},
 };
 
 export default UserManageForm;

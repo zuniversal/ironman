@@ -135,7 +135,12 @@ export class Request {
     // console.log(' super ： ',  )
     this.http.interceptors.request.use(
       config => {
-        // console.log('getToken() token ：', config, getToken(), getItems('token'),  )
+        console.log(
+          'getToken() token ：',
+          config,
+          getToken(),
+          getItems('token'),
+        );
         config.headers.Authorization = getToken();
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
         // config.headers.Authorization = getItems('token');
@@ -239,12 +244,16 @@ export const parseUrl = (url, params) => URL + url;
 // export const get = (url, params) => new Promise((resolve, reject) => debounce(resolve(http.get(url, { params: params }), 5000)));
 // export const get = (url, params) => new Promise((resolve, reject) => debounce(http.get(url, { params: params }), 5000));
 // export const get = (url, params) => debounce(http.get, url, { params: params }, 500);
-export const get = (url, params) => http.get(url, { params: params });
-export const post = (url, params, o) => http.post(url, params, o);
-export const put = (url, params) => http.put(url, params);
-export const patch = (url, params) => http.patch(url, params);
+export const get = (url, { d_id, action, ...params }) =>
+  http.get(url, { params: params });
+export const post = (url, { d_id, action, ...params }, o) =>
+  http.post(url, params, o);
+export const put = (url, { d_id, action, ...params }) => http.put(url, params);
+export const patch = (url, { d_id, action, ...params }) =>
+  http.patch(url, params);
+export const remove = (url, { d_id, action, ...params }) =>
+  http.delete(url, { params });
 // export const remove = (url, params) => http.delete(url, {data: {dataAttr: params}, params: {paramsAttr: params, }, });
-export const remove = (url, params) => http.delete(url, { params });
 
 // 不显示 tips 的方法
 export const noTipsGet = (url, params) =>

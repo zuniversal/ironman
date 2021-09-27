@@ -57,7 +57,6 @@ const getBase64 = file => {
 };
 
 const UploadCom = props => {
-  // console.log(' UploadCom   props, ,   ： ', props);
   const {
     label,
     isInputUpload,
@@ -75,12 +74,22 @@ const UploadCom = props => {
     formAction,
     succExtraText,
   } = props;
+  console.log(
+    ' UploadCom   props, ,   ： ',
+    props,
+    name,
+    typeof name === 'object',
+  );
 
   const [state, setState] = useState({});
 
   const IconCom = isInputUpload ? UploadOutlined : PlusOutlined;
 
-  const [fileData, setFileData] = useState(formatFileList(init[name]));
+  const [fileData, setFileData] = useState(
+    typeof name === 'object'
+      ? formatFileList(init)
+      : formatFileList(init[name]),
+  );
 
   // const fileList = formatFileList(fileData)
 
@@ -273,10 +282,10 @@ UploadCom.defaultProps = {
 UploadCom.propTypes = {
   text: PropTypes.string,
   action: PropTypes.string,
-  name: PropTypes.string,
+  // name: PropTypes.string,
   uploadProps: PropTypes.object,
   formItemProps: PropTypes.object,
-  init: PropTypes.object,
+  // init: PropTypes.object,
   formItemLayout: PropTypes.object,
   size: PropTypes.number,
 };

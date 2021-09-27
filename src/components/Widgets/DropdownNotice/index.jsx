@@ -154,6 +154,12 @@ const DropdownNotice = props => {
       className={`dropdownNotice`}
       overlayClassName={`dropdownNotice`}
       // placement={'bottomRight'}
+      onVisibleChange={isNotice =>
+        isNotice &&
+        props.onNoticeChange({
+          isNotice: false,
+        })
+      }
     >
       {children}
     </Dropdown>

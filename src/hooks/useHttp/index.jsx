@@ -35,7 +35,7 @@ const useHttp = (http = () => {}, configs = {}) => {
 
   // 数据结果处理函数
   const handleRes = res => {
-    setIsLoading(false);
+    // setIsLoading(false);
     const attrRes = attr ? res[attr] : res; // 返回数结果值 是否使用 配置的属性值获取
     let datas = format ? format(attrRes, formatVal, formatKey) : attrRes;
 
@@ -58,7 +58,7 @@ const useHttp = (http = () => {}, configs = {}) => {
   // 手动调用 该请求钩子的请求方法使得外部可以继续使用该钩子返回的结果值 接收一个返回 promise 的方法 异步请求方法里可以手动传入请求参数
   // 该方法自动 调用该异步方法 并且调用钩子的系统处理函数自动 保存到钩子的state 数据里
   const req = async request => {
-    console.log(' req request ： ', request, http, configs);
+    console.log(' req requestrequest ： ', request, http, configs);
     setIsLoading(true);
     if (request) {
       handleRes(await request());

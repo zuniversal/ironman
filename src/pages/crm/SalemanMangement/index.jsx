@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
 import SalemanMangementSearchForm from '@/components/Form/SalemanMangementSearchForm';
-import {SalemanMangementImportForm} from '@/components/Form/SalemanMangementActionForm';
+import { SalemanMangementImportForm } from '@/components/Form/SalemanMangementActionForm';
 import SalemanMangementForm from '@/components/Form/SalemanMangementForm';
 import SalemanMangementTable from '@/components/Table/SalemanMangementTable';
 import SalemanMangementClientTable from '@/components/Table/SalemanMangementClientTable';
@@ -70,6 +70,8 @@ class SalemanMangement extends PureComponent {
     return (
       <SalemanMangementSearchForm
         formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
+        onFieldChange={this.onFieldChange}
       ></SalemanMangementSearchForm>
     );
   };
@@ -137,17 +139,17 @@ class SalemanMangement extends PureComponent {
       if (action === 'importUser') {
         if (this.props.importUserList.length) {
           this.props.importUserAsync({
-            user_list: this.props.importUserList.map((v) => v.id),
+            user_list: this.props.importUserList.map(v => v.id),
           });
         } else {
-          tips('请选择要导入的用户！', 2)
-        } 
+          tips('请选择要导入的用户！', 2);
+        }
         return;
       }
       const formData = props.form.getFieldsValue();
       if (action === 'add' && formData.rePassword !== formData.password) {
-        tips('2次密码不一致！', 2)
-        return  
+        tips('2次密码不一致！', 2);
+        return;
       }
       // if (action === 'changePasswordAsync') {
       //   this.props.changePasswordAsync({
@@ -156,24 +158,28 @@ class SalemanMangement extends PureComponent {
       //   });
       //   return
       // }
-      if (res.head_img && res.head_img.fileList && res.head_img.fileList.length > 0) {
+      if (
+        res.head_img &&
+        res.head_img.fileList &&
+        res.head_img.fileList.length > 0
+      ) {
         const fileList = res.head_img.fileList;
         console.log(' fileList ： ', fileList);
         res.head_img = fileList.map(v => v.response.url).join(',');
       } else {
         res.head_img = null;
       }
-      res.join_date = res.join_date ? res.join_date.format('YYYY-MM-DD') : null
+      res.join_date = res.join_date ? res.join_date.format('YYYY-MM-DD') : null;
 
-      delete res.rePassword
+      delete res.rePassword;
 
       if (action === 'add') {
         this.props.addItemAsync({
           ...res,
           role_ids: res.role_ids ? [res.role_ids] : [],
           tag_ids: res.tag_ids ? [res.tag_ids] : [],
-          
-          type: 'crm', 
+
+          type: 'crm',
         });
       }
       if (action === 'edit') {

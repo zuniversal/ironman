@@ -450,7 +450,7 @@ export const crmRoutes = [
     // authKey: '',
     hideInMenu: false,
     name: '客户管理',
-    icon: <Icon icon={'alarmManage'} />,
+    icon: <Icon icon={'clientManage'} />,
     routes: [
       {
         platform: 'crm',
@@ -487,7 +487,7 @@ export const crmRoutes = [
     // authKey: '',
     hideInMenu: false,
     name: '任务管理',
-    icon: <Icon icon={'alarmManage'} />,
+    icon: <Icon icon={'taskManage'} />,
     routes: [
       {
         platform: 'crm',
@@ -510,7 +510,7 @@ export const crmRoutes = [
     // authKey: '',
     hideInMenu: false,
     name: '统计分析',
-    icon: <Icon icon={'alarmManage'} />,
+    icon: <Icon icon={'satisAnalyse'} />,
     routes: [
       {
         platform: 'crm',
@@ -547,7 +547,7 @@ export const crmRoutes = [
     // authKey: '',
     hideInMenu: false,
     name: '营销人员管理',
-    icon: <Icon icon={'alarmManage'} />,
+    icon: <Icon icon={'salesManage'} />,
     routes: [
       {
         platform: 'crm',

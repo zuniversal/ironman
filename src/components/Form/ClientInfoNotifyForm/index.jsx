@@ -1,94 +1,128 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import SmartForm from '@/common/SmartForm';
-import {
-  notifyTypeWithAllConfig,
-  notifyClientEventConfig,
-  notifyClientLinkConfig,
-} from '@/configs';
+import useHttp from '@/hooks/useHttp';
+import { getList as getClientList } from '@/services/clientList';
+import { getSearchList } from '@/services/user';
+import { crmNotifyTypeConfig, crmMsgRadioCofig } from '@/configs';
 
 const ClientInfoNotifyForm = props => {
-  console.log(' ClientInfoNotifyForm ： ', props); //
+  console.log(' ClientInfoNotifyForm ： ', props);
+  const { data: userList, req: getUserListAsync } = useHttp(getSearchList, {
+    formatVal: 'nickname',
+  });
+
+  const { data: clientList, req: getClientListAsync } = useHttp(getClientList);
+
+  const onTypeChange = e => {
+    console.log('  onTypeChange   e, 改变设置  ： ', e, e.target.value);
+  };
 
   const config = [
     {
       itemProps: {
-        label: '名称',
-        name: '',
+        label: '标题',
+        name: 'title',
       },
     },
+    {
+      formType: 'TextArea',
+      itemProps: {
+        label: '消息内容',
+        name: 'content',
+      },
+    },
+    // {
+    //   formType: 'Radio',
+    //   itemProps: {
+    //     label: '通知方法',
+    //     name: 'send_type',
+    //   },
+    //   comProps: {
+    //     onChange: onTypeChange,
+    //   },
+    //   radioData: crmNotifyTypeConfig,
+    // },
     {
       formType: 'Checkbox',
       itemProps: {
         label: '通知方法',
         name: 'send_type',
       },
-      checkboxData: notifyTypeWithAllConfig,
+      checkboxData: crmNotifyTypeConfig,
+      checkboxData: [
+        {
+          label: '短信',
+          value: 0,
+          key: 0,
+        },
+        {
+          label: '邮件',
+          value: 1,
+          key: 1,
+        },
+      ],
     },
     {
-      formType: 'rowText',
+      formType: 'Radio',
       itemProps: {
-        label: '通知事件',
+        label: '消息类型',
+        name: 'type',
       },
+      comProps: {
+        onChange: onTypeChange,
+      },
+      radioData: crmMsgRadioCofig,
     },
     // {
     //   formType: 'Checkbox',
     //   itemProps: {
-    //     label: '客户',
-    //     name: 'send_type',
+    //     label: '消息类型',
+    //     name: 'type',
     //   },
-    //   checkboxData: notifyClientEventConfig,
+    //   checkboxData: choiceRadios,
     // },
-    // {
-    //   formType: 'Checkbox',
-    //   itemProps: {
-    //     label: '通知人员',
-    //     name: 'send_type',
-    //   },
-    //   checkboxData: notifyClientLinkConfig,
-    // },
+
     {
+      formType: 'Search',
+      selectSearch: e =>
+        getClientListAsync(() => getClientList({ keyword: e })),
+      selectData: clientList,
       itemProps: {
-        label: '客户',
-        name: 'send_type',
+        label: '关联客户',
+        name: 'customer_id',
       },
+      comProps: {},
     },
     {
-      noRule: true,
-      formType: 'Checkbox',
+      formType: 'Search',
+      selectData: userList,
       itemProps: {
-        label: ' ',
-        name: 'send_type2',
+        label: '消息接收人',
+        name: 'user_id',
       },
-      checkboxData: notifyClientEventConfig,
-    },
-    {
-      itemProps: {
-        label: '通知人员',
-        name: 'send_type',
+      comProps: {
+        mode: 'multiple',
       },
-      // comProps: {
-      //   extra: <div>extra</div>,
-      // },
-      // extra: <div>extra</div>,
-    },
-    {
-      noRule: true,
-      formType: 'Checkbox',
-      itemProps: {
-        label: ' ',
-        name: 'send_type2',
-      },
-      checkboxData: notifyClientLinkConfig,
     },
   ];
+
+  const { send_type, type } = props.init; //
 
   return (
     <SmartForm
       config={config}
       {...props}
-      className={`clientInfoNotifyForm`}
+      init={{
+        ...props.init,
+        type: type != undefined ? type : 1,
+        send_type: [send_type != undefined ? send_type : 1],
+      }}
     ></SmartForm>
   );
+};
+
+ClientInfoNotifyForm.defaultProps = {
+  init: {},
 };
 
 export default ClientInfoNotifyForm;

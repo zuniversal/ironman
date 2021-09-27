@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
-import UserCenterForm, {UserPasswordForm} from '@/components/Form/UserCenterForm';
-import {UserManagePasswordForm} from '@/components/Form/UserManageActionForm';
+import UserCenterForm, {
+  UserPasswordForm,
+} from '@/components/Form/UserCenterForm';
+import { UserManagePasswordForm } from '@/components/Form/UserManageActionForm';
 import {
   actions,
   // mapStateToProps,
@@ -47,22 +49,32 @@ class UserCenter extends PureComponent {
       init: this.props.itemDetail,
     };
     const {
-      location: {
-        query,
-      },
+      location: { query },
     } = this.props;
-    
-    console.log(' formComProps ： ', formComProps, !!Object.keys(this.props.itemDetail).length, query, );
-    const formCom =( query.action === 'pwd' ? <UserPasswordForm
-        {...formComProps}
-        handleOk={this.handleOk}
-      ></UserPasswordForm> : <UserCenterForm
-      {...formComProps}
-      handleOk={this.handleOk}
-    ></UserCenterForm>)
 
-    return (
-      !!Object.keys(this.props.itemDetail).length && formCom
+    console.log(
+      ' formComProps ： ',
+      formComProps,
+      this.props.itemDetail,
+      query,
+    );
+    const formCom =
+      query.action === 'pwd' ? (
+        <UserPasswordForm
+          {...formComProps}
+          handleOk={this.handleOk}
+        ></UserPasswordForm>
+      ) : (
+        <UserCenterForm
+          {...formComProps}
+          handleOk={this.handleOk}
+        ></UserCenterForm>
+      );
+
+    return !!Object.keys(this.props.itemDetail).length ? (
+      formCom
+    ) : (
+      <div className={`t-c`}>获取不到个人信息数据！</div>
     );
   };
   handleOk = async props => {
@@ -72,20 +84,27 @@ class UserCenter extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
       const formData = props.form.getFieldsValue();
-      if (action === 'changePwdAsync' && formData.rePassword !== formData.password) {
-        tips('2次密码不一致！', 2)
-        return  
+      if (
+        action === 'changePwdAsync' &&
+        formData.rePassword !== formData.password
+      ) {
+        tips('2次密码不一致！', 2);
+        return;
       }
-      
+
       if (action === 'changePwdAsync') {
         this.props.changePwdAsync({
           ...res,
         });
-        return
+        return;
       }
 
       if (action === 'edit') {
-        if (res.head_img && res.head_img.fileList && res.head_img.fileList.length > 0) {
+        if (
+          res.head_img &&
+          res.head_img.fileList &&
+          res.head_img.fileList.length > 0
+        ) {
           const fileList = res.head_img.fileList;
           console.log(' fileList ： ', fileList);
           res.head_img = fileList.map(v => v.response.url).join(',');

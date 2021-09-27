@@ -59,7 +59,7 @@ const model = {
         action: payload.payload.action,
         isShowModal: true,
         d_id: payload.payload.d_id,
-        itemDetail: payload.bean,
+        itemDetail: payload.bean ?? {},
       };
     },
     addItem(state, { payload, type }) {
@@ -112,7 +112,7 @@ const model = {
       const res = yield call(services.removeItem, payload);
       yield put(action({ ...res, payload }));
     },
-    
+
     *changePwdAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.changePwd, payload);
       // yield put(action({ ...res, payload }));

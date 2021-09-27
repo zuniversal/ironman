@@ -14,11 +14,11 @@ const MyTaskTable = props => {
     {
       title: '公司名称',
       dataIndex: ['customer', 'name'],
-      // detailFn: record =>
-      //   props.showItemAsync({
-      //     action: 'clientDetailAsync',
-      //     d_id: record.customer.id,
-      //   }),
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer.customer_id,
+        }),
     },
     {
       title: '类型',
@@ -72,7 +72,7 @@ const MyTaskTable = props => {
       <a
         onClick={() =>
           props.getItemAsync({
-            action: 'planContract',
+            action: 'getPlanContract',
             d_id: record.id,
           })
         }

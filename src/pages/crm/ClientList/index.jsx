@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import { Button, Tabs } from 'antd';
+import ClientRemark from './ClientRemark';
 import ClientPlanList from './ClientPlanList';
 import ClientForm from '@/components/Form/ClientForm';
 import ClientListSearchForm from '@/components/Form/ClientListSearchForm';
 import ClientListForm from '@/components/Form/ClientListForm';
 import {
-  ClientListAsignPeopleForm,
+  ClientListAssignPeopleForm,
   ClientListPlanForm,
   ClientListPullContractForm,
   ClientListRemarkForm,
@@ -20,6 +21,8 @@ import { actions, mapStateToProps } from '@/models/clientList';
 import SmartHOC from '@/common/SmartHOC';
 import { clientListTabConfig, clientListTabMap } from '@/configs';
 import { connect } from 'umi';
+import { tips } from '@/utils';
+import { formatClientData } from '@/format/client';
 
 const { TabPane } = Tabs;
 
@@ -34,9 +37,10 @@ const titleMap = {
   clientListPullContract: `拉取合同`,
   clientListPullContract: `拉取计划`,
   clientListRemark: `添加备注`,
-  clientListAsignPeople: `分配人员`,
+  clientListAssignPeople: `分配人员`,
   getClientPlanAsync: `${TITLE}计划详情`,
   clientDetailAsync: `客户详情`,
+  addClientPlanAsync: `新建计划`,
 };
 
 const detailFormMap = {
@@ -73,7 +77,8 @@ class ClientList extends PureComponent {
   renderSearchForm = params => {
     return (
       <ClientListSearchForm
-        formBtn={this.renderFormBtn}
+        // formBtn={this.renderFormBtn}
+        init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
       ></ClientListSearchForm>
     );
@@ -99,6 +104,7 @@ class ClientList extends PureComponent {
 
       getClientPlanAsync: this.props.getClientPlanAsync,
       getRemarkAsync: this.props.getRemarkAsync,
+      getClientRemarkListAsync: this.props.getClientRemarkListAsync,
     };
 
     const tableMap = {
@@ -134,13 +140,31 @@ class ClientList extends PureComponent {
     console.log(' onOkonOk ： ', props, this.state, this.props);
     const { action, itemDetail } = this.props;
     const { form, init } = props;
-    if (['uploadFile'].includes(action)) {
+    if (['uploadFile', 'getClientPlanAsync'].includes(action)) {
       this.props.onCancel({});
       return;
     }
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'edit') {
+        const formatRes = formatClientData(res, {
+          itemDetail,
+          action,
+        });
+        console.log(' formatRes ： ', formatRes); //
+        const isUrgeOneRes = formatRes.contacts.filter(v => v.is_urge);
+        console.log(' formatResformatRes ： ', formatRes, res, isUrgeOneRes);
+        if (isUrgeOneRes.length > 1) {
+          tips('催款联系人只能勾选1人！', 2);
+          return;
+        }
+        this.props.editItemAsync({
+          ...formatRes,
+          d_id: this.props.itemDetail.id,
+        });
+        return;
+      }
       if (action === 'addClientPlanAsync') {
         const { duration1, duration2, duration3 } = res;
         const params = {
@@ -170,13 +194,20 @@ class ClientList extends PureComponent {
         this.props.addClientPlanAsync(params);
       }
 
+      if (action === 'clientListAssignPeople') {
+        this.props.assignPeopleAsync({
+          ...res,
+          d_id: this.props.customer_id,
+        });
+        return;
+      }
       if (action === 'clientListRemark') {
         this.props.addRemarkAsync({
           ...res,
           customer_id: this.props.itemDetail.id,
         });
+        return;
       }
-      return  
       if (action === 'clientListRemark') {
         this.props.editRemarkAsync({
           ...res,
@@ -192,6 +223,7 @@ class ClientList extends PureComponent {
     const { action } = this.props;
     const formComProps = {
       action,
+      clientRemarkList: this.props.clientRemarkList,
     };
     if (action !== 'add') {
       formComProps.init = this.props.itemDetail;
@@ -224,12 +256,12 @@ class ClientList extends PureComponent {
         ></UploadCom>
       );
     }
-    if (action === 'clientListAsignPeople') {
-      formComProps.init = this.props.formInitData
+    if (action === 'clientListAssignPeople') {
+      formComProps.init = this.props.formInitData;
       return (
-        <ClientListAsignPeopleForm
+        <ClientListAssignPeopleForm
           {...formComProps}
-        ></ClientListAsignPeopleForm>
+        ></ClientListAssignPeopleForm>
       );
     }
     if (action === 'addClientPlanAsync') {
@@ -247,10 +279,21 @@ class ClientList extends PureComponent {
     }
     if (action === 'getClientPlanAsync') {
       formComProps.clientPlanList = this.props.clientPlanList;
+      formComProps.getClientAsync = this.props.getClientAsync;
       formComProps.getClientClueAsync = this.props.getClientClueAsync;
       return <ClientPlanList {...formComProps}></ClientPlanList>;
     }
-    return <ClientForm {...formComProps}></ClientForm>;
+    const clientForm = <ClientForm {...formComProps}></ClientForm>;
+    return (
+      <>
+        {clientForm}
+        {action === 'edit' && (
+          <ClientRemark
+            clientRemarkList={this.props.clientRemarkList}
+          ></ClientRemark>
+        )}
+      </>
+    );
     return <ClientListForm {...formComProps}></ClientListForm>;
   };
   get size() {

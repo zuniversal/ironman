@@ -136,16 +136,23 @@ const resss = getWeek(datasss);
 
 export const nowYear = new Date().getFullYear();
 export const nowMonth = new Date().getMonth() + 1;
+export const nowMonthPad = `${new Date().getMonth() + 1}`.padStart(2, '0');
 export const nowDay = new Date().getDate();
 export const nowYearMonth = `${nowYear}-${nowMonth}`;
 export const nowYearMonthDay = `${nowYear}-${nowMonth}-${nowDay}`;
 export const getCountDays = (month = nowMonth, year = nowYear) =>
   new Date(year, month, 0).getDate();
+// export const getMonthDays = ({month, year, isPad}) =>
+//   Array.from({ length: getCountDays(month, year) }, (_, index) => isPad ? `${index + 1}`.padStart(2, '0') : `${index + 1}`);
 export const getMonthDays = (month, year) =>
-  Array.from({ length: getCountDays(month, year) }, (_, index) => index + 1);
+  Array.from(
+    { length: getCountDays(month, year) },
+    (_, index) => `${index + 1}`,
+  );
 export const formatMonthDay = (data, month = nowMonth, year = nowYear) =>
   data.map(v => `${year}-${month}-${v}`);
 export const getNowMonthDays = formatMonthDay(getMonthDays());
+export const getNowMonthDaysPad = () => formatMonthDay(months, nowMonthPad);
 export const getMonthWeekDays = getWeek(getNowMonthDays, true);
 export const getMonthWeekDaysSimple = getMonthWeekDays.map(
   v => v.split('-')[v.split('-').length - 1],
@@ -159,6 +166,7 @@ const RadioGroup = Radio.Group;
 const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
 const { RangePicker } = DatePicker;
+// console.log(' day() ： ', day, months, nowMonth, getMonthDays({isPad: true,  }), formatMonthDayformatMonthDay, getMonthWeekDays, getNowMonthDaysPad())//
 
 // 注意 如果 select 的data数组里没有 value 属性会导致选中表单无值
 export const renderSelectOp = (config = [], opType = 'option') => {
@@ -816,4 +824,15 @@ export const formatDuring = second => {
   const minutes = parseInt((second % (60 * 60)) / 60);
   const seconds = (second % 60) / 1000;
   return days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分钟';
+};
+
+export const toFixed = (num, decimal = 2) => {
+  num = num.toString();
+  let index = num.indexOf('.');
+  if (index !== -1) {
+    num = num.substring(0, decimal + index + 1);
+  } else {
+    num = num.substring(0);
+  }
+  return parseFloat(num).toFixed(decimal);
 };

@@ -301,7 +301,7 @@ class SmartTable extends PureComponent {
       // mapText = dayjs.duration(text).asSeconds()
     }
     if (day) {
-      console.log('    renderCol mapText： ', mapText, day);
+      // console.log('    renderCol mapText： ', mapText, day);
       mapText =
         mapText !== 'NaT'
           ? dayjs(mapText).format(
@@ -400,7 +400,7 @@ class SmartTable extends PureComponent {
 
     let tagColor = PRIMARY;
     if (config.tagMap) {
-      console.log(' configconfigconfig ： ', config.tagMap, val, text); //
+      // console.log(' configconfigconfig ： ', config.tagMap, val, text); //
       tagColor = config.tagMap[text];
     } else if (config.tags) {
       tagColor = tagColorMap[text];

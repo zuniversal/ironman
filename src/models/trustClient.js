@@ -12,6 +12,7 @@ import * as commonServices from '@/services/common';
 import { formatSelectList, filterObjSame } from '@/utils';
 import { customerTypeMap } from '@/configs';
 import { recursiveHandle } from '@/models/organize';
+import { formatClientDetail } from '@/format/client';
 
 const namespace = 'trustClient';
 const { createActions, createAction } = init(namespace);
@@ -139,7 +140,7 @@ const model = {
         last_service_staff,
         electricityuser,
         file,
-        contact,
+        contacts,
         service_staff_name,
         last_service_staff_name,
         service_organization_name,
@@ -186,7 +187,7 @@ const model = {
             logo: enterprise?.logo ? enterprise?.logo.split(',') : [],
           },
 
-          contact: contact.map(v => ({
+          contacts: contacts.map(v => ({
             ...v,
             is_urge: [v.is_urge],
             is_quit: [v.is_quit],
@@ -211,6 +212,16 @@ const model = {
         // adminList: [...adminList, payload.bean.customer_admin],
         // userList: [serviceStaff, lastServiceStaff, ...userList],
         userList: filterObjSame([...userList, serviceStaff, lastServiceStaff]),
+      };
+    },
+    getItem(state, { payload, type }) {
+      console.log(' getItem 修改  ： ', state, payload, type);
+      return {
+        ...state,
+        action: payload.payload.action,
+        isShowModal: true,
+        d_id: payload.payload.d_id,
+        itemDetail: formatClientDetail(payload.bean),
       };
     },
     addItem(state, { payload, type }) {

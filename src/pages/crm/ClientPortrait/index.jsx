@@ -6,7 +6,8 @@ import ClientPortraitSearchForm from '@/components/Form/ClientPortraitSearchForm
 // import ClientPortraitForm from '@/components/Form/ClientPortraitForm';
 // import ClientPortraitTable from '@/components/Table/ClientPortraitTable';
 import SmartFormModal from '@/common/SmartFormModal';
-import { actions, mapStateToProps } from '@/models/client';
+import { actions, mapStateToProps } from '@/models/clientPortrait';
+// import { actions, mapStateToProps } from '@/models/turnRate2';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { clientPortraitSpreadConfig } from '@/configs';
@@ -27,6 +28,7 @@ const detailFormMap = {};
 @SmartHOC({
   actions,
   titleMap,
+  noMountFetch: true,
 })
 class ClientPortrait extends PureComponent {
   constructor(props) {
@@ -122,14 +124,42 @@ class ClientPortrait extends PureComponent {
   };
 
   renderEcharts = params => {
+    console.log(
+      ' %c getIndustry renderEcharts 组件 this.state, this.props ： ',
+      this.state,
+      this.props,
+      this.props.industryList,
+    ); //
     return (
       <div className={`clientPortraitEchartsWrapper`}>
         <Row gutter={[24, 16]}>
+          {/* <Col span={12} >
+            <Divider />
+            <RingPieEchart
+              data={this.props.industryList}
+              // subtextKey={this.props.saleAreaData[v.subtextKey]}
+              text={'总数'}
+            />
+          </Col>
+          <Col span={12} >
+            <Divider />
+            <RingPieEchart
+              data={this.props.assetList}
+              // subtextKey={this.props.saleAreaData[v.subtextKey]}
+              text={'总数'}
+            />
+          </Col> */}
           {clientPortraitSpreadConfig.map((v, i) => (
             <Col span={12} {...v} key={v.value}>
               <div className={`homeTitle`}>{v.label}</div>
+              {/* {JSON.stringify(this.props[v.key])} */}
               <Divider />
-              <RingPieEchart />
+              <RingPieEchart
+                data={this.props[v.key]}
+                // subtextKey={this.props.saleAreaData[v.subtextKey]}
+                text={'总数'}
+                key={v.value}
+              />
             </Col>
           ))}
         </Row>
@@ -137,10 +167,44 @@ class ClientPortrait extends PureComponent {
     );
   };
 
+  componentDidMount() {
+    // this.props.getEchartsAsync({
+    //   _group: 'industry',
+    //   _value: 'industry',
+    // });
+    // this.props.getTurnRateProgressAsync({
+    //   _group: 'industry',
+    //   _value: 'industry',
+    // });
+    this.props.getIndustryAsync({
+      _group: 'industry',
+      _value: 'industry',
+    });
+    this.props.getAdcodeAsync({
+      _group: 'adcode',
+      _value: 'adcode',
+    });
+    this.props.getSaleAsync({
+      _group: 'scale',
+      _value: 'scale',
+    });
+    this.props.getAssetAsync({
+      _group: 'asset',
+      _value: 'asset',
+    });
+    // this.props.getEchartsAsync()
+  }
+
   render() {
+    console.log(
+      ' %c ClientPortrait 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="clientPortrait">
-        {this.renderSearchForm()}
+        {/* {this.renderSearchForm()} */}
 
         {this.renderEcharts()}
 

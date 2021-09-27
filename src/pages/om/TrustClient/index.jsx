@@ -15,6 +15,7 @@ import { tips, format2Null, getItem, formatSelectList } from '@/utils';
 import { TRUST_CLIENT } from '@/constants';
 import HouseNoForm from '@/components/Form/HouseNoForm';
 import { formatClientFormData } from '@/format';
+import { formatClientData } from '@/format/client';
 
 export const TITLE = '客户';
 
@@ -194,11 +195,34 @@ class Client extends PureComponent {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action, actionFn);
       const { adminList, itemDetail } = this.props;
+      const formatRes = formatClientData(res, {
+        itemDetail,
+        action,
+      });
+      console.log(' formatRes ： ', formatRes); //
+      const isUrgeOneRes = formatRes.contacts.filter(v => v.is_urge);
+      console.log(' formatResformatRes ： ', formatRes, res, isUrgeOneRes);
+      if (isUrgeOneRes.length > 1) {
+        tips('催款联系人只能勾选1人！', 2);
+        return;
+      }
+      if (action === 'add') {
+        this.props.addItemAsync({
+          ...formatRes,
+        });
+      }
+      if (action === 'edit') {
+        this.props.editItemAsync({
+          ...formatRes,
+          d_id: this.props.itemDetail.id,
+        });
+      }
+      return;
       const params = {
         ...init,
         ...res,
         // customer_admin: tableData,
-        contact: res.contact.map(v => ({
+        contacts: res.contacts.map(v => ({
           ...v,
           is_urge: v.is_urge && v.is_urge.length > 0 ? true : false,
           is_quit: v.is_quit && v.is_quit.length > 0 ? true : false,
@@ -263,7 +287,7 @@ class Client extends PureComponent {
         delete datas.last_service_staff_id;
       }
 
-      const isUrgeRes = datas.contact.filter(v => v.is_urge);
+      const isUrgeRes = datas.contacts.filter(v => v.is_urge);
       console.log(' paramsparams ： ', params, datas, isUrgeRes);
       if (isUrgeRes.length > 1) {
         tips('催款联系人只能勾选1人！', 2);
@@ -549,12 +573,12 @@ class Client extends PureComponent {
   checkOne = params => {
     console.log(' checkOne,  , ： ', params);
     const { form, formData } = params;
-    if (params.value?.contact) {
-      const isUrge = params.value?.contact[0]?.is_urge;
+    if (params.value?.contacts) {
+      const isUrge = params.value?.contacts[0]?.is_urge;
       console.log(' isUrge ： ', isUrge);
       if (isUrge) {
-        const { contact } = formData;
-        console.log('  formData ：', formData, contact);
+        const { contacts } = formData;
+        console.log('  formData ：', formData, contacts);
         form.setFieldsValue(formData);
       }
     }
