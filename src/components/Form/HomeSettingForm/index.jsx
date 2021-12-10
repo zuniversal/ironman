@@ -96,10 +96,6 @@ TabPanes.defaultProps = {
 };
 
 const HomeSettingForm = props => {
-  console.log(' HomeSettingForm ： ', props);
-  const { formBtn, ...rest } = props;
-
-  console.log(' checkboxConfig ： ', checkboxConfig);
   // const CheckboxItems = checkboxData.map(v => (
   //   v.type === 'custom' ? <div>ssssssssss</div> : <Checkbox key={v.value} value={v.value}>
   //     {v.label}
@@ -182,8 +178,6 @@ const HomeSettingForm = props => {
         noLabelLayout
         {...props}
       ></SmartForm>
-
-      {/* {formBtn} */}
     </div>
   );
 };

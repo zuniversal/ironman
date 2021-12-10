@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import { Form, InputNumber } from 'antd';
 import SmartForm from '@/common/SmartForm';
 import { notifyTypeConfig, fullFormLayouts } from '@/configs';
@@ -28,9 +27,6 @@ const layoutObj = {
 const checkboxData = { label: '', value: 1, key: 'true' };
 
 const AlarmTemplateForm = props => {
-  console.log(' AlarmTemplateForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const ruleConfig = [
     // {
     //   formType: 'rowText',

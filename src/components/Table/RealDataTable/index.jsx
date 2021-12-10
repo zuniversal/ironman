@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './style.less';
 import SmartTable from '@/common/SmartTable';
 import { Button, Form } from 'antd';
 import useHttp from '@/hooks/useHttp';
@@ -240,7 +239,6 @@ export const RealDataTableCom = props => {
       }),
     {
       format: res => {
-        console.log('  副作用 对吗  res.length ', res, props);
         if (res.length > 0) {
           getAlarmCurveListAsync(() => {
             // form.setFieldsValue({
@@ -278,7 +276,6 @@ export const RealDataTableCom = props => {
       props,
     );
     const { time = [], point_id } = params.formData;
-    console.log('  对吗  time.length ', time.length);
     if (time.length > 0) {
       const [day1, day2] = time;
       const startTime = day1.format('YYYY-MM-DD HH:mm:ss');

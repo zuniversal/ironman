@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button, Row, Col, Divider } from 'antd';
+import { Button, Row, Col, Divider, Empty } from 'antd';
 import AssetsSearchForm from '@/components/Form/AssetsSearchForm';
 import AssetsDetailSearchForm from '@/components/Form/AssetsDetailSearchForm';
 import SearchKwForm from '@/components/Form/SearchKwForm';
@@ -65,7 +65,7 @@ class Assets extends PureComponent {
           }
           disabled={!customer_id}
         >
-          编辑客户
+          编辑客户资产
         </Button>
       </div>
     );
@@ -200,14 +200,20 @@ class Assets extends PureComponent {
             <ClientSimpleTable {...tableProps}></ClientSimpleTable>
           </Col>
           <Col span={16}>
-            <AssetsInfo
-              assetList={this.props.assetList}
-              subAssetList={this.props.subAssetList}
-              subAssetTreeList={this.props.subAssetTreeList}
-              selectItem={this.props.selectItem}
-              assetDetail={this.props.assetDetail}
-              getAssetDetailAsync={this.props.getAssetDetailAsync}
-            ></AssetsInfo>
+            {!!this.props.assetList.length ? (
+              <AssetsInfo
+                assetList={this.props.assetList}
+                subAssetList={this.props.subAssetList}
+                subAssetTreeList={this.props.subAssetTreeList}
+                selectItem={this.props.selectItem}
+                assetDetail={this.props.assetDetail}
+                getAssetDetailAsync={this.props.getAssetDetailAsync}
+              ></AssetsInfo>
+            ) : (
+              <div className={`dfc fullfill`}>
+                <Empty />
+              </div>
+            )}
           </Col>
         </Row>
       </div>

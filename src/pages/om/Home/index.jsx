@@ -306,7 +306,6 @@ class Home extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getStatisticAsync();
     this.props
       .getChartAsync

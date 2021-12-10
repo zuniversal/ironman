@@ -306,12 +306,6 @@ const SmartFormTable = props => {
                       <a
                         className={'remove'}
                         onClick={() => {
-                          console.log(
-                            '  对吗  fields.length ',
-                            fields,
-                            field,
-                            i,
-                          );
                           if (fields.length > 1) {
                             remove(field.name);
                             // const datas = props.form.getFieldValue(name);

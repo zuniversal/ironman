@@ -47,11 +47,13 @@ export const formatClientData = (res, extraData) => {
 
   const params = {
     ...res,
-    contacts: res.contacts.map(v => ({
-      ...v,
-      is_urge: v.is_urge ? true : false,
-      is_quit: v.is_quit ? true : false,
-    })),
+    contacts: res.contacts
+      ? res.contacts.map(v => ({
+          ...v,
+          is_urge: v.is_urge ? true : false,
+          is_quit: v.is_quit ? true : false,
+        }))
+      : [],
     customer_admin:
       res.customer_admin && !!res.customer_admin.length
         ? res.customer_admin.map(v => ({
@@ -168,13 +170,17 @@ export const formatClientDetail = (payload, extraData) => {
       : null,
 
     service_staff: `${service_staff_id}`,
-    last_service_staff: `${last_service_staff_id}`,
+    last_service_staff: last_service_staff_id
+      ? `${last_service_staff_id}`
+      : null,
     // service_organization_id: service_organization_name ?? '',
     customer_admin: customer_admin.map(v => ({ ...v, tags: v.tags ?? [] })),
     contacts: contacts.map(v => ({
       ...v,
-      is_urge: [v.is_urge],
-      is_quit: [v.is_quit],
+      // is_urge: [v.is_urge],
+      // is_quit: [v.is_quit],
+      is_urge: v.is_urge ? true : false,
+      is_quit: v.is_quit ? true : false,
       tags: v.tags.map(v => `${v.id}`) ?? [],
     })),
   };

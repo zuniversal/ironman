@@ -1,7 +1,8 @@
 import React from 'react';
-import './style.less';
 import SmartTable from '@/common/SmartTable';
 import { assetTypeMap } from '@/configs';
+import { ASSET_DETAIL } from '@/constants';
+import { getToken } from '@/utils';
 
 const AssetsListTable = props => {
   const columns = [
@@ -42,6 +43,7 @@ const AssetsListTable = props => {
     {
       title: '容量',
       dataIndex: 'real_capacity',
+      dataIndex: 'capacity',
     },
     {
       title: '厂商',
@@ -95,10 +97,17 @@ const AssetsListTable = props => {
       </a>
       <a
         onClick={() => {
+          // props.showQRCode({
+          //   title: `${record.name}`,
+          //   record,
+          //   d_id: record.id,
+          // });
           props.showQRCode({
             title: `${record.name}`,
-            record,
-            d_id: record.id,
+            record: `${window.location.origin}/#${ASSET_DETAIL}?id=${
+              record.id
+            }&token=${getToken()}`,
+            // record: `https://epk.faladi.cn:31009/#/login`,
           });
         }}
       >

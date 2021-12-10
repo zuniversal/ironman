@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.less';
 import { Form, Button, Upload, Result, Tabs } from 'antd';
 
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
@@ -608,8 +607,6 @@ const init = {
 };
 
 const ContractRelativeForm = props => {
-  console.log(' ContractRelativeForm ： ', props);
-
   const { index, propsForm, formConfigs } = props;
 
   // const formConfigs = formatConfig(config);

@@ -1,10 +1,7 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 
 const AppraiseForm = props => {
-  console.log(' AppraiseForm ： ', props);
-
   const config = [
     {
       formType: 'rowText',
@@ -62,13 +59,7 @@ const AppraiseForm = props => {
     },
   ];
 
-  return (
-    <div className={' AppraiseForm '}>
-      <SmartForm config={config} {...props}></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 AppraiseForm.defaultProps = {};

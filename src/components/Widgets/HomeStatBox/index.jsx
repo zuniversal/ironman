@@ -63,9 +63,11 @@ const StatBoxCom = props => {
     rightTopKey = 'week_compare',
     rightBottomKey = 'day_compare',
     numKey = 'total_count',
+    numTofixed,
   } = props;
   const weekDirectionText = data[rightTopKey] >= 0 ? '↑' : '↓';
   const dayDirectionText = data[rightBottomKey] >= 0 ? '↑' : '↓';
+  const value = numTofixed ? numTofixed(data[numKey]) : data[numKey] ?? 0;
 
   return (
     <StatBox
@@ -79,7 +81,7 @@ const StatBoxCom = props => {
             {props.title}
           </div> */}
             <div className="num">
-              <Statistic title={props.title} value={data[numKey] ?? 0} />
+              <Statistic title={props.title} value={value} />
             </div>
           </div>
         </>
@@ -89,11 +91,12 @@ const StatBoxCom = props => {
           <div className="stat">
             <div className="statInfo">
               {props.week} {weekDirectionText}{' '}
-              {Math.abs(data[rightTopKey] ?? 1).toFixed(1) * 100}%
+              {/* {Math.abs(data[rightTopKey] ?? 1)?.toFixed(1) * 100}% */}
+              {Math.abs(data[rightTopKey] ?? 1 * 100)?.toFixed(2)}%
             </div>
             <div className="statInfo">
               {props.day} {dayDirectionText}{' '}
-              {(Math.abs(data[rightBottomKey] ?? 1) * 100).toFixed(1)}%
+              {(Math.abs(data[rightBottomKey] ?? 1) * 100)?.toFixed(1)}%
             </div>
           </div>
         </>

@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
@@ -9,14 +8,7 @@ import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'
 import OrderConsumeTable from '@/components/Table/OrderConsumeTable';
 import SmartImg from '@/common/SmartImg';
 
-const choiceRadios = [
-  { label: '种类1', value: 'yes', key: 'yes' },
-  { label: '种类2', value: 'no', key: 'no' },
-];
-
 const WorkOrderTicketForm = props => {
-  console.log(' WorkOrderTicketForm ： ', props);
-  const { formBtn, ...rest } = props;
   const { task = {}, file } = props.init;
   const buildFile = file ? file : [];
   const responseFile = task.file ? task.file : [];
@@ -225,18 +217,21 @@ const WorkOrderTicketForm = props => {
       },
     },
     {
+      formType: 'TextArea',
       itemProps: {
         label: '事故描述',
         name: ['order_record', 0, 'describe'],
       },
     },
     {
+      formType: 'TextArea',
       itemProps: {
         label: '事故排查',
         name: ['order_record', 0, 'investigation'],
       },
     },
     {
+      formType: 'TextArea',
       itemProps: {
         label: '事故处理',
         name: ['order_record', 0, 'handle'],
@@ -244,6 +239,7 @@ const WorkOrderTicketForm = props => {
     },
 
     {
+      formType: 'TextArea',
       itemProps: {
         label: '事故措施与建议',
         name: ['order_record', 0, 'proposal'],
@@ -282,17 +278,7 @@ const WorkOrderTicketForm = props => {
   ];
 
   return (
-    <div className={' WorkOrderTicketForm '}>
-      <SmartForm
-        config={config}
-        isDisabledAll
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
+    <SmartForm config={config} isDisabledAll noRuleAll {...props}></SmartForm>
   );
 };
 

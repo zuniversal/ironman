@@ -6,9 +6,6 @@ import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 import SmartImg from '@/common/SmartImg';
 
 const ForgetPwdForm = props => {
-  console.log(' ForgetPwdForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       noLabel: true,

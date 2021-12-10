@@ -426,8 +426,6 @@ const model = {
     },
     *addItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' addItemAsync dragList ： ', dragList);
-      console.log('  对吗  dragList.length ', dragList.length);
       if (dragList.length > 0) {
         const planData = dragList
           .filter(v => v.plan_date != v.extendedProps.plan_date)
@@ -443,7 +441,6 @@ const model = {
 
             return items;
           });
-        console.log(' planData ： ', planData);
         // return
         const res = yield call(services.addItem, {
           // data: planData,
@@ -455,7 +452,6 @@ const model = {
     },
     *editItemAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' editItemAsync dragList ： ', dragList);
       const res = yield call(services.changePlan, {
         data: dragList.filter(v => v.plan_date != v.extendedProps.plan_date),
       });
@@ -468,7 +464,6 @@ const model = {
     },
     *changePlanAsync({ payload, action, type }, { call, put, select }) {
       const { dragList } = yield select(state => state[namespace]);
-      console.log(' changePlanAsync dragList ： ', dragList);
       // const res = yield call(services.changePlan, {
       //   data: dragList,
       // });
@@ -479,7 +474,6 @@ const model = {
       { call, put, select },
     ) {
       const { searchInfo, dayInfo } = yield select(state => state[namespace]);
-      console.log(' getScheduledDetailListAsync  ： ', payload, searchInfo);
       // const date = payload.event ? dayInfo : payload
       if (payload.event.extendedProps?.plan_date) {
         const params = {
@@ -492,7 +486,6 @@ const model = {
           page_size: payload.event.title,
           // date: payload.event ? payload.event.extendedProps.plan_date.split('T')[0] : dayInfo.date,
         };
-        console.log(' paramsparams ： ', params, payload, dayInfo);
         const res = yield call(services.getScheduledDetailList, params);
         yield put(action({ ...res, payload: params }));
       }
@@ -510,7 +503,6 @@ const model = {
       yield put(action({ ...res, payload }));
     },
     *removePlanAsync({ payload, action, type }, { call, put }) {
-      console.log(' removePlanAsync  ： ', payload);
       const params = {
         data: [payload.id],
       };

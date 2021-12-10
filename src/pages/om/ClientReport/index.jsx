@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import ClientReportTable from '@/components/Table/ClientReportTable';
 import ClientReportForm from '@/components/Form/ClientReportForm';
@@ -409,7 +408,6 @@ class ClientReport extends PureComponent {
   };
 
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getBillTypeListAsync();
     setTimeout(() => {
       console.log('  延时器 ： ');
@@ -442,7 +440,7 @@ class ClientReport extends PureComponent {
       this.props,
     );
     return (
-      <div className="ClientReport">
+      <div className="">
         {this.renderSearchForm()}
 
         {this.renderTable()}

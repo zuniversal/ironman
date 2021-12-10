@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import SmartForm from '@/common/SmartForm';
@@ -24,7 +23,6 @@ const formatFormItem = (data = []) =>
   })); //
 
 const AssetsForm = props => {
-  console.log(' AssetsForm ： ', props, config);
   const { action } = props;
 
   const [houseNoList, setHouseNoList] = useState([]);
@@ -160,27 +158,36 @@ const AssetsForm = props => {
       },
     },
     {
-      formType: 'InputNumber',
+      // formType: 'InputNumber',
       // noRule: true,
       itemProps: {
         label: '额定电压',
         name: 'voltage',
       },
+      comProps: {
+        suffix: 'V',
+      },
     },
     {
-      formType: 'InputNumber',
+      // formType: 'InputNumber',
       // noRule: true,
       itemProps: {
         label: '额定电流',
         name: 'current',
       },
+      comProps: {
+        suffix: 'A',
+      },
     },
     {
       // noRule: true,
-      formType: 'InputNumber',
+      // formType: 'InputNumber',
       itemProps: {
         label: '容量',
         name: 'capacity',
+      },
+      comProps: {
+        suffix: 'kVA',
       },
     },
     {
@@ -305,12 +312,18 @@ const AssetsForm = props => {
         label: '额定电压',
         name: 'voltage',
       },
+      comProps: {
+        suffix: 'V',
+      },
     },
     {
       noRule: true,
       itemProps: {
         label: '额定电流',
         name: 'electricity',
+      },
+      comProps: {
+        suffix: 'A',
       },
     },
     {

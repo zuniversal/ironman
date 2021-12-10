@@ -1028,7 +1028,6 @@ const model = {
       );
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },

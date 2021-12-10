@@ -385,7 +385,7 @@ const AssetsInfo = props => {
           </div>
           {/* <div className="dfc"> */}
           <div
-            className={`listWrapper ${ANIMATE.bounceIn}`}
+            className={`listWrapper ${ANIMATE.fadeInUp}`}
             key={props.assetDetail.id}
           >
             {/* <RenderList dataSource={data} header={'相排'}></RenderList>

@@ -1,13 +1,9 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { workOrderStatusConfig } from '@/configs';
 
 const WorkOrderSearchForm = props => {
-  console.log(' WorkOrderSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -48,18 +44,7 @@ const WorkOrderSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' WorkOrderSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 WorkOrderSearchForm.defaultProps = {};

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import InspectMissionSearchForm from '@/components/Form/InspectMissionSearchForm';
@@ -33,6 +32,7 @@ const titleMap = {
   clientDetailAsync: `客户详情`,
   powerStationDetailAsync: `电站详情`,
   inspectMissionDetailAsync: `巡检任务详情`,
+  dispatchMission: `派发`,
 };
 
 const detailFormMap = {

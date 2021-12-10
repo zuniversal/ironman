@@ -1,13 +1,8 @@
 import React from 'react';
-import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { contractTypeConfig } from '@/configs';
 
 const ContractSearchForm = props => {
-  console.log(' ContractSearchForm ： ', props);
-
-  const { formBtn } = props;
-
   const config = [
     // {
     //   itemProps: {
@@ -48,11 +43,7 @@ const ContractSearchForm = props => {
 
   return (
     <div className={'flex-bw'}>
-      <SearchForm
-        config={config}
-        // {...rest}
-        {...props}
-      ></SearchForm>
+      <SearchForm config={config} {...props}></SearchForm>
     </div>
   );
 };

@@ -1,5 +1,13 @@
 import { httpTipsMap } from '@/configs';
-import { URL, LOAD, LOUOUT, LOGIN, isDev } from '@/constants';
+import {
+  URL,
+  LOAD,
+  LOUOUT,
+  LOGIN,
+  isDev,
+  ASSET_DETAIL,
+  noRedirectLoginPath,
+} from '@/constants';
 import {
   getToken,
   getPlatformToken,
@@ -100,7 +108,10 @@ export const isTips = res => {
     //   codeMsg,
     // );
     if (code === AUTH_FAIL && !isDev) {
-      history.push(LOGIN);
+      const { pathname } = history.location;
+      if (!noRedirectLoginPath.includes(pathname)) {
+        history.push(LOGIN);
+      }
     }
     // console.log(' codecode ： ', msg_show, msg_show ?? '操作成功', codeMsg); //
     tips(msg_show || codeMsg, 2);
@@ -127,6 +138,16 @@ const instance = axios.create({
   // timeout: 0,
 });
 
+export const handleParams = params => {
+  if (params.d_id) {
+    delete params.d_id;
+  }
+  if (params.action) {
+    delete params.action;
+  }
+  return params;
+};
+
 export class Request {
   http = null;
 
@@ -135,12 +156,6 @@ export class Request {
     // console.log(' super ： ',  )
     this.http.interceptors.request.use(
       config => {
-        console.log(
-          'getToken() token ：',
-          config,
-          getToken(),
-          getItems('token'),
-        );
         config.headers.Authorization = getToken();
         // console.log('langlanglang LanguageLanguage：', getLang(),  )
         // config.headers.Authorization = getItems('token');
@@ -165,13 +180,12 @@ export class Request {
         //     ? config.params
         //     : config.data,
         // );
-        config.customInfo = formatParams;
+        config.customInfo = handleParams(formatParams);
         const { noTips, extraPayload, ...rest } = formatParams;
         // if (config.params) {
         //   const { noTips, ...rest } = config.params;
         //   config.data = config.params = rest;
         // }
-        console.log(' config ： ', config); //
         if (config.method === 'post') {
           // config.data = rest; // 支持 delete 传递 body 参数
         } else if (config.method !== 'put') {
@@ -244,15 +258,11 @@ export const parseUrl = (url, params) => URL + url;
 // export const get = (url, params) => new Promise((resolve, reject) => debounce(resolve(http.get(url, { params: params }), 5000)));
 // export const get = (url, params) => new Promise((resolve, reject) => debounce(http.get(url, { params: params }), 5000));
 // export const get = (url, params) => debounce(http.get, url, { params: params }, 500);
-export const get = (url, { d_id, action, ...params }) =>
-  http.get(url, { params: params });
-export const post = (url, { d_id, action, ...params }, o) =>
-  http.post(url, params, o);
-export const put = (url, { d_id, action, ...params }) => http.put(url, params);
-export const patch = (url, { d_id, action, ...params }) =>
-  http.patch(url, params);
-export const remove = (url, { d_id, action, ...params }) =>
-  http.delete(url, { params });
+export const get = (url, params) => http.get(url, { params: params });
+export const post = (url, params, o) => http.post(url, params, o);
+export const put = (url, params) => http.put(url, params);
+export const patch = (url, params) => http.patch(url, params);
+export const remove = (url, params) => http.delete(url, { params });
 // export const remove = (url, params) => http.delete(url, {data: {dataAttr: params}, params: {paramsAttr: params, }, });
 
 // 不显示 tips 的方法

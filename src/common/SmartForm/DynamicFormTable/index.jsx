@@ -162,7 +162,6 @@ const ActionBtn = ({
       className={'actionBtn addBtn'}
       disabled={isDisabledAll}
       onClick={() => {
-        console.log('  对吗  limit.length ', fields, limit);
         if (fields.length < limit) {
           add();
         } else {
@@ -485,7 +484,6 @@ const DynamicFormTable = props => {
                       className={'actionBtn addBtn'}
                       disabled={isDisabledAll}
                       onClick={() => {
-                        console.log('  对吗  limit.length ', fields, limit);
                         if (fields.length < limit) {
                           add();
                         } else {

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import ShiftsManageTable from '@/components/Table/ShiftsManageTable';
 import ShiftsManageForm from '@/components/Form/ShiftsManageForm';
@@ -201,7 +200,6 @@ class ShiftsManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      console.log('  对吗  .length ', res.member);
       // if (res.member.length > 5) {
       //   tips('最多添加5个组员！', 2);
       //   return;
@@ -249,12 +247,6 @@ class ShiftsManage extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' ShiftsManage 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-      this.props.authInfo,
-    );
     // this.props.dispatch(actions.getUserAsync());
     // this.props.getUserAsync({ page_size: 1000 });
     this.props.getUserAsync();

@@ -1,14 +1,10 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 import { regoins, treeList } from '@/configs';
 import { formatConfig } from '@/utils';
 
 const OrganizeForm = props => {
-  console.log(' OrganizeForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -42,13 +38,7 @@ const OrganizeForm = props => {
     },
   ];
 
-  return (
-    <div className={' OrganizeForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 OrganizeForm.defaultProps = {};

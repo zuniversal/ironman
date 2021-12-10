@@ -316,11 +316,6 @@ const ReduxTable = props => {
               <Button
                 type="primary"
                 onClick={() => {
-                  console.log(
-                    '  对吗  props.dataSource.filter((v) => v.isEdit).length < 2 ',
-                    props.dataSource,
-                    props,
-                  );
                   if (isDisabledAll) {
                     return;
                   }

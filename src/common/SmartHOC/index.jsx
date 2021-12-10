@@ -32,7 +32,7 @@ import { connect } from 'umi';
 
 const getAuth = (authInfo = {}, authKey = '') => {
   const authData = authInfo[authKey];
-  console.log(' getAuth ： ', authInfo, authKey); //
+  console.log(' authData ： ', authData); //
   if (authData && Object.keys(authData).length) {
     if (false) {
       // if (isDev) {
@@ -675,7 +675,6 @@ export default ({
             onBatchRemove={this.onBatchRemove}
             onSelectChange={this.onSelectChange}
             // showFormModal={this.showFormModal}
-            syncOAAsync={this.syncOAAsync}
             downloadFile={this.downloadFile}
             exportData={this.exportData}
             search={this.search}

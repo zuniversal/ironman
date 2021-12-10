@@ -1,11 +1,9 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { inspectMissionsSearchConfig } from '@/configs';
 
 const InspectMissionSearchForm = props => {
-  console.log(' InspectMissionSearchForm ： ', props);
   const config = [
     {
       // 职位 班组组长

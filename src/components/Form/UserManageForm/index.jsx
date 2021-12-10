@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import UploadCom from '@/components/Widgets/UploadCom';
 import {

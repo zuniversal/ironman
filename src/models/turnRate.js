@@ -41,15 +41,16 @@ const model = {
           ...payload.bean,
           customerCluePercent: 100,
           contractPercent: (
-            (contract_number / customer_clue_number) *
-            100
+            (contract_number ? contract_number / customer_clue_number : 0) * 100
           ).toFixed(2),
-          schemePercent: ((scheme_number / customer_clue_number) * 100).toFixed(
-            2,
-          ),
+          schemePercent: (scheme_number
+            ? scheme_number / customer_clue_number
+            : 0 * 100
+          ).toFixed(2),
           visitCustomerPercent: (
-            (visit_customer_number / customer_clue_number) *
-            100
+            (visit_customer_number
+              ? visit_customer_number / customer_clue_number
+              : 0) * 100
           ).toFixed(2),
         },
         turnRateSearchInfo: payload.payload,

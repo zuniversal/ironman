@@ -53,6 +53,7 @@ const detailFormMap = {
 @SmartHOC({
   actions,
   titleMap,
+  // noMountFetch: true,
 })
 class ClientList extends PureComponent {
   constructor(props) {
@@ -67,7 +68,7 @@ class ClientList extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
-          // disabled={this.props.authInfo.create !== true}
+          disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
@@ -80,6 +81,7 @@ class ClientList extends PureComponent {
         // formBtn={this.renderFormBtn}
         init={this.props.searchInfo}
         onFieldChange={this.onFieldChange}
+        getListAsync={this.props.getListAsync}
       ></ClientListSearchForm>
     );
   };
@@ -329,13 +331,27 @@ class ClientList extends PureComponent {
   };
   renderTabPanes = params => (
     <div className={'tabWrapper'}>
-      <Tabs defaultActiveKey="0" onChange={this.onTabChange}>
+      <Tabs defaultActiveKey={this.props.tabType} onChange={this.onTabChange}>
         {clientListTabConfig.map((v, i) => (
           <TabPane {...v}></TabPane>
         ))}
       </Tabs>
     </div>
   );
+  componentDidMount() {
+    const params = {};
+    const { location } = this.props; //
+    if (location.query.saleId) {
+      params.service_staff = location.query.saleId;
+    }
+    console.log(
+      ' clientList 组件componentDidMount挂载 ： ',
+      this.state,
+      this.props,
+      params,
+    ); //
+    // this.props.getListAsync(params)
+  }
 
   render() {
     return (

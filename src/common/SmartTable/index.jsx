@@ -67,7 +67,6 @@ class SmartTable extends PureComponent {
       // onChange: this.onPageChange,
       ...paginationConfig,
     };
-    console.log(' SmartTableSmartTable ： ', this.state, this.props);
     this.state = {
       pagination,
 
@@ -701,7 +700,6 @@ class SmartTable extends PureComponent {
     }));
 
     const cols = [...col];
-    // console.log('  对吗  !noActionCol ', !noActionCol, actionCol,    )
     if (!noActionCol) {
       cols.push(this.actionCol());
     }

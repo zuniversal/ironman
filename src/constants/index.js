@@ -95,6 +95,13 @@ export const TRUST_CLIENT = '/om/trustClient';
 export const CS_HOME = '/cs/energyInfo';
 export const ASSETS_DETAIL = '/om/assetsDetail?';
 export const ASSETS = '/om/assets';
+export const ASSET_DETAIL = '/assetDetail';
+export const CLIENT_LIST = '/crm/clientList?';
+
+export const noGetUserInfoPath = [LOGIN, ASSET_DETAIL];
+
+export const noRedirectLoginPath = [ASSET_DETAIL];
+
 export const homeMap = {
   manager: HOME,
   customer: CS_HOME,

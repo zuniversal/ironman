@@ -7,7 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import './style.less';
 import {
   Table,
   Icon,

@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const ShiftsTransferSearchForm = props => {
-  console.log(' ShiftsTransferSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       // formType: 'Search',
@@ -52,18 +48,7 @@ const ShiftsTransferSearchForm = props => {
     // },
   ];
 
-  return (
-    <div className={'ShiftsTransferSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 ShiftsTransferSearchForm.defaultProps = {

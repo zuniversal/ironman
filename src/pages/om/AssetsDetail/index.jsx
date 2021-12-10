@@ -435,11 +435,6 @@ class Assets extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log(
-      ' Assets 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
     // this.props.getPowerAsync();
     // this.props.getListAsync({
     //   electricity_user_id: '6464',

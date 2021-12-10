@@ -320,7 +320,7 @@ const ReportCover = props => {
 
 const MonthPowerReport = props => {
   console.log(' MonthPowerReport ：', props);
-  const { formBtn, data, ...rest } = props;
+  const { data, ...rest } = props;
   // const headerCom = (
   //   <Descriptions title="" className="headerWrapper " layout="vertical" colon={false} column={1}>
   //     <DescItem label={'月度用电分析报告'} className="noPadding ant-descriptions-item pdfTitle">
@@ -650,7 +650,7 @@ const MonthPowerReport = props => {
 
 const MonthStationReport = props => {
   console.log(' MonthStationReport ：', props);
-  const { formBtn, data, ...rest } = props;
+  const { data, ...rest } = props;
   const headerCom = (
     <div className="headerWrapper">
       <div className={`pdfTitle`}>变(配)电站月度运行报告</div>

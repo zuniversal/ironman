@@ -104,9 +104,6 @@ const inputBefore = (
 );
 
 const CsInspectRecordForm = props => {
-  console.log(' CsInspectRecordForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -905,7 +902,6 @@ const CsInspectRecordForm = props => {
           处理已完成，请确认电工完成该工作
         </Tag>
       </div>
-      {/* {formBtn} */}
     </div>
   );
 };

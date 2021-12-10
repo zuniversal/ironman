@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import HouseNoTable from '@/components/Table/HouseNoTable';
 import PowerStationForm from '@/components/Form/PowerStationForm';

@@ -288,7 +288,7 @@ const model = {
     *batchDispatchAsync({ payload, action, type }, { call, put }) {
       console.log(' batchDispatchAsync ： ', payload);
       const res = yield call(services.batchDispatch, payload);
-      yield put({ type: 'getListAsync' });
+      yield put({ type: 'getListAsync', payload: {} });
     },
   },
 };

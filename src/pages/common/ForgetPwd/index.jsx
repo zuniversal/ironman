@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { history, connect } from 'umi';
 import loginAvatar from '@/static/assets/loginAvatar.png';

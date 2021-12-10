@@ -229,7 +229,6 @@ const model = {
 
   effects: {
     *getListAsync({ payload, action, type }, { call, put }) {
-      console.log(' getListAsyncgetListAsync ： ', payload);
       const res = yield call(services.getList, formatSearch(payload));
       yield put(action({ ...res, payload }));
     },
@@ -255,7 +254,6 @@ const model = {
         }));
       };
       const params = formatArrangeData();
-      console.log('  params ：', params);
       const res = yield call(services.addItem, { teamschedule_list: params });
       yield put(action(res));
       history.push(SHIFTSARRANGE);
@@ -273,7 +271,6 @@ const model = {
       return res;
     },
     *getTeamAsync({ payload, action, type }, { call, put }) {
-      console.log(' getTeamAsync ： ', payload);
       const res = yield call(teamServices.getList, payload);
       yield put(action({ ...res, payload }));
     },
@@ -287,7 +284,6 @@ const model = {
     //   // }));
     // },
     *setSearchAsync({ payload, type }, { call, put }) {
-      console.log(' setSearchAsync ： ', payload);
       const res = yield call(services.getList, formatSearch(payload));
       yield put({
         type: 'setSearchInfo',

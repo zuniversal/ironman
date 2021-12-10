@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button, Radio, Tabs } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import SmartFormModal from '@/common/SmartFormModal';

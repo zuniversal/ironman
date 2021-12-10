@@ -1,12 +1,7 @@
 import React from 'react';
-import './style.less';
-
 import SmartForm from '@/common/SmartForm';
 
 const MissionsWorkOrderForm = props => {
-  console.log(' MissionsWorkOrderForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -33,13 +28,7 @@ const MissionsWorkOrderForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsWorkOrderForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 MissionsWorkOrderForm.defaultProps = {};

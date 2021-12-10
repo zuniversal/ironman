@@ -7,8 +7,6 @@ import SmartImg from '@/common/SmartImg';
 import UploadCom from '@/components/Widgets/UploadCom';
 
 const MissionsManageForm = props => {
-  console.log(' MissionsManageForm ： ', props);
-  const { formBtn, action, ...rest } = props;
   // const { file = [] } = props.init;
   const file = props.init.file ?? [];
 
@@ -146,8 +144,6 @@ const MissionsManageForm = props => {
   return (
     <div className={' missionsManageForm '}>
       <SmartForm config={config} {...props}></SmartForm>
-
-      {/* {formBtn} */}
     </div>
   );
 };

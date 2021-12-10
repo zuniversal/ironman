@@ -1,16 +1,6 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import './style.less';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Descriptions, Input, Button, Spin } from 'antd';
+import { Descriptions } from 'antd';
 
 // 通用的描详情内容的 描述性组件 传入配置 自动生成相应内容
 const DescriptionsCom = props => {

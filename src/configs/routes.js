@@ -14,7 +14,6 @@ export const DEF_BUSSNIESS_TAB = 'bp';
 
 export const isPlatform = platform => getItem('platform') === platform;
 export const isPlatformCRM = (platform = CRM) => isPlatform(platform);
-console.log(' isPlatform ： ', isPlatformCRM()); //
 
 export const platformMap = {
   manager: DEF_BUSSNIESS_TAB,
@@ -447,29 +446,29 @@ export const iotRoutes = [
 export const crmRoutes = [
   {
     platform: 'crm',
-    // authKey: '',
-    hideInMenu: false,
+    authKey: 'CRMCustomerManageModel',
+    // hideInMenu: false,
     name: '客户管理',
     icon: <Icon icon={'clientManage'} />,
     routes: [
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMCustomerModel',
+        // hideInMenu: false,
         path: '/crm/clientList',
         name: '客户列表',
       },
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMCustomerClueModel',
+        // hideInMenu: false,
         path: '/crm/clientClue',
         name: '客户线索',
       },
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMCustomerPortraitModel',
+        // hideInMenu: false,
         path: '/crm/clientPortrait',
         name: '客户画像',
       },
@@ -484,22 +483,22 @@ export const crmRoutes = [
   },
   {
     platform: 'crm',
-    // authKey: '',
-    hideInMenu: false,
+    authKey: 'CRMTaskManageModel',
+    // hideInMenu: false,
     name: '任务管理',
     icon: <Icon icon={'taskManage'} />,
     routes: [
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMTaskModel',
+        // hideInMenu: false,
         path: '/crm/myTask',
         name: '我的任务',
       },
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMTaskApproveModel',
+        // hideInMenu: false,
         path: '/crm/approvalMangement',
         name: '审批管理',
       },
@@ -507,22 +506,22 @@ export const crmRoutes = [
   },
   {
     platform: 'crm',
-    // authKey: '',
-    hideInMenu: false,
+    authKey: 'CRMStatisticsModel',
+    // hideInMenu: false,
     name: '统计分析',
     icon: <Icon icon={'satisAnalyse'} />,
     routes: [
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMConversionRateModel',
+        // hideInMenu: false,
         path: '/crm/turnRate',
         name: '转化率',
       },
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMSaleDataModel',
+        // hideInMenu: false,
         path: '/crm/saleData',
         name: '销售数据',
       },
@@ -535,8 +534,8 @@ export const crmRoutes = [
       // },
       {
         platform: 'crm',
-        authKey: 'customerModel',
-        hideInMenu: false,
+        authKey: 'CRMSaleClueModel',
+        // hideInMenu: false,
         path: '/crm/saleClue',
         name: '销售线索',
       },
@@ -544,22 +543,29 @@ export const crmRoutes = [
   },
   {
     platform: 'crm',
-    // authKey: '',
-    hideInMenu: false,
+    authKey: 'CRMSaleUserManageModel',
+    // hideInMenu: false,
     name: '营销人员管理',
     icon: <Icon icon={'salesManage'} />,
     routes: [
       {
         platform: 'crm',
-        // authKey: '',
-        hideInMenu: false,
+        authKey: 'CRMSaleUserModel',
+        // hideInMenu: false,
         path: '/crm/salemanMangement',
         name: '营销人员管理',
       },
       {
         platform: 'crm',
-        // authKey: '',
-        hideInMenu: false,
+        authKey: 'CRMClockInModel',
+        // hideInMenu: false,
+        path: '/crm/signRecord',
+        name: '打卡记录',
+      },
+      {
+        platform: 'crm',
+        authKey: 'CRMCustomerMessageModel',
+        // hideInMenu: false,
         path: '/crm/clientInfoNotify',
         name: '客户信息通知',
       },
@@ -820,15 +826,15 @@ export const platformSelectConfig = [
 ];
 
 // if (isDev) {
-if (window.location.protocol === 'http:') {
-  platformSelectConfig.push({
-    value: CRM,
-    label: 'CRM平台',
-    name: 'CRM平台',
-    authKey: 'businessPlatform',
-    routes: crmRoutes,
-  });
-}
+// if (window.location.protocol === 'http:') {
+platformSelectConfig.push({
+  value: CRM,
+  label: 'CRM平台',
+  name: 'CRM平台',
+  authKey: 'CRMPlatform',
+  routes: crmRoutes,
+});
+// }
 
 export const bussniessTabConfig = [
   {

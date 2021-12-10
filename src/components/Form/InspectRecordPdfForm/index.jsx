@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './style.less';
 import {
   Form,
   Input,
@@ -127,9 +126,6 @@ const inputBefore = (
 );
 
 const InspectRecordForm = props => {
-  console.log(' InspectRecordForm ： ', props, props.init);
-  const { formBtn, init, ...rest } = props;
-
   const {
     // power_data = [{}],
     file = [],

@@ -165,6 +165,17 @@ const HeaderMenuLeft = React.memo(props => {
 
 const Headers = props => {
   console.log(' HeadersHeaders ： ', props); //
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setVisible(false);
+    }, 5000);
+  }, []);
+
+  const handleHoverChange = visible => {
+    setVisible(visible);
+  };
+
   const onMenuClick = event => {
     const { key } = event;
     console.log(' onMenuClick ： ', key); //
@@ -322,8 +333,15 @@ const Headers = props => {
       ></HeaderMenuLeft>
 
       <div className="right">
-        提示：
-        <Popover content={<OperationTips></OperationTips>} title="操作提示">
+        操作提示：
+        <Popover
+          content={<OperationTips></OperationTips>}
+          title="操作提示"
+          visible={visible}
+          // visible={true}
+          trigger="hover"
+          onVisibleChange={handleHoverChange}
+        >
           <InfoCircleOutlined />
         </Popover>
         <div className={`headerItem`}>视图：{scale}%</div>

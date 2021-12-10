@@ -1,9 +1,7 @@
 import React from 'react';
-import './style.less';
 import { SearchForm } from '@/common/SmartForm';
 
 const AssetsSearchForm = props => {
-  console.log(' AssetsSearchForm ： ', props);
   const configs = [
     {
       itemProps: {

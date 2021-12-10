@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import SmartFormModal from '@/common/SmartFormModal';
@@ -180,12 +179,6 @@ class MonitorManage extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
-      console.log(
-        '  对吗  res.phone_list.length ',
-        res.phone_list,
-        !!res.phone_list?.length,
-        res.phone_list?.length,
-      );
       let isLength11 = false;
       let isNumber = false;
       if (!!res.phone_list?.length) {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import useHttp from '@/hooks/useHttp';
 import { getRelatived } from '@/services/client';

@@ -8,11 +8,11 @@ export const formatSelectList2 = (
 ) => {
   console.log(' formatSelectList2 res ： ', data, labelKey, idKey);
 };
-const callFn = (...args) => {
-  console.log(' formatSelectList2 callFn   ', args);
-  formatSelectList2([111], ...args);
-};
-callFn('aa', 'bb');
+// const callFn = (...args) => {
+//   console.log(' formatSelectList2 callFn   ', args);
+//   formatSelectList2([111], ...args);
+// };
+// callFn('aa', 'bb');
 
 const useHttp = (http = () => {}, configs = {}) => {
   const {
@@ -35,7 +35,7 @@ const useHttp = (http = () => {}, configs = {}) => {
 
   // 数据结果处理函数
   const handleRes = res => {
-    // setIsLoading(false);
+    setIsLoading(false);
     const attrRes = attr ? res[attr] : res; // 返回数结果值 是否使用 配置的属性值获取
     let datas = format ? format(attrRes, formatVal, formatKey) : attrRes;
 
@@ -67,8 +67,8 @@ const useHttp = (http = () => {}, configs = {}) => {
 
   // 挂载默认请求钩子
   useEffect(() => {
-    console.log(' useHttp useEffect  ： ', params);
     if (!noMountFetch && ifReq) {
+      setIsLoading(true);
       const asyncFn = async () => handleRes(await http());
       asyncFn();
     }

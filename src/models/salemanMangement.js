@@ -14,7 +14,7 @@ const initialState = {
   itemDetail: {},
   searchInfo: {},
 
-  importUserList: [],  
+  importUserList: [],
 };
 
 const model = {
@@ -38,7 +38,7 @@ const model = {
         isShowModal: false,
         itemDetail: {},
 
-        importUserList: [],  
+        importUserList: [],
       };
     },
     getList(state, { payload, type }) {
@@ -51,7 +51,7 @@ const model = {
       };
     },
     getItem(state, { payload, type }) {
-      const { roles, tags, account, role, join_date, } = payload.bean;
+      const { roles, tags, account, role, join_date } = payload.bean;
       console.log(' getItemgetItem ： ', payload, account);
       const role_ids = role[0]?.role_id ? `${role[0]?.role_id}` : null;
       const tag_ids = tags[0]?.tag_id ? `${tags[0]?.tag_id}` : null;
@@ -73,26 +73,23 @@ const model = {
     },
     importUser(state, { payload, type }) {
       console.log(' importUser 修改  ： ', state, payload, type);
-      const {importUserList,  } = state// 
-      const res = importUserList.find((v) => v.id === payload.record.id)
-      console.log(' res  state.find v ： ', res,   )
-      const data = res ? importUserList : [
-        payload.record,
-        ...importUserList,
-      ]
+      const { importUserList } = state; //
+      const res = importUserList.find(v => v.id === payload.record.id);
+      console.log(' res  state.find v ： ', res);
+      const data = res ? importUserList : [payload.record, ...importUserList];
       return {
         ...state,
-        importUserList: data,  
+        importUserList: data,
       };
     },
     removeUser(state, { payload, type }) {
       console.log(' removeUser 修改  ： ', state, payload, type);
-      const {importUserList,  } = state// 
-      const res = importUserList.filter((v) => v.id !== payload.record.id)
-      console.log(' res  state.filter v ： ', res,   )
+      const { importUserList } = state; //
+      const res = importUserList.filter(v => v.id !== payload.record.id);
+      console.log(' res  state.filter v ： ', res);
       return {
         ...state,
-        importUserList: res,  
+        importUserList: res,
       };
     },
   },
@@ -130,10 +127,14 @@ const model = {
       const res = yield call(services.removeItem, payload);
       yield put({ type: 'getListAsync' });
     },
-    
+
     *importUserAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.importUser, payload);
       yield put({ type: 'getListAsync' });
+    },
+    *exportDataAsync({ payload, action, type }, { call, put }) {
+      const res = yield call(services.exportData, payload);
+      return res;
     },
   },
 };

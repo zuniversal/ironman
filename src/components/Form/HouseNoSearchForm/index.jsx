@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import {
   Form,
   Input,
@@ -22,7 +21,6 @@ import { formatConfig, reportRadioOp } from '@/utils';
 import ProvinceForm, { config } from '@/components/Form/ProvinceForm';
 
 const HouseNoSearchForm = props => {
-  console.log(' HouseNoSearchForm ： ', props);
   const [form] = Form.useForm();
 
   const configs = [
@@ -92,19 +90,7 @@ const HouseNoSearchForm = props => {
     // },
   ];
 
-  const { formBtn, ...rest } = props;
-
-  return (
-    <div className={'fsb HouseNoSearchForm '}>
-      <SearchForm
-        config={configs}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn && formBtn({ form })} */}
-    </div>
-  );
+  return <SearchForm config={configs} {...props}></SearchForm>;
 };
 
 HouseNoSearchForm.defaultProps = {};

@@ -197,7 +197,7 @@ export const getWidget = props => {
       isDisabledAll: props.isDisabledAll,
       comProps: comProps,
     }),
-    CheckboxItem: <Checkbox {...comProps} />,
+    CheckboxItem: <Checkbox disabled={props.isDisabledAll} {...comProps} />,
     Input: <Input disabled={props.isDisabledAll} {...comProps} />,
     Select: (
       <Select {...selectProps} disabled={props.isDisabledAll}>
@@ -1410,6 +1410,7 @@ const ClientClueForm = props => {
         contacts: [{}],
         ele_user: [{}],
         ...props.init,
+        level: props.init?.level ?? clientClueLevelConfig[0].value,
       }}
       formLayouts={formLayouts}
       flexRow={2}

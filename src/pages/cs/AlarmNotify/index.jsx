@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import AlarmNotifyForm from '@/components/Form/AlarmNotifyForm';
 import AlarmNotifySearchForm from '@/components/Form/AlarmNotifySearchForm';

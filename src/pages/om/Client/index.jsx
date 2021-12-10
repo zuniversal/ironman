@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import ClientForm from '@/components/Form/ClientForm';
 import ClientSearchForm from '@/components/Form/ClientSearchForm';
@@ -773,18 +772,10 @@ class Client extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' Client 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    );
-
     // this.getList()
-
     // this.props.getTagsAsync();
     // this.props.getUserAsync();
     // this.props.getOrganizeAsync({ page_size: 1000 });
-
     // this.props.getDistrictAsync({});
     // this.props.getGeoAsync({ address: '上海浦东' });
     // this.props.getRegionAsync({

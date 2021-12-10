@@ -1,6 +1,4 @@
 import React from 'react';
-import './style.less';
-
 import SmartForm from '@/common/SmartForm';
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
 
@@ -10,8 +8,6 @@ const choiceRadios = [
 ];
 
 const KnowledgeCateForm = props => {
-  console.log(' KnowledgeCateForm ： ', props);
-
   const config = [
     {
       itemProps: {
@@ -29,13 +25,7 @@ const KnowledgeCateForm = props => {
     },
   ];
 
-  return (
-    <div className={' KnowledgeCateForm '}>
-      <SmartForm config={config} {...props}></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 KnowledgeCateForm.defaultProps = {};

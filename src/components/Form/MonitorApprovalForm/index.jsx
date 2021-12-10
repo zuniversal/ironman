@@ -13,6 +13,7 @@ import {
 import { getPowerInfo, getElectricOutlineList } from '@/services/powerStation';
 import { getTransformer } from '@/services/assets';
 import SmartForm from '@/common/SmartForm';
+import SmartImg from '@/common/SmartImg';
 import {
   monitorDeviceStatusConfig,
   networkTypeConfig,
@@ -326,6 +327,163 @@ const MonitorApprovalForm = props => {
     });
   };
 
+  const imgConfig = [
+    <UploadCom
+      label={'设备标签图片'}
+      key={'device_img'}
+      action={`${url}?imei=${imei}&file_id=device_img`}
+      name={'device_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+    ></UploadCom>,
+    <UploadCom
+      label={'电表图片'}
+      key={'meter_img'}
+      action={`${url}?imei=${imei}&file_id=meter_img`}
+      name={'meter_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+    ></UploadCom>,
+    <UploadCom
+      label={'变压器铭牌'}
+      key={'trans_nameplate_img'}
+      action={`${url}?imei=${imei}&file_id=trans_nameplate_img`}
+      name={'trans_nameplate_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+    ></UploadCom>,
+    <UploadCom
+      label={'安装完成整体照'}
+      key={'complete_img'}
+      action={`${url}?imei=${imei}&file_id=complete_img`}
+      name={'complete_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+    ></UploadCom>,
+    <UploadCom
+      label={'监控数据截图'}
+      key={'data_img'}
+      action={`${url}?imei=${imei}&file_id=data_img`}
+      name={'data_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+    ></UploadCom>,
+    <UploadCom
+      label={'其他'}
+      key={'other_img'}
+      action={`${url}?imei=${imei}&file_id=other_img`}
+      name={'other_img'}
+      extra={null}
+      uploadProps={{
+        disabled: props.isDisabledAll || props.action === 'detail',
+        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
+      }}
+      init={props.init}
+      formAction={props.action}
+      noRule
+    ></UploadCom>,
+  ];
+
+  const smartImgConfig = [
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.device_img} />
+        </>
+      ),
+      itemProps: {
+        label: '设备标签图片',
+        name: 'device_img',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.meter_img} />
+        </>
+      ),
+      itemProps: {
+        label: '电表图片',
+        name: 'meter_img',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.trans_nameplate_img} />
+        </>
+      ),
+      itemProps: {
+        label: '变压器铭牌',
+        name: 'trans_nameplate_img',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.complete_img} />
+        </>
+      ),
+      itemProps: {
+        label: '安装完成整体照',
+        name: 'complete_img',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.data_img} />
+        </>
+      ),
+      itemProps: {
+        label: '监控数据截图',
+        name: 'data_img',
+      },
+    },
+    {
+      formType: 'CustomCom',
+      CustomCom: (
+        <>
+          <SmartImg src={props.init.other_img} />
+        </>
+      ),
+      itemProps: {
+        label: '其他',
+        name: 'other_img',
+      },
+    },
+  ];
+
   const config = [
     {
       noRule: true,
@@ -619,86 +777,7 @@ const MonitorApprovalForm = props => {
         name: 'updated_time',
       },
     },
-
-    <UploadCom
-      label={'设备标签图片'}
-      key={'device_img'}
-      action={`${url}?imei=${imei}&file_id=device_img`}
-      name={'device_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-    ></UploadCom>,
-    <UploadCom
-      label={'电表图片'}
-      key={'meter_img'}
-      action={`${url}?imei=${imei}&file_id=meter_img`}
-      name={'meter_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-    ></UploadCom>,
-    <UploadCom
-      label={'变压器铭牌'}
-      key={'trans_nameplate_img'}
-      action={`${url}?imei=${imei}&file_id=trans_nameplate_img`}
-      name={'trans_nameplate_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-    ></UploadCom>,
-    <UploadCom
-      label={'安装完成整体照'}
-      key={'complete_img'}
-      action={`${url}?imei=${imei}&file_id=complete_img`}
-      name={'complete_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-    ></UploadCom>,
-    <UploadCom
-      label={'监控数据截图'}
-      key={'data_img'}
-      action={`${url}?imei=${imei}&file_id=data_img`}
-      name={'data_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-    ></UploadCom>,
-    <UploadCom
-      label={'其他'}
-      key={'other_img'}
-      action={`${url}?imei=${imei}&file_id=other_img`}
-      name={'other_img'}
-      extra={null}
-      uploadProps={{
-        disabled: props.isDisabledAll || props.action === 'detail',
-        accept: 'image/png,image/jpeg,image/pdf,application/pdf',
-      }}
-      init={props.init}
-      formAction={props.action}
-      noRule
-    ></UploadCom>,
+    ...(props.action === 'detail' ? smartImgConfig : imgConfig),
   ];
 
   // const userInfo = getItem('userInfo');

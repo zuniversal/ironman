@@ -1,12 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const AppraiseSearchForm = props => {
-  console.log(' AppraiseSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'DatePicker',
@@ -26,18 +22,7 @@ const AppraiseSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={'fsb AppraiseSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 AppraiseSearchForm.defaultProps = {};

@@ -1,11 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 
 const AssessmentForm = props => {
-  console.log(' AssessmentForm ： ', props);
-
   const config = [
     {
       formType: 'Select',
@@ -28,13 +25,7 @@ const AssessmentForm = props => {
     },
   ];
 
-  return (
-    <div className={' AssessmentForm '}>
-      <SmartForm config={config} {...props}></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 AssessmentForm.defaultProps = {};

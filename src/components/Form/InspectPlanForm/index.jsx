@@ -3,9 +3,6 @@ import './style.less';
 import SmartForm from '@/common/SmartForm';
 
 const InspectPlanForm = props => {
-  console.log(' InspectPlanForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'rowText',
@@ -155,13 +152,7 @@ const InspectPlanForm = props => {
     },
   ];
 
-  return (
-    <div className={' InspectPlanForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 InspectPlanForm.defaultProps = {};

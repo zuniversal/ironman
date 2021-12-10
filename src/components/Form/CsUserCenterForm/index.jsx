@@ -33,7 +33,6 @@ const formLayouts = {
 };
 
 const CsUserCenterForm = props => {
-  console.log(' CsUserCenterForm ： ', props);
   const [form] = Form.useForm();
   const [noRule, setNoRule] = useState(false);
 

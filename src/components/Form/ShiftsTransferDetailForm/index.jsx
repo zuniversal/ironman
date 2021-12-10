@@ -117,8 +117,6 @@ const transferRadios = transferDetailConfig.map((v, i) => ({
 }));
 
 const ShiftsTransferDetailForm = props => {
-  console.log(' ShiftsTransferDetailForm ： ', props);
-
   const { getCapture, showFormModal } = props;
 
   const config = [

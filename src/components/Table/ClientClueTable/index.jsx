@@ -7,6 +7,8 @@ const ClientClueTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      sorter: true,
+      sortKey: 'id',
     },
     {
       title: '客户名称',
@@ -21,10 +23,14 @@ const ClientClueTable = props => {
       title: '客户等级',
       dataIndex: 'level',
       dataMap: clientClueLevelMap,
+      sorter: true,
+      sortKey: 'level',
     },
     {
       title: '户号数',
       dataIndex: 'ele_user_count',
+      sorter: true,
+      sortKey: 'ele_user_count',
     },
     // {
     //   title: '客户类型',
@@ -37,6 +43,8 @@ const ClientClueTable = props => {
     {
       title: '客户地址',
       dataIndex: 'address',
+      sorter: true,
+      sortKey: 'address',
     },
     {
       title: '提交人',
@@ -46,6 +54,8 @@ const ClientClueTable = props => {
       title: '状态',
       dataIndex: 'status',
       dataMap: clientClueStatusMap,
+      sorter: true,
+      sortKey: 'status',
     },
   ];
 

@@ -41,22 +41,36 @@ const Layouts = props => {
     userMsg,
     platform,
     isNotice,
+    authInfo,
   } = props;
   const path = location.pathname;
   const [pathname, setPathname] = useState(path);
-
   console.log(
-    ' %c Layouts 组件 this.state, this.props ： ',
+    ' %c Layouts 组件 props ： ',
     `color: #333; font-weight: bold`,
     props,
   ); //
-  const onPlatformChange = platform => {
-    console.log(' onPlatformChange   ,   ： ', platform);
+
+  const onPlatformChange = (platform, item) => {
+    console.log(
+      ' onPlatform, itemChange   ,   ： ',
+      platform,
+      item,
+      props,
+      authInfo,
+      platformSelectConfig,
+    );
+    const { authKey } = platformSelectConfig.find(v => v.value === platform);
+    console.log(' onPlatform authKey ： ', authKey, authInfo[authKey]); //
+    // if (authInfo[authKey].module) {
     props.dispatch({
       type: 'user/onPlatformChange',
       payload: { platform },
     });
     tips('平台切换成功！');
+    // } else {
+    //   tips('没有该平台的相关权限！', 2);
+    // }
   };
 
   const menuHeaderRender = () => (
@@ -214,6 +228,7 @@ const mapStateToProps = ({ loading, user }) => ({
   getRoutes: user.getRoutes,
   userMsg: user.userMsg,
   isNotice: user.isNotice,
+  authInfo: user.authInfo,
 });
 
 export default connect(mapStateToProps)(Layouts);

@@ -1,6 +1,4 @@
 import React from 'react';
-import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 import { monitorApprovalMap, APPROVAL_PASS, WAIT_APPROVAL } from '@/configs';
 import { formatSelectList, arrMapObj } from '@/utils';

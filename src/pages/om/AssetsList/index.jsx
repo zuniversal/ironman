@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import AssetsListSearchForm from '@/components/Form/AssetsListSearchForm';
 import AssetsListTable from '@/components/Table/AssetsListTable';

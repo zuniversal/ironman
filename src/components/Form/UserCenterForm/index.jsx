@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import './style.less';
-import {
-  Button,
-  Form,
-} from 'antd';
+import { Button, Form } from 'antd';
 import SmartForm from '@/common/SmartForm';
 import UploadCom from '@/components/Widgets/UploadCom';
-import { genderRadios,  } from '@/configs';
+import { genderRadios } from '@/configs';
 
 const formLayouts = {
   labelCol: {
@@ -18,7 +15,6 @@ const formLayouts = {
 };
 
 export const UserPasswordForm = props => {
-  console.log(' UserPasswordForm ： ', props);
   const [form] = Form.useForm();
 
   const config = [
@@ -61,9 +57,7 @@ export const UserPasswordForm = props => {
   );
 };
 
-
 const UserCenterForm = props => {
-  console.log(' UserCenterForm ： ', props);
   const [form] = Form.useForm();
 
   const config = [
@@ -126,9 +120,7 @@ const UserCenterForm = props => {
     ></UploadCom>,
   ];
 
-  const { 
-    gender, 
-  } = props.init; //
+  const { gender } = props.init; //
 
   return (
     <SmartForm

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import SmartTable from '@/common/SmartTable';
 import { monitorDeviceStatusMap, deviceFrequencyMap } from '@/configs';
 import * as monitorManageServices from '@/services/monitorManage';
-import './style.less';
 import { tips } from '@/utils';
 
 const ElectricInfoTable = props => {

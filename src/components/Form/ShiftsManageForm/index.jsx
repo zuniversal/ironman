@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 import { regoins, onDutyTypeConfig } from '@/configs';
 import { formatConfig } from '@/utils';
 
 const ShiftsManageForm = props => {
-  console.log(' ShiftsManageForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -90,19 +86,15 @@ const ShiftsManageForm = props => {
   ];
 
   return (
-    <div className={' ShiftsManageForm '}>
-      <SmartForm
-        config={config}
-        isDisabledAll={!['add', 'edit'].includes(props.action)}
-        {...props}
-        init={{
-          member: [],
-          ...props.init,
-        }}
-      ></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
+    <SmartForm
+      config={config}
+      isDisabledAll={!['add', 'edit'].includes(props.action)}
+      {...props}
+      init={{
+        member: [],
+        ...props.init,
+      }}
+    ></SmartForm>
   );
 };
 

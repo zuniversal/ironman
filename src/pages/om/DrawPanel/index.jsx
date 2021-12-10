@@ -135,11 +135,6 @@ class DrawPanel extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' DrawPanel 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    );
     const { powerstation_id, number } = this.props.location.query;
     if (powerstation_id) {
       this.props.getCircuitItemAsync({

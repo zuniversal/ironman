@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import { dayHours } from '@/configs';
 import useHttp from '@/hooks/useHttp';
 import { formatSelectList, filterObjSame } from '@/utils';
-import { getRelatived,  } from '@/services/client';
+import { getRelatived } from '@/services/client';
 import { getList as getPowerStationList } from '@/services/powerStation';
 
 const InspectMissionForm = props => {
-  console.log(' InspectMissionForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const [stationList, setStationList] = useState([]);
-  
+
   const commonParams = {
     init: [],
     format: res => formatSelectList(res, 'name'),
@@ -21,36 +17,40 @@ const InspectMissionForm = props => {
     () => getRelatived({ get_all: '1' }),
     {
       ...commonParams,
-      withArr: props.action !== 'add'
-        ? [
-            {
-              value: props.init.customer_id,
-              label: props.init.customer_name,
-            },
-          ]
-        : [],
+      withArr:
+        props.action !== 'add'
+          ? [
+              {
+                value: props.init.customer_id,
+                label: props.init.customer_name,
+              },
+            ]
+          : [],
     },
   );
-  const {
-    data: powerStationList,
-    req: getPowerStationAsync,
-  } = useHttp(getPowerStationList, {
-    ...commonParams,
-    withArr: props.action !== 'add'
-      ? [
-          // {
-          //   value: props.init.station_id,
-          //   label: props.init.station_name,
-          // },
-        ]
-      : [],
-  });
+  const { data: powerStationList, req: getPowerStationAsync } = useHttp(
+    getPowerStationList,
+    {
+      ...commonParams,
+      withArr:
+        props.action !== 'add'
+          ? [
+              // {
+              //   value: props.init.station_id,
+              //   label: props.init.station_name,
+              // },
+            ]
+          : [],
+    },
+  );
   console.log(' powerStationList ： ', powerStationList);
 
   const onClientChange = (params, rest) => {
     console.log(' onClientChange  ： ', params, rest);
     const res = clientList.find(v => v.value == params);
-    const formatRes = formatSelectList(res.electricity_users.map(v => v.stations[0]));
+    const formatRes = formatSelectList(
+      res.electricity_users.map(v => v.stations[0]),
+    );
     console.log(' res  clientList.filter v ： ', res, formatRes);
     props.propsForm.setFieldsValue({
       station_id: null,
@@ -61,7 +61,7 @@ const InspectMissionForm = props => {
   const onPowerStationChange = (params, rest) => {
     console.log(' onPowerStationChange  ： ', params, rest);
     const res = powerStationList.find(v => v.id == params)?.customer;
-    console.log(' res  onPowerStationChange.filter v ： ', res, );
+    console.log(' res  onPowerStationChange.filter v ： ', res);
     // if (res && stationList.length == 0) {
     if (res) {
       props.propsForm.setFieldsValue({
@@ -139,11 +139,7 @@ const InspectMissionForm = props => {
     },
   ];
 
-  return (
-    <div className={' InspectMissionForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 InspectMissionForm.defaultProps = {};

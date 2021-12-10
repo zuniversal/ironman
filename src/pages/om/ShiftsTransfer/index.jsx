@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import ShiftsTransferTable from '@/components/Table/ShiftsTransferTable';
 import ShiftsTransferForm from '@/components/Form/ShiftsTransferForm';

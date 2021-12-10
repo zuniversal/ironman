@@ -47,7 +47,7 @@ const model = {
   reducers: {
     showFormModal(state, { payload, type }) {
       console.log(' showFormModal 修改  ： ', state, payload, type);
-      let itemDetail = {}
+      let itemDetail = {};
       if (payload.action === 'changePasswordAsync') {
         itemDetail = payload.record;
       }
@@ -72,10 +72,16 @@ const model = {
         dataList: payload.list.map(v => ({
           ...v,
           // role: v.roles.map(v => v.name),
-          role: v.role.map(v => v.name),
+          role: (!Object.keys(payload.searchInfo).length
+            ? v.role
+            : v.roles
+          )?.map(v => v.name),
           tag: v.tags.map(v => v.name),
           // organization: v.organizations.map(v => v.name),
-          organization: v.organization.map(v => v.name),
+          organization: (!Object.keys(payload.searchInfo).length
+            ? v.organization
+            : v.organizations
+          )?.map(v => v.name),
         })),
         count: payload.rest.count,
         isShowModal: false,
@@ -83,7 +89,7 @@ const model = {
       };
     },
     getItem(state, { payload, type }) {
-      const { roles, tags, account, role, join_date, } = payload.bean;
+      const { roles, tags, account, role, join_date } = payload.bean;
       console.log(' getItemgetItem ： ', payload, account);
       // const role_ids = roles[0]?.role_id ? `${roles[0]?.role_id}` : null;
       const role_ids = role[0]?.role_id ? `${role[0]?.role_id}` : null;

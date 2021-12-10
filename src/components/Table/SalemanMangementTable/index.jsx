@@ -1,6 +1,8 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
 import { userStatusMap } from '@/configs';
+import { CLIENT_LIST } from '@/constants';
+import { history } from 'umi';
 
 const SalemanMangementTable = props => {
   const columns = [
@@ -46,13 +48,20 @@ const SalemanMangementTable = props => {
 
   const extra = (text, record, index, props) => (
     <>
-      <a
+      {/* <a
         onClick={() =>
           props.showFormModal({
             action: 'responsibleClientAsync',
             d_id: record.id,
           })
         }
+      >
+        查看客户
+      </a> */}
+      <a
+        onClick={() => {
+          history.push(`${CLIENT_LIST}saleId=${record.id}`);
+        }}
       >
         查看客户
       </a>
@@ -69,7 +78,14 @@ const SalemanMangementTable = props => {
     </>
   );
 
-  return <SmartTable columns={columns} extra={extra} rowSelection={null} {...props}></SmartTable>;
+  return (
+    <SmartTable
+      columns={columns}
+      extra={extra}
+      // rowSelection={null}
+      {...props}
+    ></SmartTable>
+  );
 };
 
 export default SalemanMangementTable;

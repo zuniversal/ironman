@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './style.less';
 import { tips } from '@/utils';
 
 const usePrintPdf = props => {

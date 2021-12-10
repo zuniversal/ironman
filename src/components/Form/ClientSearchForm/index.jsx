@@ -23,14 +23,8 @@ import SmartForm, { SearchForm } from '@/common/SmartForm';
 import ProvinceForm, { config } from '@/components/Form/ProvinceForm';
 import { regoins, customerTypeConfig } from '@/configs';
 
-console.log(' config ： ', config);
-
 const ClientSearchForm = props => {
-  console.log(' ClientSearchForm ： ', props);
-
   const [form] = Form.useForm();
-
-  const { formBtn, ...rest } = props;
 
   const configs = [
     // ...config(props),
@@ -87,16 +81,7 @@ const ClientSearchForm = props => {
 
   return (
     <div className="clientSearchForm">
-      <SearchForm
-        config={configs}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn && formBtn(
-        {form,  }
-      )} */}
+      <SearchForm config={configs} noRuleAll {...props}></SearchForm>
     </div>
   );
 };

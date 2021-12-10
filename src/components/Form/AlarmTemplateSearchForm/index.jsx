@@ -1,14 +1,10 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { regoins } from '@/configs';
 import { formatConfig } from '@/utils';
 
 const AlarmTemplateForm = props => {
-  console.log(' AlarmTemplateForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'rowText',
@@ -133,13 +129,7 @@ const AlarmTemplateForm = props => {
     },
   ];
 
-  return (
-    <div className={' AlarmTemplateForm '}>
-      <SearchForm config={config} {...rest}></SearchForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 AlarmTemplateForm.defaultProps = {};

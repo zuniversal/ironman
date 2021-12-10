@@ -1,14 +1,9 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import { regoins } from '@/configs';
 import { formatConfig, reportRadioOp } from '@/utils';
 
 const ClientReportForm = props => {
-  console.log(' ClientReportForm ： ', props);
-
-  const { getCapture } = props;
-
   const config = [
     {
       itemProps: {

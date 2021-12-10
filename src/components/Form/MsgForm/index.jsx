@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import './style.less';
-
 import SmartForm from '@/common/SmartForm';
 import {
   // notifyTypeConfig,
@@ -81,7 +79,7 @@ const choiceRadios = [
 
 const MsgForm = props => {
   console.log(' MsgForm ： ', props);
-  const { formBtn, organizeList, flatOrganizeList, ...rest } = props;
+  const { organizeList, flatOrganizeList } = props;
   // const [ treeData, setTreeData ] = useState(expandLoadTreeList)
   const [treeData, setTreeData] = useState(organizeList);
   // const [treeData, setTreeData] = useState(flatOrganizeList);
@@ -279,18 +277,14 @@ const MsgForm = props => {
   ];
 
   return (
-    <div className={' MsgForm '}>
-      <SmartForm
-        config={config}
-        {...rest}
-        init={{
-          type: msgType,
-          ...props.init,
-        }}
-      ></SmartForm>
-
-      {formBtn}
-    </div>
+    <SmartForm
+      config={config}
+      {...props}
+      init={{
+        type: msgType,
+        ...props.init,
+      }}
+    ></SmartForm>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm';
 import OperateRecordTable from '@/components/Table/OperateRecordTable';

@@ -145,9 +145,8 @@ export const getCountDays = (month = nowMonth, year = nowYear) =>
 // export const getMonthDays = ({month, year, isPad}) =>
 //   Array.from({ length: getCountDays(month, year) }, (_, index) => isPad ? `${index + 1}`.padStart(2, '0') : `${index + 1}`);
 export const getMonthDays = (month, year) =>
-  Array.from(
-    { length: getCountDays(month, year) },
-    (_, index) => `${index + 1}`,
+  Array.from({ length: getCountDays(month, year) }, (_, index) =>
+    `${index + 1}`.padStart(2, '0'),
   );
 export const formatMonthDay = (data, month = nowMonth, year = nowYear) =>
   data.map(v => `${year}-${month}-${v}`);
@@ -469,7 +468,6 @@ export const createObj = (length = 6) => {
 };
 
 export const mockTbData = (params = {}) => {
-  console.log(' paramsparams ： ', params);
   const mockDataSource = new Array(20).fill(0);
   const { columns = mockDataSource } = params;
   // Array.from({ length: end }, (_, index) => index); // undefined 0
@@ -799,6 +797,16 @@ export const format2Null = (data = {}, keys = []) => {
   return formatObj;
 };
 
+export const format2Str = (data = {}, keys = []) => {
+  const formatObj = {
+    ...data,
+  };
+  keys.forEach(
+    k => (formatObj[k] = data[k] != undefined ? `${data[k]}` : null),
+  );
+  return formatObj;
+};
+
 export const num2Str = (data = {}, keys = []) => {
   const formatObj = {
     ...data,
@@ -826,7 +834,7 @@ export const formatDuring = second => {
   return days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分钟';
 };
 
-export const toFixed = (num, decimal = 2) => {
+export const toFixed = (num = '', decimal = 2) => {
   num = num.toString();
   let index = num.indexOf('.');
   if (index !== -1) {

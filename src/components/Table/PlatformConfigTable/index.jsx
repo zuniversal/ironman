@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartTable from '@/common/SmartTable';
 import { cameraSystemMap } from '@/configs';
 

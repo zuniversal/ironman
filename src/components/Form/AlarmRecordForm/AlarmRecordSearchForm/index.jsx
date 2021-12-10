@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { alarmRecordTypeConfig } from '@/configs';

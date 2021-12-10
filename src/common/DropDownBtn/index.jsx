@@ -1,28 +1,7 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './style.less';
-import {
-  Table,
-  Icon,
-  notification,
-  Modal,
-  Button,
-  Tag,
-  Form,
-  Input,
-  Row,
-  Col,
-  Menu,
-  Dropdown,
-} from 'antd';
+import { Button, Menu, Dropdown } from 'antd';
 import { DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { BASE_URL } from '@/constants';
 

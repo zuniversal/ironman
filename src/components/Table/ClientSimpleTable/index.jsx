@@ -8,7 +8,7 @@ const ClientSimpleTable = props => {
     {
       noCutText: true,
       // width: 400,
-      title: '客户',
+      title: '客户 (点击客户显示对应客户资产)',
       dataIndex: 'name',
       detailFn: record =>
         props.getAssetListAsync({

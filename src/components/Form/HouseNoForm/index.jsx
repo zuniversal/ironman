@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import HouseNoFormTable from '@/components/Table/HouseNoFormTable';
 import {
@@ -9,7 +8,6 @@ import {
 } from '@/configs';
 
 const HouseNoForm = props => {
-  console.log(' HouseNoForm ： ', props, config);
   const { action } = props;
 
   const capacityConfig = [
@@ -199,15 +197,13 @@ const HouseNoForm = props => {
   // }
 
   return (
-    <div className={''}>
-      <SmartForm
-        config={config}
-        // config={configs}
+    <SmartForm
+      config={config}
+      // config={configs}
 
-        isDisabledAll={action === 'detail'}
-        {...props}
-      ></SmartForm>
-    </div>
+      isDisabledAll={action === 'detail'}
+      {...props}
+    ></SmartForm>
   );
 };
 

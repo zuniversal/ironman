@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import './style.less';
 import SmartEchart from '@/common/SmartEchart';
 import { gridZero } from '@/common/SmartEchart/common';
 

@@ -9,10 +9,14 @@ export const ClientListPrivateTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      sorter: true,
+      sortKey: 'id',
     },
     {
       title: '客户名称',
       dataIndex: 'name',
+      sorter: true,
+      sortKey: 'name',
       detailFn: record =>
         props.showItemAsync({
           action: 'clientDetailAsync',
@@ -23,6 +27,8 @@ export const ClientListPrivateTable = props => {
       title: '客户等级',
       dataIndex: 'level',
       dataMap: clientClueLevelMap,
+      sorter: true,
+      sortKey: 'level',
     },
     {
       title: '客户代表',
@@ -39,19 +45,21 @@ export const ClientListPrivateTable = props => {
         const pendingList = record.plan?.filter(v => v.status === 'pending');
         const completeList = record.plan?.filter(v => v.status === 'complete');
         // console.log(' res  record.plan.filter v ： ', pendingList, completeList,   )
+        const isHaveDetail = !!pendingList.length || !!completeList.length;
         return (
           <>
             <div
-              className={`linking`}
-              onClick={() =>
-                !!pendingList.length || !!completeList.length
+              className={isHaveDetail ? `linking` : ''}
+              onClick={() => {
+                console.log(' isHaveDetail ： ', isHaveDetail, record); //
+                isHaveDetail
                   ? props.getClientPlanAsync({
                       action: 'getClientPlanAsync',
                       d_id: record.id,
                       customer_id: record.id,
                     })
-                  : tips('没有计划详情！', 2)
-              }
+                  : tips('没有计划详情！', 2);
+              }}
             >
               (方案中)计划 {pendingList.length}、(已完成)计划{' '}
               {completeList.length}
@@ -175,15 +183,26 @@ export const ClientListPublicTable = props => {
     {
       title: 'id',
       dataIndex: 'id',
+      sorter: true,
+      sortKey: 'id',
     },
     {
       title: '客户名称',
       dataIndex: 'name',
+      sorter: true,
+      sortKey: 'name',
+      detailFn: record =>
+        props.showItemAsync({
+          action: 'clientDetailAsync',
+          d_id: record.customer_id,
+        }),
     },
     {
       title: '客户等级',
       dataIndex: 'level',
       dataMap: clientClueLevelMap,
+      sorter: true,
+      sortKey: 'level',
     },
     {
       title: '客户代表',
@@ -196,6 +215,8 @@ export const ClientListPublicTable = props => {
     {
       title: '客户地址',
       dataIndex: 'address',
+      sorter: true,
+      sortKey: 'level',
     },
   ];
 

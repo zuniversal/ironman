@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import PowerStationTable from '@/components/Table/PowerStationTable';
 import PowerStationForm from '@/components/Form/PowerStationForm';
@@ -371,6 +370,7 @@ class PowerStation extends PureComponent {
         const params = {
           ...record,
           ...res,
+          powerstation: itemDetail.id,
           // powerstation: itemDetail.id,
         };
         console.log(' params ： ', params); //
@@ -381,6 +381,7 @@ class PowerStation extends PureComponent {
         const params = {
           ...record,
           ...res,
+          powerstation: itemDetail.id,
           // powerstation: itemDetail.id,
         };
         console.log(' params ： ', params); //
@@ -443,12 +444,6 @@ class PowerStation extends PureComponent {
       init: this.props.record,
       ...this.props.extraData2,
     };
-    console.log(
-      ' %c renderModalContent2 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    ); //
     if (['addPowerNumberAsync', 'editPowerNumberAsync'].includes(action2)) {
       return <PowerNumberForm {...powerNumberFormProps}></PowerNumberForm>;
     }

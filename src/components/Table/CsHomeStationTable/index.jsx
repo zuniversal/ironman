@@ -7,9 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import './style.less';
-import { Tabs } from 'antd';
-
 import SmartTable from '@/common/SmartTable';
 import { missionsStatusMap } from '@/configs';
 

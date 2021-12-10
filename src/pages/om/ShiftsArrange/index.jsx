@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import ShiftsArrangeSearchForm from '@/components/Form/ShiftsArrangeSearchForm';
 import ShiftsArrangeCalendar from '@/components/Calendar/ShiftsArrangeCalendar';

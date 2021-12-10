@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button } from 'antd';
+import { MyTaskApproveForm } from '@/components/Form/MyTaskActionForm';
 import ClientForm from '@/components/Form/ClientForm';
 import PlanContractStep from '@/pages/crm/MyTask/PlanContractStep';
 import MyTaskSearchForm from '@/components/Form/MyTaskSearchForm';
@@ -19,6 +20,7 @@ const titleMap = {
   detail: `${TITLE}详情`,
   getPlanContract: `任务详情`,
   clientDetailAsync: `客户详情`,
+  approveTaskAsync: `任务审核`,
 };
 
 const detailFormMap = {
@@ -121,6 +123,14 @@ class ApprovalMangement extends PureComponent {
     try {
       const res = await form.validateFields();
       console.log('  res await 结果  ：', res, action);
+      if (action === 'approveTaskAsync') {
+        this.props.approveTaskAsync({
+          d_id: this.props.taskInfo.d_id,
+          result: true,
+          ...res,
+        });
+        return;
+      }
     } catch (error) {
       console.log(' error ： ', error);
     }
@@ -135,6 +145,9 @@ class ApprovalMangement extends PureComponent {
       formComProps.init = this.props.itemDetail;
     }
     console.log(' formComProps ： ', formComProps);
+    if (action === 'approveTaskAsync') {
+      return <MyTaskApproveForm {...formComProps}></MyTaskApproveForm>;
+    }
     if (action === 'getPlanContract') {
       formComProps.planStepInfo = this.props.planStepInfo;
       formComProps.planStepId = this.props.planStepId;
@@ -142,6 +155,11 @@ class ApprovalMangement extends PureComponent {
     }
     // return <ApprovalMangementForm {...formComProps}></ApprovalMangementForm>;
   };
+  get size() {
+    return ['approveTaskAsync'].some(v => v === this.props.action)
+      ? 'small'
+      : 'default';
+  }
   renderSmartFormModal = params => {
     return (
       <SmartFormModal
@@ -150,10 +168,39 @@ class ApprovalMangement extends PureComponent {
         titleMap={this.state.titleMap}
         onOk={this.onOk}
         onCancel={this.props.onCancel}
+        size={this.size}
+        extraBtn={this.renderExtraBtn}
       >
         {this.renderModalContent()}
       </SmartFormModal>
     );
+  };
+  confirmHandle = async (params, type) => {
+    console.log('    confirmHandle ： ', params, type, this.props);
+    const { action } = this.props;
+    const { form } = params;
+    try {
+      const res = await form.validateFields();
+      console.log('  res await 结果  ：', res, action);
+      this.props.approveTaskAsync({
+        d_id: this.props.taskInfo.d_id,
+        result: false,
+        ...res,
+      });
+    } catch (error) {
+      console.log(' error ： ', error);
+    }
+  };
+  renderExtraBtn = params => {
+    console.log('    renderExtraBtn ： ', params);
+    if (this.props.action === 'approveTaskAsync') {
+      return (
+        <Button key="reject" onClick={e => this.confirmHandle(params, 'onOk')}>
+          驳回
+        </Button>
+      );
+    }
+    return null;
   };
 
   render() {

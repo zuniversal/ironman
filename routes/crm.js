@@ -66,6 +66,12 @@ export default [
     title: '营销人员管理',
   },
   {
+    path: '/crm/signRecord',
+    authKey: '',
+    component: '@/pages/crm/SignRecord',
+    title: '打卡记录',
+  },
+  {
     path: '/crm/clientInfoNotify',
     authKey: '',
     component: '@/pages/crm/ClientInfoNotify',

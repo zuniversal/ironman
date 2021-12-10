@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import './style.less';
-import { Button, Spin, Row, Col, Divider, Progress } from 'antd';
+import { Button, Spin, Row, Col, Divider, Progress, Tooltip } from 'antd';
 import PageTitle from '@/components/Widgets/PageTitle';
 import TimeChoice from '@/components/Widgets/TimeChoice';
 import RingPieEchart from '@/components/Echarts/RingPieEchart';
@@ -81,24 +81,28 @@ class TurnRate extends PureComponent {
         value: '80',
         value: this.props.turnRateData.customerCluePercent,
         color: '#36C7EA',
+        title: this.props.turnRateData.customer_clue_number,
       },
       {
         label: '拜访客户数',
         value: '60',
         value: this.props.turnRateData.visitCustomerPercent,
         color: '#FCA149',
+        title: this.props.turnRateData.visit_customer_number,
       },
       {
         label: '提交方案数',
         value: '50',
         value: this.props.turnRateData.schemePercent,
         color: '#00B460',
+        title: this.props.turnRateData.scheme_number,
       },
       {
         label: '已签约',
         value: '30',
         value: this.props.turnRateData.contractPercent,
         color: '#F569CA',
+        title: this.props.turnRateData.contract_number,
       },
     ];
     return (
@@ -109,9 +113,9 @@ class TurnRate extends PureComponent {
               init={this.props.searchInfo}
               onFieldChange={this.onFieldChange}
             ></TurnRateSearchForm>
-            <TimeChoice
+            {/* <TimeChoice
               onOptionChange={this.onClientSignTrendChange}
-            ></TimeChoice>
+            ></TimeChoice> */}
           </div>
         </PageTitle>
         {turnRateBarConfig.map((v, i) => (
@@ -120,12 +124,14 @@ class TurnRate extends PureComponent {
               {v.label}
             </Col>
             <Col span={21}>
-              <Progress
-                percent={v.value}
-                strokeColor={v.color}
-                status="active"
-                width={80}
-              />
+              <Tooltip title={v.title}>
+                <Progress
+                  percent={v.value}
+                  strokeColor={v.color}
+                  status="active"
+                  width={80}
+                />
+              </Tooltip>
             </Col>
           </Row>
         ))}
@@ -188,6 +194,12 @@ class TurnRate extends PureComponent {
   }
 
   render() {
+    console.log(
+      ' %c turnRateBarConfig 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="turnRate">
         {this.renderRateBar()}

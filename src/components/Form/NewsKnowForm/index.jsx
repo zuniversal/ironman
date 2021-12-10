@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 import WeakDetailImg from '@/components/Widgets/WeakDetailImg';
@@ -12,8 +11,6 @@ const choiceRadios = [
 ];
 
 const NewsKnowForm = props => {
-  console.log(' NewsKnowForm ： ', props);
-
   const config = [
     {
       itemProps: {
@@ -89,13 +86,7 @@ const NewsKnowForm = props => {
     ></UploadCom>,
   ];
 
-  return (
-    <div className={' NewsKnowForm '}>
-      <SmartForm config={config} {...props}></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 NewsKnowForm.defaultProps = {};

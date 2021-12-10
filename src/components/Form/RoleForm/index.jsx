@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './style.less';
 import { Tabs, Tree } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 
@@ -94,7 +93,7 @@ const treeData = [
 // };
 
 const RoleForm = props => {
-  const { formBtn, init, permsData = [], ...rest } = props;
+  const { init, permsData = [] } = props;
   const { perms_codes = [] } = init;
   console.log(' RoleForm 1 ： ', props, perms_codes);
 

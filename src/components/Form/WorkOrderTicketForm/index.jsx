@@ -83,9 +83,6 @@ const radioData = [
 ];
 
 const WorkOrderTicketForm = props => {
-  console.log(' WorkOrderTicketForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const excuteConfig = [
     {
       itemProps: {
@@ -925,7 +922,7 @@ const WorkOrderTicketForm = props => {
       <SmartForm
         config={config}
         formLayouts={formLayouts}
-        {...rest}
+        {...props}
         init={{
           ...props.init,
           type: 0,
@@ -939,8 +936,6 @@ const WorkOrderTicketForm = props => {
           wt_child_ticket: [{}],
         }}
       ></SmartForm>
-
-      {/* {formBtn} */}
     </div>
   );
 };

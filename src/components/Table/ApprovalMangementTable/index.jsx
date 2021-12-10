@@ -1,8 +1,19 @@
 import React from 'react';
 import SmartTable from '@/common/SmartTable';
 import { myTaskTypeMap, mytaskTabMap } from '@/configs';
+import { connect } from 'umi';
+
+const mapStateToProps = ({ user }) => ({ user });
 
 const ApprovalMangementTable = props => {
+  const { approve } = props.user.authInfo.CRMTaskModel;
+  console.log(
+    ' %c ApprovalMangementTable 组件 props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+    approve,
+  ); //
+
   const columns = [
     {
       title: '公司名称',
@@ -68,6 +79,20 @@ const ApprovalMangementTable = props => {
       >
         查看
       </a>
+      <a
+        disabled={!approve}
+        onClick={() => {
+          approve &&
+            props.showFormModal({
+              action: 'approveTaskAsync',
+              taskInfo: {
+                d_id: record.id,
+              },
+            });
+        }}
+      >
+        审批
+      </a>
     </>
   );
 
@@ -82,4 +107,4 @@ const ApprovalMangementTable = props => {
   );
 };
 
-export default ApprovalMangementTable;
+export default connect(mapStateToProps)(ApprovalMangementTable);

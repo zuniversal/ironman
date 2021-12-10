@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import UserManageForm from '@/components/Form/UserManageForm';
-import {UserManagePasswordForm} from '@/components/Form/UserManageActionForm';
+import { UserManagePasswordForm } from '@/components/Form/UserManageActionForm';
 import UserManageSearchForm from '@/components/Form/UserManageSearchForm';
 import UserManageTable from '@/components/Table/UserManageTable';
 
@@ -136,26 +135,30 @@ class UserManage extends PureComponent {
       console.log('  res await 结果  ：', res, action);
       const formData = props.form.getFieldsValue();
       if (action === 'add' && formData.rePassword !== formData.password) {
-        tips('2次密码不一致！', 2)
-        return  
+        tips('2次密码不一致！', 2);
+        return;
       }
       if (action === 'changePasswordAsync') {
         this.props.changePasswordAsync({
           ...res,
           d_id: this.props.itemDetail.id,
         });
-        return
+        return;
       }
-      if (res.head_img && res.head_img.fileList && res.head_img.fileList.length > 0) {
+      if (
+        res.head_img &&
+        res.head_img.fileList &&
+        res.head_img.fileList.length > 0
+      ) {
         const fileList = res.head_img.fileList;
         console.log(' fileList ： ', fileList);
         res.head_img = fileList.map(v => v.response.url).join(',');
       } else {
         res.head_img = null;
       }
-      res.join_date = res.join_date ? res.join_date.format('YYYY-MM-DD') : null
+      res.join_date = res.join_date ? res.join_date.format('YYYY-MM-DD') : null;
 
-      delete res.rePassword
+      delete res.rePassword;
 
       if (action === 'add') {
         this.props.addItemAsync({
@@ -204,7 +207,9 @@ class UserManage extends PureComponent {
     }
     console.log(' formComProps ： ', formComProps);
     if (action === 'changePasswordAsync') {
-      return <UserManagePasswordForm {...formComProps}></UserManagePasswordForm>;
+      return (
+        <UserManagePasswordForm {...formComProps}></UserManagePasswordForm>
+      );
     }
     return <UserManageForm {...formComProps}></UserManageForm>;
   };

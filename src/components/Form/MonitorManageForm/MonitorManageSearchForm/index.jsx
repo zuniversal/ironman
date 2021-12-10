@@ -1,13 +1,8 @@
 import React from 'react';
-import './style.less';
-
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { weakStatusConfig } from '@/configs';
 
 const MonitorManageSearchForm = props => {
-  console.log(' MonitorManageSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -27,17 +22,7 @@ const MonitorManageSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' MonitorManageSearchForm '}>
-      <SearchForm
-        config={config}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 MonitorManageSearchForm.defaultProps = {};

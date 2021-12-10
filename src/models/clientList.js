@@ -446,11 +446,5 @@ const model = {
 //   ...createActions(otherActions, batchTurnActions),
 // };
 export const actions = createAction(model);
-console.log(
-  ' model 修改  ： ',
-  Object.keys(model.effects),
-  actions,
-  createAction(model),
-);
 
 export default model;

@@ -16,9 +16,6 @@ const formLayouts = {
 };
 
 const SystemNotifyForm = props => {
-  console.log(' SystemNotifyForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     // {
     //   itemProps: {
@@ -135,11 +132,8 @@ const SystemNotifyForm = props => {
         config={config}
         formLayouts={formLayouts}
         noRuleAll
-        // {...rest}
         {...props}
       ></SmartForm>
-
-      {/* {formBtn} */}
     </div>
   );
 };

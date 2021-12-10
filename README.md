@@ -35,14 +35,16 @@ $ npm start
 
   ├─configs - 项目公共配置
   ├─constants - 项目通用常量
+  ├─format - 格式化form表单要提交的数据 接口详情数据等
   ├─layouts - 布局入口容器组件 
+  ├─hooks - 钩子目录 
   ├─locales - 国际化
   ├─models - 状态管理
   ├─pages - 页面容器 - 处理管控页面逻辑 数据 组装组件
   ├─services - 请求服务
   ├─static - 静态资源
   ├─tamp - 不需要查看的目录 临时存放 (后续加入的文件目录) 
-  └─utils - 工具方法
+  └─utils - 通用工具方法
 
 ```
 

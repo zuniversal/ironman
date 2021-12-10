@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartPdf from '@/common/SmartPdf';
 
 const config = [

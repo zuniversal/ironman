@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import WorkOrderForm from '@/components/Form/WorkOrderForm';

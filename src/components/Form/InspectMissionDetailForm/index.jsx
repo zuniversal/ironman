@@ -17,9 +17,6 @@ const datas = [
 ];
 
 const InspectMissionDetailForm = props => {
-  console.log(' InspectMissionDetailForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -92,9 +89,7 @@ const InspectMissionDetailForm = props => {
 
   return (
     <div className={' inspectMissionDetailForm '}>
-      <SmartForm config={config} noRuleAll isDisabledAll {...rest}></SmartForm>
-
-      {formBtn}
+      <SmartForm config={config} noRuleAll isDisabledAll {...props}></SmartForm>
     </div>
   );
 };

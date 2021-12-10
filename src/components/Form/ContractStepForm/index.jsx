@@ -48,8 +48,6 @@ const ContractStepForm = props => {
   const [current, setCurrent] = useState(0);
   const completeIndex = useRef(0);
 
-  console.log(' ContractStepForm ： ', props, form, formform);
-
   const completeItem = { key: 'complete', title: '完成' };
 
   // const config1 = formatConfig(clientConfig)

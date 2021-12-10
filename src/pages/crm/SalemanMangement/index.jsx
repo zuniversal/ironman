@@ -37,6 +37,16 @@ class SalemanMangement extends PureComponent {
       titleMap,
     };
   }
+  exportDataAsync = e => {
+    console.log('    exportDataAsync ： ', e, this.props.selectedRowKeys);
+    if (this.props.selectedRowKeys.length > 0) {
+      this.props.exportData({
+        customer_id: this.props.selectedRowKeys,
+      });
+    } else {
+      tips('请勾选导出项！', 2);
+    }
+  };
   renderFormBtn = params => {
     return (
       <div className={'btnWrapper'}>
@@ -49,11 +59,14 @@ class SalemanMangement extends PureComponent {
         <Button
           type="primary"
           onClick={() => this.props.showFormModal({ action: 'add' })}
-          // disabled={this.props.authInfo.create !== true}
+          disabled={this.props.authInfo.create !== true}
         >
           新增{TITLE}
         </Button>
-        <Button type="primary" onClick={() => this.props.exportData()}>
+        {/* <Button type="primary" onClick={() => this.props.exportData()}>
+          导出Excel
+        </Button> */}
+        <Button type="primary" onClick={this.exportDataAsync}>
           导出Excel
         </Button>
         {/* <Button

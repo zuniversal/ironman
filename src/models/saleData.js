@@ -42,14 +42,17 @@ const model = {
         ...state,
         saleAmountData: {
           ...payload.bean,
-          rank: payload.bean.rank.map(v => ({ ...v, name: v.amount })),
+          rank: payload.bean.rank.map(v => ({
+            ...v,
+            name: v.amount.toFixed(2),
+          })),
         },
         saleAmountSearchInfo: payload.payload,
       };
     },
     getSaleArea(state, { payload, type }) {
       console.log(' getSaleArea ： ', payload);
-      const {reginRes,  } = payload
+      const { reginRes } = payload;
       let saleAreaAmount = 0;
       payload.bean.area_amount.forEach(
         v => (saleAreaAmount = v.amount + saleAreaAmount),
@@ -64,17 +67,24 @@ const model = {
           ...payload.bean,
           saleAreaData: payload.bean.area_amount.map(v => ({
             ...v,
-            value: v.amount,
-            name: v.adcode ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[v.adcode] : v.industry,
+            value: v.amount.toFixed(2),
+            amount: v.amount.toFixed(2),
+            name:
+              v.adcode != undefined
+                ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[
+                    v.adcode
+                  ]
+                : v.industry,
             // name: 440000 ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[440000] : v.industry,
-            percent: (v.amount / saleAreaAmount).toFixed(2) * 100 + '%', 
+            percent: (v.amount / saleAreaAmount).toFixed(2) * 100 + '%',
           })),
           saleIndustyData: payload.bean.industry_amount.map(v => ({
             ...v,
-            value: v.amount,
-            name: v.industry ? industryMap[v.industry] : v.industry,
+            value: v.amount.toFixed(2),
+            amount: v.amount.toFixed(2),
+            name: v.industry ? industryMap[v.industry] : '其它',
             // name: 1 ? industryMap[1] : v.industry,
-            percent: (v.amount / saleIndustyAmount).toFixed(2) * 100 + '%', 
+            percent: (v.amount / saleIndustyAmount).toFixed(2) * 100 + '%',
           })),
           saleAreaAmount,
           saleIndustyAmount,
@@ -97,7 +107,10 @@ const model = {
     *getSaleAreaAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.getSaleArea, payload);
       const reginRes = yield call(getRegionOne);
-      yield put({ type: 'getSaleArea', payload: { ...res, payload, reginRes } });
+      yield put({
+        type: 'getSaleArea',
+        payload: { ...res, payload, reginRes },
+      });
     },
   },
 };

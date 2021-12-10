@@ -1,11 +1,7 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 
 const AlarmRecordHandleForm = props => {
-  console.log(' AlarmRecordHandleForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'TextArea',

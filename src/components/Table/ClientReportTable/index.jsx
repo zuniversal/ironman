@@ -8,8 +8,6 @@ import React, {
   useState,
   use,
 } from 'react';
-import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 import { HOUSENO, PDF_URL } from '@/constants';
 import { linkUrlFn } from '@/utils';

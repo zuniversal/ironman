@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import CsClientReportTable from '@/components/Table/CsClientReportTable';
 import CsClientReportSearchForm from '@/components/Form/CsClientReportForm/CsClientReportSearchForm';
@@ -157,7 +156,6 @@ class ClientReport extends PureComponent {
     if (value.filter) {
       this.props.getListFilter({ ...params.value });
     } else {
-      console.log('  对吗  params.value.length ', params.value.length);
       // if (params.value?.customer_id?.length) {
       this.props.getListAsync(params.formData);
       // } else {
@@ -400,7 +398,7 @@ class ClientReport extends PureComponent {
     // }
 
     return (
-      <div className="ClientReport">
+      <div className="">
         {this.renderSearchForm()}
 
         {this.renderTable()}

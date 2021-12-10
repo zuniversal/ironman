@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import SmartFormModal from '@/common/SmartFormModal';
@@ -151,7 +150,6 @@ class Msg extends PureComponent {
     );
   };
   async componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     this.props.getOrganizeAsync();
     // const  = () => new Promise((resolve, reject) => {
     //   console.log('  Promise ： ',  )

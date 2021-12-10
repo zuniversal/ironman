@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import useHttp from '@/hooks/useHttp';
 import {
   getManufacturerList,

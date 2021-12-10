@@ -1,12 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const OperateRecordSearchForm = props => {
-  console.log(' OperateRecordSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -27,17 +23,7 @@ const OperateRecordSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' OperateRecordSearchForm '}>
-      <SearchForm
-        config={config}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 OperateRecordSearchForm.defaultProps = {};

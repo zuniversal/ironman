@@ -1,11 +1,8 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import SmartImg from '@/common/SmartImg';
 
 const WeakForm = props => {
-  console.log(' WeakForm ： ', props);
-  const { formBtn, ...rest } = props;
   const { file = [] } = props.init;
 
   const config = [
@@ -111,16 +108,12 @@ const WeakForm = props => {
   ];
 
   return (
-    <div className={' WeakForm '}>
-      <SmartForm
-        config={config}
-        isDisabledAll={!['add', 'edit'].includes(props.action)}
-        noRuleAll
-        {...rest}
-      ></SmartForm>
-
-      {formBtn}
-    </div>
+    <SmartForm
+      config={config}
+      isDisabledAll={!['add', 'edit'].includes(props.action)}
+      noRuleAll
+      {...props}
+    ></SmartForm>
   );
 };
 

@@ -1,29 +1,7 @@
 import React, { Component, PureComponent } from 'react';
-import './style.less';
-
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Menu,
-  Upload,
-  Result,
-  Typography,
-  Divider,
-} from 'antd';
-import SearchForm from '@/common/SearchForm';
 import UserCenterForm from '@/components/Form/UserCenterForm';
 import CsUserCenterForm from '@/components/Form/CsUserCenterForm';
 import CsUserCenterEditForm from '@/components/Form/CsUserCenterEditForm';
-import ResultModal from '@/components/Modal/ResultModal';
-import SmartModal from '@/common/SmartModal';
-import SmartFormModal from '@/common/SmartFormModal';
-import DropDownBtn from '@/common/DropDownBtn';
-import ErrorInfo from '@/components/Widgets/ErrorInfo';
-import UploadFileCom from '@/components/Widgets/UploadFileCom';
-import SuccResult from '@/components/Widgets/SuccResult';
-
 import { actions, mapStateToProps } from '@/models/csUserCenter';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
@@ -63,10 +41,16 @@ class CsUserCenter extends PureComponent {
       // init: this.props.userInfo.user,
       init: this.props.itemDetail,
     };
-    console.log(' formComProps ： ', formComProps, !!Object.keys(this.props.itemDetail).length);
-    return !!Object.keys(this.props.itemDetail).length && <UserCenterForm
-      {...formComProps}
-    ></UserCenterForm>
+    console.log(
+      ' formComProps ： ',
+      formComProps,
+      !!Object.keys(this.props.itemDetail).length,
+    );
+    return (
+      !!Object.keys(this.props.itemDetail).length && (
+        <UserCenterForm {...formComProps}></UserCenterForm>
+      )
+    );
     const com = this.props.isStartEdit ? (
       <CsUserCenterEditForm handleOk={this.handleOk}></CsUserCenterEditForm>
     ) : (
@@ -74,7 +58,7 @@ class CsUserCenter extends PureComponent {
         startEdit={this.props.toggleEditInfo}
         {...formComProps}
       ></CsUserCenterForm>
-    )
+    );
     return !!Object.keys(this.props.itemDetail).length ? com : null;
   };
   handleOk = async props => {
@@ -101,11 +85,6 @@ class CsUserCenter extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' CsUserCenter 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    );
     this.props.getItemAsync({});
   }
 

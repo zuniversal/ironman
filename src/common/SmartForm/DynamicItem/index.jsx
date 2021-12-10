@@ -370,7 +370,6 @@ const DynamicItemForm = props => {
                     type="dashed"
                     className={'actionBtn addBtn'}
                     onClick={() => {
-                      console.log('  对吗  limit.length ', fields, limit);
                       if (fields.length < limit) {
                         add();
                       } else {

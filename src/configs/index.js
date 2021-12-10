@@ -622,35 +622,35 @@ export const notifyTypeMap = arrMapObj(notifyTypeConfig);
 export const clientLevelConfig = [
   {
     label: '【签】VIP客户(集团)',
-    value: 119,
+    value: '119',
   },
   {
     label: '【签】VIP客户',
-    value: 120,
+    value: '120',
   },
   {
     label: '【签】优质客户',
-    value: 110,
+    value: '110',
   },
   {
     label: '【签】普通客户',
-    value: 100,
+    value: '100',
   },
   {
     label: '【签】边际客户',
-    value: 90,
+    value: '90',
   },
   {
     label: '【分】已分配客户',
-    value: 10,
+    value: '10',
   },
   {
     label: '【未】未分配客户',
-    value: 0,
+    value: '0',
   },
   {
     label: '【无】无意向客户',
-    value: 10,
+    value: '10',
   },
 ];
 
@@ -2073,7 +2073,7 @@ export const planContractStepConfig = [
   },
 ];
 
-export const planContractDescConfig = [
+export const planContractDescConfig = current => [
   {
     label: '提交人',
     value: 'submitterName',
@@ -2089,8 +2089,17 @@ export const planContractDescConfig = [
   {
     label: '所属计划',
     value: 'planName',
-    span: 3,
+    span: current === 2 ? 1 : 3,
   },
+  ...(current === 2
+    ? [
+        {
+          label: '合同金额',
+          value: 'amount',
+          span: 2,
+        },
+      ]
+    : []),
   {
     label: '方案详情',
     label: '详情',
@@ -2125,7 +2134,6 @@ export const systemNotifyConfig = [
 
 export const systemNotifyMap = arrMapObj(systemNotifyConfig);
 export const systemNotifyColorMap = arrMapColor(systemNotifyConfig);
-console.log(' systemNotifyColorMap ： ', systemNotifyColorMap); //
 
 export const clientClueLevelConfig = [
   {
@@ -2340,3 +2348,37 @@ export const emailRule = {
   message: '邮箱格式不正确',
   pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
 };
+
+export const assetDetailConfig = [
+  {
+    label: '设备名称',
+    value: 'name',
+  },
+  {
+    label: '设备类型',
+    value: 'type',
+    dataMap: assetTypeMap,
+  },
+  {
+    label: '容量',
+    value: 'real_capacity',
+    value: 'capacity',
+    unit: 'kVA',
+  },
+  {
+    label: '厂商',
+    value: 'manufacturer',
+  },
+  {
+    label: '型号',
+    value: 'model',
+  },
+  {
+    label: '所属客户',
+    value: 'customer_name',
+  },
+  {
+    label: '户号',
+    value: 'code',
+  },
+];

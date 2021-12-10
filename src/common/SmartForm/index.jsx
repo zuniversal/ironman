@@ -190,15 +190,6 @@ const SmartForm = (props, state) => {
     dynamicFields.forEach(
       v => (obj[v.itemProps.name] = dynamicInitMap[v.formType]),
     );
-    console.log(
-      ' 惰性初始state   ： ',
-      init,
-      initData,
-      configs,
-      obj,
-      dynamicFields,
-      props,
-    );
     return obj;
   });
 
@@ -430,7 +421,7 @@ const SmartForm = (props, state) => {
       comProps.suffix = <SearchOutlined className="searchIcon" />;
     }
     if (noLabel) {
-      console.log(' noLabel ： ');
+      // console.log(' noLabel ： ');
       // comProps.wrapperCol = {
       //   sm: { span: 10 },
       // };
@@ -828,6 +819,5 @@ export default SmartForm;
 //   ...props,
 // })
 export const SearchForm = props => {
-  console.log(' SearchFormSearchForm ：', props);
   return <SmartForm noRule isSearchForm {...props}></SmartForm>;
 };

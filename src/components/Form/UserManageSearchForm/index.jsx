@@ -1,12 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const UserManageSearchForm = props => {
-  console.log(' UserManageSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       noRule: true,
@@ -52,17 +48,7 @@ const UserManageSearchForm = props => {
   ];
 
   return (
-    <div className={'fsb UserManageSearchForm '}>
-      <SearchForm
-        config={config}
-        searchRight
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
+    <SearchForm config={config} searchRight noRuleAll {...props}></SearchForm>
   );
 };
 

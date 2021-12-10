@@ -1,10 +1,15 @@
 import React from 'react';
-import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 import { monitorPointStatusMap, deviceFrequencyMap } from '@/configs';
+import useHttp from '@/hooks/useHttp';
+import { getManufacturerList } from '@/services/monitorManage';
+import { formatSelectList, arrMapObj } from '@/utils';
 
 const MonitorManageTable = props => {
+  const { data: manufacturerList } = useHttp(getManufacturerList, {
+    format: res => formatSelectList(res, 'manufacturer'),
+  });
+
   const columns = [
     {
       noCutText: true,
@@ -69,6 +74,7 @@ const MonitorManageTable = props => {
     {
       title: '设备厂商',
       dataIndex: 'manufacturer',
+      dataMap: arrMapObj(manufacturerList),
     },
     {
       width: 160,

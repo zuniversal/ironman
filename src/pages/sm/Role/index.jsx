@@ -115,18 +115,23 @@ class Role extends PureComponent {
     const permsCodesRoot = filterArr(
       filterData.map(v => `${v}`.slice(0, 4)).map(v => Number(v + '000')),
     );
+    const permsCodesTab = filterArr(
+      filterData.map(v => `${v}`.slice(0, 2)).map(v => Number(v + '00000')),
+    );
     const permsCodes = filterArr([
       // ...this.props.permsData,
       ...filterData,
       ...permsCodesMain,
       ...permsCodesRoot,
-    ]);
+      ...permsCodesTab,
+    ]).filter(v => v > 1);
     console.log(
       ' permsCodes0 ： ',
       filterData,
       permsCodesMain,
       permsCodesRoot,
       permsCodes,
+      permsCodesTab,
     );
     try {
       const res = await form.validateFields();

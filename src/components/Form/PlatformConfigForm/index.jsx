@@ -1,10 +1,8 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import { cameraSystemConfig } from '@/configs';
 
 const PlatformConfigForm = props => {
-  console.log(' PlatformConfigForm ： ', props);
   const config = [
     {
       itemProps: {

@@ -262,7 +262,6 @@ class InspectPlan extends PureComponent {
     );
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     // this.props.getTagUserAsync();
     // this.props.getUserAsync();
 

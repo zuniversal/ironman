@@ -1,6 +1,4 @@
 import React from 'react';
-import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 import { simcardStatusMap, validityPeriodMap } from '@/configs';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 
 export const config = [
@@ -12,16 +11,7 @@ export const config = [
 ];
 
 const AssessExpotForm = props => {
-  console.log(' AssessExpotForm ： ', props);
-  const { formBtn, ...rest } = props;
-
-  return (
-    <div className={' AssessExpotForm '}>
-      <SearchForm config={config} {...rest}></SearchForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 AssessExpotForm.defaultProps = {};

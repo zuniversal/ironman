@@ -12,9 +12,6 @@ import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline'
 import SmartImg from '@/common/SmartImg';
 
 export const MissionsManageWorkOrderForm = props => {
-  console.log(' MissionsManageWorkOrderForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       // formType: 'Search',
@@ -56,21 +53,12 @@ export const MissionsManageWorkOrderForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsManageWorkOrderForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 MissionsManageWorkOrderForm.defaultProps = {};
 
 export const MissionsManageContractForm = props => {
-  console.log(' MissionsManageContractForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -86,21 +74,12 @@ export const MissionsManageContractForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsManageContractForm '}>
-      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };
 
 MissionsManageContractForm.defaultProps = {};
 
 export const MissionsManageScheduleForm = props => {
-  console.log(' MissionsManageScheduleForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'DatePicker',
@@ -114,13 +93,7 @@ export const MissionsManageScheduleForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsManageScheduleForm '}>
-      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };
 
 MissionsManageScheduleForm.defaultProps = {};
@@ -133,9 +106,6 @@ const scheduleRadios = [
 ];
 
 export const MissionsManageConfirmScheduleForm = props => {
-  console.log(' MissionsManageConfirmScheduleForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'DatePicker',
@@ -171,13 +141,7 @@ export const MissionsManageConfirmScheduleForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsManageConfirmScheduleForm '}>
-      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };
 
 MissionsManageConfirmScheduleForm.defaultProps = {};
@@ -228,7 +192,6 @@ const formLayouts = {
 };
 
 export const MissionsManageOrderInfoForm = props => {
-  console.log(' MissionsManageOrderInfoForm ： ', props);
   const [tabIndex, setTabIndex] = useState(0);
   console.log(' tabIndex ： ', tabIndex);
 
@@ -485,8 +448,6 @@ export const MissionsManageOrderInfoForm = props => {
 MissionsManageOrderInfoForm.defaultProps = {};
 
 export const MissionsClientForm = props => {
-  console.log(' MissionsClientForm       ： ', props);
-
   const config = [
     {
       formType: 'rowText',
@@ -689,8 +650,6 @@ export const MissionsClientForm = props => {
 MissionsClientForm.defaultProps = {};
 
 export const MissionsSimpleClientForm = props => {
-  console.log(' MissionsSimpleClientForm       ： ', props);
-
   const config = [
     {
       formType: 'rowText',

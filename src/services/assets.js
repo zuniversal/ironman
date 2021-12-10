@@ -42,3 +42,6 @@ export const getTemplate = p =>
 export const uploadFile = parseUrl('console/OMS/equipment/upload');
 export const getTransformer = p =>
   noTipsGet('console/OMS/equipment/transformer', p);
+
+export const getAssetDetail = p =>
+  noTipsGet(`console/OMS/equipment/${p.d_id}/info`);

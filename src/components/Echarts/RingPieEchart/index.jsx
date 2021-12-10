@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SmartEchart from '@/common/SmartEchart';
 
 const defaultWeek = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
@@ -12,15 +12,27 @@ export const crmColorConfig = [
   '#36C7EA',
   '#F569CA',
   '#FCA149',
+  // 'red',
+  // 'black',
+  // 'blue',
+  // 'green',
+  // 'green',
 ];
 
 const option = params => {
-  console.log(' getIndustry  renderEcharts option ： ', params); //
   const { data } = params;
+  console.log(
+    ' 选项 getIndustry  renderEcharts option ： ',
+    params,
+    params.subtext,
+    params.selectData,
+    data,
+  ); //
   // const { subtext, } = params.option;
   const { text, subtext } = params;
   return {
     color: crmColorConfig,
+    // color: undefined,
     title: {
       text,
       subtext,
@@ -45,16 +57,16 @@ const option = params => {
       itemGap: 25,
       icon: 'circle',
       right: 'right',
-      top: '25%',
+      top: '15%',
       borderRadius: 100,
       // left: 'center'
       formatter(name) {
         const match = data.find(v => v.name === name);
-        console.log(' namenamename ： ', name, data, match, params); //
+        // console.log(' namenamename ： ', name, data, match, params); //
         const { percent, amount, label } = match;
         // return 222
         // return name;
-        return name + space + percent + space + '￥ ' + amount;
+        return name + space + percent + space + ' ' + amount;
       },
     },
     series: [
@@ -65,6 +77,13 @@ const option = params => {
         avoidLabelOverlap: false,
         label: {
           show: false,
+          normal: {
+            show: false,
+            position: 'center',
+            formatter() {
+              return ''; //
+            },
+          },
           position: 'center',
         },
         emphasis: {
@@ -76,6 +95,9 @@ const option = params => {
         },
         labelLine: {
           show: false,
+          normal: {
+            show: false,
+          },
         },
         data: [
           { value: 1048, name: '搜索引擎' },
@@ -91,10 +113,50 @@ const option = params => {
 };
 
 const RingPieEcharts = props => {
+  // let subtext = props[v.key][0]?.sum
+  const [subtext, setSubtext] = useState(0);
+  const [selectData, setSelectData] = useState(props.data);
+
+  const onChartLegendselectchanged = param => {
+    let subtext = 0;
+    const selectData = props.data.filter(v => param.selected[v.name]);
+    selectData.forEach(v => {
+      subtext = subtext + v.count;
+      // return {
+      //   ...v,
+      //   selected: param.selected[v.name],
+      //   selected: true,
+      // }
+    });
+    selectData.forEach(v => {
+      console.log(' onChartLegendselectchanged  vvv ： ', v, subtext, v.count); //
+      subtext = subtext + v.count;
+    });
+    // setSelectData(selectData)
+    // setSubtext(subtext)
+    console.log(
+      ' onChartLegendselectchanged   param,   ： ',
+      param,
+      props,
+      selectData,
+      subtext,
+    );
+  };
   return (
     <SmartEchart
       // {...props}
+      // option={{
+      //   ...option(props),
+      //   // data: selectData,
+      //   // selectData,
+      //   // subtext: `${subtext}`,
+      //   subtext: `${666}`,
+      // }}
       option={option(props)}
+      onEvents={{
+        legendselectchanged: onChartLegendselectchanged,
+      }}
+      // key={100}
     ></SmartEchart>
   );
 };

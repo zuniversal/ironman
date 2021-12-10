@@ -1,12 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const AlarmNotifyForm = props => {
-  console.log(' AlarmNotifyForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       // formType: 'Select',
@@ -21,18 +17,7 @@ const AlarmNotifyForm = props => {
     },
   ];
 
-  return (
-    <div className={' AlarmNotifyForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 AlarmNotifyForm.defaultProps = {};

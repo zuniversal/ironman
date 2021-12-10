@@ -20,6 +20,7 @@ const initialState = {
 
   formInitData: {},
   planStepId: '',
+  taskInfo: {},
 };
 
 const model = {
@@ -34,11 +35,16 @@ const model = {
       if (payload.action === 'approveapprovalMangementAsync') {
         formInitData = payload;
       }
+      let taskInfo = [];
+      if (payload.taskInfo) {
+        taskInfo = payload.taskInfo;
+      }
       return {
         ...state,
         isShowModal: true,
         action: payload.action,
         formInitData,
+        taskInfo,
       };
     },
     onCancel(state, { payload, type }) {
@@ -130,6 +136,11 @@ const model = {
 
     *approveClientClueAsync({ payload, action, type }, { call, put }) {
       const res = yield call(services.approveClientClue, payload);
+      yield put({ type: 'getListAsync' });
+    },
+    *approveTaskAsync({ payload, action, type }, { call, put }) {
+      console.log(' approveTaskAsync 修改  ： ', payload);
+      const res = yield call(services.approveTask, payload);
       yield put({ type: 'getListAsync' });
     },
   },

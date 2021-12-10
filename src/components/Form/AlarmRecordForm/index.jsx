@@ -1,11 +1,8 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import InspectMissionTimeline from '@/components/Widgets/InspectMissionTimeline';
 
 const AlarmRecordForm = props => {
-  console.log(' AlarmRecordForm ： ', props);
-  const { formBtn, ...rest } = props;
   const config = [
     {
       formType: 'rowText',

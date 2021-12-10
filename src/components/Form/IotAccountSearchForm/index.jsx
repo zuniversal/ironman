@@ -23,11 +23,7 @@ const IotAccountSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={''}>
-      <SearchForm config={config} {...props}></SearchForm>
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 export default IotAccountSearchForm;

@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import ProvinceForm, {
@@ -10,8 +9,6 @@ import { formatSelectList } from '@/utils';
 import { getList as getHouseNoList } from '@/services/houseNo';
 
 const PowerStationSearchForm = props => {
-  console.log(' PowerStationSearchForm ： ', props);
-
   const { data: houseNoList, req: getHouseNoListAsync } = useHttp(
     // () => {
     //   console.log(' houseNoList1111 ： ', );

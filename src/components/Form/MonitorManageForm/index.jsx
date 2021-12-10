@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import { getList as getAssetsList } from '@/services/assets';
 import {
@@ -185,15 +184,16 @@ const MonitorManageForm = props => {
   });
   const { data: outlineList, req: getOutlineListAsync } = useHttp(() => {}, {
     ...commonParams,
-    // format: res => formatSelectList(res, 'number', 'ele_user_id'),
-    init: props.init.customer_id
-      ? [
-          {
-            value: props.init.outline_id,
-            label: props.init.outline_name,
-          },
-        ]
-      : [],
+    format: res => formatSelectList(res, 'outline_name', 'outline_id'),
+    init:
+      props.init.customer_id && props.init.outline_id
+        ? [
+            {
+              value: props.init.outline_id,
+              label: props.init.outline_name,
+            },
+          ]
+        : [],
     noMountFetch: true,
   });
 
@@ -275,6 +275,22 @@ const MonitorManageForm = props => {
       }),
     );
   };
+
+  const initRequest = () => {
+    console.log(' initRequest   ,   ： ');
+    const { customer_id } = props.propsForm.getFieldsValue();
+    if (customer_id) {
+      getHouseNoListAsync(() =>
+        getInfoList({
+          kw: 'ele_info',
+          customer_id,
+        }),
+      );
+    }
+  };
+  useEffect(() => {
+    initRequest();
+  }, []);
 
   const onClientSelect = (params, rest) => {
     console.log(' onClientSelect  ： ', clientList, params, rest);

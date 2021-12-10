@@ -222,7 +222,7 @@ export const getWidget = props => {
       isDisabledAll: props.isDisabledAll,
       comProps: comProps,
     }),
-    CheckboxItem: <Checkbox {...comProps} />,
+    CheckboxItem: <Checkbox disabled={props.isDisabledAll} {...comProps} />,
     // Checkbox: <Checkbox>是1</Checkbox>,
     // Input: <Input className={'w-200'} disabled={props.isDisabledAll} {...comProps} />,
     Input: <Input disabled={props.isDisabledAll} {...comProps} />,
@@ -823,7 +823,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '行政区域编码',
         // name: 'adcode',
@@ -838,7 +838,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '经度',
         // name: 'longitude',
@@ -853,7 +853,7 @@ const ClientForm = props => {
     {
       // noRule: true,
       flexRow: 3,
-      noRule: true,
+      // noRule: true,
       itemProps: {
         label: '纬度',
         // name: 'latitude',
@@ -1268,8 +1268,18 @@ const ClientForm = props => {
       init={props.init}
       formAction={props.action}
       noRule
-      formItemCls={'ant-col-12'}
+      formItemCls={'ant-col-12 w100'}
     ></UploadCom>,
+    {
+      noRule: true,
+      formType: 'CustomCom',
+      CustomCom: <div></div>,
+      itemProps: {
+        label: '',
+        name: 'block',
+        className: 'ant-col-12 ',
+      },
+    },
   ].map(v => ({
     ...v,
     comProps: { className: `w-200 ${v.comProps?.className}`, ...v.comProps },
@@ -1308,7 +1318,7 @@ const ClientForm = props => {
         rules: null,
       }}
       formAction={props.action}
-      formItemCls={'w100'}
+      // formItemCls={'w100'}
     ></UploadCom>,
   ];
 
@@ -1526,6 +1536,8 @@ const ClientForm = props => {
           'service_enterprise_id',
           'tags',
         ]),
+        level: props.init.level ?? clientLevelConfig[0].value,
+        type: props.init.type ?? customerTypeConfig[0].value,
         // customer_admin: [
         //   {
         //     nickname: 'nickname1',

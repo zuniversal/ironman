@@ -61,6 +61,7 @@ const model = {
     assetDetail: {},
     subAssetTreeList: [],
     stationInfo: {},
+    canvasList: [],
   },
 
   reducers: {
@@ -110,27 +111,46 @@ const model = {
     //   };
     // },
     getRelatived(state, { payload, type }) {
+      const houseNoList = [];
+      payload.list.forEach(v => {
+        houseNoList.push(...v.electricity_users);
+      });
       const clientPowerList = formatSelectList(
         payload.list.map(v => v.electricity_users[0]),
         'number',
         'number',
       );
-      const stationList = clientPowerList[0].stations.map(v => ({
+      const flatStationList = [];
+      houseNoList.forEach(v => {
+        flatStationList.push(...v.stations);
+      });
+      // const stationList = clientPowerList[0].stations.map(v => ({
+      const stationList = flatStationList.map(v => ({
         ...v,
         text: v.name,
         type: `${v.id}`,
       }));
-      console.log('  getRelatived ：', payload, clientPowerList, stationList); //
       return {
         ...state,
         clientPowerList: clientPowerList,
         stationList: stationList,
         // houseNo: `${clientPowerList[0].number}`,
         houseNo: `${clientPowerList[0].id}`,
-        stationId: stationList[0].type,
+        stationId: payload.payload?.stationId ?? stationList[0].type,
         powerInfo: payload.powerInfo,
         canvasData: payload.canvasData,
         canvasInfo: payload.canvasInfo,
+        canvasList: payload.canvasList,
+      };
+    },
+    setCanvasData(state, { payload, type }) {
+      console.log('  setCanvasData ：', payload); //
+      const { canvasList } = state;
+      const matchItem = canvasList.filter(v => v.id == payload)[0];
+      return {
+        ...state,
+        canvasData: matchItem?.draw,
+        canvasInfo: matchItem,
       };
     },
     setStationList(state, { payload, type }) {
@@ -206,7 +226,7 @@ const model = {
       const user_id = customers[0]?.id;
       console.log(' history ： ', history, customer_id, user_id); //
       const clientId = customer_id || user_id;
-      console.log(' history clientId ： ', clientId); //
+      console.log(' history clientId ： ', clientId, payload); //
       if (clientId) {
         const res = yield call(getRelatived, {
           customer_id: clientId,
@@ -216,7 +236,9 @@ const model = {
           ele_number: res.list[0].electricity_users[0].number,
         });
         const canvasDataRes = yield call(getCircuitItem, {
-          power_station_id: res.list[0].electricity_users[0].stations[0].id,
+          power_station_id:
+            payload?.stationId ??
+            res.list[0].electricity_users[0].stations[0].id,
         });
         yield put({
           type: 'getAssetListAsync',
@@ -249,6 +271,7 @@ const model = {
             },
             canvasData: canvasDataRes.list[0]?.draw,
             canvasInfo: canvasDataRes.list[0],
+            canvasList: canvasDataRes.list,
           }),
         );
       }

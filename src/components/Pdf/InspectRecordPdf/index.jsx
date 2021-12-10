@@ -1,9 +1,8 @@
 import React from 'react';
-import './style.less';
 import { Button } from 'antd';
 
 const InspectRecordPdf = props => {
-  console.log(' InspectPlanForm ： ', props);;
+  console.log(' InspectPlanForm ： ', props);
 
   return (
     <div className={'inspectRecordPdf dfc '}>

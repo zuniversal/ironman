@@ -9,9 +9,10 @@ import {
   FileOutlined,
   FolderOpenOutlined,
 } from '@ant-design/icons';
-import { Tree, Input, Row, Col, Button, Tooltip, Form } from 'antd';
+import { Tree, Input, Row, Col, Button, Tooltip, Form, Empty } from 'antd';
 import { recursiveResetAssets } from '@/models/assets'; //
 import { num2Str, recursiveKeys } from '@/utils';
+import { ANIMATE } from '@/constants';
 const { DirectoryTree } = Tree;
 
 const SaveBtn = props => {
@@ -141,7 +142,6 @@ const addTreeAttr = ({ treeData, val, attr, item = {}, i }) => {
   const { indexes = [] } = item;
   const [index0, index1, index2] = indexes;
   const copyData = [...treeData];
-  console.log('  对吗  indexes.length ', indexes);
   const newTreeNode = {
     // indexes: [...indexes, children.length],
     isNew: true,
@@ -335,7 +335,6 @@ const AssetTree = props => {
         <Tooltip title="保存资产结构">
           <FileOutlined
             onClick={() => {
-              console.log(' 保存资产结构 ： '); //
               console.log(
                 ' 保存资产结构 ： ',
                 recursiveHandle(treeData),
@@ -622,10 +621,17 @@ const AssetTree = props => {
           {treeNodes}
         </Col>
         {/* <Col span={16} className={`dfc`}> */}
-        <Col span={18} className={``}>
+        <Col
+          span={18}
+          className={`${ANIMATE.slideInUp} `}
+          key={props?.selectItem?.name}
+        >
           {/* {treeData.length > 0 && (
           )} */}
-          <div className={`fje addAssetWrapper`}>
+          <div className={`fsb addAssetWrapper `}>
+            <div className={`title`} key={props?.selectItem?.name}>
+              资产： {props?.selectItem?.name}
+            </div>
             <Button
               type="primary"
               // onClick={() => {
@@ -687,7 +693,9 @@ const AssetTree = props => {
                 </AssetsForm>
               ) : null}
             </>
-          ) : null}
+          ) : (
+            <Empty />
+          )}
           {!props.action &&
           !Object.keys(props.itemDetail)?.length &&
           props.selectItem?.children?.length === 0 ? (

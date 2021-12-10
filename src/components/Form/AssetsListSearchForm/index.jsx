@@ -1,9 +1,7 @@
 import React from 'react';
-import './style.less';
 import { SearchForm } from '@/common/SmartForm';
 
 const AssetsListSearchForm = props => {
-  console.log(' AssetsListSearchForm ： ', props); //
   const config = [
     {
       customLabel: '',

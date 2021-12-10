@@ -13,6 +13,7 @@ import { getList as getOrganizeList } from '@/services/organize';
 import { getList as getRoleList } from '@/services/role';
 import { getList as getTagsList } from '@/services/tags';
 import { recursiveHandle } from '@/models/organize';
+import { format2Str } from '@/utils';
 
 const UserManageForm = props => {
   console.log(' UserManageForm ： ', props);
@@ -191,16 +192,18 @@ const UserManageForm = props => {
   ];
 
   const { gender, cert, status } = props.init; //
+  const initData = format2Str(props.init, ['cert', 'status']);
+  console.log(' initData ： ', initData); //
 
   return (
     <SmartForm
       config={config}
       {...props}
       init={{
-        ...props.init,
-        gender: gender != undefined ? gender : 1,
-        cert: cert != undefined ? `${cert}` : '1',
-        status: status != undefined ? `${status}` : '1',
+        ...initData,
+        gender: initData.gender ?? 1,
+        cert: initData.cert ?? '1',
+        status: initData.status ?? '1',
       }}
     ></SmartForm>
   );

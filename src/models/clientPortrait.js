@@ -39,20 +39,25 @@ const model = {
   reducers: {
     getAdcode(state, { payload, type }) {
       const { reginRes } = payload;
+      const filterData = payload.list
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 6);
       let sum = 0;
-      payload.list.forEach(v => (sum = v.count + sum));
+      filterData.forEach(v => (sum = v.count + sum));
       return {
         ...state,
-        adcodeList: payload.list.map(v => ({
+        adcodeList: filterData.map(v => ({
           ...v,
           value: v.count,
           amount: v.count,
-          name: v.adcode
-            ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[
-                v.adcode
-              ]
-            : '其它',
-          percent: ((v.count / sum) * 100).toFixed(2) + '%',
+          name:
+            v.adcode != undefined
+              ? arrMapObj(reginRes.list, { key: 'adcode', label: 'name' })[
+                  v.adcode
+                ] ?? '未知'
+              : '其它',
+          percent: toFixed((v.count / sum) * 100, 2) + '%',
+          sum,
         })),
         adcodeSearchInfo: payload.searchInfo,
       };
@@ -83,11 +88,13 @@ const model = {
             ...v,
             value: v.count,
             amount: v.count,
-            name: v[payload.payload._value]
-              ? industryMap[v[payload.payload._value]]
-              : '其它',
+            name:
+              v[payload.payload._value] != undefined
+                ? industryMap[v[payload.payload._value]] ?? '未知'
+                : '其它',
             name: industryMap[v[payload.payload._value]] ?? '其它',
-            percent: ((v.count / sum) * 100).toFixed(2) + '%',
+            percent: toFixed((v.count / sum) * 100, 2) + '%',
+            sum,
           };
         }),
         industrySearchInfo: payload.searchInfo,
@@ -108,10 +115,12 @@ const model = {
           ...v,
           value: v.count,
           amount: v.count,
-          name: v[payload.payload._value]
-            ? enterpriseScaleMap[v[payload.payload._value]]
-            : '其它',
-          percent: ((v.count / sum) * 100).toFixed(2) + '%',
+          name:
+            v[payload.payload._value] != undefined
+              ? enterpriseScaleMap[v[payload.payload._value]] ?? '未知'
+              : '其它',
+          percent: toFixed((v.count / sum) * 100, 2) + '%',
+          sum,
         })),
         saleSearchInfo: payload.searchInfo,
       };
@@ -125,10 +134,12 @@ const model = {
           ...v,
           value: v.count,
           amount: v.count,
-          name: v[payload.payload._value]
-            ? assetScaleMap[v[payload.payload._value]]
-            : '其它',
-          percent: ((v.count / sum) * 100).toFixed(2) + '%',
+          name:
+            v[payload.payload._value] != undefined
+              ? assetScaleMap[v[payload.payload._value]] ?? '未知'
+              : '其它',
+          percent: toFixed((v.count / sum) * 100, 2) + '%',
+          sum,
         })),
         assetSearchInfo: payload.searchInfo,
       };

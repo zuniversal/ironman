@@ -8,3 +8,4 @@ export const removeItem = p => req.remove(`crm/user/${p.d_id}`, p);
 
 export const importUser = p => req.post(`crm/user/import`, p);
 export const getSalesmanList = p => req.noTipsGet('crm/user/simple', p);
+export const exportData = p => req.get(`console/OMS/customer/file`, p);

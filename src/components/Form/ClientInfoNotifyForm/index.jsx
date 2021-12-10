@@ -6,7 +6,6 @@ import { getSearchList } from '@/services/user';
 import { crmNotifyTypeConfig, crmMsgRadioCofig } from '@/configs';
 
 const ClientInfoNotifyForm = props => {
-  console.log(' ClientInfoNotifyForm ： ', props);
   const { data: userList, req: getUserListAsync } = useHttp(getSearchList, {
     formatVal: 'nickname',
   });

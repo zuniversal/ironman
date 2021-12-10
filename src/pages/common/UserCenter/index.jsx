@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import UserCenterForm from '@/components/Form/UserCenterForm';
 
@@ -50,11 +49,6 @@ class UserCenter extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' UserCenter 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    );
     // this.props.getItemAsync()
   }
 

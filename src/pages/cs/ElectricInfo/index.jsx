@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import './style.less';
 import { Button } from 'antd';
+import SmartSelect from '@/common/SmartSelect';
 import SmartMonitor from '@/pages/om/SmartMonitor';
 import ElectricInfoTable from '@/components/Table/ElectricInfoTable';
 import PageTitle from '@/components/Widgets/PageTitle';
@@ -27,6 +28,7 @@ import { actions, mapStateToProps } from '@/models/electricInfo';
 import SmartHOC from '@/common/SmartHOC';
 import { connect, history } from 'umi';
 import { DRAW_PANEL } from '@/constants';
+import { formatSelectList } from '@/utils';
 
 const TITLE = '';
 
@@ -76,9 +78,12 @@ class ElectricInfo extends PureComponent {
 
   onOptionChange = params => {
     console.log('  onOptionChange  ：', params);
-    this.props.showItemAsync({
-      action: 'powerStationDetailAsync',
-      d_id: params.id,
+    // this.props.showItemAsync({
+    //   action: 'powerStationDetailAsync',
+    //   d_id: params.id,
+    // });
+    this.props.getRelativedAsync({
+      stationId: params.id,
     });
   };
 
@@ -110,15 +115,21 @@ class ElectricInfo extends PureComponent {
           <div className="title">智能监控</div>
         </div>
         {/* <ElectricInfoTable {...tableProps}></ElectricInfoTable> */}
-        {this.props.stationId && <SmartMonitor {...this.props}
-          match={{
-            params: { 
-              stationId: this.props.stationId,
-            } 
-          }}
-          noWrapper
-          noTitle
-        ></SmartMonitor>}
+        {/* {this.props.stationId} */}
+        {this.props.stationId && (
+          <SmartMonitor
+            {...this.props}
+            match={{
+              params: {
+                stationId: this.props.stationId,
+              },
+            }}
+            noWrapper
+            noTitle
+            // stationId={this.props.stationId}
+            key={this.props.stationId}
+          ></SmartMonitor>
+        )}
       </>
     );
   };
@@ -236,6 +247,10 @@ class ElectricInfo extends PureComponent {
       },
     });
   };
+  onSelect = params => {
+    console.log('    onSelect ： ', params);
+    this.props.setCanvasData(params);
+  };
   renderDrawPic = params => {
     const formComProps = {
       // data: data,
@@ -243,12 +258,30 @@ class ElectricInfo extends PureComponent {
       data: this.props.canvasData,
       noPortal: true,
       noFitWindow: true,
+      realParams: {
+        powerstation_id: this.props.powerInfo.id,
+        number: this.props.powerInfo.number,
+      },
     };
+    const selectData = this.props.canvasList.map((v, i) => ({
+      value: `${v.id}`,
+      label: `线路图-${i + 1}`,
+    }));
     return (
       <>
         <div className="titleRow fsb">
           <div className="title">一次系统图</div>
           <div className="btnWrapper">
+            {this.props.canvasData && (
+              <SmartSelect
+                selectData={selectData}
+                // onSelect={this.props.onSelect}
+                onSelect={this.onSelect}
+                comProps={{
+                  defaultValue: selectData[0]?.value,
+                }}
+              ></SmartSelect>
+            )}
             <Button
               type="primary"
               onClick={() =>
@@ -271,7 +304,10 @@ class ElectricInfo extends PureComponent {
         </div>
         <div className="drawWrapper">
           {this.props.canvasData ? (
-            <Preview {...formComProps}></Preview>
+            <Preview
+              {...formComProps}
+              key={this.props.stationId + this.props.canvasInfo?.id}
+            ></Preview>
           ) : (
             <div className="previewContainer dfc">该电站暂无系统图</div>
           )}
@@ -328,11 +364,6 @@ class ElectricInfo extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(
-      ' ElectricInfo 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    ); //
     // this.props.getPowerInfoAsync({
     //   ele_number: '0000727272',
     //   // ele_number: ,

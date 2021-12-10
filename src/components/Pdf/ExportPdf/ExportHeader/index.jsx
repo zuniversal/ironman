@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import ReactDOM from 'react-dom';
 import { Button } from 'antd';
 

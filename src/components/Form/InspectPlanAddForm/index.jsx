@@ -14,8 +14,6 @@ const formLayouts = {
 const checkboxData = [{ label: '短信通知客户', value: '', key: '' }];
 
 const InspectPlanAddForm = props => {
-  console.log(' InspectPlanAddForm ： ', props);
-
   const config = [
     {
       formType: 'CustomCom',

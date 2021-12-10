@@ -4,9 +4,6 @@ import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const InspectPlanSearchForm = props => {
-  console.log(' InspectPlanSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     // {
     //   formType: 'DatePicker',
@@ -36,14 +33,7 @@ const InspectPlanSearchForm = props => {
 
   return (
     <div className={' inspectPlanSearchForm '}>
-      <SearchForm
-        config={config}
-        noRule={false}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
+      <SearchForm config={config} noRule={false} {...props}></SearchForm>
     </div>
   );
 };

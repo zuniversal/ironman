@@ -7,8 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import './style.less';
-
 import { onDutyTypeMap } from '@/configs';
 import SmartTable from '@/common/SmartTable';
 import { Link } from 'umi';

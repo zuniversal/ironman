@@ -125,7 +125,6 @@ const MissionsManageForm = props => {
     setIsShow(true);
   };
 
-  const { formBtn, action, ...rest } = props;
   // const { file = [] } = props.init;
   const file = props.init.file ?? [];
 

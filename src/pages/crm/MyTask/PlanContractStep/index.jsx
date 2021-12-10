@@ -41,28 +41,6 @@ const PlanContractStep = props => {
 
   const [current, setCurrent] = useState(0);
 
-  const { data: clientInit, req: getClientAsync } = useHttp(
-    // () => getClient({
-    //   d_id: props.planStepInfo.customer.customer_id,
-    // }),
-    getClient,
-    {
-      attr: 'bean',
-      format: data => {
-        console.log(
-          ' getClientAsync PlanContractStep data ： ',
-          data,
-          props,
-          formatClientDetail(data),
-        ); //
-        const datas = formatClientDetail(data);
-        props.propsForm.setFieldsValue(datas);
-        return datas;
-      },
-      noMountFetch: true,
-    },
-  );
-
   const { data: myTaskInfo, req: getMyTaskAsync, isLoading, loading } = useHttp(
     // () => getMyTask({
     //   d_id: props.planStepId,
@@ -96,9 +74,45 @@ const PlanContractStep = props => {
         );
         const datas = formatMyTask(data);
         setCurrent(datas.step);
+        console.log(' rest datas ： ', datas); //
+        props.propsForm.setFieldsValue({
+          contacts: datas.contact,
+        });
         // setDataInit(datas)
         return datas;
       },
+    },
+  );
+
+  const { data: clientInit, req: getClientAsync } = useHttp(
+    // () => getClient({
+    //   d_id: props.planStepInfo.customer.customer_id,
+    // }),
+    getClient,
+    {
+      attr: 'bean',
+      format: data => {
+        console.log(
+          ' getClientAsync PlanContractStep data ： ',
+          data,
+          props,
+          formatClientDetail(data),
+        ); //
+        const datas = formatClientDetail(data);
+        // if (!!Object.keys(myTaskInfo).length) {
+        // props.propsForm.setFieldsValue(datas);
+        // props.propsForm.setFieldsValue({
+        //   ...datas,
+        //   // contacts: myTaskInfo.contact,
+        // });
+        // }
+        // return datas;
+        const { contacts, ...rest } = datas;
+        console.log(' rest ： ', rest); //
+        props.propsForm.setFieldsValue(rest);
+        return rest;
+      },
+      noMountFetch: true,
     },
   );
 
@@ -122,7 +136,10 @@ const PlanContractStep = props => {
     //   d_id: props.planStepInfo.customer.customer_id,
     // }))
     if (goIndex === 0) {
-      props.propsForm.setFieldsValue(clientInit);
+      props.propsForm.setFieldsValue({
+        ...clientInit,
+        contacts: myTaskInfo.contact,
+      });
     }
   };
   const planContractStep = (
@@ -140,7 +157,7 @@ const PlanContractStep = props => {
 
   const planContractDesc = (
     <Descriptions>
-      {planContractDescConfig.map((v, i) => (
+      {planContractDescConfig(current).map((v, i) => (
         <Descriptions.Item {...v} key={i}>
           {!v.type && myTaskInfo[v.value]}
           {v.type === 'showPDF' && (
@@ -165,12 +182,22 @@ const PlanContractStep = props => {
     <ClientForm
       {...props}
       action={'detail'}
-      init={clientInit}
+      init={{
+        ...clientInit,
+        contacts: myTaskInfo.contact,
+      }}
       // noDisabledContact
     ></ClientForm>
   );
 
-  console.log(' isLoading ： ', isLoading, loading); //
+  console.log(
+    ' isLoading ： ',
+    props,
+    clientInit,
+    myTaskInfo,
+    isLoading,
+    loading,
+  ); //
 
   return (
     <Spin spinning={isLoading}>
@@ -179,7 +206,7 @@ const PlanContractStep = props => {
         {/* {current === 0 ? <MyTaskForm
           action={'detail'}
         ></MyTaskForm> : planContractDesc} */}
-        {current === 0
+        {current === 0 && !!Object.keys(myTaskInfo).length
           ? // <ClientClueForm
             //   {...props}
             //   init={props.init.clientClueRes}

@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import SmartForm from '@/common/SmartForm';
 
 const OutlineForm = props => {
-  console.log(' OutlineForm ： ', props); //
-
   const config = [
     {
       noRule: true,

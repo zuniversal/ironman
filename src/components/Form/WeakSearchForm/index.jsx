@@ -1,13 +1,9 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { weakStatusConfig } from '@/configs';
 
 const WeakSearchForm = props => {
-  console.log(' WeakSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -44,17 +40,7 @@ const WeakSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' WeakSearchForm '}>
-      <SearchForm
-        config={config}
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} {...props}></SearchForm>;
 };
 
 WeakSearchForm.defaultProps = {};

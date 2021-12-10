@@ -1,13 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const BussniessRecordSearchForm = props => {
-  console.log(' BussniessRecordSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       noLabel: true,
@@ -27,22 +22,9 @@ const BussniessRecordSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={'BussniessRecordSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 BussniessRecordSearchForm.defaultProps = {};
-
-BussniessRecordSearchForm.propTypes = {};
 
 export default BussniessRecordSearchForm;

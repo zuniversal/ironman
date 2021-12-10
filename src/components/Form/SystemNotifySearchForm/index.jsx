@@ -1,12 +1,8 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const SystemNotifySearchForm = props => {
-  console.log(' SystemNotifySearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'RangePicker',
@@ -16,18 +12,7 @@ const SystemNotifySearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' SystemNotifySearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 SystemNotifySearchForm.defaultProps = {};

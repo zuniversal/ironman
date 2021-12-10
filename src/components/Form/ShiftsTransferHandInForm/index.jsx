@@ -18,8 +18,6 @@ const ticketConfig = [
 ];
 
 const ShiftsTransferHandInForm = props => {
-  console.log(' ShiftsTransferHandInForm ： ', props);
-
   const { getCapture, showFormModal } = props;
 
   const config = [

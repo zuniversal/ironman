@@ -7,8 +7,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import './style.less';
-
 import SmartTable from '@/common/SmartTable';
 
 const UserManageTable = props => {
@@ -48,7 +46,7 @@ const UserManageTable = props => {
     <>
       <a
         onClick={() =>
-          props.showFormModal({ action: 'changePasswordAsync', record, })
+          props.showFormModal({ action: 'changePasswordAsync', record })
         }
       >
         修改密码
@@ -56,13 +54,7 @@ const UserManageTable = props => {
     </>
   );
 
-  return (
-    <SmartTable
-      columns={columns}
-      extra={extra}
-      {...props}
-    ></SmartTable>
-  );
+  return <SmartTable columns={columns} extra={extra} {...props}></SmartTable>;
 };
 
 export default UserManageTable;

@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { regoins } from '@/configs';
 import { formatConfig, nowYearMonth } from '@/utils';
 
 const ShiftsArrangeSearchForm = props => {
-  console.log(' ShiftsArrangeSearchForm ： ', props);
-
-  const { getCapture, showFormModal } = props;
-
   const config = [
     {
       formType: 'Search',

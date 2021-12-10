@@ -1,15 +1,5 @@
-import React, {
-  Component,
-  PureComponent,
-  lazy,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React from 'react';
 import './style.less';
-
-import PropTypes from 'prop-types';
 import QRCode from 'qrcode.react';
 
 const QRCodeCom = props => {
@@ -50,10 +40,6 @@ QRCodeCom.defaultProps = {
   width: 260,
   height: 260,
   size: 260,
-};
-
-QRCodeCom.propTypes = {
-  // value: PropTypes.string,
 };
 
 export default QRCodeCom;

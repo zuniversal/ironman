@@ -8,7 +8,6 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import './style.less';
 import {
   Table,
   Icon,
@@ -76,15 +75,6 @@ const SmartFormModal = props => {
   //   })
   // }
 
-  console.log(
-    ' SmartFormModalSmartFormModal ： ',
-    props,
-    form,
-    modalProps,
-    React.isValidElement(null),
-    React.isValidElement(FormCom),
-  );
-
   const handleOk = e => {
     console.log(' handleOk   e, ,   ： ', e, props);
 
@@ -110,7 +100,6 @@ const SmartFormModal = props => {
       }
     });
   });
-  console.log(' SmartFormModalSmartFormModal isOkDisabled ： ', isOkDisabled); //
 
   return (
     <SmartModal

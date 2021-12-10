@@ -202,7 +202,6 @@ const DrawPanel = props => {
   const [filterName, setFilterName] = useState(null);
 
   useEffect(() => {
-    console.log('  对吗  props.circuitList.length ', props.circuitList);
     if (props.circuitList.length > 0) {
       if (!drawId) {
         setDrawId(props.circuitList[0]?.id);

@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { regoins, province, site, city } from '@/configs';
@@ -101,8 +100,6 @@ const init = {
 };
 
 const ProvinceForm = props => {
-  console.log(' ProvinceForm ： ', props);
-  const { formBtn, ...rest } = props;
   const formProps = {
     // layout: 'vertical',
     layout: 'inline',
@@ -117,10 +114,8 @@ const ProvinceForm = props => {
         // init={init}
         // init={{}}
 
-        {...rest}
+        {...props}
       ></SearchForm>
-
-      {formBtn}
     </div>
   );
 };

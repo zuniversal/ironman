@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 
@@ -9,9 +8,6 @@ const choiceRadios = [
 ];
 
 export const WorkOrderDispatchOrderForm = props => {
-  console.log(' WorkOrderDispatchOrderForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -28,13 +24,7 @@ export const WorkOrderDispatchOrderForm = props => {
     },
   ];
 
-  return (
-    <div className={' WorkOrderDispatchOrderForm '}>
-      <SmartForm config={config} size={'small'} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} size={'small'} {...props}></SmartForm>;
 };
 
 WorkOrderDispatchOrderForm.defaultProps = {};

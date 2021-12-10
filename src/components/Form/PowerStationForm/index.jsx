@@ -455,6 +455,7 @@ const PowerStationForm = props => {
           operation_level: null,
           inspection_type: inspectMode,
           ...props.init,
+          status: props.init.status ?? selectData[0].value,
         }}
       ></SmartForm>
 

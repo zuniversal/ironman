@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import PowerStationForm from '@/components/Form/PowerStationForm';
 import SmartFormModal from '@/common/SmartFormModal';
 

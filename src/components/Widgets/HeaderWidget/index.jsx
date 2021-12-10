@@ -94,8 +94,6 @@ const HeaderWidget = props => {
     <span className="avatars" onClick={() => goPage('/om/userCenter')}></span>
   );
 
-  console.log(' onClickonClick ： ', props, props.isNotice);
-
   const headerWidget = (
     <div className="headerWidget dfc ">
       {/* <Icon icon={'search'} className={'actionItem '} /> */}

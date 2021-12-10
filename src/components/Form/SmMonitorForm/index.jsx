@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm from '@/common/SmartForm';
 import { regoins } from '@/configs';
@@ -41,16 +40,7 @@ export const config = [
 ];
 
 const SmMonitorForm = props => {
-  console.log(' SmMonitorForm ： ', props);
-  const { formBtn, ...rest } = props;
-
-  return (
-    <div className={' SmMonitorForm '}>
-      <SmartForm config={config} {...rest}></SmartForm>
-
-      {formBtn}
-    </div>
-  );
+  return <SmartForm config={config} {...props}></SmartForm>;
 };
 
 SmMonitorForm.defaultProps = {};

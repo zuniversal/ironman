@@ -1,12 +1,9 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 import { MeterTable } from '@/components/Table/PowerStationInfoTable';
 import { voltageLevelConfig } from '@/configs';
 
 const MeterForm = props => {
-  console.log(' MeterForm ： ', props);
-
   const config = [
     {
       noRule: true,

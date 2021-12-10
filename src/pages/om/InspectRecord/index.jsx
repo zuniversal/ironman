@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SmartFormModal from '@/common/SmartFormModal';
 import SearchKwForm from '@/components/Form/SearchKwForm';
@@ -367,7 +366,6 @@ class InspectRecord extends PureComponent {
     // }, 2000)
   };
   componentDidMount() {
-    console.log('  组件componentDidMount挂载 ： ', this.state, this.props);
     setTimeout(() => {
       console.log('  延时器 ： ');
       // this.props.getListAsync({

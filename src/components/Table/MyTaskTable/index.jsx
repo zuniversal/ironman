@@ -7,9 +7,19 @@ import {
   myTaskTypeMap,
   mytaskTabMap,
 } from '@/configs';
+import { connect } from 'umi';
+
+const mapStateToProps = ({ user }) => ({ user });
 
 const MyTaskTable = props => {
-  console.log(' MyTaskTable   props,   ： ', props);
+  const { approve } = props.user.authInfo.CRMTaskModel;
+  // const approve = false
+  console.log(
+    ' %c MyTaskTable 组件 props ： ',
+    `color: #333; font-weight: bold`,
+    props,
+    approve,
+  ); //
   const columns = [
     {
       title: '公司名称',
@@ -80,13 +90,15 @@ const MyTaskTable = props => {
         查看
       </a>
       <a
+        disabled={!approve}
         onClick={() => {
-          props.showFormModal({
-            action: 'approveTaskAsync',
-            taskInfo: {
-              d_id: record.id,
-            },
-          });
+          approve &&
+            props.showFormModal({
+              action: 'approveTaskAsync',
+              taskInfo: {
+                d_id: record.id,
+              },
+            });
         }}
       >
         审批
@@ -108,4 +120,4 @@ MyTaskTable.defaultProps = {
   taskType: MYTASK_PENDING_APPROVE,
 };
 
-export default MyTaskTable;
+export default connect(mapStateToProps)(MyTaskTable);

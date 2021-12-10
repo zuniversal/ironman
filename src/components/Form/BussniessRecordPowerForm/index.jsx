@@ -1,14 +1,10 @@
 import React from 'react';
-import './style.less';
 
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { regoins } from '@/configs';
 import { formatConfig } from '@/utils';
 
 const BussniessRecordPowerForm = props => {
-  console.log(' BussniessRecordPowerForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       itemProps: {
@@ -115,15 +111,13 @@ const BussniessRecordPowerForm = props => {
   ];
 
   return (
-    <div className={' BussniessRecordPowerForm '}>
-      <SmartForm
-        config={config}
-        // config={configs}
+    <SmartForm
+      config={config}
+      // config={configs}
 
-        isDisabledAll
-        {...props}
-      ></SmartForm>
-    </div>
+      isDisabledAll
+      {...props}
+    ></SmartForm>
   );
 };
 

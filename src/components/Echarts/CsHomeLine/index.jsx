@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartEchart from '@/common/SmartEchart';
 
 import { createIndexArr } from '@/utils';

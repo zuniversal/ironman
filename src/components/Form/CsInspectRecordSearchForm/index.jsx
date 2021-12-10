@@ -1,13 +1,8 @@
 import React from 'react';
-import './style.less';
-
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { workOrderStatusConfig } from '@/configs';
 
 const CsInspectRecordSearchForm = props => {
-  console.log(' CsInspectRecordSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       // formType: 'Select',
@@ -30,18 +25,7 @@ const CsInspectRecordSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' CsInspectRecordSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 CsInspectRecordSearchForm.defaultProps = {};

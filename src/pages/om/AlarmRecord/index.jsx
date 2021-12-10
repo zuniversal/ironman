@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SearchKwForm from '@/components/Form/SearchKwForm';
 import AlarmRecordTable from '@/components/Table/AlarmRecordTable';

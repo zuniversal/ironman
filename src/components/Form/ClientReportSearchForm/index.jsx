@@ -40,8 +40,6 @@ export const priceConfig1 = [
 ];
 
 const ClientReportSearchForm = props => {
-  console.log(' ClientReportSearchForm ： ', props);
-
   const config = [
     {
       formType: 'MonthPicker',

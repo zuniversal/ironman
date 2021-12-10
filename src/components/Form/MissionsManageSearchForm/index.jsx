@@ -1,13 +1,8 @@
 import React from 'react';
-import './style.less';
-
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 import { missionsStatusConfig, missionsTypeConfig } from '@/configs';
 
 const MissionsManageSearchForm = props => {
-  console.log(' MissionsManageSearchForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -51,18 +46,7 @@ const MissionsManageSearchForm = props => {
     },
   ];
 
-  return (
-    <div className={' MissionsManageSearchForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
-    </div>
-  );
+  return <SearchForm config={config} noRuleAll {...props}></SearchForm>;
 };
 
 MissionsManageSearchForm.defaultProps = {};

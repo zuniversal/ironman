@@ -158,6 +158,7 @@ class ClientPortrait extends PureComponent {
                 data={this.props[v.key]}
                 // subtextKey={this.props.saleAreaData[v.subtextKey]}
                 text={'总数'}
+                subtext={this.props[v.key][0]?.sum ?? '0'}
                 key={v.value}
               />
             </Col>

@@ -139,7 +139,7 @@ const model = {
         ...state,
         powerData: {
           ...state.powerData,
-          data: payload.bean.data.map(v => v?.toFixed(2)),
+          data: payload.bean.data?.map(v => v?.toFixed(2)),
           // xAxis: payload.bean.time[0].map((v) => v?.split('T')[0]),
           // xAxis: payload.bean?.time[0].map(v => dayjs(v).format('HH:mm')),
           xAxis: payload.bean?.time?.map(v => dayjs(v).format('HH:mm')),
@@ -232,9 +232,11 @@ const model = {
       }
       console.log(
         ' Object.values(payload.bean?.f ?? {}) ： ',
+        payload.bean,
         fData,
         Object.values(payload.bean?.f ?? {}),
         Object.values(fData),
+        nowMonthDaysPad,
       ); //
       return {
         ...state,

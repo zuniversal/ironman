@@ -212,7 +212,7 @@ class MyTask extends PureComponent {
   };
   renderTabPanes = params => (
     <div className={'tabWrapper'}>
-      <Tabs defaultActiveKey="0" onChange={this.onTabChange}>
+      <Tabs defaultActiveKey={this.props.tabType} onChange={this.onTabChange}>
         {mytaskTabConfig.map((v, i) => (
           <TabPane {...v}></TabPane>
         ))}

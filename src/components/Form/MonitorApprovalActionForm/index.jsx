@@ -1,5 +1,4 @@
 import React from 'react';
-import './style.less';
 import SmartForm from '@/common/SmartForm';
 
 export const MonitorApprovalRemarkForm = props => {

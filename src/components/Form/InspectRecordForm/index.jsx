@@ -319,7 +319,7 @@ const handleMaxChange = payload => {
 };
 
 const InspectRecordForm = props => {
-  const { formBtn, init, isExportPDF, formData, ...rest } = props;
+  const { init, isExportPDF, formData, ...rest } = props;
   // const [isEdit, setIsEdit] = useState(false);
   // const {isEdit,  } = props//
   // const isEdit = isDev ? true : props.isEdit;

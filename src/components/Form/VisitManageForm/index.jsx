@@ -4,9 +4,6 @@ import './style.less';
 import SmartForm, { SearchForm } from '@/common/SmartForm';
 
 const VisitManageForm = props => {
-  console.log(' VisitManageForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'TextArea',
@@ -21,14 +18,7 @@ const VisitManageForm = props => {
 
   return (
     <div className={' visitManageForm '}>
-      <SearchForm
-        config={config}
-        noRuleAll
-        // {...rest}
-        {...props}
-      ></SearchForm>
-
-      {/* {formBtn} */}
+      <SearchForm config={config} noRuleAll {...props}></SearchForm>
     </div>
   );
 };

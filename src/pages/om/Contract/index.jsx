@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './style.less';
 import { Button } from 'antd';
 import SearchForm from '@/common/SearchForm';
 import SmartShowPDF from '@/common/SmartShowPDF';
@@ -392,25 +391,9 @@ class Contract extends PureComponent {
     );
   };
 
-  componentDidMount() {
-    console.log(
-      ' Contract 组件componentDidMount挂载 ： ',
-      this.state,
-      this.props,
-    );
-    // this.showRelativeForm({action: 'edit',  });
-  }
-
   render() {
-    console.log(
-      ' %c Contract 组件 this.state, this.props ： ',
-      `color: #333; font-weight: bold`,
-      this.state,
-      this.props,
-    );
-
     return (
-      <div className="Contract">
+      <div className="">
         {this.renderSearchForm()}
 
         {this.renderTable()}

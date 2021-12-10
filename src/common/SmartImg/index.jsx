@@ -13,14 +13,14 @@ export const formatSrc = ({
   proxyImgUrl = PROXY_IMG_URL,
 }) => {
   const res = src.replace(replaceUrl, proxyImgUrl);
-  console.log(' formatSrc res ：', res, replaceUrl, proxyImgUrl); //
+  // console.log(' formatSrc res ：', res, replaceUrl, proxyImgUrl); //
   return res;
 }; //
 
 const SmartImg = ({ src, ...props }) => {
-  console.log(' SmartImg ： ', props);
+  // console.log(' SmartImg ： ', props);
   const formatStr = props.format ? formatSrc({ src }) : src; //
-  console.log('  formatSrc ：', formatStr, src); //
+  // console.log('  formatSrc ：', formatStr, src); //
   return (
     <Image
       src={formatStr}

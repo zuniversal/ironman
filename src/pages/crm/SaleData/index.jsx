@@ -15,6 +15,7 @@ import { actions, mapStateToProps } from '@/models/saleData';
 import SmartHOC from '@/common/SmartHOC';
 import { connect } from 'umi';
 import { saleDataEchartsConfig } from '@/configs';
+import { toFixed } from '@/utils';
 
 import power1 from '@/static/assets/cs/power1.png';
 import power2 from '@/static/assets/cs/power2.png';
@@ -52,7 +53,7 @@ class SaleData extends PureComponent {
     const statConfig = [
       {
         dataKey: 'contract_amount_status',
-        title: '总线索数',
+        title: '总销售额',
         key: 'contract_amount_status',
         num: this.props.saleCountData.amount,
         week: '周同比 ',
@@ -65,6 +66,7 @@ class SaleData extends PureComponent {
         rightTopKey: 'month_increase_amount',
         rightBottomKey: 'month_compare',
         numKey: 'amount',
+        numTofixed: val => toFixed(val),
       },
       {
         dataKey: 'contract_number_status',
@@ -173,6 +175,12 @@ class SaleData extends PureComponent {
   }
 
   render() {
+    console.log(
+      ' %c SaleData 组件 this.state, this.props ： ',
+      `color: #333; font-weight: bold`,
+      this.state,
+      this.props,
+    ); //
     return (
       <div className="">
         {this.renderStatBox()}

@@ -21,6 +21,8 @@ import {
   guestModeRedirectMap,
   LOGIN,
   DEF_PALTFORM,
+  ASSET_DETAIL,
+  noGetUserInfoPath,
 } from '@/constants';
 import defaultProps, {
   managerRoutes,
@@ -181,7 +183,6 @@ const getRoutes = (props = {}) => {
       : // : false,
         v.hideInMenu,
   }));
-  console.log(' routesConfig   ,   ： ', routesConfig);
   const routesData = {
     route: {
       path: '/',
@@ -297,13 +298,6 @@ const model = {
     login(state, { payload, type }) {
       const isGuestMode = getItem('isGuestMode');
       const userInfoKey = isGuestMode ? 'guestInfo' : 'userInfo';
-      console.log(
-        ' loginAsync loginAsync  ： ',
-        state,
-        payload,
-        isGuestMode,
-        userInfoKey,
-      );
       const authInfo = flatAuth(payload.perms);
       const routeData = getRoutes({
         ...payload,
@@ -496,7 +490,7 @@ const model = {
     },
 
     *getUserInfoAsync({ payload, action, type }, { call, put }) {
-      console.log(' getUserInfoAsync ： ', payload, action, type);
+      // console.log(' getUserInfoAsync ： ', payload, action, type);
       const resData = yield call(services.getUserInfo);
       const [enterprise = {}] = resData.bean.enterprises;
       // console.log(' enterprise ： ', enterprise);
@@ -541,7 +535,6 @@ const model = {
         is_read: 0,
         _sort: '-created_time',
       });
-      console.log(' getUserMsgAsync ： ', payload, action, type, res);
       const data = res.list.map(v => ({
         ...v,
         time: moment(v.timestamp).format('YYYY-MM-DD'),
@@ -615,12 +608,10 @@ const model = {
 
   subscriptions: {
     setup: props => {
-      console.log(' 用户 setup ： ', props, this);
       const { dispatch, history } = props;
 
       const getUserMsg = params => {
         const userInfo = getItem('userInfo');
-        console.log('  延时获取信息 ： ', userInfo);
         if (userInfo?.id) {
           dispatch({
             type: 'getUserMsgAsync',
@@ -646,7 +637,8 @@ const model = {
       history.listen(location => {
         // console.log(' 监听路由 匹配 ： ', history, location);
         const { pathname } = location;
-        if (pathname !== '/login') {
+        // if (pathname !== '/login') {
+        if (!noGetUserInfoPath.includes(pathname)) {
           dispatch({
             type: 'getUserInfoAsync',
           });

@@ -5,9 +5,6 @@ import SmartForm from '@/common/SmartForm';
 const renderCheckboxOp = [{ label: '短信通知客户', value: 'yes', key: 'yes' }];
 
 export const InspectMissionAssignForm = props => {
-  console.log(' InspectMissionAssignForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'Search',
@@ -24,25 +21,18 @@ export const InspectMissionAssignForm = props => {
   ];
 
   return (
-    <div className={' InspectMissionAssignForm '}>
-      <SmartForm
-        config={config}
-        size={'small'}
-        // noRuleAll
-        {...rest}
-      ></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
+    <SmartForm
+      config={config}
+      size={'small'}
+      // noRuleAll
+      {...props}
+    ></SmartForm>
   );
 };
 
 InspectMissionAssignForm.defaultProps = {};
 
 export const InspectMissionEditDateForm = props => {
-  console.log(' InspectMissionEditDateForm ： ', props);
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'DatePicker',
@@ -78,16 +68,12 @@ export const InspectMissionEditDateForm = props => {
   ];
 
   return (
-    <div className={' inspectMissionEditDateForm '}>
-      <SmartForm
-        config={config}
-        size={'small'}
-        // noRuleAll
-        {...rest}
-      ></SmartForm>
-
-      {/* {formBtn} */}
-    </div>
+    <SmartForm
+      config={config}
+      size={'small'}
+      // noRuleAll
+      {...props}
+    ></SmartForm>
   );
 };
 

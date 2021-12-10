@@ -3,4 +3,5 @@ export default [
   { path: '/forgetPwd', component: '@/pages/common/ForgetPwd' },
   { path: '/resetPwd', component: '@/pages/common/ResetPwd' },
   { path: '/userCenter', component: '@/pages/common/UserCenter' },
+  { path: '/assetDetail', component: '@/pages/common/AssetDetail' },
 ];

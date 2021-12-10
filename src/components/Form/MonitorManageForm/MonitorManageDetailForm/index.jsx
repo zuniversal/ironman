@@ -95,11 +95,7 @@ const ListCom = props => {
 };
 
 const MonitorManageDetailForm = props => {
-  console.log(' MonitorManageDetailForm ： ', props);
   const [checkItem, setCheckItem] = useState('A相');
-
-  const { formBtn, ...rest } = props;
-
   const config = [
     {
       formType: 'TextArea',
